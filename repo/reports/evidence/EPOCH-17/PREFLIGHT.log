@@ -1,0 +1,40 @@
+# PREFLIGHT
+date: 2026-02-10T17:58:00+00:00
+$ node -v
+v20.19.6
+$ npm -v
+11.4.2
+$ git --version
+git version 2.43.0
+$ uname -a
+Linux e0253bb5ef4a 6.12.47 #1 SMP Mon Oct 27 10:01:15 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+$ pwd
+/workspace/Treasure_engine/repo
+$ ls -la
+total 120
+drwxr-xr-x 15 root root  4096 Feb 10 17:01 .
+drwxr-xr-x  4 root root  4096 Feb 10 17:57 ..
+-rw-r--r--  1 root root  5368 Feb 10 17:05 AGENTS.md
+drwxr-xr-x  2 root root  4096 Feb 10 11:30 EVIDENCE_PACK
+-rw-r--r--  1 root root 11768 Feb 10 11:30 QUICK_START.md
+-rw-r--r--  1 root root  9654 Feb 10 13:25 RUNBOOK_OPERATIONS.md
+drwxr-xr-x 24 root root  4096 Feb 10 13:12 core
+drwxr-xr-x  3 root root  4096 Feb 10 13:42 data
+drwxr-xr-x  2 root root  4096 Feb 10 11:30 dataset
+drwxr-xr-x  2 root root  4096 Feb 10 17:07 docs
+drwxr-xr-x  5 root root  4096 Feb 10 13:05 evidence
+drwxr-xr-x  2 root root  4096 Feb 10 11:30 examples
+drwxr-xr-x  5 root root  4096 Feb 10 13:42 logs
+-rw-r--r--  1 root root 19412 Feb 10 13:15 package-lock.json
+-rw-r--r--  1 root root  3838 Feb 10 13:41 package.json
+-rw-r--r--  1 root root  3186 Feb 10 12:43 package.json.bak
+drwxr-xr-x 10 root root  4096 Feb 10 17:58 reports
+drwxr-xr-x  5 root root  4096 Feb 10 11:30 scripts
+drwxr-xr-x  2 root root  4096 Feb 10 12:43 spec
+drwxr-xr-x  2 root root  4096 Feb 10 13:22 truth
+drwxr-xr-x  2 root root  4096 Feb 10 11:30 ui
+$ git status -sb
+## work
+?? ./
+$ git rev-parse HEAD
+0035d7eb7c628b2aff7d119f572b5cd685a22bfd
