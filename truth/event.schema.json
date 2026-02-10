@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://treasure-engine.io/schemas/event.schema.json",
+  "title": "Treasure Engine Event Schema",
+  "description": "Schema for individual system events (EPOCH-15)",
+  "type": "object",
+  "properties": {
+    "ts_ms": {
+      "type": "integer",
+      "description": "Timestamp in milliseconds since epoch",
+      "minimum": 0
+    },
+    "seq": {
+      "type": "integer",
+      "description": "Monotonic sequence number per run",
+      "minimum": 0
+    },
+    "run_id": {
+      "type": "string",
+      "description": "Run identifier",
+      "minLength": 1
+    },
+    "category": {
+      "type": "string",
+      "enum": ["SYS", "EXEC", "RISK", "RECON", "DATA", "ORCH"],
+      "description": "Event category"
+    },
+    "event_type": {
+      "type": "string",
+      "description": "Specific event type within category",
+      "minLength": 1
+    },
+    "level": {
+      "type": "string",
+      "enum": ["DEBUG", "INFO", "WARN", "ERROR", "CRITICAL"],
+      "description": "Event severity level",
+      "default": "INFO"
+    },
+    "payload": {
+      "type": "object",
+      "description": "Event-specific data"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Optional tags for filtering/grouping"
+    },
+    "correlation_id": {
+      "type": "string",
+      "description": "Correlation ID for tracking related events"
+    }
+  },
+  "required": ["ts_ms", "run_id", "category", "event_type"],
+  "additionalProperties": false,
+  "definitions": {
+    "sys_events": {
+      "description": "System lifecycle events",
+      "enum": [
+        "run_start",
+        "run_complete",
+        "run_error",
+        "phase_start",
+        "phase_complete",
+        "checkpoint_created",
+        "checkpoint_loaded",
+        "config_loaded",
+        "mode_transition"
+      ]
+    },
+    "exec_events": {
+      "description": "Execution/trading events",
+      "enum": [
+        "intent_created",
+        "intent_validated",
+        "order_placed",
+        "order_filled",
+        "order_partial_fill",
+        "order_canceled",
+        "fill_recorded",
+        "position_updated",
+        "adapter_error"
+      ]
+    },
+    "risk_events": {
+      "description": "Risk management events",
+      "enum": [
+        "risk_check",
+        "risk_breach",
+        "risk_limit_exceeded",
+        "daily_loss_limit",
+        "position_limit_exceeded",
+        "drawdown_threshold",
+        "emergency_halt",
+        "risk_override"
+      ]
+    },
+    "recon_events": {
+      "description": "Reconciliation events",
+      "enum": [
+        "recon_start",
+        "recon_complete",
+        "recon_mismatch",
+        "price_deviation",
+        "fee_mismatch",
+        "fill_missing",
+        "state_drift"
+      ]
+    },
+    "data_events": {
+      "description": "Data pipeline events",
+      "enum": [
+        "dataset_loaded",
+        "dataset_validated",
+        "bar_processed",
+        "data_gap_detected",
+        "data_quality_issue",
+        "cache_hit",
+        "cache_miss",
+        "data_refresh"
+      ]
+    },
+    "orch_events": {
+      "description": "Orchestration/coordination events",
+      "enum": [
+        "strategy_activated",
+        "strategy_deactivated",
+        "signal_generated",
+        "signal_filtered",
+        "decision_made",
+        "action_queued",
+        "action_executed",
+        "workflow_step"
+      ]
+    }
+  }
+}

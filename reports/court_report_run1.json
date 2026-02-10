@@ -1,0 +1,89 @@
+{
+  "version": "1.0",
+  "run_id": "174c753e01f79367",
+  "timestamp_utc": "2026-02-10T11:17:47.538Z",
+  "ssot_ref": {
+    "path": "spec/ssot.json",
+    "sha256": "96a77b7028f0849baae277b08bca7bfa5a3969d097cd3632e268542fd86516d7"
+  },
+  "hacks": [
+    {
+      "id": "HACK_A2",
+      "decision": "BLOCKED",
+      "reasons": [
+        "REALITY GAP CLIFF: 115.9% >= 85% (model hallucination)",
+        "Penalized expectancy too low: -0.233114 <= 0",
+        "Hostile reject ratio too high: 6.93% > 5.00%"
+      ],
+      "evidence": {
+        "reality_gap": 1.159230575305955,
+        "reality_gap_cliff": 0.85,
+        "base_penalized_expectancy": -0.2331138246012294,
+        "base_expectancy_raw": -0.000037312775595517116,
+        "penalty_total": 0.23307651182563388,
+        "hostile_max_dd_pct": 0.04774009349932817,
+        "hostile_reject_ratio": 0.06930693069306931
+      }
+    },
+    {
+      "id": "HACK_A3",
+      "decision": "BLOCKED",
+      "reasons": [
+        "REALITY GAP CLIFF: 149.5% >= 85% (model hallucination)",
+        "Penalized expectancy too low: -0.302033 <= 0",
+        "Hostile reject ratio too high: 7.92% > 5.00%"
+      ],
+      "evidence": {
+        "reality_gap": 1.495045272270767,
+        "reality_gap_cliff": 0.85,
+        "base_penalized_expectancy": -0.30203284959582966,
+        "base_expectancy_raw": 0.00008601016768430004,
+        "penalty_total": 0.30211885976351394,
+        "hostile_max_dd_pct": 0.033186453800857385,
+        "hostile_reject_ratio": 0.07920792079207921
+      }
+    },
+    {
+      "id": "HACK_B1",
+      "decision": "BLOCKED",
+      "reasons": [
+        "REALITY GAP CLIFF: 121.8% >= 85% (model hallucination)",
+        "Penalized expectancy too low: -0.169526 <= 0"
+      ],
+      "evidence": {
+        "reality_gap": 1.2184775089902964,
+        "reality_gap_cliff": 0.85,
+        "base_penalized_expectancy": -0.16952572251895567,
+        "base_expectancy_raw": -0.000036473351361712926,
+        "penalty_total": 0.16948924916759395,
+        "hostile_max_dd_pct": 0.05724256533144201,
+        "hostile_reject_ratio": 0.0297029702970297
+      }
+    },
+    {
+      "id": "HACK_B3",
+      "decision": "BLOCKED",
+      "reasons": [
+        "REALITY GAP CLIFF: 137.9% >= 85% (model hallucination)",
+        "Penalized expectancy too low: -0.302387 <= 0",
+        "Hostile reject ratio too high: 5.94% > 5.00%"
+      ],
+      "evidence": {
+        "reality_gap": 1.379018532081701,
+        "reality_gap_cliff": 0.85,
+        "base_penalized_expectancy": -0.3023871053967102,
+        "base_expectancy_raw": 0.000015019681806528195,
+        "penalty_total": 0.3024021250785167,
+        "hostile_max_dd_pct": 0.054944479663819254,
+        "hostile_reject_ratio": 0.0594059405940594
+      }
+    }
+  ],
+  "summary": {
+    "total": 4,
+    "allowed": 0,
+    "blocked": 4,
+    "disabled": 0,
+    "needs_data": 0
+  }
+}

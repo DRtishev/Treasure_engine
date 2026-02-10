@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://treasure-engine.io/schemas/events_report.schema.json",
+  "title": "Treasure Engine Events Report Schema",
+  "description": "Schema for event log reports and summaries (EPOCH-15)",
+  "type": "object",
+  "properties": {
+    "run_id": {
+      "type": "string",
+      "description": "Run identifier",
+      "minLength": 1
+    },
+    "start_time": {
+      "type": "integer",
+      "description": "Report start timestamp (milliseconds)",
+      "minimum": 0
+    },
+    "end_time": {
+      "type": "integer",
+      "description": "Report end timestamp (milliseconds)",
+      "minimum": 0
+    },
+    "total_events": {
+      "type": "integer",
+      "description": "Total number of events",
+      "minimum": 0
+    },
+    "events_by_category": {
+      "type": "object",
+      "properties": {
+        "SYS": {"type": "integer", "minimum": 0},
+        "EXEC": {"type": "integer", "minimum": 0},
+        "RISK": {"type": "integer", "minimum": 0},
+        "RECON": {"type": "integer", "minimum": 0},
+        "DATA": {"type": "integer", "minimum": 0},
+        "ORCH": {"type": "integer", "minimum": 0}
+      },
+      "description": "Event counts by category"
+    },
+    "events_by_level": {
+      "type": "object",
+      "properties": {
+        "DEBUG": {"type": "integer", "minimum": 0},
+        "INFO": {"type": "integer", "minimum": 0},
+        "WARN": {"type": "integer", "minimum": 0},
+        "ERROR": {"type": "integer", "minimum": 0},
+        "CRITICAL": {"type": "integer", "minimum": 0}
+      },
+      "description": "Event counts by severity level"
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "ts_ms": {"type": "integer", "minimum": 0},
+          "seq": {"type": "integer", "minimum": 0},
+          "run_id": {"type": "string", "minLength": 1},
+          "category": {"type": "string", "enum": ["SYS", "EXEC", "RISK", "RECON", "DATA", "ORCH"]},
+          "event_type": {"type": "string", "minLength": 1},
+          "level": {"type": "string", "enum": ["DEBUG", "INFO", "WARN", "ERROR", "CRITICAL"]},
+          "payload": {"type": "object"}
+        },
+        "required": ["ts_ms", "run_id", "category", "event_type"]
+      },
+      "description": "Array of events (optional, for full reports)"
+    },
+    "validation_status": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "UNKNOWN"],
+      "description": "Overall validation status"
+    },
+    "validation_errors": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "line": {"type": "integer"},
+          "error": {"type": "string"},
+          "event_snippet": {"type": "string"}
+        }
+      },
+      "description": "Validation errors (if any)"
+    },
+    "monotonic_check": {
+      "type": "object",
+      "properties": {
+        "passed": {"type": "boolean"},
+        "gaps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "expected": {"type": "integer"},
+              "actual": {"type": "integer"}
+            }
+          }
+        }
+      },
+      "description": "Monotonic sequence check results"
+    },
+    "duration_ms": {
+      "type": "integer",
+      "description": "Total duration covered by events (milliseconds)",
+      "minimum": 0
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Report generation timestamp (ISO 8601)"
+    }
+  },
+  "required": [
+    "run_id",
+    "total_events",
+    "events_by_category",
+    "validation_status"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,33 @@
+{
+  "assembly_version": "TRUTH_LAYER_v1.0",
+  "timestamp": "2026-02-10T09:37:34Z",
+  "node_version": "v22.21.0",
+  "npm_version": "10.9.4",
+  "baseline_selected": "neuro-mev-source",
+  "baseline_source": "neuro-mev-source-code.zip",
+  "baseline_sha256": "20d42ff375ff6ba824b99cd7b38ae7b0242d11f8a26850858799110263c77090",
+  "patches_applied": [
+    {
+      "patch_id": 1,
+      "source": "treasure-sandbox/truth/",
+      "target": "truth/",
+      "reason": "Missing schema files",
+      "files_count": 3
+    },
+    {
+      "patch_id": 2,
+      "source": "epoch04-bridge/dataset/",
+      "target": "dataset/",
+      "reason": "Missing dataset for paper tests",
+      "files_count": 1
+    }
+  ],
+  "verification_results": {
+    "verify:e2": "PASS",
+    "verify:phase2": "PASS",
+    "verify:paper": "PASS",
+    "verify:epoch09": "PARTIAL (53/55)"
+  },
+  "total_source_files": 81,
+  "evidence_pack_files": 13
+}

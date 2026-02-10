@@ -1,0 +1,27 @@
+{
+  "run_id": "test_events_verification",
+  "start_time": 1770730978106,
+  "end_time": 1770730978107,
+  "total_events": 6,
+  "events_by_category": {
+    "SYS": 1,
+    "EXEC": 1,
+    "RISK": 1,
+    "RECON": 1,
+    "DATA": 1,
+    "ORCH": 1
+  },
+  "events_by_level": {
+    "INFO": 4,
+    "WARN": 1,
+    "DEBUG": 1
+  },
+  "validation_status": "PASS",
+  "validation_errors": [],
+  "monotonic_check": {
+    "passed": true,
+    "gaps": []
+  },
+  "duration_ms": 1,
+  "generated_at": "2026-02-10T13:42:58.108Z"
+}

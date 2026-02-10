@@ -1,0 +1,65 @@
+{
+  "fixture_id": "sol_usdt_price_mismatch",
+  "description": "SOL/USDT market buy with price mismatch (for reconciliation testing)",
+  "scenario": "PRICE_MISMATCH",
+  "request": {
+    "intent": {
+      "side": "BUY",
+      "size": 10.0,
+      "price": 100,
+      "type": "MARKET",
+      "symbol": "SOL/USDT"
+    },
+    "ctx": {
+      "run_id": "fixture_run_003",
+      "hack_id": "HACK_TEST_03",
+      "mode": "dryrun",
+      "bar_idx": 2,
+      "order_seq": 0
+    }
+  },
+  "response": {
+    "placeOrder": {
+      "order_id": "fixture_run_003_HACK_TEST_03_dryrun_2_0",
+      "status": "PENDING",
+      "timestamp": 1700000020000
+    },
+    "pollOrder": {
+      "status": "FILLED",
+      "filled": true,
+      "filled_price": 105.5,
+      "filled_qty": 10.0,
+      "fee": 1.055,
+      "fee_asset": "USDT",
+      "slippage_bps": 550,
+      "timestamp": 1700000020200,
+      "fills": [
+        {
+          "fill_id": "fill_003",
+          "price": 105.5,
+          "qty": 10.0,
+          "fee": 1.055,
+          "timestamp": 1700000020200
+        }
+      ]
+    }
+  },
+  "expected": {
+    "order_id": "fixture_run_003_HACK_TEST_03_dryrun_2_0",
+    "status": "FILLED",
+    "fills": [
+      {
+        "fill_id": "fill_003",
+        "price": 100.0,
+        "qty": 10.0,
+        "fee": 1.0,
+        "timestamp": 1700000020200
+      }
+    ]
+  },
+  "reconciliation": {
+    "should_pass": false,
+    "expected_mismatches": 2,
+    "expected_codes": ["PRICE_MISMATCH", "FEE_MISMATCH"]
+  }
+}

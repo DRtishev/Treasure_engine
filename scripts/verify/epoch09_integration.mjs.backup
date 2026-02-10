@@ -1,0 +1,346 @@
+#!/usr/bin/env node
+// scripts/verify/epoch09_integration.mjs
+// EPOCH-09: Autonomous AI Agent Integration Testing
+// Tests: Cognitive Brain, Learning System, Strategy Generator, Autonomous Agent
+
+import { CognitiveBrain } from '../../core/ai/cognitive_brain.mjs';
+import { LearningSystem } from '../../core/ai/learning_system.mjs';
+import { StrategyGenerator, StrategyDNA } from '../../core/ai/strategy_generator.mjs';
+import { AutonomousAgent } from '../../core/ai/autonomous_agent.mjs';
+
+let passed = 0;
+let failed = 0;
+
+function assert(condition, msg) {
+  if (condition) {
+    passed++;
+    console.log(`✓ ${msg}`);
+  } else {
+    failed++;
+    console.error(`✗ ${msg}`);
+  }
+}
+
+async function main() {
+  console.log('');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('EPOCH-09: AUTONOMOUS AI AGENT INTEGRATION');
+  console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log('');
+
+  try {
+    // ━━━ TEST 1: COGNITIVE BRAIN ━━━
+    console.log('━━━ TEST 1: COGNITIVE BRAIN ━━━');
+    
+    const brain = new CognitiveBrain({ name: 'Test Brain' });
+    
+    assert(brain !== null, 'Cognitive Brain created');
+    assert(brain.memory !== null, 'Memory system initialized');
+    assert(brain.reasoning !== null, 'Reasoning engine initialized');
+    assert(brain.planning !== null, 'Planning system initialized');
+    
+    // Test memory
+    brain.memory.storeShortTerm({ event: 'test', value: 42 });
+    brain.memory.storeLongTerm('test_key', { data: 'test' }, 0.8);
+    
+    const memStats = brain.memory.getStats();
+    assert(memStats.shortTermSize === 1, 'Short-term memory stores data');
+    assert(memStats.longTermSize === 1, 'Long-term memory stores data');
+    
+    // Test reasoning
+    brain.reasoning.addRule('test_rule', {
+      condition: (state) => state.test === true,
+      action: 'TEST_ACTION',
+      priority: 5
+    });
+    
+    const reasoning = brain.reasoning.reason({ test: true });
+    assert(reasoning.actions.length > 0, 'Reasoning produces actions');
+    
+    // Test thinking
+    const thought = await brain.think({
+      context: 'test',
+      test: true
+    });
+    
+    assert(thought.action !== undefined, 'Brain produces decisions');
+    assert(thought.confidence !== undefined, 'Decision has confidence');
+    
+    // Test learning
+    brain.learn({
+      type: 'test_experience',
+      outcome: 10,
+      rare: true
+    });
+    
+    assert(brain.stats.learningEvents === 1, 'Brain learns from experiences');
+    
+    // Test memory consolidation
+    const consolidated = await brain.sleep();
+    assert(consolidated.consolidated >= 0, 'Memory consolidation works');
+    
+    console.log('');
+
+    // ━━━ TEST 2: LEARNING SYSTEM ━━━
+    console.log('━━━ TEST 2: LEARNING SYSTEM ━━━');
+    
+    const learning = new LearningSystem({
+      learningMode: 'Q_LEARNING',
+      learningRate: 0.1
+    });
+    
+    assert(learning !== null, 'Learning System created');
+    assert(learning.qLearning !== null, 'Q-Learning agent initialized');
+    assert(learning.policyNetwork !== null, 'Policy network initialized');
+    
+    // Record experiences
+    for (let i = 0; i < 50; i++) {
+      learning.recordExperience(
+        { position: i % 2, trend: Math.random() },
+        i % 2 === 0 ? 'BUY' : 'SELL',
+        Math.random() * 10 - 5,
+        { position: (i + 1) % 2, trend: Math.random() }
+      );
+    }
+    
+    const bufferStats = learning.experienceBuffer.getStats();
+    assert(bufferStats.size === 50, 'Experience buffer stores experiences');
+    
+    // Train
+    const trainResult = await learning.train(32);
+    assert(trainResult.trained === true, 'Learning system trains successfully');
+    assert(trainResult.updates > 0, 'Q-values updated during training');
+    
+    // Choose action
+    const action = learning.chooseAction(
+      { position: 0, trend: 0.5 },
+      ['BUY', 'SELL', 'HOLD']
+    );
+    assert(action !== undefined, 'Learning system chooses actions');
+    assert(['BUY', 'SELL', 'HOLD'].includes(action), 'Action is valid');
+    
+    console.log('');
+
+    // ━━━ TEST 3: STRATEGY GENERATOR ━━━
+    console.log('━━━ TEST 3: STRATEGY GENERATOR ━━━');
+    
+    const strategyGen = new StrategyGenerator({
+      populationSize: 20,
+      mutationRate: 0.1
+    });
+    
+    assert(strategyGen !== null, 'Strategy Generator created');
+    assert(strategyGen.population !== null, 'Population initialized');
+    assert(strategyGen.population.strategies.length === 20, 'Population has correct size');
+    
+    // Generate initial population
+    strategyGen.generateInitialPopulation();
+    
+    const popStats = strategyGen.population.getStats();
+    assert(popStats.generation === 0, 'Initial generation is 0');
+    assert(parseFloat(popStats.avgFitness) >= 0, 'Avg fitness calculated');
+    
+    // Test strategy DNA
+    const dna = new StrategyDNA();
+    assert(dna.genes !== undefined, 'Strategy DNA has genes');
+    assert(dna.id !== undefined, 'Strategy has unique ID');
+    
+    // Test mutation
+    const mutated = dna.mutate(0.5);
+    assert(mutated.id !== dna.id, 'Mutation creates new strategy');
+    assert(mutated.genes !== dna.genes, 'Mutated genes differ from original');
+    
+    // Test crossover
+    const dna2 = new StrategyDNA();
+    const [child1, child2] = dna.crossover(dna2);
+    assert(child1.parentIds.length === 2, 'Child has parent IDs');
+    assert(child1.generation === 1, 'Child generation incremented');
+    
+    // Test evolution
+    await strategyGen.evolve(3);
+    const evolvedStats = strategyGen.population.getStats();
+    assert(evolvedStats.generation === 3, 'Population evolved correctly');
+    
+    // Deploy strategies
+    strategyGen.deployTopStrategies(3);
+    const activeStrategies = strategyGen.getActiveStrategies();
+    assert(activeStrategies.length === 3, 'Top strategies deployed');
+    
+    console.log('');
+
+    // ━━━ TEST 4: AUTONOMOUS AGENT ━━━
+    console.log('━━━ TEST 4: AUTONOMOUS AGENT ━━━');
+    
+    const agent = new AutonomousAgent({
+      name: 'Test Agent',
+      mode: 'LEARNING',
+      populationSize: 10,
+      autoEvolve: false // Disable for testing
+    });
+    
+    assert(agent !== null, 'Autonomous Agent created');
+    assert(agent.brain !== null, 'Agent has cognitive brain');
+    assert(agent.learning !== null, 'Agent has learning system');
+    assert(agent.strategyGen !== null, 'Agent has strategy generator');
+    
+    // Initialize agent
+    await agent.initialize();
+    assert(agent.state.active === true, 'Agent activated after initialization');
+    assert(agent.state.currentStrategy !== null, 'Agent has current strategy');
+    
+    // Make decision
+    const marketState = {
+      trend: 0.5,
+      volume: 1.5,
+      volatility: 0.2,
+      price: 50000
+    };
+    
+    const decision = await agent.decide(marketState);
+    assert(decision.action !== undefined, 'Agent makes decisions');
+    assert(decision.strategy !== undefined, 'Decision includes strategy');
+    assert(decision.confidence !== undefined, 'Decision has confidence');
+    
+    // Execute trade
+    const tradeResult = {
+      pnl: 25.50,
+      outcome: 'WIN',
+      nextState: {
+        trend: 0.6,
+        volume: 1.6,
+        volatility: 0.15,
+        price: 50250
+      }
+    };
+    
+    await agent.executeTrade(decision, tradeResult);
+    
+    assert(agent.performance.totalTrades === 1, 'Trade recorded');
+    assert(agent.performance.totalPnL === 25.50, 'PnL updated');
+    assert(agent.performance.wins === 1, 'Win counted');
+    
+    // Execute multiple trades
+    for (let i = 0; i < 20; i++) {
+      const dec = await agent.decide(marketState);
+      await agent.executeTrade(dec, {
+        pnl: Math.random() * 10 - 5,
+        outcome: Math.random() > 0.5 ? 'WIN' : 'LOSS',
+        nextState: marketState
+      });
+    }
+    
+    assert(agent.performance.totalTrades === 21, 'Multiple trades executed');
+    assert(agent.state.tradeCount === 21, 'Trade count updated');
+    
+    // Get status
+    const status = agent.getStatus();
+    assert(status.state !== undefined, 'Agent has state');
+    assert(status.performance !== undefined, 'Agent has performance metrics');
+    assert(status.brain !== undefined, 'Agent has brain status');
+    assert(status.learning !== undefined, 'Agent has learning status');
+    assert(status.strategyGen !== undefined, 'Agent has strategy gen status');
+    
+    // Shutdown
+    await agent.shutdown();
+    assert(agent.state.active === false, 'Agent deactivated after shutdown');
+    
+    console.log('');
+
+    // ━━━ TEST 5: INTEGRATION WORKFLOW ━━━
+    console.log('━━━ TEST 5: INTEGRATION WORKFLOW ━━━');
+    
+    const integrationAgent = new AutonomousAgent({
+      name: 'Integration Test',
+      populationSize: 10
+    });
+    
+    await integrationAgent.initialize();
+    
+    // Simulate trading session
+    let sessionPnL = 0;
+    const trades = 30;
+    
+    for (let i = 0; i < trades; i++) {
+      const market = {
+        trend: Math.random() * 2 - 1,
+        volume: 1 + Math.random(),
+        volatility: Math.random() * 0.5,
+        price: 50000 + Math.random() * 1000
+      };
+      
+      const dec = await integrationAgent.decide(market);
+      
+      if (dec.action === 'ENTER') {
+        const pnl = Math.random() * 20 - 10;
+        sessionPnL += pnl;
+        
+        await integrationAgent.executeTrade(dec, {
+          pnl,
+          outcome: pnl > 0 ? 'WIN' : 'LOSS',
+          nextState: market,
+          done: i === trades - 1
+        });
+      }
+    }
+    
+    assert(integrationAgent.performance.totalTrades > 0, 'Integration workflow executed trades');
+    assert(integrationAgent.learning.experienceBuffer.buffer.length > 0, 'Experiences recorded');
+    assert(integrationAgent.brain.stats.thoughtCycles > 0, 'Brain thought cycles executed');
+    
+    await integrationAgent.shutdown();
+    
+    console.log('');
+
+    // ━━━ SUMMARY ━━━
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('RESULTS');
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log(`✓ PASSED: ${passed}`);
+    console.log(`✗ FAILED: ${failed}`);
+    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.log('');
+
+    if (failed > 0) {
+      console.error(`✗ ${failed} tests failed`);
+      console.error('');
+      console.error('EPOCH-09 INTEGRATION: FAIL');
+      process.exit(1);
+    }
+
+    console.log('✓ All integration tests passed');
+    console.log('');
+    console.log('🎉 EPOCH-09 INTEGRATION: COMPLETE');
+    console.log('');
+    console.log('📦 COMPONENTS VALIDATED:');
+    console.log('   ✓ Cognitive Brain');
+    console.log('   ✓ Learning System');
+    console.log('   ✓ Strategy Generator');
+    console.log('   ✓ Autonomous Agent');
+    console.log('   ✓ Integration Workflow');
+    console.log('');
+    console.log('🤖 AI CAPABILITIES:');
+    console.log('   • Memory (short-term, long-term, semantic)');
+    console.log('   • Reasoning (rule-based inference)');
+    console.log('   • Planning (goal-oriented decomposition)');
+    console.log('   • Learning (Q-learning, policy network)');
+    console.log('   • Evolution (genetic algorithms)');
+    console.log('   • Autonomy (self-directed decision-making)');
+    console.log('');
+    console.log('💎 AI SINGULARITY: ACHIEVED');
+    console.log('');
+
+    process.exit(0);
+  } catch (err) {
+    console.error('');
+    console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.error('✗ EPOCH-09 INTEGRATION FAILED');
+    console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.error(`Error: ${err.message}`);
+    console.error(err.stack);
+    console.error('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+    console.error('');
+    process.exit(1);
+  }
+}
+
+main();

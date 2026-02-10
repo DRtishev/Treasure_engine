@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Brain Visualizer - NEURO-MEV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #000000;
+            color: #00ff41;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: linear-gradient(90deg, #0a0e27, #1a2351);
+            border-bottom: 2px solid #00ff41;
+            padding: 15px 30px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+        }
+
+        h1 {
+            font-size: 1.8em;
+            text-shadow: 0 0 10px #00ff41;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #7aa2ff;
+            font-size: 0.9em;
+        }
+
+        .main-content {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 10px;
+            padding: 10px;
+            overflow: hidden;
+        }
+
+        .brain-panel {
+            background: #0a0e27;
+            border: 1px solid #00ff41;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            color: #00ff41;
+            text-shadow: 0 0 5px #00ff41;
+            border-bottom: 1px solid #00ff41;
+            padding-bottom: 10px;
+        }
+
+        .panel-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .panel-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .panel-content::-webkit-scrollbar-track {
+            background: #0a0e27;
+        }
+
+        .panel-content::-webkit-scrollbar-thumb {
+            background: #00ff41;
+            border-radius: 4px;
+        }
+
+        /* Neural Network Visualization */
+        #neuralCanvas {
+            width: 100%;
+            height: 100%;
+            border: 1px solid #00ff4150;
+            border-radius: 5px;
+        }
+
+        /* Thought Stream */
+        .thought-item {
+            background: #1a2351;
+            border-left: 3px solid #00ff41;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .thought-time {
+            color: #7aa2ff;
+            font-size: 0.8em;
+        }
+
+        .thought-content {
+            color: #00ff41;
+            margin-top: 5px;
+        }
+
+        .thought-confidence {
+            color: #ffaa00;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+
+        /* Memory Visualization */
+        .memory-item {
+            background: #1a2351;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            border-left: 3px solid #7aa2ff;
+        }
+
+        .memory-type {
+            color: #7aa2ff;
+            font-size: 0.8em;
+            font-weight: bold;
+        }
+
+        .memory-content {
+            color: #00ff41;
+            font-size: 0.85em;
+            margin-top: 3px;
+        }
+
+        .memory-importance {
+            color: #ffaa00;
+            font-size: 0.75em;
+            margin-top: 3px;
+        }
+
+        /* Learning Progress */
+        .learning-metric {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: #1a2351;
+            margin-bottom: 8px;
+            border-radius: 5px;
+        }
+
+        .metric-label {
+            color: #7aa2ff;
+        }
+
+        .metric-value {
+            color: #00ff41;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #1a2351;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff41, #7aa2ff);
+            transition: width 0.5s ease-out;
+        }
+
+        /* Strategy Evolution */
+        .strategy-item {
+            background: #1a2351;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffaa00;
+        }
+
+        .strategy-id {
+            color: #ffaa00;
+            font-size: 0.8em;
+        }
+
+        .strategy-fitness {
+            color: #00ff41;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .strategy-genes {
+            color: #7aa2ff;
+            font-size: 0.75em;
+            margin-top: 3px;
+        }
+
+        /* Status Indicators */
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .status-active {
+            background: #00ff41;
+            box-shadow: 0 0 10px #00ff41;
+        }
+
+        .status-learning {
+            background: #ffaa00;
+            box-shadow: 0 0 10px #ffaa00;
+        }
+
+        .status-evolving {
+            background: #7aa2ff;
+            box-shadow: 0 0 10px #7aa2ff;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🧠 AI BRAIN VISUALIZER</h1>
+            <div class="subtitle">Real-time visualization of autonomous AI thinking</div>
+        </header>
+
+        <div class="main-content">
+            <!-- Neural Network Panel -->
+            <div class="brain-panel">
+                <div class="panel-header">
+                    <span class="status-indicator status-active"></span>
+                    NEURAL ACTIVITY
+                </div>
+                <div class="panel-content">
+                    <canvas id="neuralCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Thought Stream Panel -->
+            <div class="brain-panel">
+                <div class="panel-header">
+                    <span class="status-indicator status-active"></span>
+                    THOUGHT STREAM
+                </div>
+                <div class="panel-content" id="thoughtStream">
+                    <!-- Thoughts will be added here -->
+                </div>
+            </div>
+
+            <!-- Memory Panel -->
+            <div class="brain-panel">
+                <div class="panel-header">
+                    <span class="status-indicator status-learning"></span>
+                    MEMORY SYSTEM
+                </div>
+                <div class="panel-content" id="memorySystem">
+                    <!-- Memory items will be added here -->
+                </div>
+            </div>
+
+            <!-- Learning & Evolution Panel -->
+            <div class="brain-panel">
+                <div class="panel-header">
+                    <span class="status-indicator status-evolving"></span>
+                    LEARNING & EVOLUTION
+                </div>
+                <div class="panel-content" id="learningPanel">
+                    <!-- Learning metrics will be added here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Neural Network Visualization
+        const canvas = document.getElementById('neuralCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            const panel = canvas.parentElement;
+            canvas.width = panel.clientWidth - 40;
+            canvas.height = panel.clientHeight - 40;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Neural network structure
+        const layers = [6, 8, 8, 4]; // Input, hidden1, hidden2, output
+        let activations = layers.map(size => Array(size).fill(0));
+        let weights = [];
+
+        // Initialize weights
+        for (let i = 0; i < layers.length - 1; i++) {
+            weights.push(Array(layers[i] * layers[i + 1]).fill(0));
+        }
+
+        function drawNeuralNetwork() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            const layerSpacing = canvas.width / (layers.length + 1);
+            const nodeRadius = 15;
+
+            // Draw connections
+            for (let l = 0; l < layers.length - 1; l++) {
+                const x1 = layerSpacing * (l + 1);
+                const x2 = layerSpacing * (l + 2);
+
+                for (let i = 0; i < layers[l]; i++) {
+                    const y1 = (canvas.height / (layers[l] + 1)) * (i + 1);
+
+                    for (let j = 0; j < layers[l + 1]; j++) {
+                        const y2 = (canvas.height / (layers[l + 1] + 1)) * (j + 1);
+
+                        // Draw connection
+                        ctx.beginPath();
+                        ctx.moveTo(x1, y1);
+                        ctx.lineTo(x2, y2);
+                        ctx.strokeStyle = `rgba(0, 255, 65, ${Math.random() * 0.3 + 0.1})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Draw nodes
+            for (let l = 0; l < layers.length; l++) {
+                const x = layerSpacing * (l + 1);
+
+                for (let i = 0; i < layers[l]; i++) {
+                    const y = (canvas.height / (layers[l] + 1)) * (i + 1);
+                    const activation = activations[l][i];
+
+                    // Node
+                    ctx.beginPath();
+                    ctx.arc(x, y, nodeRadius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(0, 255, 65, ${activation})`;
+                    ctx.fill();
+                    ctx.strokeStyle = '#00ff41';
+                    ctx.lineWidth = 2;
+                    ctx.stroke();
+                }
+            }
+        }
+
+        // Animate neural activity
+        function animateNeuralActivity() {
+            // Random activation pattern
+            for (let l = 0; l < layers.length; l++) {
+                for (let i = 0; i < layers[l]; i++) {
+                    activations[l][i] = Math.random() * 0.5 + 0.3;
+                }
+            }
+
+            drawNeuralNetwork();
+        }
+
+        setInterval(animateNeuralActivity, 1000);
+
+        // Thought Stream
+        let thoughtCount = 0;
+        function addThought(action, confidence) {
+            const stream = document.getElementById('thoughtStream');
+            const thought = document.createElement('div');
+            thought.className = 'thought-item';
+
+            const time = new Date().toLocaleTimeString();
+            thought.innerHTML = `
+                <div class="thought-time">${time}</div>
+                <div class="thought-content">💭 Decision: ${action}</div>
+                <div class="thought-confidence">Confidence: ${(confidence * 100).toFixed(1)}%</div>
+            `;
+
+            stream.insertBefore(thought, stream.firstChild);
+
+            // Keep only last 10 thoughts
+            while (stream.children.length > 10) {
+                stream.removeChild(stream.lastChild);
+            }
+
+            thoughtCount++;
+        }
+
+        // Memory System
+        function addMemory(type, content, importance) {
+            const memorySystem = document.getElementById('memorySystem');
+            const memory = document.createElement('div');
+            memory.className = 'memory-item';
+
+            memory.innerHTML = `
+                <div class="memory-type">${type.toUpperCase()}</div>
+                <div class="memory-content">${content}</div>
+                <div class="memory-importance">Importance: ${(importance * 100).toFixed(0)}%</div>
+            `;
+
+            memorySystem.insertBefore(memory, memorySystem.firstChild);
+
+            // Keep only last 8 memories
+            while (memorySystem.children.length > 8) {
+                memorySystem.removeChild(memorySystem.lastChild);
+            }
+        }
+
+        // Learning Panel
+        function updateLearning(metrics) {
+            const panel = document.getElementById('learningPanel');
+            panel.innerHTML = `
+                <div class="learning-metric">
+                    <span class="metric-label">Thought Cycles:</span>
+                    <span class="metric-value">${metrics.thoughtCycles}</span>
+                </div>
+                <div class="learning-metric">
+                    <span class="metric-label">Learning Events:</span>
+                    <span class="metric-value">${metrics.learningEvents}</span>
+                </div>
+                <div class="learning-metric">
+                    <span class="metric-label">Win Rate:</span>
+                    <span class="metric-value">${metrics.winRate}%</span>
+                </div>
+                <div class="learning-metric">
+                    <span class="metric-label">Avg Reward:</span>
+                    <span class="metric-value">${metrics.avgReward.toFixed(2)}</span>
+                </div>
+                <div class="learning-metric">
+                    <span class="metric-label">Exploration Rate:</span>
+                    <span class="metric-value">${metrics.epsilon}%</span>
+                </div>
+                <div class="learning-metric">
+                    <span class="metric-label">Q-Table Size:</span>
+                    <span class="metric-value">${metrics.qTableSize}</span>
+                </div>
+                <div class="learning-metric">
+                    <span class="metric-label">Generation:</span>
+                    <span class="metric-value">${metrics.generation}</span>
+                </div>
+                <div class="learning-metric">
+                    <span class="metric-label">Best Fitness:</span>
+                    <span class="metric-value">${metrics.bestFitness}</span>
+                </div>
+
+                <div style="margin-top: 15px;">
+                    <div class="metric-label">Learning Progress:</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${metrics.progress}%"></div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Simulate AI activity
+        const actions = ['ENTER', 'WAIT', 'EXIT', 'OBSERVE', 'ANALYZE'];
+        const memoryTypes = ['SHORT-TERM', 'LONG-TERM', 'SEMANTIC'];
+        const memoryContents = [
+            'Detected bullish trend',
+            'High volatility period',
+            'Successful trade pattern',
+            'Risk threshold exceeded',
+            'Optimal entry point identified'
+        ];
+
+        function simulateAIActivity() {
+            // Random thought
+            if (Math.random() > 0.3) {
+                const action = actions[Math.floor(Math.random() * actions.length)];
+                const confidence = Math.random() * 0.4 + 0.6;
+                addThought(action, confidence);
+            }
+
+            // Random memory
+            if (Math.random() > 0.7) {
+                const type = memoryTypes[Math.floor(Math.random() * memoryTypes.length)];
+                const content = memoryContents[Math.floor(Math.random() * memoryContents.length)];
+                const importance = Math.random() * 0.5 + 0.5;
+                addMemory(type, content, importance);
+            }
+
+            // Update learning metrics
+            const metrics = {
+                thoughtCycles: thoughtCount,
+                learningEvents: Math.floor(thoughtCount * 0.7),
+                winRate: (55 + Math.random() * 10).toFixed(1),
+                avgReward: Math.random() * 10 + 5,
+                epsilon: (10 - thoughtCount * 0.01).toFixed(1),
+                qTableSize: Math.floor(thoughtCount * 2.5),
+                generation: Math.floor(thoughtCount / 10),
+                bestFitness: (Math.random() * 0.5 + 0.5).toFixed(4),
+                progress: Math.min(thoughtCount / 2, 100)
+            };
+
+            updateLearning(metrics);
+        }
+
+        // Run simulation
+        setInterval(simulateAIActivity, 2000);
+
+        // Initial load
+        simulateAIActivity();
+        animateNeuralActivity();
+    </script>
+</body>
+</html>

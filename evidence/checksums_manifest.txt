@@ -1,0 +1,12 @@
+# TREASURE ENGINE EPOCH-12 CHECKSUMS MANIFEST
+# Date: 2026-02-10T12:46:00Z
+# Purpose: File integrity verification
+
+53d06499e27355f54b5ad0f4139dc2d19dc47190ed1022ba376df5e16e3fc930  package.json
+96a77b7028f0849baae277b08bca7bfa5a3969d097cd3632e268542fd86516d7  spec/ssot.json
+f5c1bd5e8e5321bce7accaac57a334aba4aecb2e2dab5e6c70f14502a4191fbb  core/persist/db.mjs
+1216043969e821153dc1a503f5227d6f741004768ac133fbe767f1f830168ff3  core/persist/migrations/0001_init.sql
+3a1592e5dc1d4f043b39b7263c07d9b0238fd72460ae25c4096313548d23a3f4  core/persist/repo_state.mjs
+7fde48b2ffdb2605011f3d286d212e053ae1d0417597c9bb39e131e891b3c63b  scripts/verify/persist_idempotency.mjs
+f16bd4726c77a528f89c0859b0be42618d99288fa5e7f57fdded761f8362e297  scripts/verify/config_check.mjs
+5a3423261ea75be96d7bc89e710c5a651e4806ddd49fe6124f53b8323854ed71  spec/config.schema.json

@@ -1,0 +1,21 @@
+diff --git a/.gitignore b/.gitignore
+index 4af7318..a6e2097 100644
+--- a/.gitignore
++++ b/.gitignore
+@@ -3,6 +3,8 @@ node_modules/
+ npm-debug.log*
+ _extract_tmp*/
+ FINAL_VALIDATED.zip
++*.zip
++*.tar.gz
+ *.tsbuildinfo
+ .DS_Store
+ 
+diff --git a/artifacts/incoming/TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip b/artifacts/incoming/TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip
+deleted file mode 100644
+index a58a0a5..0000000
+Binary files a/artifacts/incoming/TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip and /dev/null differ
+diff --git a/reports/EVIDENCE_PACK.tar.gz b/reports/EVIDENCE_PACK.tar.gz
+deleted file mode 100644
+index bd13cf7..0000000
+Binary files a/reports/EVIDENCE_PACK.tar.gz and /dev/null differ

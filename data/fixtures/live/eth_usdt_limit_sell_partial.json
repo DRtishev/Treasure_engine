@@ -1,0 +1,61 @@
+{
+  "fixture_id": "eth_usdt_limit_sell_partial",
+  "description": "ETH/USDT limit sell with partial fill",
+  "scenario": "PARTIAL_FILL",
+  "request": {
+    "intent": {
+      "side": "SELL",
+      "size": 1.0,
+      "price": 3000,
+      "type": "LIMIT",
+      "symbol": "ETH/USDT"
+    },
+    "ctx": {
+      "run_id": "fixture_run_002",
+      "hack_id": "HACK_TEST_02",
+      "mode": "dryrun",
+      "bar_idx": 1,
+      "order_seq": 0
+    }
+  },
+  "response": {
+    "placeOrder": {
+      "order_id": "fixture_run_002_HACK_TEST_02_dryrun_1_0",
+      "status": "PENDING",
+      "timestamp": 1700000010000
+    },
+    "pollOrder": {
+      "status": "PARTIALLY_FILLED",
+      "filled": false,
+      "filled_qty": 0.6,
+      "remaining_qty": 0.4,
+      "fills": [
+        {
+          "fill_id": "fill_002_1",
+          "price": 3000,
+          "qty": 0.6,
+          "fee": 1.8,
+          "timestamp": 1700000010500
+        }
+      ],
+      "timestamp": 1700000010500
+    }
+  },
+  "expected": {
+    "order_id": "fixture_run_002_HACK_TEST_02_dryrun_1_0",
+    "status": "PARTIALLY_FILLED",
+    "fills": [
+      {
+        "fill_id": "fill_002_1",
+        "price": 3000,
+        "qty": 0.6,
+        "fee": 1.8,
+        "timestamp": 1700000010500
+      }
+    ]
+  },
+  "reconciliation": {
+    "should_pass": true,
+    "expected_mismatches": 0
+  }
+}

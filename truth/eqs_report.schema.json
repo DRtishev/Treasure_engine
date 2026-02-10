@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "eqs_report.schema.json",
+  "title": "Execution Quality Score Report",
+  "type": "object",
+  "required": ["version", "run_id", "timestamp_utc", "source", "mode", "aggregation", "eqs_score", "inputs", "thresholds"],
+  "properties": {
+    "version": {"type": "string"},
+    "run_id": {"type": "string", "minLength": 8},
+    "timestamp_utc": {"type": "string", "format": "date-time"},
+    "source": {"type": "string", "enum": ["SYNTHETIC", "REAL"]},
+    "mode": {"type": "string", "enum": ["hostile"]},
+    "aggregation": {"type": "string", "enum": ["worst-case", "average", "p90"]},
+    "eqs_score": {"type": "number", "minimum": 0, "maximum": 1},
+    "inputs": {
+      "type": "object",
+      "required": ["fill_ratio", "partial_fill_rate", "reject_ratio", "slippage_p99_bps", "rtt_p99_ms", "reconnect_rate"],
+      "properties": {
+        "fill_ratio": {"type": "number"},
+        "partial_fill_rate": {"type": "number"},
+        "reject_ratio": {"type": "number"},
+        "slippage_p99_bps": {"type": "number"},
+        "rtt_p99_ms": {"type": "integer"},
+        "reconnect_rate": {"type": "number"}
+      }
+    },
+    "thresholds": {
+      "type": "object",
+      "properties": {
+        "max_reject_ratio": {"type": "number"},
+        "max_slippage_p99_bps": {"type": "number"},
+        "max_rtt_p99_ms": {"type": "integer"}
+      }
+    }
+  },
+  "additionalProperties": false
+}

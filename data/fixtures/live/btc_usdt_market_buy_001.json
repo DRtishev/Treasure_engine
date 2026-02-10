@@ -1,0 +1,64 @@
+{
+  "fixture_id": "btc_usdt_market_buy_001",
+  "description": "Simple BTC/USDT market buy order with instant fill",
+  "scenario": "INSTANT_FILL",
+  "request": {
+    "intent": {
+      "side": "BUY",
+      "size": 0.001,
+      "price": 50000,
+      "type": "MARKET",
+      "symbol": "BTC/USDT"
+    },
+    "ctx": {
+      "run_id": "fixture_run_001",
+      "hack_id": "HACK_TEST_01",
+      "mode": "dryrun",
+      "bar_idx": 0,
+      "order_seq": 0
+    }
+  },
+  "response": {
+    "placeOrder": {
+      "order_id": "fixture_run_001_HACK_TEST_01_dryrun_0_0",
+      "status": "PENDING",
+      "timestamp": 1700000000000
+    },
+    "pollOrder": {
+      "status": "FILLED",
+      "filled": true,
+      "filled_price": 50010,
+      "filled_qty": 0.001,
+      "fee": 0.05001,
+      "fee_asset": "USDT",
+      "slippage_bps": 2,
+      "timestamp": 1700000000100,
+      "fills": [
+        {
+          "fill_id": "fill_001",
+          "price": 50010,
+          "qty": 0.001,
+          "fee": 0.05001,
+          "timestamp": 1700000000100
+        }
+      ]
+    }
+  },
+  "expected": {
+    "order_id": "fixture_run_001_HACK_TEST_01_dryrun_0_0",
+    "status": "FILLED",
+    "fills": [
+      {
+        "fill_id": "fill_001",
+        "price": 50010,
+        "qty": 0.001,
+        "fee": 0.05001,
+        "timestamp": 1700000000100
+      }
+    ]
+  },
+  "reconciliation": {
+    "should_pass": true,
+    "expected_mismatches": 0
+  }
+}

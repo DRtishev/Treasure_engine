@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "run_id": "3ff4373113369921",
+  "timestamp_utc": "2026-02-10T13:42:55.381Z",
+  "source": "SYNTHETIC",
+  "mode": "hostile",
+  "aggregation": "worst-case",
+  "eqs_score": 0.5014046882594579,
+  "inputs": {
+    "fill_ratio": 0.949364414795449,
+    "partial_fill_rate": 0.8936170212765957,
+    "reject_ratio": 0.07920792079207921,
+    "slippage_p99_bps": 23.362306658116474,
+    "rtt_p99_ms": 1034,
+    "reconnect_rate": 0
+  },
+  "thresholds": {
+    "max_reject_ratio": 0.05,
+    "max_slippage_p99_bps": 15,
+    "max_rtt_p99_ms": 800
+  }
+}
