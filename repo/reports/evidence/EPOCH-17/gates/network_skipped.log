@@ -1,0 +1,1 @@
+Network-sensitive gates skipped by default (ENABLE_NETWORK_TESTS not set): verify:binance, verify:websocket, verify:live

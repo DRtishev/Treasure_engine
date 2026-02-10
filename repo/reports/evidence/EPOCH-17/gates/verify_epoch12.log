@@ -1,0 +1,11 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm error Missing script: "verify:epoch12"
+npm error
+npm error Did you mean one of these?
+npm error   npm run verify:e2 # run the "verify:e2" package script
+npm error   npm run verify:phase2 # run the "verify:phase2" package script
+npm error   npm run verify:epoch06 # run the "verify:epoch06" package script
+npm error
+npm error To see a list of scripts, run:
+npm error   npm run
+npm error A complete log of this run can be found in: /root/.npm/_logs/2026-02-10T17_58_44_488Z-debug-0.log
