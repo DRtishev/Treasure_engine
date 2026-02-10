@@ -1,0 +1,22 @@
+# PREFLIGHT
+date: 2026-02-10T18:09:59+00:00
+$ node -v
+v20.19.6
+$ npm -v
+11.4.2
+$ git --version
+git version 2.43.0
+$ pwd
+/workspace/Treasure_engine
+$ ls -la
+total 544
+drwxr-xr-x  4 root root   4096 Feb 10 17:57 .
+drwxr-xr-x  3 root root   4096 Feb 10 17:56 ..
+drwxr-xr-x  8 root root   4096 Feb 10 18:09 .git
+-rw-r--r--  1 root root 538957 Feb 10 17:56 TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip
+drwxr-xr-x 16 root root   4096 Feb 10 18:09 repo
+$ git status -sb
+## work-clean
+?? repo/
+$ git rev-parse HEAD
+0035d7eb7c628b2aff7d119f572b5cd685a22bfd
