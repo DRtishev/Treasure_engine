@@ -1,0 +1,22 @@
+[
+  {
+    "hack_id": "HACK_A2",
+    "name": "Test Hack A2",
+    "description": "Test hack for paper trading verification"
+  },
+  {
+    "hack_id": "HACK_A3",
+    "name": "Test Hack A3",
+    "description": "Test hack for paper trading verification"
+  },
+  {
+    "hack_id": "HACK_B1",
+    "name": "Test Hack B1",
+    "description": "Test hack for paper trading verification"
+  },
+  {
+    "hack_id": "HACK_B3",
+    "name": "Test Hack B3",
+    "description": "Test hack for paper trading verification"
+  }
+]

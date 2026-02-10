@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "sim_report.schema.json",
+  "title": "Simulation Per-Mode Report",
+  "type": "object",
+  "required": ["version", "run_id", "timestamp_utc", "source", "mode", "hack_id", "summary", "execution"],
+  "properties": {
+    "version": {"type": "string"},
+    "run_id": {"type": "string", "minLength": 8},
+    "timestamp_utc": {"type": "string", "format": "date-time"},
+    "source": {"type": "string", "enum": ["SYNTHETIC", "REAL"]},
+    "disclaimer": {"type": "string"},
+    "seed": {"type": "integer"},
+    "mode": {"type": "string", "enum": ["optimistic", "base", "hostile"]},
+    "hack_id": {"type": "string"},
+    "dataset_ref": {
+      "type": "object",
+      "properties": {
+        "path": {"type": "string"},
+        "sha256": {"type": "string"}
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["trade_count", "trade_count_total", "trade_count_filled", "trade_count_rejected", "expectancy_per_trade", "penalized_expectancy_per_trade", "max_drawdown_pct", "win_rate", "profit_factor", "penalty_breakdown"],
+      "properties": {
+        "trade_count": {"type": "integer", "minimum": 0},
+        "trade_count_total": {"type": "integer", "minimum": 0},
+        "trade_count_filled": {"type": "integer", "minimum": 0},
+        "trade_count_rejected": {"type": "integer", "minimum": 0},
+        "expectancy_per_trade": {"type": "number"},
+        "penalized_expectancy_per_trade": {"type": "number"},
+        "max_drawdown_pct": {"type": "number", "minimum": 0, "maximum": 1},
+        "win_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "profit_factor": {"type": "number", "minimum": 0},
+        "penalty_breakdown": {
+          "type": "object",
+          "required": ["reject", "slippage", "rtt", "maxdd", "reality_gap", "total"],
+          "properties": {
+            "reject": {
+              "type": "object",
+              "required": ["raw", "norm", "weight", "contrib"],
+              "properties": {
+                "raw": {"type": "number"},
+                "norm": {"type": "number"},
+                "weight": {"type": "number"},
+                "contrib": {"type": "number"}
+              }
+            },
+            "slippage": {
+              "type": "object",
+              "required": ["raw", "norm", "weight", "contrib"],
+              "properties": {
+                "raw": {"type": "number"},
+                "norm": {"type": "number"},
+                "weight": {"type": "number"},
+                "contrib": {"type": "number"}
+              }
+            },
+            "rtt": {
+              "type": "object",
+              "required": ["raw", "norm", "weight", "contrib"],
+              "properties": {
+                "raw": {"type": "number"},
+                "norm": {"type": "number"},
+                "weight": {"type": "number"},
+                "contrib": {"type": "number"}
+              }
+            },
+            "maxdd": {
+              "type": "object",
+              "required": ["raw", "norm", "weight", "contrib"],
+              "properties": {
+                "raw": {"type": "number"},
+                "norm": {"type": "number"},
+                "weight": {"type": "number"},
+                "contrib": {"type": "number"}
+              }
+            },
+            "reality_gap": {
+              "type": "object",
+              "required": ["raw", "norm", "weight", "contrib"],
+              "properties": {
+                "raw": {"type": "number"},
+                "norm": {"type": "number"},
+                "weight": {"type": "number"},
+                "contrib": {"type": "number"}
+              }
+            },
+            "total": {"type": "number"}
+          }
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "required": ["fill_ratio", "partial_fill_rate", "reject_ratio", "slippage_p95_bps", "slippage_p99_bps", "rtt_p95_ms", "rtt_p99_ms"],
+      "properties": {
+        "fill_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+        "partial_fill_rate": {"type": "number", "minimum": 0, "maximum": 1},
+        "reject_ratio": {"type": "number", "minimum": 0, "maximum": 1},
+        "slippage_p95_bps": {"type": "number", "minimum": 0},
+        "slippage_p99_bps": {"type": "number", "minimum": 0},
+        "rtt_p95_ms": {"type": "integer", "minimum": 0},
+        "rtt_p99_ms": {"type": "integer", "minimum": 0}
+      }
+    },
+    "hack_data": {"type": "object"},
+    "notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": true
+}

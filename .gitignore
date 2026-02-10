@@ -1,0 +1,16 @@
+node_modules/
+*.log
+npm-debug.log*
+_extract_tmp*/
+FINAL_VALIDATED.zip
+*.zip
+*.tar.gz
+*.tsbuildinfo
+.DS_Store
+
+# runtime logs/caches
+logs/events/*.jsonl
+logs/test_events/*.jsonl
+logs/test_integration/*.jsonl
+
+# keep evidence tracked; keep incoming artifacts tracked for traceability

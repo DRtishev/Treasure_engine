@@ -1,0 +1,104 @@
+{
+  "version": "1.0",
+  "run_id": "ce20ab3361017f91",
+  "timestamp_utc": "2026-02-10T18:32:40.714Z",
+  "source": "SYNTHETIC",
+  "disclaimer": "SYNTHETIC DATA ONLY - NOT REAL MARKET",
+  "seed": 12345,
+  "mode": "hostile",
+  "hack_id": "HACK_B3",
+  "dataset_ref": {
+    "path": "data/synthetic_1000bars_5m.json"
+  },
+  "summary": {
+    "trade_count": 95,
+    "trade_count_total": 101,
+    "trade_count_filled": 95,
+    "trade_count_rejected": 6,
+    "expectancy_per_trade": -0.0005870563037389488,
+    "penalized_expectancy_per_trade": -0.30298918138225567,
+    "max_drawdown_pct": 0.054944479663819254,
+    "win_rate": 0.2736842105263158,
+    "profit_factor": 0.20185623827798724,
+    "penalty_breakdown": {
+      "reject": {
+        "raw": 0.0594059405940594,
+        "norm": 0.188118811881188,
+        "weight": 0.25000000000000006,
+        "contrib": 0.047029702970297016
+      },
+      "slippage": {
+        "raw": 23.362306658116474,
+        "norm": 0.5574871105410982,
+        "weight": 0.20000000000000004,
+        "contrib": 0.11149742210821967
+      },
+      "rtt": {
+        "raw": 1034,
+        "norm": 0.2925,
+        "weight": 0.15000000000000002,
+        "contrib": 0.043875000000000004
+      },
+      "maxdd": {
+        "raw": 0.054944479663819254,
+        "norm": 0,
+        "weight": 0.30000000000000004,
+        "contrib": 0
+      },
+      "reality_gap": {
+        "raw": 1.379018532081701,
+        "norm": 1,
+        "weight": 0.10000000000000002,
+        "contrib": 0.10000000000000002
+      },
+      "total": 0.3024021250785167
+    }
+  },
+  "execution": {
+    "fill_ratio": 0.949364414795449,
+    "partial_fill_rate": 0.8631578947368421,
+    "reject_ratio": 0.0594059405940594,
+    "slippage_p95_bps": 17.15254926490043,
+    "slippage_p99_bps": 23.362306658116474,
+    "rtt_p95_ms": 785,
+    "rtt_p99_ms": 1034
+  },
+  "quality_filter": {
+    "total_signals": 101,
+    "quality_filtered": 0,
+    "passed": 101,
+    "pass_rate": 1,
+    "avg_score": 0.39083276855626586,
+    "min_score": 0.2819546190072052,
+    "max_score": 0.5185959086608872
+  },
+  "execution_policy": {
+    "total": 101,
+    "avg_ttl_ms": 6000,
+    "avg_tip_bps": 2.07,
+    "avg_competition": 0.414,
+    "max_ttl_ms": 6000,
+    "max_tip_bps": 2.93,
+    "expired_count": 0
+  },
+  "risk_governor": {
+    "kill_switch_active": false,
+    "kill_switch_reason": null,
+    "circuit_breaker_active": false,
+    "final_equity_usd": 9999.944229651148,
+    "peak_equity_usd": 10000.000682716247,
+    "final_drawdown_pct": 0.000005645306124490692,
+    "daily_pnl_usd": -0.05577034885520014,
+    "daily_trade_count": 95,
+    "blocked_trades": 0,
+    "caps": {
+      "max_position_size_usd": 1000,
+      "max_daily_loss_usd": 100,
+      "max_drawdown_pct": 0.05,
+      "kill_switch_threshold": 0.1,
+      "remaining_daily_loss_budget": 99.9442296511448
+    }
+  },
+  "hack_data": {},
+  "notes": []
+}

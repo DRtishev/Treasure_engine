@@ -1,0 +1,7 @@
+REASON: neuro-mev-source missing truth/*.schema.json files
+ACTION: Copied truth/ directory from treasure-sandbox
+FILES:
+court_report.schema.json
+eqs_report.schema.json
+sim_report.schema.json
+PATCH: Added dataset/ from epoch04-bridge

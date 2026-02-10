@@ -1,0 +1,11 @@
+{
+  "reconciliation_status": "PASS",
+  "summary": {
+    "orders_checked": 1,
+    "fills_checked": 1,
+    "mismatches_found": 0
+  },
+  "mismatches": [],
+  "mismatch_codes": {},
+  "timestamp": 1770730977505
+}

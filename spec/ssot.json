@@ -1,0 +1,64 @@
+{
+  "version": "1.0",
+  "fees": {
+    "maker_fee": 0.0001,
+    "taker_fee": 0.0005
+  },
+  "thresholds": {
+    "min_penalized_expectancy": 0.0,
+    "max_penalized_maxdd_pct": 0.18,
+    "max_reject_ratio": 0.05,
+    "max_slippage_p99_bps": 15,
+    "max_rtt_p99_ms": 800,
+    "reality_gap_warn": 0.5,
+    "reality_gap_cliff": 0.85
+  },
+  "penalty_weights": {
+    "reject_ratio": 0.25,
+    "slippage_p99_bps": 0.20,
+    "rtt_p99_ms": 0.15,
+    "max_drawdown_pct": 0.30,
+    "reality_gap": 0.10
+  },
+  "formulas": {
+    "quality_score": "weighted_norm(atr_pct, vol_z, range_exp, trendiness, spread_proxy)",
+    "eqs_score": "0.3*fill + 0.18*(1-partial) + 0.18*(1-reject) + 0.14*(1-slip/20) + 0.14*(1-rtt/1000) + 0.06",
+    "toxicity_score": "weighted_norm(reject_ratio, slippage_p99, rtt_p99, spread_proxy)",
+    "penalized_expectancy": "expectancy - penalty_total"
+  },
+  "execution_policy": {
+    "base_order_size_usd": 1000,
+    "default_ttl_ms": 5000,
+    "max_ttl_ms": 30000,
+    "tip_strategy": "adaptive",
+    "min_tip_bps": 0,
+    "max_tip_bps": 5,
+    "competition_threshold": 0.7
+  },
+  "risk_governor": {
+    "initial_equity_usd": 10000,
+    "max_position_size_usd": 1000,
+    "max_daily_loss_usd": 100,
+    "max_drawdown_from_peak_pct": 0.05,
+    "kill_switch_threshold": 0.10,
+    "circuit_breaker_cooldown_minutes": 60,
+    "caps_reset_schedule": "daily_00_utc"
+  },
+  "quality_filter": {
+    "min_quality_score": 0.25,
+    "min_spread_bps": 0.1,
+    "max_spread_bps": 100,
+    "min_volume_usd": 10000,
+    "min_atr_pct": 0.0001
+  },
+  "truth_layer": {
+    "reality_gap_halt": 0.85,
+    "penalized_expectancy_min": 0.0,
+    "max_drawdown_halt_pct": 0.20,
+    "max_daily_loss_halt_usd": 200,
+    "data_staleness_halt_ms": 5000,
+    "min_confidence_allow": 0.75,
+    "cooldown_on_degraded_s": 300,
+    "reduce_risk_on_degraded_pct": 50
+  }
+}

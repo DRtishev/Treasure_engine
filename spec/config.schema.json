@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://treasure-engine.io/schemas/config.schema.json",
+  "title": "Treasure Engine Configuration Schema",
+  "description": "Validation schema for Treasure Engine configuration (EPOCH-12)",
+  "type": "object",
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": ["sim", "paper", "live"],
+      "description": "Execution mode"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^run_[a-zA-Z0-9_-]+$",
+      "description": "Unique run identifier"
+    },
+    "dataset": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Path to dataset file"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "Dataset SHA256 hash"
+        }
+      }
+    },
+    "ssot": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "description": "Path to SSOT file"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SSOT SHA256 hash"
+        }
+      }
+    },
+    "persistence": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Enable persistence layer"
+        },
+        "db_path": {
+          "type": "string",
+          "description": "Path to SQLite database"
+        }
+      }
+    },
+    "event_log": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "path": {
+          "type": "string"
+        },
+        "dual_sink": {
+          "type": "boolean",
+          "description": "Write to both JSONL and DB"
+        }
+      }
+    },
+    "execution": {
+      "type": "object",
+      "properties": {
+        "adapter": {
+          "type": "string",
+          "enum": ["PaperAdapter", "LiveAdapter", "MockExchange"],
+          "description": "Execution adapter to use"
+        }
+      }
+    },
+    "risk": {
+      "type": "object",
+      "properties": {
+        "max_position_size_usd": {
+          "type": "number",
+          "minimum": 0
+        },
+        "max_daily_loss_pct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      }
+    }
+  },
+  "required": ["mode"]
+}

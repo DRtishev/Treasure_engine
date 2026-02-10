@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEURO-MEV Master Control Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0e27;
+            color: #00ff41;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #00ff41;
+            padding-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 2em;
+            color: #00ff41;
+            text-shadow: 0 0 10px #00ff41;
+            margin-bottom: 10px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .status-running {
+            background: #00ff41;
+            color: #0a0e27;
+        }
+
+        .status-halted {
+            background: #ff0000;
+            color: #ffffff;
+        }
+
+        .status-degraded {
+            background: #ffaa00;
+            color: #0a0e27;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .panel {
+            background: #151b3b;
+            border: 1px solid #00ff41;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.3);
+        }
+
+        .panel-header {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+            color: #00ff41;
+            border-bottom: 1px solid #00ff41;
+            padding-bottom: 10px;
+        }
+
+        .metric-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #1a2351;
+        }
+
+        .metric-label {
+            color: #7aa2ff;
+        }
+
+        .metric-value {
+            font-weight: bold;
+            color: #00ff41;
+        }
+
+        .metric-value.warning {
+            color: #ffaa00;
+        }
+
+        .metric-value.critical {
+            color: #ff0000;
+        }
+
+        .mode-indicator {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .mode-off {
+            background: #333;
+            color: #999;
+        }
+
+        .mode-paper {
+            background: #0066cc;
+            color: #fff;
+        }
+
+        .mode-live-small {
+            background: #ffaa00;
+            color: #0a0e27;
+        }
+
+        .mode-live {
+            background: #00ff41;
+            color: #0a0e27;
+        }
+
+        .mode-diagnostic {
+            background: #7aa2ff;
+            color: #0a0e27;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #00ff41;
+            background: #0a0e27;
+            color: #00ff41;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: #00ff41;
+            color: #0a0e27;
+            box-shadow: 0 0 10px #00ff41;
+        }
+
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .strategy-list {
+            margin-top: 10px;
+        }
+
+        .strategy-item {
+            background: #1a2351;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            border-left: 3px solid #00ff41;
+        }
+
+        .strategy-item.disabled {
+            border-left-color: #666;
+            opacity: 0.6;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #1a2351;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 5px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff41, #7aa2ff);
+            transition: width 0.3s;
+        }
+
+        .alert-box {
+            background: #ff00001a;
+            border: 1px solid #ff0000;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 10px 0;
+            color: #ff6666;
+        }
+
+        .timestamp {
+            text-align: center;
+            color: #7aa2ff;
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+
+        .fsm-diagram {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9em;
+        }
+
+        .fsm-state {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 5px;
+            border: 2px solid #7aa2ff;
+            border-radius: 10px;
+            background: #1a2351;
+        }
+
+        .fsm-state.active {
+            border-color: #00ff41;
+            background: #00ff4120;
+            box-shadow: 0 0 15px #00ff41;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .pulsing {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎛️ NEURO-MEV MASTER CONTROL DASHBOARD</h1>
+            <div>
+                <span class="status-badge status-running" id="systemStatus">● RUNNING</span>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <!-- Truth Layer Panel -->
+            <div class="panel">
+                <div class="panel-header">⚖️ TRUTH LAYER</div>
+                <div class="metric-row">
+                    <span class="metric-label">Verdict:</span>
+                    <span class="metric-value" id="truthVerdict">ALLOW</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Mode:</span>
+                    <span class="metric-value" id="truthMode">PAPER</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Confidence:</span>
+                    <span class="metric-value" id="truthConfidence">0.95</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Reason Codes:</span>
+                    <span class="metric-value" id="truthReasons">ALLOW_OK</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="confidenceBar" style="width: 95%"></div>
+                </div>
+            </div>
+
+            <!-- Safety Monitor Panel -->
+            <div class="panel">
+                <div class="panel-header">🛡️ SAFETY MONITOR</div>
+                <div class="metric-row">
+                    <span class="metric-label">Safety Score:</span>
+                    <span class="metric-value" id="safetyScore">95/100</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Position Utilization:</span>
+                    <span class="metric-value" id="positionUtil">25%</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Loss Utilization:</span>
+                    <span class="metric-value" id="lossUtil">10%</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Anomalies:</span>
+                    <span class="metric-value" id="anomalyCount">0</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="safetyBar" style="width: 95%"></div>
+                </div>
+            </div>
+
+            <!-- System State Panel -->
+            <div class="panel">
+                <div class="panel-header">📊 SYSTEM STATE</div>
+                <div class="metric-row">
+                    <span class="metric-label">Kill Switch:</span>
+                    <span class="metric-value" id="killSwitch">OFF ✓</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Emergency Stop:</span>
+                    <span class="metric-value" id="emergencyStop">OFF ✓</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Reality Gap:</span>
+                    <span class="metric-value" id="realityGap">15.5%</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Daily PnL:</span>
+                    <span class="metric-value" id="dailyPnl">+$45.50</span>
+                </div>
+            </div>
+
+            <!-- Performance Panel -->
+            <div class="panel">
+                <div class="panel-header">⚡ PERFORMANCE</div>
+                <div class="metric-row">
+                    <span class="metric-label">Avg Response:</span>
+                    <span class="metric-value" id="avgResponse">125ms</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">P95 Response:</span>
+                    <span class="metric-value" id="p95Response">280ms</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Cache Hit Rate:</span>
+                    <span class="metric-value" id="cacheHitRate">78%</span>
+                </div>
+                <div class="metric-row">
+                    <span class="metric-label">Connections:</span>
+                    <span class="metric-value" id="connections">5/10</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- FSM State Diagram -->
+        <div class="panel">
+            <div class="panel-header">🔄 GOVERNANCE FSM</div>
+            <div class="fsm-diagram">
+                <span class="fsm-state" id="state-OFF">OFF</span>
+                →
+                <span class="fsm-state active" id="state-PAPER">PAPER</span>
+                →
+                <span class="fsm-state" id="state-LIVE_SMALL">LIVE_SMALL</span>
+                →
+                <span class="fsm-state" id="state-LIVE">LIVE</span>
+                <br><br>
+                <span class="fsm-state" id="state-DIAGNOSTIC">DIAGNOSTIC</span>
+            </div>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="panel">
+            <div class="panel-header">🎮 CONTROLS</div>
+            <div class="control-buttons">
+                <button onclick="requestMode('PAPER')">📄 PAPER</button>
+                <button onclick="requestMode('LIVE_SMALL')">🔸 LIVE SMALL</button>
+                <button onclick="requestMode('LIVE')">🔥 LIVE</button>
+                <button onclick="activateKillSwitch()" style="border-color: #ff0000; color: #ff0000;">🚨 KILL SWITCH</button>
+            </div>
+            <div class="control-buttons">
+                <button onclick="requestManualReset()">🔄 MANUAL RESET</button>
+                <button onclick="runHealthCheck()">🏥 HEALTH CHECK</button>
+                <button onclick="refreshDashboard()">↻ REFRESH</button>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        <div id="alertsContainer"></div>
+
+        <div class="timestamp pulsing" id="timestamp">
+            Last update: --:--:--
+        </div>
+    </div>
+
+    <script>
+        // Dashboard state
+        let currentMode = 'PAPER';
+        let isHalted = false;
+
+        // Simulated API calls (in production, these would be real HTTP/WebSocket calls)
+        async function requestMode(mode) {
+            console.log(`Requesting mode: ${mode}`);
+            
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 500));
+            
+            if (isHalted && mode !== 'OFF') {
+                showAlert('Mode change blocked: System is HALTED. Manual reset required.', 'critical');
+                return;
+            }
+            
+            currentMode = mode;
+            updateFSMDiagram(mode);
+            showAlert(`Mode changed to ${mode}`, 'success');
+            refreshDashboard();
+        }
+
+        async function activateKillSwitch() {
+            if (!confirm('⚠️ ACTIVATE KILL SWITCH? This will HALT all trading immediately.')) {
+                return;
+            }
+            
+            console.log('Kill switch activated');
+            isHalted = true;
+            
+            document.getElementById('systemStatus').className = 'status-badge status-halted';
+            document.getElementById('systemStatus').textContent = '● HALTED';
+            
+            document.getElementById('killSwitch').textContent = 'ACTIVE 🚨';
+            document.getElementById('killSwitch').classList.add('critical');
+            
+            document.getElementById('truthVerdict').textContent = 'HALT';
+            document.getElementById('truthVerdict').classList.add('critical');
+            
+            document.getElementById('truthMode').textContent = 'OFF';
+            
+            updateFSMDiagram('OFF');
+            showAlert('🚨 KILL SWITCH ACTIVATED - System HALTED', 'critical');
+        }
+
+        async function requestManualReset() {
+            if (!confirm('Perform manual reset to exit HALT state?')) {
+                return;
+            }
+            
+            console.log('Manual reset requested');
+            isHalted = false;
+            
+            document.getElementById('systemStatus').className = 'status-badge status-running';
+            document.getElementById('systemStatus').textContent = '● RUNNING';
+            
+            document.getElementById('killSwitch').textContent = 'OFF ✓';
+            document.getElementById('killSwitch').classList.remove('critical');
+            
+            document.getElementById('truthVerdict').textContent = 'ALLOW';
+            document.getElementById('truthVerdict').classList.remove('critical');
+            
+            showAlert('✓ Manual reset successful - System operational', 'success');
+            refreshDashboard();
+        }
+
+        async function runHealthCheck() {
+            showAlert('Running health check...', 'info');
+            
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            
+            showAlert('✓ Health check completed: All systems operational', 'success');
+        }
+
+        function updateFSMDiagram(activeMode) {
+            // Remove active class from all states
+            document.querySelectorAll('.fsm-state').forEach(el => {
+                el.classList.remove('active');
+            });
+            
+            // Add active class to current mode
+            const activeState = document.getElementById(`state-${activeMode}`);
+            if (activeState) {
+                activeState.classList.add('active');
+            }
+        }
+
+        function showAlert(message, type) {
+            const container = document.getElementById('alertsContainer');
+            const alert = document.createElement('div');
+            alert.className = 'alert-box';
+            alert.textContent = message;
+            
+            container.appendChild(alert);
+            
+            // Remove alert after 5 seconds
+            setTimeout(() => {
+                alert.remove();
+            }, 5000);
+        }
+
+        function refreshDashboard() {
+            // Update timestamp
+            const now = new Date();
+            document.getElementById('timestamp').textContent = 
+                `Last update: ${now.toLocaleTimeString()}`;
+            
+            // In production, this would fetch real data from API
+            // For now, just simulate some updates
+            updateRandomMetrics();
+        }
+
+        function updateRandomMetrics() {
+            // Simulate metric updates
+            const safetyScore = Math.floor(85 + Math.random() * 15);
+            document.getElementById('safetyScore').textContent = `${safetyScore}/100`;
+            document.getElementById('safetyBar').style.width = `${safetyScore}%`;
+            
+            const confidence = (0.85 + Math.random() * 0.15).toFixed(2);
+            document.getElementById('truthConfidence').textContent = confidence;
+            document.getElementById('confidenceBar').style.width = `${confidence * 100}%`;
+            
+            const dailyPnl = (Math.random() * 100 - 20).toFixed(2);
+            const pnlElement = document.getElementById('dailyPnl');
+            pnlElement.textContent = `${dailyPnl >= 0 ? '+' : ''}$${dailyPnl}`;
+            pnlElement.classList.toggle('warning', dailyPnl < 0);
+        }
+
+        // Auto-refresh every 2 seconds
+        setInterval(refreshDashboard, 2000);
+
+        // Initial load
+        refreshDashboard();
+        updateFSMDiagram(currentMode);
+    </script>
+</body>
+</html>

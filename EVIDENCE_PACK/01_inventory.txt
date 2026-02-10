@@ -1,0 +1,36 @@
+BASELINE: neuro-mev-source
+
+REASON: Contains EPOCH-09 AI Agent (core/ai/), most complete feature set
+
+Available verify scripts:
+  "scripts": {
+    "verify:truth": "bash scripts/verify/truth.sh",
+    "verify:hacks": "node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json",
+    "verify:court": "node scripts/verify/court_stub.mjs && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json",
+    "verify:all": "npm run verify:hacks && npm run verify:truth || true && npm run verify:court",
+    "sim:data": "node core/sim/bar_generator.mjs",
+    "sim:all": "npm run sim:data && node core/sim/engine.mjs",
+    "court:v1": "node core/court/court_v1.mjs",
+    "court:v2": "node core/court/court_v2.mjs",
+    "verify:sim-schema": "node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports",
+    "verify:eqs-schema": "node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json",
+    "verify:e2": "npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs",
+    "verify:phase2": "node scripts/verify/phase2_verify.mjs",
+    "verify:dataset": "node scripts/verify/dataset_check.mjs",
+    "verify:binance": "node scripts/verify/binance_smoke.mjs",
+    "verify:websocket": "node scripts/verify/websocket_smoke.mjs",
+    "verify:confidence": "node scripts/verify/confidence_score.test.mjs",
+    "verify:agent": "node scripts/verify/agent_smoke.mjs",
+    "verify:treasure": "node scripts/profit/__tests__/treasure_engine.test.mjs",
+    "verify:paper": "node scripts/verify/paper_e2e.mjs",
+    "verify:live": "node scripts/verify/live_adapter_smoke.mjs",
+    "verify:adversarial": "node scripts/verify/adversarial_safety.mjs",
+    "verify:godtier": "node scripts/verify/godtier_integration.mjs",
+    "verify:truth-layer": "node scripts/verify/truth_layer_check.mjs",
+    "verify:epoch06": "npm run verify:e2 && npm run verify:truth-layer",
+    "verify:epoch07": "node scripts/verify/epoch07_integration.mjs",
+    "verify:epoch08": "node scripts/verify/epoch08_integration.mjs",
+    "verify:epoch09": "node scripts/verify/epoch09_integration.mjs",
+    "verify:epochX": "node scripts/verify/epochX_integration.mjs",
+    "verify:reality-gap": "node scripts/verify/verify_reality_gap.mjs",
+    "verify:all-data": "npm run verify:binance && npm run verify:websocket && npm run verify:confidence && npm run verify:agent",

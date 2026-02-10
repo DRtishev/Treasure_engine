@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "court_report.schema.json",
+  "title": "Court Report",
+  "type": "object",
+  "required": ["version", "run_id", "timestamp_utc", "ssot_ref", "hacks", "summary"],
+  "properties": {
+    "version": { "type": "string" },
+    "run_id": { "type": "string", "minLength": 8 },
+    "timestamp_utc": { "type": "string", "format": "date-time" },
+    "ssot_ref": {
+      "type": "object",
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": { "type": "string" },
+        "sha256": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "hacks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "decision", "reasons", "evidence"],
+        "properties": {
+          "id": { "type": "string" },
+          "decision": { "type": "string", "enum": ["ALLOWED", "BLOCKED", "NEEDS_DATA", "DISABLED"] },
+          "reasons": { "type": "array", "items": { "type": "string" } },
+          "evidence": {
+            "type": "object",
+            "properties": {
+              "reality_gap": { "type": "number" },
+              "base_expectancy": { "type": "number" },
+              "base_expectancy_raw": { "type": "number" },
+              "base_penalized_expectancy": { "type": "number" },
+              "penalty_total": { "type": "number" },
+              "hostile_max_dd_pct": { "type": "number" },
+              "hostile_reject_ratio": { "type": "number" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["total", "allowed", "blocked", "disabled", "needs_data"],
+      "properties": {
+        "total": { "type": "integer" },
+        "allowed": { "type": "integer" },
+        "blocked": { "type": "integer" },
+        "disabled": { "type": "integer" },
+        "needs_data": { "type": "integer" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

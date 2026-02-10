@@ -1,0 +1,11 @@
+# TREASURE ENGINE EPOCH-13 CHECKSUMS MANIFEST
+# Date: 2026-02-10T13:10:00Z
+# Purpose: File integrity verification
+9ef08c0e579e3021fcf00a591f64671f5799168d0991dc9429a3046ae8b53451  package.json
+347592da2563f583ebc4f2bfadddce5d523b63356c191cd7215156dd6c452d35  core/sys/clock.mjs
+0dcc42d2989af61473e8a69fae1b694bcfc4f5d373020b666056ed60392777c6  core/sys/context.mjs
+9a27da4dc26d54613f18484d88e22ae9a3af09cb131cb67666940caddb036d94  core/sys/rng.mjs
+c42151ccb9ce4c9d35a0378369c5b36f87a5bd906b66e00716bb9f8bac5212fd  core/truth/canonicalize.mjs
+96b76e476fbbef5d65334530e32149936b3cfd2fc363acb11ed8b72a639fcab3  scripts/verify/determinism.mjs
+efd86e5a52a1ec261aef9d207b1b6ac81a0ef0d7b8265844791fbef334da10f6  reports/epoch-13/EPOCH-13_BLOCKERS.md
+b6b21b7f8dea2d598cb3b1213611b54f09c344749d169316bbb209aa7ad2eebe  reports/epoch-13/EPOCH-13_EXECUTION_REPORT.md
