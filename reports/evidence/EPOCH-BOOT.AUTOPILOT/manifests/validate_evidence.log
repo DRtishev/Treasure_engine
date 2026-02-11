@@ -1,0 +1,27 @@
+$ sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt
+reports/evidence/EPOCH-BOOT.AUTOPILOT/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/DIFF.patch: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/GATE_PLAN.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/INVENTORY.txt: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/PIPELINE_IMPROVEMENTS.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/PREFLIGHT.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/SNAPSHOT.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/SUMMARY.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/TREE_DEPTH2.txt: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/VERDICT.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/export_validated_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/export_validated_prewall.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/npm_ci.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_core.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_core_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_integration.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_integration_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_phase2_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_release_governor_autobuild.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_specs.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_specs_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_wall.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_wall_latest.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/zip_check.log: OK

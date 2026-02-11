@@ -1,0 +1,16 @@
+reports/evidence/EPOCH-23/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-23/DIFF.patch: OK
+reports/evidence/EPOCH-23/GATE_PLAN.md: OK
+reports/evidence/EPOCH-23/INVENTORY.txt: OK
+reports/evidence/EPOCH-23/PREFLIGHT.md: OK
+reports/evidence/EPOCH-23/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-23/SUMMARY.md: OK
+reports/evidence/EPOCH-23/VERDICT.md: OK
+reports/evidence/EPOCH-23/gates/export_validated.log: OK
+reports/evidence/EPOCH-23/gates/npm_ci.log: OK
+reports/evidence/EPOCH-23/gates/verify_core.log: OK
+reports/evidence/EPOCH-23/gates/verify_epoch23_run1.log: OK
+reports/evidence/EPOCH-23/gates/verify_epoch23_run2.log: OK
+reports/evidence/EPOCH-23/gates/verify_integration.log: OK
+reports/evidence/EPOCH-23/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-23/gates/verify_wall.log: OK

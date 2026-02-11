@@ -1,0 +1,2 @@
+$ sha256sum -c reports/evidence/EPOCH-23/SHA256SUMS.EXPORT.txt
+FINAL_VALIDATED.zip: OK

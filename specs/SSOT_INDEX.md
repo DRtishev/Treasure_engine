@@ -1,24 +1,36 @@
-# SSOT Index
+# SSOT INDEX
 
-## Authority Order (highest first)
-1. `specs/SSOT_INDEX.md` + `specs/CONSTRAINTS.md` + `specs/DECISIONS.md` (governance and hard rules)
-2. `specs/epochs/EPOCH-XX.md` (epoch implementation contracts)
-3. `SDD_EPOCH_17_21.md` (system design baseline for epoch roadmap)
-4. `TASK_TRACKER.md` (execution status and near-term work queue)
-5. `RUNBOOK.md` / `README.md` (operator commands and troubleshooting)
-6. `docs/*` and `spec/*` schemas/configs (reference details)
+## Canonical Single Sources of Truth
+- `spec/ssot.json` — canonical strategy/system baseline parameters.
+- `spec/hacks.json` — allowed hack registry controlled by validation gate.
+- `spec/config.schema.json` — runtime configuration contract.
+- `truth/*.schema.json` — verification schemas for reports and event artifacts.
+- `specs/CONSTRAINTS.md` — global engineering and QA constraints.
+- `specs/epochs/INDEX.md` + `specs/epochs/EPOCH-*.md` — implementation order and epoch contracts.
 
-## Override Rules
-- Higher authority overrides lower authority.
-- If same-level documents conflict, newest dated entry wins **only after** recording in `specs/DECISIONS.md`.
-- If conflict is unresolved, execution must stop and be recorded in `specs/SPEC_CONFLICTS.md`.
+## Change Control Rules
+1. Propose SSOT changes in the relevant epoch spec first.
+2. Keep one semantic change per commit (atomic discipline).
+3. Any change to `spec/*.json` or `truth/*.schema.json` must be accompanied by gate evidence:
+   - validation command output,
+   - updated evidence summary,
+   - checksum manifest refresh.
+4. Network-dependent validation remains opt-in with `ENABLE_NETWORK_TESTS=1`; default verify path must stay offline.
+5. Determinism-sensitive SSOT changes require repeat runs and multi-seed checks.
 
-## Change Control
-- Any non-trivial spec change requires:
-  1) Decision entry in `specs/DECISIONS.md`.
-  2) Updated epoch gate/evidence docs if gates or artifacts change.
-  3) Evidence run proving no regression (`verify:e2`, `verify:paper`, anti-flake policy).
+## Validation Workflow
+- Baseline:
+  - `npm run verify:specs`
+  - `npm run verify:core`
+  - `npm run verify:phase2`
+  - `npm run verify:integration`
+- Release integrity:
+  - `npm run verify:release-governor`
+  - `node scripts/ops/regen_manifests.mjs`
 
-## Decision Registry
-- Architectural and policy decisions are append-only in `specs/DECISIONS.md`.
-- Decisions are immutable after merge; superseding decisions must reference previous decision IDs.
+## Evidence Requirements for SSOT Changes
+Store under `reports/evidence/<EPOCH-ID>/`:
+- gate logs (`gates/*.log`),
+- `DIFF.patch`,
+- `SHA256SUMS.SOURCE.txt`, `SHA256SUMS.EVIDENCE.txt`, and `SHA256SUMS.EXPORT.txt` (when export exists),
+- `SUMMARY.md` and `VERDICT.md`.

@@ -1,0 +1,17 @@
+$ sha256sum -c reports/evidence/EPOCH-25/SHA256SUMS.EVIDENCE.txt
+reports/evidence/EPOCH-25/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-25/DIFF.patch: OK
+reports/evidence/EPOCH-25/GATE_PLAN.md: OK
+reports/evidence/EPOCH-25/INVENTORY.txt: OK
+reports/evidence/EPOCH-25/PREFLIGHT.md: OK
+reports/evidence/EPOCH-25/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-25/SUMMARY.md: OK
+reports/evidence/EPOCH-25/VERDICT.md: OK
+reports/evidence/EPOCH-25/gates/export_validated.log: OK
+reports/evidence/EPOCH-25/gates/npm_ci.log: OK
+reports/evidence/EPOCH-25/gates/verify_core.log: OK
+reports/evidence/EPOCH-25/gates/verify_epoch25_run1.log: OK
+reports/evidence/EPOCH-25/gates/verify_epoch25_run2.log: OK
+reports/evidence/EPOCH-25/gates/verify_integration.log: OK
+reports/evidence/EPOCH-25/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-25/gates/verify_wall.log: OK
