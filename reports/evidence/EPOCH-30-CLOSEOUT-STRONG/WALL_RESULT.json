@@ -1,0 +1,170 @@
+{
+  "evidence_epoch": "EPOCH-30-CLOSEOUT-STRONG",
+  "evidence_dir": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG",
+  "started_at": "2026-02-11T19:49:12.058Z",
+  "finished_at": "2026-02-11T19:53:12.461Z",
+  "status": "PASS",
+  "required_markers": [
+    "npm run verify:specs",
+    "npm run verify:paper",
+    "npm run verify:e2",
+    "npm run verify:e2:multi",
+    "npm run verify:paper:multi",
+    "npm run verify:phase2",
+    "npm run verify:integration",
+    "npm run verify:core",
+    "npm run verify:clean-clone",
+    "npm run export:validated",
+    "npm run regen:manifests",
+    "sha256sum -c "
+  ],
+  "steps": [
+    {
+      "command": "npm ci",
+      "started_at": "2026-02-11T19:49:12.064Z",
+      "finished_at": "2026-02-11T19:49:16.041Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/01_npm_ci.log"
+    },
+    {
+      "command": "npm run verify:specs",
+      "started_at": "2026-02-11T19:49:16.043Z",
+      "finished_at": "2026-02-11T19:49:18.474Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/02_npm_run_verify_specs.log"
+    },
+    {
+      "command": "npm run verify:specs",
+      "started_at": "2026-02-11T19:49:18.475Z",
+      "finished_at": "2026-02-11T19:49:21.022Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/03_npm_run_verify_specs.log"
+    },
+    {
+      "command": "npm run verify:paper",
+      "started_at": "2026-02-11T19:49:21.023Z",
+      "finished_at": "2026-02-11T19:49:23.979Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/04_npm_run_verify_paper.log"
+    },
+    {
+      "command": "npm run verify:paper",
+      "started_at": "2026-02-11T19:49:23.980Z",
+      "finished_at": "2026-02-11T19:49:26.950Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/05_npm_run_verify_paper.log"
+    },
+    {
+      "command": "npm run verify:e2",
+      "started_at": "2026-02-11T19:49:26.951Z",
+      "finished_at": "2026-02-11T19:49:33.326Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/06_npm_run_verify_e2.log"
+    },
+    {
+      "command": "npm run verify:e2",
+      "started_at": "2026-02-11T19:49:33.327Z",
+      "finished_at": "2026-02-11T19:49:40.273Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/07_npm_run_verify_e2.log"
+    },
+    {
+      "command": "npm run verify:e2:multi",
+      "started_at": "2026-02-11T19:49:40.275Z",
+      "finished_at": "2026-02-11T19:50:03.381Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/08_npm_run_verify_e2_multi.log"
+    },
+    {
+      "command": "npm run verify:paper:multi",
+      "started_at": "2026-02-11T19:50:03.382Z",
+      "finished_at": "2026-02-11T19:50:08.807Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/09_npm_run_verify_paper_multi.log"
+    },
+    {
+      "command": "npm run verify:phase2",
+      "started_at": "2026-02-11T19:50:08.808Z",
+      "finished_at": "2026-02-11T19:50:15.896Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/10_npm_run_verify_phase2.log"
+    },
+    {
+      "command": "npm run verify:integration",
+      "started_at": "2026-02-11T19:50:15.898Z",
+      "finished_at": "2026-02-11T19:50:18.331Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/11_npm_run_verify_integration.log"
+    },
+    {
+      "command": "npm run verify:core",
+      "started_at": "2026-02-11T19:50:18.332Z",
+      "finished_at": "2026-02-11T19:50:45.871Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/12_npm_run_verify_core.log"
+    },
+    {
+      "command": "npm run verify:epoch27",
+      "started_at": "2026-02-11T19:50:45.872Z",
+      "finished_at": "2026-02-11T19:50:48.638Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/13_npm_run_verify_epoch27.log"
+    },
+    {
+      "command": "npm run verify:epoch28",
+      "started_at": "2026-02-11T19:50:48.639Z",
+      "finished_at": "2026-02-11T19:50:51.226Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/14_npm_run_verify_epoch28.log"
+    },
+    {
+      "command": "npm run verify:epoch29",
+      "started_at": "2026-02-11T19:50:51.228Z",
+      "finished_at": "2026-02-11T19:50:53.849Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/15_npm_run_verify_epoch29.log"
+    },
+    {
+      "command": "npm run verify:clean-clone",
+      "started_at": "2026-02-11T19:50:53.851Z",
+      "finished_at": "2026-02-11T19:52:59.897Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/16_npm_run_verify_clean_clone.log"
+    },
+    {
+      "command": "npm run export:validated",
+      "started_at": "2026-02-11T19:52:59.898Z",
+      "finished_at": "2026-02-11T19:53:02.911Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/17_npm_run_export_validated.log"
+    },
+    {
+      "command": "npm run regen:manifests",
+      "started_at": "2026-02-11T19:53:02.912Z",
+      "finished_at": "2026-02-11T19:53:06.332Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/18_npm_run_regen_manifests.log"
+    },
+    {
+      "command": "sha256sum -c reports/evidence/EPOCH-30-CLOSEOUT-STRONG/SHA256SUMS.SOURCE.txt",
+      "started_at": "2026-02-11T19:53:06.333Z",
+      "finished_at": "2026-02-11T19:53:08.427Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/19_sha256sum_c_reports_evidence_EPOCH_30_CLOSEOUT_STRONG_SHA256SUMS_SOURCE_txt.log"
+    },
+    {
+      "command": "sha256sum -c reports/evidence/EPOCH-30-CLOSEOUT-STRONG/SHA256SUMS.EVIDENCE.txt",
+      "started_at": "2026-02-11T19:53:08.429Z",
+      "finished_at": "2026-02-11T19:53:10.374Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/20_sha256sum_c_reports_evidence_EPOCH_30_CLOSEOUT_STRONG_SHA256SUMS_EVIDENCE_txt.log"
+    },
+    {
+      "command": "sha256sum -c reports/evidence/EPOCH-30-CLOSEOUT-STRONG/SHA256SUMS.EXPORT.txt",
+      "started_at": "2026-02-11T19:53:10.375Z",
+      "finished_at": "2026-02-11T19:53:12.460Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/gates/21_sha256sum_c_reports_evidence_EPOCH_30_CLOSEOUT_STRONG_SHA256SUMS_EXPORT_txt.log"
+    }
+  ]
+}
