@@ -45,9 +45,10 @@ function run(stepId, cmd) {
 }
 
 run(1, 'npm ci');
-run(2, 'SKIP_CLEAN_CLONE_IN_WALL=1 SKIP_SHA_CHECKS_IN_WALL=1 npm run verify:wall');
-run(3, 'npm run verify:release-governor');
+run(2, 'npm run export:validated');
+run(3, 'SKIP_CLEAN_CLONE_IN_WALL=1 SKIP_SHA_CHECKS_IN_WALL=1 npm run verify:wall');
 run(4, 'npm run verify:release-governor');
+run(5, 'npm run verify:release-governor');
 
 const markerPath = path.join(cleanDir, 'CLEAN_CLONE.OK');
 fs.writeFileSync(markerPath, `PASS EVIDENCE_EPOCH=${evidenceEpoch}\n`);

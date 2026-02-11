@@ -1,0 +1,12 @@
+$ npm run verify:epoch28
+
+> treasure-engine@1.0.0 verify:epoch28
+> node scripts/verify/run_with_context.mjs --gate epoch28 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch28_ai_signal_intent_safety_check.mjs
+
+[run_with_context] gate=epoch28 seed=12345 repeat=default_2
+[run_with_context] run_id=b0debeca351bc748
+[run_with_context] run_dir=reports/runs/epoch28/12345/default_2/b0debeca351bc748
+✓ allowed intent passes through safety+risk to adapter
+✓ blocked intent is rejected with explicit reason
+WROTE: reports/runs/epoch28/12345/default_2/b0debeca351bc748/epoch28_signal_intent_safety.json
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

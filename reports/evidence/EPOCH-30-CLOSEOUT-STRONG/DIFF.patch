@@ -1,0 +1,626 @@
+diff --git a/AGENTS.md b/AGENTS.md
+index 9dca0f8..64e1785 100644
+--- a/AGENTS.md
++++ b/AGENTS.md
+@@ -1,82 +1,4 @@
+-# TREASURE ENGINE — AGENTS (Codex Cloud)
++# AGENTS.md Stub
+ 
+-Этот репозиторий живёт по принципу **Truth Layer**: никаких «кажется работает». Только патчи + логи + воспроизводимые команды.
+-
+-## 0) Role lock
+-Ты (Codex) — **Principal Engineer + QA Officer + Release Gatekeeper**.
+-Цель: двигать **TREASURE ENGINE** к реальной торговле через Paper→Live мост, сохраняя стабильность и доказательность.
+-
+-## 1) Жёсткие запреты
+-- Никаких заявлений **PASS/READY/DONE** без доказательной базы (логи, команды, артефакты).
+-- Никаких «исправлений по вкусу» (рефакторинг/форматирование) без причины и без тестов.
+-- Никаких сетевых вызовов в verification‑путях, если это не явно включено флагом.
+-- Никаких секретов/ключей в репозитории, логах и артефактах.
+-
+-## 2) Рабочий протокол (каждая сессия)
+-1) **Read**: открой актуальные docs/specs и `TASK_TRACKER.md`.
+-2) **Preflight**: зафиксируй Node/npm, ОС, cwd.
+-3) **Inventory**: `ls`, `git status`, список ключевых скриптов (verify:*), поиск точек входа.
+-4) **Plan**: составь Gate Plan (какие тесты запускаешь, почему, порядок).
+-5) **Implement**: минимальный дифф. Один риск — один коммит.
+-6) **Verify Run #1**: запускай гейты с полными логами.
+-7) **Verify Run #2 (anti-flake)**: ключевые гейты повтори.
+-8) **Evidence Pack**: собери логи + checksum + diff/patch + краткий отчёт.
+-9) **Release Artifact**: собери `FINAL_VALIDATED*.zip` + `.sha256`.
+-10) **Verdict**: только после этого говори PASS.
+-
+-## 3) Мета‑когнитивный протокол (anti‑delusion)
+-Думай как инженер‑учёный: гипотеза → проверка → вывод.
+-
+-### 3.1 Assumptions ledger
+-Перед изменениями выпиши 3–10 предположений (что «вроде» правда). Затем для каждого:
+-- как это проверить (команда/файл/тест)
+-- результат проверки
+-
+-### 3.2 Invariants (не ломать)
+-- `verify:e2` должен проходить.
+-- `verify:paper` должен проходить.
+-- Детерминизм: где возможно — seed‑based, без скрытой рандомности.
+-- Никаких live‑ордеров по умолчанию.
+-
+-### 3.3 Stop‑and‑think triggers
+-Останавливайся и пересматривай план, если:
+-- тесты падают после «невинного» изменения
+-- появляется скрытая зависимость от времени/рандома/сети
+-- дифф растёт > ~200 строк без жёсткой причины
+-
+-## 4) Дисциплина сети
+-- Любые тесты с сетью должны быть **skipped by default** и включаться только `ENABLE_NETWORK_TESTS=1`.
+-- В CI/verify по умолчанию сеть считается недоступной.
+-
+-## 5) Детерминизм
+-- Любая рандомность обязана иметь seed (`SEED=12345` по умолчанию).
+-- Любое использование `Date.now()`/`new Date()` в critical path — либо удаляем, либо изолируем и логируем как «non-deterministic field».
+-
+-## 6) Evidence Pack (обязательный формат)
+-Создавай папку: `reports/evidence/<EPOCH-ID>/`
+-
+-Минимум файлов:
+-- `PREFLIGHT.md` — вывод preflight команд
+-- `INVENTORY.txt` — дерево/список ключевых файлов
+-- `GATE_PLAN.md` — какие гейты и почему
+-- `LOGS/` — все логи запусков (tee)
+-- `DIFF.patch` — `git diff` или патч
+-- `SHA256SUMS.txt` — checksums артефактов
+-- `SUMMARY.md` — что сделано, что доказано, риски
+-
+-## 7) Commit discipline
+-- Atomic commits: один смысл — один коммит.
+-- Сообщения: `feat(epoch-XX): ...`, `fix(...)`, `test(...)`, `docs(...)`.
+-- Если что-то не успели — фиксируем **честный блокер** и оставляем воспроизводимый кейс.
+-
+-## 8) Release artifacts
+-- `FINAL_VALIDATED*.zip`: репозиторий без `node_modules/`, без кешей, без гигантских логов.
+-- `EVIDENCE_PACK*.tar.gz`: evidence pack + логи.
+-- Всегда создавай `.sha256` рядом.
+-
+-## 9) Definition of Done
+-Задача «сделана» только когда:
+-- все выбранные гейты прошли 2 раза
+-- evidence pack собран и валидный
+-- zip артефакт собран и checksum совпадает
+-- README/runbook обновлён (если менялись команды)
++Authoritative policy moved to `agents.md`.
++Use `agents.md` as the single source of truth for repository-wide agent instructions.
+diff --git a/FINAL_VALIDATED.zip.sha256 b/FINAL_VALIDATED.zip.sha256
+index 276a2f0..87afeb4 100644
+--- a/FINAL_VALIDATED.zip.sha256
++++ b/FINAL_VALIDATED.zip.sha256
+@@ -1 +1 @@
+-0628d8d509873ee8e68d8269ba1bfef4faf634213838926be7f2b191ca74ae0e  FINAL_VALIDATED.zip
++1754d4f5c77b58e43921188f5e6552c837096cbc9dfe1af301d2b5b67ecc3600  FINAL_VALIDATED.zip
+diff --git a/scripts/ops/clean_clone_bootstrap.mjs b/scripts/ops/clean_clone_bootstrap.mjs
+index 864dca1..351504a 100755
+--- a/scripts/ops/clean_clone_bootstrap.mjs
++++ b/scripts/ops/clean_clone_bootstrap.mjs
+@@ -45,9 +45,10 @@ function run(stepId, cmd) {
+ }
+ 
+ run(1, 'npm ci');
+-run(2, 'SKIP_CLEAN_CLONE_IN_WALL=1 SKIP_SHA_CHECKS_IN_WALL=1 npm run verify:wall');
+-run(3, 'npm run verify:release-governor');
++run(2, 'npm run export:validated');
++run(3, 'SKIP_CLEAN_CLONE_IN_WALL=1 SKIP_SHA_CHECKS_IN_WALL=1 npm run verify:wall');
+ run(4, 'npm run verify:release-governor');
++run(5, 'npm run verify:release-governor');
+ 
+ const markerPath = path.join(cleanDir, 'CLEAN_CLONE.OK');
+ fs.writeFileSync(markerPath, `PASS EVIDENCE_EPOCH=${evidenceEpoch}\n`);
+diff --git a/scripts/verify/wall.mjs b/scripts/verify/wall.mjs
+index d98e87e..84d7751 100644
+--- a/scripts/verify/wall.mjs
++++ b/scripts/verify/wall.mjs
+@@ -32,6 +32,7 @@ const commands = [
+   'npm run verify:epoch28',
+   'npm run verify:epoch29',
+   ...(includeCleanClone ? ['npm run verify:clean-clone'] : []),
++  'npm run export:validated',
+   'npm run regen:manifests',
+   ...(includeShaChecks ? [
+     `sha256sum -c ${path.join(evidenceDir, 'SHA256SUMS.SOURCE.txt')}`,
+@@ -50,6 +51,7 @@ const requiredMarkers = [
+   'npm run verify:integration',
+   'npm run verify:core',
+   ...(includeCleanClone ? ['npm run verify:clean-clone'] : []),
++  'npm run export:validated',
+   'npm run regen:manifests',
+   ...(includeShaChecks ? ['sha256sum -c '] : [])
+ ];
+diff --git a/specs/epochs/LEDGER.json b/specs/epochs/LEDGER.json
+index 2e3a72f..bf27710 100644
+--- a/specs/epochs/LEDGER.json
++++ b/specs/epochs/LEDGER.json
+@@ -1,6 +1,6 @@
+ {
+   "schema_version": 2,
+-  "updated_at": "2026-02-11T18:38:49.842Z",
++  "updated_at": "2026-02-11T19:48:39.778Z",
+   "epochs": {
+     "1": {
+       "id": "EPOCH-01",
+@@ -9,12 +9,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "2": {
+       "id": "EPOCH-02",
+@@ -23,12 +23,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "3": {
+       "id": "EPOCH-03",
+@@ -37,12 +37,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "4": {
+       "id": "EPOCH-04",
+@@ -51,12 +51,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "5": {
+       "id": "EPOCH-05",
+@@ -65,12 +65,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "6": {
+       "id": "EPOCH-06",
+@@ -79,12 +79,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "7": {
+       "id": "EPOCH-07",
+@@ -93,12 +93,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "8": {
+       "id": "EPOCH-08",
+@@ -107,12 +107,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "9": {
+       "id": "EPOCH-09",
+@@ -121,12 +121,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "10": {
+       "id": "EPOCH-10",
+@@ -135,12 +135,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "11": {
+       "id": "EPOCH-11",
+@@ -149,12 +149,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "12": {
+       "id": "EPOCH-12",
+@@ -163,12 +163,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "13": {
+       "id": "EPOCH-13",
+@@ -177,12 +177,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "14": {
+       "id": "EPOCH-14",
+@@ -191,12 +191,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "15": {
+       "id": "EPOCH-15",
+@@ -205,12 +205,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "16": {
+       "id": "EPOCH-16",
+@@ -219,12 +219,12 @@
+       "type": "legacy",
+       "depends_on": [],
+       "gate_owner": "docs",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "17": {
+       "id": "EPOCH-17",
+@@ -235,12 +235,12 @@
+         "EPOCH-16"
+       ],
+       "gate_owner": "verify:epoch17",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "18": {
+       "id": "EPOCH-18",
+@@ -251,12 +251,12 @@
+         "EPOCH-17"
+       ],
+       "gate_owner": "verify:epoch18",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "19": {
+       "id": "EPOCH-19",
+@@ -267,12 +267,12 @@
+         "EPOCH-18"
+       ],
+       "gate_owner": "verify:epoch19",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "20": {
+       "id": "EPOCH-20",
+@@ -283,12 +283,12 @@
+         "EPOCH-19"
+       ],
+       "gate_owner": "verify:epoch20",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "21": {
+       "id": "EPOCH-21",
+@@ -299,12 +299,12 @@
+         "EPOCH-20"
+       ],
+       "gate_owner": "verify:epoch21",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "22": {
+       "id": "EPOCH-22",
+@@ -315,12 +315,12 @@
+         "EPOCH-21"
+       ],
+       "gate_owner": "verify:epoch22",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "23": {
+       "id": "EPOCH-23",
+@@ -331,12 +331,12 @@
+         "EPOCH-22"
+       ],
+       "gate_owner": "verify:epoch23",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "24": {
+       "id": "EPOCH-24",
+@@ -347,12 +347,12 @@
+         "EPOCH-23"
+       ],
+       "gate_owner": "verify:epoch24",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "25": {
+       "id": "EPOCH-25",
+@@ -363,12 +363,12 @@
+         "EPOCH-24"
+       ],
+       "gate_owner": "verify:epoch25",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "26": {
+       "id": "EPOCH-26",
+@@ -379,12 +379,12 @@
+         "EPOCH-25"
+       ],
+       "gate_owner": "verify:epoch26",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "27": {
+       "id": "EPOCH-27",
+@@ -395,12 +395,12 @@
+         "EPOCH-26"
+       ],
+       "gate_owner": "verify:epoch27",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "28": {
+       "id": "EPOCH-28",
+@@ -411,12 +411,12 @@
+         "EPOCH-27"
+       ],
+       "gate_owner": "verify:epoch28",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "29": {
+       "id": "EPOCH-29",
+@@ -427,12 +427,12 @@
+         "EPOCH-28"
+       ],
+       "gate_owner": "verify:epoch29",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     },
+     "30": {
+       "id": "EPOCH-30",
+@@ -443,12 +443,12 @@
+         "EPOCH-29"
+       ],
+       "gate_owner": "verify:epoch30",
+-      "evidence_id": "EPOCH-30-CLOSEOUT-FINAL",
++      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
+       "completed_at": "2026-02-11T18:38:49.842Z",
+       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-FINAL/",
+-      "last_gate_summary": "Included in final wall/governor freeze cycle"
++      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
++      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+     }
+   }
+ }

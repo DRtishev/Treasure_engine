@@ -1,0 +1,15 @@
+$ sha256sum -c reports/evidence/EPOCH-30-CLOSEOUT-STRONG/SHA256SUMS.EVIDENCE.txt
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/CLEAN_CLONE/01_npm_ci.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/CLEAN_CLONE/02_npm_run_export_validated.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/CLEAN_CLONE/03_SKIP_CLEAN_CLONE_IN_WALL_1_SKIP_SHA_CHECKS_IN_WALL_1_npm_run_verify_wall.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/CLEAN_CLONE/04_npm_run_verify_release_governor.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/CLEAN_CLONE/05_npm_run_verify_release_governor.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/CLEAN_CLONE/CLEAN_CLONE.OK: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/GATE_PLAN.md: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/INSTALL.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/PREFLIGHT.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/SNAPSHOT.md: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/SUMMARY.md: OK
+reports/evidence/EPOCH-30-CLOSEOUT-STRONG/VERDICT.md: OK

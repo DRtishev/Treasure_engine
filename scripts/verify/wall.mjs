@@ -32,6 +32,7 @@ const commands = [
   'npm run verify:epoch28',
   'npm run verify:epoch29',
   ...(includeCleanClone ? ['npm run verify:clean-clone'] : []),
+  'npm run export:validated',
   'npm run regen:manifests',
   ...(includeShaChecks ? [
     `sha256sum -c ${path.join(evidenceDir, 'SHA256SUMS.SOURCE.txt')}`,
@@ -50,6 +51,7 @@ const requiredMarkers = [
   'npm run verify:integration',
   'npm run verify:core',
   ...(includeCleanClone ? ['npm run verify:clean-clone'] : []),
+  'npm run export:validated',
   'npm run regen:manifests',
   ...(includeShaChecks ? ['sha256sum -c '] : [])
 ];
