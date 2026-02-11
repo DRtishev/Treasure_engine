@@ -1,0 +1,1935 @@
+diff --git a/scripts/verify/specs_check.mjs b/scripts/verify/specs_check.mjs
+index 83b95d9..4d4f822 100644
+--- a/scripts/verify/specs_check.mjs
++++ b/scripts/verify/specs_check.mjs
+@@ -2,61 +2,108 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
+ 
+-const requiredHeadings = [
+-  '## REALITY SNAPSHOT',
+-  '## GOALS / NON-GOALS',
+-  '## CONSTRAINTS',
+-  '## DESIGN (contracts + interfaces + invariants)',
+-  '## PATCH PLAN (file list, minimal diffs policy)',
+-  '## VERIFY (gates, commands, expected outputs, anti-flake rules)',
+-  '## EVIDENCE REQUIREMENTS (paths, logs, manifests)',
+-  '## STOP RULES (PASS/FAIL criteria)',
+-  '## RISK REGISTER (incl. meta-risks)',
+-  '## ROLLBACK PLAN',
+-  '## ACCEPTANCE CRITERIA (checkbox list)',
+-  '## NOTES (compatibility concerns)'
+-];
++const EPOCH_START = 17;
++const EPOCH_END = 26;
++const epochFiles = Array.from({ length: EPOCH_END - EPOCH_START + 1 }, (_, i) => `specs/epochs/EPOCH-${i + EPOCH_START}.md`);
+ 
+ const requiredFiles = [
+   'specs/SSOT_INDEX.md',
+   'specs/CONSTRAINTS.md',
+   'specs/epochs/INDEX.md',
+   'specs/epochs/TEMPLATE.md',
+-  ...Array.from({ length: 10 }, (_, i) => `specs/epochs/EPOCH-${i + 17}.md`)
++  'docs/SPECS_PLAYBOOK.md',
++  ...epochFiles
+ ];
+ 
+-const fail = [];
+-function checkFile(file) {
+-  if (!fs.existsSync(file)) fail.push(`Missing required file: ${file}`);
++const requiredHeadings = [
++  '## REALITY SNAPSHOT',
++  '## GOALS',
++  '## NON-GOALS',
++  '## CONSTRAINTS',
++  '## DESIGN / CONTRACTS',
++  '## PATCH PLAN',
++  '## VERIFY',
++  '## EVIDENCE REQUIREMENTS',
++  '## STOP RULES',
++  '## RISK REGISTER',
++  '## ACCEPTANCE CRITERIA',
++  '## NOTES'
++];
++
++const forbiddenPlaceholderRegex = /\b(TBD|TODO|TBA)\b/i;
++const errors = [];
++
++const read = (file) => fs.readFileSync(file, 'utf8');
++
++for (const file of requiredFiles) {
++  if (!fs.existsSync(file)) errors.push(`Missing required file: ${file}`);
+ }
+ 
+-for (const file of requiredFiles) checkFile(file);
++function sectionBody(text, heading, nextHeading) {
++  const start = text.indexOf(heading);
++  if (start === -1) return '';
++  const from = start + heading.length;
++  const to = nextHeading ? text.indexOf(nextHeading, from) : text.length;
++  return text.slice(from, to === -1 ? text.length : to).trim();
++}
+ 
+-for (const epochFile of requiredFiles.filter((f) => /EPOCH-\d+\.md$/.test(f))) {
++for (const epochFile of epochFiles) {
+   if (!fs.existsSync(epochFile)) continue;
+-  const text = fs.readFileSync(epochFile, 'utf8');
++  const text = read(epochFile);
++
++  let last = -1;
+   for (const heading of requiredHeadings) {
+-    if (!text.includes(heading)) {
+-      fail.push(`${epochFile} missing heading: ${heading}`);
++    const pos = text.indexOf(heading);
++    if (pos === -1) {
++      errors.push(`${epochFile} missing heading: ${heading}`);
++      continue;
++    }
++    if (pos < last) errors.push(`${epochFile} heading order violation near: ${heading}`);
++    last = Math.max(last, pos);
++  }
++
++  const verifyBody = sectionBody(text, '## VERIFY', '## EVIDENCE REQUIREMENTS');
++  if (!/`npm run verify:[^`]+`/.test(verifyBody)) {
++    errors.push(`${epochFile} VERIFY must include at least one npm verify command`);
++  }
++
++  const riskBody = sectionBody(text, '## RISK REGISTER', '## ACCEPTANCE CRITERIA');
++  const riskCount = (riskBody.match(/^\s*-\s+/gm) || []).length;
++  if (riskCount < 3) {
++    errors.push(`${epochFile} RISK REGISTER must contain at least 3 bullet risks`);
++  }
++
++  const acceptanceBody = sectionBody(text, '## ACCEPTANCE CRITERIA', '## NOTES');
++  const acceptanceCount = (acceptanceBody.match(/^\s*-\s+\[ \]/gm) || []).length;
++  if (acceptanceCount < 5) {
++    errors.push(`${epochFile} ACCEPTANCE CRITERIA must contain at least 5 unchecked checklist items`);
++  }
++
++  for (let i = 0; i < requiredHeadings.length; i += 1) {
++    const heading = requiredHeadings[i];
++    const next = requiredHeadings[i + 1];
++    const body = sectionBody(text, heading, next);
++    const allowTbd = /ALLOW_TBD:\s*YES/i.test(body);
++    if (!allowTbd && forbiddenPlaceholderRegex.test(body)) {
++      errors.push(`${epochFile} section ${heading} contains placeholder text without ALLOW_TBD: YES`);
+     }
+   }
+ }
+ 
+-const indexPath = 'specs/epochs/INDEX.md';
+-if (fs.existsSync(indexPath)) {
+-  const indexText = fs.readFileSync(indexPath, 'utf8');
+-  for (let epoch = 17; epoch <= 26; epoch += 1) {
+-    const marker = `EPOCH-${epoch}`;
+-    if (!indexText.includes(marker)) fail.push(`INDEX missing reference: ${marker}`);
++if (fs.existsSync('specs/epochs/INDEX.md')) {
++  const indexText = read('specs/epochs/INDEX.md');
++  for (let epoch = EPOCH_START; epoch <= EPOCH_END; epoch += 1) {
++    const marker = `specs/epochs/EPOCH-${epoch}.md`;
++    if (!indexText.includes(marker)) errors.push(`INDEX missing epoch file mapping: ${marker}`);
+   }
+-  if (!/depends on|Dependency chain/i.test(indexText)) {
+-    fail.push('INDEX missing dependency declaration section');
++  if (!/Dependency chain|READY order/i.test(indexText)) {
++    errors.push('INDEX missing dependency chain / READY order section');
+   }
+ }
+ 
+-if (fail.length) {
++if (errors.length > 0) {
+   console.error('verify:specs FAILED');
+-  for (const item of fail) console.error(`- ${item}`);
++  for (const e of errors) console.error(`- ${e}`);
+   process.exit(1);
+ }
+ 
+diff --git a/specs/CONSTRAINTS.md b/specs/CONSTRAINTS.md
+index d335430..79a1b17 100644
+--- a/specs/CONSTRAINTS.md
++++ b/specs/CONSTRAINTS.md
+@@ -1,31 +1,48 @@
+-# TREASURE ENGINE CONSTRAINTS
++# TREASURE ENGINE — CONSTRAINTS
+ 
+-## 1. Offline-first policy
+-- Default verification path must not require network.
+-- Any network-dependent check must be opt-in and gated by `ENABLE_NETWORK_TESTS=1`.
+-- CI/verification baseline assumes network unavailable.
++## Purpose
++This document defines non-negotiable engineering and QA constraints for TREASURE ENGINE specs, gates, and release evidence.
+ 
+-## 2. Determinism policy
+-- Canonical seed default: `SEED=12345`.
+-- Same seed must produce the same structural outputs for deterministic gates.
+-- Any unavoidable non-deterministic field (time, environment metadata) must be isolated and documented.
+-- Drift detection is mandatory via repeated runs and multi-seed verification.
++## 1) Offline-first verification
++- Default verification MUST run without external network access.
++- Any network-dependent check MUST be disabled by default and enabled only with `ENABLE_NETWORK_TESTS=1`.
++- CI and local baseline verification assume network is unavailable.
+ 
+-## 3. Run-dir discipline
+-- Gate outputs with run variance must use: `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- New gates/wrappers must preserve this layout.
++## 2) Determinism and reproducibility
++- Canonical seed default is `SEED=12345` unless a gate explicitly defines otherwise.
++- Deterministic gates MUST produce structurally stable outputs for the same seed and repeat profile.
++- Non-deterministic fields (timestamps, host metadata) MUST be isolated and documented.
+ 
+-## 4. Evidence discipline
+-- Every implementation epoch requires an evidence folder under `reports/evidence/<EPOCH-ID>/`.
+-- Required artifacts: preflight snapshot, gate logs, patch diff, checksum manifests, summary/verdict.
+-- No PASS/SAFE claim without command logs and artifact paths.
++## 3) Run-directory discipline
++- Variable gate outputs MUST be written under:
++  `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Repeats MUST NOT overwrite prior outputs.
+ 
+-## 5. Safety policy
++## 4) Evidence protocol
++- Every work epoch MUST publish an evidence pack under `reports/evidence/<EPOCH-ID>/`.
++- Required artifacts:
++  - `PREFLIGHT.log`
++  - `SNAPSHOT.md`
++  - `ASSUMPTIONS.md`
++  - `GATE_PLAN.md`
++  - `RISK_REGISTER.md`
++  - `SUMMARY.md`
++  - `VERDICT.md`
++  - gate logs (`gates/*.log`)
++  - checksum manifests (`SHA256SUMS.*`)
++- No PASS/SAFE claim is valid without logs + manifests + verdict.
++
++## 5) Security and safety policy
++- No secrets/API keys in repository, logs, manifests, or evidence artifacts.
+ - No live trading by default.
+-- Any live-like path requires explicit enable flags, safety checks, and audit events.
+-- Emergency stop and rollback paths must remain available.
++- Live-like execution requires explicit unlock controls and release governor verification.
++
++## 6) Spec quality policy
++- Specs MUST be implementable without clarifying questions.
++- Placeholder-only content (e.g., `TBD`, `TODO`, `TBA`) is forbidden unless section contains marker `ALLOW_TBD: YES` and a concrete remediation note.
++- Risk section MUST include technical + operational + meta-risk entries.
++- Acceptance criteria MUST be checklist-based and testable.
+ 
+-## 6. Anti-regression policy
+-- Critical gates run with anti-flake repeats where defined.
+-- Regression wall must include baseline functional and integration checks.
+-- Manifest checks (`sha256sum -c`) are required before release verdict.
++## 7) Anti-regression policy
++- Critical gates run with anti-flake repeats where defined by epoch docs.
++- Spec changes MUST keep `verify:spec` green before merging implementation work.
+diff --git a/specs/SSOT_INDEX.md b/specs/SSOT_INDEX.md
+index 7846ff0..52546b5 100644
+--- a/specs/SSOT_INDEX.md
++++ b/specs/SSOT_INDEX.md
+@@ -1,36 +1,32 @@
+-# SSOT INDEX
++# TREASURE ENGINE — SSOT INDEX
+ 
+-## Canonical Single Sources of Truth
+-- `spec/ssot.json` — canonical strategy/system baseline parameters.
+-- `spec/hacks.json` — allowed hack registry controlled by validation gate.
+-- `spec/config.schema.json` — runtime configuration contract.
+-- `truth/*.schema.json` — verification schemas for reports and event artifacts.
+-- `specs/CONSTRAINTS.md` — global engineering and QA constraints.
+-- `specs/epochs/INDEX.md` + `specs/epochs/EPOCH-*.md` — implementation order and epoch contracts.
++## Canonical SSOT files
++- `spec/ssot.json` — canonical system and execution baseline.
++- `spec/hacks.json` — sanctioned hack registry and identifiers.
++- `spec/config.schema.json` — runtime config schema contract.
++- `truth/*.schema.json` — report/event schemas consumed by verification.
++- `specs/CONSTRAINTS.md` — non-negotiable QA/engineering constraints.
++- `specs/epochs/INDEX.md` — dependency order and epoch gate map.
+ 
+-## Change Control Rules
+-1. Propose SSOT changes in the relevant epoch spec first.
+-2. Keep one semantic change per commit (atomic discipline).
+-3. Any change to `spec/*.json` or `truth/*.schema.json` must be accompanied by gate evidence:
+-   - validation command output,
+-   - updated evidence summary,
+-   - checksum manifest refresh.
+-4. Network-dependent validation remains opt-in with `ENABLE_NETWORK_TESTS=1`; default verify path must stay offline.
+-5. Determinism-sensitive SSOT changes require repeat runs and multi-seed checks.
++## Required validation when SSOT changes
++When changing any SSOT file (`spec/*.json`, `truth/*.schema.json`, or epoch contracts):
++1. `npm run verify:specs`
++2. Relevant domain gate(s) (minimum one):
++   - `npm run verify:core`
++   - `npm run verify:phase2`
++   - `npm run verify:integration`
++3. If release-governance behavior changes:
++   - `npm run verify:release-governor`
++4. Update evidence pack manifests and summaries.
+ 
+-## Validation Workflow
+-- Baseline:
+-  - `npm run verify:specs`
+-  - `npm run verify:core`
+-  - `npm run verify:phase2`
+-  - `npm run verify:integration`
+-- Release integrity:
+-  - `npm run verify:release-governor`
+-  - `node scripts/ops/regen_manifests.mjs`
++## Compatibility and change discipline
++- Prefer additive evolution over breaking rename/removal.
++- If breaking change is required, document migration in epoch NOTES and update gate map.
++- Keep one semantic SSOT change per commit when possible.
+ 
+-## Evidence Requirements for SSOT Changes
++## Evidence requirements for SSOT edits
+ Store under `reports/evidence/<EPOCH-ID>/`:
+-- gate logs (`gates/*.log`),
+-- `DIFF.patch`,
+-- `SHA256SUMS.SOURCE.txt`, `SHA256SUMS.EVIDENCE.txt`, and `SHA256SUMS.EXPORT.txt` (when export exists),
+-- `SUMMARY.md` and `VERDICT.md`.
++- gate logs (`gates/*.log`)
++- `DIFF.patch`
++- checksum manifests (`SHA256SUMS.SOURCE.txt`, `SHA256SUMS.EVIDENCE.txt`, optional export manifest)
++- `SUMMARY.md` + `VERDICT.md`
+diff --git a/specs/epochs/EPOCH-17.md b/specs/epochs/EPOCH-17.md
+index 88fa67f..dd29771 100644
+--- a/specs/epochs/EPOCH-17.md
++++ b/specs/epochs/EPOCH-17.md
+@@ -1,63 +1,87 @@
+-# EPOCH-17
++# EPOCH-17 — Safety-Integrated Executor
+ 
+ ## REALITY SNAPSHOT
+-- Current baseline already exposes offline verification scripts through npm gates.
+-- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
+-- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
++- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Evidence target for this epoch is `reports/evidence/EPOCH-17/`.
+ 
+-## GOALS / NON-GOALS
+-### Goals
+-- Harden safety-integrated executor behavior with deterministic and auditable checks.
+-- Preserve dry-run default and risk guard enforcement.
++## GOALS
++- Deliver the epoch contract through deterministic, reproducible gates.
++- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
++- Produce complete evidence and manifest validation before SAFE verdict.
+ 
+-### Non-goals
+-- No uncontrolled refactors unrelated to the epoch contract.
++## NON-GOALS
++- No unscoped product feature invention.
+ - No default-on network verification path.
++- No live-production execution by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first by default; network checks must be explicit opt-in.
+-- Determinism via seed discipline (`SEED=12345` default).
+-- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- No live trading activation without explicit approvals.
+-
+-## DESIGN (contracts + interfaces + invariants)
+-- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
+-- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
+-- Invariant: epoch gate remains reproducible across anti-flake reruns.
+-- Unknowns in adapter compatibility are marked: Requires verification.
+-
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Update only epoch-specific modules/gates and relevant docs.
+-- Keep diffs minimal and evidence-backed.
+-- Preserve backward compatibility for existing npm gate entry points.
+-
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run baseline wall gates plus epoch-specific gate.
+-- Repeat critical gates (anti-flake) where defined.
+-- Fail on schema mismatch, checksum mismatch, or drift.
+-
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- Evidence directory: `reports/evidence/EPOCH-17/` (or boot evidence for planning cycle).
+-- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
+-- Export hash references required for release-facing epochs.
+-
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS only if required gates pass and evidence is complete.
+-- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Functional risk: hidden coupling between epoch contracts.
+-- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
+-
+-## ROLLBACK PLAN
+-- Revert epoch commits.
+-- Re-run baseline gates to confirm recovery.
+-
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [ ] Required contracts implemented/verified.
+-- [ ] Required gates pass with anti-flake policy.
+-- [ ] Evidence folder complete with manifest validation.
+-
+-## NOTES (compatibility concerns)
+-- Keep npm scripts stable for downstream automation.
+-- Flag unresolved assumptions as Requires verification.
++- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
++- Deterministic seeds and run-scoped output directories are mandatory.
++- No secrets in specs, logs, manifests, or artifacts.
++
++## DESIGN / CONTRACTS
++- Primary contracts: `core/exec/safety_integrated_executor.mjs`, `core/exec/safety_gate_validator.mjs`, `core/risk/risk_governor_wrapper.mjs`, `truth/live_config.schema.json`.
++- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
++- Outputs: gate logs in `reports/evidence/EPOCH-17/gates/` and run artifacts in `reports/runs/...`.
++- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
++- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++
++## PATCH PLAN
++1. Implement only contract-relevant files:
++  - `core/exec/safety_integrated_executor.mjs`
++  - `core/exec/safety_gate_validator.mjs`
++  - `core/risk/risk_governor_wrapper.mjs`
++  - `scripts/verify/safety_integrated_executor_check.mjs`
++2. Keep a minimal diff and avoid non-functional churn.
++3. Preserve backward compatibility of npm gate names.
++
++## VERIFY
++- Required command order:
++- `npm run verify:epoch17`
++- `npm run verify:epoch17`
++- `npm run verify:specs`
++- `npm run verify:paper`
++- `npm run verify:e2`
++- `npm run verify:e2:multi`
++- `npm run verify:phase2`
++- `npm run verify:core`
++- Expected artifacts:
++  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
++  - gate logs under `reports/evidence/EPOCH-17/gates/`
++- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++
++## EVIDENCE REQUIREMENTS
++- `reports/evidence/EPOCH-17/PREFLIGHT.log`
++- `reports/evidence/EPOCH-17/SNAPSHOT.md`
++- `reports/evidence/EPOCH-17/ASSUMPTIONS.md`
++- `reports/evidence/EPOCH-17/GATE_PLAN.md`
++- `reports/evidence/EPOCH-17/RISK_REGISTER.md`
++- `reports/evidence/EPOCH-17/DIFF.patch`
++- `reports/evidence/EPOCH-17/gates/*.log`
++- `reports/evidence/EPOCH-17/SHA256SUMS.SOURCE.txt`
++- `reports/evidence/EPOCH-17/SHA256SUMS.EVIDENCE.txt`
++- `reports/evidence/EPOCH-17/SUMMARY.md`
++- `reports/evidence/EPOCH-17/VERDICT.md`
++
++## STOP RULES
++- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
++- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
++- Trigger rollback if baseline gate regressions appear after epoch changes.
++
++## RISK REGISTER
++- Technical risk: contract mismatch between gate script and runtime module interfaces.
++- Operational risk: stale or overwritten run artifacts masking failures.
++- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
++- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++
++## ACCEPTANCE CRITERIA
++- [ ] Epoch gate is implemented and mapped in `package.json`.
++- [ ] `npm run verify:specs` passes after spec updates.
++- [ ] Epoch-specific gate passes twice (anti-flake).
++- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
++- [ ] Evidence folder is complete and checksum manifests validate.
++
++## NOTES
++- Compatibility: preserve existing script names consumed by automation and runbooks.
++- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
+diff --git a/specs/epochs/EPOCH-18.md b/specs/epochs/EPOCH-18.md
+index e6982d8..eedc43d 100644
+--- a/specs/epochs/EPOCH-18.md
++++ b/specs/epochs/EPOCH-18.md
+@@ -1,63 +1,87 @@
+-# EPOCH-18
++# EPOCH-18 — Strategy Layer Contracts
+ 
+ ## REALITY SNAPSHOT
+-- Current baseline already exposes offline verification scripts through npm gates.
+-- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
+-- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
++- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Evidence target for this epoch is `reports/evidence/EPOCH-18/`.
+ 
+-## GOALS / NON-GOALS
+-### Goals
+-- Stabilize strategy layer contracts that convert signals to intents deterministically.
+-- Ensure strategy checks remain offline and reproducible.
++## GOALS
++- Deliver the epoch contract through deterministic, reproducible gates.
++- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
++- Produce complete evidence and manifest validation before SAFE verdict.
+ 
+-### Non-goals
+-- No uncontrolled refactors unrelated to the epoch contract.
++## NON-GOALS
++- No unscoped product feature invention.
+ - No default-on network verification path.
++- No live-production execution by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first by default; network checks must be explicit opt-in.
+-- Determinism via seed discipline (`SEED=12345` default).
+-- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- No live trading activation without explicit approvals.
+-
+-## DESIGN (contracts + interfaces + invariants)
+-- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
+-- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
+-- Invariant: epoch gate remains reproducible across anti-flake reruns.
+-- Unknowns in adapter compatibility are marked: Requires verification.
+-
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Update only epoch-specific modules/gates and relevant docs.
+-- Keep diffs minimal and evidence-backed.
+-- Preserve backward compatibility for existing npm gate entry points.
+-
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run baseline wall gates plus epoch-specific gate.
+-- Repeat critical gates (anti-flake) where defined.
+-- Fail on schema mismatch, checksum mismatch, or drift.
+-
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- Evidence directory: `reports/evidence/EPOCH-18/` (or boot evidence for planning cycle).
+-- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
+-- Export hash references required for release-facing epochs.
+-
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS only if required gates pass and evidence is complete.
+-- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Functional risk: hidden coupling between epoch contracts.
+-- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
+-
+-## ROLLBACK PLAN
+-- Revert epoch commits.
+-- Re-run baseline gates to confirm recovery.
+-
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [ ] Required contracts implemented/verified.
+-- [ ] Required gates pass with anti-flake policy.
+-- [ ] Evidence folder complete with manifest validation.
+-
+-## NOTES (compatibility concerns)
+-- Keep npm scripts stable for downstream automation.
+-- Flag unresolved assumptions as Requires verification.
++- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
++- Deterministic seeds and run-scoped output directories are mandatory.
++- No secrets in specs, logs, manifests, or artifacts.
++
++## DESIGN / CONTRACTS
++- Primary contracts: `core/strategy/strategy_orchestrator.mjs`, `core/exec/signal_converter.mjs`, `core/portfolio/portfolio_allocator.mjs`, `core/exec/strategy_aware_executor.mjs`.
++- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
++- Outputs: gate logs in `reports/evidence/EPOCH-18/gates/` and run artifacts in `reports/runs/...`.
++- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
++- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++
++## PATCH PLAN
++1. Implement only contract-relevant files:
++  - `core/strategy/strategy_orchestrator.mjs`
++  - `core/exec/signal_converter.mjs`
++  - `core/portfolio/portfolio_allocator.mjs`
++  - `scripts/verify/strategy_check.mjs`
++2. Keep a minimal diff and avoid non-functional churn.
++3. Preserve backward compatibility of npm gate names.
++
++## VERIFY
++- Required command order:
++- `npm run verify:epoch18`
++- `npm run verify:epoch18`
++- `npm run verify:specs`
++- `npm run verify:paper`
++- `npm run verify:e2`
++- `npm run verify:e2:multi`
++- `npm run verify:strategy`
++- `npm run verify:core`
++- Expected artifacts:
++  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
++  - gate logs under `reports/evidence/EPOCH-18/gates/`
++- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++
++## EVIDENCE REQUIREMENTS
++- `reports/evidence/EPOCH-18/PREFLIGHT.log`
++- `reports/evidence/EPOCH-18/SNAPSHOT.md`
++- `reports/evidence/EPOCH-18/ASSUMPTIONS.md`
++- `reports/evidence/EPOCH-18/GATE_PLAN.md`
++- `reports/evidence/EPOCH-18/RISK_REGISTER.md`
++- `reports/evidence/EPOCH-18/DIFF.patch`
++- `reports/evidence/EPOCH-18/gates/*.log`
++- `reports/evidence/EPOCH-18/SHA256SUMS.SOURCE.txt`
++- `reports/evidence/EPOCH-18/SHA256SUMS.EVIDENCE.txt`
++- `reports/evidence/EPOCH-18/SUMMARY.md`
++- `reports/evidence/EPOCH-18/VERDICT.md`
++
++## STOP RULES
++- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
++- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
++- Trigger rollback if baseline gate regressions appear after epoch changes.
++
++## RISK REGISTER
++- Technical risk: contract mismatch between gate script and runtime module interfaces.
++- Operational risk: stale or overwritten run artifacts masking failures.
++- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
++- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++
++## ACCEPTANCE CRITERIA
++- [ ] Epoch gate is implemented and mapped in `package.json`.
++- [ ] `npm run verify:specs` passes after spec updates.
++- [ ] Epoch-specific gate passes twice (anti-flake).
++- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
++- [ ] Evidence folder is complete and checksum manifests validate.
++
++## NOTES
++- Compatibility: preserve existing script names consumed by automation and runbooks.
++- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
+diff --git a/specs/epochs/EPOCH-19.md b/specs/epochs/EPOCH-19.md
+index e32bcde..47f5ed7 100644
+--- a/specs/epochs/EPOCH-19.md
++++ b/specs/epochs/EPOCH-19.md
+@@ -1,63 +1,87 @@
+-# EPOCH-19
++# EPOCH-19 — Governance Mode FSM
+ 
+ ## REALITY SNAPSHOT
+-- Current baseline already exposes offline verification scripts through npm gates.
+-- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
+-- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
++- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Evidence target for this epoch is `reports/evidence/EPOCH-19/`.
+ 
+-## GOALS / NON-GOALS
+-### Goals
+-- Enforce governance mode FSM transitions with explicit safety constraints.
+-- Ensure governance decisions are auditable in event outputs.
++## GOALS
++- Deliver the epoch contract through deterministic, reproducible gates.
++- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
++- Produce complete evidence and manifest validation before SAFE verdict.
+ 
+-### Non-goals
+-- No uncontrolled refactors unrelated to the epoch contract.
++## NON-GOALS
++- No unscoped product feature invention.
+ - No default-on network verification path.
++- No live-production execution by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first by default; network checks must be explicit opt-in.
+-- Determinism via seed discipline (`SEED=12345` default).
+-- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- No live trading activation without explicit approvals.
+-
+-## DESIGN (contracts + interfaces + invariants)
+-- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
+-- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
+-- Invariant: epoch gate remains reproducible across anti-flake reruns.
+-- Unknowns in adapter compatibility are marked: Requires verification.
+-
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Update only epoch-specific modules/gates and relevant docs.
+-- Keep diffs minimal and evidence-backed.
+-- Preserve backward compatibility for existing npm gate entry points.
+-
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run baseline wall gates plus epoch-specific gate.
+-- Repeat critical gates (anti-flake) where defined.
+-- Fail on schema mismatch, checksum mismatch, or drift.
+-
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- Evidence directory: `reports/evidence/EPOCH-19/` (or boot evidence for planning cycle).
+-- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
+-- Export hash references required for release-facing epochs.
+-
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS only if required gates pass and evidence is complete.
+-- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Functional risk: hidden coupling between epoch contracts.
+-- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
+-
+-## ROLLBACK PLAN
+-- Revert epoch commits.
+-- Re-run baseline gates to confirm recovery.
+-
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [ ] Required contracts implemented/verified.
+-- [ ] Required gates pass with anti-flake policy.
+-- [ ] Evidence folder complete with manifest validation.
+-
+-## NOTES (compatibility concerns)
+-- Keep npm scripts stable for downstream automation.
+-- Flag unresolved assumptions as Requires verification.
++- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
++- Deterministic seeds and run-scoped output directories are mandatory.
++- No secrets in specs, logs, manifests, or artifacts.
++
++## DESIGN / CONTRACTS
++- Primary contracts: `core/governance/governance_engine.mjs`, `core/governance/rules_engine.mjs`, `core/governance/approval_workflow.mjs`, `core/exec/mode_aware_executor.mjs`.
++- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
++- Outputs: gate logs in `reports/evidence/EPOCH-19/gates/` and run artifacts in `reports/runs/...`.
++- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
++- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++
++## PATCH PLAN
++1. Implement only contract-relevant files:
++  - `core/governance/governance_engine.mjs`
++  - `core/governance/rules_engine.mjs`
++  - `core/governance/approval_workflow.mjs`
++  - `scripts/verify/governance_check.mjs`
++2. Keep a minimal diff and avoid non-functional churn.
++3. Preserve backward compatibility of npm gate names.
++
++## VERIFY
++- Required command order:
++- `npm run verify:epoch19`
++- `npm run verify:epoch19`
++- `npm run verify:specs`
++- `npm run verify:paper`
++- `npm run verify:e2`
++- `npm run verify:e2:multi`
++- `npm run verify:governance`
++- `npm run verify:core`
++- Expected artifacts:
++  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
++  - gate logs under `reports/evidence/EPOCH-19/gates/`
++- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++
++## EVIDENCE REQUIREMENTS
++- `reports/evidence/EPOCH-19/PREFLIGHT.log`
++- `reports/evidence/EPOCH-19/SNAPSHOT.md`
++- `reports/evidence/EPOCH-19/ASSUMPTIONS.md`
++- `reports/evidence/EPOCH-19/GATE_PLAN.md`
++- `reports/evidence/EPOCH-19/RISK_REGISTER.md`
++- `reports/evidence/EPOCH-19/DIFF.patch`
++- `reports/evidence/EPOCH-19/gates/*.log`
++- `reports/evidence/EPOCH-19/SHA256SUMS.SOURCE.txt`
++- `reports/evidence/EPOCH-19/SHA256SUMS.EVIDENCE.txt`
++- `reports/evidence/EPOCH-19/SUMMARY.md`
++- `reports/evidence/EPOCH-19/VERDICT.md`
++
++## STOP RULES
++- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
++- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
++- Trigger rollback if baseline gate regressions appear after epoch changes.
++
++## RISK REGISTER
++- Technical risk: contract mismatch between gate script and runtime module interfaces.
++- Operational risk: stale or overwritten run artifacts masking failures.
++- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
++- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++
++## ACCEPTANCE CRITERIA
++- [ ] Epoch gate is implemented and mapped in `package.json`.
++- [ ] `npm run verify:specs` passes after spec updates.
++- [ ] Epoch-specific gate passes twice (anti-flake).
++- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
++- [ ] Evidence folder is complete and checksum manifests validate.
++
++## NOTES
++- Compatibility: preserve existing script names consumed by automation and runbooks.
++- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
+diff --git a/specs/epochs/EPOCH-20.md b/specs/epochs/EPOCH-20.md
+index a648c35..25bc777 100644
+--- a/specs/epochs/EPOCH-20.md
++++ b/specs/epochs/EPOCH-20.md
+@@ -1,63 +1,85 @@
+-# EPOCH-20
++# EPOCH-20 — Monitoring and Performance Gates
+ 
+ ## REALITY SNAPSHOT
+-- Current baseline already exposes offline verification scripts through npm gates.
+-- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
+-- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
++- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Evidence target for this epoch is `reports/evidence/EPOCH-20/`.
+ 
+-## GOALS / NON-GOALS
+-### Goals
+-- Validate monitoring/performance contract outputs and thresholds.
+-- Keep monitoring gate deterministic across repeated runs.
++## GOALS
++- Deliver the epoch contract through deterministic, reproducible gates.
++- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
++- Produce complete evidence and manifest validation before SAFE verdict.
+ 
+-### Non-goals
+-- No uncontrolled refactors unrelated to the epoch contract.
++## NON-GOALS
++- No unscoped product feature invention.
+ - No default-on network verification path.
++- No live-production execution by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first by default; network checks must be explicit opt-in.
+-- Determinism via seed discipline (`SEED=12345` default).
+-- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- No live trading activation without explicit approvals.
+-
+-## DESIGN (contracts + interfaces + invariants)
+-- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
+-- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
+-- Invariant: epoch gate remains reproducible across anti-flake reruns.
+-- Unknowns in adapter compatibility are marked: Requires verification.
+-
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Update only epoch-specific modules/gates and relevant docs.
+-- Keep diffs minimal and evidence-backed.
+-- Preserve backward compatibility for existing npm gate entry points.
+-
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run baseline wall gates plus epoch-specific gate.
+-- Repeat critical gates (anti-flake) where defined.
+-- Fail on schema mismatch, checksum mismatch, or drift.
+-
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- Evidence directory: `reports/evidence/EPOCH-20/` (or boot evidence for planning cycle).
+-- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
+-- Export hash references required for release-facing epochs.
+-
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS only if required gates pass and evidence is complete.
+-- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Functional risk: hidden coupling between epoch contracts.
+-- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
+-
+-## ROLLBACK PLAN
+-- Revert epoch commits.
+-- Re-run baseline gates to confirm recovery.
+-
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [ ] Required contracts implemented/verified.
+-- [ ] Required gates pass with anti-flake policy.
+-- [ ] Evidence folder complete with manifest validation.
+-
+-## NOTES (compatibility concerns)
+-- Keep npm scripts stable for downstream automation.
+-- Flag unresolved assumptions as Requires verification.
++- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
++- Deterministic seeds and run-scoped output directories are mandatory.
++- No secrets in specs, logs, manifests, or artifacts.
++
++## DESIGN / CONTRACTS
++- Primary contracts: `truth/monitoring_report.schema.json`, `scripts/verify/monitoring_perf_check.mjs`, telemetry outputs in `reports/monitoring_report.json`.
++- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
++- Outputs: gate logs in `reports/evidence/EPOCH-20/gates/` and run artifacts in `reports/runs/...`.
++- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
++- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++
++## PATCH PLAN
++1. Implement only contract-relevant files:
++  - `truth/monitoring_report.schema.json`
++  - `scripts/verify/monitoring_perf_check.mjs`
++2. Keep a minimal diff and avoid non-functional churn.
++3. Preserve backward compatibility of npm gate names.
++
++## VERIFY
++- Required command order:
++- `npm run verify:epoch20`
++- `npm run verify:epoch20`
++- `npm run verify:specs`
++- `npm run verify:paper`
++- `npm run verify:e2`
++- `npm run verify:e2:multi`
++- `npm run verify:monitoring`
++- `npm run verify:core`
++- Expected artifacts:
++  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
++  - gate logs under `reports/evidence/EPOCH-20/gates/`
++- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++
++## EVIDENCE REQUIREMENTS
++- `reports/evidence/EPOCH-20/PREFLIGHT.log`
++- `reports/evidence/EPOCH-20/SNAPSHOT.md`
++- `reports/evidence/EPOCH-20/ASSUMPTIONS.md`
++- `reports/evidence/EPOCH-20/GATE_PLAN.md`
++- `reports/evidence/EPOCH-20/RISK_REGISTER.md`
++- `reports/evidence/EPOCH-20/DIFF.patch`
++- `reports/evidence/EPOCH-20/gates/*.log`
++- `reports/evidence/EPOCH-20/SHA256SUMS.SOURCE.txt`
++- `reports/evidence/EPOCH-20/SHA256SUMS.EVIDENCE.txt`
++- `reports/evidence/EPOCH-20/SUMMARY.md`
++- `reports/evidence/EPOCH-20/VERDICT.md`
++
++## STOP RULES
++- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
++- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
++- Trigger rollback if baseline gate regressions appear after epoch changes.
++
++## RISK REGISTER
++- Technical risk: contract mismatch between gate script and runtime module interfaces.
++- Operational risk: stale or overwritten run artifacts masking failures.
++- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
++- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++
++## ACCEPTANCE CRITERIA
++- [ ] Epoch gate is implemented and mapped in `package.json`.
++- [ ] `npm run verify:specs` passes after spec updates.
++- [ ] Epoch-specific gate passes twice (anti-flake).
++- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
++- [ ] Evidence folder is complete and checksum manifests validate.
++
++## NOTES
++- Compatibility: preserve existing script names consumed by automation and runbooks.
++- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
+diff --git a/specs/epochs/EPOCH-21.md b/specs/epochs/EPOCH-21.md
+index 6786ee7..f9cc53b 100644
+--- a/specs/epochs/EPOCH-21.md
++++ b/specs/epochs/EPOCH-21.md
+@@ -1,63 +1,85 @@
+-# EPOCH-21
++# EPOCH-21 — Release Governor
+ 
+ ## REALITY SNAPSHOT
+-- Current baseline already exposes offline verification scripts through npm gates.
+-- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
+-- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
++- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Evidence target for this epoch is `reports/evidence/EPOCH-21/`.
+ 
+-## GOALS / NON-GOALS
+-### Goals
+-- Enforce release-governor criteria and artifact integrity checks.
+-- Guarantee explicit SAFE/BLOCKED protocol compliance.
++## GOALS
++- Deliver the epoch contract through deterministic, reproducible gates.
++- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
++- Produce complete evidence and manifest validation before SAFE verdict.
+ 
+-### Non-goals
+-- No uncontrolled refactors unrelated to the epoch contract.
++## NON-GOALS
++- No unscoped product feature invention.
+ - No default-on network verification path.
++- No live-production execution by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first by default; network checks must be explicit opt-in.
+-- Determinism via seed discipline (`SEED=12345` default).
+-- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- No live trading activation without explicit approvals.
+-
+-## DESIGN (contracts + interfaces + invariants)
+-- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
+-- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
+-- Invariant: epoch gate remains reproducible across anti-flake reruns.
+-- Unknowns in adapter compatibility are marked: Requires verification.
+-
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Update only epoch-specific modules/gates and relevant docs.
+-- Keep diffs minimal and evidence-backed.
+-- Preserve backward compatibility for existing npm gate entry points.
+-
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run baseline wall gates plus epoch-specific gate.
+-- Repeat critical gates (anti-flake) where defined.
+-- Fail on schema mismatch, checksum mismatch, or drift.
+-
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- Evidence directory: `reports/evidence/EPOCH-21/` (or boot evidence for planning cycle).
+-- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
+-- Export hash references required for release-facing epochs.
+-
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS only if required gates pass and evidence is complete.
+-- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Functional risk: hidden coupling between epoch contracts.
+-- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
+-
+-## ROLLBACK PLAN
+-- Revert epoch commits.
+-- Re-run baseline gates to confirm recovery.
+-
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [ ] Required contracts implemented/verified.
+-- [ ] Required gates pass with anti-flake policy.
+-- [ ] Evidence folder complete with manifest validation.
+-
+-## NOTES (compatibility concerns)
+-- Keep npm scripts stable for downstream automation.
+-- Flag unresolved assumptions as Requires verification.
++- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
++- Deterministic seeds and run-scoped output directories are mandatory.
++- No secrets in specs, logs, manifests, or artifacts.
++
++## DESIGN / CONTRACTS
++- Primary contracts: `scripts/verify/release_governor_check.mjs`, release rules, explicit unlock controls (`RELEASE_UNLOCK`).
++- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
++- Outputs: gate logs in `reports/evidence/EPOCH-21/gates/` and run artifacts in `reports/runs/...`.
++- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
++- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++
++## PATCH PLAN
++1. Implement only contract-relevant files:
++  - `scripts/verify/release_governor_check.mjs`
++  - `specs/epochs/RELEASE_CHECKLIST_TEMPLATE.md`
++2. Keep a minimal diff and avoid non-functional churn.
++3. Preserve backward compatibility of npm gate names.
++
++## VERIFY
++- Required command order:
++- `npm run verify:epoch21`
++- `npm run verify:epoch21`
++- `npm run verify:specs`
++- `npm run verify:paper`
++- `npm run verify:e2`
++- `npm run verify:e2:multi`
++- `npm run verify:release-governor`
++- `npm run verify:core`
++- Expected artifacts:
++  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
++  - gate logs under `reports/evidence/EPOCH-21/gates/`
++- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++
++## EVIDENCE REQUIREMENTS
++- `reports/evidence/EPOCH-21/PREFLIGHT.log`
++- `reports/evidence/EPOCH-21/SNAPSHOT.md`
++- `reports/evidence/EPOCH-21/ASSUMPTIONS.md`
++- `reports/evidence/EPOCH-21/GATE_PLAN.md`
++- `reports/evidence/EPOCH-21/RISK_REGISTER.md`
++- `reports/evidence/EPOCH-21/DIFF.patch`
++- `reports/evidence/EPOCH-21/gates/*.log`
++- `reports/evidence/EPOCH-21/SHA256SUMS.SOURCE.txt`
++- `reports/evidence/EPOCH-21/SHA256SUMS.EVIDENCE.txt`
++- `reports/evidence/EPOCH-21/SUMMARY.md`
++- `reports/evidence/EPOCH-21/VERDICT.md`
++
++## STOP RULES
++- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
++- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
++- Trigger rollback if baseline gate regressions appear after epoch changes.
++
++## RISK REGISTER
++- Technical risk: contract mismatch between gate script and runtime module interfaces.
++- Operational risk: stale or overwritten run artifacts masking failures.
++- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
++- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++
++## ACCEPTANCE CRITERIA
++- [ ] Epoch gate is implemented and mapped in `package.json`.
++- [ ] `npm run verify:specs` passes after spec updates.
++- [ ] Epoch-specific gate passes twice (anti-flake).
++- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
++- [ ] Evidence folder is complete and checksum manifests validate.
++
++## NOTES
++- Compatibility: preserve existing script names consumed by automation and runbooks.
++- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
+diff --git a/specs/epochs/EPOCH-22.md b/specs/epochs/EPOCH-22.md
+index 3a8046d..eb46744 100644
+--- a/specs/epochs/EPOCH-22.md
++++ b/specs/epochs/EPOCH-22.md
+@@ -1,63 +1,85 @@
+-# EPOCH-22
++# EPOCH-22 — AI Validation Harness
+ 
+ ## REALITY SNAPSHOT
+-- Current baseline already exposes offline verification scripts through npm gates.
+-- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
+-- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
++- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Evidence target for this epoch is `reports/evidence/EPOCH-22/`.
+ 
+-## GOALS / NON-GOALS
+-### Goals
+-- Build AI validation harness for determinism + invariant scenario battery.
+-- Add reproducible drift/invariant reporting for AI-facing paths.
++## GOALS
++- Deliver the epoch contract through deterministic, reproducible gates.
++- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
++- Produce complete evidence and manifest validation before SAFE verdict.
+ 
+-### Non-goals
+-- No uncontrolled refactors unrelated to the epoch contract.
++## NON-GOALS
++- No unscoped product feature invention.
+ - No default-on network verification path.
++- No live-production execution by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first by default; network checks must be explicit opt-in.
+-- Determinism via seed discipline (`SEED=12345` default).
+-- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- No live trading activation without explicit approvals.
+-
+-## DESIGN (contracts + interfaces + invariants)
+-- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
+-- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
+-- Invariant: epoch gate remains reproducible across anti-flake reruns.
+-- Unknowns in adapter compatibility are marked: Requires verification.
+-
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Update only epoch-specific modules/gates and relevant docs.
+-- Keep diffs minimal and evidence-backed.
+-- Preserve backward compatibility for existing npm gate entry points.
+-
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run `npm run verify:epoch22` (x2), then baseline wall gates.
+-- Repeat critical gates (anti-flake) where defined.
+-- Fail on schema mismatch, checksum mismatch, or drift.
+-
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- Evidence directory: `reports/evidence/EPOCH-22/` (or boot evidence for planning cycle).
+-- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
+-- Export hash references required for release-facing epochs.
+-
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS only if required gates pass and evidence is complete.
+-- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Functional risk: hidden coupling between epoch contracts.
+-- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
+-
+-## ROLLBACK PLAN
+-- Revert epoch commits.
+-- Re-run baseline gates to confirm recovery.
+-
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [ ] Required contracts implemented/verified.
+-- [ ] Required gates pass with anti-flake policy.
+-- [ ] Evidence folder complete with manifest validation.
+-
+-## NOTES (compatibility concerns)
+-- Keep npm scripts stable for downstream automation.
+-- Flag unresolved assumptions as Requires verification.
++- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
++- Deterministic seeds and run-scoped output directories are mandatory.
++- No secrets in specs, logs, manifests, or artifacts.
++
++## DESIGN / CONTRACTS
++- Primary contracts: `scripts/verify/epoch22_ai_validation_harness.mjs` with deterministic scenario fixtures and invariant checks.
++- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
++- Outputs: gate logs in `reports/evidence/EPOCH-22/gates/` and run artifacts in `reports/runs/...`.
++- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
++- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++
++## PATCH PLAN
++1. Implement only contract-relevant files:
++  - `scripts/verify/epoch22_ai_validation_harness.mjs`
++  - `specs/epochs/EPOCH-22.md`
++2. Keep a minimal diff and avoid non-functional churn.
++3. Preserve backward compatibility of npm gate names.
++
++## VERIFY
++- Required command order:
++- `npm run verify:epoch22`
++- `npm run verify:epoch22`
++- `npm run verify:specs`
++- `npm run verify:paper`
++- `npm run verify:e2`
++- `npm run verify:e2:multi`
++- `npm run verify:epoch22`
++- `npm run verify:core`
++- Expected artifacts:
++  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
++  - gate logs under `reports/evidence/EPOCH-22/gates/`
++- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++
++## EVIDENCE REQUIREMENTS
++- `reports/evidence/EPOCH-22/PREFLIGHT.log`
++- `reports/evidence/EPOCH-22/SNAPSHOT.md`
++- `reports/evidence/EPOCH-22/ASSUMPTIONS.md`
++- `reports/evidence/EPOCH-22/GATE_PLAN.md`
++- `reports/evidence/EPOCH-22/RISK_REGISTER.md`
++- `reports/evidence/EPOCH-22/DIFF.patch`
++- `reports/evidence/EPOCH-22/gates/*.log`
++- `reports/evidence/EPOCH-22/SHA256SUMS.SOURCE.txt`
++- `reports/evidence/EPOCH-22/SHA256SUMS.EVIDENCE.txt`
++- `reports/evidence/EPOCH-22/SUMMARY.md`
++- `reports/evidence/EPOCH-22/VERDICT.md`
++
++## STOP RULES
++- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
++- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
++- Trigger rollback if baseline gate regressions appear after epoch changes.
++
++## RISK REGISTER
++- Technical risk: contract mismatch between gate script and runtime module interfaces.
++- Operational risk: stale or overwritten run artifacts masking failures.
++- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
++- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++
++## ACCEPTANCE CRITERIA
++- [ ] Epoch gate is implemented and mapped in `package.json`.
++- [ ] `npm run verify:specs` passes after spec updates.
++- [ ] Epoch-specific gate passes twice (anti-flake).
++- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
++- [ ] Evidence folder is complete and checksum manifests validate.
++
++## NOTES
++- Compatibility: preserve existing script names consumed by automation and runbooks.
++- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
+diff --git a/specs/epochs/EPOCH-23.md b/specs/epochs/EPOCH-23.md
+index d7891d0..4eaeceb 100644
+--- a/specs/epochs/EPOCH-23.md
++++ b/specs/epochs/EPOCH-23.md
+@@ -1,63 +1,85 @@
+-# EPOCH-23
++# EPOCH-23 — Signal-to-Intent Contract
+ 
+ ## REALITY SNAPSHOT
+-- Current baseline already exposes offline verification scripts through npm gates.
+-- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
+-- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
++- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Evidence target for this epoch is `reports/evidence/EPOCH-23/`.
+ 
+-## GOALS / NON-GOALS
+-### Goals
+-- Integrate AI -> Signals -> Intents contract with strict schema compatibility.
+-- Ensure intent generation remains deterministic and auditable.
++## GOALS
++- Deliver the epoch contract through deterministic, reproducible gates.
++- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
++- Produce complete evidence and manifest validation before SAFE verdict.
+ 
+-### Non-goals
+-- No uncontrolled refactors unrelated to the epoch contract.
++## NON-GOALS
++- No unscoped product feature invention.
+ - No default-on network verification path.
++- No live-production execution by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first by default; network checks must be explicit opt-in.
+-- Determinism via seed discipline (`SEED=12345` default).
+-- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- No live trading activation without explicit approvals.
+-
+-## DESIGN (contracts + interfaces + invariants)
+-- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
+-- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
+-- Invariant: epoch gate remains reproducible across anti-flake reruns.
+-- Unknowns in adapter compatibility are marked: Requires verification.
+-
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Update only epoch-specific modules/gates and relevant docs.
+-- Keep diffs minimal and evidence-backed.
+-- Preserve backward compatibility for existing npm gate entry points.
+-
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run `npm run verify:epoch23` (x2), then baseline wall gates.
+-- Repeat critical gates (anti-flake) where defined.
+-- Fail on schema mismatch, checksum mismatch, or drift.
+-
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- Evidence directory: `reports/evidence/EPOCH-23/` (or boot evidence for planning cycle).
+-- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
+-- Export hash references required for release-facing epochs.
+-
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS only if required gates pass and evidence is complete.
+-- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Functional risk: hidden coupling between epoch contracts.
+-- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
+-
+-## ROLLBACK PLAN
+-- Revert epoch commits.
+-- Re-run baseline gates to confirm recovery.
+-
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [ ] Required contracts implemented/verified.
+-- [ ] Required gates pass with anti-flake policy.
+-- [ ] Evidence folder complete with manifest validation.
+-
+-## NOTES (compatibility concerns)
+-- Keep npm scripts stable for downstream automation.
+-- Flag unresolved assumptions as Requires verification.
++- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
++- Deterministic seeds and run-scoped output directories are mandatory.
++- No secrets in specs, logs, manifests, or artifacts.
++
++## DESIGN / CONTRACTS
++- Primary contracts: `scripts/verify/epoch23_signal_intent_contract_check.mjs`, `core/exec/signal_converter.mjs`, `core/exec/master_executor.mjs`.
++- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
++- Outputs: gate logs in `reports/evidence/EPOCH-23/gates/` and run artifacts in `reports/runs/...`.
++- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
++- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++
++## PATCH PLAN
++1. Implement only contract-relevant files:
++  - `scripts/verify/epoch23_signal_intent_contract_check.mjs`
++  - `core/exec/signal_converter.mjs`
++2. Keep a minimal diff and avoid non-functional churn.
++3. Preserve backward compatibility of npm gate names.
++
++## VERIFY
++- Required command order:
++- `npm run verify:epoch23`
++- `npm run verify:epoch23`
++- `npm run verify:specs`
++- `npm run verify:paper`
++- `npm run verify:e2`
++- `npm run verify:e2:multi`
++- `npm run verify:integration`
++- `npm run verify:core`
++- Expected artifacts:
++  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
++  - gate logs under `reports/evidence/EPOCH-23/gates/`
++- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++
++## EVIDENCE REQUIREMENTS
++- `reports/evidence/EPOCH-23/PREFLIGHT.log`
++- `reports/evidence/EPOCH-23/SNAPSHOT.md`
++- `reports/evidence/EPOCH-23/ASSUMPTIONS.md`
++- `reports/evidence/EPOCH-23/GATE_PLAN.md`
++- `reports/evidence/EPOCH-23/RISK_REGISTER.md`
++- `reports/evidence/EPOCH-23/DIFF.patch`
++- `reports/evidence/EPOCH-23/gates/*.log`
++- `reports/evidence/EPOCH-23/SHA256SUMS.SOURCE.txt`
++- `reports/evidence/EPOCH-23/SHA256SUMS.EVIDENCE.txt`
++- `reports/evidence/EPOCH-23/SUMMARY.md`
++- `reports/evidence/EPOCH-23/VERDICT.md`
++
++## STOP RULES
++- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
++- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
++- Trigger rollback if baseline gate regressions appear after epoch changes.
++
++## RISK REGISTER
++- Technical risk: contract mismatch between gate script and runtime module interfaces.
++- Operational risk: stale or overwritten run artifacts masking failures.
++- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
++- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++
++## ACCEPTANCE CRITERIA
++- [ ] Epoch gate is implemented and mapped in `package.json`.
++- [ ] `npm run verify:specs` passes after spec updates.
++- [ ] Epoch-specific gate passes twice (anti-flake).
++- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
++- [ ] Evidence folder is complete and checksum manifests validate.
++
++## NOTES
++- Compatibility: preserve existing script names consumed by automation and runbooks.
++- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
+diff --git a/specs/epochs/EPOCH-24.md b/specs/epochs/EPOCH-24.md
+index d918032..34d2c0b 100644
+--- a/specs/epochs/EPOCH-24.md
++++ b/specs/epochs/EPOCH-24.md
+@@ -1,63 +1,85 @@
+-# EPOCH-24
++# EPOCH-24 — Walk-Forward Reality Gap
+ 
+ ## REALITY SNAPSHOT
+-- Current baseline already exposes offline verification scripts through npm gates.
+-- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
+-- Evidence path target for this planning cycle: `reports/evidence/EPOCH-24/`.
++- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
++- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Evidence target for this epoch is `reports/evidence/EPOCH-24/`.
+ 
+-## GOALS / NON-GOALS
+-### Goals
+-- Add walk-forward and reality-gap court checks with drift budgets.
+-- Detect overfit regressions and enforce anti-overfit evidence.
++## GOALS
++- Deliver the epoch contract through deterministic, reproducible gates.
++- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
++- Produce complete evidence and manifest validation before SAFE verdict.
+ 
+-### Non-goals
+-- No uncontrolled refactors unrelated to the epoch contract.
++## NON-GOALS
++- No unscoped product feature invention.
+ - No default-on network verification path.
++- No live-production execution by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first by default; network checks must be explicit opt-in.
+-- Determinism via seed discipline (`SEED=12345` default).
+-- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- No live trading activation without explicit approvals.
+-
+-## DESIGN (contracts + interfaces + invariants)
+-- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
+-- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
+-- Invariant: epoch gate remains reproducible across anti-flake reruns.
+-- Unknowns in adapter compatibility are marked: Requires verification.
+-
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Update only epoch-specific modules/gates and relevant docs.
+-- Keep diffs minimal and evidence-backed.
+-- Preserve backward compatibility for existing npm gate entry points.
+-
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run `npm run verify:epoch24` (x2), then baseline wall gates.
+-- Repeat critical gates (anti-flake) where defined.
+-- Fail on schema mismatch, checksum mismatch, or drift.
+-
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- Evidence directory: `reports/evidence/EPOCH-24/` (or boot evidence for planning cycle).
+-- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
+-- Export hash references required for release-facing epochs.
+-
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS only if required gates pass and evidence is complete.
+-- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Functional risk: hidden coupling between epoch contracts.
+-- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
+-
+-## ROLLBACK PLAN
+-- Revert epoch commits.
+-- Re-run baseline gates to confirm recovery.
+-
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [ ] Required contracts implemented/verified.
+-- [ ] Required gates pass with anti-flake policy.
+-- [ ] Evidence folder complete with manifest validation.
+-
+-## NOTES (compatibility concerns)
+-- Keep npm scripts stable for downstream automation.
+-- Flag unresolved assumptions as Requires verification.
++- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
++- Deterministic seeds and run-scoped output directories are mandatory.
++- No secrets in specs, logs, manifests, or artifacts.
++
++## DESIGN / CONTRACTS
++- Primary contracts: `scripts/verify/epoch24_walkforward_reality_gap_check.mjs`, `core/obs/reality_gap_monitor.mjs`, phase-2 risk invariants.
++- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
++- Outputs: gate logs in `reports/evidence/EPOCH-24/gates/` and run artifacts in `reports/runs/...`.
++- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
++- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++
++## PATCH PLAN
++1. Implement only contract-relevant files:
++  - `scripts/verify/epoch24_walkforward_reality_gap_check.mjs`
++  - `core/obs/reality_gap_monitor.mjs`
++2. Keep a minimal diff and avoid non-functional churn.
++3. Preserve backward compatibility of npm gate names.
++
++## VERIFY
++- Required command order:
++- `npm run verify:epoch24`
++- `npm run verify:epoch24`
++- `npm run verify:specs`
++- `npm run verify:paper`
++- `npm run verify:e2`
++- `npm run verify:e2:multi`
++- `npm run verify:phase2`
++- `npm run verify:core`
++- Expected artifacts:
++  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
++  - gate logs under `reports/evidence/EPOCH-24/gates/`
++- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++
++## EVIDENCE REQUIREMENTS
++- `reports/evidence/EPOCH-24/PREFLIGHT.log`
++- `reports/evidence/EPOCH-24/SNAPSHOT.md`
++- `reports/evidence/EPOCH-24/ASSUMPTIONS.md`
++- `reports/evidence/EPOCH-24/GATE_PLAN.md`
++- `reports/evidence/EPOCH-24/RISK_REGISTER.md`
++- `reports/evidence/EPOCH-24/DIFF.patch`
++- `reports/evidence/EPOCH-24/gates/*.log`
++- `reports/evidence/EPOCH-24/SHA256SUMS.SOURCE.txt`
++- `reports/evidence/EPOCH-24/SHA256SUMS.EVIDENCE.txt`
++- `reports/evidence/EPOCH-24/SUMMARY.md`
++- `reports/evidence/EPOCH-24/VERDICT.md`
++
++## STOP RULES
++- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
++- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
++- Trigger rollback if baseline gate regressions appear after epoch changes.
++
++## RISK REGISTER
++- Technical risk: contract mismatch between gate script and runtime module interfaces.
++- Operational risk: stale or overwritten run artifacts masking failures.
++- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
++- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++
++## ACCEPTANCE CRITERIA
++- [ ] Epoch gate is implemented and mapped in `package.json`.
++- [ ] `npm run verify:specs` passes after spec updates.
++- [ ] Epoch-specific gate passes twice (anti-flake).
++- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
++- [ ] Evidence folder is complete and checksum manifests validate.
++
++## NOTES
++- Compatibility: preserve existing script names consumed by automation and runbooks.
++- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
+diff --git a/specs/epochs/EPOCH-25.md b/specs/epochs/EPOCH-25.md
+index 3ace3b8..d34fbe5 100644
+--- a/specs/epochs/EPOCH-25.md
++++ b/specs/epochs/EPOCH-25.md
+@@ -1,63 +1,85 @@
+-# EPOCH-25
++# EPOCH-25 — Testnet Campaign Profiling
+ 
+ ## REALITY SNAPSHOT
+-- Current baseline already exposes offline verification scripts through npm gates.
+-- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
+-- Evidence path target for this planning cycle: `reports/evidence/EPOCH-25/`.
++- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
++- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Evidence target for this epoch is `reports/evidence/EPOCH-25/`.
+ 
+-## GOALS / NON-GOALS
+-### Goals
+-- Run testnet campaign profiling for latency, fees, and slippage.
+-- Keep all network-dependent checks opt-in (`ENABLE_NETWORK_TESTS=1`).
++## GOALS
++- Deliver the epoch contract through deterministic, reproducible gates.
++- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
++- Produce complete evidence and manifest validation before SAFE verdict.
+ 
+-### Non-goals
+-- No uncontrolled refactors unrelated to the epoch contract.
++## NON-GOALS
++- No unscoped product feature invention.
+ - No default-on network verification path.
++- No live-production execution by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first by default; network checks must be explicit opt-in.
+-- Determinism via seed discipline (`SEED=12345` default).
+-- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- No live trading activation without explicit approvals.
+-
+-## DESIGN (contracts + interfaces + invariants)
+-- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
+-- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
+-- Invariant: epoch gate remains reproducible across anti-flake reruns.
+-- Unknowns in adapter compatibility are marked: Requires verification.
+-
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Update only epoch-specific modules/gates and relevant docs.
+-- Keep diffs minimal and evidence-backed.
+-- Preserve backward compatibility for existing npm gate entry points.
+-
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run `npm run verify:epoch25` (x2), then baseline wall gates.
+-- Repeat critical gates (anti-flake) where defined.
+-- Fail on schema mismatch, checksum mismatch, or drift.
+-
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- Evidence directory: `reports/evidence/EPOCH-25/` (or boot evidence for planning cycle).
+-- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
+-- Export hash references required for release-facing epochs.
+-
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS only if required gates pass and evidence is complete.
+-- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Functional risk: hidden coupling between epoch contracts.
+-- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
+-
+-## ROLLBACK PLAN
+-- Revert epoch commits.
+-- Re-run baseline gates to confirm recovery.
+-
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [ ] Required contracts implemented/verified.
+-- [ ] Required gates pass with anti-flake policy.
+-- [ ] Evidence folder complete with manifest validation.
+-
+-## NOTES (compatibility concerns)
+-- Keep npm scripts stable for downstream automation.
+-- Flag unresolved assumptions as Requires verification.
++- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
++- Deterministic seeds and run-scoped output directories are mandatory.
++- No secrets in specs, logs, manifests, or artifacts.
++
++## DESIGN / CONTRACTS
++- Primary contracts: `scripts/verify/epoch25_testnet_campaign_check.mjs`; network path is opt-in only via `ENABLE_NETWORK_TESTS=1`.
++- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
++- Outputs: gate logs in `reports/evidence/EPOCH-25/gates/` and run artifacts in `reports/runs/...`.
++- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
++- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++
++## PATCH PLAN
++1. Implement only contract-relevant files:
++  - `scripts/verify/epoch25_testnet_campaign_check.mjs`
++  - `docs/DEPLOYMENT_GUIDE.md`
++2. Keep a minimal diff and avoid non-functional churn.
++3. Preserve backward compatibility of npm gate names.
++
++## VERIFY
++- Required command order:
++- `npm run verify:epoch25`
++- `npm run verify:epoch25`
++- `npm run verify:specs`
++- `npm run verify:paper`
++- `npm run verify:e2`
++- `npm run verify:e2:multi`
++- `ENABLE_NETWORK_TESTS=1 npm run verify:epoch25`
++- `npm run verify:core`
++- Expected artifacts:
++  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
++  - gate logs under `reports/evidence/EPOCH-25/gates/`
++- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++
++## EVIDENCE REQUIREMENTS
++- `reports/evidence/EPOCH-25/PREFLIGHT.log`
++- `reports/evidence/EPOCH-25/SNAPSHOT.md`
++- `reports/evidence/EPOCH-25/ASSUMPTIONS.md`
++- `reports/evidence/EPOCH-25/GATE_PLAN.md`
++- `reports/evidence/EPOCH-25/RISK_REGISTER.md`
++- `reports/evidence/EPOCH-25/DIFF.patch`
++- `reports/evidence/EPOCH-25/gates/*.log`
++- `reports/evidence/EPOCH-25/SHA256SUMS.SOURCE.txt`
++- `reports/evidence/EPOCH-25/SHA256SUMS.EVIDENCE.txt`
++- `reports/evidence/EPOCH-25/SUMMARY.md`
++- `reports/evidence/EPOCH-25/VERDICT.md`
++
++## STOP RULES
++- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
++- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
++- Trigger rollback if baseline gate regressions appear after epoch changes.
++
++## RISK REGISTER
++- Technical risk: contract mismatch between gate script and runtime module interfaces.
++- Operational risk: stale or overwritten run artifacts masking failures.
++- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
++- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++
++## ACCEPTANCE CRITERIA
++- [ ] Epoch gate is implemented and mapped in `package.json`.
++- [ ] `npm run verify:specs` passes after spec updates.
++- [ ] Epoch-specific gate passes twice (anti-flake).
++- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
++- [ ] Evidence folder is complete and checksum manifests validate.
++
++## NOTES
++- Compatibility: preserve existing script names consumed by automation and runbooks.
++- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
+diff --git a/specs/epochs/EPOCH-26.md b/specs/epochs/EPOCH-26.md
+index b22dbde..07bb590 100644
+--- a/specs/epochs/EPOCH-26.md
++++ b/specs/epochs/EPOCH-26.md
+@@ -1,82 +1,85 @@
+ # EPOCH-26 — Micro-Live Governor Rehearsal
+ 
+ ## REALITY SNAPSHOT
+-- Governance stack exists (`GovernanceEngine`, `ModeAwareExecutor`) and already enforces mode transitions.
+-- EPOCH-26 introduces a deterministic rehearsal gate to validate approval/FSM safety before any real live path.
+-- Canonical evidence target for this epoch: `reports/evidence/EPOCH-26/`.
++- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
++- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Evidence target for this epoch is `reports/evidence/EPOCH-26/`.
+ 
+-## GOALS / NON-GOALS
+-### Goals
+-- Prove DRY_RUN -> LIVE_TESTNET transition control via explicit governance prerequisites.
+-- Prove kill-switch and rollback behavior in rehearsal mode.
+-- Keep gate offline-first and deterministic.
++## GOALS
++- Deliver the epoch contract through deterministic, reproducible gates.
++- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
++- Produce complete evidence and manifest validation before SAFE verdict.
+ 
+-### Non-goals
+-- No default network dependency.
+-- No real order placement/live production activation.
+-- No unrelated refactors.
++## NON-GOALS
++- No unscoped product feature invention.
++- No default-on network verification path.
++- No live-production execution by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first by default; network checks must be explicit opt-in.
+-- Deterministic execution (fixed timestamps/inputs where possible).
+-- Baseline invariants remain mandatory: `verify:e2`, `verify:paper` (inside `verify:core`).
+-- Live production transition from DRY_RUN must stay blocked by FSM.
++- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
++- Deterministic seeds and run-scoped output directories are mandatory.
++- No secrets in specs, logs, manifests, or artifacts.
+ 
+-## DESIGN (contracts + interfaces + invariants)
+-- Contracts used: `GovernanceEngine`, `GOV_MODES`, `ModeAwareExecutor`, `EventLog`.
+-- Rehearsal invariants:
+-  1) default mode is `DRY_RUN`;
+-  2) no-approval LIVE_TESTNET transition is blocked;
+-  3) scoped approval artifact validates;
+-  4) approved transition to LIVE_TESTNET is allowed;
+-  5) kill-switch blocks execution;
+-  6) emergency rollback to DRY_RUN is allowed;
+-  7) DRY_RUN -> LIVE_PRODUCTION is blocked;
+-  8) allowed + blocked governance events are emitted.
++## DESIGN / CONTRACTS
++- Primary contracts: `scripts/verify/epoch26_micro_live_governor_check.mjs`, governance FSM transitions, kill-switch/rollback controls.
++- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
++- Outputs: gate logs in `reports/evidence/EPOCH-26/gates/` and run artifacts in `reports/runs/...`.
++- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
++- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
+ 
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Add/maintain gate script: `scripts/verify/epoch26_micro_live_governor_check.mjs`.
+-- Expose npm entrypoint: `verify:epoch26`.
+-- Keep change-set minimal and evidence-backed.
++## PATCH PLAN
++1. Implement only contract-relevant files:
++  - `scripts/verify/epoch26_micro_live_governor_check.mjs`
++  - `core/governance/mode_fsm.mjs`
++2. Keep a minimal diff and avoid non-functional churn.
++3. Preserve backward compatibility of npm gate names.
+ 
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- `npm run verify:epoch26` (run #1)
+-- `npm run verify:epoch26` (run #2)
+-- Mandatory baseline:
+-  - `npm ci`
+-  - `npm run verify:core`
+-  - `npm run verify:phase2`
+-  - `npm run verify:integration`
++## VERIFY
++- Required command order:
++- `npm run verify:epoch26`
++- `npm run verify:epoch26`
++- `npm run verify:specs`
++- `npm run verify:paper`
++- `npm run verify:e2`
++- `npm run verify:e2:multi`
++- `npm run verify:release-governor`
++- `npm run verify:core`
++- Expected artifacts:
++  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
++  - gate logs under `reports/evidence/EPOCH-26/gates/`
++- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
+ 
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- `reports/evidence/EPOCH-26/PREFLIGHT.md`
+-- `reports/evidence/EPOCH-26/INVENTORY.txt`
+-- `reports/evidence/EPOCH-26/GATE_PLAN.md`
++## EVIDENCE REQUIREMENTS
++- `reports/evidence/EPOCH-26/PREFLIGHT.log`
++- `reports/evidence/EPOCH-26/SNAPSHOT.md`
+ - `reports/evidence/EPOCH-26/ASSUMPTIONS.md`
+-- `reports/evidence/EPOCH-26/gates/*.log`
++- `reports/evidence/EPOCH-26/GATE_PLAN.md`
++- `reports/evidence/EPOCH-26/RISK_REGISTER.md`
+ - `reports/evidence/EPOCH-26/DIFF.patch`
++- `reports/evidence/EPOCH-26/gates/*.log`
+ - `reports/evidence/EPOCH-26/SHA256SUMS.SOURCE.txt`
+ - `reports/evidence/EPOCH-26/SHA256SUMS.EVIDENCE.txt`
+ - `reports/evidence/EPOCH-26/SUMMARY.md`
++- `reports/evidence/EPOCH-26/VERDICT.md`
+ 
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS only if all epoch + mandatory baseline gates pass and both checksum manifests validate.
+-- FAIL/BLOCKED if any gate/checksum fails or evidence bundle is incomplete.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Hidden coupling in governance transition guards.
+-- Flake risk in event emission assertions.
+-- Clean-clone drift if manifests are not regenerated after patch.
++## STOP RULES
++- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
++- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
++- Trigger rollback if baseline gate regressions appear after epoch changes.
+ 
+-## ROLLBACK PLAN
+-- Revert epoch-specific commit(s).
+-- Re-run `npm run verify:core`, `npm run verify:phase2`, `npm run verify:integration`.
++## RISK REGISTER
++- Technical risk: contract mismatch between gate script and runtime module interfaces.
++- Operational risk: stale or overwritten run artifacts masking failures.
++- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
++- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
+ 
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [x] EPOCH-26 rehearsal gate implemented and script-wired.
+-- [x] Anti-flake rerun passes.
+-- [x] Mandatory baseline gates pass.
+-- [x] Evidence + manifests generated and checksum-validated.
++## ACCEPTANCE CRITERIA
++- [ ] Epoch gate is implemented and mapped in `package.json`.
++- [ ] `npm run verify:specs` passes after spec updates.
++- [ ] Epoch-specific gate passes twice (anti-flake).
++- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
++- [ ] Evidence folder is complete and checksum manifests validate.
+ 
+-## NOTES (compatibility concerns)
+-- This epoch is rehearsal-only and does not authorize production trading.
++## NOTES
++- Compatibility: preserve existing script names consumed by automation and runbooks.
++- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
+diff --git a/specs/epochs/INDEX.md b/specs/epochs/INDEX.md
+index 5def226..bdb82b1 100644
+--- a/specs/epochs/INDEX.md
++++ b/specs/epochs/INDEX.md
+@@ -1,6 +1,7 @@
+ # EPOCH SPECS INDEX
++One-line purpose: defines implementation order, gate ownership, and evidence expectations for autopilot epoch execution.
+ 
+-## Dependency chain and implementation order
++## Dependency chain (READY order)
+ 1. EPOCH-17
+ 2. EPOCH-18 (depends on EPOCH-17)
+ 3. EPOCH-19 (depends on EPOCH-17..18)
+@@ -12,7 +13,8 @@
+ 9. EPOCH-25 (depends on EPOCH-17..24)
+ 10. EPOCH-26 (depends on EPOCH-17..25)
+ 
+-No-skip policy: parallel implementation is allowed only when dependency contracts are not violated and regression gates remain green.
++## Next READY epoch selection rule
++Select the first epoch in dependency order that is not marked complete by its acceptance checklist + evidence verdict.
+ 
+ ## Shared contracts
+ - `ExecutionAdapter`
+@@ -22,17 +24,29 @@ No-skip policy: parallel implementation is allowed only when dependency contract
+ - `GovernanceFSM`
+ - `ReleaseGovernor`
+ 
+-## Gate map
++## Gate map per epoch
+ - EPOCH-17: `verify:epoch17`, `verify:e2`, `verify:paper`, `verify:e2:multi`
+-- EPOCH-18: `verify:epoch18`, `verify:strategy`, baseline wall
+-- EPOCH-19: `verify:epoch19`, `verify:governance`, baseline wall
+-- EPOCH-20: `verify:epoch20`, `verify:monitoring`, baseline wall
+-- EPOCH-21: `verify:epoch21`, `verify:release-governor`, baseline wall
+-- EPOCH-22: `verify:epoch22`, `verify:core` determinism/invariant scenario battery gates
+-- EPOCH-23: `verify:epoch23`, `verify:integration` signal-to-intent contract checks
+-- EPOCH-24: `verify:epoch24`, `verify:phase2` walk-forward + drift budget checks
+-- EPOCH-25: `verify:epoch25` testnet campaign profiling (network opt-in via `ENABLE_NETWORK_TESTS=1`)
+-- EPOCH-26: `verify:epoch26` micro-live governor rehearsals (approval/FSM/kill-switch/rollback, offline)
++- EPOCH-18: `verify:epoch18`, `verify:strategy`, `verify:core`
++- EPOCH-19: `verify:epoch19`, `verify:governance`, `verify:core`
++- EPOCH-20: `verify:epoch20`, `verify:monitoring`, `verify:core`
++- EPOCH-21: `verify:epoch21`, `verify:release-governor`, `verify:core`
++- EPOCH-22: `verify:epoch22`, `verify:core`
++- EPOCH-23: `verify:epoch23`, `verify:integration`, `verify:core`
++- EPOCH-24: `verify:epoch24`, `verify:phase2`, `verify:core`
++- EPOCH-25: `verify:epoch25` (network opt-in via `ENABLE_NETWORK_TESTS=1`), `verify:core`
++- EPOCH-26: `verify:epoch26`, `verify:release-governor`, `verify:core`
++
++## Evidence pack naming
++- Required path pattern: `reports/evidence/<EPOCH-ID>/`
++- Gate logs live under `reports/evidence/<EPOCH-ID>/gates/`
++- Manifests live under `reports/evidence/<EPOCH-ID>/manifests/`
++
++## Definition of DONE
++An epoch is DONE only when:
++1. Required gates pass with anti-flake repeats where required.
++2. Evidence pack exists and includes `VERDICT.md` with `SAFE` or `SAFE-WITH-LIMITATIONS`.
++3. Source/evidence manifests validate.
++4. Export hash is recorded when export artifact is produced.
+ 
+ ## Epoch spec files
+ - `specs/epochs/EPOCH-17.md`
+diff --git a/specs/epochs/TEMPLATE.md b/specs/epochs/TEMPLATE.md
+index c732357..818d03f 100644
+--- a/specs/epochs/TEMPLATE.md
++++ b/specs/epochs/TEMPLATE.md
+@@ -1,56 +1,57 @@
+-# EPOCH-XX
++# EPOCH-XX — <TITLE>
+ 
+ ## REALITY SNAPSHOT
+-- Describe the current implementation reality, available modules, and verified gaps.
+-- Include explicit references to existing gates and known blockers.
++- Current state of implementation and known baseline.
+ 
+-## GOALS / NON-GOALS
+-### Goals
+-- List measurable outcomes for the epoch.
++## GOALS
++- Measurable objective #1.
++- Measurable objective #2.
+ 
+-### Non-goals
+-- List explicitly out-of-scope changes.
++## NON-GOALS
++- Explicitly excluded scope #1.
++- Explicitly excluded scope #2.
+ 
+ ## CONSTRAINTS
+-- Offline-first verification by default.
+-- Determinism requirements (seed discipline, non-deterministic field policy).
+-- Safety constraints (no live trading by default, explicit opt-in controls).
++- Offline-first by default.
++- Determinism (`SEED`, run-dir discipline, no hidden drift).
++- Safety/security constraints.
+ 
+-## DESIGN (contracts + interfaces + invariants)
+-- Contracts to implement/update.
+-- Interface boundaries and compatibility notes.
++## DESIGN / CONTRACTS
++- Contracts and interfaces touched.
++- Inputs/outputs, schemas, and environment variables.
+ - Invariants that must remain true.
+ 
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Files expected to change.
+-- Minimal-diff and rollback-friendly strategy.
+-
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Required gates and order.
+-- Anti-flake rerun policy.
+-- Expected structural outputs and failure criteria.
+-
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- Required evidence folder path.
+-- Required logs and checksum manifests.
+-- Any additional artifacts needed for acceptance.
+-
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS criteria with objective checks.
+-- FAIL/BLOCKED criteria and escalation path.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Functional risks.
+-- Meta-risks: flake, hidden state, clean-clone regressions, drift.
+-
+-## ROLLBACK PLAN
+-- Exact rollback and re-verification steps.
+-
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [ ] Contract implementation complete.
+-- [ ] Required gates pass (including anti-flake repeats).
+-- [ ] Evidence is complete and checksums validate.
+-
+-## NOTES (compatibility concerns)
+-- Backward compatibility considerations.
+-- Migration and operator notes.
++## PATCH PLAN
++- Ordered list of files to change.
++- Minimal-diff strategy.
++
++## VERIFY
++- Exact commands.
++- Expected artifacts and pass criteria.
++- Anti-flake repeat policy.
++
++## EVIDENCE REQUIREMENTS
++- Evidence directory path.
++- Required logs, manifests, summaries, verdict.
++
++## STOP RULES
++- PASS criteria.
++- BLOCKED criteria.
++- Required rollback trigger.
++
++## RISK REGISTER
++- Technical risk.
++- Operational risk.
++- Meta-risk (false pass/evidence drift).
++- Rollback risk.
++
++## ACCEPTANCE CRITERIA
++- [ ] Criterion 1
++- [ ] Criterion 2
++- [ ] Criterion 3
++- [ ] Criterion 4
++- [ ] Criterion 5
++
++## NOTES
++- Compatibility notes.
++- Rollback plan or reference.

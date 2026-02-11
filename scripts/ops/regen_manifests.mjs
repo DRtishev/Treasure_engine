@@ -3,9 +3,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { execSync } from 'node:child_process';
+import { resolveEvidenceDir } from './evidence_helpers.mjs';
 
-const repoRoot = process.cwd();
-const evidenceDir = process.env.EVIDENCE_DIR || 'reports/evidence/EPOCH-BOOT.AUTOPILOT';
+const evidenceDir = process.env.EVIDENCE_DIR || resolveEvidenceDir();
 const manifestsDir = path.join(evidenceDir, 'manifests');
 fs.mkdirSync(manifestsDir, { recursive: true });
 
@@ -29,6 +29,20 @@ function runCheck(manifestPath, logName) {
   fs.writeFileSync(path.join(manifestsDir, logName), `$ ${cmd}\n${out}`);
 }
 
+function isEvidenceFileExcluded(filePath) {
+  const basename = path.basename(filePath);
+  if (filePath.includes('/manifests/')) return true;
+  if (basename.startsWith('SHA256SUMS.')) return true;
+  if (filePath.includes('/gates/')) {
+    if (basename.startsWith('verify_wall')) return true;
+    if (basename.startsWith('14_regen_manifests')) return true;
+    if (basename.startsWith('15_sha_')) return true;
+    if (basename.startsWith('16_sha_')) return true;
+    if (basename.startsWith('17_sha_')) return true;
+  }
+  return false;
+}
+
 const evidenceFiles = [];
 if (fs.existsSync(evidenceDir)) {
   const all = execSync(`find ${evidenceDir} -type f | sort`, { encoding: 'utf8' })
@@ -36,32 +50,39 @@ if (fs.existsSync(evidenceDir)) {
     .split('\n')
     .filter(Boolean);
   for (const f of all) {
-    if (f.includes('/manifests/')) continue;
-    if (f.includes('/gates/sha_')) continue;
-    if (f.includes('/gates/regen_manifests')) continue;
-    if (path.basename(f).startsWith('SHA256SUMS.')) continue;
+    if (isEvidenceFileExcluded(f)) continue;
     evidenceFiles.push(f);
   }
 }
 writeManifest(evidenceManifest, evidenceFiles);
-runCheck(evidenceManifest, 'validate_evidence.log');
+runCheck(evidenceManifest, 'check_evidence.log');
 
-const tracked = execSync('git ls-files', { encoding: 'utf8' })
-  .trim()
-  .split('\n')
-  .filter(Boolean)
+let tracked = [];
+try {
+  tracked = execSync('git ls-files', { encoding: 'utf8' })
+    .trim()
+    .split('\n')
+    .filter(Boolean);
+} catch {
+  tracked = execSync("find . -type f | sed 's#^\./##'", { encoding: 'utf8' })
+    .trim()
+    .split('\n')
+    .filter(Boolean);
+}
+tracked = tracked
   .filter((f) => !f.match(/\.(zip|tar\.gz)$/))
   .filter((f) => !path.basename(f).startsWith('SHA256SUMS.'))
   .filter((f) => !f.includes('/manifests/'));
 writeManifest(sourceManifest, tracked);
-runCheck(sourceManifest, 'validate_source.log');
+runCheck(sourceManifest, 'check_source.log');
 
-const exportCandidates = ['FINAL_VALIDATED.zip', 'EVIDENCE_PACK_EPOCH-BOOT.AUTOPILOT.tar.gz'].filter((f) => fs.existsSync(f));
+const exportCandidates = ['FINAL_VALIDATED.zip', 'FINAL_VALIDATED.zip.sha256']
+  .filter((f) => fs.existsSync(f));
 writeManifest(exportManifest, exportCandidates);
 if (exportCandidates.length) {
-  runCheck(exportManifest, 'validate_export.log');
+  runCheck(exportManifest, 'check_export.log');
 } else {
-  fs.writeFileSync(path.join(manifestsDir, 'validate_export.log'), 'No export artifacts found; created empty SHA256SUMS.EXPORT.txt\n');
+  fs.writeFileSync(path.join(manifestsDir, 'check_export.log'), 'No export artifacts found; created empty SHA256SUMS.EXPORT.txt\n');
 }
 
 console.log(`Manifest regeneration complete in canonical order: EVIDENCE -> SOURCE -> EXPORT (${evidenceDir})`);

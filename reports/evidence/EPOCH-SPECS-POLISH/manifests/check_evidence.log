@@ -1,0 +1,14 @@
+$ sha256sum -c reports/evidence/EPOCH-SPECS-POLISH/SHA256SUMS.EVIDENCE.txt
+reports/evidence/EPOCH-SPECS-POLISH/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-SPECS-POLISH/AUDIT.md: OK
+reports/evidence/EPOCH-SPECS-POLISH/DIFF.patch: OK
+reports/evidence/EPOCH-SPECS-POLISH/GATE_PLAN.md: OK
+reports/evidence/EPOCH-SPECS-POLISH/INVENTORY.txt: OK
+reports/evidence/EPOCH-SPECS-POLISH/PREFLIGHT.log: OK
+reports/evidence/EPOCH-SPECS-POLISH/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-SPECS-POLISH/SHA256SUMS.SOURCE.txt: OK
+reports/evidence/EPOCH-SPECS-POLISH/SNAPSHOT.md: OK
+reports/evidence/EPOCH-SPECS-POLISH/SUMMARY.md: OK
+reports/evidence/EPOCH-SPECS-POLISH/VERDICT.md: OK
+reports/evidence/EPOCH-SPECS-POLISH/gates/verify_specs.log: OK
+reports/evidence/EPOCH-SPECS-POLISH/manifests/regen_manifests.log: OK

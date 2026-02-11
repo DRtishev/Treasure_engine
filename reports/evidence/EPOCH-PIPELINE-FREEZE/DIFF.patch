@@ -1,0 +1,283 @@
+diff --git a/FINAL_VALIDATED.zip.sha256 b/FINAL_VALIDATED.zip.sha256
+index 6567573..41efdf8 100644
+--- a/FINAL_VALIDATED.zip.sha256
++++ b/FINAL_VALIDATED.zip.sha256
+@@ -1 +1 @@
+-342a6fad55f97e67780e6fe3ee8a32c44a5d8bc4fc116da80cd408566f8cd3ea  FINAL_VALIDATED.zip
++27e4f94afdfa4e839612720d54bb72c1958630a33455bb9b6ce333e2cae8f590  FINAL_VALIDATED.zip
+diff --git a/RUNBOOK.md b/RUNBOOK.md
+index 20e94d8..10d086c 100644
+--- a/RUNBOOK.md
++++ b/RUNBOOK.md
+@@ -2,35 +2,29 @@
+ 
+ ## 1) Канонический оффлайн wall
+ ```bash
+-npm run verify:wall
++EVIDENCE_EPOCH=EPOCH-PIPELINE-FREEZE npm run verify:wall
+ ```
+ 
+-`verify:wall` выполняет строгую последовательность:
++`verify:wall` выполняет фиксированный оффлайн-пайплайн:
+ 1. `npm ci`
+ 2. `npm run verify:specs`
+ 3. `npm run verify:paper` (x2)
+ 4. `npm run verify:e2` (x2)
+ 5. `npm run verify:e2:multi`
+-6. `npm run verify:phase2`
+-7. `npm run verify:integration`
+-8. `npm run verify:epoch17`
+-9. `npm run verify:epoch18`
+-10. `npm run verify:epoch19`
+-11. `npm run verify:monitoring` (x2)
+-12. `npm run verify:epoch20`
+-13. `npm run verify:epoch21`
+-14. `npm run verify:epoch22`
+-15. `npm run verify:epoch23`
+-16. `npm run verify:epoch24`
+-17. `npm run verify:epoch25`
+-18. `npm run verify:epoch26` (x2)
+-19. `npm run verify:release-governor` (x2)
+-20. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt`
+-21. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt`
++6. `npm run verify:paper:multi`
++7. `npm run verify:phase2`
++8. `npm run verify:integration`
++9. `npm run verify:core`
++10. `npm run regen:manifests`
++11. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.SOURCE.txt`
++12. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.EVIDENCE.txt`
++13. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.EXPORT.txt`
++
++Если `EVIDENCE_EPOCH` не задан, используется самый свежий каталог в `reports/evidence/`.
+ 
+ ## 2) Канонический порядок манифестов
+ ```bash
+-npm run regen:manifests
++EVIDENCE_EPOCH=EPOCH-PIPELINE-FREEZE npm run regen:manifests
+ ```
+ Порядок всегда: **EVIDENCE -> SOURCE -> EXPORT**, затем `sha256sum -c` по каждому манифесту.
+ 
+@@ -42,7 +36,7 @@ npm run export:validated
+ - `FINAL_VALIDATED.zip`
+ - `FINAL_VALIDATED.zip.sha256`
+ 
+-Экспорт исключает `.git`, `node_modules`, `reports/runs`, логи, кеши, временные и входящие архивы.
++Экспорт исключает `.git`, `node_modules`, `reports/runs`, логи, кеши, временные директории и `artifacts/incoming`.
+ 
+ ## 4) Сеть и безопасность
+ - Network-dependent тесты выключены по умолчанию.
+diff --git a/package.json b/package.json
+index e9b4dce..02293bb 100644
+--- a/package.json
++++ b/package.json
+@@ -73,7 +73,7 @@
+     "verify:specs": "node scripts/verify/specs_check.mjs",
+     "regen:manifests": "node scripts/ops/regen_manifests.mjs",
+     "export:validated": "node scripts/export_validated.mjs",
+-    "verify:wall": "npm ci && npm run verify:specs && npm run verify:paper && npm run verify:paper && npm run verify:e2 && npm run verify:e2 && npm run verify:e2:multi && npm run verify:paper:multi && npm run verify:phase2 && npm run verify:integration && npm run verify:core && npm run regen:manifests && git ls-files | sort | xargs sha256sum > reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.SOURCE.txt && find reports/evidence/EPOCH-AUTOPILOT-FINAL -type f ! -name 'SHA256SUMS.EVIDENCE.txt' ! -path 'reports/evidence/EPOCH-AUTOPILOT-FINAL/manifests/check_source.log' ! -path 'reports/evidence/EPOCH-AUTOPILOT-FINAL/manifests/check_evidence.log' ! -path 'reports/evidence/EPOCH-AUTOPILOT-FINAL/manifests/check_export.log' ! -path 'reports/evidence/EPOCH-AUTOPILOT-FINAL/gates/verify_wall_run1.log' | sort | xargs sha256sum > reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.EVIDENCE.txt && sha256sum FINAL_VALIDATED.zip FINAL_VALIDATED.zip.sha256 > reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.EXPORT.txt && sha256sum -c reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.SOURCE.txt && sha256sum -c reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.EVIDENCE.txt && sha256sum -c reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.EXPORT.txt",
++    "verify:wall": "node scripts/verify/wall.mjs",
+     "verify:epoch22": "node scripts/verify/epoch22_ai_validation_harness.mjs",
+     "verify:epoch23": "node scripts/verify/epoch23_signal_intent_contract_check.mjs",
+     "verify:epoch24": "node scripts/verify/epoch24_walkforward_reality_gap_check.mjs",
+diff --git a/scripts/epoch/autonomous_epoch_executor.mjs b/scripts/epoch/autonomous_epoch_executor.mjs
+index 18fbf69..1a0fbd4 100755
+--- a/scripts/epoch/autonomous_epoch_executor.mjs
++++ b/scripts/epoch/autonomous_epoch_executor.mjs
+@@ -4,7 +4,7 @@ import path from 'node:path';
+ import { spawnSync } from 'node:child_process';
+ 
+ const LEDGER_PATH = 'specs/epochs/LEDGER.json';
+-const EVIDENCE_EPOCH = process.env.EPOCH_EVIDENCE_ID || 'EPOCH-AUTOPILOT-FINAL';
++const EVIDENCE_EPOCH = process.env.EVIDENCE_EPOCH || process.env.EPOCH_EVIDENCE_ID || 'EPOCH-PIPELINE-FREEZE';
+ const EVIDENCE_DIR = path.join('reports', 'evidence', EVIDENCE_EPOCH);
+ const GATES_DIR = path.join(EVIDENCE_DIR, 'gates');
+ const RUN_STATE_PATH = path.join(EVIDENCE_DIR, 'AUTONOMOUS_EPOCH_RUN_STATE.json');
+diff --git a/scripts/export_validated.mjs b/scripts/export_validated.mjs
+index 0814414..17a9acc 100644
+--- a/scripts/export_validated.mjs
++++ b/scripts/export_validated.mjs
+@@ -12,12 +12,12 @@ const excludes = [
+   'node_modules/*',
+   'logs/*',
+   'reports/runs/*',
++  'artifacts/incoming/*',
+   '.cache/*',
+   'tmp/*',
+   'temp/*',
+   '*.zip',
+-  '*.tar.gz',
+-  '*.sha256'
++  '*.tar.gz'
+ ];
+ 
+ const cmd = `zip -r -X ${zipName} . ${excludes.map((x) => `-x "${x}"`).join(' ')}`;
+diff --git a/scripts/ops/regen_manifests.mjs b/scripts/ops/regen_manifests.mjs
+index 6283bc1..43156ad 100644
+--- a/scripts/ops/regen_manifests.mjs
++++ b/scripts/ops/regen_manifests.mjs
+@@ -3,9 +3,9 @@ import fs from 'node:fs';
+ import path from 'node:path';
+ import crypto from 'node:crypto';
+ import { execSync } from 'node:child_process';
++import { resolveEvidenceDir } from './evidence_helpers.mjs';
+ 
+-const repoRoot = process.cwd();
+-const evidenceDir = process.env.EVIDENCE_DIR || 'reports/evidence/EPOCH-BOOT.AUTOPILOT';
++const evidenceDir = process.env.EVIDENCE_DIR || resolveEvidenceDir();
+ const manifestsDir = path.join(evidenceDir, 'manifests');
+ fs.mkdirSync(manifestsDir, { recursive: true });
+ 
+@@ -29,6 +29,20 @@ function runCheck(manifestPath, logName) {
+   fs.writeFileSync(path.join(manifestsDir, logName), `$ ${cmd}\n${out}`);
+ }
+ 
++function isEvidenceFileExcluded(filePath) {
++  const basename = path.basename(filePath);
++  if (filePath.includes('/manifests/')) return true;
++  if (basename.startsWith('SHA256SUMS.')) return true;
++  if (filePath.includes('/gates/')) {
++    if (basename.startsWith('verify_wall')) return true;
++    if (basename.startsWith('14_regen_manifests')) return true;
++    if (basename.startsWith('15_sha_')) return true;
++    if (basename.startsWith('16_sha_')) return true;
++    if (basename.startsWith('17_sha_')) return true;
++  }
++  return false;
++}
++
+ const evidenceFiles = [];
+ if (fs.existsSync(evidenceDir)) {
+   const all = execSync(`find ${evidenceDir} -type f | sort`, { encoding: 'utf8' })
+@@ -36,32 +50,39 @@ if (fs.existsSync(evidenceDir)) {
+     .split('\n')
+     .filter(Boolean);
+   for (const f of all) {
+-    if (f.includes('/manifests/')) continue;
+-    if (f.includes('/gates/sha_')) continue;
+-    if (f.includes('/gates/regen_manifests')) continue;
+-    if (path.basename(f).startsWith('SHA256SUMS.')) continue;
++    if (isEvidenceFileExcluded(f)) continue;
+     evidenceFiles.push(f);
+   }
+ }
+ writeManifest(evidenceManifest, evidenceFiles);
+-runCheck(evidenceManifest, 'validate_evidence.log');
++runCheck(evidenceManifest, 'check_evidence.log');
+ 
+-const tracked = execSync('git ls-files', { encoding: 'utf8' })
+-  .trim()
+-  .split('\n')
+-  .filter(Boolean)
++let tracked = [];
++try {
++  tracked = execSync('git ls-files', { encoding: 'utf8' })
++    .trim()
++    .split('\n')
++    .filter(Boolean);
++} catch {
++  tracked = execSync("find . -type f | sed 's#^\./##'", { encoding: 'utf8' })
++    .trim()
++    .split('\n')
++    .filter(Boolean);
++}
++tracked = tracked
+   .filter((f) => !f.match(/\.(zip|tar\.gz)$/))
+   .filter((f) => !path.basename(f).startsWith('SHA256SUMS.'))
+   .filter((f) => !f.includes('/manifests/'));
+ writeManifest(sourceManifest, tracked);
+-runCheck(sourceManifest, 'validate_source.log');
++runCheck(sourceManifest, 'check_source.log');
+ 
+-const exportCandidates = ['FINAL_VALIDATED.zip', 'EVIDENCE_PACK_EPOCH-BOOT.AUTOPILOT.tar.gz'].filter((f) => fs.existsSync(f));
++const exportCandidates = ['FINAL_VALIDATED.zip', 'FINAL_VALIDATED.zip.sha256']
++  .filter((f) => fs.existsSync(f));
+ writeManifest(exportManifest, exportCandidates);
+ if (exportCandidates.length) {
+-  runCheck(exportManifest, 'validate_export.log');
++  runCheck(exportManifest, 'check_export.log');
+ } else {
+-  fs.writeFileSync(path.join(manifestsDir, 'validate_export.log'), 'No export artifacts found; created empty SHA256SUMS.EXPORT.txt\n');
++  fs.writeFileSync(path.join(manifestsDir, 'check_export.log'), 'No export artifacts found; created empty SHA256SUMS.EXPORT.txt\n');
+ }
+ 
+ console.log(`Manifest regeneration complete in canonical order: EVIDENCE -> SOURCE -> EXPORT (${evidenceDir})`);
+diff --git a/scripts/verify/release_governor_check.mjs b/scripts/verify/release_governor_check.mjs
+index bb5ecc2..d1fae5b 100644
+--- a/scripts/verify/release_governor_check.mjs
++++ b/scripts/verify/release_governor_check.mjs
+@@ -2,9 +2,9 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import crypto from 'node:crypto';
++import { EVIDENCE_ROOT, resolveEvidenceDir } from '../ops/evidence_helpers.mjs';
+ 
+ const LEDGER_PATH = 'specs/epochs/LEDGER.json';
+-const EVIDENCE_ROOT = 'reports/evidence';
+ 
+ let passed = 0;
+ let failed = 0;
+@@ -33,15 +33,6 @@ function parseShaFile(filePath) {
+   return first.split(/\s+/)[0] || '';
+ }
+ 
+-function latestEvidenceDir() {
+-  if (!mustExist(EVIDENCE_ROOT)) return null;
+-  const dirs = fs.readdirSync(EVIDENCE_ROOT)
+-    .map((d) => path.join(EVIDENCE_ROOT, d))
+-    .filter((p) => fs.statSync(p).isDirectory())
+-    .sort((a, b) => fs.statSync(b).mtimeMs - fs.statSync(a).mtimeMs);
+-  return dirs[0] || null;
+-}
+-
+ function validateLedger() {
+   assert(mustExist(LEDGER_PATH), `ledger exists: ${LEDGER_PATH}`);
+   if (!mustExist(LEDGER_PATH)) return null;
+@@ -61,12 +52,22 @@ function validateLedger() {
+   return ledger;
+ }
+ 
++function latestWallLog(gatesDir) {
++  if (!mustExist(gatesDir)) return null;
++  const wallLogs = fs.readdirSync(gatesDir)
++    .filter((name) => name.includes('verify_wall') && name.endsWith('.log'))
++    .map((name) => path.join(gatesDir, name))
++    .sort((a, b) => fs.statSync(b).mtimeMs - fs.statSync(a).mtimeMs);
++  return wallLogs[0] || null;
++}
++
+ function validateWallEvidence(evidenceDir) {
+   const gatesDir = path.join(evidenceDir, 'gates');
+   assert(mustExist(gatesDir), `gates dir exists: ${gatesDir}`);
+-  const wallLog = path.join(gatesDir, 'verify_wall_run1.log');
+-  assert(mustExist(wallLog), `wall log exists: ${wallLog}`);
+-  if (!mustExist(wallLog)) return;
++  const wallLog = latestWallLog(gatesDir);
++  assert(Boolean(wallLog), `wall log exists under: ${gatesDir}`);
++  if (!wallLog) return;
++
+   const text = fs.readFileSync(wallLog, 'utf8');
+   const requiredMarkers = [
+     'npm run verify:specs',
+@@ -78,10 +79,9 @@ function validateWallEvidence(evidenceDir) {
+     'npm run verify:integration',
+     'npm run verify:core',
+     'npm run regen:manifests',
+-    'sha256sum -c reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.SOURCE.txt',
+-    'sha256sum -c reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.EVIDENCE.txt',
+-    'sha256sum -c reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.EXPORT.txt'
++    'sha256sum -c '
+   ];
++
+   for (const marker of requiredMarkers) {
+     assert(text.includes(marker), `wall log contains marker: ${marker}`);
+   }
+@@ -120,7 +120,7 @@ console.log('RELEASE GOVERNOR CHECK (LEDGER + LATEST EVIDENCE)');
+ console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+ 
+ const ledger = validateLedger();
+-const latest = latestEvidenceDir();
++const latest = process.env.EVIDENCE_DIR || resolveEvidenceDir();
+ assert(Boolean(latest), `latest evidence directory exists under ${EVIDENCE_ROOT}`);
+ if (latest) {
+   console.log(`Using latest evidence dir: ${latest}`);

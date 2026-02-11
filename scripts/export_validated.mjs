@@ -12,12 +12,12 @@ const excludes = [
   'node_modules/*',
   'logs/*',
   'reports/runs/*',
+  'artifacts/incoming/*',
   '.cache/*',
   'tmp/*',
   'temp/*',
   '*.zip',
-  '*.tar.gz',
-  '*.sha256'
+  '*.tar.gz'
 ];
 
 const cmd = `zip -r -X ${zipName} . ${excludes.map((x) => `-x "${x}"`).join(' ')}`;

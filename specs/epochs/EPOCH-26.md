@@ -1,82 +1,85 @@
 # EPOCH-26 — Micro-Live Governor Rehearsal
 
 ## REALITY SNAPSHOT
-- Governance stack exists (`GovernanceEngine`, `ModeAwareExecutor`) and already enforces mode transitions.
-- EPOCH-26 introduces a deterministic rehearsal gate to validate approval/FSM safety before any real live path.
-- Canonical evidence target for this epoch: `reports/evidence/EPOCH-26/`.
+- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
+- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+- Evidence target for this epoch is `reports/evidence/EPOCH-26/`.
 
-## GOALS / NON-GOALS
-### Goals
-- Prove DRY_RUN -> LIVE_TESTNET transition control via explicit governance prerequisites.
-- Prove kill-switch and rollback behavior in rehearsal mode.
-- Keep gate offline-first and deterministic.
+## GOALS
+- Deliver the epoch contract through deterministic, reproducible gates.
+- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
+- Produce complete evidence and manifest validation before SAFE verdict.
 
-### Non-goals
-- No default network dependency.
-- No real order placement/live production activation.
-- No unrelated refactors.
+## NON-GOALS
+- No unscoped product feature invention.
+- No default-on network verification path.
+- No live-production execution by default.
 
 ## CONSTRAINTS
-- Offline-first by default; network checks must be explicit opt-in.
-- Deterministic execution (fixed timestamps/inputs where possible).
-- Baseline invariants remain mandatory: `verify:e2`, `verify:paper` (inside `verify:core`).
-- Live production transition from DRY_RUN must stay blocked by FSM.
+- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
+- Deterministic seeds and run-scoped output directories are mandatory.
+- No secrets in specs, logs, manifests, or artifacts.
 
-## DESIGN (contracts + interfaces + invariants)
-- Contracts used: `GovernanceEngine`, `GOV_MODES`, `ModeAwareExecutor`, `EventLog`.
-- Rehearsal invariants:
-  1) default mode is `DRY_RUN`;
-  2) no-approval LIVE_TESTNET transition is blocked;
-  3) scoped approval artifact validates;
-  4) approved transition to LIVE_TESTNET is allowed;
-  5) kill-switch blocks execution;
-  6) emergency rollback to DRY_RUN is allowed;
-  7) DRY_RUN -> LIVE_PRODUCTION is blocked;
-  8) allowed + blocked governance events are emitted.
+## DESIGN / CONTRACTS
+- Primary contracts: `scripts/verify/epoch26_micro_live_governor_check.mjs`, governance FSM transitions, kill-switch/rollback controls.
+- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
+- Outputs: gate logs in `reports/evidence/EPOCH-26/gates/` and run artifacts in `reports/runs/...`.
+- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
+- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
 
 ## PATCH PLAN
-- Add/maintain gate script: `scripts/verify/epoch26_micro_live_governor_check.mjs`.
-- Expose npm entrypoint: `verify:epoch26`.
-- Keep change-set minimal and evidence-backed.
+1. Implement only contract-relevant files:
+  - `scripts/verify/epoch26_micro_live_governor_check.mjs`
+  - `core/governance/mode_fsm.mjs`
+2. Keep a minimal diff and avoid non-functional churn.
+3. Preserve backward compatibility of npm gate names.
 
-## VERIFY (gates + anti-flake)
-- `npm run verify:epoch26` (run #1)
-- `npm run verify:epoch26` (run #2)
-- Mandatory baseline:
-  - `npm ci`
-  - `npm run verify:core`
-  - `npm run verify:phase2`
-  - `npm run verify:integration`
+## VERIFY
+- Required command order:
+- `npm run verify:epoch26`
+- `npm run verify:epoch26`
+- `npm run verify:specs`
+- `npm run verify:paper`
+- `npm run verify:e2`
+- `npm run verify:e2:multi`
+- `npm run verify:release-governor`
+- `npm run verify:core`
+- Expected artifacts:
+  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+  - gate logs under `reports/evidence/EPOCH-26/gates/`
+- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
 
 ## EVIDENCE REQUIREMENTS
-- `reports/evidence/EPOCH-26/PREFLIGHT.md`
-- `reports/evidence/EPOCH-26/INVENTORY.txt`
-- `reports/evidence/EPOCH-26/GATE_PLAN.md`
+- `reports/evidence/EPOCH-26/PREFLIGHT.log`
+- `reports/evidence/EPOCH-26/SNAPSHOT.md`
 - `reports/evidence/EPOCH-26/ASSUMPTIONS.md`
-- `reports/evidence/EPOCH-26/gates/*.log`
+- `reports/evidence/EPOCH-26/GATE_PLAN.md`
+- `reports/evidence/EPOCH-26/RISK_REGISTER.md`
 - `reports/evidence/EPOCH-26/DIFF.patch`
+- `reports/evidence/EPOCH-26/gates/*.log`
 - `reports/evidence/EPOCH-26/SHA256SUMS.SOURCE.txt`
 - `reports/evidence/EPOCH-26/SHA256SUMS.EVIDENCE.txt`
 - `reports/evidence/EPOCH-26/SUMMARY.md`
+- `reports/evidence/EPOCH-26/VERDICT.md`
 
 ## STOP RULES
-- PASS only if all epoch + mandatory baseline gates pass and both checksum manifests validate.
-- FAIL/BLOCKED if any gate/checksum fails or evidence bundle is incomplete.
+- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
+- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
+- Trigger rollback if baseline gate regressions appear after epoch changes.
 
 ## RISK REGISTER
-- Hidden coupling in governance transition guards.
-- Flake risk in event emission assertions.
-- Clean-clone drift if manifests are not regenerated after patch.
-
-## ROLLBACK PLAN
-- Revert epoch-specific commit(s).
-- Re-run `npm run verify:core`, `npm run verify:phase2`, `npm run verify:integration`.
+- Technical risk: contract mismatch between gate script and runtime module interfaces.
+- Operational risk: stale or overwritten run artifacts masking failures.
+- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
+- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
 
 ## ACCEPTANCE CRITERIA
-- [x] EPOCH-26 rehearsal gate implemented and script-wired.
-- [x] Anti-flake rerun passes.
-- [x] Mandatory baseline gates pass.
-- [x] Evidence + manifests generated and checksum-validated.
+- [ ] Epoch gate is implemented and mapped in `package.json`.
+- [ ] `npm run verify:specs` passes after spec updates.
+- [ ] Epoch-specific gate passes twice (anti-flake).
+- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
+- [ ] Evidence folder is complete and checksum manifests validate.
 
 ## NOTES
-- This epoch is rehearsal-only and does not authorize production trading.
+- Compatibility: preserve existing script names consumed by automation and runbooks.
+- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.

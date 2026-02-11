@@ -1,0 +1,7 @@
+$ npm run verify:specs
+
+> treasure-engine@1.0.0 verify:specs
+> node scripts/verify/specs_check.mjs
+
+verify:specs PASSED
+Validated 14 required files in /workspace/Treasure_engine

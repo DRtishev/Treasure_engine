@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-02-11T13:35:41.016Z",
+  "epochs": {
+    "17": {
+      "status": "DONE",
+      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
+      "last_evidence_path": "reports/evidence/EPOCH-17/",
+      "last_gate_summary": "verify:epoch17 PASS; baseline gates PASS"
+    },
+    "18": {
+      "status": "DONE",
+      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
+      "last_evidence_path": "reports/evidence/EPOCH-18/",
+      "last_gate_summary": "verify:epoch18 PASS; strategy gates PASS"
+    },
+    "19": {
+      "status": "DONE",
+      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
+      "last_evidence_path": "reports/evidence/EPOCH-19/",
+      "last_gate_summary": "verify:epoch19 PASS; governance gates PASS"
+    },
+    "20": {
+      "status": "DONE",
+      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
+      "last_evidence_path": "reports/evidence/EPOCH-20/",
+      "last_gate_summary": "verify:epoch20 PASS; monitoring gates PASS"
+    },
+    "21": {
+      "status": "DONE",
+      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
+      "last_evidence_path": "reports/evidence/EPOCH-21/",
+      "last_gate_summary": "verify:epoch21 PASS; release governor baseline PASS"
+    },
+    "22": {
+      "status": "DONE",
+      "last_commit_sha": "afda7bbfbf11c19e9a7afd4e20eff84e828a25be",
+      "last_evidence_path": "reports/evidence/EPOCH-AUTOPILOT-FINAL/",
+      "last_gate_summary": "npm run verify:epoch22=PASS; npm run verify:core=PASS"
+    },
+    "23": {
+      "status": "READY",
+      "last_commit_sha": "",
+      "last_evidence_path": "",
+      "last_gate_summary": "Awaiting dependency completion"
+    },
+    "24": {
+      "status": "READY",
+      "last_commit_sha": "",
+      "last_evidence_path": "",
+      "last_gate_summary": "Awaiting dependency completion"
+    },
+    "25": {
+      "status": "READY",
+      "last_commit_sha": "",
+      "last_evidence_path": "",
+      "last_gate_summary": "Awaiting dependency completion"
+    },
+    "26": {
+      "status": "READY",
+      "last_commit_sha": "",
+      "last_evidence_path": "",
+      "last_gate_summary": "Awaiting dependency completion"
+    }
+  }
+}
