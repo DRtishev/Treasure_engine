@@ -38,7 +38,7 @@ function validateLedger() {
   if (!mustExist(LEDGER_PATH)) return null;
   const ledger = JSON.parse(fs.readFileSync(LEDGER_PATH, 'utf8'));
   const statuses = ['DONE', 'READY', 'BLOCKED'];
-  for (let epoch = 17; epoch <= 26; epoch += 1) {
+  for (let epoch = 1; epoch <= 30; epoch += 1) {
     const e = ledger.epochs?.[String(epoch)];
     assert(Boolean(e), `ledger has epoch ${epoch}`);
     if (!e) continue;
@@ -46,9 +46,9 @@ function validateLedger() {
   }
 
   const blocked = Object.entries(ledger.epochs || {})
-    .filter(([k, v]) => Number(k) >= 17 && v.status === 'BLOCKED')
+    .filter(([k, v]) => Number(k) >= 1 && v.status === 'BLOCKED')
     .map(([k]) => k);
-  assert(blocked.length === 0, `no BLOCKED epochs >=17 in ledger (found: ${blocked.join(', ') || 'none'})`);
+  assert(blocked.length === 0, `no BLOCKED epochs >=1 in ledger (found: ${blocked.join(', ') || 'none'})`);
   return ledger;
 }
 

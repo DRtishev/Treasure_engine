@@ -9,6 +9,7 @@ const evidenceDir = process.env.EVIDENCE_DIR || resolveEvidenceDir();
 const commands = [
   'npm ci',
   'npm run verify:specs',
+  'npm run verify:specs',
   'npm run verify:paper',
   'npm run verify:paper',
   'npm run verify:e2',
@@ -18,6 +19,9 @@ const commands = [
   'npm run verify:phase2',
   'npm run verify:integration',
   'npm run verify:core',
+  'npm run verify:epoch27',
+  'npm run verify:epoch28',
+  'npm run verify:epoch29',
   'npm run regen:manifests',
   `sha256sum -c ${path.join(evidenceDir, 'SHA256SUMS.SOURCE.txt')}`,
   `sha256sum -c ${path.join(evidenceDir, 'SHA256SUMS.EVIDENCE.txt')}`,

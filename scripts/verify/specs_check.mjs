@@ -2,9 +2,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const EPOCH_START = 17;
-const EPOCH_END = 26;
-const epochFiles = Array.from({ length: EPOCH_END - EPOCH_START + 1 }, (_, i) => `specs/epochs/EPOCH-${i + EPOCH_START}.md`);
+const EPOCH_START = 1;
+const EPOCH_END = 30;
+const epochFiles = Array.from({ length: EPOCH_END - EPOCH_START + 1 }, (_, i) => `specs/epochs/EPOCH-${String(i + EPOCH_START).padStart(2, '0')}.md`);
 
 const requiredFiles = [
   'specs/SSOT_INDEX.md',
@@ -13,6 +13,7 @@ const requiredFiles = [
   'specs/epochs/TEMPLATE.md',
   'docs/SPECS_PLAYBOOK.md',
   'specs/epochs/LEDGER.json',
+  'agents.md',
   ...epochFiles
 ];
 
@@ -92,6 +93,25 @@ for (const epochFile of epochFiles) {
 }
 
 
+
+if (fs.existsSync('agents.md')) {
+  const agents = read('agents.md');
+  const requiredAgentHeadings = [
+    '# TREASURE ENGINE — AGENTS (CODEX AUTOPILOT POLICY)',
+    '## Operating Mode',
+    '## Truth Layer Rules (Non-Negotiable)',
+    '## Determinism & Run Directories',
+    '## Gates & Wall',
+    '## Evidence Protocol',
+    '## Ledger Discipline',
+    '## Safety',
+    '## Output Standard'
+  ];
+  for (const h of requiredAgentHeadings) {
+    if (!agents.includes(h)) errors.push(`agents.md missing required heading: ${h}`);
+  }
+}
+
 if (fs.existsSync('specs/epochs/LEDGER.json')) {
   const ledger = JSON.parse(read('specs/epochs/LEDGER.json'));
   const validStatuses = new Set(['DONE', 'READY', 'BLOCKED']);
@@ -113,7 +133,7 @@ if (fs.existsSync('specs/epochs/LEDGER.json')) {
 if (fs.existsSync('specs/epochs/INDEX.md')) {
   const indexText = read('specs/epochs/INDEX.md');
   for (let epoch = EPOCH_START; epoch <= EPOCH_END; epoch += 1) {
-    const marker = `specs/epochs/EPOCH-${epoch}.md`;
+    const marker = `specs/epochs/EPOCH-${String(epoch).padStart(2, '0')}.md`;
     if (!indexText.includes(marker)) errors.push(`INDEX missing epoch file mapping: ${marker}`);
   }
   if (!/Dependency chain|READY order/i.test(indexText)) {

@@ -1,0 +1,22 @@
+$ npm run verify:epoch26
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch26
+> node scripts/verify/epoch26_micro_live_governor_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-26 MICRO-LIVE GOVERNOR CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ default mode is DRY_RUN
+✓ transition to LIVE_TESTNET blocked without governance approval
+✓ approval artifact validates for required scope
+✓ transition to LIVE_TESTNET succeeds with prerequisites
+✓ kill switch blocks execution in micro-live drill
+✓ emergency rollback to DRY_RUN succeeds
+✓ LIVE_PRODUCTION blocked by FSM from DRY_RUN
+✓ allowed transition events emitted
+✓ blocked transition events emitted
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 9
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

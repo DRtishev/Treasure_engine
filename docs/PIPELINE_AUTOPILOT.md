@@ -32,3 +32,10 @@ For each epoch, keep `reports/evidence/<EPOCH-ID>/` with:
 - `epoch:next` prints the next READY epoch from ledger + dependency reasoning.
 - `epoch:run` executes required verify gates for the next READY epoch and writes logs.
 - `epoch:close` validates evidence completeness then marks epoch DONE in ledger.
+
+
+## Epoch executor commands
+- `npm run epoch:next`
+- `npm run epoch:run`
+- `npm run epoch:close`
+- Honors `EVIDENCE_EPOCH` for run/evidence location.

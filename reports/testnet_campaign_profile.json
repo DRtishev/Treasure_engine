@@ -1,0 +1,37 @@
+{
+  "gate": "epoch25_testnet_campaign",
+  "mode": "OFFLINE_BASELINE",
+  "seed": 12345,
+  "campaign_samples": [
+    {
+      "fixture": "data/fixtures/live/btc_usdt_market_buy_001.json",
+      "latency_ms": 120,
+      "fee_usd": 0,
+      "slippage_bps": 0
+    },
+    {
+      "fixture": "data/fixtures/live/eth_usdt_limit_sell_partial.json",
+      "latency_ms": 240,
+      "fee_usd": 0,
+      "slippage_bps": 0
+    },
+    {
+      "fixture": "data/fixtures/live/sol_usdt_price_mismatch.json",
+      "latency_ms": 360,
+      "fee_usd": 0,
+      "slippage_bps": 0
+    }
+  ],
+  "summary": {
+    "avg_latency_ms": 240,
+    "avg_fee_usd": 0,
+    "avg_slippage_bps": 0
+  },
+  "budget": {
+    "max_avg_latency_ms": 1000,
+    "max_avg_slippage_bps": 100,
+    "max_avg_fee_usd": 20
+  },
+  "within_budget": true,
+  "fingerprint": "58480d11c3adf692940e4858e371c37b7f9d0a7532a6d66305c84820bb1d7426"
+}

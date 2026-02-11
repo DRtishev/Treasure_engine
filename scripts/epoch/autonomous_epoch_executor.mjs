@@ -9,7 +9,7 @@ const EVIDENCE_DIR = path.join('reports', 'evidence', EVIDENCE_EPOCH);
 const GATES_DIR = path.join(EVIDENCE_DIR, 'gates');
 const RUN_STATE_PATH = path.join(EVIDENCE_DIR, 'AUTONOMOUS_EPOCH_RUN_STATE.json');
 
-const ORDER = ['17', '18', '19', '20', '21', '22', '23', '24', '25', '26'];
+const ORDER = ['17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
 
 const GATE_MAP = {
   '17': ['npm run verify:epoch17', 'npm run verify:paper', 'npm run verify:e2', 'npm run verify:e2:multi'],
@@ -21,7 +21,11 @@ const GATE_MAP = {
   '23': ['npm run verify:epoch23', 'npm run verify:integration', 'npm run verify:core'],
   '24': ['npm run verify:epoch24', 'npm run verify:phase2', 'npm run verify:core'],
   '25': ['npm run verify:epoch25', 'npm run verify:core'],
-  '26': ['npm run verify:epoch26', 'npm run verify:release-governor', 'npm run verify:core']
+  '26': ['npm run verify:epoch26', 'npm run verify:release-governor', 'npm run verify:core'],
+  '27': ['npm run verify:epoch27', 'npm run verify:core'],
+  '28': ['npm run verify:epoch28', 'npm run verify:integration', 'npm run verify:core'],
+  '29': ['npm run verify:epoch29', 'npm run verify:phase2', 'npm run verify:core'],
+  '30': ['npm run verify:epoch30', 'npm run verify:wall', 'npm run verify:release-governor'],
 };
 
 function readLedger() {

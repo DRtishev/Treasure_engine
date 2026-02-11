@@ -1,66 +1,454 @@
 {
-  "schema_version": 1,
-  "updated_at": "2026-02-11T13:35:41.016Z",
+  "schema_version": 2,
+  "updated_at": "2026-02-11T15:09:30Z",
   "epochs": {
-    "17": {
+    "1": {
+      "id": "EPOCH-01",
+      "title": "Foundation Baseline",
       "status": "DONE",
-      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
-      "last_evidence_path": "reports/evidence/EPOCH-17/",
-      "last_gate_summary": "verify:epoch17 PASS; baseline gates PASS"
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "2": {
+      "id": "EPOCH-02",
+      "title": "Data Pipeline Bootstrap",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "3": {
+      "id": "EPOCH-03",
+      "title": "Simulation Core",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "4": {
+      "id": "EPOCH-04",
+      "title": "Paper Runtime Baseline",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "5": {
+      "id": "EPOCH-05",
+      "title": "Truth-Layer Contracts",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "6": {
+      "id": "EPOCH-06",
+      "title": "Deterministic Orchestration",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "7": {
+      "id": "EPOCH-07",
+      "title": "Integration Hardening",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "8": {
+      "id": "EPOCH-08",
+      "title": "Safety Gate Skeleton",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "9": {
+      "id": "EPOCH-09",
+      "title": "Governance Prework",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "10": {
+      "id": "EPOCH-10",
+      "title": "Execution Adapter Baseline",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "11": {
+      "id": "EPOCH-11",
+      "title": "Master Orchestrator",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "12": {
+      "id": "EPOCH-12",
+      "title": "Persistence and Config Guardrails",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "13": {
+      "id": "EPOCH-13",
+      "title": "Observability Contracts",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "14": {
+      "id": "EPOCH-14",
+      "title": "Adversarial Safety",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "15": {
+      "id": "EPOCH-15",
+      "title": "Reality Gap Controls",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "16": {
+      "id": "EPOCH-16",
+      "title": "Pre-Spec Consolidation",
+      "status": "DONE",
+      "type": "LEGACY",
+      "depends_on": [],
+      "gate_owner": "verify:specs",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "17": {
+      "id": "EPOCH-17",
+      "title": "Safety Integrated Executor",
+      "status": "DONE",
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-16"
+      ],
+      "gate_owner": "verify:epoch17",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
     },
     "18": {
+      "id": "EPOCH-18",
+      "title": "Strategy Layer",
       "status": "DONE",
-      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
-      "last_evidence_path": "reports/evidence/EPOCH-18/",
-      "last_gate_summary": "verify:epoch18 PASS; strategy gates PASS"
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-17"
+      ],
+      "gate_owner": "verify:epoch18",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
     },
     "19": {
+      "id": "EPOCH-19",
+      "title": "Governance FSM",
       "status": "DONE",
-      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
-      "last_evidence_path": "reports/evidence/EPOCH-19/",
-      "last_gate_summary": "verify:epoch19 PASS; governance gates PASS"
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-18"
+      ],
+      "gate_owner": "verify:epoch19",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
     },
     "20": {
+      "id": "EPOCH-20",
+      "title": "Monitoring and Performance",
       "status": "DONE",
-      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
-      "last_evidence_path": "reports/evidence/EPOCH-20/",
-      "last_gate_summary": "verify:epoch20 PASS; monitoring gates PASS"
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-19"
+      ],
+      "gate_owner": "verify:epoch20",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
     },
     "21": {
+      "id": "EPOCH-21",
+      "title": "Deployment and Release Governor",
       "status": "DONE",
-      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
-      "last_evidence_path": "reports/evidence/EPOCH-21/",
-      "last_gate_summary": "verify:epoch21 PASS; release governor baseline PASS"
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-20"
+      ],
+      "gate_owner": "verify:epoch21",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
     },
     "22": {
+      "id": "EPOCH-22",
+      "title": "AI Validation Harness",
       "status": "DONE",
-      "last_commit_sha": "afda7bbfbf11c19e9a7afd4e20eff84e828a25be",
-      "last_evidence_path": "reports/evidence/EPOCH-AUTOPILOT-FINAL/",
-      "last_gate_summary": "npm run verify:epoch22=PASS; npm run verify:core=PASS"
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-21"
+      ],
+      "gate_owner": "verify:epoch22",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
     },
     "23": {
-      "status": "READY",
-      "last_commit_sha": "",
-      "last_evidence_path": "",
-      "last_gate_summary": "Awaiting dependency completion"
+      "id": "EPOCH-23",
+      "title": "Signal to Intent Contracts",
+      "status": "DONE",
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-22"
+      ],
+      "gate_owner": "verify:epoch23",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
     },
     "24": {
-      "status": "READY",
-      "last_commit_sha": "",
-      "last_evidence_path": "",
-      "last_gate_summary": "Awaiting dependency completion"
+      "id": "EPOCH-24",
+      "title": "Walk-forward Reality Gap",
+      "status": "DONE",
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-23"
+      ],
+      "gate_owner": "verify:epoch24",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
     },
     "25": {
-      "status": "READY",
-      "last_commit_sha": "",
-      "last_evidence_path": "",
-      "last_gate_summary": "Awaiting dependency completion"
+      "id": "EPOCH-25",
+      "title": "Testnet Campaign (Opt-in Network)",
+      "status": "DONE",
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-24"
+      ],
+      "gate_owner": "verify:epoch25",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
     },
     "26": {
-      "status": "READY",
-      "last_commit_sha": "",
-      "last_evidence_path": "",
-      "last_gate_summary": "Awaiting dependency completion"
+      "id": "EPOCH-26",
+      "title": "Micro-Live Governor Rehearsal",
+      "status": "DONE",
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-25"
+      ],
+      "gate_owner": "verify:epoch26",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "27": {
+      "id": "EPOCH-27",
+      "title": "AI Contracts + Deterministic Harness",
+      "status": "DONE",
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-26"
+      ],
+      "gate_owner": "verify:epoch27",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "28": {
+      "id": "EPOCH-28",
+      "title": "AI Signal to Intent Integration with Safety",
+      "status": "DONE",
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-27"
+      ],
+      "gate_owner": "verify:epoch28",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "29": {
+      "id": "EPOCH-29",
+      "title": "Walk-Forward + Leakage Sentinel",
+      "status": "DONE",
+      "type": "IMPLEMENTATION",
+      "depends_on": [
+        "EPOCH-28"
+      ],
+      "gate_owner": "verify:epoch29",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
+    },
+    "30": {
+      "id": "EPOCH-30",
+      "title": "Final Polish + Release Freeze + Operator Readiness",
+      "status": "DONE",
+      "type": "POLISH",
+      "depends_on": [
+        "EPOCH-29"
+      ],
+      "gate_owner": "verify:epoch30",
+      "evidence_id": "EPOCH-30-FINAL",
+      "completed_at": "2026-02-11T15:09:30Z",
+      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
+      "last_gate_summary": "Included in final wall/governor freeze cycle"
     }
   }
 }

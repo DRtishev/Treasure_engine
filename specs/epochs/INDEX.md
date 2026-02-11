@@ -1,54 +1,54 @@
 # EPOCH SPECS INDEX
-One-line purpose: defines implementation order, gate ownership, and evidence expectations for autopilot epoch execution.
 
 ## Dependency chain (READY order)
-1. EPOCH-17
-2. EPOCH-18 (depends on EPOCH-17)
-3. EPOCH-19 (depends on EPOCH-17..18)
-4. EPOCH-20 (depends on EPOCH-17..19)
-5. EPOCH-21 (depends on EPOCH-17..20)
-6. EPOCH-22 (depends on EPOCH-17..21)
-7. EPOCH-23 (depends on EPOCH-17..22)
-8. EPOCH-24 (depends on EPOCH-17..23)
-9. EPOCH-25 (depends on EPOCH-17..24)
-10. EPOCH-26 (depends on EPOCH-17..25)
-
-## Next READY epoch selection rule
-Select the first epoch in dependency order that is not marked complete by its acceptance checklist + evidence verdict.
-
-## Shared contracts
-- `ExecutionAdapter`
-- `EventLog`
-- `RunContext`
-- `RiskGuard`
-- `GovernanceFSM`
-- `ReleaseGovernor`
-
-## Gate map per epoch
-- EPOCH-17: `verify:epoch17`, `verify:e2`, `verify:paper`, `verify:e2:multi`
-- EPOCH-18: `verify:epoch18`, `verify:strategy`, `verify:core`
-- EPOCH-19: `verify:epoch19`, `verify:governance`, `verify:core`
-- EPOCH-20: `verify:epoch20`, `verify:monitoring`, `verify:core`
-- EPOCH-21: `verify:epoch21`, `verify:release-governor`, `verify:core`
-- EPOCH-22: `verify:epoch22`, `verify:core`
-- EPOCH-23: `verify:epoch23`, `verify:integration`, `verify:core`
-- EPOCH-24: `verify:epoch24`, `verify:phase2`, `verify:core`
-- EPOCH-25: `verify:epoch25` (network opt-in via `ENABLE_NETWORK_TESTS=1`), `verify:core`
-- EPOCH-26: `verify:epoch26`, `verify:release-governor`, `verify:core`
-
-## Evidence pack naming
-- Required path pattern: `reports/evidence/<EPOCH-ID>/`
-- Gate logs live under `reports/evidence/<EPOCH-ID>/gates/`
-- Manifests live under `reports/evidence/<EPOCH-ID>/manifests/`
-
-## Definition of DONE
-An epoch is DONE only when:
-1. Required gates pass with anti-flake repeats where required.
-2. Evidence pack exists and includes `VERDICT.md` with `SAFE` or `SAFE-WITH-LIMITATIONS`.
-3. Source/evidence manifests validate.
-4. Export hash is recorded when export artifact is produced.
+1. EPOCH-01
+2. EPOCH-02
+3. EPOCH-03
+4. EPOCH-04
+5. EPOCH-05
+6. EPOCH-06
+7. EPOCH-07
+8. EPOCH-08
+9. EPOCH-09
+10. EPOCH-10
+11. EPOCH-11
+12. EPOCH-12
+13. EPOCH-13
+14. EPOCH-14
+15. EPOCH-15
+16. EPOCH-16
+17. EPOCH-17
+18. EPOCH-18
+19. EPOCH-19
+20. EPOCH-20
+21. EPOCH-21
+22. EPOCH-22
+23. EPOCH-23
+24. EPOCH-24
+25. EPOCH-25
+26. EPOCH-26
+27. EPOCH-27
+28. EPOCH-28
+29. EPOCH-29
+30. EPOCH-30
 
 ## Epoch spec files
+- `specs/epochs/EPOCH-01.md`
+- `specs/epochs/EPOCH-02.md`
+- `specs/epochs/EPOCH-03.md`
+- `specs/epochs/EPOCH-04.md`
+- `specs/epochs/EPOCH-05.md`
+- `specs/epochs/EPOCH-06.md`
+- `specs/epochs/EPOCH-07.md`
+- `specs/epochs/EPOCH-08.md`
+- `specs/epochs/EPOCH-09.md`
+- `specs/epochs/EPOCH-10.md`
+- `specs/epochs/EPOCH-11.md`
+- `specs/epochs/EPOCH-12.md`
+- `specs/epochs/EPOCH-13.md`
+- `specs/epochs/EPOCH-14.md`
+- `specs/epochs/EPOCH-15.md`
+- `specs/epochs/EPOCH-16.md`
 - `specs/epochs/EPOCH-17.md`
 - `specs/epochs/EPOCH-18.md`
 - `specs/epochs/EPOCH-19.md`
@@ -59,3 +59,24 @@ An epoch is DONE only when:
 - `specs/epochs/EPOCH-24.md`
 - `specs/epochs/EPOCH-25.md`
 - `specs/epochs/EPOCH-26.md`
+- `specs/epochs/EPOCH-27.md`
+- `specs/epochs/EPOCH-28.md`
+- `specs/epochs/EPOCH-29.md`
+- `specs/epochs/EPOCH-30.md`
+
+## Gate map
+- EPOCH-01..EPOCH-16: legacy/doc mapping validated by `verify:specs`.
+- EPOCH-17: `verify:epoch17`
+- EPOCH-18: `verify:epoch18`
+- EPOCH-19: `verify:epoch19`
+- EPOCH-20: `verify:epoch20`
+- EPOCH-21: `verify:epoch21`
+- EPOCH-22: `verify:epoch22`
+- EPOCH-23: `verify:epoch23`
+- EPOCH-24: `verify:epoch24`
+- EPOCH-25: `verify:epoch25`
+- EPOCH-26: `verify:epoch26`
+- EPOCH-27: `verify:epoch27`
+- EPOCH-28: `verify:epoch28`
+- EPOCH-29: `verify:epoch29`
+- EPOCH-30: `verify:epoch30`
