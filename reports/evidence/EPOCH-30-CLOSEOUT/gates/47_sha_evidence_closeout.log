@@ -1,0 +1,14 @@
+reports/evidence/EPOCH-30-CLOSEOUT/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-30-CLOSEOUT/CLEAN_CLONE/01_npm_ci.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT/CLEAN_CLONE/02_SKIP_CLEAN_CLONE_IN_WALL_1_SKIP_SHA_CHECKS_IN_WALL_1_npm_run_verify_wall.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT/CLEAN_CLONE/02_SKIP_CLEAN_CLONE_IN_WALL_1_npm_run_verify_wall.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT/CLEAN_CLONE/03_npm_run_verify_release_governor.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT/CLEAN_CLONE/04_npm_run_verify_release_governor.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT/CLEAN_CLONE/CLEAN_CLONE.OK: OK
+reports/evidence/EPOCH-30-CLOSEOUT/GATE_PLAN.md: OK
+reports/evidence/EPOCH-30-CLOSEOUT/INVENTORY.txt: OK
+reports/evidence/EPOCH-30-CLOSEOUT/PREFLIGHT.log: OK
+reports/evidence/EPOCH-30-CLOSEOUT/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-30-CLOSEOUT/SNAPSHOT.md: OK
+reports/evidence/EPOCH-30-CLOSEOUT/SUMMARY.md: OK
+reports/evidence/EPOCH-30-CLOSEOUT/VERDICT.md: OK

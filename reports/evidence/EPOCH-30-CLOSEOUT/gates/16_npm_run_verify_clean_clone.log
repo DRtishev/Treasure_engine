@@ -1,0 +1,7 @@
+$ npm run verify:clean-clone
+
+> treasure-engine@1.0.0 verify:clean-clone
+> node scripts/ops/clean_clone_bootstrap.mjs
+
+verify:clean-clone passed (reports/evidence/EPOCH-30-CLOSEOUT/CLEAN_CLONE/CLEAN_CLONE.OK)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

@@ -1,0 +1,89 @@
+
+> treasure-engine@1.0.0 verify:release-governor
+> node scripts/verify/release_governor_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RELEASE GOVERNOR CHECK (LEDGER + LATEST EVIDENCE)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ ledger exists: specs/epochs/LEDGER.json
+✓ ledger has epoch 1
+✓ epoch 1 status is valid (LEGACY_DONE)
+✓ ledger has epoch 2
+✓ epoch 2 status is valid (LEGACY_DONE)
+✓ ledger has epoch 3
+✓ epoch 3 status is valid (LEGACY_DONE)
+✓ ledger has epoch 4
+✓ epoch 4 status is valid (LEGACY_DONE)
+✓ ledger has epoch 5
+✓ epoch 5 status is valid (LEGACY_DONE)
+✓ ledger has epoch 6
+✓ epoch 6 status is valid (LEGACY_DONE)
+✓ ledger has epoch 7
+✓ epoch 7 status is valid (LEGACY_DONE)
+✓ ledger has epoch 8
+✓ epoch 8 status is valid (LEGACY_DONE)
+✓ ledger has epoch 9
+✓ epoch 9 status is valid (LEGACY_DONE)
+✓ ledger has epoch 10
+✓ epoch 10 status is valid (LEGACY_DONE)
+✓ ledger has epoch 11
+✓ epoch 11 status is valid (LEGACY_DONE)
+✓ ledger has epoch 12
+✓ epoch 12 status is valid (LEGACY_DONE)
+✓ ledger has epoch 13
+✓ epoch 13 status is valid (LEGACY_DONE)
+✓ ledger has epoch 14
+✓ epoch 14 status is valid (LEGACY_DONE)
+✓ ledger has epoch 15
+✓ epoch 15 status is valid (LEGACY_DONE)
+✓ ledger has epoch 16
+✓ epoch 16 status is valid (LEGACY_DONE)
+✓ ledger has epoch 17
+✓ epoch 17 status is valid (DONE)
+✓ ledger has epoch 18
+✓ epoch 18 status is valid (DONE)
+✓ ledger has epoch 19
+✓ epoch 19 status is valid (DONE)
+✓ ledger has epoch 20
+✓ epoch 20 status is valid (DONE)
+✓ ledger has epoch 21
+✓ epoch 21 status is valid (DONE)
+✓ ledger has epoch 22
+✓ epoch 22 status is valid (DONE)
+✓ ledger has epoch 23
+✓ epoch 23 status is valid (DONE)
+✓ ledger has epoch 24
+✓ epoch 24 status is valid (DONE)
+✓ ledger has epoch 25
+✓ epoch 25 status is valid (DONE)
+✓ ledger has epoch 26
+✓ epoch 26 status is valid (DONE)
+✓ ledger has epoch 27
+✓ epoch 27 status is valid (DONE)
+✓ ledger has epoch 28
+✓ epoch 28 status is valid (DONE)
+✓ ledger has epoch 29
+✓ epoch 29 status is valid (DONE)
+✓ ledger has epoch 30
+✓ epoch 30 status is valid (DONE)
+✓ no BLOCKED epochs >=1 in ledger (found: none)
+✓ latest evidence directory exists under reports/evidence
+Using latest evidence dir: reports/evidence/EPOCH-30-CLOSEOUT
+✓ wall machine output exists: reports/evidence/EPOCH-30-CLOSEOUT/WALL_RESULT.json
+✓ wall markers exist: reports/evidence/EPOCH-30-CLOSEOUT/WALL_MARKERS.txt
+✓ WALL_RESULT.json is valid JSON
+✓ WALL_RESULT.json has ordered steps
+✓ WALL_RESULT.json reports all gate steps passed
+✓ required evidence file exists: PREFLIGHT.log
+✓ required evidence file exists: SNAPSHOT.md
+✓ required evidence file exists: ASSUMPTIONS.md
+✓ required evidence file exists: GATE_PLAN.md
+✓ required evidence file exists: RISK_REGISTER.md
+✓ required evidence file exists: SUMMARY.md
+✓ required evidence file exists: VERDICT.md
+✓ FINAL_VALIDATED.zip.sha256 exists
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 76
+✗ FAILED: 7
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

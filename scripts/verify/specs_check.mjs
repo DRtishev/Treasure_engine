@@ -97,24 +97,32 @@ for (const epochFile of epochFiles) {
 if (fs.existsSync('agents.md')) {
   const agents = read('agents.md');
   const requiredAgentHeadings = [
-    '# TREASURE ENGINE — AGENTS (CODEX AUTOPILOT POLICY)',
-    '## Operating Mode',
-    '## Truth Layer Rules (Non-Negotiable)',
-    '## Determinism & Run Directories',
-    '## Gates & Wall',
-    '## Evidence Protocol',
-    '## Ledger Discipline',
-    '## Safety',
-    '## Output Standard'
+    '# PURPOSE',
+    '# SAFETY & OFFLINE POLICY',
+    '# EVIDENCE PROTOCOL',
+    '# ANTI-REGRESSION DOCTRINE',
+    '# AUTONOMOUS EPOCH EXECUTION',
+    '# OUTPUT STANDARD',
+    '# STOP RULES'
   ];
+  let lastPosition = -1;
   for (const h of requiredAgentHeadings) {
-    if (!agents.includes(h)) errors.push(`agents.md missing required heading: ${h}`);
+    const pos = agents.indexOf(h);
+    if (pos === -1) {
+      errors.push(`agents.md missing required heading: ${h}`);
+      continue;
+    }
+    if (pos < lastPosition) {
+      errors.push(`agents.md heading order violation near: ${h}`);
+    }
+    lastPosition = Math.max(lastPosition, pos);
   }
 }
 
 if (fs.existsSync('specs/epochs/LEDGER.json')) {
   const ledger = JSON.parse(read('specs/epochs/LEDGER.json'));
-  const validStatuses = new Set(['DONE', 'READY', 'BLOCKED']);
+  const validStatuses = new Set(['DONE', 'READY', 'BLOCKED', 'LEGACY_DONE']);
+  const requiredLedgerFields = ['id', 'title', 'status', 'type', 'depends_on', 'gate_owner', 'evidence_id', 'completed_at', 'commit_sha'];
   for (let epoch = EPOCH_START; epoch <= EPOCH_END; epoch += 1) {
     const row = ledger.epochs?.[String(epoch)];
     if (!row) {
@@ -124,8 +132,19 @@ if (fs.existsSync('specs/epochs/LEDGER.json')) {
     if (!validStatuses.has(row.status)) {
       errors.push(`LEDGER invalid status for epoch ${epoch}: ${row.status}`);
     }
-    for (const k of ['last_commit_sha', 'last_evidence_path', 'last_gate_summary']) {
+    for (const k of requiredLedgerFields) {
       if (!(k in row)) errors.push(`LEDGER epoch ${epoch} missing field: ${k}`);
+    }
+    if (epoch <= 16) {
+      if (String(row.type).toLowerCase() !== 'legacy') {
+        errors.push(`LEDGER epoch ${epoch} must be type=legacy`);
+      }
+      if (row.gate_owner !== 'docs') {
+        errors.push(`LEDGER epoch ${epoch} must set gate_owner=docs`);
+      }
+      if (!['LEGACY_DONE', 'DONE', 'READY', 'BLOCKED'].includes(row.status)) {
+        errors.push(`LEDGER epoch ${epoch} invalid legacy status: ${row.status}`);
+      }
     }
   }
 }

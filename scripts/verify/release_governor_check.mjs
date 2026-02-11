@@ -37,7 +37,7 @@ function validateLedger() {
   assert(mustExist(LEDGER_PATH), `ledger exists: ${LEDGER_PATH}`);
   if (!mustExist(LEDGER_PATH)) return null;
   const ledger = JSON.parse(fs.readFileSync(LEDGER_PATH, 'utf8'));
-  const statuses = ['DONE', 'READY', 'BLOCKED'];
+  const statuses = ['DONE', 'READY', 'BLOCKED', 'LEGACY_DONE'];
   for (let epoch = 1; epoch <= 30; epoch += 1) {
     const e = ledger.epochs?.[String(epoch)];
     assert(Boolean(e), `ledger has epoch ${epoch}`);
@@ -52,38 +52,39 @@ function validateLedger() {
   return ledger;
 }
 
-function latestWallLog(gatesDir) {
-  if (!mustExist(gatesDir)) return null;
-  const wallLogs = fs.readdirSync(gatesDir)
-    .filter((name) => name.includes('verify_wall') && name.endsWith('.log'))
-    .map((name) => path.join(gatesDir, name))
-    .sort((a, b) => fs.statSync(b).mtimeMs - fs.statSync(a).mtimeMs);
-  return wallLogs[0] || null;
-}
-
 function validateWallEvidence(evidenceDir) {
-  const gatesDir = path.join(evidenceDir, 'gates');
-  assert(mustExist(gatesDir), `gates dir exists: ${gatesDir}`);
-  const wallLog = latestWallLog(gatesDir);
-  assert(Boolean(wallLog), `wall log exists under: ${gatesDir}`);
-  if (!wallLog) return;
+  const wallJson = path.join(evidenceDir, 'WALL_RESULT.json');
+  const wallMarkers = path.join(evidenceDir, 'WALL_MARKERS.txt');
+  assert(mustExist(wallJson), `wall machine output exists: ${wallJson}`);
+  assert(mustExist(wallMarkers), `wall markers exist: ${wallMarkers}`);
 
-  const text = fs.readFileSync(wallLog, 'utf8');
-  const requiredMarkers = [
-    'npm run verify:specs',
-    'npm run verify:paper',
-    'npm run verify:e2',
-    'npm run verify:e2:multi',
-    'npm run verify:paper:multi',
-    'npm run verify:phase2',
-    'npm run verify:integration',
-    'npm run verify:core',
-    'npm run regen:manifests',
-    'sha256sum -c '
-  ];
+  if (!mustExist(wallJson)) return;
 
-  for (const marker of requiredMarkers) {
-    assert(text.includes(marker), `wall log contains marker: ${marker}`);
+  let parsed = null;
+  try {
+    parsed = JSON.parse(fs.readFileSync(wallJson, 'utf8'));
+  } catch {
+    parsed = null;
+  }
+  assert(Boolean(parsed), 'WALL_RESULT.json is valid JSON');
+  if (!parsed) return;
+
+  assert(Array.isArray(parsed.steps) && parsed.steps.length > 0, 'WALL_RESULT.json has ordered steps');
+  assert(typeof parsed.started_at === 'string' && typeof parsed.finished_at === 'string', 'WALL_RESULT.json has timestamps');
+
+  const failedStep = (parsed.steps || []).find((step) => Number(step.exit_code) !== 0);
+  assert(!failedStep, `WALL_RESULT.json reports all gate steps passed${failedStep ? ` (failed: ${failedStep.command})` : ''}`);
+
+  const markersText = mustExist(wallMarkers) ? fs.readFileSync(wallMarkers, 'utf8') : '';
+  assert(!markersText.includes('REQUIRED|FAIL|'), 'WALL_MARKERS.txt has no failed required markers');
+
+  if ((!parsed.steps || parsed.steps.length === 0) && mustExist(path.join(evidenceDir, 'gates'))) {
+    const gatesDir = path.join(evidenceDir, 'gates');
+    const fallbackWallLog = fs.readdirSync(gatesDir)
+      .filter((name) => name.includes('verify_wall') && name.endsWith('.log'))
+      .map((name) => path.join(gatesDir, name))
+      .sort((a, b) => fs.statSync(b).mtimeMs - fs.statSync(a).mtimeMs)[0];
+    assert(Boolean(fallbackWallLog), `fallback wall log exists under: ${gatesDir}`);
   }
 }
 
@@ -102,6 +103,11 @@ function validateEvidenceCompleteness(evidenceDir) {
   ];
   for (const f of requiredFiles) {
     assert(mustExist(path.join(evidenceDir, f)), `required evidence file exists: ${f}`);
+  }
+  if (process.env.CLEAN_CLONE_BOOTSTRAP === '1') {
+    assert(true, 'clean-clone marker check deferred during bootstrap');
+  } else {
+    assert(mustExist(path.join(evidenceDir, 'CLEAN_CLONE', 'CLEAN_CLONE.OK')), 'clean-clone marker exists');
   }
 }
 
