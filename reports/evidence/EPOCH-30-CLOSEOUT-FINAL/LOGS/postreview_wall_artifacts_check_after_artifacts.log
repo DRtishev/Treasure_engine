@@ -1,0 +1,3 @@
+$ ls -la reports/evidence/EPOCH-30-CLOSEOUT-FINAL/WALL_RESULT.json reports/evidence/EPOCH-30-CLOSEOUT-FINAL/WALL_MARKERS.txt
+-rw-r--r-- 1 root root 2002 Feb 11 18:58 reports/evidence/EPOCH-30-CLOSEOUT-FINAL/WALL_MARKERS.txt
+-rw-r--r-- 1 root root 4829 Feb 11 18:58 reports/evidence/EPOCH-30-CLOSEOUT-FINAL/WALL_RESULT.json

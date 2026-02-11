@@ -1,0 +1,2 @@
+$ git ls-files | rg -n "\.(zip|tar\.gz)$" || echo "OK: no tracked archives"
+OK: no tracked archives

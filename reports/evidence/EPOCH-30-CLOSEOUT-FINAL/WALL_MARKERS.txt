@@ -1,0 +1,25 @@
+01|PASS|npm ci|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/01_npm_ci.log
+02|PASS|npm run verify:specs|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/02_npm_run_verify_specs.log
+03|PASS|npm run verify:specs|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/03_npm_run_verify_specs.log
+04|PASS|npm run verify:paper|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/04_npm_run_verify_paper.log
+05|PASS|npm run verify:paper|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/05_npm_run_verify_paper.log
+06|PASS|npm run verify:e2|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/06_npm_run_verify_e2.log
+07|PASS|npm run verify:e2|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/07_npm_run_verify_e2.log
+08|PASS|npm run verify:e2:multi|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/08_npm_run_verify_e2_multi.log
+09|PASS|npm run verify:paper:multi|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/09_npm_run_verify_paper_multi.log
+10|PASS|npm run verify:phase2|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/10_npm_run_verify_phase2.log
+11|PASS|npm run verify:integration|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/11_npm_run_verify_integration.log
+12|PASS|npm run verify:core|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/12_npm_run_verify_core.log
+13|PASS|npm run verify:epoch27|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/13_npm_run_verify_epoch27.log
+14|PASS|npm run verify:epoch28|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/14_npm_run_verify_epoch28.log
+15|PASS|npm run verify:epoch29|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/15_npm_run_verify_epoch29.log
+16|PASS|npm run regen:manifests|reports/evidence/EPOCH-30-CLOSEOUT-FINAL/gates/16_npm_run_regen_manifests.log
+REQUIRED|PASS|npm run verify:specs
+REQUIRED|PASS|npm run verify:paper
+REQUIRED|PASS|npm run verify:e2
+REQUIRED|PASS|npm run verify:e2:multi
+REQUIRED|PASS|npm run verify:paper:multi
+REQUIRED|PASS|npm run verify:phase2
+REQUIRED|PASS|npm run verify:integration
+REQUIRED|PASS|npm run verify:core
+REQUIRED|PASS|npm run regen:manifests

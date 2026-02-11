@@ -1,0 +1,106 @@
+$ ls -la
+total 216
+drwxr-xr-x 18 root root  4096 Feb 11 18:29 .
+drwxr-xr-x  3 root root  4096 Feb 11 12:50 ..
+drwxr-xr-x  8 root root  4096 Feb 11 18:29 .git
+-rw-r--r--  1 root root   491 Feb 11 12:50 .gitignore
+-rw-r--r--  1 root root  5368 Feb 11 12:50 AGENTS.md
+drwxr-xr-x  2 root root  4096 Feb 11 12:50 EVIDENCE_PACK
+-rw-r--r--  1 root root    96 Feb 11 12:50 EVIDENCE_PACK_EPOCH-17.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 11 12:50 EVIDENCE_PACK_EPOCH-18.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 11 12:50 EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 11 12:50 EVIDENCE_PACK_EPOCH-21.tar.gz.sha256
+-rw-r--r--  1 root root    98 Feb 11 12:50 EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+-rw-r--r--  1 root root    86 Feb 11 18:29 FINAL_VALIDATED.zip.sha256
+-rw-r--r--  1 root root  1677 Feb 11 12:50 NEXT_EPOCH_PLAN.md
+-rw-r--r--  1 root root 11768 Feb 11 12:50 QUICK_START.md
+-rw-r--r--  1 root root  2041 Feb 11 18:29 README.md
+-rw-r--r--  1 root root  2187 Feb 11 18:29 RUNBOOK.md
+-rw-r--r--  1 root root  9654 Feb 11 12:50 RUNBOOK_OPERATIONS.md
+-rw-r--r--  1 root root 28917 Feb 11 12:50 SDD_EPOCH_17_21.md
+-rw-r--r--  1 root root  1847 Feb 11 12:50 TASK_TRACKER.md
+-rw-r--r--  1 root root  1694 Feb 11 18:29 agents.md
+drwxr-xr-x  3 root root  4096 Feb 11 12:50 artifacts
+drwxr-xr-x 24 root root  4096 Feb 11 12:50 core
+drwxr-xr-x  3 root root  4096 Feb 11 12:50 data
+drwxr-xr-x  2 root root  4096 Feb 11 12:50 dataset
+drwxr-xr-x  2 root root  4096 Feb 11 18:29 docs
+drwxr-xr-x  4 root root  4096 Feb 11 12:50 evidence
+drwxr-xr-x  2 root root  4096 Feb 11 12:50 examples
+drwxr-xr-x 47 root root  4096 Feb 11 12:50 node_modules
+-rw-r--r--  1 root root 19412 Feb 11 12:50 package-lock.json
+-rw-r--r--  1 root root  6620 Feb 11 18:29 package.json
+-rw-r--r--  1 root root  3186 Feb 11 12:50 package.json.bak
+drwxr-xr-x 11 root root  4096 Feb 11 18:29 reports
+drwxr-xr-x  7 root root  4096 Feb 11 18:29 scripts
+drwxr-xr-x  2 root root  4096 Feb 11 12:50 spec
+drwxr-xr-x  3 root root  4096 Feb 11 18:29 specs
+drwxr-xr-x  2 root root  4096 Feb 11 12:50 truth
+drwxr-xr-x  2 root root  4096 Feb 11 12:50 ui
+
+$ git status -sb
+## work
+?? reports/evidence/EPOCH-30-CLOSEOUT-FINAL/
+
+$ node -e "Object.keys(require(\"./package.json\").scripts).filter(k=>k.startsWith(\"verify\")).sort().forEach(k=>console.log(k))"
+verify:adversarial
+verify:agent
+verify:all
+verify:all-data
+verify:binance
+verify:clean-clone
+verify:confidence
+verify:config
+verify:core
+verify:court
+verify:dataset
+verify:determinism
+verify:dryrun-live
+verify:e2
+verify:e2:multi
+verify:e2:raw
+verify:epoch06
+verify:epoch07
+verify:epoch08
+verify:epoch09
+verify:epoch10
+verify:epoch11
+verify:epoch17
+verify:epoch18
+verify:epoch19
+verify:epoch20
+verify:epoch21
+verify:epoch22
+verify:epoch23
+verify:epoch24
+verify:epoch25
+verify:epoch26
+verify:epoch27
+verify:epoch28
+verify:epoch29
+verify:epoch30
+verify:epochX
+verify:eqs-schema
+verify:events
+verify:godtier
+verify:governance
+verify:hacks
+verify:integration
+verify:live
+verify:monitoring
+verify:paper
+verify:paper:multi
+verify:paper:raw
+verify:persist
+verify:phase2
+verify:reality-gap
+verify:release-governor
+verify:safety
+verify:sim-schema
+verify:specs
+verify:strategy
+verify:treasure
+verify:truth
+verify:truth-layer
+verify:wall
+verify:websocket
