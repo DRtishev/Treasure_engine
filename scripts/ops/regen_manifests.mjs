@@ -33,13 +33,8 @@ function isEvidenceFileExcluded(filePath) {
   const basename = path.basename(filePath);
   if (filePath.includes('/manifests/')) return true;
   if (basename.startsWith('SHA256SUMS.')) return true;
-  if (filePath.includes('/gates/')) {
-    if (basename.startsWith('verify_wall')) return true;
-    if (basename.startsWith('14_regen_manifests')) return true;
-    if (basename.startsWith('15_sha_')) return true;
-    if (basename.startsWith('16_sha_')) return true;
-    if (basename.startsWith('17_sha_')) return true;
-  }
+  if (basename.startsWith('WALL_')) return true;
+  if (filePath.includes('/gates/')) return true;
   return false;
 }
 

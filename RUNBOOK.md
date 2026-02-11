@@ -15,10 +15,14 @@ EVIDENCE_EPOCH=EPOCH-PIPELINE-FREEZE npm run verify:wall
 7. `npm run verify:phase2`
 8. `npm run verify:integration`
 9. `npm run verify:core`
-10. `npm run regen:manifests`
-11. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.SOURCE.txt`
-12. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.EVIDENCE.txt`
-13. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.EXPORT.txt`
+10. `npm run verify:epoch27`
+11. `npm run verify:epoch28`
+12. `npm run verify:epoch29`
+13. `npm run verify:clean-clone`
+14. `npm run regen:manifests`
+15. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.SOURCE.txt`
+16. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.EVIDENCE.txt`
+17. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.EXPORT.txt`
 
 Если `EVIDENCE_EPOCH` не задан, используется самый свежий каталог в `reports/evidence/`.
 
@@ -42,3 +46,11 @@ npm run export:validated
 - Network-dependent тесты выключены по умолчанию.
 - Включение только явным `ENABLE_NETWORK_TESTS=1`.
 - Live trading в verification path не включается.
+
+
+## 5) Machine-readable wall outputs
+После каждого `verify:wall` формируются:
+- `reports/evidence/<EVIDENCE_EPOCH>/WALL_RESULT.json`
+- `reports/evidence/<EVIDENCE_EPOCH>/WALL_MARKERS.txt`
+
+`verify:release-governor` читает `WALL_RESULT.json` в первую очередь, log parsing используется только как fallback.

@@ -1,0 +1,48 @@
+EVIDENCE_EPOCH=EPOCH-30-CLOSEOUT
+UTC 2026-02-11T16:59:26Z
+Linux 9b4202cf5501 6.12.47 #1 SMP Mon Oct 27 10:01:15 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+v20.19.6
+11.4.2
+/workspace/Treasure_engine
+total 216
+drwxr-xr-x 18 root root  4096 Feb 11 16:58 .
+drwxr-xr-x  3 root root  4096 Feb 11 10:28 ..
+drwxr-xr-x  8 root root  4096 Feb 11 16:58 .git
+-rw-r--r--  1 root root   491 Feb 11 10:28 .gitignore
+-rw-r--r--  1 root root  5368 Feb 11 10:28 AGENTS.md
+drwxr-xr-x  2 root root  4096 Feb 11 10:28 EVIDENCE_PACK
+-rw-r--r--  1 root root    96 Feb 11 10:28 EVIDENCE_PACK_EPOCH-17.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 11 10:28 EVIDENCE_PACK_EPOCH-18.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 11 10:28 EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 11 10:28 EVIDENCE_PACK_EPOCH-21.tar.gz.sha256
+-rw-r--r--  1 root root    98 Feb 11 10:28 EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+-rw-r--r--  1 root root    86 Feb 11 16:58 FINAL_VALIDATED.zip.sha256
+-rw-r--r--  1 root root  1677 Feb 11 10:28 NEXT_EPOCH_PLAN.md
+-rw-r--r--  1 root root 11768 Feb 11 10:28 QUICK_START.md
+-rw-r--r--  1 root root  1907 Feb 11 16:58 README.md
+-rw-r--r--  1 root root  1697 Feb 11 16:58 RUNBOOK.md
+-rw-r--r--  1 root root  9654 Feb 11 10:28 RUNBOOK_OPERATIONS.md
+-rw-r--r--  1 root root 28917 Feb 11 10:28 SDD_EPOCH_17_21.md
+-rw-r--r--  1 root root  1847 Feb 11 10:28 TASK_TRACKER.md
+-rw-r--r--  1 root root  1694 Feb 11 16:59 agents.md
+drwxr-xr-x  3 root root  4096 Feb 11 10:28 artifacts
+drwxr-xr-x 24 root root  4096 Feb 11 10:28 core
+drwxr-xr-x  3 root root  4096 Feb 11 10:28 data
+drwxr-xr-x  2 root root  4096 Feb 11 10:28 dataset
+drwxr-xr-x  2 root root  4096 Feb 11 16:58 docs
+drwxr-xr-x  4 root root  4096 Feb 11 10:28 evidence
+drwxr-xr-x  2 root root  4096 Feb 11 10:28 examples
+drwxr-xr-x 47 root root  4096 Feb 11 10:28 node_modules
+-rw-r--r--  1 root root 19412 Feb 11 10:28 package-lock.json
+-rw-r--r--  1 root root  6548 Feb 11 16:58 package.json
+-rw-r--r--  1 root root  3186 Feb 11 10:28 package.json.bak
+drwxr-xr-x 11 root root  4096 Feb 11 16:58 reports
+drwxr-xr-x  7 root root  4096 Feb 11 16:58 scripts
+drwxr-xr-x  2 root root  4096 Feb 11 10:28 spec
+drwxr-xr-x  3 root root  4096 Feb 11 16:58 specs
+drwxr-xr-x  2 root root  4096 Feb 11 10:28 truth
+drwxr-xr-x  2 root root  4096 Feb 11 10:28 ui
+## work
+ M agents.md
+?? reports/evidence/EPOCH-30-CLOSEOUT/
+5683352acefdb9303c6a69ab39893240ed6954f3

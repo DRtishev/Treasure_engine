@@ -12,7 +12,8 @@ npm run verify:wall
 - `npm run verify:specs` — проверка полноты и структуры spec-suite (`specs/`).
 - `npm run regen:manifests` — каноническая регенерация манифестов в порядке EVIDENCE -> SOURCE -> EXPORT.
 - `npm run export:validated` — детерминированный экспорт `FINAL_VALIDATED.zip` + `.sha256`.
-- `npm run verify:release-governor` — release-gate, при отсутствии zip пытается выполнить `export:validated`.
+- `npm run verify:clean-clone` — bootstrap clean-clone evidence и прогоняет wall + release-governor x2.
+- `npm run verify:release-governor` — release-gate по ledger + machine-readable wall artifacts (`WALL_RESULT.json`, `WALL_MARKERS.txt`) + checksums export.
 - `npm run verify:epoch22` — AI Validation Harness drift/invariant gate (offline).
 - `npm run verify:epoch23` — AI -> Signals -> Intents contract gate (offline).
 - `npm run verify:epoch24` — Walk-forward + reality-gap drift-budget gate (offline).

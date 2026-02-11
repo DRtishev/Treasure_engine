@@ -1,0 +1,12 @@
+$ npm run verify:epoch29
+
+> treasure-engine@1.0.0 verify:epoch29
+> node scripts/verify/run_with_context.mjs --gate epoch29 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch29_walkforward_leakage_sentinel.mjs
+
+[run_with_context] gate=epoch29 seed=12345 repeat=default_13
+[run_with_context] run_id=f6ac7cc209d5b8d9
+[run_with_context] run_dir=reports/runs/epoch29/12345/default_13/f6ac7cc209d5b8d9
+✓ walk-forward generated multiple folds
+✓ leakage sentinel: training window never uses future validation data
+WROTE: reports/runs/epoch29/12345/default_13/f6ac7cc209d5b8d9/epoch29_walkforward_manifest.json
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
