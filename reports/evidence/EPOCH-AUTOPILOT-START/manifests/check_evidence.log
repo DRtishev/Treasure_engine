@@ -1,0 +1,24 @@
+$ sha256sum -c reports/evidence/EPOCH-AUTOPILOT-START/SHA256SUMS.EVIDENCE.txt
+reports/evidence/EPOCH-AUTOPILOT-START/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-AUTOPILOT-START/DIFF.patch: OK
+reports/evidence/EPOCH-AUTOPILOT-START/GATE_PLAN.md: OK
+reports/evidence/EPOCH-AUTOPILOT-START/INSTALL.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/INVENTORY.txt: OK
+reports/evidence/EPOCH-AUTOPILOT-START/PREFLIGHT.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-AUTOPILOT-START/SHA256SUMS.EXPORT.txt: OK
+reports/evidence/EPOCH-AUTOPILOT-START/SHA256SUMS.SOURCE.txt: OK
+reports/evidence/EPOCH-AUTOPILOT-START/SNAPSHOT.md: OK
+reports/evidence/EPOCH-AUTOPILOT-START/SUMMARY.md: OK
+reports/evidence/EPOCH-AUTOPILOT-START/VERDICT.md: OK
+reports/evidence/EPOCH-AUTOPILOT-START/gates/verify_core.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/gates/verify_e2_multi.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/gates/verify_e2_run1.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/gates/verify_e2_run2.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/gates/verify_integration.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/gates/verify_paper_run1.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/gates/verify_paper_run2.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/gates/verify_specs.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/manifests/export_validated.log: OK
+reports/evidence/EPOCH-AUTOPILOT-START/manifests/regen_manifests.log: OK

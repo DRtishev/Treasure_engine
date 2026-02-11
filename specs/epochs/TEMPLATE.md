@@ -1,56 +1,57 @@
-# EPOCH-XX
+# EPOCH-XX — <TITLE>
 
 ## REALITY SNAPSHOT
-- Describe the current implementation reality, available modules, and verified gaps.
-- Include explicit references to existing gates and known blockers.
+- Current state of implementation and known baseline.
 
-## GOALS / NON-GOALS
-### Goals
-- List measurable outcomes for the epoch.
+## GOALS
+- Measurable objective #1.
+- Measurable objective #2.
 
-### Non-goals
-- List explicitly out-of-scope changes.
+## NON-GOALS
+- Explicitly excluded scope #1.
+- Explicitly excluded scope #2.
 
 ## CONSTRAINTS
-- Offline-first verification by default.
-- Determinism requirements (seed discipline, non-deterministic field policy).
-- Safety constraints (no live trading by default, explicit opt-in controls).
+- Offline-first by default.
+- Determinism (`SEED`, run-dir discipline, no hidden drift).
+- Safety/security constraints.
 
-## DESIGN (contracts + interfaces + invariants)
-- Contracts to implement/update.
-- Interface boundaries and compatibility notes.
+## DESIGN / CONTRACTS
+- Contracts and interfaces touched.
+- Inputs/outputs, schemas, and environment variables.
 - Invariants that must remain true.
 
-## PATCH PLAN (file list, minimal diffs policy)
-- Files expected to change.
-- Minimal-diff and rollback-friendly strategy.
+## PATCH PLAN
+- Ordered list of files to change.
+- Minimal-diff strategy.
 
-## VERIFY (gates, commands, expected outputs, anti-flake rules)
-- Required gates and order.
-- Anti-flake rerun policy.
-- Expected structural outputs and failure criteria.
+## VERIFY
+- Exact commands.
+- Expected artifacts and pass criteria.
+- Anti-flake repeat policy.
 
-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
-- Required evidence folder path.
-- Required logs and checksum manifests.
-- Any additional artifacts needed for acceptance.
+## EVIDENCE REQUIREMENTS
+- Evidence directory path.
+- Required logs, manifests, summaries, verdict.
 
-## STOP RULES (PASS/FAIL criteria)
-- PASS criteria with objective checks.
-- FAIL/BLOCKED criteria and escalation path.
+## STOP RULES
+- PASS criteria.
+- BLOCKED criteria.
+- Required rollback trigger.
 
-## RISK REGISTER (incl. meta-risks)
-- Functional risks.
-- Meta-risks: flake, hidden state, clean-clone regressions, drift.
+## RISK REGISTER
+- Technical risk.
+- Operational risk.
+- Meta-risk (false pass/evidence drift).
+- Rollback risk.
 
-## ROLLBACK PLAN
-- Exact rollback and re-verification steps.
+## ACCEPTANCE CRITERIA
+- [ ] Criterion 1
+- [ ] Criterion 2
+- [ ] Criterion 3
+- [ ] Criterion 4
+- [ ] Criterion 5
 
-## ACCEPTANCE CRITERIA (checkbox list)
-- [ ] Contract implementation complete.
-- [ ] Required gates pass (including anti-flake repeats).
-- [ ] Evidence is complete and checksums validate.
-
-## NOTES (compatibility concerns)
-- Backward compatibility considerations.
-- Migration and operator notes.
+## NOTES
+- Compatibility notes.
+- Rollback plan or reference.

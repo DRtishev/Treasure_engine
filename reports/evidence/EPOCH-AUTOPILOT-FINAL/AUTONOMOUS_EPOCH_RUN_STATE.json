@@ -1,0 +1,17 @@
+{
+  "epoch": "22",
+  "evidence_dir": "reports/evidence/EPOCH-AUTOPILOT-FINAL",
+  "executed_at": "2026-02-11T13:35:40.642Z",
+  "gates": [
+    {
+      "gate": "npm run verify:epoch22",
+      "log": "reports/evidence/EPOCH-AUTOPILOT-FINAL/gates/epoch_22_01_npm_run_verify_epoch22.log",
+      "status": "PASS"
+    },
+    {
+      "gate": "npm run verify:core",
+      "log": "reports/evidence/EPOCH-AUTOPILOT-FINAL/gates/epoch_22_02_npm_run_verify_core.log",
+      "status": "PASS"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+$ npm run epoch:next
+
+> treasure-engine@1.0.0 epoch:next
+> node scripts/epoch/autonomous_epoch_executor.mjs --action next
+
+Next epoch: EPOCH-22
+Why: first READY epoch with all dependencies DONE (17, 18, 19, 20, 21)
+Planned gates: npm run verify:epoch22 ; npm run verify:core

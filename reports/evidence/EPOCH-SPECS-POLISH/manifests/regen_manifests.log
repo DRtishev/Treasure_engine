@@ -1,0 +1,6 @@
+$ npm run regen:manifests
+
+> treasure-engine@1.0.0 regen:manifests
+> node scripts/ops/regen_manifests.mjs
+
+Manifest regeneration complete in canonical order: EVIDENCE -> SOURCE -> EXPORT (reports/evidence/EPOCH-BOOT.AUTOPILOT)

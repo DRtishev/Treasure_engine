@@ -1,36 +1,32 @@
-# SSOT INDEX
+# TREASURE ENGINE — SSOT INDEX
 
-## Canonical Single Sources of Truth
-- `spec/ssot.json` — canonical strategy/system baseline parameters.
-- `spec/hacks.json` — allowed hack registry controlled by validation gate.
-- `spec/config.schema.json` — runtime configuration contract.
-- `truth/*.schema.json` — verification schemas for reports and event artifacts.
-- `specs/CONSTRAINTS.md` — global engineering and QA constraints.
-- `specs/epochs/INDEX.md` + `specs/epochs/EPOCH-*.md` — implementation order and epoch contracts.
+## Canonical SSOT files
+- `spec/ssot.json` — canonical system and execution baseline.
+- `spec/hacks.json` — sanctioned hack registry and identifiers.
+- `spec/config.schema.json` — runtime config schema contract.
+- `truth/*.schema.json` — report/event schemas consumed by verification.
+- `specs/CONSTRAINTS.md` — non-negotiable QA/engineering constraints.
+- `specs/epochs/INDEX.md` — dependency order and epoch gate map.
 
-## Change Control Rules
-1. Propose SSOT changes in the relevant epoch spec first.
-2. Keep one semantic change per commit (atomic discipline).
-3. Any change to `spec/*.json` or `truth/*.schema.json` must be accompanied by gate evidence:
-   - validation command output,
-   - updated evidence summary,
-   - checksum manifest refresh.
-4. Network-dependent validation remains opt-in with `ENABLE_NETWORK_TESTS=1`; default verify path must stay offline.
-5. Determinism-sensitive SSOT changes require repeat runs and multi-seed checks.
+## Required validation when SSOT changes
+When changing any SSOT file (`spec/*.json`, `truth/*.schema.json`, or epoch contracts):
+1. `npm run verify:specs`
+2. Relevant domain gate(s) (minimum one):
+   - `npm run verify:core`
+   - `npm run verify:phase2`
+   - `npm run verify:integration`
+3. If release-governance behavior changes:
+   - `npm run verify:release-governor`
+4. Update evidence pack manifests and summaries.
 
-## Validation Workflow
-- Baseline:
-  - `npm run verify:specs`
-  - `npm run verify:core`
-  - `npm run verify:phase2`
-  - `npm run verify:integration`
-- Release integrity:
-  - `npm run verify:release-governor`
-  - `node scripts/ops/regen_manifests.mjs`
+## Compatibility and change discipline
+- Prefer additive evolution over breaking rename/removal.
+- If breaking change is required, document migration in epoch NOTES and update gate map.
+- Keep one semantic SSOT change per commit when possible.
 
-## Evidence Requirements for SSOT Changes
+## Evidence requirements for SSOT edits
 Store under `reports/evidence/<EPOCH-ID>/`:
-- gate logs (`gates/*.log`),
-- `DIFF.patch`,
-- `SHA256SUMS.SOURCE.txt`, `SHA256SUMS.EVIDENCE.txt`, and `SHA256SUMS.EXPORT.txt` (when export exists),
-- `SUMMARY.md` and `VERDICT.md`.
+- gate logs (`gates/*.log`)
+- `DIFF.patch`
+- checksum manifests (`SHA256SUMS.SOURCE.txt`, `SHA256SUMS.EVIDENCE.txt`, optional export manifest)
+- `SUMMARY.md` + `VERDICT.md`

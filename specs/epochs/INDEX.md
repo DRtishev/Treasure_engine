@@ -1,6 +1,7 @@
 # EPOCH SPECS INDEX
+One-line purpose: defines implementation order, gate ownership, and evidence expectations for autopilot epoch execution.
 
-## Dependency chain and implementation order
+## Dependency chain (READY order)
 1. EPOCH-17
 2. EPOCH-18 (depends on EPOCH-17)
 3. EPOCH-19 (depends on EPOCH-17..18)
@@ -12,7 +13,8 @@
 9. EPOCH-25 (depends on EPOCH-17..24)
 10. EPOCH-26 (depends on EPOCH-17..25)
 
-No-skip policy: parallel implementation is allowed only when dependency contracts are not violated and regression gates remain green.
+## Next READY epoch selection rule
+Select the first epoch in dependency order that is not marked complete by its acceptance checklist + evidence verdict.
 
 ## Shared contracts
 - `ExecutionAdapter`
@@ -22,17 +24,29 @@ No-skip policy: parallel implementation is allowed only when dependency contract
 - `GovernanceFSM`
 - `ReleaseGovernor`
 
-## Gate map
+## Gate map per epoch
 - EPOCH-17: `verify:epoch17`, `verify:e2`, `verify:paper`, `verify:e2:multi`
-- EPOCH-18: `verify:epoch18`, `verify:strategy`, baseline wall
-- EPOCH-19: `verify:epoch19`, `verify:governance`, baseline wall
-- EPOCH-20: `verify:epoch20`, `verify:monitoring`, baseline wall
-- EPOCH-21: `verify:epoch21`, `verify:release-governor`, baseline wall
-- EPOCH-22: `verify:epoch22`, `verify:core` determinism/invariant scenario battery gates
-- EPOCH-23: `verify:epoch23`, `verify:integration` signal-to-intent contract checks
-- EPOCH-24: `verify:epoch24`, `verify:phase2` walk-forward + drift budget checks
-- EPOCH-25: `verify:epoch25` testnet campaign profiling (network opt-in via `ENABLE_NETWORK_TESTS=1`)
-- EPOCH-26: `verify:epoch26` micro-live governor rehearsals (approval/FSM/kill-switch/rollback, offline)
+- EPOCH-18: `verify:epoch18`, `verify:strategy`, `verify:core`
+- EPOCH-19: `verify:epoch19`, `verify:governance`, `verify:core`
+- EPOCH-20: `verify:epoch20`, `verify:monitoring`, `verify:core`
+- EPOCH-21: `verify:epoch21`, `verify:release-governor`, `verify:core`
+- EPOCH-22: `verify:epoch22`, `verify:core`
+- EPOCH-23: `verify:epoch23`, `verify:integration`, `verify:core`
+- EPOCH-24: `verify:epoch24`, `verify:phase2`, `verify:core`
+- EPOCH-25: `verify:epoch25` (network opt-in via `ENABLE_NETWORK_TESTS=1`), `verify:core`
+- EPOCH-26: `verify:epoch26`, `verify:release-governor`, `verify:core`
+
+## Evidence pack naming
+- Required path pattern: `reports/evidence/<EPOCH-ID>/`
+- Gate logs live under `reports/evidence/<EPOCH-ID>/gates/`
+- Manifests live under `reports/evidence/<EPOCH-ID>/manifests/`
+
+## Definition of DONE
+An epoch is DONE only when:
+1. Required gates pass with anti-flake repeats where required.
+2. Evidence pack exists and includes `VERDICT.md` with `SAFE` or `SAFE-WITH-LIMITATIONS`.
+3. Source/evidence manifests validate.
+4. Export hash is recorded when export artifact is produced.
 
 ## Epoch spec files
 - `specs/epochs/EPOCH-17.md`

@@ -2,35 +2,29 @@
 
 ## 1) Канонический оффлайн wall
 ```bash
-npm run verify:wall
+EVIDENCE_EPOCH=EPOCH-PIPELINE-FREEZE npm run verify:wall
 ```
 
-`verify:wall` выполняет строгую последовательность:
+`verify:wall` выполняет фиксированный оффлайн-пайплайн:
 1. `npm ci`
 2. `npm run verify:specs`
 3. `npm run verify:paper` (x2)
 4. `npm run verify:e2` (x2)
 5. `npm run verify:e2:multi`
-6. `npm run verify:phase2`
-7. `npm run verify:integration`
-8. `npm run verify:epoch17`
-9. `npm run verify:epoch18`
-10. `npm run verify:epoch19`
-11. `npm run verify:monitoring` (x2)
-12. `npm run verify:epoch20`
-13. `npm run verify:epoch21`
-14. `npm run verify:epoch22`
-15. `npm run verify:epoch23`
-16. `npm run verify:epoch24`
-17. `npm run verify:epoch25`
-18. `npm run verify:epoch26` (x2)
-19. `npm run verify:release-governor` (x2)
-20. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt`
-21. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt`
+6. `npm run verify:paper:multi`
+7. `npm run verify:phase2`
+8. `npm run verify:integration`
+9. `npm run verify:core`
+10. `npm run regen:manifests`
+11. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.SOURCE.txt`
+12. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.EVIDENCE.txt`
+13. `sha256sum -c reports/evidence/<EVIDENCE_EPOCH>/SHA256SUMS.EXPORT.txt`
+
+Если `EVIDENCE_EPOCH` не задан, используется самый свежий каталог в `reports/evidence/`.
 
 ## 2) Канонический порядок манифестов
 ```bash
-npm run regen:manifests
+EVIDENCE_EPOCH=EPOCH-PIPELINE-FREEZE npm run regen:manifests
 ```
 Порядок всегда: **EVIDENCE -> SOURCE -> EXPORT**, затем `sha256sum -c` по каждому манифесту.
 
@@ -42,7 +36,7 @@ npm run export:validated
 - `FINAL_VALIDATED.zip`
 - `FINAL_VALIDATED.zip.sha256`
 
-Экспорт исключает `.git`, `node_modules`, `reports/runs`, логи, кеши, временные и входящие архивы.
+Экспорт исключает `.git`, `node_modules`, `reports/runs`, логи, кеши, временные директории и `artifacts/incoming`.
 
 ## 4) Сеть и безопасность
 - Network-dependent тесты выключены по умолчанию.

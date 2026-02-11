@@ -1,0 +1,233 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:paper
+> node scripts/verify/run_with_context.mjs --gate paper --seed ${SEED:-12345} --repeat default -- npm run verify:paper:raw
+
+[run_with_context] gate=paper seed=12345 repeat=default_2
+[run_with_context] run_id=10834bfc54f60232
+[run_with_context] run_dir=reports/runs/paper/12345/default_2/10834bfc54f60232
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:paper:raw
+> node scripts/verify/paper_e2e.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PAPER TRADING E2E VERIFICATION (EPOCH-04)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Testing:
+  • PaperAdapter integration
+  • EventLog JSONL format
+  • Risk event logging
+  • Execution event logging
+  • System event logging
+  • Deterministic execution
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━ PREREQUISITES ━━━
+✓ Dataset exists: dataset/BTCUSDT_5m_100bars.json
+✓ SSOT exists: spec/ssot.json
+✓ Hacks spec exists: spec/hacks.json
+
+━━━ PAPER SIMULATION ━━━
+Run ID: paper_test_f5b39056ca22a7fd
+Run Dir: reports/runs/paper/12345/default_2/10834bfc54f60232
+Running simulation...
+✓ Simulation completed
+✓ Aggregate metrics computed
+✓ Run ID matches
+✓ PaperAdapter used
+
+━━━ EVENT LOG VERIFICATION ━━━
+✓ Event log created: reports/runs/paper/12345/default_2/10834bfc54f60232/run_paper_test_f5b39056ca22a7fd.jsonl
+✓ Event log is valid JSONL
+  Total events: 28
+  SYS events: 26
+  EXEC events: 1
+  RISK events: 1
+✓ Event log not empty
+✓ SYS events logged (start/stop)
+✓ EXEC events logged (>0)
+✓ RISK events logged (>0)
+
+━━━ EVENT CONTENT VERIFICATION ━━━
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Found engine_start event
+✓ Found engine_stop event
+✓ Found SYS events
+✓ Found RISK events
+
+━━━ DETERMINISM VERIFICATION ━━━
+✓ Dataset SHA256 recorded
+✓ Timestamp recorded
+✓ Event log path recorded
+
+━━━ ADAPTER STATISTICS ━━━
+  optimistic/HACK_A2:
+    Adapter: PaperAdapter
+    Orders placed: 0
+    Orders filled: 0
+    Orders canceled: 0
+    Fill rate: 0.0%
+✓ Correct adapter used
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 161
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ All paper trading tests passed
+
+🎉 EPOCH-04 VERIFICATION: PASS
+
+📦 DELIVERABLES:
+   • Event log: reports/runs/paper/12345/default_2/10834bfc54f60232/run_paper_test_f5b39056ca22a7fd.jsonl
+   • Adapter: PaperAdapter
+   • Integration: Risk + Execution + EventLog
+
+✅ READY FOR:
+   • Phase 2.5: Live Adapter skeleton
+   • Production deployment preparation
+   • Risk monitoring dashboard
+

@@ -1,0 +1,8 @@
+$ npm run verify:specs
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:specs
+> node scripts/verify/specs_check.mjs
+
+verify:specs PASSED
+Validated 16 required files in /workspace/Treasure_engine

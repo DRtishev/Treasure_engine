@@ -1,0 +1,65 @@
+$ npm run verify:release-governor
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:release-governor
+> node scripts/verify/release_governor_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RELEASE GOVERNOR CHECK (LEDGER + LATEST EVIDENCE)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ ledger exists: specs/epochs/LEDGER.json
+✓ ledger has epoch 17
+✓ epoch 17 status is valid (DONE)
+✓ ledger has epoch 18
+✓ epoch 18 status is valid (DONE)
+✓ ledger has epoch 19
+✓ epoch 19 status is valid (DONE)
+✓ ledger has epoch 20
+✓ epoch 20 status is valid (DONE)
+✓ ledger has epoch 21
+✓ epoch 21 status is valid (DONE)
+✓ ledger has epoch 22
+✓ epoch 22 status is valid (DONE)
+✓ ledger has epoch 23
+✓ epoch 23 status is valid (READY)
+✓ ledger has epoch 24
+✓ epoch 24 status is valid (READY)
+✓ ledger has epoch 25
+✓ epoch 25 status is valid (READY)
+✓ ledger has epoch 26
+✓ epoch 26 status is valid (READY)
+✓ no BLOCKED epochs >=17 in ledger (found: none)
+✓ latest evidence directory exists under reports/evidence
+Using latest evidence dir: reports/evidence/EPOCH-AUTOPILOT-FINAL
+✓ gates dir exists: reports/evidence/EPOCH-AUTOPILOT-FINAL/gates
+✓ wall log exists: reports/evidence/EPOCH-AUTOPILOT-FINAL/gates/verify_wall_run1.log
+✓ wall log contains marker: npm run verify:specs
+✓ wall log contains marker: npm run verify:paper
+✓ wall log contains marker: npm run verify:e2
+✓ wall log contains marker: npm run verify:e2:multi
+✓ wall log contains marker: npm run verify:paper:multi
+✓ wall log contains marker: npm run verify:phase2
+✓ wall log contains marker: npm run verify:integration
+✓ wall log contains marker: npm run verify:core
+✓ wall log contains marker: npm run regen:manifests
+✓ wall log contains marker: sha256sum -c reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.SOURCE.txt
+✓ wall log contains marker: sha256sum -c reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.EVIDENCE.txt
+✓ wall log contains marker: sha256sum -c reports/evidence/EPOCH-AUTOPILOT-FINAL/SHA256SUMS.EXPORT.txt
+✓ required evidence file exists: PREFLIGHT.log
+✓ required evidence file exists: SNAPSHOT.md
+✓ required evidence file exists: ASSUMPTIONS.md
+✓ required evidence file exists: GATE_PLAN.md
+✓ required evidence file exists: RISK_REGISTER.md
+✓ required evidence file exists: SUMMARY.md
+✓ required evidence file exists: VERDICT.md
+✓ required evidence file exists: SHA256SUMS.SOURCE.txt
+✓ required evidence file exists: SHA256SUMS.EVIDENCE.txt
+✓ required evidence file exists: SHA256SUMS.EXPORT.txt
+✓ FINAL_VALIDATED.zip exists
+✓ FINAL_VALIDATED.zip.sha256 exists
+✓ FINAL_VALIDATED.zip checksum matches declared hash
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 50
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
