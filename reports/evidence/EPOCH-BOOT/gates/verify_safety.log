@@ -1,0 +1,38 @@
+$ npm run verify:safety
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:safety
+> node scripts/verify/safety_gates_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SAFETY GATE VALIDATOR CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ DRY_RUN valid intent passes
+✓ validateIntent check executed
+✓ checkPositionCap executed
+✓ checkDailyLossCap executed
+✓ invalid side blocked
+✓ invalid side reason present
+✓ position cap breach blocked
+✓ daily loss cap breach blocked
+✓ live mode requires confirmation
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+⚠️  AUDIT: REAL ORDER PLACED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Side: BUY
+Size: 0.01 USD
+Price: 50000
+Type: MARKET
+Run ID: r1
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ live mode passes with confirmation and env
+✓ validateEnvironment check executed
+✓ auditLog check executed
+✓ audit event emitted
+✓ live mode missing env blocked
+✓ missing key reason present
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 15
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

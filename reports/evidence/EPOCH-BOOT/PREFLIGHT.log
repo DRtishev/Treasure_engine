@@ -1,0 +1,41 @@
+$ node -v
+v20.19.6
+$ npm -v
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+11.4.2
+$ pwd
+/workspace/Treasure_engine
+$ ls -la
+total 176
+drwxr-xr-x 16 root root  4096 Feb 11 05:46 .
+drwxr-xr-x  3 root root  4096 Feb 10 18:05 ..
+drwxr-xr-x  8 root root  4096 Feb 11 05:46 .git
+-rw-r--r--  1 root root   432 Feb 11 05:46 .gitignore
+-rw-r--r--  1 root root  5368 Feb 11 05:45 AGENTS.md
+drwxr-xr-x  2 root root  4096 Feb 11 05:45 EVIDENCE_PACK
+-rw-r--r--  1 root root    98 Feb 11 05:46 EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+-rw-r--r--  1 root root    86 Feb 11 05:46 FINAL_VALIDATED.zip.sha256
+-rw-r--r--  1 root root 11768 Feb 11 05:45 QUICK_START.md
+-rw-r--r--  1 root root  1053 Feb 11 05:46 README.md
+-rw-r--r--  1 root root  9654 Feb 11 05:45 RUNBOOK_OPERATIONS.md
+-rw-r--r--  1 root root 28917 Feb 11 05:46 SDD_EPOCH_17_21.md
+-rw-r--r--  1 root root  1367 Feb 11 05:46 TASK_TRACKER.md
+drwxr-xr-x  3 root root  4096 Feb 11 05:45 artifacts
+drwxr-xr-x 23 root root  4096 Feb 11 05:45 core
+drwxr-xr-x  3 root root  4096 Feb 11 05:45 data
+drwxr-xr-x  2 root root  4096 Feb 11 05:45 dataset
+drwxr-xr-x  2 root root  4096 Feb 11 05:45 docs
+drwxr-xr-x  4 root root  4096 Feb 11 05:45 evidence
+drwxr-xr-x  2 root root  4096 Feb 11 05:45 examples
+-rw-r--r--  1 root root 19412 Feb 11 05:45 package-lock.json
+-rw-r--r--  1 root root  3906 Feb 11 05:46 package.json
+-rw-r--r--  1 root root  3186 Feb 11 05:45 package.json.bak
+drwxr-xr-x 11 root root  4096 Feb 11 05:46 reports
+drwxr-xr-x  5 root root  4096 Feb 11 05:45 scripts
+drwxr-xr-x  2 root root  4096 Feb 11 05:45 spec
+drwxr-xr-x  2 root root  4096 Feb 11 05:45 truth
+drwxr-xr-x  2 root root  4096 Feb 11 05:46 ui
+$ git status -sb
+## work
+$ find . -maxdepth 3 -type f \( -name "package.json" -o -name "*.zip" -o -name "*.tar.gz" \) | sort
+./package.json

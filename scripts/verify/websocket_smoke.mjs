@@ -7,6 +7,8 @@ import { BinanceWSClient } from '../data/BinanceWSClient.mjs';
 
 let passed = 0;
 let failed = 0;
+const NETWORK_ENABLED = process.env.ENABLE_NETWORK_TESTS === '1';
+
 
 function assert(condition, msg) {
   if (condition) {
@@ -189,7 +191,12 @@ function testReconnectAttempts() {
 
 async function main() {
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-  console.log('BINANCE WEBSOCKET SMOKE TEST (No Network)');
+  if (!NETWORK_ENABLED) {
+    console.log('⚠ NETWORK TESTS DISABLED (set ENABLE_NETWORK_TESTS=1 to run)');
+    process.exit(0);
+  }
+
+  console.log('BINANCE WEBSOCKET SMOKE TEST (Network-gated)');
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
   try {

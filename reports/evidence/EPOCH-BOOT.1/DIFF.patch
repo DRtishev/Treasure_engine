@@ -1,0 +1,115 @@
+diff --git a/FINAL_VALIDATED.zip.sha256 b/FINAL_VALIDATED.zip.sha256
+index 5962060..3ee5b71 100644
+--- a/FINAL_VALIDATED.zip.sha256
++++ b/FINAL_VALIDATED.zip.sha256
+@@ -1 +1 @@
+-d318063104a736151a3393113939315703d0b9205729d0fb7b1383e0c083b6df  FINAL_VALIDATED.zip
++3d3047f02bf77ae078bfaa35e57a081ac47fc692076427d80f68d1cee4482767  FINAL_VALIDATED.zip
+diff --git a/README.md b/README.md
+index fc976f1..b26d65f 100644
+--- a/README.md
++++ b/README.md
+@@ -1,6 +1,6 @@
+ # Treasure Engine
+ 
+-Deterministic verification baseline with truth-layer evidence discipline.
++Deterministic verification baseline with Truth Layer evidence discipline.
+ 
+ ## Prerequisites
+ - Node.js 20+
+@@ -10,39 +10,36 @@ Deterministic verification baseline with truth-layer evidence discipline.
+ ```bash
+ npm ci
+ ```
+-If `npm ci` fails because lockfile drifted, run:
+-```bash
+-npm install
+-```
+-and commit only the lockfile changes (never `node_modules`).
+ 
+-## Core gates
++## Core offline gates
+ ```bash
+-npm run verify:e2
++npm run verify:e2          # wrapped with run context, seed defaults to 12345
+ npm run verify:phase2
+ npm run verify:paper
+ npm run verify:integration
++npm run verify:e2:multi    # multi-seed + anti-flake structural stability
+ ```
+ 
+-## Anti-flake reruns
++## CI-friendly aggregate gates
+ ```bash
+-npm run verify:e2
+-npm run verify:paper
++npm run verify:core        # verify:e2 + verify:paper + verify:e2:multi
++npm run verify:all         # backward-compatible project aggregate
+ ```
+ 
+-## Determinism/Truth checks
++## Expected outcomes
++- `verify:e2`: generates run-scoped artifacts under `reports/runs/e2/<seed>/<repeat>/<run_id>/`.
++- `verify:e2:multi`: checks schema validity, finite numbers, required report existence, and same-seed repeat structural stability.
++- `verify:binance` / `verify:websocket`: skip by default unless `ENABLE_NETWORK_TESTS=1`.
++
++## Truth checks
+ ```bash
+-sha256sum -c reports/evidence/EPOCH-BOOT/SHA256SUMS.SOURCE.txt
++sha256sum -c reports/evidence/EPOCH-BOOT.1/SHA256SUMS.SOURCE.txt
+ ```
+ 
+-## Evidence
+-- Session evidence pack: `reports/evidence/EPOCH-BOOT/`
+-- Run-scoped canonical outputs: `reports/runs/<run_id>/`
+-
+ ## Troubleshooting
+-- If schema checks fail due to missing run marker, run `npm run verify:e2` once to regenerate `reports/runs/LATEST_RUN_ID`.
+-- If paper verification fails, inspect `logs/events/` and `reports/evidence/EPOCH-BOOT/gates/verify_paper_*.log`.
+-
++- If schema checks fail, inspect the latest run directory in `reports/runs/e2/` and logs in `reports/evidence/EPOCH-BOOT.1/gates/`.
++- If paper verification fails, inspect `logs/events/` and `reports/evidence/EPOCH-BOOT.1/gates/verify_paper_*.log`.
++- If network tests unexpectedly run, verify `ENABLE_NETWORK_TESTS` is unset.
+ 
+ ## Planning
+-- Track active implementation milestones in `TASK_TRACKER.md`.
++- Current implementation track is maintained in `TASK_TRACKER.md`.
+diff --git a/core/sys/run_artifacts.mjs b/core/sys/run_artifacts.mjs
+index b15b1ae..a45913a 100644
+--- a/core/sys/run_artifacts.mjs
++++ b/core/sys/run_artifacts.mjs
+@@ -11,7 +11,8 @@ export function deterministicRunId({ epoch, seed, hack_id }) {
+ }
+ 
+ export function ensureRunDir(run_id) {
+-  const dir = path.join(RUNS_ROOT, run_id);
++  const envDir = process.env.TREASURE_RUN_DIR;
++  const dir = envDir ? envDir : path.join(RUNS_ROOT, run_id);
+   fs.mkdirSync(dir, { recursive: true });
+   return dir;
+ }
+diff --git a/package.json b/package.json
+index 39b5e36..476ae48 100644
+--- a/package.json
++++ b/package.json
+@@ -18,7 +18,7 @@
+     "court:v2": "node core/court/court_v2.mjs",
+     "verify:sim-schema": "node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports",
+     "verify:eqs-schema": "node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json",
+-    "verify:e2": "npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs",
++    "verify:e2": "node scripts/verify/run_with_context.mjs --gate e2 --seed ${SEED:-12345} --repeat default -- npm run verify:e2:raw",
+     "verify:phase2": "node scripts/verify/phase2_verify.mjs",
+     "verify:dataset": "node scripts/verify/dataset_check.mjs",
+     "verify:binance": "node scripts/verify/binance_smoke.mjs",
+@@ -56,7 +56,10 @@
+     "gate:obs": "npm run verify:events",
+     "verify:integration": "node scripts/verify/master_integration_e2e.mjs",
+     "gate:integration": "npm run verify:integration",
+-    "verify:safety": "node scripts/verify/safety_gates_check.mjs"
++    "verify:safety": "node scripts/verify/safety_gates_check.mjs",
++    "verify:e2:raw": "npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs",
++    "verify:e2:multi": "node scripts/verify/e2_multi_seed.mjs",
++    "verify:core": "npm run verify:e2 && npm run verify:paper && npm run verify:e2:multi"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"

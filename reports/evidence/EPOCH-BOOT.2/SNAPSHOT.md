@@ -1,0 +1,11 @@
+# SNAPSHOT
+- Branch: work
+- Commit (start): 7193072
+- Node: v20.19.6
+- npm: 11.4.2
+- CI: local container
+- Date (UTC): 2026-02-11T07:03:13Z
+- Default env flags:
+  - ENABLE_NETWORK_TESTS: unset (network OFF by default)
+  - SEED: unset (wrapper default 12345)
+  - FORCE_TRADES: auto-enabled by paper wrapper

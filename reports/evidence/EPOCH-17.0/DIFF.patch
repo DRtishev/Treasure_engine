@@ -1,0 +1,300 @@
+diff --git a/core/court/court_v1.mjs b/core/court/court_v1.mjs
+index a5dd147..4cd1ebc 100755
+--- a/core/court/court_v1.mjs
++++ b/core/court/court_v1.mjs
+@@ -3,6 +3,9 @@
+ import fs from 'fs';
+ import crypto from 'crypto';
+ 
++import { RunContext } from '../sys/context.mjs';
++import { deterministicRunId, getLatestRunDir } from '../sys/run_artifacts.mjs';
++
+ function loadJSON(filepath) {
+   return JSON.parse(fs.readFileSync(filepath, 'utf8'));
+ }
+@@ -17,6 +20,15 @@ function main() {
+   const ssot = loadJSON('spec/ssot.json');
+   const HACK_IDS = ['HACK_A2', 'HACK_A3', 'HACK_B1', 'HACK_B3'];
+   
++  const runDir = getLatestRunDir();
++  const runSeed = Number(process.env.SEED || 12345);
++  const ctx = new RunContext({
++    run_id: deterministicRunId({ epoch: process.env.TREASURE_EPOCH || 'EPOCH-17.0', seed: runSeed, hack_id: 'COURT' }),
++    run_seed: runSeed,
++    deterministic: true,
++    mode: 'sim'
++  });
++
+   const decisions = [];
+   
+   for (const hackId of HACK_IDS) {
+@@ -27,9 +39,9 @@ function main() {
+     const evidence = {};
+     
+     try {
+-      const optimistic = loadJSON(`reports/${hackId.toLowerCase()}_optimistic_report.json`);
+-      const base = loadJSON(`reports/${hackId.toLowerCase()}_base_report.json`);
+-      const hostile = loadJSON(`reports/${hackId.toLowerCase()}_hostile_report.json`);
++      const optimistic = loadJSON(`${runDir}/${hackId.toLowerCase()}_optimistic_report.json`);
++      const base = loadJSON(`${runDir}/${hackId.toLowerCase()}_base_report.json`);
++      const hostile = loadJSON(`${runDir}/${hackId.toLowerCase()}_hostile_report.json`);
+       
+       const tradeCountFilled = (base.summary.trade_count_filled ?? base.summary.trade_count ?? 0);
+       
+@@ -119,8 +131,8 @@ function main() {
+   
+   const courtReport = {
+     version: '1.0',
+-    run_id: crypto.randomBytes(8).toString('hex'),
+-    timestamp_utc: new Date().toISOString(),
++    run_id: ctx.run_id,
++    timestamp_utc: ctx.toISOString(),
+     ssot_ref: {
+       path: 'spec/ssot.json',
+       sha256: sha256Text(ssotText)
+@@ -129,8 +141,9 @@ function main() {
+     summary
+   };
+   
+-  fs.writeFileSync('reports/court_report.json', JSON.stringify(courtReport, null, 2));
+-  console.log('[court] Generated: reports/court_report.json');
++  const courtPath = `${runDir}/court_report.json`;
++  fs.writeFileSync(courtPath, JSON.stringify(courtReport, null, 2));
++  console.log(`[court] Generated: ${courtPath}`);
+   console.log(`[court] Summary: ${summary.allowed} ALLOWED, ${summary.blocked} BLOCKED, ${summary.needs_data} NEEDS_DATA`);
+ }
+ 
+diff --git a/core/sim/engine.mjs b/core/sim/engine.mjs
+index d8f1377..da16ce6 100755
+--- a/core/sim/engine.mjs
++++ b/core/sim/engine.mjs
+@@ -1,7 +1,6 @@
+ #!/usr/bin/env node
+ // core/sim/engine.mjs - Phase 2.2 PROFIT DOMINATOR
+ import fs from 'fs';
+-import crypto from 'crypto';
+ import { loadDatasetWithSha, hash32 } from '../data/dataset_io.mjs';
+ import { SeededRNG } from './rng.mjs';
+ import { sampleSpreadProxy } from './models.mjs';
+@@ -12,6 +11,8 @@ import { computePenalizedMetrics } from './penalized.mjs';
+ import * as qualityFilter from '../quality/quality_filter.mjs';
+ import * as executionPolicy from '../exec/execution_policy.mjs';
+ import { RiskGovernorState, preCheck as riskPreCheck, update as riskUpdate, getDashboard as riskDashboard } from '../risk/risk_governor.mjs';
++import { RunContext } from '../sys/context.mjs';
++import { deterministicRunId, ensureRunDir, setLatestRun } from '../sys/run_artifacts.mjs';
+ 
+ const MODES = ['optimistic', 'base', 'hostile'];
+ const HACK_IDS = ['HACK_A2', 'HACK_A3', 'HACK_B1', 'HACK_B3'];
+@@ -197,10 +198,20 @@ function main() {
+   const { dataset, datasetText, datasetSha256 } = loadDatasetWithSha(datasetPath);
+   const baseSeed = (dataset.meta && Number.isFinite(dataset.meta.seed)) ? (dataset.meta.seed >>> 0) : (hash32(datasetSha256) >>> 0);
+   
+-  const runId = crypto.randomBytes(8).toString('hex');
+-  const timestamp = new Date().toISOString();
+-  
++  const epoch = process.env.TREASURE_EPOCH || 'EPOCH-17.0';
++  const runSeed = process.env.SEED ? Number(process.env.SEED) : baseSeed;
++  const batchRunId = deterministicRunId({ epoch, seed: runSeed, hack_id: 'SIM_BATCH' });
++  const ctx = new RunContext({
++    run_id: batchRunId,
++    run_seed: runSeed,
++    initial_time: dataset.bars?.[0]?.t_ms || 0,
++    deterministic: true,
++    mode: 'sim'
++  });
++
+   fs.mkdirSync('reports', { recursive: true });
++  const runDir = ensureRunDir(batchRunId);
++  setLatestRun(batchRunId);
+   
+   const allReports = {};
+   
+@@ -239,8 +250,8 @@ function main() {
+       
+       const report = {
+         version: '1.0',
+-        run_id: runId,
+-        timestamp_utc: timestamp,
++        run_id: deterministicRunId({ epoch, seed: runSeed, hack_id: hackId }),
++        timestamp_utc: ctx.toISOString(),
+         source: (dataset.meta && dataset.meta.source) ? dataset.meta.source : 'SYNTHETIC',
+         disclaimer: (dataset.meta && dataset.meta.disclaimer) ? dataset.meta.disclaimer : 'DATASET DISCLAIMER: operator supplied dataset (REAL) or generated (SYNTHETIC).',
+         seed: (dataset.meta && Number.isFinite(dataset.meta.seed)) ? dataset.meta.seed : baseSeed,
+@@ -275,7 +286,7 @@ function main() {
+         notes: []
+       };
+       
+-      const reportPath = `reports/${hackId.toLowerCase()}_${mode}_report.json`;
++      const reportPath = `${runDir}/${hackId.toLowerCase()}_${mode}_report.json`;
+       fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
+       console.log(`[engine] Generated: ${reportPath}`);
+       
+@@ -305,8 +316,8 @@ function main() {
+   
+   const eqsReport = {
+     version: '1.0',
+-    run_id: runId,
+-    timestamp_utc: timestamp,
++    run_id: deterministicRunId({ epoch, seed: runSeed, hack_id: 'EQS' }),
++    timestamp_utc: ctx.toISOString(),
+     source: (dataset.meta && dataset.meta.source) ? dataset.meta.source : 'SYNTHETIC',
+     mode: 'hostile',
+     aggregation: 'worst-case',
+@@ -319,8 +330,9 @@ function main() {
+     }
+   };
+   
+-  fs.writeFileSync('reports/eqs_report.json', JSON.stringify(eqsReport, null, 2));
+-  console.log('[engine] Generated: reports/eqs_report.json');
++  const eqsPath = `${runDir}/eqs_report.json`;
++  fs.writeFileSync(eqsPath, JSON.stringify(eqsReport, null, 2));
++  console.log(`[engine] Generated: ${eqsPath}`);
+   console.log('[engine] E2.1 PENALIZED METRICS simulation complete!');
+ }
+ 
+diff --git a/core/sys/context.mjs b/core/sys/context.mjs
+index 8e81595..752fe18 100644
+--- a/core/sys/context.mjs
++++ b/core/sys/context.mjs
+@@ -14,13 +14,14 @@ import { DeterministicRNG, SystemRNG } from './rng.mjs';
+ export class RunContext {
+   constructor(options = {}) {
+     // Run metadata
+-    this.run_id = options.run_id || this._generateRunId();
+     this.mode = options.mode || 'sim'; // sim, paper, live
+     this.dataset_sha = options.dataset_sha || null;
+     this.ssot_sha = options.ssot_sha || null;
+ 
+     // Seed generation (deterministic from dataset + ssot)
+     this.run_seed = this._generateSeed(options.run_seed);
++    this.metadata = options.metadata || {};
++    this.run_id = options.run_id || this._generateRunId();
+ 
+     // Deterministic providers
+     const useDeterministic = options.deterministic !== false && this.mode !== 'live';
+@@ -34,7 +35,6 @@ export class RunContext {
+     }
+ 
+     // Additional context
+-    this.metadata = options.metadata || {};
+     this.persistence_enabled = options.persistence_enabled || false;
+   }
+ 
+@@ -68,9 +68,14 @@ export class RunContext {
+    * @private
+    */
+   _generateRunId() {
+-    const timestamp = Date.now();
+-    const random = Math.random().toString(36).substring(2, 8);
+-    return `run_${timestamp}_${random}`;
++    const epoch = this.metadata?.epoch || process.env.TREASURE_EPOCH || 'EPOCH-17.0';
++    const seed = this.run_seed ?? 0;
++    const mode = this.mode || 'sim';
++    const hash = createHash('sha256')
++      .update(`${epoch}::${seed}::${mode}`)
++      .digest('hex')
++      .slice(0, 16);
++    return `run_${hash}`;
+   }
+ 
+   /**
+diff --git a/scripts/verify/json_schema_check.mjs b/scripts/verify/json_schema_check.mjs
+index f12085b..6befd0a 100644
+--- a/scripts/verify/json_schema_check.mjs
++++ b/scripts/verify/json_schema_check.mjs
+@@ -5,6 +5,7 @@
+ 
+ import fs from 'fs';
+ import path from 'path';
++import { getLatestRunDir } from '../../core/sys/run_artifacts.mjs';
+ 
+ function isObject(v) {
+   return v !== null && typeof v === 'object' && !Array.isArray(v);
+@@ -122,6 +123,21 @@ function readJson(filePath) {
+   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+ }
+ 
++
++function resolveTargetPath(targetPath) {
++  const latestRunDir = getLatestRunDir();
++
++  if (targetPath === 'reports') {
++    return latestRunDir;
++  }
++
++  if (targetPath.startsWith('reports/')) {
++    return path.join(latestRunDir, path.basename(targetPath));
++  }
++
++  return targetPath;
++}
++
+ function listJsonFiles(schemaBasename, targetPath) {
+   const stat = fs.statSync(targetPath);
+   if (stat.isFile()) return [targetPath];
+@@ -140,12 +156,13 @@ function listJsonFiles(schemaBasename, targetPath) {
+ }
+ 
+ function main() {
+-  const [schemaPath, targetPath] = process.argv.slice(2);
+-  if (!schemaPath || !targetPath) {
++  const [schemaPath, targetPathRaw] = process.argv.slice(2);
++  if (!schemaPath || !targetPathRaw) {
+     console.error('Usage: node scripts/verify/json_schema_check.mjs <schema.json> <target.json|dir>');
+     process.exit(2);
+   }
+ 
++  const targetPath = resolveTargetPath(targetPathRaw);
+   const schema = readJson(schemaPath);
+   const schemaBasename = path.basename(schemaPath).toLowerCase();
+   const targets = listJsonFiles(schemaBasename, targetPath);
+diff --git a/scripts/verify/paper_e2e.mjs b/scripts/verify/paper_e2e.mjs
+index 459835f..afa095f 100755
+--- a/scripts/verify/paper_e2e.mjs
++++ b/scripts/verify/paper_e2e.mjs
+@@ -7,6 +7,7 @@ import fs from 'fs';
+ import path from 'path';
+ import { runSimulation } from '../../core/sim/engine_paper.mjs';
+ import { validateEventLog } from '../../core/obs/event_log.mjs';
++import { deterministicRunId } from '../../core/sys/run_artifacts.mjs';
+ 
+ const DATASET_PATH = 'dataset/BTCUSDT_5m_100bars.json';
+ const SSOT_PATH = 'spec/ssot.json';
+@@ -50,7 +51,8 @@ async function main() {
+ 
+     // Run paper simulation
+     console.log('━━━ PAPER SIMULATION ━━━');
+-    const runId = `paper_test_${Date.now()}`;
++    const seed = Number(process.env.SEED || 12345);
++    const runId = `paper_test_${deterministicRunId({ epoch: process.env.TREASURE_EPOCH || 'EPOCH-17.0', seed, hack_id: 'PAPER_E2E' })}`;
+     console.log(`Run ID: ${runId}`);
+     console.log('Running simulation...');
+     
+diff --git a/ui/generate_panel.mjs b/ui/generate_panel.mjs
+index 4aaf7f5..74157ac 100644
+--- a/ui/generate_panel.mjs
++++ b/ui/generate_panel.mjs
+@@ -1,9 +1,11 @@
++import { getLatestRunDir } from '../core/sys/run_artifacts.mjs';
+ // ui/generate_panel.mjs (E2.1 PENALIZED METRICS)
+ import fs from "fs";
+ function readJson(p){ try{ if(!fs.existsSync(p)) return null; return JSON.parse(fs.readFileSync(p,"utf8")); }catch{ return null; } }
+ function esc(s){ return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;"); }
+ 
+-const courtReport=readJson("reports/court_report.json");
++const runDir = getLatestRunDir();
++const courtReport=readJson(`${runDir}/court_report.json`);
+ const courtById=new Map();
+ if(courtReport&&Array.isArray(courtReport.hacks)){ for(const h of courtReport.hacks) courtById.set(h.id,h); }
+ 
+@@ -23,8 +25,8 @@ const tiles=HACK_IDS.map(hackId=>{
+   let topPenalties = [];
+   
+   try {
+-    const baseReport = readJson(`reports/${hackId.toLowerCase()}_base_report.json`);
+-    const hostileReport = readJson(`reports/${hackId.toLowerCase()}_hostile_report.json`);
++    const baseReport = readJson(`${runDir}/${hackId.toLowerCase()}_base_report.json`);
++    const hostileReport = readJson(`${runDir}/${hackId.toLowerCase()}_hostile_report.json`);
+     
+     if (baseReport && baseReport.summary) {
+       expectancyBase = baseReport.summary.expectancy_per_trade.toFixed(6);

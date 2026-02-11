@@ -1,7 +1,6 @@
 #!/usr/bin/env node
 // core/sim/engine.mjs - Phase 2.2 PROFIT DOMINATOR
 import fs from 'fs';
-import crypto from 'crypto';
 import { loadDatasetWithSha, hash32 } from '../data/dataset_io.mjs';
 import { SeededRNG } from './rng.mjs';
 import { sampleSpreadProxy } from './models.mjs';
@@ -12,6 +11,8 @@ import { computePenalizedMetrics } from './penalized.mjs';
 import * as qualityFilter from '../quality/quality_filter.mjs';
 import * as executionPolicy from '../exec/execution_policy.mjs';
 import { RiskGovernorState, preCheck as riskPreCheck, update as riskUpdate, getDashboard as riskDashboard } from '../risk/risk_governor.mjs';
+import { RunContext } from '../sys/context.mjs';
+import { deterministicRunId, ensureRunDir, setLatestRun } from '../sys/run_artifacts.mjs';
 
 const MODES = ['optimistic', 'base', 'hostile'];
 const HACK_IDS = ['HACK_A2', 'HACK_A3', 'HACK_B1', 'HACK_B3'];
@@ -197,10 +198,20 @@ function main() {
   const { dataset, datasetText, datasetSha256 } = loadDatasetWithSha(datasetPath);
   const baseSeed = (dataset.meta && Number.isFinite(dataset.meta.seed)) ? (dataset.meta.seed >>> 0) : (hash32(datasetSha256) >>> 0);
   
-  const runId = crypto.randomBytes(8).toString('hex');
-  const timestamp = new Date().toISOString();
-  
+  const epoch = process.env.TREASURE_EPOCH || 'EPOCH-17.0';
+  const runSeed = process.env.SEED ? Number(process.env.SEED) : baseSeed;
+  const batchRunId = deterministicRunId({ epoch, seed: runSeed, hack_id: 'SIM_BATCH' });
+  const ctx = new RunContext({
+    run_id: batchRunId,
+    run_seed: runSeed,
+    initial_time: dataset.bars?.[0]?.t_ms || 0,
+    deterministic: true,
+    mode: 'sim'
+  });
+
   fs.mkdirSync('reports', { recursive: true });
+  const runDir = ensureRunDir(batchRunId);
+  setLatestRun(batchRunId);
   
   const allReports = {};
   
@@ -239,8 +250,8 @@ function main() {
       
       const report = {
         version: '1.0',
-        run_id: runId,
-        timestamp_utc: timestamp,
+        run_id: deterministicRunId({ epoch, seed: runSeed, hack_id: hackId }),
+        timestamp_utc: ctx.toISOString(),
         source: (dataset.meta && dataset.meta.source) ? dataset.meta.source : 'SYNTHETIC',
         disclaimer: (dataset.meta && dataset.meta.disclaimer) ? dataset.meta.disclaimer : 'DATASET DISCLAIMER: operator supplied dataset (REAL) or generated (SYNTHETIC).',
         seed: (dataset.meta && Number.isFinite(dataset.meta.seed)) ? dataset.meta.seed : baseSeed,
@@ -275,7 +286,7 @@ function main() {
         notes: []
       };
       
-      const reportPath = `reports/${hackId.toLowerCase()}_${mode}_report.json`;
+      const reportPath = `${runDir}/${hackId.toLowerCase()}_${mode}_report.json`;
       fs.writeFileSync(reportPath, JSON.stringify(report, null, 2));
       console.log(`[engine] Generated: ${reportPath}`);
       
@@ -305,8 +316,8 @@ function main() {
   
   const eqsReport = {
     version: '1.0',
-    run_id: runId,
-    timestamp_utc: timestamp,
+    run_id: deterministicRunId({ epoch, seed: runSeed, hack_id: 'EQS' }),
+    timestamp_utc: ctx.toISOString(),
     source: (dataset.meta && dataset.meta.source) ? dataset.meta.source : 'SYNTHETIC',
     mode: 'hostile',
     aggregation: 'worst-case',
@@ -319,8 +330,9 @@ function main() {
     }
   };
   
-  fs.writeFileSync('reports/eqs_report.json', JSON.stringify(eqsReport, null, 2));
-  console.log('[engine] Generated: reports/eqs_report.json');
+  const eqsPath = `${runDir}/eqs_report.json`;
+  fs.writeFileSync(eqsPath, JSON.stringify(eqsReport, null, 2));
+  console.log(`[engine] Generated: ${eqsPath}`);
   console.log('[engine] E2.1 PENALIZED METRICS simulation complete!');
 }
 

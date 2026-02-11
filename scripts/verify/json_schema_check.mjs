@@ -5,6 +5,7 @@
 
 import fs from 'fs';
 import path from 'path';
+import { getLatestRunDir } from '../../core/sys/run_artifacts.mjs';
 
 function isObject(v) {
   return v !== null && typeof v === 'object' && !Array.isArray(v);
@@ -122,6 +123,21 @@ function readJson(filePath) {
   return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }
 
+
+function resolveTargetPath(targetPath) {
+  if (targetPath === 'reports') {
+    const latestRunDir = getLatestRunDir();
+    return latestRunDir;
+  }
+
+  if (targetPath.startsWith('reports/')) {
+    const latestRunDir = getLatestRunDir();
+    return path.join(latestRunDir, path.basename(targetPath));
+  }
+
+  return targetPath;
+}
+
 function listJsonFiles(schemaBasename, targetPath) {
   const stat = fs.statSync(targetPath);
   if (stat.isFile()) return [targetPath];
@@ -140,12 +156,13 @@ function listJsonFiles(schemaBasename, targetPath) {
 }
 
 function main() {
-  const [schemaPath, targetPath] = process.argv.slice(2);
-  if (!schemaPath || !targetPath) {
+  const [schemaPath, targetPathRaw] = process.argv.slice(2);
+  if (!schemaPath || !targetPathRaw) {
     console.error('Usage: node scripts/verify/json_schema_check.mjs <schema.json> <target.json|dir>');
     process.exit(2);
   }
 
+  const targetPath = resolveTargetPath(targetPathRaw);
   const schema = readJson(schemaPath);
   const schemaBasename = path.basename(schemaPath).toLowerCase();
   const targets = listJsonFiles(schemaBasename, targetPath);
