@@ -1,0 +1,13 @@
+$ npm run verify:epoch27
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch27
+> node scripts/verify/run_with_context.mjs --gate epoch27 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch27_ai_contracts_deterministic_harness.mjs
+
+[run_with_context] gate=epoch27 seed=12345 repeat=default
+[run_with_context] run_id=a58ee91ecff86bb7
+[run_with_context] run_dir=reports/runs/epoch27/12345/default/a58ee91ecff86bb7
+✓ stable structural output for same seed
+✓ no NaN/Infinity in AI contract outputs
+✓ multi-seed harness executed
+WROTE: reports/runs/epoch27/12345/default/a58ee91ecff86bb7/epoch27_harness.json

@@ -1,0 +1,23 @@
+$ npm run verify:epoch23
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch23
+> node scripts/verify/epoch23_signal_intent_contract_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-23 SIGNAL->INTENT CONTRACT CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ same seed yields identical AI->signal output
+✓ HOLD/zero-score decisions are skipped
+✓ signal sides are normalized BUY/SELL
+✓ notional_usd is finite and positive
+✓ cross-seed output preserves structural signal count
+✓ signal->intent conversion is deterministic
+✓ intent count equals signal count
+✓ intent contract contains deterministic ids and ai strategy ids
+✓ intent sizing fields are finite
+✓ mode remains DRY_RUN by default in epoch23 contract
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 10
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

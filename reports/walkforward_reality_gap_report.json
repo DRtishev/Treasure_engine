@@ -1,0 +1,29 @@
+{
+  "gate": "epoch24_walkforward_reality_gap",
+  "seed": 12345,
+  "fold_metrics": [
+    {
+      "fold": 1,
+      "train_mean_return": 0.00525,
+      "test_mean_return": 0.0045,
+      "reality_gap": 0.00075
+    },
+    {
+      "fold": 2,
+      "train_mean_return": 0.00575,
+      "test_mean_return": 0.003,
+      "reality_gap": 0.00275
+    },
+    {
+      "fold": 3,
+      "train_mean_return": 0.00475,
+      "test_mean_return": 0.002,
+      "reality_gap": 0.00275
+    }
+  ],
+  "drift_budget": 0.005,
+  "max_reality_gap": 0.00275,
+  "avg_reality_gap": 0.002083,
+  "within_budget": true,
+  "drift_fingerprint": "e65001f963cad77e96f90ad4ad8333171cacbd37e5eed447c9cd43798c6eda0c"
+}

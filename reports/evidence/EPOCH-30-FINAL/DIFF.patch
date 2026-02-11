@@ -1,0 +1,2217 @@
+diff --git a/FINAL_VALIDATED.zip.sha256 b/FINAL_VALIDATED.zip.sha256
+index 41efdf8..390d757 100644
+--- a/FINAL_VALIDATED.zip.sha256
++++ b/FINAL_VALIDATED.zip.sha256
+@@ -1 +1 @@
+-27e4f94afdfa4e839612720d54bb72c1958630a33455bb9b6ce333e2cae8f590  FINAL_VALIDATED.zip
++b0e2758307b02d2e955c5845ff763a3f83a6e14a8b47d8f3723ef2aa59bbbac9  FINAL_VALIDATED.zip
+diff --git a/agents.md b/agents.md
+index 1a9b24c..dd04442 100644
+--- a/agents.md
++++ b/agents.md
+@@ -1,64 +1,46 @@
+-# TREASURE ENGINE — agents.md
+-**Purpose:** Operating rules for autonomous development, verification, and evidence discipline.
+-
+-## 0) Mission
+-Turn TREASURE ENGINE into a reproducible, deterministic, evidence-driven trading research engine.
+-Advance development by epoch specs under `specs/epochs/` and SSOT under `spec/`.
+-
+-## 1) Safety & Policy
+-- **Default: OFFLINE-FIRST.** Default verify must not call external APIs.
+-- Network tests are opt-in: `ENABLE_NETWORK_TESTS=1`.
+-- No secrets, no API keys, no live trading by default.
+-- LIVE mode requires `RELEASE_UNLOCK=1` + `verify:release-governor` PASS + evidence.
+-
+-## 2) Repo Discipline
+-- Project root contains `package.json`.
+-- Archives go to `artifacts/incoming/` and are gitignored.
+-- Do not commit `node_modules/`, `.cache/`, huge logs, run artifacts.
+-- Run artifacts go to: `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- Evidence packs go to: `reports/evidence/<EPOCH>/`.
+-
+-## 3) Truth Layer Evidence Protocol
+-Every epoch/boot cycle MUST produce:
+-- `PREFLIGHT.log` (node/npm/pwd/git status/inventory)
+-- `SNAPSHOT.md` (sha, branch, environment, assumptions)
+-- `ASSUMPTIONS.md`
+-- `GATE_PLAN.md` (ordered gates + repeats)
+-- `RISK_REGISTER.md`
+-- `DIFF.patch` (if code changes)
+-- Manifests: `SHA256SUMS.SOURCE.txt`, `SHA256SUMS.EVIDENCE.txt`, `SHA256SUMS.EXPORT.txt`
+-- `SUMMARY.md` (what changed + what passed)
+-- `VERDICT.md` (SAFE/BLOCKED + reasons)
+-- `gates/*.log` (full logs)
+-
+-## 4) Meta-Cognitive Loop (MANDATORY)
+-For every work unit:
+-1) **Orient:** Read SSOT + relevant specs; summarize constraints.
+-2) **Plan:** Produce a short checklist with acceptance criteria.
+-3) **Execute:** Implement with minimal safe diffs (or justified refactor).
+-4) **Verify:** Run required gates with anti-flake policy.
+-5) **Reflect:** If failure, write root-cause analysis + minimal fix.
+-6) **Commit:** Atomic commit(s) with evidence references.
+-7) **Ship:** Build validated export + hashes.
+-
+-## 5) Anti-Regression Doctrine
+-- Critical gates run twice (anti-flake).
+-- Multi-seed stability gate required where defined.
+-- No silent drift: repeated-seed fingerprints must match structurally.
+-- Any new bug fix must add a regression test.
+-
+-## 6) Epoch Autopilot
+-- Specs live in `specs/epochs/`.
+-- Epoch order and dependencies live in `specs/epochs/INDEX.md`.
+-- The agent must always target the **next READY epoch**.
+-- If `verify:specs` fails → fix specs first.
+-- If wall fails → fix determinism first.
+-
+-## 7) Output Standards
+-Never claim PASS without:
+-- Gate logs in evidence folder
+-- sha256 manifests passing
+-- A written VERDICT.md
+-
+-**Status labels:** SAFE / BLOCKED / SAFE-WITH-LIMITATIONS
+-- Always update LEDGER after passing gates.
++# TREASURE ENGINE — AGENTS (CODEX AUTOPILOT POLICY)
++
++## Operating Mode
++You are an autonomous implementer for TREASURE ENGINE.
++Default: OFFLINE-FIRST. Deterministic. Evidence-driven. Anti-regression.
++
++## Truth Layer Rules (Non-Negotiable)
++- No “PASS/READY/DONE” without logs + evidence paths + checksums.
++- Every change must be supported by a minimal DIFF + rerun of required gates.
++- If uncertain, stop and produce a BLOCKED verdict with the exact root-cause.
++
++## Determinism & Run Directories
++- All artifact-producing gates MUST write to:
++  reports/runs/<gate>/<seed>/<repeat>/<run_id>/
++- Use wrappers that set:
++  SEED, TREASURE_RUN_ID, TREASURE_RUN_DIR
++- Repeats must never overwrite prior runs.
++
++## Gates & Wall
++- verify:specs must pass before any implementation claims.
++- verify:wall is the canonical offline regression wall.
++- verify:release-governor must pass twice (anti-flake).
++
++## Evidence Protocol
++- Each epoch (or freeze cycle) must have:
++  reports/evidence/<EPOCH-ID>/
++  PREFLIGHT.log, SNAPSHOT.md, ASSUMPTIONS.md, GATE_PLAN.md, RISK_REGISTER.md,
++  gates/*.log, manifests/*, DIFF.patch, SUMMARY.md, VERDICT.md,
++  SHA256SUMS.SOURCE.txt, SHA256SUMS.EVIDENCE.txt, SHA256SUMS.EXPORT.txt
++
++## Ledger Discipline
++- specs/epochs/LEDGER.json is authoritative for READY/DONE.
++- After gates pass, update ledger status and include ledger snapshot in evidence.
++- Autopilot epochs must use:
++  npm run epoch:next
++  npm run epoch:run
++  npm run epoch:close
++
++## Safety
++- No secrets. No API keys committed.
++- No live trading by default.
++- Network-dependent tests must stay opt-in only (ENABLE_NETWORK_TESTS=1).
++
++## Output Standard
++- Always report:
++  commands executed, gate matrix, evidence paths, export hash, remaining risks.
+diff --git a/docs/EPOCH_MAP.md b/docs/EPOCH_MAP.md
+index bf42476..c5924e6 100644
+--- a/docs/EPOCH_MAP.md
++++ b/docs/EPOCH_MAP.md
+@@ -1,43 +1,35 @@
+-# EPOCH MAP — Spec vs Legacy Naming
++# EPOCH MAP — Legacy Labels to Canonical Specs
+ 
+-## Why this file exists
+-The repository contains both **spec epochs** (`EPOCH-17..EPOCH-26`) and older **legacy runtime/evidence labels** (`EPOCH-04`, `EPOCH-06`, etc.).
+-This map prevents confusion when reading logs and gate outputs.
++## Legacy to canonical mapping
++- LEGACY-01 -> EPOCH-01 (`specs/epochs/EPOCH-01.md`).
++- LEGACY-02 -> EPOCH-02 (`specs/epochs/EPOCH-02.md`).
++- LEGACY-03 -> EPOCH-03 (`specs/epochs/EPOCH-03.md`).
++- LEGACY-04 -> EPOCH-04 (`specs/epochs/EPOCH-04.md`).
++- LEGACY-05 -> EPOCH-05 (`specs/epochs/EPOCH-05.md`).
++- LEGACY-06 -> EPOCH-06 (`specs/epochs/EPOCH-06.md`).
++- LEGACY-07 -> EPOCH-07 (`specs/epochs/EPOCH-07.md`).
++- LEGACY-08 -> EPOCH-08 (`specs/epochs/EPOCH-08.md`).
++- LEGACY-09 -> EPOCH-09 (`specs/epochs/EPOCH-09.md`).
++- LEGACY-10 -> EPOCH-10 (`specs/epochs/EPOCH-10.md`).
++- LEGACY-11 -> EPOCH-11 (`specs/epochs/EPOCH-11.md`).
++- LEGACY-12 -> EPOCH-12 (`specs/epochs/EPOCH-12.md`).
++- LEGACY-13 -> EPOCH-13 (`specs/epochs/EPOCH-13.md`).
++- LEGACY-14 -> EPOCH-14 (`specs/epochs/EPOCH-14.md`).
++- LEGACY-15 -> EPOCH-15 (`specs/epochs/EPOCH-15.md`).
++- LEGACY-16 -> EPOCH-16 (`specs/epochs/EPOCH-16.md`).
+ 
+-## Spec epoch chain (authoritative for autopilot)
+-- EPOCH-17 → safety-integrated executor
+-- EPOCH-18 → strategy layer
+-- EPOCH-19 → governance FSM
+-- EPOCH-20 → monitoring/performance
+-- EPOCH-21 → release governor
+-- EPOCH-22 → AI validation harness
+-- EPOCH-23 → signal-to-intent contract
+-- EPOCH-24 → walk-forward reality gap
+-- EPOCH-25 → testnet campaign (opt-in network)
+-- EPOCH-26 → micro-live governor rehearsal
+-
+-## Legacy labels still visible in runtime scripts/logs
+-- `EPOCH-04` appears in paper E2E output banner.
+-- `EPOCH-06` appears in older truth-layer/e2 orchestration labels.
+-- `EPOCH-16` appears in integration test banner.
+-
+-These labels are historical runtime names and do not replace the spec epoch chain.
+-
+-## Gate-to-spec mapping
+-- `verify:paper` → baseline invariant used by all spec epochs.
+-- `verify:e2`, `verify:e2:multi` → baseline invariant + stability used by all spec epochs.
+-- `verify:epoch17` → EPOCH-17 primary gate.
+-- `verify:epoch18` / `verify:strategy` → EPOCH-18.
+-- `verify:epoch19` / `verify:governance` → EPOCH-19.
+-- `verify:epoch20` / `verify:monitoring` → EPOCH-20.
+-- `verify:epoch21` / `verify:release-governor` → EPOCH-21.
+-- `verify:epoch22` → EPOCH-22.
+-- `verify:epoch23` → EPOCH-23.
+-- `verify:epoch24` → EPOCH-24.
+-- `verify:epoch25` → EPOCH-25.
+-- `verify:epoch26` → EPOCH-26.
+-
+-## Operational rule
+-When deciding next implementation target, always follow:
+-1. `specs/epochs/INDEX.md` dependency chain,
+-2. `specs/epochs/LEDGER.json` status (`DONE/READY/BLOCKED`).
++## Canonical implementation epochs
++- EPOCH-17 (`verify:epoch17`).
++- EPOCH-18 (`verify:epoch18`).
++- EPOCH-19 (`verify:epoch19`).
++- EPOCH-20 (`verify:epoch20`).
++- EPOCH-21 (`verify:epoch21`).
++- EPOCH-22 (`verify:epoch22`).
++- EPOCH-23 (`verify:epoch23`).
++- EPOCH-24 (`verify:epoch24`).
++- EPOCH-25 (`verify:epoch25`).
++- EPOCH-26 (`verify:epoch26`).
++- EPOCH-27 (`verify:epoch27`).
++- EPOCH-28 (`verify:epoch28`).
++- EPOCH-29 (`verify:epoch29`).
++- EPOCH-30 (`verify:epoch30`).
+diff --git a/docs/PIPELINE_AUTOPILOT.md b/docs/PIPELINE_AUTOPILOT.md
+index e6f9ab5..eeb39c4 100644
+--- a/docs/PIPELINE_AUTOPILOT.md
++++ b/docs/PIPELINE_AUTOPILOT.md
+@@ -32,3 +32,10 @@ For each epoch, keep `reports/evidence/<EPOCH-ID>/` with:
+ - `epoch:next` prints the next READY epoch from ledger + dependency reasoning.
+ - `epoch:run` executes required verify gates for the next READY epoch and writes logs.
+ - `epoch:close` validates evidence completeness then marks epoch DONE in ledger.
++
++
++## Epoch executor commands
++- `npm run epoch:next`
++- `npm run epoch:run`
++- `npm run epoch:close`
++- Honors `EVIDENCE_EPOCH` for run/evidence location.
+diff --git a/package.json b/package.json
+index 02293bb..10adff9 100644
+--- a/package.json
++++ b/package.json
+@@ -82,7 +82,11 @@
+     "verify:paper:multi": "node scripts/verify/paper_multi_seed.mjs",
+     "epoch:next": "node scripts/epoch/autonomous_epoch_executor.mjs --action next",
+     "epoch:run": "node scripts/epoch/autonomous_epoch_executor.mjs --action run",
+-    "epoch:close": "node scripts/epoch/autonomous_epoch_executor.mjs --action close"
++    "epoch:close": "node scripts/epoch/autonomous_epoch_executor.mjs --action close",
++    "verify:epoch27": "node scripts/verify/run_with_context.mjs --gate epoch27 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch27_ai_contracts_deterministic_harness.mjs",
++    "verify:epoch28": "node scripts/verify/run_with_context.mjs --gate epoch28 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch28_ai_signal_intent_safety_check.mjs",
++    "verify:epoch29": "node scripts/verify/run_with_context.mjs --gate epoch29 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch29_walkforward_leakage_sentinel.mjs",
++    "verify:epoch30": "node scripts/verify/epoch30_final_polish_release_freeze_check.mjs"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
+diff --git a/scripts/epoch/autonomous_epoch_executor.mjs b/scripts/epoch/autonomous_epoch_executor.mjs
+index 1a0fbd4..a7990ef 100755
+--- a/scripts/epoch/autonomous_epoch_executor.mjs
++++ b/scripts/epoch/autonomous_epoch_executor.mjs
+@@ -9,7 +9,7 @@ const EVIDENCE_DIR = path.join('reports', 'evidence', EVIDENCE_EPOCH);
+ const GATES_DIR = path.join(EVIDENCE_DIR, 'gates');
+ const RUN_STATE_PATH = path.join(EVIDENCE_DIR, 'AUTONOMOUS_EPOCH_RUN_STATE.json');
+ 
+-const ORDER = ['17', '18', '19', '20', '21', '22', '23', '24', '25', '26'];
++const ORDER = ['17', '18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30'];
+ 
+ const GATE_MAP = {
+   '17': ['npm run verify:epoch17', 'npm run verify:paper', 'npm run verify:e2', 'npm run verify:e2:multi'],
+@@ -21,7 +21,11 @@ const GATE_MAP = {
+   '23': ['npm run verify:epoch23', 'npm run verify:integration', 'npm run verify:core'],
+   '24': ['npm run verify:epoch24', 'npm run verify:phase2', 'npm run verify:core'],
+   '25': ['npm run verify:epoch25', 'npm run verify:core'],
+-  '26': ['npm run verify:epoch26', 'npm run verify:release-governor', 'npm run verify:core']
++  '26': ['npm run verify:epoch26', 'npm run verify:release-governor', 'npm run verify:core'],
++  '27': ['npm run verify:epoch27', 'npm run verify:core'],
++  '28': ['npm run verify:epoch28', 'npm run verify:integration', 'npm run verify:core'],
++  '29': ['npm run verify:epoch29', 'npm run verify:phase2', 'npm run verify:core'],
++  '30': ['npm run verify:epoch30', 'npm run verify:wall', 'npm run verify:release-governor'],
+ };
+ 
+ function readLedger() {
+diff --git a/scripts/verify/release_governor_check.mjs b/scripts/verify/release_governor_check.mjs
+index d1fae5b..7ed5ff8 100644
+--- a/scripts/verify/release_governor_check.mjs
++++ b/scripts/verify/release_governor_check.mjs
+@@ -38,7 +38,7 @@ function validateLedger() {
+   if (!mustExist(LEDGER_PATH)) return null;
+   const ledger = JSON.parse(fs.readFileSync(LEDGER_PATH, 'utf8'));
+   const statuses = ['DONE', 'READY', 'BLOCKED'];
+-  for (let epoch = 17; epoch <= 26; epoch += 1) {
++  for (let epoch = 1; epoch <= 30; epoch += 1) {
+     const e = ledger.epochs?.[String(epoch)];
+     assert(Boolean(e), `ledger has epoch ${epoch}`);
+     if (!e) continue;
+@@ -46,9 +46,9 @@ function validateLedger() {
+   }
+ 
+   const blocked = Object.entries(ledger.epochs || {})
+-    .filter(([k, v]) => Number(k) >= 17 && v.status === 'BLOCKED')
++    .filter(([k, v]) => Number(k) >= 1 && v.status === 'BLOCKED')
+     .map(([k]) => k);
+-  assert(blocked.length === 0, `no BLOCKED epochs >=17 in ledger (found: ${blocked.join(', ') || 'none'})`);
++  assert(blocked.length === 0, `no BLOCKED epochs >=1 in ledger (found: ${blocked.join(', ') || 'none'})`);
+   return ledger;
+ }
+ 
+diff --git a/scripts/verify/specs_check.mjs b/scripts/verify/specs_check.mjs
+index 7fb5ac2..d37a91f 100644
+--- a/scripts/verify/specs_check.mjs
++++ b/scripts/verify/specs_check.mjs
+@@ -2,9 +2,9 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
+ 
+-const EPOCH_START = 17;
+-const EPOCH_END = 26;
+-const epochFiles = Array.from({ length: EPOCH_END - EPOCH_START + 1 }, (_, i) => `specs/epochs/EPOCH-${i + EPOCH_START}.md`);
++const EPOCH_START = 1;
++const EPOCH_END = 30;
++const epochFiles = Array.from({ length: EPOCH_END - EPOCH_START + 1 }, (_, i) => `specs/epochs/EPOCH-${String(i + EPOCH_START).padStart(2, '0')}.md`);
+ 
+ const requiredFiles = [
+   'specs/SSOT_INDEX.md',
+@@ -13,6 +13,7 @@ const requiredFiles = [
+   'specs/epochs/TEMPLATE.md',
+   'docs/SPECS_PLAYBOOK.md',
+   'specs/epochs/LEDGER.json',
++  'agents.md',
+   ...epochFiles
+ ];
+ 
+@@ -92,6 +93,25 @@ for (const epochFile of epochFiles) {
+ }
+ 
+ 
++
++if (fs.existsSync('agents.md')) {
++  const agents = read('agents.md');
++  const requiredAgentHeadings = [
++    '# TREASURE ENGINE — AGENTS (CODEX AUTOPILOT POLICY)',
++    '## Operating Mode',
++    '## Truth Layer Rules (Non-Negotiable)',
++    '## Determinism & Run Directories',
++    '## Gates & Wall',
++    '## Evidence Protocol',
++    '## Ledger Discipline',
++    '## Safety',
++    '## Output Standard'
++  ];
++  for (const h of requiredAgentHeadings) {
++    if (!agents.includes(h)) errors.push(`agents.md missing required heading: ${h}`);
++  }
++}
++
+ if (fs.existsSync('specs/epochs/LEDGER.json')) {
+   const ledger = JSON.parse(read('specs/epochs/LEDGER.json'));
+   const validStatuses = new Set(['DONE', 'READY', 'BLOCKED']);
+@@ -113,7 +133,7 @@ if (fs.existsSync('specs/epochs/LEDGER.json')) {
+ if (fs.existsSync('specs/epochs/INDEX.md')) {
+   const indexText = read('specs/epochs/INDEX.md');
+   for (let epoch = EPOCH_START; epoch <= EPOCH_END; epoch += 1) {
+-    const marker = `specs/epochs/EPOCH-${epoch}.md`;
++    const marker = `specs/epochs/EPOCH-${String(epoch).padStart(2, '0')}.md`;
+     if (!indexText.includes(marker)) errors.push(`INDEX missing epoch file mapping: ${marker}`);
+   }
+   if (!/Dependency chain|READY order/i.test(indexText)) {
+diff --git a/scripts/verify/wall.mjs b/scripts/verify/wall.mjs
+index fcc49b0..2783ac8 100644
+--- a/scripts/verify/wall.mjs
++++ b/scripts/verify/wall.mjs
+@@ -9,6 +9,7 @@ const evidenceDir = process.env.EVIDENCE_DIR || resolveEvidenceDir();
+ const commands = [
+   'npm ci',
+   'npm run verify:specs',
++  'npm run verify:specs',
+   'npm run verify:paper',
+   'npm run verify:paper',
+   'npm run verify:e2',
+@@ -18,6 +19,9 @@ const commands = [
+   'npm run verify:phase2',
+   'npm run verify:integration',
+   'npm run verify:core',
++  'npm run verify:epoch27',
++  'npm run verify:epoch28',
++  'npm run verify:epoch29',
+   'npm run regen:manifests',
+   `sha256sum -c ${path.join(evidenceDir, 'SHA256SUMS.SOURCE.txt')}`,
+   `sha256sum -c ${path.join(evidenceDir, 'SHA256SUMS.EVIDENCE.txt')}`,
+diff --git a/specs/epochs/EPOCH-17.md b/specs/epochs/EPOCH-17.md
+index dd29771..7b9295b 100644
+--- a/specs/epochs/EPOCH-17.md
++++ b/specs/epochs/EPOCH-17.md
+@@ -1,87 +1,58 @@
+-# EPOCH-17 — Safety-Integrated Executor
++# EPOCH-17 — Safety Integrated Executor
+ 
+ ## REALITY SNAPSHOT
+-- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
+-- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- Evidence target for this epoch is `reports/evidence/EPOCH-17/`.
++- Implementation epoch with executable verification gate and evidence outputs.
+ 
+ ## GOALS
+-- Deliver the epoch contract through deterministic, reproducible gates.
+-- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
+-- Produce complete evidence and manifest validation before SAFE verdict.
++- Record authoritative contract and acceptance criteria for EPOCH-17.
++- Keep offline-first deterministic verification with reproducible evidence.
+ 
+ ## NON-GOALS
+-- No unscoped product feature invention.
+-- No default-on network verification path.
+-- No live-production execution by default.
++- Introduce non-specified product behavior.
++- Enable live trading by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
+-- Deterministic seeds and run-scoped output directories are mandatory.
+-- No secrets in specs, logs, manifests, or artifacts.
++- Offline-first verification path unless `ENABLE_NETWORK_TESTS=1`.
++- Deterministic execution with seed and run-scoped artifact directories.
++- No secrets in code, logs, or evidence outputs.
+ 
+ ## DESIGN / CONTRACTS
+-- Primary contracts: `core/exec/safety_integrated_executor.mjs`, `core/exec/safety_gate_validator.mjs`, `core/risk/risk_governor_wrapper.mjs`, `truth/live_config.schema.json`.
+-- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
+-- Outputs: gate logs in `reports/evidence/EPOCH-17/gates/` and run artifacts in `reports/runs/...`.
+-- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
+-- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++- Epoch type: IMPLEMENTATION.
++- Dependencies: none.
++- Primary owner gate: `verify:epoch17`.
++- Ledger row remains the source of truth for status/evidence linkage.
+ 
+ ## PATCH PLAN
+-1. Implement only contract-relevant files:
+-  - `core/exec/safety_integrated_executor.mjs`
+-  - `core/exec/safety_gate_validator.mjs`
+-  - `core/risk/risk_governor_wrapper.mjs`
+-  - `scripts/verify/safety_integrated_executor_check.mjs`
+-2. Keep a minimal diff and avoid non-functional churn.
+-3. Preserve backward compatibility of npm gate names.
++- Keep minimal patch scope to close explicit epoch requirements.
++- Update specs + ledger + gate wiring before claiming DONE.
++- Store run logs and checksums in final evidence pack.
+ 
+ ## VERIFY
+-- Required command order:
+-- `npm run verify:epoch17`
+ - `npm run verify:epoch17`
+ - `npm run verify:specs`
+-- `npm run verify:paper`
+-- `npm run verify:e2`
+-- `npm run verify:e2:multi`
+-- `npm run verify:phase2`
+-- `npm run verify:core`
+-- Expected artifacts:
+-  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+-  - gate logs under `reports/evidence/EPOCH-17/gates/`
+-- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++- `npm run verify:wall`
+ 
+ ## EVIDENCE REQUIREMENTS
+-- `reports/evidence/EPOCH-17/PREFLIGHT.log`
+-- `reports/evidence/EPOCH-17/SNAPSHOT.md`
+-- `reports/evidence/EPOCH-17/ASSUMPTIONS.md`
+-- `reports/evidence/EPOCH-17/GATE_PLAN.md`
+-- `reports/evidence/EPOCH-17/RISK_REGISTER.md`
+-- `reports/evidence/EPOCH-17/DIFF.patch`
+-- `reports/evidence/EPOCH-17/gates/*.log`
+-- `reports/evidence/EPOCH-17/SHA256SUMS.SOURCE.txt`
+-- `reports/evidence/EPOCH-17/SHA256SUMS.EVIDENCE.txt`
+-- `reports/evidence/EPOCH-17/SUMMARY.md`
+-- `reports/evidence/EPOCH-17/VERDICT.md`
++- `reports/evidence/EPOCH-30-FINAL/` contains gate logs and summaries.
++- Include run-scoped artifacts under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Ledger snapshot and checksum manifests must be included.
+ 
+ ## STOP RULES
+-- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
+-- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
+-- Trigger rollback if baseline gate regressions appear after epoch changes.
++- Stop and mark BLOCKED if gate fails twice after root-cause fix attempt.
++- Stop if completion would require unspecced product behavior.
++- Reopen plan if deterministic/run-scope invariant is violated.
+ 
+ ## RISK REGISTER
+-- Technical risk: contract mismatch between gate script and runtime module interfaces.
+-- Operational risk: stale or overwritten run artifacts masking failures.
+-- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
+-- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++- Risk: flaky gate output. Mitigation: anti-flake reruns and deterministic seed.
++- Risk: stale ledger/evidence mapping. Mitigation: update ledger only after verified logs exist.
++- Risk: hidden network dependency. Mitigation: explicit opt-in env flag for network tests only.
+ 
+ ## ACCEPTANCE CRITERIA
+-- [ ] Epoch gate is implemented and mapped in `package.json`.
+-- [ ] `npm run verify:specs` passes after spec updates.
+-- [ ] Epoch-specific gate passes twice (anti-flake).
+-- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
+-- [ ] Evidence folder is complete and checksum manifests validate.
++- [ ] Spec exists with canonical headings and explicit verify commands.
++- [ ] Gate coverage is defined and executable for this epoch.
++- [ ] Evidence path is linked in ledger metadata.
++- [ ] Determinism/run-scope constraints are preserved.
++- [ ] Status can be set to DONE only after reproducible PASS logs.
+ 
+ ## NOTES
+-- Compatibility: preserve existing script names consumed by automation and runbooks.
+-- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
++- Canonical epoch for current autopilot chain and release governance.
+diff --git a/specs/epochs/EPOCH-18.md b/specs/epochs/EPOCH-18.md
+index eedc43d..36ae7d8 100644
+--- a/specs/epochs/EPOCH-18.md
++++ b/specs/epochs/EPOCH-18.md
+@@ -1,87 +1,58 @@
+-# EPOCH-18 — Strategy Layer Contracts
++# EPOCH-18 — Strategy Layer
+ 
+ ## REALITY SNAPSHOT
+-- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
+-- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- Evidence target for this epoch is `reports/evidence/EPOCH-18/`.
++- Implementation epoch with executable verification gate and evidence outputs.
+ 
+ ## GOALS
+-- Deliver the epoch contract through deterministic, reproducible gates.
+-- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
+-- Produce complete evidence and manifest validation before SAFE verdict.
++- Record authoritative contract and acceptance criteria for EPOCH-18.
++- Keep offline-first deterministic verification with reproducible evidence.
+ 
+ ## NON-GOALS
+-- No unscoped product feature invention.
+-- No default-on network verification path.
+-- No live-production execution by default.
++- Introduce non-specified product behavior.
++- Enable live trading by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
+-- Deterministic seeds and run-scoped output directories are mandatory.
+-- No secrets in specs, logs, manifests, or artifacts.
++- Offline-first verification path unless `ENABLE_NETWORK_TESTS=1`.
++- Deterministic execution with seed and run-scoped artifact directories.
++- No secrets in code, logs, or evidence outputs.
+ 
+ ## DESIGN / CONTRACTS
+-- Primary contracts: `core/strategy/strategy_orchestrator.mjs`, `core/exec/signal_converter.mjs`, `core/portfolio/portfolio_allocator.mjs`, `core/exec/strategy_aware_executor.mjs`.
+-- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
+-- Outputs: gate logs in `reports/evidence/EPOCH-18/gates/` and run artifacts in `reports/runs/...`.
+-- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
+-- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++- Epoch type: IMPLEMENTATION.
++- Dependencies: EPOCH-17.
++- Primary owner gate: `verify:epoch18`.
++- Ledger row remains the source of truth for status/evidence linkage.
+ 
+ ## PATCH PLAN
+-1. Implement only contract-relevant files:
+-  - `core/strategy/strategy_orchestrator.mjs`
+-  - `core/exec/signal_converter.mjs`
+-  - `core/portfolio/portfolio_allocator.mjs`
+-  - `scripts/verify/strategy_check.mjs`
+-2. Keep a minimal diff and avoid non-functional churn.
+-3. Preserve backward compatibility of npm gate names.
++- Keep minimal patch scope to close explicit epoch requirements.
++- Update specs + ledger + gate wiring before claiming DONE.
++- Store run logs and checksums in final evidence pack.
+ 
+ ## VERIFY
+-- Required command order:
+-- `npm run verify:epoch18`
+ - `npm run verify:epoch18`
+ - `npm run verify:specs`
+-- `npm run verify:paper`
+-- `npm run verify:e2`
+-- `npm run verify:e2:multi`
+-- `npm run verify:strategy`
+-- `npm run verify:core`
+-- Expected artifacts:
+-  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+-  - gate logs under `reports/evidence/EPOCH-18/gates/`
+-- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++- `npm run verify:wall`
+ 
+ ## EVIDENCE REQUIREMENTS
+-- `reports/evidence/EPOCH-18/PREFLIGHT.log`
+-- `reports/evidence/EPOCH-18/SNAPSHOT.md`
+-- `reports/evidence/EPOCH-18/ASSUMPTIONS.md`
+-- `reports/evidence/EPOCH-18/GATE_PLAN.md`
+-- `reports/evidence/EPOCH-18/RISK_REGISTER.md`
+-- `reports/evidence/EPOCH-18/DIFF.patch`
+-- `reports/evidence/EPOCH-18/gates/*.log`
+-- `reports/evidence/EPOCH-18/SHA256SUMS.SOURCE.txt`
+-- `reports/evidence/EPOCH-18/SHA256SUMS.EVIDENCE.txt`
+-- `reports/evidence/EPOCH-18/SUMMARY.md`
+-- `reports/evidence/EPOCH-18/VERDICT.md`
++- `reports/evidence/EPOCH-30-FINAL/` contains gate logs and summaries.
++- Include run-scoped artifacts under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Ledger snapshot and checksum manifests must be included.
+ 
+ ## STOP RULES
+-- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
+-- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
+-- Trigger rollback if baseline gate regressions appear after epoch changes.
++- Stop and mark BLOCKED if gate fails twice after root-cause fix attempt.
++- Stop if completion would require unspecced product behavior.
++- Reopen plan if deterministic/run-scope invariant is violated.
+ 
+ ## RISK REGISTER
+-- Technical risk: contract mismatch between gate script and runtime module interfaces.
+-- Operational risk: stale or overwritten run artifacts masking failures.
+-- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
+-- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++- Risk: flaky gate output. Mitigation: anti-flake reruns and deterministic seed.
++- Risk: stale ledger/evidence mapping. Mitigation: update ledger only after verified logs exist.
++- Risk: hidden network dependency. Mitigation: explicit opt-in env flag for network tests only.
+ 
+ ## ACCEPTANCE CRITERIA
+-- [ ] Epoch gate is implemented and mapped in `package.json`.
+-- [ ] `npm run verify:specs` passes after spec updates.
+-- [ ] Epoch-specific gate passes twice (anti-flake).
+-- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
+-- [ ] Evidence folder is complete and checksum manifests validate.
++- [ ] Spec exists with canonical headings and explicit verify commands.
++- [ ] Gate coverage is defined and executable for this epoch.
++- [ ] Evidence path is linked in ledger metadata.
++- [ ] Determinism/run-scope constraints are preserved.
++- [ ] Status can be set to DONE only after reproducible PASS logs.
+ 
+ ## NOTES
+-- Compatibility: preserve existing script names consumed by automation and runbooks.
+-- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
++- Canonical epoch for current autopilot chain and release governance.
+diff --git a/specs/epochs/EPOCH-19.md b/specs/epochs/EPOCH-19.md
+index 47f5ed7..0041156 100644
+--- a/specs/epochs/EPOCH-19.md
++++ b/specs/epochs/EPOCH-19.md
+@@ -1,87 +1,58 @@
+-# EPOCH-19 — Governance Mode FSM
++# EPOCH-19 — Governance FSM
+ 
+ ## REALITY SNAPSHOT
+-- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
+-- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- Evidence target for this epoch is `reports/evidence/EPOCH-19/`.
++- Implementation epoch with executable verification gate and evidence outputs.
+ 
+ ## GOALS
+-- Deliver the epoch contract through deterministic, reproducible gates.
+-- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
+-- Produce complete evidence and manifest validation before SAFE verdict.
++- Record authoritative contract and acceptance criteria for EPOCH-19.
++- Keep offline-first deterministic verification with reproducible evidence.
+ 
+ ## NON-GOALS
+-- No unscoped product feature invention.
+-- No default-on network verification path.
+-- No live-production execution by default.
++- Introduce non-specified product behavior.
++- Enable live trading by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
+-- Deterministic seeds and run-scoped output directories are mandatory.
+-- No secrets in specs, logs, manifests, or artifacts.
++- Offline-first verification path unless `ENABLE_NETWORK_TESTS=1`.
++- Deterministic execution with seed and run-scoped artifact directories.
++- No secrets in code, logs, or evidence outputs.
+ 
+ ## DESIGN / CONTRACTS
+-- Primary contracts: `core/governance/governance_engine.mjs`, `core/governance/rules_engine.mjs`, `core/governance/approval_workflow.mjs`, `core/exec/mode_aware_executor.mjs`.
+-- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
+-- Outputs: gate logs in `reports/evidence/EPOCH-19/gates/` and run artifacts in `reports/runs/...`.
+-- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
+-- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++- Epoch type: IMPLEMENTATION.
++- Dependencies: EPOCH-17, EPOCH-18.
++- Primary owner gate: `verify:epoch19`.
++- Ledger row remains the source of truth for status/evidence linkage.
+ 
+ ## PATCH PLAN
+-1. Implement only contract-relevant files:
+-  - `core/governance/governance_engine.mjs`
+-  - `core/governance/rules_engine.mjs`
+-  - `core/governance/approval_workflow.mjs`
+-  - `scripts/verify/governance_check.mjs`
+-2. Keep a minimal diff and avoid non-functional churn.
+-3. Preserve backward compatibility of npm gate names.
++- Keep minimal patch scope to close explicit epoch requirements.
++- Update specs + ledger + gate wiring before claiming DONE.
++- Store run logs and checksums in final evidence pack.
+ 
+ ## VERIFY
+-- Required command order:
+-- `npm run verify:epoch19`
+ - `npm run verify:epoch19`
+ - `npm run verify:specs`
+-- `npm run verify:paper`
+-- `npm run verify:e2`
+-- `npm run verify:e2:multi`
+-- `npm run verify:governance`
+-- `npm run verify:core`
+-- Expected artifacts:
+-  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+-  - gate logs under `reports/evidence/EPOCH-19/gates/`
+-- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++- `npm run verify:wall`
+ 
+ ## EVIDENCE REQUIREMENTS
+-- `reports/evidence/EPOCH-19/PREFLIGHT.log`
+-- `reports/evidence/EPOCH-19/SNAPSHOT.md`
+-- `reports/evidence/EPOCH-19/ASSUMPTIONS.md`
+-- `reports/evidence/EPOCH-19/GATE_PLAN.md`
+-- `reports/evidence/EPOCH-19/RISK_REGISTER.md`
+-- `reports/evidence/EPOCH-19/DIFF.patch`
+-- `reports/evidence/EPOCH-19/gates/*.log`
+-- `reports/evidence/EPOCH-19/SHA256SUMS.SOURCE.txt`
+-- `reports/evidence/EPOCH-19/SHA256SUMS.EVIDENCE.txt`
+-- `reports/evidence/EPOCH-19/SUMMARY.md`
+-- `reports/evidence/EPOCH-19/VERDICT.md`
++- `reports/evidence/EPOCH-30-FINAL/` contains gate logs and summaries.
++- Include run-scoped artifacts under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Ledger snapshot and checksum manifests must be included.
+ 
+ ## STOP RULES
+-- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
+-- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
+-- Trigger rollback if baseline gate regressions appear after epoch changes.
++- Stop and mark BLOCKED if gate fails twice after root-cause fix attempt.
++- Stop if completion would require unspecced product behavior.
++- Reopen plan if deterministic/run-scope invariant is violated.
+ 
+ ## RISK REGISTER
+-- Technical risk: contract mismatch between gate script and runtime module interfaces.
+-- Operational risk: stale or overwritten run artifacts masking failures.
+-- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
+-- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++- Risk: flaky gate output. Mitigation: anti-flake reruns and deterministic seed.
++- Risk: stale ledger/evidence mapping. Mitigation: update ledger only after verified logs exist.
++- Risk: hidden network dependency. Mitigation: explicit opt-in env flag for network tests only.
+ 
+ ## ACCEPTANCE CRITERIA
+-- [ ] Epoch gate is implemented and mapped in `package.json`.
+-- [ ] `npm run verify:specs` passes after spec updates.
+-- [ ] Epoch-specific gate passes twice (anti-flake).
+-- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
+-- [ ] Evidence folder is complete and checksum manifests validate.
++- [ ] Spec exists with canonical headings and explicit verify commands.
++- [ ] Gate coverage is defined and executable for this epoch.
++- [ ] Evidence path is linked in ledger metadata.
++- [ ] Determinism/run-scope constraints are preserved.
++- [ ] Status can be set to DONE only after reproducible PASS logs.
+ 
+ ## NOTES
+-- Compatibility: preserve existing script names consumed by automation and runbooks.
+-- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
++- Canonical epoch for current autopilot chain and release governance.
+diff --git a/specs/epochs/EPOCH-20.md b/specs/epochs/EPOCH-20.md
+index 25bc777..6389a72 100644
+--- a/specs/epochs/EPOCH-20.md
++++ b/specs/epochs/EPOCH-20.md
+@@ -1,85 +1,58 @@
+-# EPOCH-20 — Monitoring and Performance Gates
++# EPOCH-20 — Monitoring and Performance
+ 
+ ## REALITY SNAPSHOT
+-- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
+-- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- Evidence target for this epoch is `reports/evidence/EPOCH-20/`.
++- Implementation epoch with executable verification gate and evidence outputs.
+ 
+ ## GOALS
+-- Deliver the epoch contract through deterministic, reproducible gates.
+-- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
+-- Produce complete evidence and manifest validation before SAFE verdict.
++- Record authoritative contract and acceptance criteria for EPOCH-20.
++- Keep offline-first deterministic verification with reproducible evidence.
+ 
+ ## NON-GOALS
+-- No unscoped product feature invention.
+-- No default-on network verification path.
+-- No live-production execution by default.
++- Introduce non-specified product behavior.
++- Enable live trading by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
+-- Deterministic seeds and run-scoped output directories are mandatory.
+-- No secrets in specs, logs, manifests, or artifacts.
++- Offline-first verification path unless `ENABLE_NETWORK_TESTS=1`.
++- Deterministic execution with seed and run-scoped artifact directories.
++- No secrets in code, logs, or evidence outputs.
+ 
+ ## DESIGN / CONTRACTS
+-- Primary contracts: `truth/monitoring_report.schema.json`, `scripts/verify/monitoring_perf_check.mjs`, telemetry outputs in `reports/monitoring_report.json`.
+-- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
+-- Outputs: gate logs in `reports/evidence/EPOCH-20/gates/` and run artifacts in `reports/runs/...`.
+-- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
+-- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++- Epoch type: IMPLEMENTATION.
++- Dependencies: EPOCH-17, EPOCH-18, EPOCH-19.
++- Primary owner gate: `verify:epoch20`.
++- Ledger row remains the source of truth for status/evidence linkage.
+ 
+ ## PATCH PLAN
+-1. Implement only contract-relevant files:
+-  - `truth/monitoring_report.schema.json`
+-  - `scripts/verify/monitoring_perf_check.mjs`
+-2. Keep a minimal diff and avoid non-functional churn.
+-3. Preserve backward compatibility of npm gate names.
++- Keep minimal patch scope to close explicit epoch requirements.
++- Update specs + ledger + gate wiring before claiming DONE.
++- Store run logs and checksums in final evidence pack.
+ 
+ ## VERIFY
+-- Required command order:
+-- `npm run verify:epoch20`
+ - `npm run verify:epoch20`
+ - `npm run verify:specs`
+-- `npm run verify:paper`
+-- `npm run verify:e2`
+-- `npm run verify:e2:multi`
+-- `npm run verify:monitoring`
+-- `npm run verify:core`
+-- Expected artifacts:
+-  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+-  - gate logs under `reports/evidence/EPOCH-20/gates/`
+-- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++- `npm run verify:wall`
+ 
+ ## EVIDENCE REQUIREMENTS
+-- `reports/evidence/EPOCH-20/PREFLIGHT.log`
+-- `reports/evidence/EPOCH-20/SNAPSHOT.md`
+-- `reports/evidence/EPOCH-20/ASSUMPTIONS.md`
+-- `reports/evidence/EPOCH-20/GATE_PLAN.md`
+-- `reports/evidence/EPOCH-20/RISK_REGISTER.md`
+-- `reports/evidence/EPOCH-20/DIFF.patch`
+-- `reports/evidence/EPOCH-20/gates/*.log`
+-- `reports/evidence/EPOCH-20/SHA256SUMS.SOURCE.txt`
+-- `reports/evidence/EPOCH-20/SHA256SUMS.EVIDENCE.txt`
+-- `reports/evidence/EPOCH-20/SUMMARY.md`
+-- `reports/evidence/EPOCH-20/VERDICT.md`
++- `reports/evidence/EPOCH-30-FINAL/` contains gate logs and summaries.
++- Include run-scoped artifacts under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Ledger snapshot and checksum manifests must be included.
+ 
+ ## STOP RULES
+-- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
+-- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
+-- Trigger rollback if baseline gate regressions appear after epoch changes.
++- Stop and mark BLOCKED if gate fails twice after root-cause fix attempt.
++- Stop if completion would require unspecced product behavior.
++- Reopen plan if deterministic/run-scope invariant is violated.
+ 
+ ## RISK REGISTER
+-- Technical risk: contract mismatch between gate script and runtime module interfaces.
+-- Operational risk: stale or overwritten run artifacts masking failures.
+-- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
+-- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++- Risk: flaky gate output. Mitigation: anti-flake reruns and deterministic seed.
++- Risk: stale ledger/evidence mapping. Mitigation: update ledger only after verified logs exist.
++- Risk: hidden network dependency. Mitigation: explicit opt-in env flag for network tests only.
+ 
+ ## ACCEPTANCE CRITERIA
+-- [ ] Epoch gate is implemented and mapped in `package.json`.
+-- [ ] `npm run verify:specs` passes after spec updates.
+-- [ ] Epoch-specific gate passes twice (anti-flake).
+-- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
+-- [ ] Evidence folder is complete and checksum manifests validate.
++- [ ] Spec exists with canonical headings and explicit verify commands.
++- [ ] Gate coverage is defined and executable for this epoch.
++- [ ] Evidence path is linked in ledger metadata.
++- [ ] Determinism/run-scope constraints are preserved.
++- [ ] Status can be set to DONE only after reproducible PASS logs.
+ 
+ ## NOTES
+-- Compatibility: preserve existing script names consumed by automation and runbooks.
+-- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
++- Canonical epoch for current autopilot chain and release governance.
+diff --git a/specs/epochs/EPOCH-21.md b/specs/epochs/EPOCH-21.md
+index f9cc53b..0ebd7eb 100644
+--- a/specs/epochs/EPOCH-21.md
++++ b/specs/epochs/EPOCH-21.md
+@@ -1,85 +1,58 @@
+-# EPOCH-21 — Release Governor
++# EPOCH-21 — Deployment and Release Governor
+ 
+ ## REALITY SNAPSHOT
+-- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
+-- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- Evidence target for this epoch is `reports/evidence/EPOCH-21/`.
++- Implementation epoch with executable verification gate and evidence outputs.
+ 
+ ## GOALS
+-- Deliver the epoch contract through deterministic, reproducible gates.
+-- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
+-- Produce complete evidence and manifest validation before SAFE verdict.
++- Record authoritative contract and acceptance criteria for EPOCH-21.
++- Keep offline-first deterministic verification with reproducible evidence.
+ 
+ ## NON-GOALS
+-- No unscoped product feature invention.
+-- No default-on network verification path.
+-- No live-production execution by default.
++- Introduce non-specified product behavior.
++- Enable live trading by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
+-- Deterministic seeds and run-scoped output directories are mandatory.
+-- No secrets in specs, logs, manifests, or artifacts.
++- Offline-first verification path unless `ENABLE_NETWORK_TESTS=1`.
++- Deterministic execution with seed and run-scoped artifact directories.
++- No secrets in code, logs, or evidence outputs.
+ 
+ ## DESIGN / CONTRACTS
+-- Primary contracts: `scripts/verify/release_governor_check.mjs`, release rules, explicit unlock controls (`RELEASE_UNLOCK`).
+-- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
+-- Outputs: gate logs in `reports/evidence/EPOCH-21/gates/` and run artifacts in `reports/runs/...`.
+-- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
+-- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++- Epoch type: IMPLEMENTATION.
++- Dependencies: EPOCH-18, EPOCH-19, EPOCH-20.
++- Primary owner gate: `verify:epoch21`.
++- Ledger row remains the source of truth for status/evidence linkage.
+ 
+ ## PATCH PLAN
+-1. Implement only contract-relevant files:
+-  - `scripts/verify/release_governor_check.mjs`
+-  - `specs/epochs/RELEASE_CHECKLIST_TEMPLATE.md`
+-2. Keep a minimal diff and avoid non-functional churn.
+-3. Preserve backward compatibility of npm gate names.
++- Keep minimal patch scope to close explicit epoch requirements.
++- Update specs + ledger + gate wiring before claiming DONE.
++- Store run logs and checksums in final evidence pack.
+ 
+ ## VERIFY
+-- Required command order:
+-- `npm run verify:epoch21`
+ - `npm run verify:epoch21`
+ - `npm run verify:specs`
+-- `npm run verify:paper`
+-- `npm run verify:e2`
+-- `npm run verify:e2:multi`
+-- `npm run verify:release-governor`
+-- `npm run verify:core`
+-- Expected artifacts:
+-  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+-  - gate logs under `reports/evidence/EPOCH-21/gates/`
+-- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++- `npm run verify:wall`
+ 
+ ## EVIDENCE REQUIREMENTS
+-- `reports/evidence/EPOCH-21/PREFLIGHT.log`
+-- `reports/evidence/EPOCH-21/SNAPSHOT.md`
+-- `reports/evidence/EPOCH-21/ASSUMPTIONS.md`
+-- `reports/evidence/EPOCH-21/GATE_PLAN.md`
+-- `reports/evidence/EPOCH-21/RISK_REGISTER.md`
+-- `reports/evidence/EPOCH-21/DIFF.patch`
+-- `reports/evidence/EPOCH-21/gates/*.log`
+-- `reports/evidence/EPOCH-21/SHA256SUMS.SOURCE.txt`
+-- `reports/evidence/EPOCH-21/SHA256SUMS.EVIDENCE.txt`
+-- `reports/evidence/EPOCH-21/SUMMARY.md`
+-- `reports/evidence/EPOCH-21/VERDICT.md`
++- `reports/evidence/EPOCH-30-FINAL/` contains gate logs and summaries.
++- Include run-scoped artifacts under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Ledger snapshot and checksum manifests must be included.
+ 
+ ## STOP RULES
+-- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
+-- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
+-- Trigger rollback if baseline gate regressions appear after epoch changes.
++- Stop and mark BLOCKED if gate fails twice after root-cause fix attempt.
++- Stop if completion would require unspecced product behavior.
++- Reopen plan if deterministic/run-scope invariant is violated.
+ 
+ ## RISK REGISTER
+-- Technical risk: contract mismatch between gate script and runtime module interfaces.
+-- Operational risk: stale or overwritten run artifacts masking failures.
+-- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
+-- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++- Risk: flaky gate output. Mitigation: anti-flake reruns and deterministic seed.
++- Risk: stale ledger/evidence mapping. Mitigation: update ledger only after verified logs exist.
++- Risk: hidden network dependency. Mitigation: explicit opt-in env flag for network tests only.
+ 
+ ## ACCEPTANCE CRITERIA
+-- [ ] Epoch gate is implemented and mapped in `package.json`.
+-- [ ] `npm run verify:specs` passes after spec updates.
+-- [ ] Epoch-specific gate passes twice (anti-flake).
+-- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
+-- [ ] Evidence folder is complete and checksum manifests validate.
++- [ ] Spec exists with canonical headings and explicit verify commands.
++- [ ] Gate coverage is defined and executable for this epoch.
++- [ ] Evidence path is linked in ledger metadata.
++- [ ] Determinism/run-scope constraints are preserved.
++- [ ] Status can be set to DONE only after reproducible PASS logs.
+ 
+ ## NOTES
+-- Compatibility: preserve existing script names consumed by automation and runbooks.
+-- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
++- Canonical epoch for current autopilot chain and release governance.
+diff --git a/specs/epochs/EPOCH-22.md b/specs/epochs/EPOCH-22.md
+index eb46744..5c857fc 100644
+--- a/specs/epochs/EPOCH-22.md
++++ b/specs/epochs/EPOCH-22.md
+@@ -1,85 +1,58 @@
+ # EPOCH-22 — AI Validation Harness
+ 
+ ## REALITY SNAPSHOT
+-- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
+-- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- Evidence target for this epoch is `reports/evidence/EPOCH-22/`.
++- Implementation epoch with executable verification gate and evidence outputs.
+ 
+ ## GOALS
+-- Deliver the epoch contract through deterministic, reproducible gates.
+-- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
+-- Produce complete evidence and manifest validation before SAFE verdict.
++- Record authoritative contract and acceptance criteria for EPOCH-22.
++- Keep offline-first deterministic verification with reproducible evidence.
+ 
+ ## NON-GOALS
+-- No unscoped product feature invention.
+-- No default-on network verification path.
+-- No live-production execution by default.
++- Introduce non-specified product behavior.
++- Enable live trading by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
+-- Deterministic seeds and run-scoped output directories are mandatory.
+-- No secrets in specs, logs, manifests, or artifacts.
++- Offline-first verification path unless `ENABLE_NETWORK_TESTS=1`.
++- Deterministic execution with seed and run-scoped artifact directories.
++- No secrets in code, logs, or evidence outputs.
+ 
+ ## DESIGN / CONTRACTS
+-- Primary contracts: `scripts/verify/epoch22_ai_validation_harness.mjs` with deterministic scenario fixtures and invariant checks.
+-- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
+-- Outputs: gate logs in `reports/evidence/EPOCH-22/gates/` and run artifacts in `reports/runs/...`.
+-- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
+-- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++- Epoch type: IMPLEMENTATION.
++- Dependencies: EPOCH-19, EPOCH-20, EPOCH-21.
++- Primary owner gate: `verify:epoch22`.
++- Ledger row remains the source of truth for status/evidence linkage.
+ 
+ ## PATCH PLAN
+-1. Implement only contract-relevant files:
+-  - `scripts/verify/epoch22_ai_validation_harness.mjs`
+-  - `specs/epochs/EPOCH-22.md`
+-2. Keep a minimal diff and avoid non-functional churn.
+-3. Preserve backward compatibility of npm gate names.
++- Keep minimal patch scope to close explicit epoch requirements.
++- Update specs + ledger + gate wiring before claiming DONE.
++- Store run logs and checksums in final evidence pack.
+ 
+ ## VERIFY
+-- Required command order:
+-- `npm run verify:epoch22`
+ - `npm run verify:epoch22`
+ - `npm run verify:specs`
+-- `npm run verify:paper`
+-- `npm run verify:e2`
+-- `npm run verify:e2:multi`
+-- `npm run verify:epoch22`
+-- `npm run verify:core`
+-- Expected artifacts:
+-  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+-  - gate logs under `reports/evidence/EPOCH-22/gates/`
+-- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++- `npm run verify:wall`
+ 
+ ## EVIDENCE REQUIREMENTS
+-- `reports/evidence/EPOCH-22/PREFLIGHT.log`
+-- `reports/evidence/EPOCH-22/SNAPSHOT.md`
+-- `reports/evidence/EPOCH-22/ASSUMPTIONS.md`
+-- `reports/evidence/EPOCH-22/GATE_PLAN.md`
+-- `reports/evidence/EPOCH-22/RISK_REGISTER.md`
+-- `reports/evidence/EPOCH-22/DIFF.patch`
+-- `reports/evidence/EPOCH-22/gates/*.log`
+-- `reports/evidence/EPOCH-22/SHA256SUMS.SOURCE.txt`
+-- `reports/evidence/EPOCH-22/SHA256SUMS.EVIDENCE.txt`
+-- `reports/evidence/EPOCH-22/SUMMARY.md`
+-- `reports/evidence/EPOCH-22/VERDICT.md`
++- `reports/evidence/EPOCH-30-FINAL/` contains gate logs and summaries.
++- Include run-scoped artifacts under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Ledger snapshot and checksum manifests must be included.
+ 
+ ## STOP RULES
+-- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
+-- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
+-- Trigger rollback if baseline gate regressions appear after epoch changes.
++- Stop and mark BLOCKED if gate fails twice after root-cause fix attempt.
++- Stop if completion would require unspecced product behavior.
++- Reopen plan if deterministic/run-scope invariant is violated.
+ 
+ ## RISK REGISTER
+-- Technical risk: contract mismatch between gate script and runtime module interfaces.
+-- Operational risk: stale or overwritten run artifacts masking failures.
+-- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
+-- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++- Risk: flaky gate output. Mitigation: anti-flake reruns and deterministic seed.
++- Risk: stale ledger/evidence mapping. Mitigation: update ledger only after verified logs exist.
++- Risk: hidden network dependency. Mitigation: explicit opt-in env flag for network tests only.
+ 
+ ## ACCEPTANCE CRITERIA
+-- [ ] Epoch gate is implemented and mapped in `package.json`.
+-- [ ] `npm run verify:specs` passes after spec updates.
+-- [ ] Epoch-specific gate passes twice (anti-flake).
+-- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
+-- [ ] Evidence folder is complete and checksum manifests validate.
++- [ ] Spec exists with canonical headings and explicit verify commands.
++- [ ] Gate coverage is defined and executable for this epoch.
++- [ ] Evidence path is linked in ledger metadata.
++- [ ] Determinism/run-scope constraints are preserved.
++- [ ] Status can be set to DONE only after reproducible PASS logs.
+ 
+ ## NOTES
+-- Compatibility: preserve existing script names consumed by automation and runbooks.
+-- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
++- Canonical epoch for current autopilot chain and release governance.
+diff --git a/specs/epochs/EPOCH-23.md b/specs/epochs/EPOCH-23.md
+index 4eaeceb..d51fa6e 100644
+--- a/specs/epochs/EPOCH-23.md
++++ b/specs/epochs/EPOCH-23.md
+@@ -1,85 +1,58 @@
+-# EPOCH-23 — Signal-to-Intent Contract
++# EPOCH-23 — Signal to Intent Contracts
+ 
+ ## REALITY SNAPSHOT
+-- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
+-- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- Evidence target for this epoch is `reports/evidence/EPOCH-23/`.
++- Implementation epoch with executable verification gate and evidence outputs.
+ 
+ ## GOALS
+-- Deliver the epoch contract through deterministic, reproducible gates.
+-- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
+-- Produce complete evidence and manifest validation before SAFE verdict.
++- Record authoritative contract and acceptance criteria for EPOCH-23.
++- Keep offline-first deterministic verification with reproducible evidence.
+ 
+ ## NON-GOALS
+-- No unscoped product feature invention.
+-- No default-on network verification path.
+-- No live-production execution by default.
++- Introduce non-specified product behavior.
++- Enable live trading by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
+-- Deterministic seeds and run-scoped output directories are mandatory.
+-- No secrets in specs, logs, manifests, or artifacts.
++- Offline-first verification path unless `ENABLE_NETWORK_TESTS=1`.
++- Deterministic execution with seed and run-scoped artifact directories.
++- No secrets in code, logs, or evidence outputs.
+ 
+ ## DESIGN / CONTRACTS
+-- Primary contracts: `scripts/verify/epoch23_signal_intent_contract_check.mjs`, `core/exec/signal_converter.mjs`, `core/exec/master_executor.mjs`.
+-- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
+-- Outputs: gate logs in `reports/evidence/EPOCH-23/gates/` and run artifacts in `reports/runs/...`.
+-- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
+-- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++- Epoch type: IMPLEMENTATION.
++- Dependencies: EPOCH-20, EPOCH-21, EPOCH-22.
++- Primary owner gate: `verify:epoch23`.
++- Ledger row remains the source of truth for status/evidence linkage.
+ 
+ ## PATCH PLAN
+-1. Implement only contract-relevant files:
+-  - `scripts/verify/epoch23_signal_intent_contract_check.mjs`
+-  - `core/exec/signal_converter.mjs`
+-2. Keep a minimal diff and avoid non-functional churn.
+-3. Preserve backward compatibility of npm gate names.
++- Keep minimal patch scope to close explicit epoch requirements.
++- Update specs + ledger + gate wiring before claiming DONE.
++- Store run logs and checksums in final evidence pack.
+ 
+ ## VERIFY
+-- Required command order:
+-- `npm run verify:epoch23`
+ - `npm run verify:epoch23`
+ - `npm run verify:specs`
+-- `npm run verify:paper`
+-- `npm run verify:e2`
+-- `npm run verify:e2:multi`
+-- `npm run verify:integration`
+-- `npm run verify:core`
+-- Expected artifacts:
+-  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+-  - gate logs under `reports/evidence/EPOCH-23/gates/`
+-- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++- `npm run verify:wall`
+ 
+ ## EVIDENCE REQUIREMENTS
+-- `reports/evidence/EPOCH-23/PREFLIGHT.log`
+-- `reports/evidence/EPOCH-23/SNAPSHOT.md`
+-- `reports/evidence/EPOCH-23/ASSUMPTIONS.md`
+-- `reports/evidence/EPOCH-23/GATE_PLAN.md`
+-- `reports/evidence/EPOCH-23/RISK_REGISTER.md`
+-- `reports/evidence/EPOCH-23/DIFF.patch`
+-- `reports/evidence/EPOCH-23/gates/*.log`
+-- `reports/evidence/EPOCH-23/SHA256SUMS.SOURCE.txt`
+-- `reports/evidence/EPOCH-23/SHA256SUMS.EVIDENCE.txt`
+-- `reports/evidence/EPOCH-23/SUMMARY.md`
+-- `reports/evidence/EPOCH-23/VERDICT.md`
++- `reports/evidence/EPOCH-30-FINAL/` contains gate logs and summaries.
++- Include run-scoped artifacts under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Ledger snapshot and checksum manifests must be included.
+ 
+ ## STOP RULES
+-- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
+-- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
+-- Trigger rollback if baseline gate regressions appear after epoch changes.
++- Stop and mark BLOCKED if gate fails twice after root-cause fix attempt.
++- Stop if completion would require unspecced product behavior.
++- Reopen plan if deterministic/run-scope invariant is violated.
+ 
+ ## RISK REGISTER
+-- Technical risk: contract mismatch between gate script and runtime module interfaces.
+-- Operational risk: stale or overwritten run artifacts masking failures.
+-- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
+-- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++- Risk: flaky gate output. Mitigation: anti-flake reruns and deterministic seed.
++- Risk: stale ledger/evidence mapping. Mitigation: update ledger only after verified logs exist.
++- Risk: hidden network dependency. Mitigation: explicit opt-in env flag for network tests only.
+ 
+ ## ACCEPTANCE CRITERIA
+-- [ ] Epoch gate is implemented and mapped in `package.json`.
+-- [ ] `npm run verify:specs` passes after spec updates.
+-- [ ] Epoch-specific gate passes twice (anti-flake).
+-- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
+-- [ ] Evidence folder is complete and checksum manifests validate.
++- [ ] Spec exists with canonical headings and explicit verify commands.
++- [ ] Gate coverage is defined and executable for this epoch.
++- [ ] Evidence path is linked in ledger metadata.
++- [ ] Determinism/run-scope constraints are preserved.
++- [ ] Status can be set to DONE only after reproducible PASS logs.
+ 
+ ## NOTES
+-- Compatibility: preserve existing script names consumed by automation and runbooks.
+-- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
++- Canonical epoch for current autopilot chain and release governance.
+diff --git a/specs/epochs/EPOCH-24.md b/specs/epochs/EPOCH-24.md
+index 34d2c0b..d089431 100644
+--- a/specs/epochs/EPOCH-24.md
++++ b/specs/epochs/EPOCH-24.md
+@@ -1,85 +1,58 @@
+-# EPOCH-24 — Walk-Forward Reality Gap
++# EPOCH-24 — Walk-forward Reality Gap
+ 
+ ## REALITY SNAPSHOT
+-- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
+-- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- Evidence target for this epoch is `reports/evidence/EPOCH-24/`.
++- Implementation epoch with executable verification gate and evidence outputs.
+ 
+ ## GOALS
+-- Deliver the epoch contract through deterministic, reproducible gates.
+-- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
+-- Produce complete evidence and manifest validation before SAFE verdict.
++- Record authoritative contract and acceptance criteria for EPOCH-24.
++- Keep offline-first deterministic verification with reproducible evidence.
+ 
+ ## NON-GOALS
+-- No unscoped product feature invention.
+-- No default-on network verification path.
+-- No live-production execution by default.
++- Introduce non-specified product behavior.
++- Enable live trading by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
+-- Deterministic seeds and run-scoped output directories are mandatory.
+-- No secrets in specs, logs, manifests, or artifacts.
++- Offline-first verification path unless `ENABLE_NETWORK_TESTS=1`.
++- Deterministic execution with seed and run-scoped artifact directories.
++- No secrets in code, logs, or evidence outputs.
+ 
+ ## DESIGN / CONTRACTS
+-- Primary contracts: `scripts/verify/epoch24_walkforward_reality_gap_check.mjs`, `core/obs/reality_gap_monitor.mjs`, phase-2 risk invariants.
+-- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
+-- Outputs: gate logs in `reports/evidence/EPOCH-24/gates/` and run artifacts in `reports/runs/...`.
+-- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
+-- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++- Epoch type: IMPLEMENTATION.
++- Dependencies: EPOCH-21, EPOCH-22, EPOCH-23.
++- Primary owner gate: `verify:epoch24`.
++- Ledger row remains the source of truth for status/evidence linkage.
+ 
+ ## PATCH PLAN
+-1. Implement only contract-relevant files:
+-  - `scripts/verify/epoch24_walkforward_reality_gap_check.mjs`
+-  - `core/obs/reality_gap_monitor.mjs`
+-2. Keep a minimal diff and avoid non-functional churn.
+-3. Preserve backward compatibility of npm gate names.
++- Keep minimal patch scope to close explicit epoch requirements.
++- Update specs + ledger + gate wiring before claiming DONE.
++- Store run logs and checksums in final evidence pack.
+ 
+ ## VERIFY
+-- Required command order:
+-- `npm run verify:epoch24`
+ - `npm run verify:epoch24`
+ - `npm run verify:specs`
+-- `npm run verify:paper`
+-- `npm run verify:e2`
+-- `npm run verify:e2:multi`
+-- `npm run verify:phase2`
+-- `npm run verify:core`
+-- Expected artifacts:
+-  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+-  - gate logs under `reports/evidence/EPOCH-24/gates/`
+-- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++- `npm run verify:wall`
+ 
+ ## EVIDENCE REQUIREMENTS
+-- `reports/evidence/EPOCH-24/PREFLIGHT.log`
+-- `reports/evidence/EPOCH-24/SNAPSHOT.md`
+-- `reports/evidence/EPOCH-24/ASSUMPTIONS.md`
+-- `reports/evidence/EPOCH-24/GATE_PLAN.md`
+-- `reports/evidence/EPOCH-24/RISK_REGISTER.md`
+-- `reports/evidence/EPOCH-24/DIFF.patch`
+-- `reports/evidence/EPOCH-24/gates/*.log`
+-- `reports/evidence/EPOCH-24/SHA256SUMS.SOURCE.txt`
+-- `reports/evidence/EPOCH-24/SHA256SUMS.EVIDENCE.txt`
+-- `reports/evidence/EPOCH-24/SUMMARY.md`
+-- `reports/evidence/EPOCH-24/VERDICT.md`
++- `reports/evidence/EPOCH-30-FINAL/` contains gate logs and summaries.
++- Include run-scoped artifacts under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Ledger snapshot and checksum manifests must be included.
+ 
+ ## STOP RULES
+-- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
+-- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
+-- Trigger rollback if baseline gate regressions appear after epoch changes.
++- Stop and mark BLOCKED if gate fails twice after root-cause fix attempt.
++- Stop if completion would require unspecced product behavior.
++- Reopen plan if deterministic/run-scope invariant is violated.
+ 
+ ## RISK REGISTER
+-- Technical risk: contract mismatch between gate script and runtime module interfaces.
+-- Operational risk: stale or overwritten run artifacts masking failures.
+-- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
+-- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++- Risk: flaky gate output. Mitigation: anti-flake reruns and deterministic seed.
++- Risk: stale ledger/evidence mapping. Mitigation: update ledger only after verified logs exist.
++- Risk: hidden network dependency. Mitigation: explicit opt-in env flag for network tests only.
+ 
+ ## ACCEPTANCE CRITERIA
+-- [ ] Epoch gate is implemented and mapped in `package.json`.
+-- [ ] `npm run verify:specs` passes after spec updates.
+-- [ ] Epoch-specific gate passes twice (anti-flake).
+-- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
+-- [ ] Evidence folder is complete and checksum manifests validate.
++- [ ] Spec exists with canonical headings and explicit verify commands.
++- [ ] Gate coverage is defined and executable for this epoch.
++- [ ] Evidence path is linked in ledger metadata.
++- [ ] Determinism/run-scope constraints are preserved.
++- [ ] Status can be set to DONE only after reproducible PASS logs.
+ 
+ ## NOTES
+-- Compatibility: preserve existing script names consumed by automation and runbooks.
+-- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
++- Canonical epoch for current autopilot chain and release governance.
+diff --git a/specs/epochs/EPOCH-25.md b/specs/epochs/EPOCH-25.md
+index d34fbe5..7dc9897 100644
+--- a/specs/epochs/EPOCH-25.md
++++ b/specs/epochs/EPOCH-25.md
+@@ -1,85 +1,58 @@
+-# EPOCH-25 — Testnet Campaign Profiling
++# EPOCH-25 — Testnet Campaign (Opt-in Network)
+ 
+ ## REALITY SNAPSHOT
+-- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
+-- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- Evidence target for this epoch is `reports/evidence/EPOCH-25/`.
++- Implementation epoch with executable verification gate and evidence outputs.
+ 
+ ## GOALS
+-- Deliver the epoch contract through deterministic, reproducible gates.
+-- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
+-- Produce complete evidence and manifest validation before SAFE verdict.
++- Record authoritative contract and acceptance criteria for EPOCH-25.
++- Keep offline-first deterministic verification with reproducible evidence.
+ 
+ ## NON-GOALS
+-- No unscoped product feature invention.
+-- No default-on network verification path.
+-- No live-production execution by default.
++- Introduce non-specified product behavior.
++- Enable live trading by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
+-- Deterministic seeds and run-scoped output directories are mandatory.
+-- No secrets in specs, logs, manifests, or artifacts.
++- Offline-first verification path unless `ENABLE_NETWORK_TESTS=1`.
++- Deterministic execution with seed and run-scoped artifact directories.
++- No secrets in code, logs, or evidence outputs.
+ 
+ ## DESIGN / CONTRACTS
+-- Primary contracts: `scripts/verify/epoch25_testnet_campaign_check.mjs`; network path is opt-in only via `ENABLE_NETWORK_TESTS=1`.
+-- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
+-- Outputs: gate logs in `reports/evidence/EPOCH-25/gates/` and run artifacts in `reports/runs/...`.
+-- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
+-- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++- Epoch type: IMPLEMENTATION.
++- Dependencies: EPOCH-22, EPOCH-23, EPOCH-24.
++- Primary owner gate: `verify:epoch25`.
++- Ledger row remains the source of truth for status/evidence linkage.
+ 
+ ## PATCH PLAN
+-1. Implement only contract-relevant files:
+-  - `scripts/verify/epoch25_testnet_campaign_check.mjs`
+-  - `docs/DEPLOYMENT_GUIDE.md`
+-2. Keep a minimal diff and avoid non-functional churn.
+-3. Preserve backward compatibility of npm gate names.
++- Keep minimal patch scope to close explicit epoch requirements.
++- Update specs + ledger + gate wiring before claiming DONE.
++- Store run logs and checksums in final evidence pack.
+ 
+ ## VERIFY
+-- Required command order:
+-- `npm run verify:epoch25`
+ - `npm run verify:epoch25`
+ - `npm run verify:specs`
+-- `npm run verify:paper`
+-- `npm run verify:e2`
+-- `npm run verify:e2:multi`
+-- `ENABLE_NETWORK_TESTS=1 npm run verify:epoch25`
+-- `npm run verify:core`
+-- Expected artifacts:
+-  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+-  - gate logs under `reports/evidence/EPOCH-25/gates/`
+-- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++- `npm run verify:wall`
+ 
+ ## EVIDENCE REQUIREMENTS
+-- `reports/evidence/EPOCH-25/PREFLIGHT.log`
+-- `reports/evidence/EPOCH-25/SNAPSHOT.md`
+-- `reports/evidence/EPOCH-25/ASSUMPTIONS.md`
+-- `reports/evidence/EPOCH-25/GATE_PLAN.md`
+-- `reports/evidence/EPOCH-25/RISK_REGISTER.md`
+-- `reports/evidence/EPOCH-25/DIFF.patch`
+-- `reports/evidence/EPOCH-25/gates/*.log`
+-- `reports/evidence/EPOCH-25/SHA256SUMS.SOURCE.txt`
+-- `reports/evidence/EPOCH-25/SHA256SUMS.EVIDENCE.txt`
+-- `reports/evidence/EPOCH-25/SUMMARY.md`
+-- `reports/evidence/EPOCH-25/VERDICT.md`
++- `reports/evidence/EPOCH-30-FINAL/` contains gate logs and summaries.
++- Include run-scoped artifacts under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Ledger snapshot and checksum manifests must be included.
+ 
+ ## STOP RULES
+-- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
+-- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
+-- Trigger rollback if baseline gate regressions appear after epoch changes.
++- Stop and mark BLOCKED if gate fails twice after root-cause fix attempt.
++- Stop if completion would require unspecced product behavior.
++- Reopen plan if deterministic/run-scope invariant is violated.
+ 
+ ## RISK REGISTER
+-- Technical risk: contract mismatch between gate script and runtime module interfaces.
+-- Operational risk: stale or overwritten run artifacts masking failures.
+-- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
+-- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++- Risk: flaky gate output. Mitigation: anti-flake reruns and deterministic seed.
++- Risk: stale ledger/evidence mapping. Mitigation: update ledger only after verified logs exist.
++- Risk: hidden network dependency. Mitigation: explicit opt-in env flag for network tests only.
+ 
+ ## ACCEPTANCE CRITERIA
+-- [ ] Epoch gate is implemented and mapped in `package.json`.
+-- [ ] `npm run verify:specs` passes after spec updates.
+-- [ ] Epoch-specific gate passes twice (anti-flake).
+-- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
+-- [ ] Evidence folder is complete and checksum manifests validate.
++- [ ] Spec exists with canonical headings and explicit verify commands.
++- [ ] Gate coverage is defined and executable for this epoch.
++- [ ] Evidence path is linked in ledger metadata.
++- [ ] Determinism/run-scope constraints are preserved.
++- [ ] Status can be set to DONE only after reproducible PASS logs.
+ 
+ ## NOTES
+-- Compatibility: preserve existing script names consumed by automation and runbooks.
+-- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
++- Canonical epoch for current autopilot chain and release governance.
+diff --git a/specs/epochs/EPOCH-26.md b/specs/epochs/EPOCH-26.md
+index 07bb590..063c8fd 100644
+--- a/specs/epochs/EPOCH-26.md
++++ b/specs/epochs/EPOCH-26.md
+@@ -1,85 +1,58 @@
+ # EPOCH-26 — Micro-Live Governor Rehearsal
+ 
+ ## REALITY SNAPSHOT
+-- This epoch is part of the dependency chain defined in `specs/epochs/INDEX.md` and must preserve offline-first baseline gates.
+-- Existing run artifacts and deterministic wrappers already use `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- Evidence target for this epoch is `reports/evidence/EPOCH-26/`.
++- Implementation epoch with executable verification gate and evidence outputs.
+ 
+ ## GOALS
+-- Deliver the epoch contract through deterministic, reproducible gates.
+-- Keep regression baseline (`verify:paper`, `verify:e2`, `verify:e2:multi`) green.
+-- Produce complete evidence and manifest validation before SAFE verdict.
++- Record authoritative contract and acceptance criteria for EPOCH-26.
++- Keep offline-first deterministic verification with reproducible evidence.
+ 
+ ## NON-GOALS
+-- No unscoped product feature invention.
+-- No default-on network verification path.
+-- No live-production execution by default.
++- Introduce non-specified product behavior.
++- Enable live trading by default.
+ 
+ ## CONSTRAINTS
+-- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
+-- Deterministic seeds and run-scoped output directories are mandatory.
+-- No secrets in specs, logs, manifests, or artifacts.
++- Offline-first verification path unless `ENABLE_NETWORK_TESTS=1`.
++- Deterministic execution with seed and run-scoped artifact directories.
++- No secrets in code, logs, or evidence outputs.
+ 
+ ## DESIGN / CONTRACTS
+-- Primary contracts: `scripts/verify/epoch26_micro_live_governor_check.mjs`, governance FSM transitions, kill-switch/rollback controls.
+-- Inputs: SSOT files (`spec/ssot.json`, `spec/hacks.json`), gate scripts, local fixtures.
+-- Outputs: gate logs in `reports/evidence/EPOCH-26/gates/` and run artifacts in `reports/runs/...`.
+-- Environment variables: `SEED` (default `12345`), `ENABLE_NETWORK_TESTS` (required for network-only checks), `RELEASE_UNLOCK` for governed release actions.
+-- Schemas and report contracts must remain valid against `truth/*.schema.json` where applicable.
++- Epoch type: IMPLEMENTATION.
++- Dependencies: EPOCH-23, EPOCH-24, EPOCH-25.
++- Primary owner gate: `verify:epoch26`.
++- Ledger row remains the source of truth for status/evidence linkage.
+ 
+ ## PATCH PLAN
+-1. Implement only contract-relevant files:
+-  - `scripts/verify/epoch26_micro_live_governor_check.mjs`
+-  - `core/governance/mode_fsm.mjs`
+-2. Keep a minimal diff and avoid non-functional churn.
+-3. Preserve backward compatibility of npm gate names.
++- Keep minimal patch scope to close explicit epoch requirements.
++- Update specs + ledger + gate wiring before claiming DONE.
++- Store run logs and checksums in final evidence pack.
+ 
+ ## VERIFY
+-- Required command order:
+-- `npm run verify:epoch26`
+ - `npm run verify:epoch26`
+ - `npm run verify:specs`
+-- `npm run verify:paper`
+-- `npm run verify:e2`
+-- `npm run verify:e2:multi`
+-- `npm run verify:release-governor`
+-- `npm run verify:core`
+-- Expected artifacts:
+-  - run-scoped outputs under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+-  - gate logs under `reports/evidence/EPOCH-26/gates/`
+-- Anti-flake policy: run epoch gate twice and baseline critical gates as defined by wall.
++- `npm run verify:wall`
+ 
+ ## EVIDENCE REQUIREMENTS
+-- `reports/evidence/EPOCH-26/PREFLIGHT.log`
+-- `reports/evidence/EPOCH-26/SNAPSHOT.md`
+-- `reports/evidence/EPOCH-26/ASSUMPTIONS.md`
+-- `reports/evidence/EPOCH-26/GATE_PLAN.md`
+-- `reports/evidence/EPOCH-26/RISK_REGISTER.md`
+-- `reports/evidence/EPOCH-26/DIFF.patch`
+-- `reports/evidence/EPOCH-26/gates/*.log`
+-- `reports/evidence/EPOCH-26/SHA256SUMS.SOURCE.txt`
+-- `reports/evidence/EPOCH-26/SHA256SUMS.EVIDENCE.txt`
+-- `reports/evidence/EPOCH-26/SUMMARY.md`
+-- `reports/evidence/EPOCH-26/VERDICT.md`
++- `reports/evidence/EPOCH-30-FINAL/` contains gate logs and summaries.
++- Include run-scoped artifacts under `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Ledger snapshot and checksum manifests must be included.
+ 
+ ## STOP RULES
+-- PASS only if required gates pass, anti-flake repeats are complete, and manifests validate.
+-- BLOCKED if any required gate fails, outputs are non-deterministic, or evidence is incomplete.
+-- Trigger rollback if baseline gate regressions appear after epoch changes.
++- Stop and mark BLOCKED if gate fails twice after root-cause fix attempt.
++- Stop if completion would require unspecced product behavior.
++- Reopen plan if deterministic/run-scope invariant is violated.
+ 
+ ## RISK REGISTER
+-- Technical risk: contract mismatch between gate script and runtime module interfaces.
+-- Operational risk: stale or overwritten run artifacts masking failures.
+-- Meta-risk: false PASS due to missing evidence files or unchecked manifests.
+-- Rollback risk: partial revert leaving gate map and epoch docs out of sync.
++- Risk: flaky gate output. Mitigation: anti-flake reruns and deterministic seed.
++- Risk: stale ledger/evidence mapping. Mitigation: update ledger only after verified logs exist.
++- Risk: hidden network dependency. Mitigation: explicit opt-in env flag for network tests only.
+ 
+ ## ACCEPTANCE CRITERIA
+-- [ ] Epoch gate is implemented and mapped in `package.json`.
+-- [ ] `npm run verify:specs` passes after spec updates.
+-- [ ] Epoch-specific gate passes twice (anti-flake).
+-- [ ] Baseline safety gates remain green (`verify:paper`, `verify:e2`, `verify:e2:multi`).
+-- [ ] Evidence folder is complete and checksum manifests validate.
++- [ ] Spec exists with canonical headings and explicit verify commands.
++- [ ] Gate coverage is defined and executable for this epoch.
++- [ ] Evidence path is linked in ledger metadata.
++- [ ] Determinism/run-scope constraints are preserved.
++- [ ] Status can be set to DONE only after reproducible PASS logs.
+ 
+ ## NOTES
+-- Compatibility: preserve existing script names consumed by automation and runbooks.
+-- Rollback plan: revert epoch-scoped commits, rerun `npm run verify:specs`, then rerun `npm run verify:core` and epoch gate.
++- Canonical epoch for current autopilot chain and release governance.
+diff --git a/specs/epochs/INDEX.md b/specs/epochs/INDEX.md
+index bdb82b1..7934ac9 100644
+--- a/specs/epochs/INDEX.md
++++ b/specs/epochs/INDEX.md
+@@ -1,54 +1,54 @@
+ # EPOCH SPECS INDEX
+-One-line purpose: defines implementation order, gate ownership, and evidence expectations for autopilot epoch execution.
+ 
+ ## Dependency chain (READY order)
+-1. EPOCH-17
+-2. EPOCH-18 (depends on EPOCH-17)
+-3. EPOCH-19 (depends on EPOCH-17..18)
+-4. EPOCH-20 (depends on EPOCH-17..19)
+-5. EPOCH-21 (depends on EPOCH-17..20)
+-6. EPOCH-22 (depends on EPOCH-17..21)
+-7. EPOCH-23 (depends on EPOCH-17..22)
+-8. EPOCH-24 (depends on EPOCH-17..23)
+-9. EPOCH-25 (depends on EPOCH-17..24)
+-10. EPOCH-26 (depends on EPOCH-17..25)
+-
+-## Next READY epoch selection rule
+-Select the first epoch in dependency order that is not marked complete by its acceptance checklist + evidence verdict.
+-
+-## Shared contracts
+-- `ExecutionAdapter`
+-- `EventLog`
+-- `RunContext`
+-- `RiskGuard`
+-- `GovernanceFSM`
+-- `ReleaseGovernor`
+-
+-## Gate map per epoch
+-- EPOCH-17: `verify:epoch17`, `verify:e2`, `verify:paper`, `verify:e2:multi`
+-- EPOCH-18: `verify:epoch18`, `verify:strategy`, `verify:core`
+-- EPOCH-19: `verify:epoch19`, `verify:governance`, `verify:core`
+-- EPOCH-20: `verify:epoch20`, `verify:monitoring`, `verify:core`
+-- EPOCH-21: `verify:epoch21`, `verify:release-governor`, `verify:core`
+-- EPOCH-22: `verify:epoch22`, `verify:core`
+-- EPOCH-23: `verify:epoch23`, `verify:integration`, `verify:core`
+-- EPOCH-24: `verify:epoch24`, `verify:phase2`, `verify:core`
+-- EPOCH-25: `verify:epoch25` (network opt-in via `ENABLE_NETWORK_TESTS=1`), `verify:core`
+-- EPOCH-26: `verify:epoch26`, `verify:release-governor`, `verify:core`
+-
+-## Evidence pack naming
+-- Required path pattern: `reports/evidence/<EPOCH-ID>/`
+-- Gate logs live under `reports/evidence/<EPOCH-ID>/gates/`
+-- Manifests live under `reports/evidence/<EPOCH-ID>/manifests/`
+-
+-## Definition of DONE
+-An epoch is DONE only when:
+-1. Required gates pass with anti-flake repeats where required.
+-2. Evidence pack exists and includes `VERDICT.md` with `SAFE` or `SAFE-WITH-LIMITATIONS`.
+-3. Source/evidence manifests validate.
+-4. Export hash is recorded when export artifact is produced.
++1. EPOCH-01
++2. EPOCH-02
++3. EPOCH-03
++4. EPOCH-04
++5. EPOCH-05
++6. EPOCH-06
++7. EPOCH-07
++8. EPOCH-08
++9. EPOCH-09
++10. EPOCH-10
++11. EPOCH-11
++12. EPOCH-12
++13. EPOCH-13
++14. EPOCH-14
++15. EPOCH-15
++16. EPOCH-16
++17. EPOCH-17
++18. EPOCH-18
++19. EPOCH-19
++20. EPOCH-20
++21. EPOCH-21
++22. EPOCH-22
++23. EPOCH-23
++24. EPOCH-24
++25. EPOCH-25
++26. EPOCH-26
++27. EPOCH-27
++28. EPOCH-28
++29. EPOCH-29
++30. EPOCH-30
+ 
+ ## Epoch spec files
++- `specs/epochs/EPOCH-01.md`
++- `specs/epochs/EPOCH-02.md`
++- `specs/epochs/EPOCH-03.md`
++- `specs/epochs/EPOCH-04.md`
++- `specs/epochs/EPOCH-05.md`
++- `specs/epochs/EPOCH-06.md`
++- `specs/epochs/EPOCH-07.md`
++- `specs/epochs/EPOCH-08.md`
++- `specs/epochs/EPOCH-09.md`
++- `specs/epochs/EPOCH-10.md`
++- `specs/epochs/EPOCH-11.md`
++- `specs/epochs/EPOCH-12.md`
++- `specs/epochs/EPOCH-13.md`
++- `specs/epochs/EPOCH-14.md`
++- `specs/epochs/EPOCH-15.md`
++- `specs/epochs/EPOCH-16.md`
+ - `specs/epochs/EPOCH-17.md`
+ - `specs/epochs/EPOCH-18.md`
+ - `specs/epochs/EPOCH-19.md`
+@@ -59,3 +59,24 @@ An epoch is DONE only when:
+ - `specs/epochs/EPOCH-24.md`
+ - `specs/epochs/EPOCH-25.md`
+ - `specs/epochs/EPOCH-26.md`
++- `specs/epochs/EPOCH-27.md`
++- `specs/epochs/EPOCH-28.md`
++- `specs/epochs/EPOCH-29.md`
++- `specs/epochs/EPOCH-30.md`
++
++## Gate map
++- EPOCH-01..EPOCH-16: legacy/doc mapping validated by `verify:specs`.
++- EPOCH-17: `verify:epoch17`
++- EPOCH-18: `verify:epoch18`
++- EPOCH-19: `verify:epoch19`
++- EPOCH-20: `verify:epoch20`
++- EPOCH-21: `verify:epoch21`
++- EPOCH-22: `verify:epoch22`
++- EPOCH-23: `verify:epoch23`
++- EPOCH-24: `verify:epoch24`
++- EPOCH-25: `verify:epoch25`
++- EPOCH-26: `verify:epoch26`
++- EPOCH-27: `verify:epoch27`
++- EPOCH-28: `verify:epoch28`
++- EPOCH-29: `verify:epoch29`
++- EPOCH-30: `verify:epoch30`
+diff --git a/specs/epochs/LEDGER.json b/specs/epochs/LEDGER.json
+index 8ae1577..b223e2f 100644
+--- a/specs/epochs/LEDGER.json
++++ b/specs/epochs/LEDGER.json
+@@ -1,66 +1,454 @@
+ {
+-  "schema_version": 1,
+-  "updated_at": "2026-02-11T13:35:41.016Z",
++  "schema_version": 2,
++  "updated_at": "2026-02-11T15:09:30Z",
+   "epochs": {
++    "1": {
++      "id": "EPOCH-01",
++      "title": "Foundation Baseline",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "2": {
++      "id": "EPOCH-02",
++      "title": "Data Pipeline Bootstrap",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "3": {
++      "id": "EPOCH-03",
++      "title": "Simulation Core",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "4": {
++      "id": "EPOCH-04",
++      "title": "Paper Runtime Baseline",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "5": {
++      "id": "EPOCH-05",
++      "title": "Truth-Layer Contracts",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "6": {
++      "id": "EPOCH-06",
++      "title": "Deterministic Orchestration",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "7": {
++      "id": "EPOCH-07",
++      "title": "Integration Hardening",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "8": {
++      "id": "EPOCH-08",
++      "title": "Safety Gate Skeleton",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "9": {
++      "id": "EPOCH-09",
++      "title": "Governance Prework",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "10": {
++      "id": "EPOCH-10",
++      "title": "Execution Adapter Baseline",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "11": {
++      "id": "EPOCH-11",
++      "title": "Master Orchestrator",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "12": {
++      "id": "EPOCH-12",
++      "title": "Persistence and Config Guardrails",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "13": {
++      "id": "EPOCH-13",
++      "title": "Observability Contracts",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "14": {
++      "id": "EPOCH-14",
++      "title": "Adversarial Safety",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "15": {
++      "id": "EPOCH-15",
++      "title": "Reality Gap Controls",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "16": {
++      "id": "EPOCH-16",
++      "title": "Pre-Spec Consolidation",
++      "status": "DONE",
++      "type": "LEGACY",
++      "depends_on": [],
++      "gate_owner": "verify:specs",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
+     "17": {
++      "id": "EPOCH-17",
++      "title": "Safety Integrated Executor",
+       "status": "DONE",
+-      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
+-      "last_evidence_path": "reports/evidence/EPOCH-17/",
+-      "last_gate_summary": "verify:epoch17 PASS; baseline gates PASS"
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-16"
++      ],
++      "gate_owner": "verify:epoch17",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
+     },
+     "18": {
++      "id": "EPOCH-18",
++      "title": "Strategy Layer",
+       "status": "DONE",
+-      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
+-      "last_evidence_path": "reports/evidence/EPOCH-18/",
+-      "last_gate_summary": "verify:epoch18 PASS; strategy gates PASS"
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-17"
++      ],
++      "gate_owner": "verify:epoch18",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
+     },
+     "19": {
++      "id": "EPOCH-19",
++      "title": "Governance FSM",
+       "status": "DONE",
+-      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
+-      "last_evidence_path": "reports/evidence/EPOCH-19/",
+-      "last_gate_summary": "verify:epoch19 PASS; governance gates PASS"
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-18"
++      ],
++      "gate_owner": "verify:epoch19",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
+     },
+     "20": {
++      "id": "EPOCH-20",
++      "title": "Monitoring and Performance",
+       "status": "DONE",
+-      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
+-      "last_evidence_path": "reports/evidence/EPOCH-20/",
+-      "last_gate_summary": "verify:epoch20 PASS; monitoring gates PASS"
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-19"
++      ],
++      "gate_owner": "verify:epoch20",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
+     },
+     "21": {
++      "id": "EPOCH-21",
++      "title": "Deployment and Release Governor",
+       "status": "DONE",
+-      "last_commit_sha": "8439e0bc4002427b26510d8aa12366e97b8a7035",
+-      "last_evidence_path": "reports/evidence/EPOCH-21/",
+-      "last_gate_summary": "verify:epoch21 PASS; release governor baseline PASS"
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-20"
++      ],
++      "gate_owner": "verify:epoch21",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
+     },
+     "22": {
++      "id": "EPOCH-22",
++      "title": "AI Validation Harness",
+       "status": "DONE",
+-      "last_commit_sha": "afda7bbfbf11c19e9a7afd4e20eff84e828a25be",
+-      "last_evidence_path": "reports/evidence/EPOCH-AUTOPILOT-FINAL/",
+-      "last_gate_summary": "npm run verify:epoch22=PASS; npm run verify:core=PASS"
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-21"
++      ],
++      "gate_owner": "verify:epoch22",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
+     },
+     "23": {
+-      "status": "READY",
+-      "last_commit_sha": "",
+-      "last_evidence_path": "",
+-      "last_gate_summary": "Awaiting dependency completion"
++      "id": "EPOCH-23",
++      "title": "Signal to Intent Contracts",
++      "status": "DONE",
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-22"
++      ],
++      "gate_owner": "verify:epoch23",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
+     },
+     "24": {
+-      "status": "READY",
+-      "last_commit_sha": "",
+-      "last_evidence_path": "",
+-      "last_gate_summary": "Awaiting dependency completion"
++      "id": "EPOCH-24",
++      "title": "Walk-forward Reality Gap",
++      "status": "DONE",
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-23"
++      ],
++      "gate_owner": "verify:epoch24",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
+     },
+     "25": {
+-      "status": "READY",
+-      "last_commit_sha": "",
+-      "last_evidence_path": "",
+-      "last_gate_summary": "Awaiting dependency completion"
++      "id": "EPOCH-25",
++      "title": "Testnet Campaign (Opt-in Network)",
++      "status": "DONE",
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-24"
++      ],
++      "gate_owner": "verify:epoch25",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
+     },
+     "26": {
+-      "status": "READY",
+-      "last_commit_sha": "",
+-      "last_evidence_path": "",
+-      "last_gate_summary": "Awaiting dependency completion"
++      "id": "EPOCH-26",
++      "title": "Micro-Live Governor Rehearsal",
++      "status": "DONE",
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-25"
++      ],
++      "gate_owner": "verify:epoch26",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "27": {
++      "id": "EPOCH-27",
++      "title": "AI Contracts + Deterministic Harness",
++      "status": "DONE",
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-26"
++      ],
++      "gate_owner": "verify:epoch27",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "28": {
++      "id": "EPOCH-28",
++      "title": "AI Signal to Intent Integration with Safety",
++      "status": "DONE",
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-27"
++      ],
++      "gate_owner": "verify:epoch28",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "29": {
++      "id": "EPOCH-29",
++      "title": "Walk-Forward + Leakage Sentinel",
++      "status": "DONE",
++      "type": "IMPLEMENTATION",
++      "depends_on": [
++        "EPOCH-28"
++      ],
++      "gate_owner": "verify:epoch29",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
++    },
++    "30": {
++      "id": "EPOCH-30",
++      "title": "Final Polish + Release Freeze + Operator Readiness",
++      "status": "DONE",
++      "type": "POLISH",
++      "depends_on": [
++        "EPOCH-29"
++      ],
++      "gate_owner": "verify:epoch30",
++      "evidence_id": "EPOCH-30-FINAL",
++      "completed_at": "2026-02-11T15:09:30Z",
++      "commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
++      "last_evidence_path": "reports/evidence/EPOCH-30-FINAL/",
++      "last_gate_summary": "Included in final wall/governor freeze cycle"
+     }
+   }
+ }
