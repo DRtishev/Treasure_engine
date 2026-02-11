@@ -1,0 +1,228 @@
+diff --git a/FINAL_VALIDATED.zip.sha256 b/FINAL_VALIDATED.zip.sha256
+index 9d33744..45a163d 100644
+--- a/FINAL_VALIDATED.zip.sha256
++++ b/FINAL_VALIDATED.zip.sha256
+@@ -1 +1 @@
+-897ae65d703eea6c93a95b249acfa43e8fad5b327436ed39dcbe5f11b01ada8c  FINAL_VALIDATED.zip
++3730dc1f688b0757f4191b50e40fb8b7e99cc29ed9615587ffbe39d357ea2b6c  FINAL_VALIDATED.zip
+diff --git a/README.md b/README.md
+index 6aacf56..1a5a0a8 100644
+--- a/README.md
++++ b/README.md
+@@ -15,6 +15,7 @@ npm run verify:wall
+ - `npm run verify:release-governor` — release-gate, при отсутствии zip пытается выполнить `export:validated`.
+ - `npm run verify:epoch22` — AI Validation Harness drift/invariant gate (offline).
+ - `npm run verify:epoch23` — AI -> Signals -> Intents contract gate (offline).
++- `npm run verify:epoch24` — Walk-forward + reality-gap drift-budget gate (offline).
+ 
+ ## Offline-first политика
+ - По умолчанию verification path не требует сети.
+diff --git a/RUNBOOK.md b/RUNBOOK.md
+index 53e21e3..8a07027 100644
+--- a/RUNBOOK.md
++++ b/RUNBOOK.md
+@@ -21,9 +21,10 @@ npm run verify:wall
+ 13. `npm run verify:epoch21`
+ 14. `npm run verify:epoch22`
+ 15. `npm run verify:epoch23`
+-16. `npm run verify:release-governor` (x2)
+-17. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt`
+-18. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt`
++16. `npm run verify:epoch24`
++17. `npm run verify:release-governor` (x2)
++18. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt`
++19. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt`
+ 
+ ## 2) Канонический порядок манифестов
+ ```bash
+diff --git a/package.json b/package.json
+index 20b4c23..bb3bc74 100644
+--- a/package.json
++++ b/package.json
+@@ -73,9 +73,10 @@
+     "verify:specs": "node scripts/verify/specs_check.mjs",
+     "regen:manifests": "node scripts/ops/regen_manifests.mjs",
+     "export:validated": "node scripts/export_validated.mjs",
+-    "verify:wall": "npm ci && npm run verify:specs && npm run verify:paper && npm run verify:paper && npm run verify:e2 && npm run verify:e2 && npm run verify:e2:multi && npm run verify:phase2 && npm run verify:integration && npm run verify:epoch17 && npm run verify:epoch18 && npm run verify:epoch19 && npm run verify:monitoring && npm run verify:monitoring && npm run verify:epoch20 && npm run verify:epoch21 && npm run verify:epoch22 && npm run verify:epoch23 && npm run verify:release-governor && npm run verify:release-governor && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt",
++    "verify:wall": "npm ci && npm run verify:specs && npm run verify:paper && npm run verify:paper && npm run verify:e2 && npm run verify:e2 && npm run verify:e2:multi && npm run verify:phase2 && npm run verify:integration && npm run verify:epoch17 && npm run verify:epoch18 && npm run verify:epoch19 && npm run verify:monitoring && npm run verify:monitoring && npm run verify:epoch20 && npm run verify:epoch21 && npm run verify:epoch22 && npm run verify:epoch23 && npm run verify:epoch24 && npm run verify:release-governor && npm run verify:release-governor && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt",
+     "verify:epoch22": "node scripts/verify/epoch22_ai_validation_harness.mjs",
+-    "verify:epoch23": "node scripts/verify/epoch23_signal_intent_contract_check.mjs"
++    "verify:epoch23": "node scripts/verify/epoch23_signal_intent_contract_check.mjs",
++    "verify:epoch24": "node scripts/verify/epoch24_walkforward_reality_gap_check.mjs"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
+diff --git a/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EXPORT.txt b/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EXPORT.txt
+index 9d33744..45a163d 100644
+--- a/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EXPORT.txt
++++ b/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EXPORT.txt
+@@ -1 +1 @@
+-897ae65d703eea6c93a95b249acfa43e8fad5b327436ed39dcbe5f11b01ada8c  FINAL_VALIDATED.zip
++3730dc1f688b0757f4191b50e40fb8b7e99cc29ed9615587ffbe39d357ea2b6c  FINAL_VALIDATED.zip
+diff --git a/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt b/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt
+index 9c26b4d..d776f21 100644
+--- a/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt
++++ b/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt
+@@ -12,11 +12,11 @@ e03f973820b57a16e981a563d583b200fc44e22a95232e4477df0ed0293c0e96  EVIDENCE_PACK_
+ 88b146acb697a9ebef5f596301b7c2cfc2b0290708cd6db076a183c5817b090c  EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
+ d068c68941fd04a21771a2b4a77b65ffd97db2408587b364cf1bbf06d7d9d31d  EVIDENCE_PACK_EPOCH-21.tar.gz.sha256
+ 3f0dce0aa95d7ce596f3c166e5e58112c0f488eb3f31eb17e32adae8bac161d1  EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+-79bec76cbcdfbac0c9b25acd6f4d7148dde22df2f79ae9fac08f9cf52bcb2cc9  FINAL_VALIDATED.zip.sha256
++4e77cd1b02f663857eed72d953ad9222f1a6c0843e03acba233eca56b8bbee7b  FINAL_VALIDATED.zip.sha256
+ 162792b70d2501b7201a4291a0473d1c4ce17fb8f8ad0963dc4376b87161ef79  NEXT_EPOCH_PLAN.md
+ bfd732689fc66b426d11156b64ea598c02ae7f04ed29cde37a7b17692e5015a9  QUICK_START.md
+-83501047b2e743747a8ee38689217ea8adb3762a718cc4ae030039d350880cc2  README.md
+-29a302544584c5e95ca5c693b7931a169bdbfad50d51a0b20122ba98679d35a6  RUNBOOK.md
++6d0aae15ed9b1fd354a56faef609e704a09fcee48b93b30b75e154fb316ced65  README.md
++dfb3f110fa0589ecb93f6523d2774d3e405a60141e8bc0577a34c64f49c14781  RUNBOOK.md
+ e9e828776effacff265405e4882a9e88d8d7e35dc0eb23db9ba134c2ae62e871  RUNBOOK_OPERATIONS.md
+ cb46bc55e590401e903d5fd73e4dc1246e07d4d8dbc52ddc310ff3c43da33d3e  SDD_EPOCH_17_21.md
+ 1399cd2740931194881b1b685ec31f388843400a67e56e0295161bb4033cde76  TASK_TRACKER.md
+@@ -29,6 +29,7 @@ c96526624469b20e414b3d18b1030ffde23d8adefa15b999937c96d74188aa8a  artifacts/inco
+ b18f5b4128da3d4712de5616a9a9b36f8c72111545910f35a1f5c4e6453a21ec  artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-18/FILE_INVENTORY.txt
+ 15d2c252f41e0c6faabd69ba2e8f4d2513e9d186329a73b4cd3f47ab136bd786  artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-18/SNAPSHOT.md
+ 054f0b5ecf13bc6d4dcf453c0a9c9ff22015cc3d5ae819c4c811824700212ef5  artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-18/SUMMARY.md
++a951c7d739a3aa6314eb867703c4f301d4806d1a2f808fb4391673300ec98626  core/ai/ai_signal_bridge.mjs
+ 0d559451ea54b4c60a420abbc353d011c8b14ac0825c11446bc4c50db14d6113  core/ai/autonomous_agent.mjs
+ f134627eca762af969a9cefee70b834949b509ce1e9974114703a23031c6ae1d  core/ai/cognitive_brain.mjs
+ 0c8d6793845704dd18dabd7095ccbb274620af4d9ba836e9b47244afa5b09928  core/ai/hypothesis_generator.mjs
+@@ -118,7 +119,7 @@ dd83c6b98ab8da2e2e4122044f327b103372a67b8aeade2cf588e7360dd3a99e  evidence/deter
+ 22e8cf3fb72c1b15a78141c163322f2253627dc869d038078316dffd3d27b50d  evidence/diffs/determinism_diff.txt
+ 2da76cf0f69781fa5f1e305838916e50703649d2d02563f9f69afbbfa1712a6e  examples/swarm_trading_demo.mjs
+ 3bf74b60e28f65ecb160713e7fdf97f4d763910d90509b058f07c28758df1111  package-lock.json
+-9556a7ac009734bffa5eda1c699e650a2e5241a2011e4fa5972dae912da41a1a  package.json
++f6b4ac5d0be90cbce6c1d871501806577e45ce61ef7d6ca3813a05f6966028fe  package.json
+ 3ed612562343d99c0f46afa6a58a6e8fcb32b00b825425578e9818a1b1a6a4e8  package.json.bak
+ f43ca018243c6d43b085ad125425442d08e63662beacec680c39d1fb6d352828  reports/EPOCH-06_EVIDENCE/09_git_diff.patch
+ 47900ce431403c12db4a71bc7d1cdf47d5458cefa38e48337d8aeb4b2f0ec0a5  reports/EPOCH-06_EVIDENCE/11_repo_files.sha256
+@@ -257,6 +258,26 @@ a9f01fdbf32ee6b5c24e0236edf71b3711cafe4576331257a386345046afa617  reports/eviden
+ 3472aff1fae36e6b678a6f9927777cdc1282a7f250b7abaf001251fc14624089  reports/evidence/EPOCH-22/gates/verify_integration.log
+ 68b8223673de32b9fa1523f0967da765ede5d613a6fa4ddbe251386a36bde03d  reports/evidence/EPOCH-22/gates/verify_phase2.log
+ e074709c4d620a33364ce9dc4c93090b78e3018508279f860eadf985aa0c2134  reports/evidence/EPOCH-22/gates/verify_wall.log
++de9f9709385f5e4a34801b183d6e403cc57dc685c19acefd70960582df99f6cb  reports/evidence/EPOCH-23/ASSUMPTIONS.md
++2548f5b6745653b654fe45aae496524cdc7c45395c46c093cdda442f31908221  reports/evidence/EPOCH-23/DIFF.patch
++f3e5081fac0d46ba299b430ac05c57030523df65747041789e0e4576150caa0b  reports/evidence/EPOCH-23/GATE_PLAN.md
++e20ec7bbd79e87c6a333bea29a6659c3b3de9f495feafb78a594a2496fdf867b  reports/evidence/EPOCH-23/INVENTORY.txt
++1df78ac5b5185311aca98b4891f970fd435a7e607fa5c4ecd8cbe98106cc912a  reports/evidence/EPOCH-23/PREFLIGHT.md
++3c06311b25cc97731cf0d89ba2b6cf73df82dd2ec4ea3f75f60e5e7ba24b91ca  reports/evidence/EPOCH-23/RISK_REGISTER.md
++1dc30a7b9b381c9cf5c31f7f4ecbde27bf04fded57786d638f4d927364c4cf08  reports/evidence/EPOCH-23/SUMMARY.md
++b2e3dc1126f87ec5de122329302df8dd27ebdfa1a771de939a16df2fc4f0c225  reports/evidence/EPOCH-23/VERDICT.md
++e94f9de3289da57f9c168dd1ceaa49fba9fb6f5f8e37cc2e26df794896959aa3  reports/evidence/EPOCH-23/gates/export_validated.log
++60be1d9925ea05cdf0498e47564faeee727f29ae5db49c6eec9f11d4fef0fc52  reports/evidence/EPOCH-23/gates/npm_ci.log
++04bc2523154e0151929296da66c1485947d3b58e9272314489fc10e49edb7108  reports/evidence/EPOCH-23/gates/regen_manifests_boot.log
++7fe33a257f67c7d3567011b056a75d2aaf5af804dd52ba465111464decadf352  reports/evidence/EPOCH-23/gates/regen_manifests_epoch23.log
++1f57192297ea55f499ba7fae4ce406d873e76794fa13b4d8d3b17253eda3484e  reports/evidence/EPOCH-23/gates/sha_evidence_check.log
++609a4559f5343694026f4b263c5b98da5ff4f2546fc73df58329b24924b616f0  reports/evidence/EPOCH-23/gates/sha_source_check.log
++304069bf8afa1f3e4df32c5c2ecf9c57ab9e5eb8b271ea7ed70add97500e6d3a  reports/evidence/EPOCH-23/gates/verify_core.log
++e2aed72add9d3f259afa5c3e43c25d2a625a9d928396d06d5889edc9a089a915  reports/evidence/EPOCH-23/gates/verify_epoch23_run1.log
++e2aed72add9d3f259afa5c3e43c25d2a625a9d928396d06d5889edc9a089a915  reports/evidence/EPOCH-23/gates/verify_epoch23_run2.log
++3472aff1fae36e6b678a6f9927777cdc1282a7f250b7abaf001251fc14624089  reports/evidence/EPOCH-23/gates/verify_integration.log
++68b8223673de32b9fa1523f0967da765ede5d613a6fa4ddbe251386a36bde03d  reports/evidence/EPOCH-23/gates/verify_phase2.log
++b5cca83c7a782aa6f8f2df2d9c7a5d54078e9b9fd6f197c2f5446a8fc1b581d2  reports/evidence/EPOCH-23/gates/verify_wall.log
+ 4cfc09ab7f3c287f779789fbc7fd3be4d4b575448dc00bb4bbbd04bf2120f09e  reports/evidence/EPOCH-BOOT.1/ASSUMPTIONS.md
+ 6aea69a9e9be6b3339f3e9ec379cf43603f61c931ed9d654f236910da1819882  reports/evidence/EPOCH-BOOT.1/DIFF.patch
+ 1fae116ad14eb4bdcd913ee34306ffc1c1ccf3f99b06bdee7dab06e3c6828221  reports/evidence/EPOCH-BOOT.1/GATE_PLAN.md
+@@ -474,6 +495,7 @@ e06d756d33125683490a58909f793a6c07599540656ca5afee5b5e7d1c3399c6  scripts/verify
+ 5c1548548d7cc9776dd217183f1613e9a2b6ef0b8bc042b8d8221b0c9f50b8bb  scripts/verify/epoch10_integration.mjs
+ 4a82278e4cd8a3293a9e47bfbb2cc0c410f389c723f43335c02ba158901c9170  scripts/verify/epoch11_master_orchestrator.mjs
+ 86100ea545a6e528db5537370c1a79ee08a07d0b3f5e035e91eed77e90a39e6b  scripts/verify/epoch22_ai_validation_harness.mjs
++0ff6fe83b3c72993330dde4a1a0de084463bb36921861cda4d703a525fcd2325  scripts/verify/epoch23_signal_intent_contract_check.mjs
+ 7fcce1a994cca0025c9bb762e44a9001fb8c2ac40b3534f9edee5918849661f8  scripts/verify/epochX_integration.mjs
+ cab5a6c2dcc88d6e426dfa89c1fc03a1d3cfee783627be95589c5692abf83254  scripts/verify/events_schema_check.mjs
+ b816098033d5908d19393da3313d8bf0e9f7132ff725e68d50facd22d19b476f  scripts/verify/godtier_integration.mjs
+@@ -539,11 +561,11 @@ b6cd4e39e3d5ac7856e7afa88a3e9ec14426b0a5c20f5eaa06b6836d3e599098  specs/epochs/E
+ 76ff353ebebaf80e76d64558ffa89fdc847ac76490d1ee23d12f1b66b18c9ece  specs/epochs/EPOCH-21_deployment_release.md
+ c2c5194fe5d0645294d202147e9b813766b51cc37b5482a708c804ca0b4b2c43  specs/epochs/EPOCH-22.md
+ 99de7a23602a4416d51e13dc6f13b9835184c7671e241903be69ea53411b4372  specs/epochs/EPOCH-23.md
+-a61cd252b46217c9cff2d6e343397191532681dff3f31762cf83716caa562590  specs/epochs/EPOCH-24.md
++bd1db8e599175f929b81337ac8b6db1510963ca7b8211db52fdba0d584bdac92  specs/epochs/EPOCH-24.md
+ d9d68ebcbd3d080b05695e5da620566f08e26602f44c61ad790dbcdb38b500d9  specs/epochs/EPOCH-25.md
+ 39a9a8973524933131bb9b71bc16487d2a7919f6db26b84c913f564206b5d71c  specs/epochs/EPOCH-26.md
+ 8f70105531160d551a5067c5828ddbeabfd0f0d6f7bbd0a045de53b0cd8a48b1  specs/epochs/EPOCH_DEPENDENCY_GRAPH.md
+-41351e247097d3fff742987c4a5807082565e5143372a88d63fbb95cb527cab7  specs/epochs/INDEX.md
++6cf335ddafb2e72f0f40dfbed7dfa3305482472ddf7da46874de78ed1ea2d782  specs/epochs/INDEX.md
+ 63a1b79f7c512462c2ee9289be24b7182a04eab7000a9bb02647498cd48fd9d0  specs/epochs/README.md
+ 7090ee932a15dff3adf408ff771e3258ae2473ae44600e966ab5988402c9e1f9  specs/epochs/RELEASE_CHECKLIST_TEMPLATE.md
+ 5b8a119c3a9956646b8da00e5b460485245779c373761269db47ea9834857867  specs/epochs/TEMPLATE.md
+diff --git a/reports/evidence/EPOCH-BOOT.AUTOPILOT/manifests/validate_source.log b/reports/evidence/EPOCH-BOOT.AUTOPILOT/manifests/validate_source.log
+index 4ffce8e..8e4bf4d 100644
+--- a/reports/evidence/EPOCH-BOOT.AUTOPILOT/manifests/validate_source.log
++++ b/reports/evidence/EPOCH-BOOT.AUTOPILOT/manifests/validate_source.log
+@@ -30,6 +30,7 @@ artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-18/DIFF.patch: OK
+ artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-18/FILE_INVENTORY.txt: OK
+ artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-18/SNAPSHOT.md: OK
+ artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-18/SUMMARY.md: OK
++core/ai/ai_signal_bridge.mjs: OK
+ core/ai/autonomous_agent.mjs: OK
+ core/ai/cognitive_brain.mjs: OK
+ core/ai/hypothesis_generator.mjs: OK
+@@ -258,6 +259,26 @@ reports/evidence/EPOCH-22/gates/verify_epoch22_run2.log: OK
+ reports/evidence/EPOCH-22/gates/verify_integration.log: OK
+ reports/evidence/EPOCH-22/gates/verify_phase2.log: OK
+ reports/evidence/EPOCH-22/gates/verify_wall.log: OK
++reports/evidence/EPOCH-23/ASSUMPTIONS.md: OK
++reports/evidence/EPOCH-23/DIFF.patch: OK
++reports/evidence/EPOCH-23/GATE_PLAN.md: OK
++reports/evidence/EPOCH-23/INVENTORY.txt: OK
++reports/evidence/EPOCH-23/PREFLIGHT.md: OK
++reports/evidence/EPOCH-23/RISK_REGISTER.md: OK
++reports/evidence/EPOCH-23/SUMMARY.md: OK
++reports/evidence/EPOCH-23/VERDICT.md: OK
++reports/evidence/EPOCH-23/gates/export_validated.log: OK
++reports/evidence/EPOCH-23/gates/npm_ci.log: OK
++reports/evidence/EPOCH-23/gates/regen_manifests_boot.log: OK
++reports/evidence/EPOCH-23/gates/regen_manifests_epoch23.log: OK
++reports/evidence/EPOCH-23/gates/sha_evidence_check.log: OK
++reports/evidence/EPOCH-23/gates/sha_source_check.log: OK
++reports/evidence/EPOCH-23/gates/verify_core.log: OK
++reports/evidence/EPOCH-23/gates/verify_epoch23_run1.log: OK
++reports/evidence/EPOCH-23/gates/verify_epoch23_run2.log: OK
++reports/evidence/EPOCH-23/gates/verify_integration.log: OK
++reports/evidence/EPOCH-23/gates/verify_phase2.log: OK
++reports/evidence/EPOCH-23/gates/verify_wall.log: OK
+ reports/evidence/EPOCH-BOOT.1/ASSUMPTIONS.md: OK
+ reports/evidence/EPOCH-BOOT.1/DIFF.patch: OK
+ reports/evidence/EPOCH-BOOT.1/GATE_PLAN.md: OK
+@@ -475,6 +496,7 @@ scripts/verify/epoch09_integration.mjs.backup: OK
+ scripts/verify/epoch10_integration.mjs: OK
+ scripts/verify/epoch11_master_orchestrator.mjs: OK
+ scripts/verify/epoch22_ai_validation_harness.mjs: OK
++scripts/verify/epoch23_signal_intent_contract_check.mjs: OK
+ scripts/verify/epochX_integration.mjs: OK
+ scripts/verify/events_schema_check.mjs: OK
+ scripts/verify/godtier_integration.mjs: OK
+diff --git a/specs/epochs/EPOCH-24.md b/specs/epochs/EPOCH-24.md
+index f851364..d918032 100644
+--- a/specs/epochs/EPOCH-24.md
++++ b/specs/epochs/EPOCH-24.md
+@@ -3,7 +3,7 @@
+ ## REALITY SNAPSHOT
+ - Current baseline already exposes offline verification scripts through npm gates.
+ - Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
+-- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++- Evidence path target for this planning cycle: `reports/evidence/EPOCH-24/`.
+ 
+ ## GOALS / NON-GOALS
+ ### Goals
+@@ -32,7 +32,7 @@
+ - Preserve backward compatibility for existing npm gate entry points.
+ 
+ ## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run baseline wall gates plus epoch-specific gate.
++- Run `npm run verify:epoch24` (x2), then baseline wall gates.
+ - Repeat critical gates (anti-flake) where defined.
+ - Fail on schema mismatch, checksum mismatch, or drift.
+ 
+diff --git a/specs/epochs/INDEX.md b/specs/epochs/INDEX.md
+index ca6f97f..22198e6 100644
+--- a/specs/epochs/INDEX.md
++++ b/specs/epochs/INDEX.md
+@@ -30,7 +30,7 @@ No-skip policy: parallel implementation is allowed only when dependency contract
+ - EPOCH-21: `verify:epoch21`, `verify:release-governor`, baseline wall
+ - EPOCH-22: `verify:epoch22`, `verify:core` determinism/invariant scenario battery gates
+ - EPOCH-23: `verify:epoch23`, `verify:integration` signal-to-intent contract checks
+-- EPOCH-24: walk-forward + drift budget gates (`verify:phase2`, drift/reality-gap checks)
++- EPOCH-24: `verify:epoch24`, `verify:phase2` walk-forward + drift budget checks
+ - EPOCH-25: testnet campaign gates (network opt-in only via `ENABLE_NETWORK_TESTS=1`)
+ - EPOCH-26: micro-live governor rehearsals (opt-in only, extreme safety)
+ 

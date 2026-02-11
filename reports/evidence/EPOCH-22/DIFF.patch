@@ -1,0 +1,150 @@
+diff --git a/FINAL_VALIDATED.zip.sha256 b/FINAL_VALIDATED.zip.sha256
+index 364cc79..4e57746 100644
+--- a/FINAL_VALIDATED.zip.sha256
++++ b/FINAL_VALIDATED.zip.sha256
+@@ -1 +1 @@
+-697f5a7d85c816b1bacefd817f1f0c0dbc983f480dafd1d38caa726743a2e5bf  FINAL_VALIDATED.zip
++9d32ee14421bb5ededb5f64a0bb60fedf1eed700cb32d0865bade00345b40fff  FINAL_VALIDATED.zip
+diff --git a/README.md b/README.md
+index 1c90a9c..aca2785 100644
+--- a/README.md
++++ b/README.md
+@@ -13,6 +13,7 @@ npm run verify:wall
+ - `npm run regen:manifests` — каноническая регенерация манифестов в порядке EVIDENCE -> SOURCE -> EXPORT.
+ - `npm run export:validated` — детерминированный экспорт `FINAL_VALIDATED.zip` + `.sha256`.
+ - `npm run verify:release-governor` — release-gate, при отсутствии zip пытается выполнить `export:validated`.
++- `npm run verify:epoch22` — AI Validation Harness drift/invariant gate (offline).
+ 
+ ## Offline-first политика
+ - По умолчанию verification path не требует сети.
+diff --git a/RUNBOOK.md b/RUNBOOK.md
+index 87bbefd..1345362 100644
+--- a/RUNBOOK.md
++++ b/RUNBOOK.md
+@@ -19,9 +19,10 @@ npm run verify:wall
+ 11. `npm run verify:monitoring` (x2)
+ 12. `npm run verify:epoch20`
+ 13. `npm run verify:epoch21`
+-14. `npm run verify:release-governor` (x2)
+-15. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt`
+-16. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt`
++14. `npm run verify:epoch22`
++15. `npm run verify:release-governor` (x2)
++16. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt`
++17. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt`
+ 
+ ## 2) Канонический порядок манифестов
+ ```bash
+diff --git a/package.json b/package.json
+index 5b5e483..321a80c 100644
+--- a/package.json
++++ b/package.json
+@@ -73,7 +73,8 @@
+     "verify:specs": "node scripts/verify/specs_check.mjs",
+     "regen:manifests": "node scripts/ops/regen_manifests.mjs",
+     "export:validated": "node scripts/export_validated.mjs",
+-    "verify:wall": "npm ci && npm run verify:specs && npm run verify:paper && npm run verify:paper && npm run verify:e2 && npm run verify:e2 && npm run verify:e2:multi && npm run verify:phase2 && npm run verify:integration && npm run verify:epoch17 && npm run verify:epoch18 && npm run verify:epoch19 && npm run verify:monitoring && npm run verify:monitoring && npm run verify:epoch20 && npm run verify:epoch21 && npm run verify:release-governor && npm run verify:release-governor && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt"
++    "verify:wall": "npm ci && npm run verify:specs && npm run verify:paper && npm run verify:paper && npm run verify:e2 && npm run verify:e2 && npm run verify:e2:multi && npm run verify:phase2 && npm run verify:integration && npm run verify:epoch17 && npm run verify:epoch18 && npm run verify:epoch19 && npm run verify:monitoring && npm run verify:monitoring && npm run verify:epoch20 && npm run verify:epoch21 && npm run verify:epoch22 && npm run verify:release-governor && npm run verify:release-governor && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt",
++    "verify:epoch22": "node scripts/verify/epoch22_ai_validation_harness.mjs"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
+diff --git a/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EXPORT.txt b/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EXPORT.txt
+index 073b932..4e57746 100644
+--- a/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EXPORT.txt
++++ b/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EXPORT.txt
+@@ -1,2 +1 @@
+-697f5a7d85c816b1bacefd817f1f0c0dbc983f480dafd1d38caa726743a2e5bf  FINAL_VALIDATED.zip
+-c01b210f7f70657e1b49a77cb1edde43c0b8302fff696d719328071695f99920  EVIDENCE_PACK_EPOCH-BOOT.AUTOPILOT.tar.gz
++9d32ee14421bb5ededb5f64a0bb60fedf1eed700cb32d0865bade00345b40fff  FINAL_VALIDATED.zip
+diff --git a/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt b/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt
+index eff38b4..ef32153 100644
+--- a/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt
++++ b/reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt
+@@ -12,11 +12,11 @@ e03f973820b57a16e981a563d583b200fc44e22a95232e4477df0ed0293c0e96  EVIDENCE_PACK_
+ 88b146acb697a9ebef5f596301b7c2cfc2b0290708cd6db076a183c5817b090c  EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
+ d068c68941fd04a21771a2b4a77b65ffd97db2408587b364cf1bbf06d7d9d31d  EVIDENCE_PACK_EPOCH-21.tar.gz.sha256
+ 3f0dce0aa95d7ce596f3c166e5e58112c0f488eb3f31eb17e32adae8bac161d1  EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+-becad34823835d28d981b71ee51f4c2de224cdf8b2609cdc44242996de162e8d  FINAL_VALIDATED.zip.sha256
++9deaaa13b563a9aeb6620d13a9ec597e6807f66ef343e411aea6a52d50f65118  FINAL_VALIDATED.zip.sha256
+ 162792b70d2501b7201a4291a0473d1c4ce17fb8f8ad0963dc4376b87161ef79  NEXT_EPOCH_PLAN.md
+ bfd732689fc66b426d11156b64ea598c02ae7f04ed29cde37a7b17692e5015a9  QUICK_START.md
+-b5b5ccc9fb304ef5305120c1f25cc6a581d100e21c4f76e9a92aff10b657b45c  README.md
+-ac0a31f38ad9d7de4a45de19239d7eb82c00ec189defe8625d59332775bd5230  RUNBOOK.md
++e05954d85b3f9cc58a2ffba75e9f2399b6cde6db115dc6e6b4cef6e582c7b256  README.md
++b2de1359c90ad8d87238dee5938e9f0dc87783260cdbd4364bcc6ec4d7cdcf7d  RUNBOOK.md
+ e9e828776effacff265405e4882a9e88d8d7e35dc0eb23db9ba134c2ae62e871  RUNBOOK_OPERATIONS.md
+ cb46bc55e590401e903d5fd73e4dc1246e07d4d8dbc52ddc310ff3c43da33d3e  SDD_EPOCH_17_21.md
+ 1399cd2740931194881b1b685ec31f388843400a67e56e0295161bb4033cde76  TASK_TRACKER.md
+@@ -118,7 +118,7 @@ dd83c6b98ab8da2e2e4122044f327b103372a67b8aeade2cf588e7360dd3a99e  evidence/deter
+ 22e8cf3fb72c1b15a78141c163322f2253627dc869d038078316dffd3d27b50d  evidence/diffs/determinism_diff.txt
+ 2da76cf0f69781fa5f1e305838916e50703649d2d02563f9f69afbbfa1712a6e  examples/swarm_trading_demo.mjs
+ 3bf74b60e28f65ecb160713e7fdf97f4d763910d90509b058f07c28758df1111  package-lock.json
+-f51f93bca81c0e91d3b9b788d879bf93e636c4acffbc0b23ad92c6e9b2457544  package.json
++4d61aa4f7c392d11e21c89dc6c98461930949710123e72c2040d8051e901d849  package.json
+ 3ed612562343d99c0f46afa6a58a6e8fcb32b00b825425578e9818a1b1a6a4e8  package.json.bak
+ f43ca018243c6d43b085ad125425442d08e63662beacec680c39d1fb6d352828  reports/EPOCH-06_EVIDENCE/09_git_diff.patch
+ 47900ce431403c12db4a71bc7d1cdf47d5458cefa38e48337d8aeb4b2f0ec0a5  reports/EPOCH-06_EVIDENCE/11_repo_files.sha256
+@@ -515,13 +515,13 @@ b6cd4e39e3d5ac7856e7afa88a3e9ec14426b0a5c20f5eaa06b6836d3e599098  specs/epochs/E
+ 0628595f10bfa8144b646e761f533b21f7634ef0ae35c32d5566b139d789db48  specs/epochs/EPOCH-21_GATES.md
+ 22d6792535838463994f73fa54b381819e4890581e0b9506966a27fb89e73bc4  specs/epochs/EPOCH-21_TODO.md
+ 76ff353ebebaf80e76d64558ffa89fdc847ac76490d1ee23d12f1b66b18c9ece  specs/epochs/EPOCH-21_deployment_release.md
+-0432d0c0bce30bfa2fc3e6a927c193a3a7b9ffdaedf6eecb4174ffc29470ed50  specs/epochs/EPOCH-22.md
++c2c5194fe5d0645294d202147e9b813766b51cc37b5482a708c804ca0b4b2c43  specs/epochs/EPOCH-22.md
+ 894148495c829cb0841d31478fe3235a096f85c8eca59add8285be7d4f36e19a  specs/epochs/EPOCH-23.md
+ a61cd252b46217c9cff2d6e343397191532681dff3f31762cf83716caa562590  specs/epochs/EPOCH-24.md
+ d9d68ebcbd3d080b05695e5da620566f08e26602f44c61ad790dbcdb38b500d9  specs/epochs/EPOCH-25.md
+ 39a9a8973524933131bb9b71bc16487d2a7919f6db26b84c913f564206b5d71c  specs/epochs/EPOCH-26.md
+ 8f70105531160d551a5067c5828ddbeabfd0f0d6f7bbd0a045de53b0cd8a48b1  specs/epochs/EPOCH_DEPENDENCY_GRAPH.md
+-2388e1ff10d178932a69c13edc648a1fb65dfb760022f4198d2d6b743400c6af  specs/epochs/INDEX.md
++614b6098a1fb8b321caa6131a9d1091581d7cc598fc469febf37169658b085ac  specs/epochs/INDEX.md
+ 63a1b79f7c512462c2ee9289be24b7182a04eab7000a9bb02647498cd48fd9d0  specs/epochs/README.md
+ 7090ee932a15dff3adf408ff771e3258ae2473ae44600e966ab5988402c9e1f9  specs/epochs/RELEASE_CHECKLIST_TEMPLATE.md
+ 5b8a119c3a9956646b8da00e5b460485245779c373761269db47ea9834857867  specs/epochs/TEMPLATE.md
+diff --git a/reports/evidence/EPOCH-BOOT.AUTOPILOT/manifests/validate_export.log b/reports/evidence/EPOCH-BOOT.AUTOPILOT/manifests/validate_export.log
+index ff4c4f4..c021ed7 100644
+--- a/reports/evidence/EPOCH-BOOT.AUTOPILOT/manifests/validate_export.log
++++ b/reports/evidence/EPOCH-BOOT.AUTOPILOT/manifests/validate_export.log
+@@ -1,3 +1,2 @@
+ $ sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EXPORT.txt
+ FINAL_VALIDATED.zip: OK
+-EVIDENCE_PACK_EPOCH-BOOT.AUTOPILOT.tar.gz: OK
+diff --git a/scripts/ops/regen_manifests.mjs b/scripts/ops/regen_manifests.mjs
+index 20f4a43..6283bc1 100644
+--- a/scripts/ops/regen_manifests.mjs
++++ b/scripts/ops/regen_manifests.mjs
+@@ -37,6 +37,8 @@ if (fs.existsSync(evidenceDir)) {
+     .filter(Boolean);
+   for (const f of all) {
+     if (f.includes('/manifests/')) continue;
++    if (f.includes('/gates/sha_')) continue;
++    if (f.includes('/gates/regen_manifests')) continue;
+     if (path.basename(f).startsWith('SHA256SUMS.')) continue;
+     evidenceFiles.push(f);
+   }
+diff --git a/specs/epochs/EPOCH-22.md b/specs/epochs/EPOCH-22.md
+index 0377eea..3a8046d 100644
+--- a/specs/epochs/EPOCH-22.md
++++ b/specs/epochs/EPOCH-22.md
+@@ -32,7 +32,7 @@
+ - Preserve backward compatibility for existing npm gate entry points.
+ 
+ ## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run baseline wall gates plus epoch-specific gate.
++- Run `npm run verify:epoch22` (x2), then baseline wall gates.
+ - Repeat critical gates (anti-flake) where defined.
+ - Fail on schema mismatch, checksum mismatch, or drift.
+ 
+diff --git a/specs/epochs/INDEX.md b/specs/epochs/INDEX.md
+index 618c520..e546781 100644
+--- a/specs/epochs/INDEX.md
++++ b/specs/epochs/INDEX.md
+@@ -28,7 +28,7 @@ No-skip policy: parallel implementation is allowed only when dependency contract
+ - EPOCH-19: `verify:epoch19`, `verify:governance`, baseline wall
+ - EPOCH-20: `verify:epoch20`, `verify:monitoring`, baseline wall
+ - EPOCH-21: `verify:epoch21`, `verify:release-governor`, baseline wall
+-- EPOCH-22: `verify:core`, determinism/invariant scenario battery gates (to be wired by epoch)
++- EPOCH-22: `verify:epoch22`, `verify:core` determinism/invariant scenario battery gates
+ - EPOCH-23: integration contract gates (`verify:integration`, signal-to-intent checks)
+ - EPOCH-24: walk-forward + drift budget gates (`verify:phase2`, drift/reality-gap checks)
+ - EPOCH-25: testnet campaign gates (network opt-in only via `ENABLE_NETWORK_TESTS=1`)

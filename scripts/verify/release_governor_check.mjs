@@ -3,6 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { execSync } from 'node:child_process';
 
 let passed = 0;
 let failed = 0;
@@ -31,6 +32,19 @@ function parseShaFile(filePath) {
   return line.split(/\s+/)[0] || '';
 }
 
+function ensureValidatedExport() {
+  if (mustExist('FINAL_VALIDATED.zip') && mustExist('FINAL_VALIDATED.zip.sha256')) {
+    return;
+  }
+  try {
+    console.log('FINAL_VALIDATED.zip missing, auto-running npm run export:validated ...');
+    execSync('npm run export:validated', { stdio: 'inherit' });
+  } catch {
+    failed += 1;
+    console.error('✗ Missing FINAL_VALIDATED.zip. Run: npm run export:validated');
+  }
+}
+
 async function main() {
   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
   console.log('EPOCH-21 RELEASE GOVERNOR CHECK');
@@ -48,6 +62,8 @@ async function main() {
   for (const p of requiredLogs) {
     assert(mustExist(p), `required anti-flake log exists: ${p}`);
   }
+
+  ensureValidatedExport();
 
   const requiredEvidence = [
     'reports/evidence/EPOCH-19/SHA256SUMS.SOURCE.txt',

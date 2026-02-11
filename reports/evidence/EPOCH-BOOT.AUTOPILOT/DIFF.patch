@@ -1,0 +1,1366 @@
+diff --git a/FINAL_VALIDATED.zip.sha256 b/FINAL_VALIDATED.zip.sha256
+index 5fae173..495112b 100644
+--- a/FINAL_VALIDATED.zip.sha256
++++ b/FINAL_VALIDATED.zip.sha256
+@@ -1 +1 @@
+-7d824870f1bc606f114687826b111b3f66ae1dbbc0cd0979eb42e978ede08f21  FINAL_VALIDATED.zip
++16770b2897c198bde20962f523ecdb061fd61d03ac32ff5d7da36557b0e8ff8d  FINAL_VALIDATED.zip
+diff --git a/README.md b/README.md
+index ed5decf..1c90a9c 100644
+--- a/README.md
++++ b/README.md
+@@ -1,116 +1,28 @@
+ # Treasure Engine (RU)
+ 
+-**Treasure Engine** — детерминированная исследовательская торговая платформа с дисциплиной **Truth Layer**: каждое утверждение о готовности подтверждается артефактами, логами, checksum-манифестами и воспроизводимыми командами.
+-
+-> Ключевая идея: никаких «кажется работает». Только проверяемый pipeline с evidence-пакетами.
+-
+-## 1) Назначение проекта
+-
+-Проект обеспечивает безопасный мост **Simulation → Paper → Controlled Live Readiness** без реальных live-ордеров по умолчанию. Все критические этапы валидируются через offline-first гейты и фиксируются в `reports/evidence/*`.
+-
+-## 2) Архитектура (высокий уровень)
+-
+-- `core/sim/*` — генерация/прогон симуляций и метрик.
+-- `core/exec/*` — исполнение интентов, safety/strategy/governance-обвязки.
+-- `core/risk/*` — риск-ограничения и kill-switch логика.
+-- `core/governance/*` — режимы, approval workflow, transition rules.
+-- `core/monitoring/*`, `core/performance/*` — мониторинг и perf-контракты.
+-- `core/obs/*` — event log и наблюдаемость.
+-- `scripts/verify/*` — верификационные гейты (основной путь контроля качества).
+-- `truth/*` — JSON schema и truth-контракты.
+-- `reports/runs/*` — run-scoped артефакты запусков (детерминированная структура).
+-- `reports/evidence/*` — доказательная база по эпохам (логи, summary, manifests).
+-
+-Подробные документы:
+-- `docs/PROJECT_DOCUMENTATION_RU.md`
+-- `docs/VERIFICATION_PLAYBOOK_RU.md`
+-- `RUNBOOK.md`
+-
+-## 3) Требования
+-
+-- Node.js 20+
+-- npm 11+
+-
+-## 4) Быстрый старт
++**Treasure Engine** — детерминированная исследовательская торговая платформа с дисциплиной Truth Layer.
+ 
++## Быстрый старт
+ ```bash
+ npm ci
+-npm run verify:e2
+-npm run verify:paper
+-npm run verify:phase2
+-npm run verify:integration
++npm run verify:wall
+ ```
+ 
+-## 5) Ключевые оффлайн-гейты
+-
+-```bash
+-npm run verify:e2
+-npm run verify:e2:multi
+-npm run verify:paper
+-npm run verify:phase2
+-npm run verify:integration
+-npm run verify:core
+-```
+-
+-## 6) Эпохи 17–21
+-
+-```bash
+-npm run verify:epoch17
+-npm run verify:epoch18
+-npm run verify:epoch19
+-npm run verify:epoch20
+-npm run verify:epoch21
+-```
+-
+-## 7) Anti-flake дисциплина
+-
+-Минимум для release-цикла:
+-
+-```bash
+-npm run verify:e2      # запуск #1
+-npm run verify:e2      # запуск #2
+-npm run verify:paper   # запуск #1
+-npm run verify:paper   # запуск #2
+-```
+-
+-## 8) Truth Layer integrity
+-
+-```bash
+-sha256sum -c reports/evidence/EPOCH-BOOT/SHA256SUMS.SOURCE.txt
+-sha256sum -c reports/evidence/EPOCH-BOOT/SHA256SUMS.EVIDENCE.txt
+-```
+-
+-## 9) Политика сети
+-
+-Сетевые тесты **не входят** в стандартный verification path и включаются только явным флагом:
+-
+-```bash
+-ENABLE_NETWORK_TESTS=1 npm run verify:binance
+-ENABLE_NETWORK_TESTS=1 npm run verify:websocket
+-```
+-
+-## 10) Evidence workflow
+-
+-Обязательный минимум в `reports/evidence/<EPOCH-ID>/`:
+-
+-- `PREFLIGHT.log`
+-- `INSTALL.log`
+-- `gates/*.log`
+-- `DIFF.patch`
+-- `SHA256SUMS.SOURCE.txt`
+-- `SHA256SUMS.EVIDENCE.txt`
+-- `SUMMARY.md`
+-- `VERDICT.md`
+-
+-## 11) Безопасность и ограничения
+-
+-- Никаких API-ключей в репозитории.
+-- Никаких live-ордеров по умолчанию.
+-- Детерминизм: seed-based, run-scoped outputs, без скрытой рандомности в canonical artifacts.
++## Ключевые команды
++- `npm run verify:specs` — проверка полноты и структуры spec-suite (`specs/`).
++- `npm run regen:manifests` — каноническая регенерация манифестов в порядке EVIDENCE -> SOURCE -> EXPORT.
++- `npm run export:validated` — детерминированный экспорт `FINAL_VALIDATED.zip` + `.sha256`.
++- `npm run verify:release-governor` — release-gate, при отсутствии zip пытается выполнить `export:validated`.
+ 
+-## 12) Troubleshooting
++## Offline-first политика
++- По умолчанию verification path не требует сети.
++- Сетевые тесты включаются только `ENABLE_NETWORK_TESTS=1`.
++- Live path по умолчанию отключён.
+ 
+-- Если падают schema-гейты — проверяйте конкретный run-dir в `reports/runs/...`.
+-- Если не сходятся checksum — пересоберите manifests после финальных правок.
+-- Если npm показывает `http-proxy` warning — проверьте локальную npm-конфигурацию окружения.
++## Детерминизм
++- Default seed: `SEED=12345`.
++- Run artifacts: `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- Anti-flake: повторные прогоны критических gates + multi-seed контроль.
+ 
++## Evidence
++Для каждого цикла — `reports/evidence/<EPOCH-ID>/` с логами, DIFF.patch, manifests, summary/verdict.
+diff --git a/RUNBOOK.md b/RUNBOOK.md
+index 1b38737..87bbefd 100644
+--- a/RUNBOOK.md
++++ b/RUNBOOK.md
+@@ -1,44 +1,45 @@
+ # RUNBOOK (RU)
+ 
+-## 1) Базовый детерминированный цикл
++## 1) Канонический оффлайн wall
+ ```bash
+-npm ci
+-npm run verify:e2
+-npm run verify:e2
+-npm run verify:paper
+-npm run verify:paper
+-npm run verify:e2:multi
+-npm run verify:phase2
+-npm run verify:integration
+-npm run verify:core
++npm run verify:wall
+ ```
+ 
+-## 2) Эпохальные гейты
+-- `npm run verify:epoch17`
+-- `npm run verify:epoch18`
+-- `npm run verify:epoch19`
+-- `npm run verify:epoch20`
+-- `npm run verify:epoch21`
++`verify:wall` выполняет строгую последовательность:
++1. `npm ci`
++2. `npm run verify:specs`
++3. `npm run verify:paper` (x2)
++4. `npm run verify:e2` (x2)
++5. `npm run verify:e2:multi`
++6. `npm run verify:phase2`
++7. `npm run verify:integration`
++8. `npm run verify:epoch17`
++9. `npm run verify:epoch18`
++10. `npm run verify:epoch19`
++11. `npm run verify:monitoring` (x2)
++12. `npm run verify:epoch20`
++13. `npm run verify:epoch21`
++14. `npm run verify:release-governor` (x2)
++15. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt`
++16. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt`
+ 
+-## 3) Структура run-scoped артефактов
+-- E2: `reports/runs/e2/<seed>/<repeat>/<run_id>/`
+-- Paper: `reports/runs/paper/<seed>/<repeat>/<run_id>/`
+-
+-## 4) Evidence дисциплина
+-Для каждого цикла собирается `reports/evidence/<EPOCH-ID>/` с:
+-- preflight/install
+-- логами всех гейтов
+-- diff/patch
+-- checksum manifests
+-- summary + verdict
++## 2) Канонический порядок манифестов
++```bash
++npm run regen:manifests
++```
++Порядок всегда: **EVIDENCE -> SOURCE -> EXPORT**, затем `sha256sum -c` по каждому манифесту.
+ 
+-## 5) Integrity checks
++## 3) Канонический validated export
+ ```bash
+-sha256sum -c reports/evidence/EPOCH-BOOT/SHA256SUMS.SOURCE.txt
+-sha256sum -c reports/evidence/EPOCH-BOOT/SHA256SUMS.EVIDENCE.txt
++npm run export:validated
+ ```
++Выход:
++- `FINAL_VALIDATED.zip`
++- `FINAL_VALIDATED.zip.sha256`
++
++Экспорт исключает `.git`, `node_modules`, `reports/runs`, логи, кеши, временные и входящие архивы.
+ 
+-## 6) Сеть и безопасность
++## 4) Сеть и безопасность
+ - Network-dependent тесты выключены по умолчанию.
+ - Включение только явным `ENABLE_NETWORK_TESTS=1`.
+ - Live trading в verification path не включается.
+diff --git a/docs/PIPELINE_DOCTRINE.md b/docs/PIPELINE_DOCTRINE.md
+index dada76f..b7e2062 100644
+--- a/docs/PIPELINE_DOCTRINE.md
++++ b/docs/PIPELINE_DOCTRINE.md
+@@ -1,69 +1,56 @@
+-# Pipeline Doctrine (Truth Layer)
++# PIPELINE DOCTRINE
+ 
+-## 1) Run-dir discipline standard
+-All gate outputs that can vary per run must be written under:
++## Run-dir discipline
++All variable run artifacts must be written under:
+ 
+ `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
+ 
+-Rules:
+-- `<seed>` defaults to `12345` unless explicitly overridden.
+-- `<repeat>` differentiates anti-flake reruns (`default`, `default_2`, etc.).
+-- Canonical artifacts must not be overwritten in-place by repeated runs.
+-
+-## 2) Two-run anti-flake policy
+-Mandatory for release-quality epochs:
+-- `npm run verify:e2` twice
+-- `npm run verify:paper` twice
+-
+-Policy:
+-- PASS only if both runs pass.
+-- Any mismatch in structural outputs must be investigated before SAFE verdict.
+-
+-## 3) Multi-seed stability policy
+-Mandatory deterministic stress gate:
+-- `npm run verify:e2:multi`
+-
+-Minimum behavior:
+-- Run at least 3 seeds.
+-- Include repeated same-seed check.
+-- Fail on unexpected structural drift.
+-
+-## 4) Export exclusion policy
+-`FINAL_VALIDATED*.zip` must exclude:
++Required context:
++- `TREASURE_RUN_DIR`
++- `TREASURE_RUN_ID`
++- `SEED` (default `12345`)
++
++## Wrapper contracts
++- `scripts/verify/run_with_context.mjs` is the canonical wrapper for run-scoped gates.
++- Paper gate must use wrapper context (`verify:paper` -> `verify:paper:raw`).
++- E2 gate must use wrapper context (`verify:e2` -> `verify:e2:raw`).
++- Multi-seed stability is enforced by `verify:e2:multi`.
++
++## Anti-flake doctrine
++- Critical gates execute twice before SAFE verdict:
++  - `verify:paper`
++  - `verify:e2`
++  - `verify:monitoring`
++  - `verify:release-governor`
++- Same-seed repeats are used to detect hidden drift.
++
++## Multi-seed doctrine
++- Use `verify:e2:multi` to validate structural determinism across seeds.
++- Fail if repeated same-seed result diverges unexpectedly.
++
++## Export exclusion doctrine
++Canonical validated export must exclude:
+ - `.git/`
+ - `node_modules/`
+-- transient logs/caches/temp (`logs/`, `.cache/`, `tmp/`, `temp/`)
+-- large transient archives not part of required deliverables
+-
+-## 5) Evidence pack structure standard
+-Per epoch: `reports/evidence/<EPOCH-ID>/`
+-
+-Required minimum:
+-- `PREFLIGHT.log`
+-- `INVENTORY.txt`
+-- `GATE_PLAN.md`
+-- `gates/*.log`
+-- `DIFF.patch`
+-- `SHA256SUMS.SOURCE.txt`
+-- `SHA256SUMS.EVIDENCE.txt`
+-- `SUMMARY.md`
+-- `VERDICT.md` (for closeout)
+-
+-Recommended:
+-- `RISK_REGISTER.md`, `ASSUMPTIONS_LEDGER.md`, `IMPACT_ANALYSIS.md`, `PIPELINE_IMPROVEMENT_REPORT.md`.
+-
+-## 6) SAFE/BLOCKED declaration protocol
+-### SAFE
+-Declare SAFE only when:
+-1. required gates pass (including anti-flake and multi-seed where applicable)
+-2. checksum manifests validate
+-3. export checksum exists and matches
+-4. evidence pack is complete
+-5. remaining risks are explicitly documented and accepted
+-
+-### BLOCKED
+-Declare BLOCKED when any critical gate/checksum/evidence criterion fails.
+-BLOCKED declaration must include:
+-- explicit blockers
+-- affected files/paths
+-- reproducible command/log references
++- `reports/runs/`
++- transient logs (`logs/`), caches and temp dirs (`.cache/`, `tmp/`, `temp/`)
++- incoming archives and generated bundles not required for source handoff
++
++## SAFE/BLOCKED protocol
++### SAFE template
++- Status: SAFE
++- Evidence path(s): `reports/evidence/<EPOCH-ID>/...`
++- Gates: command list + pass logs
++- Integrity: manifest check results + artifact SHA
++- Remaining risks: explicit and bounded
++
++### BLOCKED template
++- Status: BLOCKED
++- Blocker(s): exact failing gate/check
++- Repro: command + log path
++- Mitigation plan: concrete next patch and rerun list
++
++## Network discipline
++- Network-dependent tests are skipped by default.
++- Enable only with `ENABLE_NETWORK_TESTS=1`.
++- Offline verify wall must stay green without network.
+diff --git a/package.json b/package.json
+index aaed089..5b5e483 100644
+--- a/package.json
++++ b/package.json
+@@ -69,7 +69,11 @@
+     "verify:monitoring": "node scripts/verify/monitoring_perf_check.mjs",
+     "verify:epoch20": "npm run verify:monitoring",
+     "verify:release-governor": "node scripts/verify/release_governor_check.mjs",
+-    "verify:epoch21": "npm run verify:release-governor"
++    "verify:epoch21": "npm run verify:release-governor",
++    "verify:specs": "node scripts/verify/specs_check.mjs",
++    "regen:manifests": "node scripts/ops/regen_manifests.mjs",
++    "export:validated": "node scripts/export_validated.mjs",
++    "verify:wall": "npm ci && npm run verify:specs && npm run verify:paper && npm run verify:paper && npm run verify:e2 && npm run verify:e2 && npm run verify:e2:multi && npm run verify:phase2 && npm run verify:integration && npm run verify:epoch17 && npm run verify:epoch18 && npm run verify:epoch19 && npm run verify:monitoring && npm run verify:monitoring && npm run verify:epoch20 && npm run verify:epoch21 && npm run verify:release-governor && npm run verify:release-governor && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
+diff --git a/scripts/verify/release_governor_check.mjs b/scripts/verify/release_governor_check.mjs
+index 59abf0f..ae4cd82 100644
+--- a/scripts/verify/release_governor_check.mjs
++++ b/scripts/verify/release_governor_check.mjs
+@@ -3,6 +3,7 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import crypto from 'node:crypto';
++import { execSync } from 'node:child_process';
+ 
+ let passed = 0;
+ let failed = 0;
+@@ -31,6 +32,19 @@ function parseShaFile(filePath) {
+   return line.split(/\s+/)[0] || '';
+ }
+ 
++function ensureValidatedExport() {
++  if (mustExist('FINAL_VALIDATED.zip') && mustExist('FINAL_VALIDATED.zip.sha256')) {
++    return;
++  }
++  try {
++    console.log('FINAL_VALIDATED.zip missing, auto-running npm run export:validated ...');
++    execSync('npm run export:validated', { stdio: 'inherit' });
++  } catch {
++    failed += 1;
++    console.error('✗ Missing FINAL_VALIDATED.zip. Run: npm run export:validated');
++  }
++}
++
+ async function main() {
+   console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+   console.log('EPOCH-21 RELEASE GOVERNOR CHECK');
+@@ -49,6 +63,8 @@ async function main() {
+     assert(mustExist(p), `required anti-flake log exists: ${p}`);
+   }
+ 
++  ensureValidatedExport();
++
+   const requiredEvidence = [
+     'reports/evidence/EPOCH-19/SHA256SUMS.SOURCE.txt',
+     'reports/evidence/EPOCH-19/SHA256SUMS.EVIDENCE.txt',
+diff --git a/specs/CONSTRAINTS.md b/specs/CONSTRAINTS.md
+index e47224f..d335430 100644
+--- a/specs/CONSTRAINTS.md
++++ b/specs/CONSTRAINTS.md
+@@ -1,30 +1,31 @@
+-# Constraints
++# TREASURE ENGINE CONSTRAINTS
+ 
+-## Offline-First Verification
+-- Default verification must be network-off.
+-- Network checks must be explicitly gated (`ENABLE_NETWORK_TESTS=1`) and skip cleanly otherwise.
++## 1. Offline-first policy
++- Default verification path must not require network.
++- Any network-dependent check must be opt-in and gated by `ENABLE_NETWORK_TESTS=1`.
++- CI/verification baseline assumes network unavailable.
+ 
+-## Safety
+-- No live trading by default.
+-- No secrets or credentials in repo/evidence/log artifacts.
++## 2. Determinism policy
++- Canonical seed default: `SEED=12345`.
++- Same seed must produce the same structural outputs for deterministic gates.
++- Any unavoidable non-deterministic field (time, environment metadata) must be isolated and documented.
++- Drift detection is mandatory via repeated runs and multi-seed verification.
++
++## 3. Run-dir discipline
++- Gate outputs with run variance must use: `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- New gates/wrappers must preserve this layout.
+ 
+-## Determinism
+-- Default seed: `SEED=12345` unless explicitly overridden.
+-- Critical verification paths must avoid unscoped `Date.now()` / random identifiers in canonical artifacts.
+-- Run outputs must be run-scoped and isolated:
+-  - `reports/runs/e2/<seed>/<repeat>/<run_id>/`
+-  - `reports/runs/paper/<seed>/<repeat>/<run_id>/`
++## 4. Evidence discipline
++- Every implementation epoch requires an evidence folder under `reports/evidence/<EPOCH-ID>/`.
++- Required artifacts: preflight snapshot, gate logs, patch diff, checksum manifests, summary/verdict.
++- No PASS/SAFE claim without command logs and artifact paths.
+ 
+-## Anti-Flake Policy
+-- Minimum anti-flake baseline:
+-  - `verify:e2` x2
+-  - `verify:paper` x2
+-- Multi-seed stability required for E2 (`verify:e2:multi`).
++## 5. Safety policy
++- No live trading by default.
++- Any live-like path requires explicit enable flags, safety checks, and audit events.
++- Emergency stop and rollback paths must remain available.
+ 
+-## Evidence Requirements
+-Each epoch must produce `reports/evidence/<EPOCH-ID>/` containing:
+-- preflight/install logs
+-- gate logs (including repeats)
+-- patch diff
+-- source/export checksum manifests
+-- summary with risks and limitations
++## 6. Anti-regression policy
++- Critical gates run with anti-flake repeats where defined.
++- Regression wall must include baseline functional and integration checks.
++- Manifest checks (`sha256sum -c`) are required before release verdict.
+diff --git a/specs/SSOT_INDEX.md b/specs/SSOT_INDEX.md
+index b09fd51..7846ff0 100644
+--- a/specs/SSOT_INDEX.md
++++ b/specs/SSOT_INDEX.md
+@@ -1,24 +1,36 @@
+-# SSOT Index
++# SSOT INDEX
+ 
+-## Authority Order (highest first)
+-1. `specs/SSOT_INDEX.md` + `specs/CONSTRAINTS.md` + `specs/DECISIONS.md` (governance and hard rules)
+-2. `specs/epochs/EPOCH-XX.md` (epoch implementation contracts)
+-3. `SDD_EPOCH_17_21.md` (system design baseline for epoch roadmap)
+-4. `TASK_TRACKER.md` (execution status and near-term work queue)
+-5. `RUNBOOK.md` / `README.md` (operator commands and troubleshooting)
+-6. `docs/*` and `spec/*` schemas/configs (reference details)
++## Canonical Single Sources of Truth
++- `spec/ssot.json` — canonical strategy/system baseline parameters.
++- `spec/hacks.json` — allowed hack registry controlled by validation gate.
++- `spec/config.schema.json` — runtime configuration contract.
++- `truth/*.schema.json` — verification schemas for reports and event artifacts.
++- `specs/CONSTRAINTS.md` — global engineering and QA constraints.
++- `specs/epochs/INDEX.md` + `specs/epochs/EPOCH-*.md` — implementation order and epoch contracts.
+ 
+-## Override Rules
+-- Higher authority overrides lower authority.
+-- If same-level documents conflict, newest dated entry wins **only after** recording in `specs/DECISIONS.md`.
+-- If conflict is unresolved, execution must stop and be recorded in `specs/SPEC_CONFLICTS.md`.
++## Change Control Rules
++1. Propose SSOT changes in the relevant epoch spec first.
++2. Keep one semantic change per commit (atomic discipline).
++3. Any change to `spec/*.json` or `truth/*.schema.json` must be accompanied by gate evidence:
++   - validation command output,
++   - updated evidence summary,
++   - checksum manifest refresh.
++4. Network-dependent validation remains opt-in with `ENABLE_NETWORK_TESTS=1`; default verify path must stay offline.
++5. Determinism-sensitive SSOT changes require repeat runs and multi-seed checks.
+ 
+-## Change Control
+-- Any non-trivial spec change requires:
+-  1) Decision entry in `specs/DECISIONS.md`.
+-  2) Updated epoch gate/evidence docs if gates or artifacts change.
+-  3) Evidence run proving no regression (`verify:e2`, `verify:paper`, anti-flake policy).
++## Validation Workflow
++- Baseline:
++  - `npm run verify:specs`
++  - `npm run verify:core`
++  - `npm run verify:phase2`
++  - `npm run verify:integration`
++- Release integrity:
++  - `npm run verify:release-governor`
++  - `node scripts/ops/regen_manifests.mjs`
+ 
+-## Decision Registry
+-- Architectural and policy decisions are append-only in `specs/DECISIONS.md`.
+-- Decisions are immutable after merge; superseding decisions must reference previous decision IDs.
++## Evidence Requirements for SSOT Changes
++Store under `reports/evidence/<EPOCH-ID>/`:
++- gate logs (`gates/*.log`),
++- `DIFF.patch`,
++- `SHA256SUMS.SOURCE.txt`, `SHA256SUMS.EVIDENCE.txt`, and `SHA256SUMS.EXPORT.txt` (when export exists),
++- `SUMMARY.md` and `VERDICT.md`.
+diff --git a/specs/epochs/EPOCH-17.md b/specs/epochs/EPOCH-17.md
+index 9e0702d..88fa67f 100644
+--- a/specs/epochs/EPOCH-17.md
++++ b/specs/epochs/EPOCH-17.md
+@@ -1,90 +1,63 @@
+ # EPOCH-17
+ 
+-## 1) Reality Snapshot
+-- Baseline has deterministic run-scoped gates for E2 and Paper.
+-- Core invariants available: `verify:e2`, `verify:paper`, `verify:e2:multi`, `verify:phase2`, `verify:integration`.
+-- Missing integration layer for this epoch is tracked in `TASK_TRACKER.md` and `SDD_EPOCH_17_21.md`.
+-
+-## 2) Objective
+-Deliver EPOCH-17 scope as a deterministic, offline-testable increment with evidence-backed gate pass.
+-
+-## 3) Non-goals
+-- No live trading activation by default.
+-- No network-required verification in default flow.
+-- No broad refactors outside required epoch files.
+-
+-## 4) Constraints
+-- Compatibility with existing gate scripts.
+-- Run-scoped outputs under `reports/runs/...`.
+-- Deterministic seed and reproducible evidence.
+-
+-## 5) Architecture / Design
+-### Interfaces
+-- Reuse existing execution and logging interfaces in `core/exec`, `core/obs`, and `core/risk`.
+-
+-### Data flow
+-1. Input intent/signal/config.
+-2. Epoch-specific orchestration or policy module.
+-3. Existing executor/adapter path.
+-4. Event emission (SYS/EXEC/RISK).
+-5. Run-scoped artifacts + evidence.
+-
+-### Event taxonomy
+-- SYS: orchestration lifecycle / start-stop / decisions.
+-- EXEC: order intent, placement, fill, cancel.
+-- RISK: precheck blocks, caps, state updates, kill-switch/circuit-breaker.
+-
+-## 6) Patch Plan
+-- Add/modify only files explicitly listed in `EPOCH-17_TODO.md`.
+-- Keep minimal diff and backward compatibility.
+-- Record any new gate in `package.json` only when implementation exists.
+-
+-## 7) Verification Plan (Gates)
+-- Mandatory baseline gates:
+-  - `npm run verify:e2` (x2)
+-  - `npm run verify:paper` (x2)
+-  - `npm run verify:e2:multi`
+-  - `npm run verify:core`
+-- Optional epoch-specific gates are defined in `EPOCH-17_GATES.md`.
+-
+-## 8) Evidence Plan
+-- Use `reports/evidence/EPOCH-17.x/` with:
+-  - preflight + install logs
+-  - all gate logs
+-  - diff patch
+-  - source/export checksum manifests
+-  - summary and remaining risks
+-
+-## 9) Acceptance Criteria
+-## E17 Safety & Live Execution Controls (mandatory)
+-- Dry-run default MUST be preserved for all execution paths.
+-- Live mode requires explicit mode switch + confirmation gate.
+-- Emergency stop, kill switch, and circuit breaker are mandatory preconditions for live enablement.
+-- No silent execution path: every order path emits audit events (SYS/EXEC/RISK).
+-- Live audit logging is required and evidence-backed in epoch gate logs.
+-
+-- [ ] Target epoch modules implemented.
+-- [ ] Baseline invariants pass.
+-- [ ] Epoch-specific gate(s) pass.
+-- [ ] Evidence folder complete and checksummed.
+-
+-## Implementation Reality Check
+-- Can this be implemented with current modules? **YES (incremental)**.
+-- New infrastructure required? **NO for baseline scope**, except epoch-specific gate scripts marked TO IMPLEMENT.
+-- Estimated implementation size: **small-to-medium (200-600 LOC per epoch core path)**.
+-- Refactor debt risk: **moderate** if interfaces diverge; minimize by adapter/wrapper reuse.
+-- Incremental shipping feasible: **YES** (module + gate + evidence in sequence).
+-
+-## 10) Risks & Mitigations
+-- Risk: hidden nondeterministic fields in new outputs.  
+-  Mitigation: seed/clock discipline + schema and fingerprint checks.
+-- Risk: gate regression in shared wrappers.  
+-  Mitigation: rerun `verify:e2`, `verify:paper`, `verify:e2:multi`.
+-
+-## 11) Rollback Plan
+-- Revert epoch commit(s).
+-- Re-run baseline gates to confirm restoration.
+-
+-## 12) Implementation Notes
+-- Sequence: implement core module → add tests/gates → run anti-flake → collect evidence.
+-- Stop immediately on invariant failure and patch root cause before continuing.
++## REALITY SNAPSHOT
++- Current baseline already exposes offline verification scripts through npm gates.
++- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
++- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++
++## GOALS / NON-GOALS
++### Goals
++- Harden safety-integrated executor behavior with deterministic and auditable checks.
++- Preserve dry-run default and risk guard enforcement.
++
++### Non-goals
++- No uncontrolled refactors unrelated to the epoch contract.
++- No default-on network verification path.
++
++## CONSTRAINTS
++- Offline-first by default; network checks must be explicit opt-in.
++- Determinism via seed discipline (`SEED=12345` default).
++- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- No live trading activation without explicit approvals.
++
++## DESIGN (contracts + interfaces + invariants)
++- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
++- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
++- Invariant: epoch gate remains reproducible across anti-flake reruns.
++- Unknowns in adapter compatibility are marked: Requires verification.
++
++## PATCH PLAN (file list, minimal diffs policy)
++- Update only epoch-specific modules/gates and relevant docs.
++- Keep diffs minimal and evidence-backed.
++- Preserve backward compatibility for existing npm gate entry points.
++
++## VERIFY (gates, commands, expected outputs, anti-flake rules)
++- Run baseline wall gates plus epoch-specific gate.
++- Repeat critical gates (anti-flake) where defined.
++- Fail on schema mismatch, checksum mismatch, or drift.
++
++## EVIDENCE REQUIREMENTS (paths, logs, manifests)
++- Evidence directory: `reports/evidence/EPOCH-17/` (or boot evidence for planning cycle).
++- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
++- Export hash references required for release-facing epochs.
++
++## STOP RULES (PASS/FAIL criteria)
++- PASS only if required gates pass and evidence is complete.
++- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
++
++## RISK REGISTER (incl. meta-risks)
++- Functional risk: hidden coupling between epoch contracts.
++- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
++
++## ROLLBACK PLAN
++- Revert epoch commits.
++- Re-run baseline gates to confirm recovery.
++
++## ACCEPTANCE CRITERIA (checkbox list)
++- [ ] Required contracts implemented/verified.
++- [ ] Required gates pass with anti-flake policy.
++- [ ] Evidence folder complete with manifest validation.
++
++## NOTES (compatibility concerns)
++- Keep npm scripts stable for downstream automation.
++- Flag unresolved assumptions as Requires verification.
+diff --git a/specs/epochs/EPOCH-18.md b/specs/epochs/EPOCH-18.md
+index 0ea3263..e6982d8 100644
+--- a/specs/epochs/EPOCH-18.md
++++ b/specs/epochs/EPOCH-18.md
+@@ -1,83 +1,63 @@
+ # EPOCH-18
+ 
+-## 1) Reality Snapshot
+-- Baseline has deterministic run-scoped gates for E2 and Paper.
+-- Core invariants available: `verify:e2`, `verify:paper`, `verify:e2:multi`, `verify:phase2`, `verify:integration`.
+-- Missing integration layer for this epoch is tracked in `TASK_TRACKER.md` and `SDD_EPOCH_17_21.md`.
+-
+-## 2) Objective
+-Deliver EPOCH-18 scope as a deterministic, offline-testable increment with evidence-backed gate pass.
+-
+-## 3) Non-goals
+-- No live trading activation by default.
+-- No network-required verification in default flow.
+-- No broad refactors outside required epoch files.
+-
+-## 4) Constraints
+-- Compatibility with existing gate scripts.
+-- Run-scoped outputs under `reports/runs/...`.
+-- Deterministic seed and reproducible evidence.
+-
+-## 5) Architecture / Design
+-### Interfaces
+-- Reuse existing execution and logging interfaces in `core/exec`, `core/obs`, and `core/risk`.
+-
+-### Data flow
+-1. Input intent/signal/config.
+-2. Epoch-specific orchestration or policy module.
+-3. Existing executor/adapter path.
+-4. Event emission (SYS/EXEC/RISK).
+-5. Run-scoped artifacts + evidence.
+-
+-### Event taxonomy
+-- SYS: orchestration lifecycle / start-stop / decisions.
+-- EXEC: order intent, placement, fill, cancel.
+-- RISK: precheck blocks, caps, state updates, kill-switch/circuit-breaker.
+-
+-## 6) Patch Plan
+-- Add/modify only files explicitly listed in `EPOCH-18_TODO.md`.
+-- Keep minimal diff and backward compatibility.
+-- Record any new gate in `package.json` only when implementation exists.
+-
+-## 7) Verification Plan (Gates)
+-- Mandatory baseline gates:
+-  - `npm run verify:e2` (x2)
+-  - `npm run verify:paper` (x2)
+-  - `npm run verify:e2:multi`
+-  - `npm run verify:core`
+-- Optional epoch-specific gates are defined in `EPOCH-18_GATES.md`.
+-
+-## 8) Evidence Plan
+-- Use `reports/evidence/EPOCH-18.x/` with:
+-  - preflight + install logs
+-  - all gate logs
+-  - diff patch
+-  - source/export checksum manifests
+-  - summary and remaining risks
+-
+-## 9) Acceptance Criteria
+-- [ ] Target epoch modules implemented.
+-- [ ] Baseline invariants pass.
+-- [ ] Epoch-specific gate(s) pass.
+-- [ ] Evidence folder complete and checksummed.
+-
+-## Implementation Reality Check
+-- Can this be implemented with current modules? **YES (incremental)**.
+-- New infrastructure required? **NO for baseline scope**, except epoch-specific gate scripts marked TO IMPLEMENT.
+-- Estimated implementation size: **small-to-medium (200-600 LOC per epoch core path)**.
+-- Refactor debt risk: **moderate** if interfaces diverge; minimize by adapter/wrapper reuse.
+-- Incremental shipping feasible: **YES** (module + gate + evidence in sequence).
+-
+-## 10) Risks & Mitigations
+-- Risk: hidden nondeterministic fields in new outputs.  
+-  Mitigation: seed/clock discipline + schema and fingerprint checks.
+-- Risk: gate regression in shared wrappers.  
+-  Mitigation: rerun `verify:e2`, `verify:paper`, `verify:e2:multi`.
+-
+-## 11) Rollback Plan
+-- Revert epoch commit(s).
+-- Re-run baseline gates to confirm restoration.
+-
+-## 12) Implementation Notes
+-- Sequence: implement core module → add tests/gates → run anti-flake → collect evidence.
+-- Stop immediately on invariant failure and patch root cause before continuing.
++## REALITY SNAPSHOT
++- Current baseline already exposes offline verification scripts through npm gates.
++- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
++- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++
++## GOALS / NON-GOALS
++### Goals
++- Stabilize strategy layer contracts that convert signals to intents deterministically.
++- Ensure strategy checks remain offline and reproducible.
++
++### Non-goals
++- No uncontrolled refactors unrelated to the epoch contract.
++- No default-on network verification path.
++
++## CONSTRAINTS
++- Offline-first by default; network checks must be explicit opt-in.
++- Determinism via seed discipline (`SEED=12345` default).
++- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- No live trading activation without explicit approvals.
++
++## DESIGN (contracts + interfaces + invariants)
++- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
++- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
++- Invariant: epoch gate remains reproducible across anti-flake reruns.
++- Unknowns in adapter compatibility are marked: Requires verification.
++
++## PATCH PLAN (file list, minimal diffs policy)
++- Update only epoch-specific modules/gates and relevant docs.
++- Keep diffs minimal and evidence-backed.
++- Preserve backward compatibility for existing npm gate entry points.
++
++## VERIFY (gates, commands, expected outputs, anti-flake rules)
++- Run baseline wall gates plus epoch-specific gate.
++- Repeat critical gates (anti-flake) where defined.
++- Fail on schema mismatch, checksum mismatch, or drift.
++
++## EVIDENCE REQUIREMENTS (paths, logs, manifests)
++- Evidence directory: `reports/evidence/EPOCH-18/` (or boot evidence for planning cycle).
++- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
++- Export hash references required for release-facing epochs.
++
++## STOP RULES (PASS/FAIL criteria)
++- PASS only if required gates pass and evidence is complete.
++- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
++
++## RISK REGISTER (incl. meta-risks)
++- Functional risk: hidden coupling between epoch contracts.
++- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
++
++## ROLLBACK PLAN
++- Revert epoch commits.
++- Re-run baseline gates to confirm recovery.
++
++## ACCEPTANCE CRITERIA (checkbox list)
++- [ ] Required contracts implemented/verified.
++- [ ] Required gates pass with anti-flake policy.
++- [ ] Evidence folder complete with manifest validation.
++
++## NOTES (compatibility concerns)
++- Keep npm scripts stable for downstream automation.
++- Flag unresolved assumptions as Requires verification.
+diff --git a/specs/epochs/EPOCH-19.md b/specs/epochs/EPOCH-19.md
+index b293202..e32bcde 100644
+--- a/specs/epochs/EPOCH-19.md
++++ b/specs/epochs/EPOCH-19.md
+@@ -1,83 +1,63 @@
+ # EPOCH-19
+ 
+-## 1) Reality Snapshot
+-- Baseline has deterministic run-scoped gates for E2 and Paper.
+-- Core invariants available: `verify:e2`, `verify:paper`, `verify:e2:multi`, `verify:phase2`, `verify:integration`.
+-- Missing integration layer for this epoch is tracked in `TASK_TRACKER.md` and `SDD_EPOCH_17_21.md`.
+-
+-## 2) Objective
+-Deliver EPOCH-19 scope as a deterministic, offline-testable increment with evidence-backed gate pass.
+-
+-## 3) Non-goals
+-- No live trading activation by default.
+-- No network-required verification in default flow.
+-- No broad refactors outside required epoch files.
+-
+-## 4) Constraints
+-- Compatibility with existing gate scripts.
+-- Run-scoped outputs under `reports/runs/...`.
+-- Deterministic seed and reproducible evidence.
+-
+-## 5) Architecture / Design
+-### Interfaces
+-- Reuse existing execution and logging interfaces in `core/exec`, `core/obs`, and `core/risk`.
+-
+-### Data flow
+-1. Input intent/signal/config.
+-2. Epoch-specific orchestration or policy module.
+-3. Existing executor/adapter path.
+-4. Event emission (SYS/EXEC/RISK).
+-5. Run-scoped artifacts + evidence.
+-
+-### Event taxonomy
+-- SYS: orchestration lifecycle / start-stop / decisions.
+-- EXEC: order intent, placement, fill, cancel.
+-- RISK: precheck blocks, caps, state updates, kill-switch/circuit-breaker.
+-
+-## 6) Patch Plan
+-- Add/modify only files explicitly listed in `EPOCH-19_TODO.md`.
+-- Keep minimal diff and backward compatibility.
+-- Record any new gate in `package.json` only when implementation exists.
+-
+-## 7) Verification Plan (Gates)
+-- Mandatory baseline gates:
+-  - `npm run verify:e2` (x2)
+-  - `npm run verify:paper` (x2)
+-  - `npm run verify:e2:multi`
+-  - `npm run verify:core`
+-- Optional epoch-specific gates are defined in `EPOCH-19_GATES.md`.
+-
+-## 8) Evidence Plan
+-- Use `reports/evidence/EPOCH-19.x/` with:
+-  - preflight + install logs
+-  - all gate logs
+-  - diff patch
+-  - source/export checksum manifests
+-  - summary and remaining risks
+-
+-## 9) Acceptance Criteria
+-- [ ] Target epoch modules implemented.
+-- [ ] Baseline invariants pass.
+-- [ ] Epoch-specific gate(s) pass.
+-- [ ] Evidence folder complete and checksummed.
+-
+-## Implementation Reality Check
+-- Can this be implemented with current modules? **YES (incremental)**.
+-- New infrastructure required? **NO for baseline scope**, except epoch-specific gate scripts marked TO IMPLEMENT.
+-- Estimated implementation size: **small-to-medium (200-600 LOC per epoch core path)**.
+-- Refactor debt risk: **moderate** if interfaces diverge; minimize by adapter/wrapper reuse.
+-- Incremental shipping feasible: **YES** (module + gate + evidence in sequence).
+-
+-## 10) Risks & Mitigations
+-- Risk: hidden nondeterministic fields in new outputs.  
+-  Mitigation: seed/clock discipline + schema and fingerprint checks.
+-- Risk: gate regression in shared wrappers.  
+-  Mitigation: rerun `verify:e2`, `verify:paper`, `verify:e2:multi`.
+-
+-## 11) Rollback Plan
+-- Revert epoch commit(s).
+-- Re-run baseline gates to confirm restoration.
+-
+-## 12) Implementation Notes
+-- Sequence: implement core module → add tests/gates → run anti-flake → collect evidence.
+-- Stop immediately on invariant failure and patch root cause before continuing.
++## REALITY SNAPSHOT
++- Current baseline already exposes offline verification scripts through npm gates.
++- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
++- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++
++## GOALS / NON-GOALS
++### Goals
++- Enforce governance mode FSM transitions with explicit safety constraints.
++- Ensure governance decisions are auditable in event outputs.
++
++### Non-goals
++- No uncontrolled refactors unrelated to the epoch contract.
++- No default-on network verification path.
++
++## CONSTRAINTS
++- Offline-first by default; network checks must be explicit opt-in.
++- Determinism via seed discipline (`SEED=12345` default).
++- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- No live trading activation without explicit approvals.
++
++## DESIGN (contracts + interfaces + invariants)
++- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
++- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
++- Invariant: epoch gate remains reproducible across anti-flake reruns.
++- Unknowns in adapter compatibility are marked: Requires verification.
++
++## PATCH PLAN (file list, minimal diffs policy)
++- Update only epoch-specific modules/gates and relevant docs.
++- Keep diffs minimal and evidence-backed.
++- Preserve backward compatibility for existing npm gate entry points.
++
++## VERIFY (gates, commands, expected outputs, anti-flake rules)
++- Run baseline wall gates plus epoch-specific gate.
++- Repeat critical gates (anti-flake) where defined.
++- Fail on schema mismatch, checksum mismatch, or drift.
++
++## EVIDENCE REQUIREMENTS (paths, logs, manifests)
++- Evidence directory: `reports/evidence/EPOCH-19/` (or boot evidence for planning cycle).
++- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
++- Export hash references required for release-facing epochs.
++
++## STOP RULES (PASS/FAIL criteria)
++- PASS only if required gates pass and evidence is complete.
++- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
++
++## RISK REGISTER (incl. meta-risks)
++- Functional risk: hidden coupling between epoch contracts.
++- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
++
++## ROLLBACK PLAN
++- Revert epoch commits.
++- Re-run baseline gates to confirm recovery.
++
++## ACCEPTANCE CRITERIA (checkbox list)
++- [ ] Required contracts implemented/verified.
++- [ ] Required gates pass with anti-flake policy.
++- [ ] Evidence folder complete with manifest validation.
++
++## NOTES (compatibility concerns)
++- Keep npm scripts stable for downstream automation.
++- Flag unresolved assumptions as Requires verification.
+diff --git a/specs/epochs/EPOCH-20.md b/specs/epochs/EPOCH-20.md
+index 82ea88a..a648c35 100644
+--- a/specs/epochs/EPOCH-20.md
++++ b/specs/epochs/EPOCH-20.md
+@@ -1,83 +1,63 @@
+ # EPOCH-20
+ 
+-## 1) Reality Snapshot
+-- Baseline has deterministic run-scoped gates for E2 and Paper.
+-- Core invariants available: `verify:e2`, `verify:paper`, `verify:e2:multi`, `verify:phase2`, `verify:integration`.
+-- Missing integration layer for this epoch is tracked in `TASK_TRACKER.md` and `SDD_EPOCH_17_21.md`.
+-
+-## 2) Objective
+-Deliver EPOCH-20 scope as a deterministic, offline-testable increment with evidence-backed gate pass.
+-
+-## 3) Non-goals
+-- No live trading activation by default.
+-- No network-required verification in default flow.
+-- No broad refactors outside required epoch files.
+-
+-## 4) Constraints
+-- Compatibility with existing gate scripts.
+-- Run-scoped outputs under `reports/runs/...`.
+-- Deterministic seed and reproducible evidence.
+-
+-## 5) Architecture / Design
+-### Interfaces
+-- Reuse existing execution and logging interfaces in `core/exec`, `core/obs`, and `core/risk`.
+-
+-### Data flow
+-1. Input intent/signal/config.
+-2. Epoch-specific orchestration or policy module.
+-3. Existing executor/adapter path.
+-4. Event emission (SYS/EXEC/RISK).
+-5. Run-scoped artifacts + evidence.
+-
+-### Event taxonomy
+-- SYS: orchestration lifecycle / start-stop / decisions.
+-- EXEC: order intent, placement, fill, cancel.
+-- RISK: precheck blocks, caps, state updates, kill-switch/circuit-breaker.
+-
+-## 6) Patch Plan
+-- Add/modify only files explicitly listed in `EPOCH-20_TODO.md`.
+-- Keep minimal diff and backward compatibility.
+-- Record any new gate in `package.json` only when implementation exists.
+-
+-## 7) Verification Plan (Gates)
+-- Mandatory baseline gates:
+-  - `npm run verify:e2` (x2)
+-  - `npm run verify:paper` (x2)
+-  - `npm run verify:e2:multi`
+-  - `npm run verify:core`
+-- Optional epoch-specific gates are defined in `EPOCH-20_GATES.md`.
+-
+-## 8) Evidence Plan
+-- Use `reports/evidence/EPOCH-20.x/` with:
+-  - preflight + install logs
+-  - all gate logs
+-  - diff patch
+-  - source/export checksum manifests
+-  - summary and remaining risks
+-
+-## 9) Acceptance Criteria
+-- [ ] Target epoch modules implemented.
+-- [ ] Baseline invariants pass.
+-- [ ] Epoch-specific gate(s) pass.
+-- [ ] Evidence folder complete and checksummed.
+-
+-## Implementation Reality Check
+-- Can this be implemented with current modules? **YES (incremental)**.
+-- New infrastructure required? **NO for baseline scope**, except epoch-specific gate scripts marked TO IMPLEMENT.
+-- Estimated implementation size: **small-to-medium (200-600 LOC per epoch core path)**.
+-- Refactor debt risk: **moderate** if interfaces diverge; minimize by adapter/wrapper reuse.
+-- Incremental shipping feasible: **YES** (module + gate + evidence in sequence).
+-
+-## 10) Risks & Mitigations
+-- Risk: hidden nondeterministic fields in new outputs.  
+-  Mitigation: seed/clock discipline + schema and fingerprint checks.
+-- Risk: gate regression in shared wrappers.  
+-  Mitigation: rerun `verify:e2`, `verify:paper`, `verify:e2:multi`.
+-
+-## 11) Rollback Plan
+-- Revert epoch commit(s).
+-- Re-run baseline gates to confirm restoration.
+-
+-## 12) Implementation Notes
+-- Sequence: implement core module → add tests/gates → run anti-flake → collect evidence.
+-- Stop immediately on invariant failure and patch root cause before continuing.
++## REALITY SNAPSHOT
++- Current baseline already exposes offline verification scripts through npm gates.
++- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
++- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++
++## GOALS / NON-GOALS
++### Goals
++- Validate monitoring/performance contract outputs and thresholds.
++- Keep monitoring gate deterministic across repeated runs.
++
++### Non-goals
++- No uncontrolled refactors unrelated to the epoch contract.
++- No default-on network verification path.
++
++## CONSTRAINTS
++- Offline-first by default; network checks must be explicit opt-in.
++- Determinism via seed discipline (`SEED=12345` default).
++- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- No live trading activation without explicit approvals.
++
++## DESIGN (contracts + interfaces + invariants)
++- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
++- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
++- Invariant: epoch gate remains reproducible across anti-flake reruns.
++- Unknowns in adapter compatibility are marked: Requires verification.
++
++## PATCH PLAN (file list, minimal diffs policy)
++- Update only epoch-specific modules/gates and relevant docs.
++- Keep diffs minimal and evidence-backed.
++- Preserve backward compatibility for existing npm gate entry points.
++
++## VERIFY (gates, commands, expected outputs, anti-flake rules)
++- Run baseline wall gates plus epoch-specific gate.
++- Repeat critical gates (anti-flake) where defined.
++- Fail on schema mismatch, checksum mismatch, or drift.
++
++## EVIDENCE REQUIREMENTS (paths, logs, manifests)
++- Evidence directory: `reports/evidence/EPOCH-20/` (or boot evidence for planning cycle).
++- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
++- Export hash references required for release-facing epochs.
++
++## STOP RULES (PASS/FAIL criteria)
++- PASS only if required gates pass and evidence is complete.
++- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
++
++## RISK REGISTER (incl. meta-risks)
++- Functional risk: hidden coupling between epoch contracts.
++- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
++
++## ROLLBACK PLAN
++- Revert epoch commits.
++- Re-run baseline gates to confirm recovery.
++
++## ACCEPTANCE CRITERIA (checkbox list)
++- [ ] Required contracts implemented/verified.
++- [ ] Required gates pass with anti-flake policy.
++- [ ] Evidence folder complete with manifest validation.
++
++## NOTES (compatibility concerns)
++- Keep npm scripts stable for downstream automation.
++- Flag unresolved assumptions as Requires verification.
+diff --git a/specs/epochs/EPOCH-21.md b/specs/epochs/EPOCH-21.md
+index 0281745..6786ee7 100644
+--- a/specs/epochs/EPOCH-21.md
++++ b/specs/epochs/EPOCH-21.md
+@@ -1,83 +1,63 @@
+ # EPOCH-21
+ 
+-## 1) Reality Snapshot
+-- Baseline has deterministic run-scoped gates for E2 and Paper.
+-- Core invariants available: `verify:e2`, `verify:paper`, `verify:e2:multi`, `verify:phase2`, `verify:integration`.
+-- Missing integration layer for this epoch is tracked in `TASK_TRACKER.md` and `SDD_EPOCH_17_21.md`.
+-
+-## 2) Objective
+-Deliver EPOCH-21 scope as a deterministic, offline-testable increment with evidence-backed gate pass.
+-
+-## 3) Non-goals
+-- No live trading activation by default.
+-- No network-required verification in default flow.
+-- No broad refactors outside required epoch files.
+-
+-## 4) Constraints
+-- Compatibility with existing gate scripts.
+-- Run-scoped outputs under `reports/runs/...`.
+-- Deterministic seed and reproducible evidence.
+-
+-## 5) Architecture / Design
+-### Interfaces
+-- Reuse existing execution and logging interfaces in `core/exec`, `core/obs`, and `core/risk`.
+-
+-### Data flow
+-1. Input intent/signal/config.
+-2. Epoch-specific orchestration or policy module.
+-3. Existing executor/adapter path.
+-4. Event emission (SYS/EXEC/RISK).
+-5. Run-scoped artifacts + evidence.
+-
+-### Event taxonomy
+-- SYS: orchestration lifecycle / start-stop / decisions.
+-- EXEC: order intent, placement, fill, cancel.
+-- RISK: precheck blocks, caps, state updates, kill-switch/circuit-breaker.
+-
+-## 6) Patch Plan
+-- Add/modify only files explicitly listed in `EPOCH-21_TODO.md`.
+-- Keep minimal diff and backward compatibility.
+-- Record any new gate in `package.json` only when implementation exists.
+-
+-## 7) Verification Plan (Gates)
+-- Mandatory baseline gates:
+-  - `npm run verify:e2` (x2)
+-  - `npm run verify:paper` (x2)
+-  - `npm run verify:e2:multi`
+-  - `npm run verify:core`
+-- Optional epoch-specific gates are defined in `EPOCH-21_GATES.md`.
+-
+-## 8) Evidence Plan
+-- Use `reports/evidence/EPOCH-21.x/` with:
+-  - preflight + install logs
+-  - all gate logs
+-  - diff patch
+-  - source/export checksum manifests
+-  - summary and remaining risks
+-
+-## 9) Acceptance Criteria
+-- [ ] Target epoch modules implemented.
+-- [ ] Baseline invariants pass.
+-- [ ] Epoch-specific gate(s) pass.
+-- [ ] Evidence folder complete and checksummed.
+-
+-## Implementation Reality Check
+-- Can this be implemented with current modules? **YES (incremental)**.
+-- New infrastructure required? **NO for baseline scope**, except epoch-specific gate scripts marked TO IMPLEMENT.
+-- Estimated implementation size: **small-to-medium (200-600 LOC per epoch core path)**.
+-- Refactor debt risk: **moderate** if interfaces diverge; minimize by adapter/wrapper reuse.
+-- Incremental shipping feasible: **YES** (module + gate + evidence in sequence).
+-
+-## 10) Risks & Mitigations
+-- Risk: hidden nondeterministic fields in new outputs.  
+-  Mitigation: seed/clock discipline + schema and fingerprint checks.
+-- Risk: gate regression in shared wrappers.  
+-  Mitigation: rerun `verify:e2`, `verify:paper`, `verify:e2:multi`.
+-
+-## 11) Rollback Plan
+-- Revert epoch commit(s).
+-- Re-run baseline gates to confirm restoration.
+-
+-## 12) Implementation Notes
+-- Sequence: implement core module → add tests/gates → run anti-flake → collect evidence.
+-- Stop immediately on invariant failure and patch root cause before continuing.
++## REALITY SNAPSHOT
++- Current baseline already exposes offline verification scripts through npm gates.
++- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
++- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++
++## GOALS / NON-GOALS
++### Goals
++- Enforce release-governor criteria and artifact integrity checks.
++- Guarantee explicit SAFE/BLOCKED protocol compliance.
++
++### Non-goals
++- No uncontrolled refactors unrelated to the epoch contract.
++- No default-on network verification path.
++
++## CONSTRAINTS
++- Offline-first by default; network checks must be explicit opt-in.
++- Determinism via seed discipline (`SEED=12345` default).
++- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
++- No live trading activation without explicit approvals.
++
++## DESIGN (contracts + interfaces + invariants)
++- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
++- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
++- Invariant: epoch gate remains reproducible across anti-flake reruns.
++- Unknowns in adapter compatibility are marked: Requires verification.
++
++## PATCH PLAN (file list, minimal diffs policy)
++- Update only epoch-specific modules/gates and relevant docs.
++- Keep diffs minimal and evidence-backed.
++- Preserve backward compatibility for existing npm gate entry points.
++
++## VERIFY (gates, commands, expected outputs, anti-flake rules)
++- Run baseline wall gates plus epoch-specific gate.
++- Repeat critical gates (anti-flake) where defined.
++- Fail on schema mismatch, checksum mismatch, or drift.
++
++## EVIDENCE REQUIREMENTS (paths, logs, manifests)
++- Evidence directory: `reports/evidence/EPOCH-21/` (or boot evidence for planning cycle).
++- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
++- Export hash references required for release-facing epochs.
++
++## STOP RULES (PASS/FAIL criteria)
++- PASS only if required gates pass and evidence is complete.
++- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
++
++## RISK REGISTER (incl. meta-risks)
++- Functional risk: hidden coupling between epoch contracts.
++- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
++
++## ROLLBACK PLAN
++- Revert epoch commits.
++- Re-run baseline gates to confirm recovery.
++
++## ACCEPTANCE CRITERIA (checkbox list)
++- [ ] Required contracts implemented/verified.
++- [ ] Required gates pass with anti-flake policy.
++- [ ] Evidence folder complete with manifest validation.
++
++## NOTES (compatibility concerns)
++- Keep npm scripts stable for downstream automation.
++- Flag unresolved assumptions as Requires verification.
+diff --git a/specs/epochs/INDEX.md b/specs/epochs/INDEX.md
+index 4703c68..618c520 100644
+--- a/specs/epochs/INDEX.md
++++ b/specs/epochs/INDEX.md
+@@ -1,36 +1,47 @@
+-# EPOCH SPECS INDEX (17 → 21)
++# EPOCH SPECS INDEX
+ 
+-## Epochs
+-1. **EPOCH-17 — Safety Integrated Executor**
+-   - Spec: `specs/epochs/EPOCH-17_safety_integrated_executor.md`
+-   - Intent: enforce pre-trade safety + risk checks in execution bridge.
+-   - Primary gates: `verify:epoch17`, `verify:e2`, `verify:paper`, `verify:e2:multi`, `verify:core`.
++## Dependency chain and implementation order
++1. EPOCH-17
++2. EPOCH-18 (depends on EPOCH-17)
++3. EPOCH-19 (depends on EPOCH-17..18)
++4. EPOCH-20 (depends on EPOCH-17..19)
++5. EPOCH-21 (depends on EPOCH-17..20)
++6. EPOCH-22 (depends on EPOCH-17..21)
++7. EPOCH-23 (depends on EPOCH-17..22)
++8. EPOCH-24 (depends on EPOCH-17..23)
++9. EPOCH-25 (depends on EPOCH-17..24)
++10. EPOCH-26 (depends on EPOCH-17..25)
+ 
+-2. **EPOCH-18 — Strategy Layer**
+-   - Spec: `specs/epochs/EPOCH-18_strategy_layer.md`
+-   - Intent: deterministic strategy orchestration and intent conversion.
+-   - Primary gates: `verify:strategy`, `verify:epoch18`, baseline regression wall.
++No-skip policy: parallel implementation is allowed only when dependency contracts are not violated and regression gates remain green.
+ 
+-3. **EPOCH-19 — Governance + Mode FSM**
+-   - Spec: `specs/epochs/EPOCH-19_governance_mode_fsm.md`
+-   - Intent: enforce mode transitions and governance approvals.
+-   - Primary gates: `verify:governance`, `verify:epoch19`, baseline regression wall.
++## Shared contracts
++- `ExecutionAdapter`
++- `EventLog`
++- `RunContext`
++- `RiskGuard`
++- `GovernanceFSM`
++- `ReleaseGovernor`
+ 
+-4. **EPOCH-20 — Monitoring + Performance**
+-   - Spec: `specs/epochs/EPOCH-20_monitoring_perf.md`
+-   - Intent: deterministic monitoring/perf contract and schema validation.
+-   - Primary gates: `verify:monitoring`, `verify:epoch20`, baseline regression wall.
++## Gate map
++- EPOCH-17: `verify:epoch17`, `verify:e2`, `verify:paper`, `verify:e2:multi`
++- EPOCH-18: `verify:epoch18`, `verify:strategy`, baseline wall
++- EPOCH-19: `verify:epoch19`, `verify:governance`, baseline wall
++- EPOCH-20: `verify:epoch20`, `verify:monitoring`, baseline wall
++- EPOCH-21: `verify:epoch21`, `verify:release-governor`, baseline wall
++- EPOCH-22: `verify:core`, determinism/invariant scenario battery gates (to be wired by epoch)
++- EPOCH-23: integration contract gates (`verify:integration`, signal-to-intent checks)
++- EPOCH-24: walk-forward + drift budget gates (`verify:phase2`, drift/reality-gap checks)
++- EPOCH-25: testnet campaign gates (network opt-in only via `ENABLE_NETWORK_TESTS=1`)
++- EPOCH-26: micro-live governor rehearsals (opt-in only, extreme safety)
+ 
+-5. **EPOCH-21 — Deployment + Release Governor**
+-   - Spec: `specs/epochs/EPOCH-21_deployment_release.md`
+-   - Intent: SAFE/BLOCKED release discipline with evidence integrity checks.
+-   - Primary gates: `verify:release-governor`, `verify:epoch21`, baseline regression wall.
+-
+-## Dependency chain
+-- EPOCH-17 is prerequisite for EPOCH-18 execution coupling.
+-- EPOCH-18 feeds strategy outputs that are governed by EPOCH-19.
+-- EPOCH-19 mode/governance events feed EPOCH-20 monitoring contracts.
+-- EPOCH-21 depends on all prior epochs for release readiness assertions.
+-
+-## Ready-to-implement order
+-EPOCH-17 → EPOCH-18 → EPOCH-19 → EPOCH-20 → EPOCH-21.
++## Epoch spec files
++- `specs/epochs/EPOCH-17.md`
++- `specs/epochs/EPOCH-18.md`
++- `specs/epochs/EPOCH-19.md`
++- `specs/epochs/EPOCH-20.md`
++- `specs/epochs/EPOCH-21.md`
++- `specs/epochs/EPOCH-22.md`
++- `specs/epochs/EPOCH-23.md`
++- `specs/epochs/EPOCH-24.md`
++- `specs/epochs/EPOCH-25.md`
++- `specs/epochs/EPOCH-26.md`

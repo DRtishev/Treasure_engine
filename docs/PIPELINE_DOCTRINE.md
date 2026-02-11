@@ -1,69 +1,56 @@
-# Pipeline Doctrine (Truth Layer)
+# PIPELINE DOCTRINE
 
-## 1) Run-dir discipline standard
-All gate outputs that can vary per run must be written under:
+## Run-dir discipline
+All variable run artifacts must be written under:
 
 `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`
 
-Rules:
-- `<seed>` defaults to `12345` unless explicitly overridden.
-- `<repeat>` differentiates anti-flake reruns (`default`, `default_2`, etc.).
-- Canonical artifacts must not be overwritten in-place by repeated runs.
+Required context:
+- `TREASURE_RUN_DIR`
+- `TREASURE_RUN_ID`
+- `SEED` (default `12345`)
 
-## 2) Two-run anti-flake policy
-Mandatory for release-quality epochs:
-- `npm run verify:e2` twice
-- `npm run verify:paper` twice
+## Wrapper contracts
+- `scripts/verify/run_with_context.mjs` is the canonical wrapper for run-scoped gates.
+- Paper gate must use wrapper context (`verify:paper` -> `verify:paper:raw`).
+- E2 gate must use wrapper context (`verify:e2` -> `verify:e2:raw`).
+- Multi-seed stability is enforced by `verify:e2:multi`.
 
-Policy:
-- PASS only if both runs pass.
-- Any mismatch in structural outputs must be investigated before SAFE verdict.
+## Anti-flake doctrine
+- Critical gates execute twice before SAFE verdict:
+  - `verify:paper`
+  - `verify:e2`
+  - `verify:monitoring`
+  - `verify:release-governor`
+- Same-seed repeats are used to detect hidden drift.
 
-## 3) Multi-seed stability policy
-Mandatory deterministic stress gate:
-- `npm run verify:e2:multi`
+## Multi-seed doctrine
+- Use `verify:e2:multi` to validate structural determinism across seeds.
+- Fail if repeated same-seed result diverges unexpectedly.
 
-Minimum behavior:
-- Run at least 3 seeds.
-- Include repeated same-seed check.
-- Fail on unexpected structural drift.
-
-## 4) Export exclusion policy
-`FINAL_VALIDATED*.zip` must exclude:
+## Export exclusion doctrine
+Canonical validated export must exclude:
 - `.git/`
 - `node_modules/`
-- transient logs/caches/temp (`logs/`, `.cache/`, `tmp/`, `temp/`)
-- large transient archives not part of required deliverables
+- `reports/runs/`
+- transient logs (`logs/`), caches and temp dirs (`.cache/`, `tmp/`, `temp/`)
+- incoming archives and generated bundles not required for source handoff
 
-## 5) Evidence pack structure standard
-Per epoch: `reports/evidence/<EPOCH-ID>/`
+## SAFE/BLOCKED protocol
+### SAFE template
+- Status: SAFE
+- Evidence path(s): `reports/evidence/<EPOCH-ID>/...`
+- Gates: command list + pass logs
+- Integrity: manifest check results + artifact SHA
+- Remaining risks: explicit and bounded
 
-Required minimum:
-- `PREFLIGHT.log`
-- `INVENTORY.txt`
-- `GATE_PLAN.md`
-- `gates/*.log`
-- `DIFF.patch`
-- `SHA256SUMS.SOURCE.txt`
-- `SHA256SUMS.EVIDENCE.txt`
-- `SUMMARY.md`
-- `VERDICT.md` (for closeout)
+### BLOCKED template
+- Status: BLOCKED
+- Blocker(s): exact failing gate/check
+- Repro: command + log path
+- Mitigation plan: concrete next patch and rerun list
 
-Recommended:
-- `RISK_REGISTER.md`, `ASSUMPTIONS_LEDGER.md`, `IMPACT_ANALYSIS.md`, `PIPELINE_IMPROVEMENT_REPORT.md`.
-
-## 6) SAFE/BLOCKED declaration protocol
-### SAFE
-Declare SAFE only when:
-1. required gates pass (including anti-flake and multi-seed where applicable)
-2. checksum manifests validate
-3. export checksum exists and matches
-4. evidence pack is complete
-5. remaining risks are explicitly documented and accepted
-
-### BLOCKED
-Declare BLOCKED when any critical gate/checksum/evidence criterion fails.
-BLOCKED declaration must include:
-- explicit blockers
-- affected files/paths
-- reproducible command/log references
+## Network discipline
+- Network-dependent tests are skipped by default.
+- Enable only with `ENABLE_NETWORK_TESTS=1`.
+- Offline verify wall must stay green without network.

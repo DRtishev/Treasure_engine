@@ -1,0 +1,18 @@
+
+> treasure-engine@1.0.0 verify:epoch25
+> node scripts/verify/epoch25_testnet_campaign_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-25 TESTNET CAMPAIGN CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ campaign profile includes >=3 samples
+✓ offline campaign metrics within configured budget
+✓ profile fingerprint is sha256
+✓ profile summary metrics are non-negative
+ℹ Network campaign checks skipped by default (set ENABLE_NETWORK_TESTS=1 to enable).
+✓ network path obeys opt-in policy
+WROTE: reports/testnet_campaign_profile.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 5
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

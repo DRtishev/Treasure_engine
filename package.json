@@ -69,7 +69,16 @@
     "verify:monitoring": "node scripts/verify/monitoring_perf_check.mjs",
     "verify:epoch20": "npm run verify:monitoring",
     "verify:release-governor": "node scripts/verify/release_governor_check.mjs",
-    "verify:epoch21": "npm run verify:release-governor"
+    "verify:epoch21": "npm run verify:release-governor",
+    "verify:specs": "node scripts/verify/specs_check.mjs",
+    "regen:manifests": "node scripts/ops/regen_manifests.mjs",
+    "export:validated": "node scripts/export_validated.mjs",
+    "verify:wall": "npm ci && npm run verify:specs && npm run verify:paper && npm run verify:paper && npm run verify:e2 && npm run verify:e2 && npm run verify:e2:multi && npm run verify:phase2 && npm run verify:integration && npm run verify:epoch17 && npm run verify:epoch18 && npm run verify:epoch19 && npm run verify:monitoring && npm run verify:monitoring && npm run verify:epoch20 && npm run verify:epoch21 && npm run verify:epoch22 && npm run verify:epoch23 && npm run verify:epoch24 && npm run verify:epoch25 && npm run verify:epoch26 && npm run verify:epoch26 && npm run verify:release-governor && npm run verify:release-governor && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt",
+    "verify:epoch22": "node scripts/verify/epoch22_ai_validation_harness.mjs",
+    "verify:epoch23": "node scripts/verify/epoch23_signal_intent_contract_check.mjs",
+    "verify:epoch24": "node scripts/verify/epoch24_walkforward_reality_gap_check.mjs",
+    "verify:epoch25": "node scripts/verify/epoch25_testnet_campaign_check.mjs",
+    "verify:epoch26": "node scripts/verify/epoch26_micro_live_governor_check.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

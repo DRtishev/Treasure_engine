@@ -1,0 +1,190 @@
+diff --git a/README.md b/README.md
+index 75a9122..02e9339 100644
+--- a/README.md
++++ b/README.md
+@@ -17,6 +17,7 @@ npm run verify:wall
+ - `npm run verify:epoch23` — AI -> Signals -> Intents contract gate (offline).
+ - `npm run verify:epoch24` — Walk-forward + reality-gap drift-budget gate (offline).
+ - `npm run verify:epoch25` — Testnet campaign profiling gate (offline baseline + optional network path).
++- `npm run verify:epoch26` — Micro-live governance rehearsal gate (approval/FSM/kill-switch/rollback, offline).
+ 
+ ## Offline-first политика
+ - По умолчанию verification path не требует сети.
+diff --git a/RUNBOOK.md b/RUNBOOK.md
+index 7085f87..20e94d8 100644
+--- a/RUNBOOK.md
++++ b/RUNBOOK.md
+@@ -23,9 +23,10 @@ npm run verify:wall
+ 15. `npm run verify:epoch23`
+ 16. `npm run verify:epoch24`
+ 17. `npm run verify:epoch25`
+-18. `npm run verify:release-governor` (x2)
+-19. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt`
+-20. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt`
++18. `npm run verify:epoch26` (x2)
++19. `npm run verify:release-governor` (x2)
++20. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt`
++21. `sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt`
+ 
+ ## 2) Канонический порядок манифестов
+ ```bash
+diff --git a/package.json b/package.json
+index a172dd5..cf4dfa1 100644
+--- a/package.json
++++ b/package.json
+@@ -73,7 +73,7 @@
+     "verify:specs": "node scripts/verify/specs_check.mjs",
+     "regen:manifests": "node scripts/ops/regen_manifests.mjs",
+     "export:validated": "node scripts/export_validated.mjs",
+-    "verify:wall": "npm ci && npm run verify:specs && npm run verify:paper && npm run verify:paper && npm run verify:e2 && npm run verify:e2 && npm run verify:e2:multi && npm run verify:phase2 && npm run verify:integration && npm run verify:epoch17 && npm run verify:epoch18 && npm run verify:epoch19 && npm run verify:monitoring && npm run verify:monitoring && npm run verify:epoch20 && npm run verify:epoch21 && npm run verify:epoch22 && npm run verify:epoch23 && npm run verify:epoch24 && npm run verify:epoch25 && npm run verify:release-governor && npm run verify:release-governor && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt",
++    "verify:wall": "npm ci && npm run verify:specs && npm run verify:paper && npm run verify:paper && npm run verify:e2 && npm run verify:e2 && npm run verify:e2:multi && npm run verify:phase2 && npm run verify:integration && npm run verify:epoch17 && npm run verify:epoch18 && npm run verify:epoch19 && npm run verify:monitoring && npm run verify:monitoring && npm run verify:epoch20 && npm run verify:epoch21 && npm run verify:epoch22 && npm run verify:epoch23 && npm run verify:epoch24 && npm run verify:epoch25 && npm run verify:epoch26 && npm run verify:epoch26 && npm run verify:release-governor && npm run verify:release-governor && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt",
+     "verify:epoch22": "node scripts/verify/epoch22_ai_validation_harness.mjs",
+     "verify:epoch23": "node scripts/verify/epoch23_signal_intent_contract_check.mjs",
+     "verify:epoch24": "node scripts/verify/epoch24_walkforward_reality_gap_check.mjs",
+diff --git a/specs/epochs/EPOCH-26.md b/specs/epochs/EPOCH-26.md
+index 506cd63..fbaa03a 100644
+--- a/specs/epochs/EPOCH-26.md
++++ b/specs/epochs/EPOCH-26.md
+@@ -1,63 +1,82 @@
+-# EPOCH-26
++# EPOCH-26 — Micro-Live Governor Rehearsal
+ 
+ ## REALITY SNAPSHOT
+-- Current baseline already exposes offline verification scripts through npm gates.
+-- Existing modules in core/scripts are reused; unknown contract gaps are marked "Requires verification".
+-- Evidence path target for this planning cycle: `reports/evidence/EPOCH-BOOT.AUTOPILOT/`.
++- Governance stack exists (`GovernanceEngine`, `ModeAwareExecutor`) and already enforces mode transitions.
++- EPOCH-26 introduces a deterministic rehearsal gate to validate approval/FSM safety before any real live path.
++- Canonical evidence target for this epoch: `reports/evidence/EPOCH-26/`.
+ 
+ ## GOALS / NON-GOALS
+ ### Goals
+-- Define micro-live governor flow with approvals and emergency rollback drills.
+-- Maintain extreme safety posture; no live execution by default.
++- Prove DRY_RUN -> LIVE_TESTNET transition control via explicit governance prerequisites.
++- Prove kill-switch and rollback behavior in rehearsal mode.
++- Keep gate offline-first and deterministic.
+ 
+ ### Non-goals
+-- No uncontrolled refactors unrelated to the epoch contract.
+-- No default-on network verification path.
++- No default network dependency.
++- No real order placement/live production activation.
++- No unrelated refactors.
+ 
+ ## CONSTRAINTS
+ - Offline-first by default; network checks must be explicit opt-in.
+-- Determinism via seed discipline (`SEED=12345` default).
+-- Run-dir discipline through `reports/runs/<gate>/<seed>/<repeat>/<run_id>/`.
+-- No live trading activation without explicit approvals.
++- Deterministic execution (fixed timestamps/inputs where possible).
++- Baseline invariants remain mandatory: `verify:e2`, `verify:paper` (inside `verify:core`).
++- Live production transition from DRY_RUN must stay blocked by FSM.
+ 
+ ## DESIGN (contracts + interfaces + invariants)
+-- Primary contracts: `ExecutionAdapter`, `EventLog`, `RunContext`, `RiskGuard`, `GovernanceFSM`, `ReleaseGovernor`.
+-- Invariant: baseline gates (`verify:e2`, `verify:paper`) remain passing.
+-- Invariant: epoch gate remains reproducible across anti-flake reruns.
+-- Unknowns in adapter compatibility are marked: Requires verification.
+-
+-## PATCH PLAN (file list, minimal diffs policy)
+-- Update only epoch-specific modules/gates and relevant docs.
+-- Keep diffs minimal and evidence-backed.
+-- Preserve backward compatibility for existing npm gate entry points.
+-
+-## VERIFY (gates, commands, expected outputs, anti-flake rules)
+-- Run baseline wall gates plus epoch-specific gate.
+-- Repeat critical gates (anti-flake) where defined.
+-- Fail on schema mismatch, checksum mismatch, or drift.
+-
+-## EVIDENCE REQUIREMENTS (paths, logs, manifests)
+-- Evidence directory: `reports/evidence/EPOCH-26/` (or boot evidence for planning cycle).
+-- Required: gate logs, `DIFF.patch`, checksum manifests, `SUMMARY.md`, `VERDICT.md`.
+-- Export hash references required for release-facing epochs.
+-
+-## STOP RULES (PASS/FAIL criteria)
+-- PASS only if required gates pass and evidence is complete.
+-- FAIL/BLOCKED if any critical gate/checksum fails or required evidence is missing.
+-
+-## RISK REGISTER (incl. meta-risks)
+-- Functional risk: hidden coupling between epoch contracts.
+-- Meta-risks: flaky tests, hidden state, clean-clone drift, non-deterministic timestamps.
++- Contracts used: `GovernanceEngine`, `GOV_MODES`, `ModeAwareExecutor`, `EventLog`.
++- Rehearsal invariants:
++  1) default mode is `DRY_RUN`;
++  2) no-approval LIVE_TESTNET transition is blocked;
++  3) scoped approval artifact validates;
++  4) approved transition to LIVE_TESTNET is allowed;
++  5) kill-switch blocks execution;
++  6) emergency rollback to DRY_RUN is allowed;
++  7) DRY_RUN -> LIVE_PRODUCTION is blocked;
++  8) allowed + blocked governance events are emitted.
++
++## PATCH PLAN
++- Add/maintain gate script: `scripts/verify/epoch26_micro_live_governor_check.mjs`.
++- Expose npm entrypoint: `verify:epoch26`.
++- Keep change-set minimal and evidence-backed.
++
++## VERIFY (gates + anti-flake)
++- `npm run verify:epoch26` (run #1)
++- `npm run verify:epoch26` (run #2)
++- Mandatory baseline:
++  - `npm ci`
++  - `npm run verify:core`
++  - `npm run verify:phase2`
++  - `npm run verify:integration`
++
++## EVIDENCE REQUIREMENTS
++- `reports/evidence/EPOCH-26/PREFLIGHT.md`
++- `reports/evidence/EPOCH-26/INVENTORY.txt`
++- `reports/evidence/EPOCH-26/GATE_PLAN.md`
++- `reports/evidence/EPOCH-26/ASSUMPTIONS.md`
++- `reports/evidence/EPOCH-26/gates/*.log`
++- `reports/evidence/EPOCH-26/DIFF.patch`
++- `reports/evidence/EPOCH-26/SHA256SUMS.SOURCE.txt`
++- `reports/evidence/EPOCH-26/SHA256SUMS.EVIDENCE.txt`
++- `reports/evidence/EPOCH-26/SUMMARY.md`
++
++## STOP RULES
++- PASS only if all epoch + mandatory baseline gates pass and both checksum manifests validate.
++- FAIL/BLOCKED if any gate/checksum fails or evidence bundle is incomplete.
++
++## RISK REGISTER
++- Hidden coupling in governance transition guards.
++- Flake risk in event emission assertions.
++- Clean-clone drift if manifests are not regenerated after patch.
+ 
+ ## ROLLBACK PLAN
+-- Revert epoch commits.
+-- Re-run baseline gates to confirm recovery.
++- Revert epoch-specific commit(s).
++- Re-run `npm run verify:core`, `npm run verify:phase2`, `npm run verify:integration`.
+ 
+-## ACCEPTANCE CRITERIA (checkbox list)
+-- [ ] Required contracts implemented/verified.
+-- [ ] Required gates pass with anti-flake policy.
+-- [ ] Evidence folder complete with manifest validation.
++## ACCEPTANCE CRITERIA
++- [x] EPOCH-26 rehearsal gate implemented and script-wired.
++- [x] Anti-flake rerun passes.
++- [x] Mandatory baseline gates pass.
++- [x] Evidence + manifests generated and checksum-validated.
+ 
+-## NOTES (compatibility concerns)
+-- Keep npm scripts stable for downstream automation.
+-- Flag unresolved assumptions as Requires verification.
++## NOTES
++- This epoch is rehearsal-only and does not authorize production trading.
+diff --git a/specs/epochs/INDEX.md b/specs/epochs/INDEX.md
+index a9b2b88..5def226 100644
+--- a/specs/epochs/INDEX.md
++++ b/specs/epochs/INDEX.md
+@@ -32,7 +32,7 @@ No-skip policy: parallel implementation is allowed only when dependency contract
+ - EPOCH-23: `verify:epoch23`, `verify:integration` signal-to-intent contract checks
+ - EPOCH-24: `verify:epoch24`, `verify:phase2` walk-forward + drift budget checks
+ - EPOCH-25: `verify:epoch25` testnet campaign profiling (network opt-in via `ENABLE_NETWORK_TESTS=1`)
+-- EPOCH-26: micro-live governor rehearsals (opt-in only, extreme safety)
++- EPOCH-26: `verify:epoch26` micro-live governor rehearsals (approval/FSM/kill-switch/rollback, offline)
+ 
+ ## Epoch spec files
+ - `specs/epochs/EPOCH-17.md`

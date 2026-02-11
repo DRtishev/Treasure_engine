@@ -1,0 +1,2338 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:wall
+> npm ci && npm run verify:specs && npm run verify:paper && npm run verify:paper && npm run verify:e2 && npm run verify:e2 && npm run verify:e2:multi && npm run verify:phase2 && npm run verify:integration && npm run verify:epoch17 && npm run verify:epoch18 && npm run verify:epoch19 && npm run verify:monitoring && npm run verify:monitoring && npm run verify:epoch20 && npm run verify:epoch21 && npm run verify:epoch22 && npm run verify:epoch23 && npm run verify:release-governor && npm run verify:release-governor && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.SOURCE.txt && sha256sum -c reports/evidence/EPOCH-BOOT.AUTOPILOT/SHA256SUMS.EVIDENCE.txt
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+added 44 packages, and audited 45 packages in 1s
+
+11 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:specs
+> node scripts/verify/specs_check.mjs
+
+verify:specs PASSED
+Validated 14 required files in /workspace/Treasure_engine
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:paper
+> node scripts/verify/run_with_context.mjs --gate paper --seed ${SEED:-12345} --repeat default -- npm run verify:paper:raw
+
+[run_with_context] gate=paper seed=12345 repeat=default_4
+[run_with_context] run_id=10834bfc54f60232
+[run_with_context] run_dir=reports/runs/paper/12345/default_4/10834bfc54f60232
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:paper:raw
+> node scripts/verify/paper_e2e.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PAPER TRADING E2E VERIFICATION (EPOCH-04)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Testing:
+  • PaperAdapter integration
+  • EventLog JSONL format
+  • Risk event logging
+  • Execution event logging
+  • System event logging
+  • Deterministic execution
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━ PREREQUISITES ━━━
+✓ Dataset exists: dataset/BTCUSDT_5m_100bars.json
+✓ SSOT exists: spec/ssot.json
+✓ Hacks spec exists: spec/hacks.json
+
+━━━ PAPER SIMULATION ━━━
+Run ID: paper_test_f5b39056ca22a7fd
+Run Dir: reports/runs/paper/12345/default_4/10834bfc54f60232
+Running simulation...
+✓ Simulation completed
+✓ Aggregate metrics computed
+✓ Run ID matches
+✓ PaperAdapter used
+
+━━━ EVENT LOG VERIFICATION ━━━
+✓ Event log created: reports/runs/paper/12345/default_4/10834bfc54f60232/run_paper_test_f5b39056ca22a7fd.jsonl
+✓ Event log is valid JSONL
+  Total events: 28
+  SYS events: 26
+  EXEC events: 1
+  RISK events: 1
+✓ Event log not empty
+✓ SYS events logged (start/stop)
+✓ EXEC events logged (>0)
+✓ RISK events logged (>0)
+
+━━━ EVENT CONTENT VERIFICATION ━━━
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Found engine_start event
+✓ Found engine_stop event
+✓ Found SYS events
+✓ Found RISK events
+
+━━━ DETERMINISM VERIFICATION ━━━
+✓ Dataset SHA256 recorded
+✓ Timestamp recorded
+✓ Event log path recorded
+
+━━━ ADAPTER STATISTICS ━━━
+  optimistic/HACK_A2:
+    Adapter: PaperAdapter
+    Orders placed: 0
+    Orders filled: 0
+    Orders canceled: 0
+    Fill rate: 0.0%
+✓ Correct adapter used
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 161
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ All paper trading tests passed
+
+🎉 EPOCH-04 VERIFICATION: PASS
+
+📦 DELIVERABLES:
+   • Event log: reports/runs/paper/12345/default_4/10834bfc54f60232/run_paper_test_f5b39056ca22a7fd.jsonl
+   • Adapter: PaperAdapter
+   • Integration: Risk + Execution + EventLog
+
+✅ READY FOR:
+   • Phase 2.5: Live Adapter skeleton
+   • Production deployment preparation
+   • Risk monitoring dashboard
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:paper
+> node scripts/verify/run_with_context.mjs --gate paper --seed ${SEED:-12345} --repeat default -- npm run verify:paper:raw
+
+[run_with_context] gate=paper seed=12345 repeat=default_5
+[run_with_context] run_id=10834bfc54f60232
+[run_with_context] run_dir=reports/runs/paper/12345/default_5/10834bfc54f60232
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:paper:raw
+> node scripts/verify/paper_e2e.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PAPER TRADING E2E VERIFICATION (EPOCH-04)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Testing:
+  • PaperAdapter integration
+  • EventLog JSONL format
+  • Risk event logging
+  • Execution event logging
+  • System event logging
+  • Deterministic execution
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━ PREREQUISITES ━━━
+✓ Dataset exists: dataset/BTCUSDT_5m_100bars.json
+✓ SSOT exists: spec/ssot.json
+✓ Hacks spec exists: spec/hacks.json
+
+━━━ PAPER SIMULATION ━━━
+Run ID: paper_test_f5b39056ca22a7fd
+Run Dir: reports/runs/paper/12345/default_5/10834bfc54f60232
+Running simulation...
+✓ Simulation completed
+✓ Aggregate metrics computed
+✓ Run ID matches
+✓ PaperAdapter used
+
+━━━ EVENT LOG VERIFICATION ━━━
+✓ Event log created: reports/runs/paper/12345/default_5/10834bfc54f60232/run_paper_test_f5b39056ca22a7fd.jsonl
+✓ Event log is valid JSONL
+  Total events: 28
+  SYS events: 26
+  EXEC events: 1
+  RISK events: 1
+✓ Event log not empty
+✓ SYS events logged (start/stop)
+✓ EXEC events logged (>0)
+✓ RISK events logged (>0)
+
+━━━ EVENT CONTENT VERIFICATION ━━━
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Event has ts_ms
+✓ Event has run_id
+✓ Event has valid category
+✓ Event has event name
+✓ Event has payload object
+✓ Found engine_start event
+✓ Found engine_stop event
+✓ Found SYS events
+✓ Found RISK events
+
+━━━ DETERMINISM VERIFICATION ━━━
+✓ Dataset SHA256 recorded
+✓ Timestamp recorded
+✓ Event log path recorded
+
+━━━ ADAPTER STATISTICS ━━━
+  optimistic/HACK_A2:
+    Adapter: PaperAdapter
+    Orders placed: 0
+    Orders filled: 0
+    Orders canceled: 0
+    Fill rate: 0.0%
+✓ Correct adapter used
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 161
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ All paper trading tests passed
+
+🎉 EPOCH-04 VERIFICATION: PASS
+
+📦 DELIVERABLES:
+   • Event log: reports/runs/paper/12345/default_5/10834bfc54f60232/run_paper_test_f5b39056ca22a7fd.jsonl
+   • Adapter: PaperAdapter
+   • Integration: Risk + Execution + EventLog
+
+✅ READY FOR:
+   • Phase 2.5: Live Adapter skeleton
+   • Production deployment preparation
+   • Risk monitoring dashboard
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:e2
+> node scripts/verify/run_with_context.mjs --gate e2 --seed ${SEED:-12345} --repeat default -- npm run verify:e2:raw
+
+[run_with_context] gate=e2 seed=12345 repeat=default_6
+[run_with_context] run_id=ecb7712de5f0ccb8
+[run_with_context] run_dir=reports/runs/e2/12345/default_6/ecb7712de5f0ccb8
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:e2:raw
+> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:hacks
+> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
+
+[verify:hacks] STUB PASS
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:truth
+> bash scripts/verify/truth.sh
+
+[verify:truth] STUB PASS
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 sim:all
+> npm run sim:data && node core/sim/engine.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 sim:data
+> node core/sim/bar_generator.mjs
+
+[bar_generator] Generated data/synthetic_1000bars_5m.json
+[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
+[engine] Running HACK_A2 in optimistic mode...
+[engine] Running HACK_A2 in base mode...
+[engine] Running HACK_A2 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a2_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[engine] Running HACK_A3 in optimistic mode...
+[engine] Running HACK_A3 in base mode...
+[engine] Running HACK_A3 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a3_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[engine] Running HACK_B1 in optimistic mode...
+[engine] Running HACK_B1 in base mode...
+[engine] Running HACK_B1 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b1_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[engine] Running HACK_B3 in optimistic mode...
+[engine] Running HACK_B3 in base mode...
+[engine] Running HACK_B3 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b3_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[engine] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/eqs_report.json
+[engine] E2.1 PENALIZED METRICS simulation complete!
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:sim-schema
+> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
+
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a2_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a3_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b1_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b3_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[schema] SUMMARY: pass 12/12
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:eqs-schema
+> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
+
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/eqs_report.json
+[schema] SUMMARY: pass 1/1
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 court:v1
+> node core/court/court_v1.mjs
+
+[court] Starting Court v1 adjudication (PENALIZED METRICS)...
+[court] Judging HACK_A2...
+[court] Judging HACK_A3...
+[court] Judging HACK_B1...
+[court] Judging HACK_B3...
+[court] Generated: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/court_report.json
+[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
+[schema] PASS: reports/runs/e2/12345/default_6/ecb7712de5f0ccb8/court_report.json
+[schema] SUMMARY: pass 1/1
+WROTE: ui/panel.html
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:e2
+> node scripts/verify/run_with_context.mjs --gate e2 --seed ${SEED:-12345} --repeat default -- npm run verify:e2:raw
+
+[run_with_context] gate=e2 seed=12345 repeat=default_7
+[run_with_context] run_id=ecb7712de5f0ccb8
+[run_with_context] run_dir=reports/runs/e2/12345/default_7/ecb7712de5f0ccb8
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:e2:raw
+> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:hacks
+> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
+
+[verify:hacks] STUB PASS
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:truth
+> bash scripts/verify/truth.sh
+
+[verify:truth] STUB PASS
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 sim:all
+> npm run sim:data && node core/sim/engine.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 sim:data
+> node core/sim/bar_generator.mjs
+
+[bar_generator] Generated data/synthetic_1000bars_5m.json
+[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
+[engine] Running HACK_A2 in optimistic mode...
+[engine] Running HACK_A2 in base mode...
+[engine] Running HACK_A2 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a2_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[engine] Running HACK_A3 in optimistic mode...
+[engine] Running HACK_A3 in base mode...
+[engine] Running HACK_A3 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a3_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[engine] Running HACK_B1 in optimistic mode...
+[engine] Running HACK_B1 in base mode...
+[engine] Running HACK_B1 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b1_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[engine] Running HACK_B3 in optimistic mode...
+[engine] Running HACK_B3 in base mode...
+[engine] Running HACK_B3 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b3_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[engine] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/eqs_report.json
+[engine] E2.1 PENALIZED METRICS simulation complete!
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:sim-schema
+> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
+
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a2_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a3_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b1_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b3_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[schema] SUMMARY: pass 12/12
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:eqs-schema
+> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
+
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/eqs_report.json
+[schema] SUMMARY: pass 1/1
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 court:v1
+> node core/court/court_v1.mjs
+
+[court] Starting Court v1 adjudication (PENALIZED METRICS)...
+[court] Judging HACK_A2...
+[court] Judging HACK_A3...
+[court] Judging HACK_B1...
+[court] Judging HACK_B3...
+[court] Generated: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/court_report.json
+[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
+[schema] PASS: reports/runs/e2/12345/default_7/ecb7712de5f0ccb8/court_report.json
+[schema] SUMMARY: pass 1/1
+WROTE: ui/panel.html
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:e2:multi
+> node scripts/verify/e2_multi_seed.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+E2 MULTI-SEED STABILITY GATE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[run_with_context] gate=e2 seed=12345 repeat=multi_r1_3
+[run_with_context] run_id=ecb7712de5f0ccb8
+[run_with_context] run_dir=reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8
+
+> treasure-engine@1.0.0 verify:e2:raw
+> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
+
+
+> treasure-engine@1.0.0 verify:hacks
+> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
+
+[verify:hacks] STUB PASS
+
+> treasure-engine@1.0.0 verify:truth
+> bash scripts/verify/truth.sh
+
+[verify:truth] STUB PASS
+
+> treasure-engine@1.0.0 sim:all
+> npm run sim:data && node core/sim/engine.mjs
+
+
+> treasure-engine@1.0.0 sim:data
+> node core/sim/bar_generator.mjs
+
+[bar_generator] Generated data/synthetic_1000bars_5m.json
+[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
+[engine] Running HACK_A2 in optimistic mode...
+[engine] Running HACK_A2 in base mode...
+[engine] Running HACK_A2 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a2_base_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[engine] Running HACK_A3 in optimistic mode...
+[engine] Running HACK_A3 in base mode...
+[engine] Running HACK_A3 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a3_base_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[engine] Running HACK_B1 in optimistic mode...
+[engine] Running HACK_B1 in base mode...
+[engine] Running HACK_B1 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b1_base_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[engine] Running HACK_B3 in optimistic mode...
+[engine] Running HACK_B3 in base mode...
+[engine] Running HACK_B3 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b3_base_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/eqs_report.json
+[engine] E2.1 PENALIZED METRICS simulation complete!
+
+> treasure-engine@1.0.0 verify:sim-schema
+> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
+
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a2_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a3_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b1_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b3_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[schema] SUMMARY: pass 12/12
+
+> treasure-engine@1.0.0 verify:eqs-schema
+> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
+
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/eqs_report.json
+[schema] SUMMARY: pass 1/1
+
+> treasure-engine@1.0.0 court:v1
+> node core/court/court_v1.mjs
+
+[court] Starting Court v1 adjudication (PENALIZED METRICS)...
+[court] Judging HACK_A2...
+[court] Judging HACK_A3...
+[court] Judging HACK_B1...
+[court] Judging HACK_B3...
+[court] Generated: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/court_report.json
+[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/court_report.json
+[schema] SUMMARY: pass 1/1
+WROTE: ui/panel.html
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a2_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a3_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b1_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b3_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[schema] SUMMARY: pass 12/12
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/eqs_report.json
+[schema] SUMMARY: pass 1/1
+[schema] PASS: reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8/court_report.json
+[schema] SUMMARY: pass 1/1
+✓ seed=12345 repeat=multi_r1 validated @ reports/runs/e2/12345/multi_r1_3/ecb7712de5f0ccb8
+[run_with_context] gate=e2 seed=12345 repeat=multi_r2_3
+[run_with_context] run_id=ecb7712de5f0ccb8
+[run_with_context] run_dir=reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8
+
+> treasure-engine@1.0.0 verify:e2:raw
+> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
+
+
+> treasure-engine@1.0.0 verify:hacks
+> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
+
+[verify:hacks] STUB PASS
+
+> treasure-engine@1.0.0 verify:truth
+> bash scripts/verify/truth.sh
+
+[verify:truth] STUB PASS
+
+> treasure-engine@1.0.0 sim:all
+> npm run sim:data && node core/sim/engine.mjs
+
+
+> treasure-engine@1.0.0 sim:data
+> node core/sim/bar_generator.mjs
+
+[bar_generator] Generated data/synthetic_1000bars_5m.json
+[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
+[engine] Running HACK_A2 in optimistic mode...
+[engine] Running HACK_A2 in base mode...
+[engine] Running HACK_A2 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a2_base_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[engine] Running HACK_A3 in optimistic mode...
+[engine] Running HACK_A3 in base mode...
+[engine] Running HACK_A3 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a3_base_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[engine] Running HACK_B1 in optimistic mode...
+[engine] Running HACK_B1 in base mode...
+[engine] Running HACK_B1 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b1_base_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[engine] Running HACK_B3 in optimistic mode...
+[engine] Running HACK_B3 in base mode...
+[engine] Running HACK_B3 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b3_base_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[engine] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/eqs_report.json
+[engine] E2.1 PENALIZED METRICS simulation complete!
+
+> treasure-engine@1.0.0 verify:sim-schema
+> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
+
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a2_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a3_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b1_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b3_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[schema] SUMMARY: pass 12/12
+
+> treasure-engine@1.0.0 verify:eqs-schema
+> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
+
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/eqs_report.json
+[schema] SUMMARY: pass 1/1
+
+> treasure-engine@1.0.0 court:v1
+> node core/court/court_v1.mjs
+
+[court] Starting Court v1 adjudication (PENALIZED METRICS)...
+[court] Judging HACK_A2...
+[court] Judging HACK_A3...
+[court] Judging HACK_B1...
+[court] Judging HACK_B3...
+[court] Generated: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/court_report.json
+[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/court_report.json
+[schema] SUMMARY: pass 1/1
+WROTE: ui/panel.html
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a2_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a3_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b1_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b3_base_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[schema] SUMMARY: pass 12/12
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/eqs_report.json
+[schema] SUMMARY: pass 1/1
+[schema] PASS: reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8/court_report.json
+[schema] SUMMARY: pass 1/1
+✓ seed=12345 repeat=multi_r2 validated @ reports/runs/e2/12345/multi_r2_3/ecb7712de5f0ccb8
+✓ seed=12345 repeat comparison stable (no structural drift)
+[run_with_context] gate=e2 seed=23456 repeat=multi_r1_3
+[run_with_context] run_id=44a630287f05571a
+[run_with_context] run_dir=reports/runs/e2/23456/multi_r1_3/44a630287f05571a
+
+> treasure-engine@1.0.0 verify:e2:raw
+> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
+
+
+> treasure-engine@1.0.0 verify:hacks
+> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
+
+[verify:hacks] STUB PASS
+
+> treasure-engine@1.0.0 verify:truth
+> bash scripts/verify/truth.sh
+
+[verify:truth] STUB PASS
+
+> treasure-engine@1.0.0 sim:all
+> npm run sim:data && node core/sim/engine.mjs
+
+
+> treasure-engine@1.0.0 sim:data
+> node core/sim/bar_generator.mjs
+
+[bar_generator] Generated data/synthetic_1000bars_5m.json
+[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
+[engine] Running HACK_A2 in optimistic mode...
+[engine] Running HACK_A2 in base mode...
+[engine] Running HACK_A2 in hostile mode...
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a2_optimistic_report.json
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a2_base_report.json
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a2_hostile_report.json
+[engine] Running HACK_A3 in optimistic mode...
+[engine] Running HACK_A3 in base mode...
+[engine] Running HACK_A3 in hostile mode...
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a3_optimistic_report.json
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a3_base_report.json
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a3_hostile_report.json
+[engine] Running HACK_B1 in optimistic mode...
+[engine] Running HACK_B1 in base mode...
+[engine] Running HACK_B1 in hostile mode...
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b1_optimistic_report.json
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b1_base_report.json
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b1_hostile_report.json
+[engine] Running HACK_B3 in optimistic mode...
+[engine] Running HACK_B3 in base mode...
+[engine] Running HACK_B3 in hostile mode...
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b3_optimistic_report.json
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b3_base_report.json
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b3_hostile_report.json
+[engine] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/eqs_report.json
+[engine] E2.1 PENALIZED METRICS simulation complete!
+
+> treasure-engine@1.0.0 verify:sim-schema
+> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
+
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a2_base_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a2_hostile_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a2_optimistic_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a3_base_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a3_hostile_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a3_optimistic_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b1_base_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b1_hostile_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b1_optimistic_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b3_base_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b3_hostile_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b3_optimistic_report.json
+[schema] SUMMARY: pass 12/12
+
+> treasure-engine@1.0.0 verify:eqs-schema
+> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
+
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/eqs_report.json
+[schema] SUMMARY: pass 1/1
+
+> treasure-engine@1.0.0 court:v1
+> node core/court/court_v1.mjs
+
+[court] Starting Court v1 adjudication (PENALIZED METRICS)...
+[court] Judging HACK_A2...
+[court] Judging HACK_A3...
+[court] Judging HACK_B1...
+[court] Judging HACK_B3...
+[court] Generated: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/court_report.json
+[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/court_report.json
+[schema] SUMMARY: pass 1/1
+WROTE: ui/panel.html
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a2_base_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a2_hostile_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a2_optimistic_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a3_base_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a3_hostile_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_a3_optimistic_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b1_base_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b1_hostile_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b1_optimistic_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b3_base_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b3_hostile_report.json
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/hack_b3_optimistic_report.json
+[schema] SUMMARY: pass 12/12
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/eqs_report.json
+[schema] SUMMARY: pass 1/1
+[schema] PASS: reports/runs/e2/23456/multi_r1_3/44a630287f05571a/court_report.json
+[schema] SUMMARY: pass 1/1
+✓ seed=23456 repeat=multi_r1 validated @ reports/runs/e2/23456/multi_r1_3/44a630287f05571a
+[run_with_context] gate=e2 seed=34567 repeat=multi_r1_3
+[run_with_context] run_id=58e729ccc40a7cdf
+[run_with_context] run_dir=reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf
+
+> treasure-engine@1.0.0 verify:e2:raw
+> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
+
+
+> treasure-engine@1.0.0 verify:hacks
+> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
+
+[verify:hacks] STUB PASS
+
+> treasure-engine@1.0.0 verify:truth
+> bash scripts/verify/truth.sh
+
+[verify:truth] STUB PASS
+
+> treasure-engine@1.0.0 sim:all
+> npm run sim:data && node core/sim/engine.mjs
+
+
+> treasure-engine@1.0.0 sim:data
+> node core/sim/bar_generator.mjs
+
+[bar_generator] Generated data/synthetic_1000bars_5m.json
+[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
+[engine] Running HACK_A2 in optimistic mode...
+[engine] Running HACK_A2 in base mode...
+[engine] Running HACK_A2 in hostile mode...
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a2_optimistic_report.json
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a2_base_report.json
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a2_hostile_report.json
+[engine] Running HACK_A3 in optimistic mode...
+[engine] Running HACK_A3 in base mode...
+[engine] Running HACK_A3 in hostile mode...
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a3_optimistic_report.json
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a3_base_report.json
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a3_hostile_report.json
+[engine] Running HACK_B1 in optimistic mode...
+[engine] Running HACK_B1 in base mode...
+[engine] Running HACK_B1 in hostile mode...
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b1_optimistic_report.json
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b1_base_report.json
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b1_hostile_report.json
+[engine] Running HACK_B3 in optimistic mode...
+[engine] Running HACK_B3 in base mode...
+[engine] Running HACK_B3 in hostile mode...
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b3_optimistic_report.json
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b3_base_report.json
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b3_hostile_report.json
+[engine] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/eqs_report.json
+[engine] E2.1 PENALIZED METRICS simulation complete!
+
+> treasure-engine@1.0.0 verify:sim-schema
+> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
+
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a2_base_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a2_hostile_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a2_optimistic_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a3_base_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a3_hostile_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a3_optimistic_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b1_base_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b1_hostile_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b1_optimistic_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b3_base_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b3_hostile_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b3_optimistic_report.json
+[schema] SUMMARY: pass 12/12
+
+> treasure-engine@1.0.0 verify:eqs-schema
+> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
+
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/eqs_report.json
+[schema] SUMMARY: pass 1/1
+
+> treasure-engine@1.0.0 court:v1
+> node core/court/court_v1.mjs
+
+[court] Starting Court v1 adjudication (PENALIZED METRICS)...
+[court] Judging HACK_A2...
+[court] Judging HACK_A3...
+[court] Judging HACK_B1...
+[court] Judging HACK_B3...
+[court] Generated: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/court_report.json
+[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/court_report.json
+[schema] SUMMARY: pass 1/1
+WROTE: ui/panel.html
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a2_base_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a2_hostile_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a2_optimistic_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a3_base_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a3_hostile_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_a3_optimistic_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b1_base_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b1_hostile_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b1_optimistic_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b3_base_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b3_hostile_report.json
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/hack_b3_optimistic_report.json
+[schema] SUMMARY: pass 12/12
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/eqs_report.json
+[schema] SUMMARY: pass 1/1
+[schema] PASS: reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf/court_report.json
+[schema] SUMMARY: pass 1/1
+✓ seed=34567 repeat=multi_r1 validated @ reports/runs/e2/34567/multi_r1_3/58e729ccc40a7cdf
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: seeds=3, repeats=2 for seed 12345
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:phase2
+> node scripts/verify/phase2_verify.mjs
+
+🔥 PHASE 2.2 VERIFICATION GATE
+
+
+=== Phase 2 Smoke Tests ===
+=== PHASE 2 SMOKE TESTS ===
+
+🔍 Quality Filter Tests
+✅ QualityFilter: High quality bar passes
+✅ QualityFilter: Low quality bar fails
+✅ QualityFilter: Wide spread fails
+✅ QualityFilter: Low volume fails
+✅ QualityFilter: aggregateStats works
+
+⚡ Execution Policy Tests
+✅ ExecutionPolicy: High competition → shorter TTL, higher tip
+✅ ExecutionPolicy: Low competition → longer TTL, lower tip
+✅ ExecutionPolicy: validate() rejects invalid params
+✅ ExecutionPolicy: validate() accepts valid params
+
+🛡️  Risk Governor Tests (CRITICAL)
+✅ RiskGovernor: Blocks oversized position
+✅ RiskGovernor: Blocks when daily loss cap exceeded
+✅ RiskGovernor: Blocks when drawdown cap exceeded
+✅ RiskGovernor: KILL SWITCH activates at threshold
+✅ RiskGovernor: Passes valid trade
+✅ RiskGovernor: update() tracks equity and drawdown
+✅ RiskGovernor: FAIL-SAFE blocks on invalid state
+✅ RiskGovernor: getDashboard() returns metrics
+
+============================================================
+✅ PASSED: 17
+❌ FAILED: 0
+============================================================
+
+✅ PHASE 2 SMOKE TESTS PASSED
+✅ Phase 2 Smoke Tests PASSED
+
+=== E2 End-to-End Tests ===
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:e2
+> node scripts/verify/run_with_context.mjs --gate e2 --seed ${SEED:-12345} --repeat default -- npm run verify:e2:raw
+
+[run_with_context] gate=e2 seed=12345 repeat=default_8
+[run_with_context] run_id=ecb7712de5f0ccb8
+[run_with_context] run_dir=reports/runs/e2/12345/default_8/ecb7712de5f0ccb8
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:e2:raw
+> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:hacks
+> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
+
+[verify:hacks] STUB PASS
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:truth
+> bash scripts/verify/truth.sh
+
+[verify:truth] STUB PASS
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 sim:all
+> npm run sim:data && node core/sim/engine.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 sim:data
+> node core/sim/bar_generator.mjs
+
+[bar_generator] Generated data/synthetic_1000bars_5m.json
+[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
+[engine] Running HACK_A2 in optimistic mode...
+[engine] Running HACK_A2 in base mode...
+[engine] Running HACK_A2 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a2_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[engine] Running HACK_A3 in optimistic mode...
+[engine] Running HACK_A3 in base mode...
+[engine] Running HACK_A3 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a3_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[engine] Running HACK_B1 in optimistic mode...
+[engine] Running HACK_B1 in base mode...
+[engine] Running HACK_B1 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b1_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[engine] Running HACK_B3 in optimistic mode...
+[engine] Running HACK_B3 in base mode...
+[engine] Running HACK_B3 in hostile mode...
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b3_base_report.json
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[engine] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/eqs_report.json
+[engine] E2.1 PENALIZED METRICS simulation complete!
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:sim-schema
+> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
+
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a2_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a2_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a3_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b1_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b1_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b3_base_report.json
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b3_hostile_report.json
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
+[schema] SUMMARY: pass 12/12
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:eqs-schema
+> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
+
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/eqs_report.json
+[schema] SUMMARY: pass 1/1
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 court:v1
+> node core/court/court_v1.mjs
+
+[court] Starting Court v1 adjudication (PENALIZED METRICS)...
+[court] Judging HACK_A2...
+[court] Judging HACK_A3...
+[court] Judging HACK_B1...
+[court] Judging HACK_B3...
+[court] Generated: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/court_report.json
+[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
+[schema] PASS: reports/runs/e2/12345/default_8/ecb7712de5f0ccb8/court_report.json
+[schema] SUMMARY: pass 1/1
+WROTE: ui/panel.html
+✅ E2 End-to-End Tests PASSED
+
+=== Report Structure Validation ===
+✅ Found section: execution_policy
+✅ Found section: risk_governor
+✅ Found section: quality_filter
+✅ execution_policy structure valid
+✅ risk_governor structure valid
+
+=== Court Reality Gap Cliff ===
+✅ reality_gap_cliff found in HACK_A2: 0.85
+
+=== Determinism Check ===
+✅ No direct Date.now() in simulation paths
+
+============================================================
+✅ PHASE 2.2 VERIFICATION PASSED
+============================================================
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:integration
+> node scripts/verify/master_integration_e2e.mjs
+
+
+╔════════════════════════════════════════════════════════════╗
+║  EPOCH-16: MASTER INTEGRATION TEST                       ║
+╚════════════════════════════════════════════════════════════╝
+
+━━━ COMPONENT INITIALIZATION ━━━
+
+[LiveAdapterDryRun] Loaded 3 fixtures
+  Adapter: LiveAdapterDryRun
+✓ Create LiveAdapterDryRun
+✓ Create ReconciliationEngine
+  Log path: logs/test_integration/run_master_integration_test.jsonl
+✓ Create EventLogV2
+  Run ID: master_integration_test
+  Seed: 1989247062
+✓ Create RunContext (deterministic)
+  Components integrated:
+    ✓ ExecutionAdapter
+    ✓ RunContext
+    ✓ EventLog
+    ✓ ReconciliationEngine
+✓ Create MasterExecutor
+
+━━━ EXECUTION TEST 1: SUCCESSFUL FLOW ━━━
+
+  Order ID: master_integration_test_HACK_MASTER_01_test_0_0
+  Success: true
+  Fills: 1
+✓ Execute BTC/USDT market buy intent
+  ✓ Execution successful
+✓ Verify execution success
+  ✓ Order ID valid
+✓ Verify order placed
+  Fill price: 50010
+  Fill qty: 0.001
+  Fill fee: 0.05001
+✓ Verify fills present
+  ✓ Reconciliation PASS
+  Mismatches: 0
+✓ Verify reconciliation ran
+  Latency breakdown:
+    Order: 0ms
+    Fill: 0ms
+    Reconciliation: 0ms
+    Total: 0ms
+  ℹ  Note: 0ms latency in deterministic mode (clock frozen)
+✓ Verify performance metrics
+
+━━━ EXECUTION TEST 2: PARTIAL FILL ━━━
+
+  Order ID: master_integration_test_HACK_MASTER_02_test_1_0
+  Success: true
+✓ Execute ETH/USDT limit sell intent
+  ✓ Partial fill handled correctly
+✓ Verify partial fill handling
+
+━━━ EVENT LOG VERIFICATION ━━━
+
+  ✓ Event log flushed
+✓ Flush event log
+  Events logged: 11
+  ✓ All expected event types present
+✓ Verify events logged
+  Categories: SYS, EXEC, RECON
+✓ Verify event categories
+  ✓ Sequences: 0..10
+✓ Verify monotonic sequences
+
+━━━ MASTER EXECUTOR STATISTICS ━━━
+
+  Intents created: 2
+  Orders placed: 2
+  Orders filled: 1
+  Reconciliations run: 2
+  Reconciliation failures: 0
+  Events logged: 11
+  Avg latency: 0.00ms
+✓ Get MasterExecutor statistics
+
+━━━ INTEGRATION REPORT ━━━
+
+  Report generated
+  Executions: 2
+  Success rate: 100%
+  Avg latency: 0.00ms
+✓ Generate integration report
+
+━━━ CLEANUP ━━━
+
+  ✓ MasterExecutor closed
+✓ Close MasterExecutor
+
+━━━ SUMMARY ━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 20
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 MASTER INTEGRATION TEST: PASS
+
+✅ INTEGRATION VERIFIED:
+
+   ✓ MasterExecutor operational
+   ✓ Full flow: Intent → Order → Fill → Reconcile → Event
+   ✓ All components integrated (Adapter, Context, EventLog, Reconciliation)
+   ✓ Performance metrics tracked
+   ✓ Event logging working
+   ✓ Statistics accurate
+
+📦 ARTIFACTS PRODUCED:
+
+   • reports/integration_report.json
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch17
+> node scripts/verify/safety_integrated_executor_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-17 SAFETY INTEGRATED EXECUTOR CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ invalid intent blocked by safety gate
+✓ blocked stage is safety
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ daily loss cap blocked by risk precheck
+✓ blocked stage is risk_precheck
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ valid intent executes successfully
+✓ execution returns order_id
+✓ route event logged
+✓ result event logged
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 8
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch18
+> npm run verify:strategy
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:strategy
+> node scripts/verify/strategy_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-18 STRATEGY LAYER CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ same-seed ranking is stable
+✓ rankings are produced
+✓ intent_id deterministic format
+✓ signal side normalized to BUY/SELL
+✓ notional preserved before allocation
+✓ per-intent cap enforced
+✓ portfolio cap enforced
+✓ prepared intents count matches signals
+✓ allocation attached to every intent
+✓ default mode remains DRY_RUN for strategy layer
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 10
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch19
+> npm run verify:governance
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:governance
+> node scripts/verify/governance_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-19 GOVERNANCE CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ default mode is DRY_RUN
+✓ LIVE_TESTNET blocked without governance approval
+✓ LIVE_TESTNET blocked without non-empty reason
+✓ approval workflow validates scoped approval artifact
+✓ LIVE_TESTNET allowed with governance/risk/safety ready
+✓ mode updated to LIVE_TESTNET
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ execution blocked when kill switch active
+✓ mode-aware executor allows execution in LIVE_TESTNET when conditions met
+✓ live intent audit event emitted
+✓ transition blocked when from_mode does not match engine state
+✓ LIVE_PRODUCTION blocked without manual confirmation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 11
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:monitoring
+> node scripts/verify/monitoring_perf_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-20 MONITORING/PERF CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ monitoring report deterministic under frozen clock
+✓ monitoring safety score is finite
+✓ monitoring reject ratio bounded [0,1]
+✓ performance report deterministic under frozen clock
+✓ performance report has no NaN/Inf metrics
+✓ monitoring/performance report passes schema
+WROTE: reports/monitoring_report.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 6
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:monitoring
+> node scripts/verify/monitoring_perf_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-20 MONITORING/PERF CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ monitoring report deterministic under frozen clock
+✓ monitoring safety score is finite
+✓ monitoring reject ratio bounded [0,1]
+✓ performance report deterministic under frozen clock
+✓ performance report has no NaN/Inf metrics
+✓ monitoring/performance report passes schema
+WROTE: reports/monitoring_report.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 6
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch20
+> npm run verify:monitoring
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:monitoring
+> node scripts/verify/monitoring_perf_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-20 MONITORING/PERF CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ monitoring report deterministic under frozen clock
+✓ monitoring safety score is finite
+✓ monitoring reject ratio bounded [0,1]
+✓ performance report deterministic under frozen clock
+✓ performance report has no NaN/Inf metrics
+✓ monitoring/performance report passes schema
+WROTE: reports/monitoring_report.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 6
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch21
+> npm run verify:release-governor
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:release-governor
+> node scripts/verify/release_governor_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-21 RELEASE GOVERNOR CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_governance_run1.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_governance_run2.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_e2_run1.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_e2_run2.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_paper_run1.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_paper_run2.log
+✓ required release artifact exists: reports/evidence/EPOCH-19/SHA256SUMS.SOURCE.txt
+✓ required release artifact exists: reports/evidence/EPOCH-19/SHA256SUMS.EVIDENCE.txt
+✓ required release artifact exists: reports/evidence/EPOCH-19/SHA256SUMS.EXPORT.txt
+✓ required release artifact exists: reports/evidence/EPOCH-19/VERDICT.md
+✓ required release artifact exists: FINAL_VALIDATED.zip
+✓ required release artifact exists: FINAL_VALIDATED.zip.sha256
+✓ FINAL_VALIDATED.zip checksum matches declared sha256
+✓ verdict contains explicit SAFE/BLOCKED status
+✓ verdict contains explicit rationale
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 15
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch22
+> node scripts/verify/epoch22_ai_validation_harness.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-22 AI VALIDATION HARNESS CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ baseline exists: specs/ai_determinism_baseline.json
+✓ core/ai/autonomous_agent.mjs Math.random count 0 <= baseline 0
+✓ core/ai/autonomous_agent.mjs Date.now count 3 <= baseline 3
+✓ core/ai/cognitive_brain.mjs Math.random count 1 <= baseline 1
+✓ core/ai/cognitive_brain.mjs Date.now count 15 <= baseline 15
+✓ core/ai/hypothesis_generator.mjs Math.random count 5 <= baseline 5
+✓ core/ai/hypothesis_generator.mjs Date.now count 8 <= baseline 8
+✓ core/ai/learning_system.mjs Math.random count 6 <= baseline 6
+✓ core/ai/learning_system.mjs Date.now count 4 <= baseline 4
+✓ core/ai/master_orchestrator.mjs Math.random count 3 <= baseline 3
+✓ core/ai/master_orchestrator.mjs Date.now count 2 <= baseline 2
+✓ core/ai/meta_learning_engine.mjs Math.random count 0 <= baseline 0
+✓ core/ai/meta_learning_engine.mjs Date.now count 7 <= baseline 7
+✓ core/ai/metacognitive_controller.mjs Math.random count 1 <= baseline 1
+✓ core/ai/metacognitive_controller.mjs Date.now count 4 <= baseline 4
+✓ core/ai/self_reflection_system.mjs Math.random count 3 <= baseline 3
+✓ core/ai/self_reflection_system.mjs Date.now count 7 <= baseline 7
+✓ core/ai/strategy_generator.mjs Math.random count 18 <= baseline 18
+✓ core/ai/strategy_generator.mjs Date.now count 4 <= baseline 4
+✓ core/ai/superintelligent_agent.mjs Math.random count 1 <= baseline 1
+✓ core/ai/superintelligent_agent.mjs Date.now count 5 <= baseline 5
+✓ total Math.random count 38 <= baseline 38
+✓ total Date.now count 59 <= baseline 59
+✓ same seed yields identical RNG sequence
+✓ different seed yields different RNG sequence
+Current totals: { mathRandom: 38, dateNow: 59 }
+Baseline totals: { mathRandom: 38, dateNow: 59 }
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 25
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch23
+> node scripts/verify/epoch23_signal_intent_contract_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-23 SIGNAL->INTENT CONTRACT CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ same seed yields identical AI->signal output
+✓ HOLD/zero-score decisions are skipped
+✓ signal sides are normalized BUY/SELL
+✓ notional_usd is finite and positive
+✓ cross-seed output preserves structural signal count
+✓ signal->intent conversion is deterministic
+✓ intent count equals signal count
+✓ intent contract contains deterministic ids and ai strategy ids
+✓ intent sizing fields are finite
+✓ mode remains DRY_RUN by default in epoch23 contract
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 10
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:release-governor
+> node scripts/verify/release_governor_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-21 RELEASE GOVERNOR CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_governance_run1.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_governance_run2.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_e2_run1.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_e2_run2.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_paper_run1.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_paper_run2.log
+✓ required release artifact exists: reports/evidence/EPOCH-19/SHA256SUMS.SOURCE.txt
+✓ required release artifact exists: reports/evidence/EPOCH-19/SHA256SUMS.EVIDENCE.txt
+✓ required release artifact exists: reports/evidence/EPOCH-19/SHA256SUMS.EXPORT.txt
+✓ required release artifact exists: reports/evidence/EPOCH-19/VERDICT.md
+✓ required release artifact exists: FINAL_VALIDATED.zip
+✓ required release artifact exists: FINAL_VALIDATED.zip.sha256
+✓ FINAL_VALIDATED.zip checksum matches declared sha256
+✓ verdict contains explicit SAFE/BLOCKED status
+✓ verdict contains explicit rationale
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 15
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:release-governor
+> node scripts/verify/release_governor_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-21 RELEASE GOVERNOR CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_governance_run1.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_governance_run2.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_e2_run1.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_e2_run2.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_paper_run1.log
+✓ required anti-flake log exists: reports/evidence/EPOCH-19/gates/verify_paper_run2.log
+✓ required release artifact exists: reports/evidence/EPOCH-19/SHA256SUMS.SOURCE.txt
+✓ required release artifact exists: reports/evidence/EPOCH-19/SHA256SUMS.EVIDENCE.txt
+✓ required release artifact exists: reports/evidence/EPOCH-19/SHA256SUMS.EXPORT.txt
+✓ required release artifact exists: reports/evidence/EPOCH-19/VERDICT.md
+✓ required release artifact exists: FINAL_VALIDATED.zip
+✓ required release artifact exists: FINAL_VALIDATED.zip.sha256
+✓ FINAL_VALIDATED.zip checksum matches declared sha256
+✓ verdict contains explicit SAFE/BLOCKED status
+✓ verdict contains explicit rationale
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 15
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+.gitignore: OK
+AGENTS.md: OK
+EVIDENCE_PACK/00_run_meta.json: OK
+EVIDENCE_PACK/01_inventory.txt: OK
+EVIDENCE_PACK/02_tree.txt: OK
+EVIDENCE_PACK/03_sha256_all.txt: OK
+EVIDENCE_PACK/09_diff.patch: OK
+EVIDENCE_PACK/10_results_summary.md: OK
+EVIDENCE_PACK/12_known_limits.md: OK
+EVIDENCE_PACK_EPOCH-17.tar.gz.sha256: OK
+EVIDENCE_PACK_EPOCH-18.tar.gz.sha256: OK
+EVIDENCE_PACK_EPOCH-19.tar.gz.sha256: OK
+EVIDENCE_PACK_EPOCH-21.tar.gz.sha256: OK
+EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256: OK
+FINAL_VALIDATED.zip.sha256: OK
+NEXT_EPOCH_PLAN.md: OK
+QUICK_START.md: OK
+README.md: OK
+RUNBOOK.md: OK
+RUNBOOK_OPERATIONS.md: OK
+SDD_EPOCH_17_21.md: OK
+TASK_TRACKER.md: OK
+artifacts/incoming/repo_prebootstrap/FINAL_VALIDATED.zip.sha256: OK
+artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-17/DIFF.patch: OK
+artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-17/FILE_INVENTORY.txt: OK
+artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-17/SNAPSHOT.md: OK
+artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-17/SUMMARY.md: OK
+artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-18/DIFF.patch: OK
+artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-18/FILE_INVENTORY.txt: OK
+artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-18/SNAPSHOT.md: OK
+artifacts/incoming/repo_prebootstrap/reports/evidence/EPOCH-18/SUMMARY.md: OK
+core/ai/autonomous_agent.mjs: OK
+core/ai/cognitive_brain.mjs: OK
+core/ai/hypothesis_generator.mjs: OK
+core/ai/learning_system.mjs: OK
+core/ai/master_orchestrator.mjs: OK
+core/ai/meta_learning_engine.mjs: OK
+core/ai/metacognitive_controller.mjs: OK
+core/ai/self_reflection_system.mjs: OK
+core/ai/strategy_generator.mjs: OK
+core/ai/superintelligent_agent.mjs: OK
+core/control/master_system.mjs: OK
+core/court/court_v1.mjs: OK
+core/court/court_v2.mjs: OK
+core/court/truth_integration_example.mjs: OK
+core/data/dataset_io.mjs: OK
+core/data/websocket_feed.mjs: OK
+core/exec/adapters/adversarial_safety.mjs: OK
+core/exec/adapters/adversarial_tester.mjs: OK
+core/exec/adapters/binance_client.mjs: OK
+core/exec/adapters/iexecution_adapter.mjs: OK
+core/exec/adapters/live_adapter.mjs: OK
+core/exec/adapters/live_adapter_dryrun.mjs: OK
+core/exec/adapters/mock_exchange.mjs: OK
+core/exec/adapters/paper_adapter.mjs: OK
+core/exec/adapters/safety_gates.mjs: OK
+core/exec/execution_policy.mjs: OK
+core/exec/master_executor.mjs: OK
+core/exec/mode_aware_executor.mjs: OK
+core/exec/safety_gate_validator.mjs: OK
+core/exec/safety_integrated_executor.mjs: OK
+core/exec/signal_converter.mjs: OK
+core/exec/strategy_aware_executor.mjs: OK
+core/governance/approval_workflow.mjs: OK
+core/governance/governance_engine.mjs: OK
+core/governance/mode_fsm.mjs: OK
+core/governance/rules_engine.mjs: OK
+core/ml/anomaly_detector.mjs: OK
+core/monitoring/safety_monitor.mjs: OK
+core/obs/event_log.mjs: OK
+core/obs/event_log_v2.mjs: OK
+core/obs/reality_gap_monitor.mjs: OK
+core/performance/perf_engine.mjs: OK
+core/persist/db.mjs: OK
+core/persist/migrations/0001_init.sql: OK
+core/persist/repo_state.mjs: OK
+core/portfolio/multi_strategy.mjs: OK
+core/portfolio/portfolio_allocator.mjs: OK
+core/quality/quality_filter.mjs: OK
+core/recon/reconcile_v1.mjs: OK
+core/resilience/self_healing.mjs: OK
+core/risk/risk_governor.mjs: OK
+core/risk/risk_governor_wrapper.mjs: OK
+core/sim/bar_generator.mjs: OK
+core/sim/base_signal.mjs: OK
+core/sim/engine.mjs: OK
+core/sim/engine_paper.mjs: OK
+core/sim/metrics.mjs: OK
+core/sim/models.mjs: OK
+core/sim/order_lifecycle.mjs: OK
+core/sim/penalized.mjs: OK
+core/sim/rng.mjs: OK
+core/strategy/strategy_orchestrator.mjs: OK
+core/sys/clock.mjs: OK
+core/sys/context.mjs: OK
+core/sys/rng.mjs: OK
+core/sys/run_artifacts.mjs: OK
+core/testing/chaos_engineer.mjs: OK
+core/truth/canonicalize.mjs: OK
+core/truth/truth_engine.mjs: OK
+core/ultimate/ultimate_system.mjs: OK
+data/fixtures/live/btc_usdt_market_buy_001.json: OK
+data/fixtures/live/eth_usdt_limit_sell_partial.json: OK
+data/fixtures/live/sol_usdt_price_mismatch.json: OK
+data/synthetic_1000bars_5m.json: OK
+dataset/BTCUSDT_5m_100bars.json: OK
+docs/API_DOCUMENTATION.md: OK
+docs/DEPLOYMENT_GUIDE.md: OK
+docs/NEXT_ACTIONS_ROADMAP.md: OK
+docs/PIPELINE_DOCTRINE.md: OK
+docs/PROJECT_DOCUMENTATION_RU.md: OK
+docs/SPEC_OF_SPECS.md: OK
+docs/VERIFICATION_PLAYBOOK_RU.md: OK
+evidence/checksums_manifest.txt: OK
+evidence/checksums_manifest_epoch13.txt: OK
+evidence/determinism_run1/court_report.json: OK
+evidence/determinism_run1/eqs_report.json: OK
+evidence/diffs/determinism_diff.txt: OK
+examples/swarm_trading_demo.mjs: OK
+package-lock.json: OK
+package.json: OK
+package.json.bak: OK
+reports/EPOCH-06_EVIDENCE/09_git_diff.patch: OK
+reports/EPOCH-06_EVIDENCE/11_repo_files.sha256: OK
+reports/EPOCH-06_EXECUTION_REPORT.md: OK
+reports/EPOCH-10_EXECUTION_REPORT.md: OK
+reports/EPOCH-11_MASTER_ORCHESTRATOR_REPORT.md: OK
+reports/FINAL_ASSEMBLY_REPORT.md: OK
+reports/FINAL_EVIDENCE/comprehensive_checksums.txt: OK
+reports/FINAL_EVIDENCE/directory_tree.txt: OK
+reports/FINAL_EVIDENCE/file_inventory.txt: OK
+reports/court_report.json: OK
+reports/court_report_run1.json: OK
+reports/epoch-12/EPOCH-12_BASELINE_GATES.md: OK
+reports/epoch-12/EPOCH-12_EXECUTION_REPORT.md: OK
+reports/epoch-12/EPOCH-12_SNAPSHOT.md: OK
+reports/epoch-13/EPOCH-13_BLOCKERS.md: OK
+reports/epoch-13/EPOCH-13_EXECUTION_REPORT.md: OK
+reports/epoch-14/EPOCH-14_EXECUTION_REPORT.md: OK
+reports/epoch-15/EPOCH-15_EXECUTION_REPORT.md: OK
+reports/epoch-16/EPOCH-16_EXECUTION_REPORT.md: OK
+reports/eqs_report.json: OK
+reports/events_report.json: OK
+reports/evidence/BOOTSTRAP/DIFF.patch: OK
+reports/evidence/BOOTSTRAP/SUMMARY.md: OK
+reports/evidence/EPOCH-01/DIFF.patch: OK
+reports/evidence/EPOCH-01/GATE_PLAN.md: OK
+reports/evidence/EPOCH-01/INVENTORY.txt: OK
+reports/evidence/EPOCH-01/PREFLIGHT.md: OK
+reports/evidence/EPOCH-01/SNAPSHOT.md: OK
+reports/evidence/EPOCH-01/SUMMARY.md: OK
+reports/evidence/EPOCH-17.0/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-17.0/DIFF.patch: OK
+reports/evidence/EPOCH-17.0/GATE_PLAN.md: OK
+reports/evidence/EPOCH-17.0/INVENTORY.txt: OK
+reports/evidence/EPOCH-17.0/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-17.0/SUMMARY.md: OK
+reports/evidence/EPOCH-17.0/TREE_DEPTH2.txt: OK
+reports/evidence/EPOCH-17/ASSUMPTIONS_LEDGER.md: OK
+reports/evidence/EPOCH-17/DIFF.patch: OK
+reports/evidence/EPOCH-17/INVENTORY.txt: OK
+reports/evidence/EPOCH-17/NEXT.md: OK
+reports/evidence/EPOCH-17/PLAN.md: OK
+reports/evidence/EPOCH-17/PREFLIGHT.log: OK
+reports/evidence/EPOCH-17/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-17/SNAPSHOT.md: OK
+reports/evidence/EPOCH-17/SUMMARY.md: OK
+reports/evidence/EPOCH-17/VERDICT.md: OK
+reports/evidence/EPOCH-17/gates/npm_ci.log: OK
+reports/evidence/EPOCH-17/gates/source_manifest_check.log: OK
+reports/evidence/EPOCH-17/gates/verify_core_run1.log: OK
+reports/evidence/EPOCH-17/gates/verify_e2_multi_run1.log: OK
+reports/evidence/EPOCH-17/gates/verify_e2_run1.log: OK
+reports/evidence/EPOCH-17/gates/verify_e2_run2.log: OK
+reports/evidence/EPOCH-17/gates/verify_epoch17_run1.log: OK
+reports/evidence/EPOCH-17/gates/verify_epoch17_run2.log: OK
+reports/evidence/EPOCH-17/gates/verify_integration_run1.log: OK
+reports/evidence/EPOCH-17/gates/verify_paper_run1.log: OK
+reports/evidence/EPOCH-17/gates/verify_paper_run2.log: OK
+reports/evidence/EPOCH-17/gates/verify_phase2_run1.log: OK
+reports/evidence/EPOCH-18/ASSUMPTIONS_LEDGER.md: OK
+reports/evidence/EPOCH-18/DIFF.patch: OK
+reports/evidence/EPOCH-18/INVENTORY.txt: OK
+reports/evidence/EPOCH-18/NEXT.md: OK
+reports/evidence/EPOCH-18/PLAN.md: OK
+reports/evidence/EPOCH-18/PREFLIGHT.log: OK
+reports/evidence/EPOCH-18/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-18/SNAPSHOT.md: OK
+reports/evidence/EPOCH-18/SUMMARY.md: OK
+reports/evidence/EPOCH-18/VERDICT.md: OK
+reports/evidence/EPOCH-18/gates/npm_ci.log: OK
+reports/evidence/EPOCH-18/gates/source_manifest_check.log: OK
+reports/evidence/EPOCH-18/gates/verify_core_run1.log: OK
+reports/evidence/EPOCH-18/gates/verify_e2_multi_run1.log: OK
+reports/evidence/EPOCH-18/gates/verify_e2_run1.log: OK
+reports/evidence/EPOCH-18/gates/verify_e2_run2.log: OK
+reports/evidence/EPOCH-18/gates/verify_epoch18_run1.log: OK
+reports/evidence/EPOCH-18/gates/verify_integration_run1.log: OK
+reports/evidence/EPOCH-18/gates/verify_paper_run1.log: OK
+reports/evidence/EPOCH-18/gates/verify_paper_run2.log: OK
+reports/evidence/EPOCH-18/gates/verify_phase2_run1.log: OK
+reports/evidence/EPOCH-18/gates/verify_strategy_run1.log: OK
+reports/evidence/EPOCH-18/gates/verify_strategy_run2.log: OK
+reports/evidence/EPOCH-19/ASSUMPTIONS_LEDGER.md: OK
+reports/evidence/EPOCH-19/DIFF.patch: OK
+reports/evidence/EPOCH-19/GATE_PLAN.md: OK
+reports/evidence/EPOCH-19/INVENTORY.txt: OK
+reports/evidence/EPOCH-19/NEXT.md: OK
+reports/evidence/EPOCH-19/PLAN.md: OK
+reports/evidence/EPOCH-19/PREFLIGHT.log: OK
+reports/evidence/EPOCH-19/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-19/SNAPSHOT.md: OK
+reports/evidence/EPOCH-19/SUMMARY.md: OK
+reports/evidence/EPOCH-19/VERDICT.md: OK
+reports/evidence/EPOCH-19/gates/npm_ci.log: OK
+reports/evidence/EPOCH-19/gates/source_manifest_check.log: OK
+reports/evidence/EPOCH-19/gates/verify_core_run1.log: OK
+reports/evidence/EPOCH-19/gates/verify_e2_multi_run1.log: OK
+reports/evidence/EPOCH-19/gates/verify_e2_run1.log: OK
+reports/evidence/EPOCH-19/gates/verify_e2_run2.log: OK
+reports/evidence/EPOCH-19/gates/verify_epoch19_run1.log: OK
+reports/evidence/EPOCH-19/gates/verify_governance_run1.log: OK
+reports/evidence/EPOCH-19/gates/verify_governance_run2.log: OK
+reports/evidence/EPOCH-19/gates/verify_integration_run1.log: OK
+reports/evidence/EPOCH-19/gates/verify_paper_run1.log: OK
+reports/evidence/EPOCH-19/gates/verify_paper_run2.log: OK
+reports/evidence/EPOCH-19/gates/verify_phase2_run1.log: OK
+reports/evidence/EPOCH-20/PLAN.md: OK
+reports/evidence/EPOCH-20/SUMMARY.md: OK
+reports/evidence/EPOCH-20/VERDICT.md: OK
+reports/evidence/EPOCH-20/gates/verify_epoch20_run1.log: OK
+reports/evidence/EPOCH-20/gates/verify_monitoring_run1.log: OK
+reports/evidence/EPOCH-20/gates/verify_monitoring_run2.log: OK
+reports/evidence/EPOCH-21/PLAN.md: OK
+reports/evidence/EPOCH-21/SUMMARY.md: OK
+reports/evidence/EPOCH-21/VERDICT.md: OK
+reports/evidence/EPOCH-21/gates/verify_epoch21_run1.log: OK
+reports/evidence/EPOCH-21/gates/verify_release_governor_run1.log: OK
+reports/evidence/EPOCH-21/gates/verify_release_governor_run2.log: OK
+reports/evidence/EPOCH-22/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-22/DIFF.patch: OK
+reports/evidence/EPOCH-22/GATE_PLAN.md: OK
+reports/evidence/EPOCH-22/INVENTORY.txt: OK
+reports/evidence/EPOCH-22/PREFLIGHT.md: OK
+reports/evidence/EPOCH-22/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-22/SUMMARY.md: OK
+reports/evidence/EPOCH-22/VERDICT.md: OK
+reports/evidence/EPOCH-22/gates/npm_ci.log: OK
+reports/evidence/EPOCH-22/gates/regen_manifests.log: OK
+reports/evidence/EPOCH-22/gates/regen_manifests_epoch22.log: OK
+reports/evidence/EPOCH-22/gates/regen_manifests_epochboot_refresh.log: OK
+reports/evidence/EPOCH-22/gates/sha_evidence_check.log: OK
+reports/evidence/EPOCH-22/gates/sha_source_check.log: OK
+reports/evidence/EPOCH-22/gates/verify_core.log: OK
+reports/evidence/EPOCH-22/gates/verify_epoch22_run1.log: OK
+reports/evidence/EPOCH-22/gates/verify_epoch22_run2.log: OK
+reports/evidence/EPOCH-22/gates/verify_integration.log: OK
+reports/evidence/EPOCH-22/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-22/gates/verify_wall.log: OK
+reports/evidence/EPOCH-BOOT.1/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-BOOT.1/DIFF.patch: OK
+reports/evidence/EPOCH-BOOT.1/GATE_PLAN.md: OK
+reports/evidence/EPOCH-BOOT.1/INSTALL.log: OK
+reports/evidence/EPOCH-BOOT.1/INVENTORY.txt: OK
+reports/evidence/EPOCH-BOOT.1/PREFLIGHT.log: OK
+reports/evidence/EPOCH-BOOT.1/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-BOOT.1/SNAPSHOT.md: OK
+reports/evidence/EPOCH-BOOT.1/SUMMARY.md: OK
+reports/evidence/EPOCH-BOOT.1/TREE_L2.txt: OK
+reports/evidence/EPOCH-BOOT.1/gates/source_manifest_check.log: OK
+reports/evidence/EPOCH-BOOT.1/gates/verify_binance.log: OK
+reports/evidence/EPOCH-BOOT.1/gates/verify_core.log: OK
+reports/evidence/EPOCH-BOOT.1/gates/verify_e2_multi.log: OK
+reports/evidence/EPOCH-BOOT.1/gates/verify_e2_run1.log: OK
+reports/evidence/EPOCH-BOOT.1/gates/verify_e2_run2.log: OK
+reports/evidence/EPOCH-BOOT.1/gates/verify_integration.log: OK
+reports/evidence/EPOCH-BOOT.1/gates/verify_paper_run1.log: OK
+reports/evidence/EPOCH-BOOT.1/gates/verify_paper_run2.log: OK
+reports/evidence/EPOCH-BOOT.1/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-BOOT.1/gates/verify_websocket.log: OK
+reports/evidence/EPOCH-BOOT.2/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-BOOT.2/DIFF.patch: OK
+reports/evidence/EPOCH-BOOT.2/GATE_PLAN.md: OK
+reports/evidence/EPOCH-BOOT.2/INSTALL.log: OK
+reports/evidence/EPOCH-BOOT.2/INVENTORY.txt: OK
+reports/evidence/EPOCH-BOOT.2/PREFLIGHT.log: OK
+reports/evidence/EPOCH-BOOT.2/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-BOOT.2/SNAPSHOT.md: OK
+reports/evidence/EPOCH-BOOT.2/SUMMARY.md: OK
+reports/evidence/EPOCH-BOOT.2/TREE_L2.txt: OK
+reports/evidence/EPOCH-BOOT.2/gates/source_manifest_check.log: OK
+reports/evidence/EPOCH-BOOT.2/gates/verify_core.log: OK
+reports/evidence/EPOCH-BOOT.2/gates/verify_e2_multi.log: OK
+reports/evidence/EPOCH-BOOT.2/gates/verify_e2_run1.log: OK
+reports/evidence/EPOCH-BOOT.2/gates/verify_e2_run2.log: OK
+reports/evidence/EPOCH-BOOT.2/gates/verify_paper_run1.log: OK
+reports/evidence/EPOCH-BOOT.2/gates/verify_paper_run2.log: OK
+reports/evidence/EPOCH-BOOT.3/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-BOOT.3/DIFF.patch: OK
+reports/evidence/EPOCH-BOOT.3/GATE_PLAN.md: OK
+reports/evidence/EPOCH-BOOT.3/INSTALL.log: OK
+reports/evidence/EPOCH-BOOT.3/INVENTORY.txt: OK
+reports/evidence/EPOCH-BOOT.3/PREFLIGHT.log: OK
+reports/evidence/EPOCH-BOOT.3/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-BOOT.3/SNAPSHOT.md: OK
+reports/evidence/EPOCH-BOOT.3/SUMMARY.md: OK
+reports/evidence/EPOCH-BOOT.3/TREE_L2.txt: OK
+reports/evidence/EPOCH-BOOT.3/gates/source_manifest_check.log: OK
+reports/evidence/EPOCH-BOOT.3/gates/verify_core.log: OK
+reports/evidence/EPOCH-BOOT.3/gates/verify_e2_multi.log: OK
+reports/evidence/EPOCH-BOOT.3/gates/verify_e2_run1.log: OK
+reports/evidence/EPOCH-BOOT.3/gates/verify_e2_run2.log: OK
+reports/evidence/EPOCH-BOOT.3/gates/verify_integration.log: OK
+reports/evidence/EPOCH-BOOT.3/gates/verify_paper_run1.log: OK
+reports/evidence/EPOCH-BOOT.3/gates/verify_paper_run2.log: OK
+reports/evidence/EPOCH-BOOT.3/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-BOOT.4/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-BOOT.4/DIFF.patch: OK
+reports/evidence/EPOCH-BOOT.4/GATE_PLAN.md: OK
+reports/evidence/EPOCH-BOOT.4/INSTALL.log: OK
+reports/evidence/EPOCH-BOOT.4/INVENTORY.txt: OK
+reports/evidence/EPOCH-BOOT.4/PREFLIGHT.log: OK
+reports/evidence/EPOCH-BOOT.4/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-BOOT.4/SNAPSHOT.md: OK
+reports/evidence/EPOCH-BOOT.4/SUMMARY.md: OK
+reports/evidence/EPOCH-BOOT.4/TREE_L2.txt: OK
+reports/evidence/EPOCH-BOOT.4/gates/source_manifest_check.log: OK
+reports/evidence/EPOCH-BOOT.4/gates/verify_core.log: OK
+reports/evidence/EPOCH-BOOT.4/gates/verify_e2_multi.log: OK
+reports/evidence/EPOCH-BOOT.4/gates/verify_e2_run1.log: OK
+reports/evidence/EPOCH-BOOT.4/gates/verify_e2_run2.log: OK
+reports/evidence/EPOCH-BOOT.4/gates/verify_integration.log: OK
+reports/evidence/EPOCH-BOOT.4/gates/verify_paper_run1.log: OK
+reports/evidence/EPOCH-BOOT.4/gates/verify_paper_run2.log: OK
+reports/evidence/EPOCH-BOOT.4/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-BOOT.5/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-BOOT.5/DIFF.patch: OK
+reports/evidence/EPOCH-BOOT.5/GATE_PLAN.md: OK
+reports/evidence/EPOCH-BOOT.5/INSTALL.log: OK
+reports/evidence/EPOCH-BOOT.5/INVENTORY.txt: OK
+reports/evidence/EPOCH-BOOT.5/PREFLIGHT.log: OK
+reports/evidence/EPOCH-BOOT.5/PR_HANDOFF.md: OK
+reports/evidence/EPOCH-BOOT.5/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-BOOT.5/SNAPSHOT.md: OK
+reports/evidence/EPOCH-BOOT.5/SUMMARY.md: OK
+reports/evidence/EPOCH-BOOT.5/TREE_L2.txt: OK
+reports/evidence/EPOCH-BOOT.5/gates/source_manifest_check.log: OK
+reports/evidence/EPOCH-BOOT.5/gates/verify_core.log: OK
+reports/evidence/EPOCH-BOOT.5/gates/verify_e2_multi.log: OK
+reports/evidence/EPOCH-BOOT.5/gates/verify_e2_run1.log: OK
+reports/evidence/EPOCH-BOOT.5/gates/verify_e2_run2.log: OK
+reports/evidence/EPOCH-BOOT.5/gates/verify_integration.log: OK
+reports/evidence/EPOCH-BOOT.5/gates/verify_paper_run1.log: OK
+reports/evidence/EPOCH-BOOT.5/gates/verify_paper_run2.log: OK
+reports/evidence/EPOCH-BOOT.5/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/DIFF.patch: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/GATE_PLAN.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/INVENTORY.txt: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/PIPELINE_IMPROVEMENTS.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/PREFLIGHT.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/SNAPSHOT.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/SUMMARY.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/TREE_DEPTH2.txt: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/VERDICT.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/export_validated_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/export_validated_prewall.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/npm_ci.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/regen_manifests.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/regen_manifests_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/sha_evidence_check.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/sha_source_check.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_core.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_core_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_integration.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_integration_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_phase2_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_release_governor_autobuild.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_specs.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_specs_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_wall.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_wall_latest.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/zip_check.log: OK
+reports/evidence/EPOCH-BOOT/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-BOOT/ASSUMPTIONS_LEDGER.md: OK
+reports/evidence/EPOCH-BOOT/CHECKSUM_VALIDATE.log: OK
+reports/evidence/EPOCH-BOOT/DIFF.patch: OK
+reports/evidence/EPOCH-BOOT/EXPORT_SHA256.txt: OK
+reports/evidence/EPOCH-BOOT/GATE_PLAN.md: OK
+reports/evidence/EPOCH-BOOT/IMPACT_ANALYSIS.md: OK
+reports/evidence/EPOCH-BOOT/IMPLEMENTATION_PLAN.md: OK
+reports/evidence/EPOCH-BOOT/INSTALL.log: OK
+reports/evidence/EPOCH-BOOT/INVENTORY.txt: OK
+reports/evidence/EPOCH-BOOT/META_RISK_ASSESSMENT.md: OK
+reports/evidence/EPOCH-BOOT/PIPELINE_IMPROVEMENT_REPORT.md: OK
+reports/evidence/EPOCH-BOOT/PREFLIGHT.log: OK
+reports/evidence/EPOCH-BOOT/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-BOOT/SNAPSHOT.md: OK
+reports/evidence/EPOCH-BOOT/SPEC_LOCK.md: OK
+reports/evidence/EPOCH-BOOT/SUMMARY.md: OK
+reports/evidence/EPOCH-BOOT/TASK_TRACKER_CHECK.txt: OK
+reports/evidence/EPOCH-BOOT/TREE_DEPTH2.txt: OK
+reports/evidence/EPOCH-BOOT/VERDICT.md: OK
+reports/evidence/EPOCH-BOOT/gates/source_manifest_check.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_binance.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_core.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_e2_multi.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_e2_run1.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_e2_run2.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_epoch17.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_epoch18.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_epoch19.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_epoch20.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_epoch21.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_integration.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_monitoring_run1.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_monitoring_run2.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_paper_run1.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_paper_run2.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_release_governor_run1.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_release_governor_run2.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_safety.log: OK
+reports/evidence/EPOCH-BOOT/gates/verify_websocket.log: OK
+reports/evidence/SPEC_REFACTOR/DIFF.patch: OK
+reports/evidence/SPEC_REFACTOR/SUMMARY.md: OK
+reports/hack_a2_base_report.json: OK
+reports/hack_a2_hostile_report.json: OK
+reports/hack_a2_optimistic_report.json: OK
+reports/hack_a3_base_report.json: OK
+reports/hack_a3_hostile_report.json: OK
+reports/hack_a3_optimistic_report.json: OK
+reports/hack_b1_base_report.json: OK
+reports/hack_b1_hostile_report.json: OK
+reports/hack_b1_optimistic_report.json: OK
+reports/hack_b3_base_report.json: OK
+reports/hack_b3_hostile_report.json: OK
+reports/hack_b3_optimistic_report.json: OK
+reports/monitoring_report.json: OK
+reports/recon_report.json: OK
+reports/runs/.gitkeep: OK
+scripts/data/BinanceWSClient.mjs: OK
+scripts/data/DataAgent.mjs: OK
+scripts/data/PriceConfidence.mjs: OK
+scripts/data/agent_demo.mjs: OK
+scripts/data/binance_fetcher.mjs: OK
+scripts/data/fetch_binance_history.mjs: OK
+scripts/data/import_binance_klines_json.mjs: OK
+scripts/data/import_ohlcv_csv.mjs: OK
+scripts/data/live_price_demo.mjs: OK
+scripts/export_validated.mjs: OK
+scripts/ops/regen_manifests.mjs: OK
+scripts/profit/OpportunityDetector.mjs: OK
+scripts/profit/OpportunityHunter.mjs: OK
+scripts/profit/ProfitCalculator.mjs: OK
+scripts/profit/__tests__/treasure_engine.test.mjs: OK
+scripts/profit/treasure_map_demo.mjs: OK
+scripts/verify/adversarial_safety.mjs: OK
+scripts/verify/agent_smoke.mjs: OK
+scripts/verify/binance_smoke.mjs: OK
+scripts/verify/confidence_score.test.mjs: OK
+scripts/verify/config_check.mjs: OK
+scripts/verify/court_stub.mjs: OK
+scripts/verify/dataset_check.mjs: OK
+scripts/verify/determinism.mjs: OK
+scripts/verify/dryrun_live_e2e.mjs: OK
+scripts/verify/e2_multi_seed.mjs: OK
+scripts/verify/epoch07_integration.mjs: OK
+scripts/verify/epoch08_integration.mjs: OK
+scripts/verify/epoch09_integration.mjs: OK
+scripts/verify/epoch09_integration.mjs.backup: OK
+scripts/verify/epoch10_integration.mjs: OK
+scripts/verify/epoch11_master_orchestrator.mjs: OK
+scripts/verify/epoch22_ai_validation_harness.mjs: OK
+scripts/verify/epochX_integration.mjs: OK
+scripts/verify/events_schema_check.mjs: OK
+scripts/verify/godtier_integration.mjs: OK
+scripts/verify/governance_check.mjs: OK
+scripts/verify/hacks_validate.mjs: OK
+scripts/verify/json_schema_check.mjs: OK
+scripts/verify/live_adapter_smoke.mjs: OK
+scripts/verify/master_integration_e2e.mjs: OK
+scripts/verify/monitoring_perf_check.mjs: OK
+scripts/verify/paper_e2e.mjs: OK
+scripts/verify/persist_idempotency.mjs: OK
+scripts/verify/phase2_smoke.mjs: OK
+scripts/verify/phase2_verify.mjs: OK
+scripts/verify/release_governor_check.mjs: OK
+scripts/verify/run_with_context.mjs: OK
+scripts/verify/safety_gates_check.mjs: OK
+scripts/verify/safety_integrated_executor_check.mjs: OK
+scripts/verify/specs_check.mjs: OK
+scripts/verify/strategy_check.mjs: OK
+scripts/verify/truth.sh: OK
+scripts/verify/truth_layer_check.mjs: OK
+scripts/verify/verify_adversarial.mjs: OK
+scripts/verify/verify_reality_gap.mjs: OK
+scripts/verify/websocket_smoke.mjs: OK
+spec/config.schema.json: OK
+spec/hacks.json: OK
+spec/ssot.json: OK
+specs/CONSTRAINTS.md: OK
+specs/DECISIONS.md: OK
+specs/DETERMINISM_AUDIT.md: OK
+specs/GATE_VALIDATION_MATRIX.md: OK
+specs/PIPELINE.md: OK
+specs/QUALITY_BAR.md: OK
+specs/SPECS_QA_REPORT.md: OK
+specs/SPEC_AUDIT_ASSUMPTIONS.md: OK
+specs/SPEC_CONFLICTS.md: OK
+specs/SSOT_INDEX.md: OK
+specs/ai_determinism_baseline.json: OK
+specs/epochs/EPOCH-17.md: OK
+specs/epochs/EPOCH-17_EVIDENCE.md: OK
+specs/epochs/EPOCH-17_GATES.md: OK
+specs/epochs/EPOCH-17_TODO.md: OK
+specs/epochs/EPOCH-17_safety_integrated_executor.md: OK
+specs/epochs/EPOCH-18.md: OK
+specs/epochs/EPOCH-18_EVIDENCE.md: OK
+specs/epochs/EPOCH-18_GATES.md: OK
+specs/epochs/EPOCH-18_TODO.md: OK
+specs/epochs/EPOCH-18_strategy_layer.md: OK
+specs/epochs/EPOCH-19.md: OK
+specs/epochs/EPOCH-19_EVIDENCE.md: OK
+specs/epochs/EPOCH-19_GATES.md: OK
+specs/epochs/EPOCH-19_TODO.md: OK
+specs/epochs/EPOCH-19_governance_mode_fsm.md: OK
+specs/epochs/EPOCH-20.md: OK
+specs/epochs/EPOCH-20_EVIDENCE.md: OK
+specs/epochs/EPOCH-20_GATES.md: OK
+specs/epochs/EPOCH-20_TODO.md: OK
+specs/epochs/EPOCH-20_monitoring_perf.md: OK
+specs/epochs/EPOCH-21.md: OK
+specs/epochs/EPOCH-21_EVIDENCE.md: OK
+specs/epochs/EPOCH-21_GATES.md: OK
+specs/epochs/EPOCH-21_TODO.md: OK
+specs/epochs/EPOCH-21_deployment_release.md: OK
+specs/epochs/EPOCH-22.md: OK
+specs/epochs/EPOCH-23.md: OK
+specs/epochs/EPOCH-24.md: OK
+specs/epochs/EPOCH-25.md: OK
+specs/epochs/EPOCH-26.md: OK
+specs/epochs/EPOCH_DEPENDENCY_GRAPH.md: OK
+specs/epochs/INDEX.md: OK
+specs/epochs/README.md: OK
+specs/epochs/RELEASE_CHECKLIST_TEMPLATE.md: OK
+specs/epochs/TEMPLATE.md: OK
+truth/court_report.schema.json: OK
+truth/eqs_report.schema.json: OK
+truth/event.schema.json: OK
+truth/events_report.schema.json: OK
+truth/live_config.schema.json: OK
+truth/monitoring_report.schema.json: OK
+truth/recon_report.schema.json: OK
+truth/sim_report.schema.json: OK
+ui/ai_brain_visualizer.html: OK
+ui/dashboard.html: OK
+ui/generate_panel.mjs: OK
+ui/panel.html: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/ASSUMPTIONS.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/DIFF.patch: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/GATE_PLAN.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/INVENTORY.txt: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/PIPELINE_IMPROVEMENTS.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/PREFLIGHT.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/RISK_REGISTER.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/SNAPSHOT.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/SUMMARY.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/TREE_DEPTH2.txt: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/VERDICT.md: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/export_validated_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/export_validated_prewall.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/npm_ci.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_core.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_core_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_integration.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_integration_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_phase2.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_phase2_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_release_governor_autobuild.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_specs.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_specs_final.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_wall.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/verify_wall_latest.log: OK
+reports/evidence/EPOCH-BOOT.AUTOPILOT/gates/zip_check.log: OK

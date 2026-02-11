@@ -1,0 +1,295 @@
+$ node -v
+v20.19.6
+$ npm -v
+11.4.2
+$ pwd
+/workspace/Treasure_engine
+$ ls -la
+total 216
+drwxr-xr-x 18 root root  4096 Feb 11 10:28 .
+drwxr-xr-x  3 root root  4096 Feb 11 07:02 ..
+drwxr-xr-x  8 root root  4096 Feb 11 10:28 .git
+-rw-r--r--  1 root root   491 Feb 11 10:28 .gitignore
+-rw-r--r--  1 root root  5368 Feb 11 07:02 AGENTS.md
+drwxr-xr-x  2 root root  4096 Feb 11 07:02 EVIDENCE_PACK
+-rw-r--r--  1 root root    96 Feb 11 10:28 EVIDENCE_PACK_EPOCH-17.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 11 10:28 EVIDENCE_PACK_EPOCH-18.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 11 10:28 EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 11 10:28 EVIDENCE_PACK_EPOCH-21.tar.gz.sha256
+-rw-r--r--  1 root root    98 Feb 11 10:28 EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+-rw-r--r--  1 root root    86 Feb 11 10:28 FINAL_VALIDATED.zip.sha256
+-rw-r--r--  1 root root  1677 Feb 11 10:28 NEXT_EPOCH_PLAN.md
+-rw-r--r--  1 root root 11768 Feb 11 07:02 QUICK_START.md
+-rw-r--r--  1 root root  4328 Feb 11 10:28 README.md
+-rw-r--r--  1 root root  1263 Feb 11 10:28 RUNBOOK.md
+-rw-r--r--  1 root root  9654 Feb 11 07:02 RUNBOOK_OPERATIONS.md
+-rw-r--r--  1 root root 28917 Feb 11 10:28 SDD_EPOCH_17_21.md
+-rw-r--r--  1 root root  1847 Feb 11 10:28 TASK_TRACKER.md
+drwxr-xr-x  3 root root  4096 Feb 11 07:02 artifacts
+drwxr-xr-x 24 root root  4096 Feb 11 10:28 core
+drwxr-xr-x  3 root root  4096 Feb 11 07:02 data
+drwxr-xr-x  2 root root  4096 Feb 11 07:02 dataset
+drwxr-xr-x  2 root root  4096 Feb 11 10:28 docs
+drwxr-xr-x  4 root root  4096 Feb 11 07:02 evidence
+drwxr-xr-x  2 root root  4096 Feb 11 07:02 examples
+drwxr-xr-x 47 root root  4096 Feb 11 07:02 node_modules
+-rw-r--r--  1 root root 19412 Feb 11 07:02 package-lock.json
+-rw-r--r--  1 root root  4927 Feb 11 10:28 package.json
+-rw-r--r--  1 root root  3186 Feb 11 07:02 package.json.bak
+drwxr-xr-x 11 root root  4096 Feb 11 10:28 reports
+drwxr-xr-x  5 root root  4096 Feb 11 07:02 scripts
+drwxr-xr-x  2 root root  4096 Feb 11 07:02 spec
+drwxr-xr-x  3 root root  4096 Feb 11 10:28 specs
+drwxr-xr-x  2 root root  4096 Feb 11 10:28 truth
+drwxr-xr-x  2 root root  4096 Feb 11 10:28 ui
+$ git status -sb
+## work
+?? reports/evidence/EPOCH-BOOT.AUTOPILOT/
+$ find . -maxdepth 4 -type f \( -name "*.zip" -o -name "*.tar.gz" -o -name "package.json" -o -name "*.md" \) | sort
+./AGENTS.md
+./EVIDENCE_PACK/10_results_summary.md
+./EVIDENCE_PACK/12_known_limits.md
+./NEXT_EPOCH_PLAN.md
+./QUICK_START.md
+./README.md
+./RUNBOOK.md
+./RUNBOOK_OPERATIONS.md
+./SDD_EPOCH_17_21.md
+./TASK_TRACKER.md
+./docs/API_DOCUMENTATION.md
+./docs/DEPLOYMENT_GUIDE.md
+./docs/NEXT_ACTIONS_ROADMAP.md
+./docs/PIPELINE_DOCTRINE.md
+./docs/PROJECT_DOCUMENTATION_RU.md
+./docs/SPEC_OF_SPECS.md
+./docs/VERIFICATION_PLAYBOOK_RU.md
+./node_modules/ajv/README.md
+./node_modules/ajv/package.json
+./node_modules/base64-js/README.md
+./node_modules/base64-js/package.json
+./node_modules/better-sqlite3/README.md
+./node_modules/better-sqlite3/package.json
+./node_modules/bindings/LICENSE.md
+./node_modules/bindings/README.md
+./node_modules/bindings/package.json
+./node_modules/bl/LICENSE.md
+./node_modules/bl/README.md
+./node_modules/bl/package.json
+./node_modules/buffer/AUTHORS.md
+./node_modules/buffer/README.md
+./node_modules/buffer/package.json
+./node_modules/chownr/README.md
+./node_modules/chownr/package.json
+./node_modules/decompress-response/package.json
+./node_modules/decompress-response/readme.md
+./node_modules/deep-extend/CHANGELOG.md
+./node_modules/deep-extend/README.md
+./node_modules/deep-extend/package.json
+./node_modules/detect-libc/README.md
+./node_modules/detect-libc/package.json
+./node_modules/end-of-stream/README.md
+./node_modules/end-of-stream/package.json
+./node_modules/expand-template/README.md
+./node_modules/expand-template/package.json
+./node_modules/fast-deep-equal/README.md
+./node_modules/fast-deep-equal/package.json
+./node_modules/fast-uri/README.md
+./node_modules/fast-uri/benchmark/package.json
+./node_modules/fast-uri/package.json
+./node_modules/file-uri-to-path/History.md
+./node_modules/file-uri-to-path/README.md
+./node_modules/file-uri-to-path/package.json
+./node_modules/fs-constants/README.md
+./node_modules/fs-constants/package.json
+./node_modules/github-from-package/example/package.json
+./node_modules/github-from-package/package.json
+./node_modules/ieee754/README.md
+./node_modules/ieee754/package.json
+./node_modules/inherits/README.md
+./node_modules/inherits/package.json
+./node_modules/ini/README.md
+./node_modules/ini/package.json
+./node_modules/json-schema-traverse/README.md
+./node_modules/json-schema-traverse/package.json
+./node_modules/mimic-response/package.json
+./node_modules/mimic-response/readme.md
+./node_modules/minimist/CHANGELOG.md
+./node_modules/minimist/README.md
+./node_modules/minimist/package.json
+./node_modules/mkdirp-classic/README.md
+./node_modules/mkdirp-classic/package.json
+./node_modules/napi-build-utils/README.md
+./node_modules/napi-build-utils/index.md
+./node_modules/napi-build-utils/package.json
+./node_modules/node-abi/README.md
+./node_modules/node-abi/package.json
+./node_modules/once/README.md
+./node_modules/once/package.json
+./node_modules/prebuild-install/CHANGELOG.md
+./node_modules/prebuild-install/CONTRIBUTING.md
+./node_modules/prebuild-install/README.md
+./node_modules/prebuild-install/package.json
+./node_modules/pump/README.md
+./node_modules/pump/SECURITY.md
+./node_modules/pump/package.json
+./node_modules/rc/README.md
+./node_modules/rc/package.json
+./node_modules/readable-stream/CONTRIBUTING.md
+./node_modules/readable-stream/GOVERNANCE.md
+./node_modules/readable-stream/README.md
+./node_modules/readable-stream/package.json
+./node_modules/require-from-string/package.json
+./node_modules/require-from-string/readme.md
+./node_modules/safe-buffer/README.md
+./node_modules/safe-buffer/package.json
+./node_modules/semver/README.md
+./node_modules/semver/package.json
+./node_modules/simple-concat/README.md
+./node_modules/simple-concat/package.json
+./node_modules/simple-get/README.md
+./node_modules/simple-get/package.json
+./node_modules/string_decoder/README.md
+./node_modules/string_decoder/package.json
+./node_modules/strip-json-comments/package.json
+./node_modules/strip-json-comments/readme.md
+./node_modules/tar-fs/README.md
+./node_modules/tar-fs/package.json
+./node_modules/tar-stream/README.md
+./node_modules/tar-stream/package.json
+./node_modules/tunnel-agent/README.md
+./node_modules/tunnel-agent/package.json
+./node_modules/util-deprecate/History.md
+./node_modules/util-deprecate/README.md
+./node_modules/util-deprecate/package.json
+./node_modules/wrappy/README.md
+./node_modules/wrappy/package.json
+./node_modules/ws/README.md
+./node_modules/ws/package.json
+./package.json
+./reports/EPOCH-06_EXECUTION_REPORT.md
+./reports/EPOCH-10_EXECUTION_REPORT.md
+./reports/EPOCH-11_MASTER_ORCHESTRATOR_REPORT.md
+./reports/FINAL_ASSEMBLY_REPORT.md
+./reports/epoch-12/EPOCH-12_BASELINE_GATES.md
+./reports/epoch-12/EPOCH-12_EXECUTION_REPORT.md
+./reports/epoch-12/EPOCH-12_SNAPSHOT.md
+./reports/epoch-13/EPOCH-13_BLOCKERS.md
+./reports/epoch-13/EPOCH-13_EXECUTION_REPORT.md
+./reports/epoch-14/EPOCH-14_EXECUTION_REPORT.md
+./reports/epoch-15/EPOCH-15_EXECUTION_REPORT.md
+./reports/epoch-16/EPOCH-16_EXECUTION_REPORT.md
+./reports/evidence/BOOTSTRAP/SUMMARY.md
+./reports/evidence/EPOCH-01/GATE_PLAN.md
+./reports/evidence/EPOCH-01/PREFLIGHT.md
+./reports/evidence/EPOCH-01/SNAPSHOT.md
+./reports/evidence/EPOCH-01/SUMMARY.md
+./reports/evidence/EPOCH-17.0/ASSUMPTIONS.md
+./reports/evidence/EPOCH-17.0/GATE_PLAN.md
+./reports/evidence/EPOCH-17.0/RISK_REGISTER.md
+./reports/evidence/EPOCH-17.0/SUMMARY.md
+./reports/evidence/EPOCH-17/ASSUMPTIONS_LEDGER.md
+./reports/evidence/EPOCH-17/NEXT.md
+./reports/evidence/EPOCH-17/PLAN.md
+./reports/evidence/EPOCH-17/RISK_REGISTER.md
+./reports/evidence/EPOCH-17/SNAPSHOT.md
+./reports/evidence/EPOCH-17/SUMMARY.md
+./reports/evidence/EPOCH-17/VERDICT.md
+./reports/evidence/EPOCH-18/ASSUMPTIONS_LEDGER.md
+./reports/evidence/EPOCH-18/NEXT.md
+./reports/evidence/EPOCH-18/PLAN.md
+./reports/evidence/EPOCH-18/RISK_REGISTER.md
+./reports/evidence/EPOCH-18/SNAPSHOT.md
+./reports/evidence/EPOCH-18/SUMMARY.md
+./reports/evidence/EPOCH-18/VERDICT.md
+./reports/evidence/EPOCH-19/ASSUMPTIONS_LEDGER.md
+./reports/evidence/EPOCH-19/GATE_PLAN.md
+./reports/evidence/EPOCH-19/NEXT.md
+./reports/evidence/EPOCH-19/PLAN.md
+./reports/evidence/EPOCH-19/RISK_REGISTER.md
+./reports/evidence/EPOCH-19/SNAPSHOT.md
+./reports/evidence/EPOCH-19/SUMMARY.md
+./reports/evidence/EPOCH-19/VERDICT.md
+./reports/evidence/EPOCH-20/PLAN.md
+./reports/evidence/EPOCH-20/SUMMARY.md
+./reports/evidence/EPOCH-20/VERDICT.md
+./reports/evidence/EPOCH-21/PLAN.md
+./reports/evidence/EPOCH-21/SUMMARY.md
+./reports/evidence/EPOCH-21/VERDICT.md
+./reports/evidence/EPOCH-BOOT.1/ASSUMPTIONS.md
+./reports/evidence/EPOCH-BOOT.1/GATE_PLAN.md
+./reports/evidence/EPOCH-BOOT.1/RISK_REGISTER.md
+./reports/evidence/EPOCH-BOOT.1/SNAPSHOT.md
+./reports/evidence/EPOCH-BOOT.1/SUMMARY.md
+./reports/evidence/EPOCH-BOOT.2/ASSUMPTIONS.md
+./reports/evidence/EPOCH-BOOT.2/GATE_PLAN.md
+./reports/evidence/EPOCH-BOOT.2/RISK_REGISTER.md
+./reports/evidence/EPOCH-BOOT.2/SNAPSHOT.md
+./reports/evidence/EPOCH-BOOT.2/SUMMARY.md
+./reports/evidence/EPOCH-BOOT.3/ASSUMPTIONS.md
+./reports/evidence/EPOCH-BOOT.3/GATE_PLAN.md
+./reports/evidence/EPOCH-BOOT.3/RISK_REGISTER.md
+./reports/evidence/EPOCH-BOOT.3/SNAPSHOT.md
+./reports/evidence/EPOCH-BOOT.3/SUMMARY.md
+./reports/evidence/EPOCH-BOOT.4/ASSUMPTIONS.md
+./reports/evidence/EPOCH-BOOT.4/GATE_PLAN.md
+./reports/evidence/EPOCH-BOOT.4/RISK_REGISTER.md
+./reports/evidence/EPOCH-BOOT.4/SNAPSHOT.md
+./reports/evidence/EPOCH-BOOT.4/SUMMARY.md
+./reports/evidence/EPOCH-BOOT.5/ASSUMPTIONS.md
+./reports/evidence/EPOCH-BOOT.5/GATE_PLAN.md
+./reports/evidence/EPOCH-BOOT.5/PR_HANDOFF.md
+./reports/evidence/EPOCH-BOOT.5/RISK_REGISTER.md
+./reports/evidence/EPOCH-BOOT.5/SNAPSHOT.md
+./reports/evidence/EPOCH-BOOT.5/SUMMARY.md
+./reports/evidence/EPOCH-BOOT/ASSUMPTIONS.md
+./reports/evidence/EPOCH-BOOT/ASSUMPTIONS_LEDGER.md
+./reports/evidence/EPOCH-BOOT/GATE_PLAN.md
+./reports/evidence/EPOCH-BOOT/IMPACT_ANALYSIS.md
+./reports/evidence/EPOCH-BOOT/IMPLEMENTATION_PLAN.md
+./reports/evidence/EPOCH-BOOT/META_RISK_ASSESSMENT.md
+./reports/evidence/EPOCH-BOOT/PIPELINE_IMPROVEMENT_REPORT.md
+./reports/evidence/EPOCH-BOOT/RISK_REGISTER.md
+./reports/evidence/EPOCH-BOOT/SNAPSHOT.md
+./reports/evidence/EPOCH-BOOT/SPEC_LOCK.md
+./reports/evidence/EPOCH-BOOT/SUMMARY.md
+./reports/evidence/EPOCH-BOOT/VERDICT.md
+./reports/evidence/SPEC_REFACTOR/SUMMARY.md
+./specs/CONSTRAINTS.md
+./specs/DECISIONS.md
+./specs/DETERMINISM_AUDIT.md
+./specs/GATE_VALIDATION_MATRIX.md
+./specs/PIPELINE.md
+./specs/QUALITY_BAR.md
+./specs/SPECS_QA_REPORT.md
+./specs/SPEC_AUDIT_ASSUMPTIONS.md
+./specs/SPEC_CONFLICTS.md
+./specs/SSOT_INDEX.md
+./specs/epochs/EPOCH-17.md
+./specs/epochs/EPOCH-17_EVIDENCE.md
+./specs/epochs/EPOCH-17_GATES.md
+./specs/epochs/EPOCH-17_TODO.md
+./specs/epochs/EPOCH-17_safety_integrated_executor.md
+./specs/epochs/EPOCH-18.md
+./specs/epochs/EPOCH-18_EVIDENCE.md
+./specs/epochs/EPOCH-18_GATES.md
+./specs/epochs/EPOCH-18_TODO.md
+./specs/epochs/EPOCH-18_strategy_layer.md
+./specs/epochs/EPOCH-19.md
+./specs/epochs/EPOCH-19_EVIDENCE.md
+./specs/epochs/EPOCH-19_GATES.md
+./specs/epochs/EPOCH-19_TODO.md
+./specs/epochs/EPOCH-19_governance_mode_fsm.md
+./specs/epochs/EPOCH-20.md
+./specs/epochs/EPOCH-20_EVIDENCE.md
+./specs/epochs/EPOCH-20_GATES.md
+./specs/epochs/EPOCH-20_TODO.md
+./specs/epochs/EPOCH-20_monitoring_perf.md
+./specs/epochs/EPOCH-21.md
+./specs/epochs/EPOCH-21_EVIDENCE.md
+./specs/epochs/EPOCH-21_GATES.md
+./specs/epochs/EPOCH-21_TODO.md
+./specs/epochs/EPOCH-21_deployment_release.md
+./specs/epochs/EPOCH_DEPENDENCY_GRAPH.md
+./specs/epochs/INDEX.md
+./specs/epochs/README.md
+./specs/epochs/RELEASE_CHECKLIST_TEMPLATE.md
