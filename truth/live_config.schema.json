@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "truth/live_config.schema.json",
+  "title": "Live Execution Configuration",
+  "type": "object",
+  "required": ["mode", "confirmation_required", "risk_caps"],
+  "properties": {
+    "mode": {
+      "type": "string",
+      "enum": ["DRY_RUN", "LIVE_TESTNET", "LIVE_PRODUCTION"]
+    },
+    "confirmation_required": {
+      "type": "boolean"
+    },
+    "kill_switch_active": {
+      "type": "boolean",
+      "default": false
+    },
+    "risk_caps": {
+      "type": "object",
+      "required": ["max_position_size_usd", "max_daily_loss_usd", "max_drawdown_from_peak_pct"],
+      "properties": {
+        "max_position_size_usd": { "type": "number", "minimum": 0 },
+        "max_daily_loss_usd": { "type": "number", "minimum": 0 },
+        "max_drawdown_from_peak_pct": { "type": "number", "minimum": 0, "maximum": 1 }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

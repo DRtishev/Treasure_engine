@@ -27,3 +27,6 @@ artifacts/incoming/*.tar.gz
 .cache/
 tmp/
 temp/
+
+# keep evidence logs trackable
+!reports/evidence/**/*.log

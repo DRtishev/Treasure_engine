@@ -1,0 +1,63 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "MonitoringPerfReport",
+  "type": "object",
+  "required": ["monitoring", "performance"],
+  "properties": {
+    "monitoring": {
+      "type": "object",
+      "required": [
+        "ts_ms",
+        "safety_score",
+        "status",
+        "position_utilization",
+        "loss_utilization",
+        "risk_incidents",
+        "recent_orders",
+        "reject_ratio",
+        "emergency_stop"
+      ],
+      "properties": {
+        "ts_ms": { "type": "number" },
+        "safety_score": { "type": "number", "minimum": 0, "maximum": 100 },
+        "status": { "type": "string" },
+        "position_utilization": { "type": "number", "minimum": 0 },
+        "loss_utilization": { "type": "number", "minimum": 0 },
+        "risk_incidents": { "type": "integer", "minimum": 0 },
+        "recent_orders": { "type": "integer", "minimum": 0 },
+        "reject_ratio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "emergency_stop": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "performance": {
+      "type": "object",
+      "required": [
+        "ts_ms",
+        "request_count",
+        "sample_count",
+        "latency_avg_ms",
+        "latency_p95_ms",
+        "latency_p99_ms",
+        "cache_hit_ratio",
+        "cache_evictions",
+        "pool_peak_usage",
+        "no_nan_inf"
+      ],
+      "properties": {
+        "ts_ms": { "type": "number" },
+        "request_count": { "type": "integer", "minimum": 0 },
+        "sample_count": { "type": "integer", "minimum": 0 },
+        "latency_avg_ms": { "type": "number", "minimum": 0 },
+        "latency_p95_ms": { "type": "number", "minimum": 0 },
+        "latency_p99_ms": { "type": "number", "minimum": 0 },
+        "cache_hit_ratio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "cache_evictions": { "type": "integer", "minimum": 0 },
+        "pool_peak_usage": { "type": "integer", "minimum": 0 },
+        "no_nan_inf": { "type": "boolean", "const": true }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

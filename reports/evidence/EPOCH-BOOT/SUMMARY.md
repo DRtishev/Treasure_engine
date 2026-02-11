@@ -1,37 +1,42 @@
-# EPOCH-BOOT Summary (refresh #6)
+# EPOCH-BOOT SUMMARY (full-byte verification cycle)
 
 ## Scope
-- Addressed feedback on previous increment by re-running the full bootstrap verification cycle with fresh evidence logs.
-- Kept product behavior unchanged; focused on evidence integrity, gate reruns, and tracker consistency.
+- Full offline verification wall + epoch gates 17→21.
+- Russian documentation refresh (`README.md`, `RUNBOOK.md`, dedicated RU docs).
+- Source/evidence integrity manifests regenerated after final changes.
 
-## Repo normalization checks
-- Root `package.json` present.
-- Archive artifacts are ignored by `.gitignore` (`*.zip`, `*.tar.gz`, and `artifacts/incoming/*`).
-- Root README/gates/troubleshooting guidance remains in place.
+## Changes made
+1. Rewrote root README in Russian with detailed architecture, verification and evidence process.
+2. Rewrote RUNBOOK in Russian with deterministic run protocol.
+3. Added professional documentation:
+   - `docs/PROJECT_DOCUMENTATION_RU.md`
+   - `docs/VERIFICATION_PLAYBOOK_RU.md`
+4. Refreshed EPOCH-BOOT evidence logs/manifests/inventory/tree/diff.
 
-## Gate execution results
-- `npm run verify:safety`: PASS (15/15)
-- `npm run verify:binance`: PASS (skip-by-policy)
-- `npm run verify:websocket`: PASS (skip-by-policy)
-- `npm run verify:e2` run #1: PASS
-- `npm run verify:e2` run #2: PASS
-- `npm run verify:phase2`: PASS
-- `npm run verify:paper` run #1: PASS
-- `npm run verify:paper` run #2: PASS
-- `npm run verify:integration`: PASS
-- `sha256sum -c reports/evidence/EPOCH-BOOT/SHA256SUMS.SOURCE.txt`: PASS
+## Gate outcomes
+- verify:e2 run1 PASS; run2 PASS
+- verify:paper run1 PASS; run2 PASS
+- verify:phase2 PASS
+- verify:integration PASS
+- verify:e2:multi PASS
+- verify:core PASS
+- verify:epoch17 PASS
+- verify:epoch18 PASS
+- verify:epoch19 PASS
+- verify:monitoring run1 PASS; run2 PASS
+- verify:epoch20 PASS
+- verify:release-governor run1 PASS; run2 PASS
+- verify:epoch21 PASS
 
-## Artifacts and checksums
-- `FINAL_VALIDATED.zip`: `d318063104a736151a3393113939315703d0b9205729d0fb7b1383e0c083b6df`
-- `EVIDENCE_PACK_EPOCH-BOOT.tar.gz`: `f5a38e602d89682190414e50dd37e918ef6bc65df18c62b74af9305b769af8e8`
-- Export hashes also recorded in `reports/evidence/EPOCH-BOOT/EXPORT_SHA256.txt`.
+## Integrity outcomes
+- `SHA256SUMS.SOURCE.txt` regenerated from tracked files and validated.
+- `SHA256SUMS.EVIDENCE.txt` regenerated for EPOCH-BOOT evidence files.
+- FINAL_VALIDATED.zip rebuilt, checksum updated and validated by release-governor.
 
-## Changes in this refresh
-- Refreshed evidence logs under `reports/evidence/EPOCH-BOOT/gates/`.
-- Regenerated `PREFLIGHT.log`, `INSTALL.log`, `INVENTORY.txt`, `TREE_DEPTH2.txt`.
-- Regenerated `SHA256SUMS.SOURCE.txt` and `SHA256SUMS.EVIDENCE.txt` after finalizing evidence files.
-- Updated `TASK_TRACKER.md` to mark delivered EPOCH-17 safety validator/check script items complete.
+## Export hash
+- FINAL_VALIDATED.zip: 7d824870f1bc606f114687826b111b3f66ae1dbbc0cd0979eb42e978ede08f21
 
 ## Remaining risks
-- `verify:e2` currently writes to a single deterministic run directory (`reports/runs/5259d0177bf2de0c`), which can mask some per-run drift classes.
-- NPM environment warning (`Unknown env config "http-proxy"`) is non-blocking but still appears in logs.
+1. npm warning `Unknown env config "http-proxy"` still appears in logs.
+2. Network-dependent verify scripts intentionally excluded from default offline wall.
+3. Release governor checks release readiness against EPOCH-19 evidence contract (as designed in current spec).

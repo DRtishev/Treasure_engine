@@ -1,5 +1,3 @@
-$ npm run verify:integration
-npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
 
 > treasure-engine@1.0.0 verify:integration
 > node scripts/verify/master_integration_e2e.mjs

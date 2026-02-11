@@ -1,0 +1,28 @@
+
+> treasure-engine@1.0.0 verify:epoch19
+> npm run verify:governance
+
+
+> treasure-engine@1.0.0 verify:governance
+> node scripts/verify/governance_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-19 GOVERNANCE CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ default mode is DRY_RUN
+✓ LIVE_TESTNET blocked without governance approval
+✓ LIVE_TESTNET blocked without non-empty reason
+✓ approval workflow validates scoped approval artifact
+✓ LIVE_TESTNET allowed with governance/risk/safety ready
+✓ mode updated to LIVE_TESTNET
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ execution blocked when kill switch active
+✓ mode-aware executor allows execution in LIVE_TESTNET when conditions met
+✓ live intent audit event emitted
+✓ transition blocked when from_mode does not match engine state
+✓ LIVE_PRODUCTION blocked without manual confirmation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 11
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

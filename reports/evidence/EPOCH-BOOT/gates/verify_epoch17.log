@@ -1,0 +1,23 @@
+
+> treasure-engine@1.0.0 verify:epoch17
+> node scripts/verify/safety_integrated_executor_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-17 SAFETY INTEGRATED EXECUTOR CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ invalid intent blocked by safety gate
+✓ blocked stage is safety
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ daily loss cap blocked by risk precheck
+✓ blocked stage is risk_precheck
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ valid intent executes successfully
+✓ execution returns order_id
+✓ route event logged
+✓ result event logged
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 8
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,0 +1,25 @@
+{
+  "monitoring": {
+    "ts_ms": 1700000000000,
+    "safety_score": 90,
+    "status": "HEALTHY",
+    "position_utilization": 0.3,
+    "loss_utilization": 0.2,
+    "risk_incidents": 0,
+    "recent_orders": 3,
+    "reject_ratio": 0.333333,
+    "emergency_stop": false
+  },
+  "performance": {
+    "ts_ms": 1700000000000,
+    "request_count": 2,
+    "sample_count": 2,
+    "latency_avg_ms": 0,
+    "latency_p95_ms": 0,
+    "latency_p99_ms": 0,
+    "cache_hit_ratio": 0.5,
+    "cache_evictions": 0,
+    "pool_peak_usage": 1,
+    "no_nan_inf": true
+  }
+}

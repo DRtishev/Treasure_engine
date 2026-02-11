@@ -1,0 +1,67 @@
+diff --git a/FINAL_VALIDATED.zip.sha256 b/FINAL_VALIDATED.zip.sha256
+index 29f28f8..0b59a6d 100644
+--- a/FINAL_VALIDATED.zip.sha256
++++ b/FINAL_VALIDATED.zip.sha256
+@@ -1 +1 @@
+-bb1054df2d4259e62503638b5cfbec08ea04c4301bf9d4d5a9c46d2edb173cf8  FINAL_VALIDATED.zip
++6aeb5ab8515c7b4183d655c3ca7436d2a9b81127e3a2399604c853b89774214c  FINAL_VALIDATED.zip
+diff --git a/README.md b/README.md
+index 88c82d4..9faab88 100644
+--- a/README.md
++++ b/README.md
+@@ -56,3 +56,8 @@ ENABLE_NETWORK_TESTS=1 npm run verify:websocket
+ ```bash
+ npm run verify:epoch17
+ ```
++
++## Epoch-specific gate (EPOCH-18)
++```bash
++npm run verify:epoch18
++```
+diff --git a/RUNBOOK.md b/RUNBOOK.md
+index 667cd78..fad547c 100644
+--- a/RUNBOOK.md
++++ b/RUNBOOK.md
+@@ -27,3 +27,6 @@ npm run verify:core
+ 
+ ## EPOCH-17 gate
+ - `npm run verify:epoch17`
++
++## EPOCH-18 gate
++- `npm run verify:epoch18`
+diff --git a/TASK_TRACKER.md b/TASK_TRACKER.md
+index 9ff446e..7d96a94 100644
+--- a/TASK_TRACKER.md
++++ b/TASK_TRACKER.md
+@@ -19,11 +19,11 @@ Source of truth: `SDD_EPOCH_17_21.md`.
+ - [x] `scripts/verify/safety_integrated_executor_check.mjs`
+ 
+ ### EPOCH-18: Strategy layer
+-- [ ] `core/strategy/strategy_orchestrator.mjs`
+-- [ ] `core/exec/signal_converter.mjs`
+-- [ ] `core/portfolio/portfolio_allocator.mjs`
+-- [ ] `core/exec/strategy_aware_executor.mjs`
+-- [ ] `scripts/verify/strategy_check.mjs`
++- [x] `core/strategy/strategy_orchestrator.mjs`
++- [x] `core/exec/signal_converter.mjs`
++- [x] `core/portfolio/portfolio_allocator.mjs`
++- [x] `core/exec/strategy_aware_executor.mjs`
++- [x] `scripts/verify/strategy_check.mjs`
+ 
+ ### EPOCH-19: Governance
+ - [ ] `core/governance/governance_engine.mjs`
+diff --git a/package.json b/package.json
+index c252db8..358e133 100644
+--- a/package.json
++++ b/package.json
+@@ -61,7 +61,9 @@
+     "verify:e2:multi": "node scripts/verify/e2_multi_seed.mjs",
+     "verify:core": "npm run verify:e2 && npm run verify:paper && npm run verify:e2:multi",
+     "verify:paper:raw": "node scripts/verify/paper_e2e.mjs",
+-    "verify:epoch17": "node scripts/verify/safety_integrated_executor_check.mjs"
++    "verify:epoch17": "node scripts/verify/safety_integrated_executor_check.mjs",
++    "verify:strategy": "node scripts/verify/strategy_check.mjs",
++    "verify:epoch18": "npm run verify:strategy"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
