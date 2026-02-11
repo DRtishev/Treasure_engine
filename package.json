@@ -60,7 +60,16 @@
     "verify:e2:raw": "npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs",
     "verify:e2:multi": "node scripts/verify/e2_multi_seed.mjs",
     "verify:core": "npm run verify:e2 && npm run verify:paper && npm run verify:e2:multi",
-    "verify:paper:raw": "node scripts/verify/paper_e2e.mjs"
+    "verify:paper:raw": "node scripts/verify/paper_e2e.mjs",
+    "verify:epoch17": "node scripts/verify/safety_integrated_executor_check.mjs",
+    "verify:strategy": "node scripts/verify/strategy_check.mjs",
+    "verify:epoch18": "npm run verify:strategy",
+    "verify:governance": "node scripts/verify/governance_check.mjs",
+    "verify:epoch19": "npm run verify:governance",
+    "verify:monitoring": "node scripts/verify/monitoring_perf_check.mjs",
+    "verify:epoch20": "npm run verify:monitoring",
+    "verify:release-governor": "node scripts/verify/release_governor_check.mjs",
+    "verify:epoch21": "npm run verify:release-governor"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

@@ -1,21 +1,267 @@
-diff --git a/.gitignore b/.gitignore
-index 4af7318..a6e2097 100644
---- a/.gitignore
-+++ b/.gitignore
-@@ -3,6 +3,8 @@ node_modules/
- npm-debug.log*
- _extract_tmp*/
- FINAL_VALIDATED.zip
-+*.zip
-+*.tar.gz
- *.tsbuildinfo
- .DS_Store
+diff --git a/FINAL_VALIDATED.zip.sha256 b/FINAL_VALIDATED.zip.sha256
+index 0b59a6d..4cb0e77 100644
+--- a/FINAL_VALIDATED.zip.sha256
++++ b/FINAL_VALIDATED.zip.sha256
+@@ -1 +1 @@
+-6aeb5ab8515c7b4183d655c3ca7436d2a9b81127e3a2399604c853b89774214c  FINAL_VALIDATED.zip
++d5b37ca500aec7380631c8e74ddf1dbd745c33c6fba10df673ac07d047555f55  FINAL_VALIDATED.zip
+diff --git a/README.md b/README.md
+index 9faab88..fc7b16d 100644
+--- a/README.md
++++ b/README.md
+@@ -61,3 +61,8 @@ npm run verify:epoch17
+ ```bash
+ npm run verify:epoch18
+ ```
++
++## Epoch-specific gate (EPOCH-19)
++```bash
++npm run verify:epoch19
++```
+diff --git a/RUNBOOK.md b/RUNBOOK.md
+index fad547c..0017d4c 100644
+--- a/RUNBOOK.md
++++ b/RUNBOOK.md
+@@ -30,3 +30,6 @@ npm run verify:core
  
-diff --git a/artifacts/incoming/TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip b/artifacts/incoming/TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip
-deleted file mode 100644
-index a58a0a5..0000000
-Binary files a/artifacts/incoming/TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip and /dev/null differ
-diff --git a/reports/EVIDENCE_PACK.tar.gz b/reports/EVIDENCE_PACK.tar.gz
-deleted file mode 100644
-index bd13cf7..0000000
-Binary files a/reports/EVIDENCE_PACK.tar.gz and /dev/null differ
+ ## EPOCH-18 gate
+ - `npm run verify:epoch18`
++
++## EPOCH-19 gate
++- `npm run verify:epoch19`
+diff --git a/TASK_TRACKER.md b/TASK_TRACKER.md
+index 7d96a94..29a8c6c 100644
+--- a/TASK_TRACKER.md
++++ b/TASK_TRACKER.md
+@@ -26,11 +26,11 @@ Source of truth: `SDD_EPOCH_17_21.md`.
+ - [x] `scripts/verify/strategy_check.mjs`
+ 
+ ### EPOCH-19: Governance
+-- [ ] `core/governance/governance_engine.mjs`
+-- [ ] `core/governance/rules_engine.mjs`
+-- [ ] `core/governance/approval_workflow.mjs`
+-- [ ] `core/exec/mode_aware_executor.mjs`
+-- [ ] `scripts/verify/governance_check.mjs`
++- [x] `core/governance/governance_engine.mjs`
++- [x] `core/governance/rules_engine.mjs`
++- [x] `core/governance/approval_workflow.mjs`
++- [x] `core/exec/mode_aware_executor.mjs`
++- [x] `scripts/verify/governance_check.mjs`
+ 
+ ## Notes
+ - Network-dependent checks must be OFF by default and enabled only via explicit env flags.
+diff --git a/package.json b/package.json
+index 358e133..0ef5b44 100644
+--- a/package.json
++++ b/package.json
+@@ -63,7 +63,9 @@
+     "verify:paper:raw": "node scripts/verify/paper_e2e.mjs",
+     "verify:epoch17": "node scripts/verify/safety_integrated_executor_check.mjs",
+     "verify:strategy": "node scripts/verify/strategy_check.mjs",
+-    "verify:epoch18": "npm run verify:strategy"
++    "verify:epoch18": "npm run verify:strategy",
++    "verify:governance": "node scripts/verify/governance_check.mjs",
++    "verify:epoch19": "npm run verify:governance"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
+diff --git a/reports/evidence/EPOCH-19/DIFF.patch b/reports/evidence/EPOCH-19/DIFF.patch
+index fa907cb..e69de29 100644
+--- a/reports/evidence/EPOCH-19/DIFF.patch
++++ b/reports/evidence/EPOCH-19/DIFF.patch
+@@ -1,21 +0,0 @@
+-diff --git a/.gitignore b/.gitignore
+-index 4af7318..a6e2097 100644
+---- a/.gitignore
+-+++ b/.gitignore
+-@@ -3,6 +3,8 @@ node_modules/
+- npm-debug.log*
+- _extract_tmp*/
+- FINAL_VALIDATED.zip
+-+*.zip
+-+*.tar.gz
+- *.tsbuildinfo
+- .DS_Store
+- 
+-diff --git a/artifacts/incoming/TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip b/artifacts/incoming/TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip
+-deleted file mode 100644
+-index a58a0a5..0000000
+-Binary files a/artifacts/incoming/TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip and /dev/null differ
+-diff --git a/reports/EVIDENCE_PACK.tar.gz b/reports/EVIDENCE_PACK.tar.gz
+-deleted file mode 100644
+-index bd13cf7..0000000
+-Binary files a/reports/EVIDENCE_PACK.tar.gz and /dev/null differ
+diff --git a/reports/evidence/EPOCH-19/INVENTORY.txt b/reports/evidence/EPOCH-19/INVENTORY.txt
+index 13ab071..ed7cffc 100644
+--- a/reports/evidence/EPOCH-19/INVENTORY.txt
++++ b/reports/evidence/EPOCH-19/INVENTORY.txt
+@@ -1,2 +1,84 @@
+-artifacts/incoming/TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip
+-reports/EVIDENCE_PACK.tar.gz
++== git status -sb ==
++## work
++ M FINAL_VALIDATED.zip.sha256
++ M README.md
++ M RUNBOOK.md
++ M TASK_TRACKER.md
++ M package.json
++ M reports/evidence/EPOCH-19/DIFF.patch
++ M reports/evidence/EPOCH-19/INVENTORY.txt
++ M reports/evidence/EPOCH-19/SNAPSHOT.md
++ M reports/evidence/EPOCH-19/SUMMARY.md
++?? EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
++?? core/exec/mode_aware_executor.mjs
++?? core/governance/approval_workflow.mjs
++?? core/governance/governance_engine.mjs
++?? core/governance/rules_engine.mjs
++?? reports/evidence/EPOCH-19/ASSUMPTIONS_LEDGER.md
++?? reports/evidence/EPOCH-19/NEXT.md
++?? reports/evidence/EPOCH-19/PLAN.md
++?? reports/evidence/EPOCH-19/PREFLIGHT.log
++?? reports/evidence/EPOCH-19/RISK_REGISTER.md
++?? reports/evidence/EPOCH-19/SHA256SUMS.EVIDENCE.txt
++?? reports/evidence/EPOCH-19/SHA256SUMS.EXPORT.txt
++?? reports/evidence/EPOCH-19/SHA256SUMS.SOURCE.txt
++?? reports/evidence/EPOCH-19/VERDICT.md
++?? reports/evidence/EPOCH-19/gates/
++?? scripts/verify/governance_check.mjs
++
++== changed files ==
++FINAL_VALIDATED.zip.sha256
++README.md
++RUNBOOK.md
++TASK_TRACKER.md
++package.json
++reports/evidence/EPOCH-19/DIFF.patch
++reports/evidence/EPOCH-19/INVENTORY.txt
++reports/evidence/EPOCH-19/SNAPSHOT.md
++reports/evidence/EPOCH-19/SUMMARY.md
++
++== verify scripts ==
++verify:adversarial => node scripts/verify/adversarial_safety.mjs
++verify:agent => node scripts/verify/agent_smoke.mjs
++verify:all => npm run verify:all-data && npm run verify:treasure
++verify:all-data => npm run verify:binance && npm run verify:websocket && npm run verify:confidence && npm run verify:agent
++verify:binance => node scripts/verify/binance_smoke.mjs
++verify:confidence => node scripts/verify/confidence_score.test.mjs
++verify:config => node scripts/verify/config_check.mjs
++verify:core => npm run verify:e2 && npm run verify:paper && npm run verify:e2:multi
++verify:court => node scripts/verify/court_stub.mjs && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json
++verify:dataset => node scripts/verify/dataset_check.mjs
++verify:determinism => node scripts/verify/determinism.mjs
++verify:dryrun-live => node scripts/verify/dryrun_live_e2e.mjs
++verify:e2 => node scripts/verify/run_with_context.mjs --gate e2 --seed ${SEED:-12345} --repeat default -- npm run verify:e2:raw
++verify:e2:multi => node scripts/verify/e2_multi_seed.mjs
++verify:e2:raw => npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
++verify:epoch06 => npm run verify:e2 && npm run verify:truth-layer
++verify:epoch07 => node scripts/verify/epoch07_integration.mjs
++verify:epoch08 => node scripts/verify/epoch08_integration.mjs
++verify:epoch09 => node scripts/verify/epoch09_integration.mjs
++verify:epoch10 => node scripts/verify/epoch10_integration.mjs
++verify:epoch11 => node scripts/verify/epoch11_master_orchestrator.mjs
++verify:epoch17 => node scripts/verify/safety_integrated_executor_check.mjs
++verify:epoch18 => npm run verify:strategy
++verify:epoch19 => npm run verify:governance
++verify:epochX => node scripts/verify/epochX_integration.mjs
++verify:eqs-schema => node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
++verify:events => node scripts/verify/events_schema_check.mjs
++verify:godtier => node scripts/verify/godtier_integration.mjs
++verify:governance => node scripts/verify/governance_check.mjs
++verify:hacks => node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
++verify:integration => node scripts/verify/master_integration_e2e.mjs
++verify:live => node scripts/verify/live_adapter_smoke.mjs
++verify:paper => node scripts/verify/run_with_context.mjs --gate paper --seed ${SEED:-12345} --repeat default -- npm run verify:paper:raw
++verify:paper:raw => node scripts/verify/paper_e2e.mjs
++verify:persist => node scripts/verify/persist_idempotency.mjs
++verify:phase2 => node scripts/verify/phase2_verify.mjs
++verify:reality-gap => node scripts/verify/verify_reality_gap.mjs
++verify:safety => node scripts/verify/safety_gates_check.mjs
++verify:sim-schema => node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
++verify:strategy => node scripts/verify/strategy_check.mjs
++verify:treasure => node scripts/profit/__tests__/treasure_engine.test.mjs
++verify:truth => bash scripts/verify/truth.sh
++verify:truth-layer => node scripts/verify/truth_layer_check.mjs
++verify:websocket => node scripts/verify/websocket_smoke.mjs
+diff --git a/reports/evidence/EPOCH-19/SNAPSHOT.md b/reports/evidence/EPOCH-19/SNAPSHOT.md
+index 632d30d..b9b6456 100644
+--- a/reports/evidence/EPOCH-19/SNAPSHOT.md
++++ b/reports/evidence/EPOCH-19/SNAPSHOT.md
+@@ -1,13 +1,5 @@
+-# EPOCH-19 Snapshot
++# SNAPSHOT — EPOCH-19
+ 
+-## Assumptions ledger
+-1. PR binary warning is caused by committed archive files (`*.zip`/`*.tar.gz`).
+-   - Check: `git ls-files | rg '\\.(zip|tar|gz)$|EVIDENCE_PACK.tar.gz'`
+-2. Removing binaries from index while preserving checksums/manifests will keep traceability.
+-   - Check: keep `.sha256`/manifest text files in repo.
+-3. Baseline gates currently pass and should remain unchanged after this minimal patch.
+-   - Check: run install + verify:e2/phase2/paper + anti-flake reruns.
+-
+-## Initial fact checks
+-- Head: `ba60ef63a9de148ff3fa3a90f7e079f6e5640c98`
+-- Preflight log: `reports/evidence/EPOCH-19/PREFLIGHT.log`
++- Selected epoch: EPOCH-19 (next READY after EPOCH-18 in `specs/epochs/INDEX.md`).
++- Prerequisite status: EPOCH-18 complete in `TASK_TRACKER.md`.
++- Mode: offline deterministic verification workflow.
+diff --git a/reports/evidence/EPOCH-19/SUMMARY.md b/reports/evidence/EPOCH-19/SUMMARY.md
+index dcae1f5..853be90 100644
+--- a/reports/evidence/EPOCH-19/SUMMARY.md
++++ b/reports/evidence/EPOCH-19/SUMMARY.md
+@@ -1,28 +1,33 @@
+-# EPOCH-19 Summary
++# EPOCH-19 SUMMARY
+ 
+-## Objective
+-Address PR issue: "binary files not supported" by removing committed binary artifacts from tracked repository content with minimal diff.
++## Implemented
++- Added governance approval artifacts: `core/governance/approval_workflow.mjs`.
++- Added transition rules engine: `core/governance/rules_engine.mjs`.
++- Added governance orchestrator: `core/governance/governance_engine.mjs`.
++- Added mode-aware executor wrapper: `core/exec/mode_aware_executor.mjs`.
++- Added governance gate `scripts/verify/governance_check.mjs` and scripts `verify:governance`, `verify:epoch19`.
++- Updated tracker and runbook/readme for EPOCH-19.
+ 
+-## What changed
+-- Updated `.gitignore` to ignore archive binaries (`*.zip`, `*.tar.gz`) moving forward.
+-- Removed tracked binary files from repository content:
+-  - `artifacts/incoming/TREASURE_ENGINE_FINAL_VALIDATED_WITH_AGENTS.zip`
+-  - `reports/EVIDENCE_PACK.tar.gz`
++## Gate outcomes
++- verify:governance run1 PASS; run2 PASS
++- verify:epoch19 PASS
++- verify:e2 run1 PASS; run2 PASS
++- verify:paper run1 PASS; run2 PASS
++- verify:e2:multi PASS
++- verify:phase2 PASS
++- verify:integration PASS
++- verify:core PASS
+ 
+-## Verification evidence
+-Baseline verification was executed in this epoch before patch:
+-- `npm ci` PASS
+-- `npm run verify:e2` PASS x2
+-- `npm run verify:phase2` PASS x1
+-- `npm run verify:paper` PASS x2
++## Evidence
++- logs: `reports/evidence/EPOCH-19/gates/`
++- diff: `reports/evidence/EPOCH-19/DIFF.patch`
++- manifests: SOURCE/EVIDENCE/EXPORT present
+ 
+-## Evidence files
+-- `reports/evidence/EPOCH-19/PREFLIGHT.log`
+-- `reports/evidence/EPOCH-19/INVENTORY.txt`
+-- `reports/evidence/EPOCH-19/gates/*.log`
+-- `reports/evidence/EPOCH-19/DIFF.patch`
+-- `reports/evidence/EPOCH-19/SHA256SUMS.txt`
++## Export hashes
++- FINAL_VALIDATED.zip: d5b37ca500aec7380631c8e74ddf1dbd745c33c6fba10df673ac07d047555f55
++- EVIDENCE_PACK_EPOCH-19.tar.gz: 91c08f66e5e98e443af6e3dcd701b34ce0f2d35c6abd0a0bd48d036f360ffcd7
+ 
+-## Risk / limitation
+-- Historical binary artifacts were removed from tracked Git content to satisfy PR diff constraints.
+-- Existing checksum sidecar files remain for traceability.
++## Remaining risks
++1. `verify:e2:raw` still contains tolerant `verify:truth || true` segment.
++2. npm `http-proxy` warning noise remains.
++3. Legacy non-run-scoped reports remain under `reports/*.json`.

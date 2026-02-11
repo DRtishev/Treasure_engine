@@ -201,6 +201,7 @@ export class SmartCache {
 export class PerformanceEngine {
   constructor(options = {}) {
     this.enabled = options.enabled !== false;
+    this.nowProvider = options.nowProvider || (() => Date.now());
     
     // Components
     this.connectionPool = new ConnectionPool({
@@ -231,7 +232,7 @@ export class PerformanceEngine {
    * Execute request with performance optimizations
    */
   async execute(fn, options = {}) {
-    const startTime = Date.now();
+    const startTime = this.nowProvider();
     this.metrics.requestCount++;
     
     try {
@@ -239,7 +240,7 @@ export class PerformanceEngine {
       if (options.cacheable && options.cacheKey) {
         const cached = this.cache.get(options.cacheKey);
         if (cached) {
-          this._recordMetric(Date.now() - startTime);
+          this._recordMetric(this.nowProvider() - startTime);
           return cached;
         }
       }
@@ -255,13 +256,13 @@ export class PerformanceEngine {
           this.cache.set(options.cacheKey, result);
         }
         
-        this._recordMetric(Date.now() - startTime);
+        this._recordMetric(this.nowProvider() - startTime);
         return result;
       } finally {
         this.connectionPool.release(conn);
       }
     } catch (err) {
-      this._recordMetric(Date.now() - startTime);
+      this._recordMetric(this.nowProvider() - startTime);
       throw err;
     }
   }
@@ -304,6 +305,29 @@ export class PerformanceEngine {
       connectionPool: this.connectionPool.getStats(),
       batcher: this.requestBatcher.getStats(),
       cache: this.cache.getStats()
+    };
+  }
+
+
+  /**
+   * Canonical deterministic performance report (epoch-20 contract)
+   */
+  toReport() {
+    const metrics = this.getMetrics();
+    const count = metrics.responseTimes.length;
+    const fillRatio = metrics.requestCount > 0 ? Number((metrics.cache.hits / metrics.requestCount).toFixed(6)) : 0;
+
+    return {
+      ts_ms: this.nowProvider(),
+      request_count: metrics.requestCount,
+      sample_count: count,
+      latency_avg_ms: Number(metrics.avgResponseTime.toFixed(6)),
+      latency_p95_ms: Number((metrics.p95ResponseTime || 0).toFixed(6)),
+      latency_p99_ms: Number((metrics.p99ResponseTime || 0).toFixed(6)),
+      cache_hit_ratio: fillRatio,
+      cache_evictions: metrics.cache.evictions,
+      pool_peak_usage: metrics.connectionPool.peakUsage,
+      no_nan_inf: [metrics.avgResponseTime, metrics.p95ResponseTime, metrics.p99ResponseTime].every((v) => Number.isFinite(v)),
     };
   }
 

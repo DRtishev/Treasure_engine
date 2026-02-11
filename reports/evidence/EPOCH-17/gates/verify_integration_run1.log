@@ -1,0 +1,121 @@
+$ npm run verify:integration
+
+> treasure-engine@1.0.0 verify:integration
+> node scripts/verify/master_integration_e2e.mjs
+
+
+╔════════════════════════════════════════════════════════════╗
+║  EPOCH-16: MASTER INTEGRATION TEST                       ║
+╚════════════════════════════════════════════════════════════╝
+
+━━━ COMPONENT INITIALIZATION ━━━
+
+[LiveAdapterDryRun] Loaded 3 fixtures
+  Adapter: LiveAdapterDryRun
+✓ Create LiveAdapterDryRun
+✓ Create ReconciliationEngine
+  Log path: logs/test_integration/run_master_integration_test.jsonl
+✓ Create EventLogV2
+  Run ID: master_integration_test
+  Seed: 1989247062
+✓ Create RunContext (deterministic)
+  Components integrated:
+    ✓ ExecutionAdapter
+    ✓ RunContext
+    ✓ EventLog
+    ✓ ReconciliationEngine
+✓ Create MasterExecutor
+
+━━━ EXECUTION TEST 1: SUCCESSFUL FLOW ━━━
+
+  Order ID: master_integration_test_HACK_MASTER_01_test_0_0
+  Success: true
+  Fills: 1
+✓ Execute BTC/USDT market buy intent
+  ✓ Execution successful
+✓ Verify execution success
+  ✓ Order ID valid
+✓ Verify order placed
+  Fill price: 50010
+  Fill qty: 0.001
+  Fill fee: 0.05001
+✓ Verify fills present
+  ✓ Reconciliation PASS
+  Mismatches: 0
+✓ Verify reconciliation ran
+  Latency breakdown:
+    Order: 0ms
+    Fill: 0ms
+    Reconciliation: 0ms
+    Total: 0ms
+  ℹ  Note: 0ms latency in deterministic mode (clock frozen)
+✓ Verify performance metrics
+
+━━━ EXECUTION TEST 2: PARTIAL FILL ━━━
+
+  Order ID: master_integration_test_HACK_MASTER_02_test_1_0
+  Success: true
+✓ Execute ETH/USDT limit sell intent
+  ✓ Partial fill handled correctly
+✓ Verify partial fill handling
+
+━━━ EVENT LOG VERIFICATION ━━━
+
+  ✓ Event log flushed
+✓ Flush event log
+  Events logged: 11
+  ✓ All expected event types present
+✓ Verify events logged
+  Categories: SYS, EXEC, RECON
+✓ Verify event categories
+  ✓ Sequences: 0..10
+✓ Verify monotonic sequences
+
+━━━ MASTER EXECUTOR STATISTICS ━━━
+
+  Intents created: 2
+  Orders placed: 2
+  Orders filled: 1
+  Reconciliations run: 2
+  Reconciliation failures: 0
+  Events logged: 11
+  Avg latency: 0.00ms
+✓ Get MasterExecutor statistics
+
+━━━ INTEGRATION REPORT ━━━
+
+  Report generated
+  Executions: 2
+  Success rate: 100%
+  Avg latency: 0.00ms
+✓ Generate integration report
+
+━━━ CLEANUP ━━━
+
+  ✓ MasterExecutor closed
+✓ Close MasterExecutor
+
+━━━ SUMMARY ━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 20
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 MASTER INTEGRATION TEST: PASS
+
+✅ INTEGRATION VERIFIED:
+
+   ✓ MasterExecutor operational
+   ✓ Full flow: Intent → Order → Fill → Reconcile → Event
+   ✓ All components integrated (Adapter, Context, EventLog, Reconciliation)
+   ✓ Performance metrics tracked
+   ✓ Event logging working
+   ✓ Statistics accurate
+
+📦 ARTIFACTS PRODUCED:
+
+   • reports/integration_report.json
+

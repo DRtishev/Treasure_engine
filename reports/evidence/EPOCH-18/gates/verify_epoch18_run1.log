@@ -1,0 +1,27 @@
+$ npm run verify:epoch18
+
+> treasure-engine@1.0.0 verify:epoch18
+> npm run verify:strategy
+
+
+> treasure-engine@1.0.0 verify:strategy
+> node scripts/verify/strategy_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-18 STRATEGY LAYER CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ same-seed ranking is stable
+✓ rankings are produced
+✓ intent_id deterministic format
+✓ signal side normalized to BUY/SELL
+✓ notional preserved before allocation
+✓ per-intent cap enforced
+✓ portfolio cap enforced
+✓ prepared intents count matches signals
+✓ allocation attached to every intent
+✓ default mode remains DRY_RUN for strategy layer
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 10
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

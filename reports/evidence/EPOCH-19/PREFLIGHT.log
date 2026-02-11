@@ -1,0 +1,50 @@
+$ node -v
+v20.19.6
+$ npm -v
+11.4.2
+$ git status -sb
+## work
+?? reports/evidence/EPOCH-19/PREFLIGHT.log
+$ git rev-parse HEAD
+4d4f8b4e54695053c33b66598ffebc61ee162367
+$ ls -la
+total 1304
+drwxr-xr-x 19 root root    4096 Feb 11 08:44 .
+drwxr-xr-x  3 root root    4096 Feb 11 06:47 ..
+drwxr-xr-x  8 root root    4096 Feb 11 08:52 .git
+-rw-r--r--  1 root root     491 Feb 11 08:14 .gitignore
+-rw-r--r--  1 root root    5368 Feb 11 06:47 AGENTS.md
+drwxr-xr-x  2 root root    4096 Feb 11 06:47 EVIDENCE_PACK
+-rw-r--r--  1 root root   14732 Feb 11 08:35 EVIDENCE_PACK_EPOCH-17.tar.gz
+-rw-r--r--  1 root root      96 Feb 11 08:35 EVIDENCE_PACK_EPOCH-17.tar.gz.sha256
+-rw-r--r--  1 root root   11602 Feb 11 08:44 EVIDENCE_PACK_EPOCH-18.tar.gz
+-rw-r--r--  1 root root      96 Feb 11 08:44 EVIDENCE_PACK_EPOCH-18.tar.gz.sha256
+-rw-r--r--  1 root root   84395 Feb 11 08:16 EVIDENCE_PACK_EPOCH-BOOT.tar.gz
+-rw-r--r--  1 root root      98 Feb 11 08:16 EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+-rw-r--r--  1 root root 1004678 Feb 11 08:44 FINAL_VALIDATED.zip
+-rw-r--r--  1 root root      86 Feb 11 08:44 FINAL_VALIDATED.zip.sha256
+-rw-r--r--  1 root root    1677 Feb 11 08:11 NEXT_EPOCH_PLAN.md
+-rw-r--r--  1 root root   11768 Feb 11 06:47 QUICK_START.md
+-rw-r--r--  1 root root    1478 Feb 11 08:44 README.md
+-rw-r--r--  1 root root     739 Feb 11 08:44 RUNBOOK.md
+-rw-r--r--  1 root root    9654 Feb 11 06:47 RUNBOOK_OPERATIONS.md
+-rw-r--r--  1 root root   28917 Feb 11 08:11 SDD_EPOCH_17_21.md
+-rw-r--r--  1 root root    1427 Feb 11 08:44 TASK_TRACKER.md
+drwxr-xr-x  3 root root    4096 Feb 11 06:47 artifacts
+drwxr-xr-x 24 root root    4096 Feb 11 08:41 core
+drwxr-xr-x  3 root root    4096 Feb 11 06:47 data
+drwxr-xr-x  2 root root    4096 Feb 11 06:47 dataset
+drwxr-xr-x  2 root root    4096 Feb 11 08:23 docs
+drwxr-xr-x  4 root root    4096 Feb 11 06:47 evidence
+drwxr-xr-x  2 root root    4096 Feb 11 06:47 examples
+drwxr-xr-x  3 root root    4096 Feb 11 08:12 logs
+drwxr-xr-x 47 root root    4096 Feb 11 08:42 node_modules
+-rw-r--r--  1 root root   19412 Feb 11 06:47 package-lock.json
+-rw-r--r--  1 root root    4544 Feb 11 08:42 package.json
+-rw-r--r--  1 root root    3186 Feb 11 06:47 package.json.bak
+drwxr-xr-x 11 root root    4096 Feb 11 08:11 reports
+drwxr-xr-x  5 root root    4096 Feb 11 06:47 scripts
+drwxr-xr-x  2 root root    4096 Feb 11 06:47 spec
+drwxr-xr-x  3 root root    4096 Feb 11 08:11 specs
+drwxr-xr-x  2 root root    4096 Feb 11 08:32 truth
+drwxr-xr-x  2 root root    4096 Feb 11 08:11 ui

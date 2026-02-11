@@ -7,6 +7,7 @@ export class SafetyMonitor {
   constructor(adapter, options = {}) {
     this.adapter = adapter;
     this.eventLog = options.eventLog;
+    this.nowProvider = options.nowProvider || (() => Date.now());
     
     // Configuration
     this.config = {
@@ -77,7 +78,7 @@ export class SafetyMonitor {
    * Check safety and update metrics
    */
   checkSafety() {
-    const timestamp = Date.now();
+    const timestamp = this.nowProvider();
     
     // Calculate safety score
     const score = this.calculateSafetyScore();
@@ -177,7 +178,7 @@ export class SafetyMonitor {
    */
   detectAnomalies() {
     const anomalies = [];
-    const timestamp = Date.now();
+    const timestamp = this.nowProvider();
     
     // Anomaly 1: Rapid score drop
     if (this.history.scores.length >= 5) {
@@ -319,7 +320,7 @@ export class SafetyMonitor {
    */
   recordOrder(orderEvent) {
     this.metrics.recentOrders.push({
-      timestamp: Date.now(),
+      timestamp: this.nowProvider(),
       status: orderEvent.status,
       side: orderEvent.side,
       size: orderEvent.size
@@ -342,7 +343,7 @@ export class SafetyMonitor {
   getMetrics() {
     return {
       ...this.metrics,
-      timestamp: Date.now(),
+      timestamp: this.nowProvider(),
       config: this.config
     };
   }
@@ -370,6 +371,28 @@ export class SafetyMonitor {
       anomalies: metrics.anomalies.length,
       alerts: metrics.alerts.length,
       emergencyStop: this.adapter.emergencyStop
+    };
+  }
+
+
+  /**
+   * Canonical deterministic monitoring report (epoch-20 contract)
+   */
+  toReport() {
+    const metrics = this.getMetrics();
+    const recentOrders = metrics.recentOrders.slice(-20);
+    const blockedOrRejected = recentOrders.filter((o) => o.status === 'rejected' || o.status === 'blocked').length;
+
+    return {
+      ts_ms: metrics.timestamp,
+      safety_score: Number(metrics.safetyScore.toFixed(2)),
+      status: metrics.status,
+      position_utilization: Number(metrics.positionUtilization.toFixed(6)),
+      loss_utilization: Number(metrics.lossUtilization.toFixed(6)),
+      risk_incidents: metrics.anomalies.length + metrics.alerts.length,
+      recent_orders: recentOrders.length,
+      reject_ratio: recentOrders.length > 0 ? Number((blockedOrRejected / recentOrders.length).toFixed(6)) : 0,
+      emergency_stop: Boolean(this.adapter.emergencyStop),
     };
   }
 

@@ -1,0 +1,66 @@
+diff --git a/FINAL_VALIDATED.zip.sha256 b/FINAL_VALIDATED.zip.sha256
+index c6a078d..29f28f8 100644
+--- a/FINAL_VALIDATED.zip.sha256
++++ b/FINAL_VALIDATED.zip.sha256
+@@ -1 +1 @@
+-bc1d312f81942af50afc1a49a6b8681858c5e32fc8358f15c5a467cc8e8ee97f  FINAL_VALIDATED.zip
++bb1054df2d4259e62503638b5cfbec08ea04c4301bf9d4d5a9c46d2edb173cf8  FINAL_VALIDATED.zip
+diff --git a/README.md b/README.md
+index 9589cc0..88c82d4 100644
+--- a/README.md
++++ b/README.md
+@@ -51,3 +51,8 @@ ENABLE_NETWORK_TESTS=1 npm run verify:websocket
+ - If schema checks fail: inspect latest `reports/runs/e2/<seed>/<repeat>/<run_id>/`.
+ - If paper checks fail: inspect `reports/runs/paper/<seed>/<repeat>/<run_id>/` and gate logs.
+ - If npm warns about proxy env config: review local npm config for `http-proxy`.
++
++## Epoch-specific gate (EPOCH-17)
++```bash
++npm run verify:epoch17
++```
+diff --git a/RUNBOOK.md b/RUNBOOK.md
+index 8090c9b..667cd78 100644
+--- a/RUNBOOK.md
++++ b/RUNBOOK.md
+@@ -23,3 +23,7 @@ npm run verify:core
+ ## Notes
+ - Network verification remains disabled by default; enable explicitly with `ENABLE_NETWORK_TESTS=1`.
+ - Live trading is not enabled in verification paths.
++
++
++## EPOCH-17 gate
++- `npm run verify:epoch17`
+diff --git a/TASK_TRACKER.md b/TASK_TRACKER.md
+index 175d91c..9ff446e 100644
+--- a/TASK_TRACKER.md
++++ b/TASK_TRACKER.md
+@@ -11,11 +11,12 @@ Source of truth: `SDD_EPOCH_17_21.md`.
+ 
+ ## Next implementation track (from SDD)
+ ### EPOCH-17: Live execution + safety integration
+-- [ ] `core/exec/safety_integrated_executor.mjs`
++- [x] `core/exec/safety_integrated_executor.mjs`
+ - [x] `core/exec/safety_gate_validator.mjs`
+-- [ ] `core/risk/risk_governor_wrapper.mjs`
+-- [ ] `truth/live_config.schema.json`
++- [x] `core/risk/risk_governor_wrapper.mjs`
++- [x] `truth/live_config.schema.json`
+ - [x] `scripts/verify/safety_gates_check.mjs`
++- [x] `scripts/verify/safety_integrated_executor_check.mjs`
+ 
+ ### EPOCH-18: Strategy layer
+ - [ ] `core/strategy/strategy_orchestrator.mjs`
+diff --git a/package.json b/package.json
+index abab3c4..c252db8 100644
+--- a/package.json
++++ b/package.json
+@@ -60,7 +60,8 @@
+     "verify:e2:raw": "npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs",
+     "verify:e2:multi": "node scripts/verify/e2_multi_seed.mjs",
+     "verify:core": "npm run verify:e2 && npm run verify:paper && npm run verify:e2:multi",
+-    "verify:paper:raw": "node scripts/verify/paper_e2e.mjs"
++    "verify:paper:raw": "node scripts/verify/paper_e2e.mjs",
++    "verify:epoch17": "node scripts/verify/safety_integrated_executor_check.mjs"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
