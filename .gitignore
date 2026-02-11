@@ -1,4 +1,6 @@
 node_modules/
+.env
+.env.*
 *.log
 npm-debug.log*
 _extract_tmp*/
@@ -13,4 +15,15 @@ logs/events/*.jsonl
 logs/test_events/*.jsonl
 logs/test_integration/*.jsonl
 
-# keep evidence tracked; keep incoming artifacts tracked for traceability
+# generated run artifacts (keep folder only)
+reports/runs/*
+!reports/runs/.gitkeep
+
+# incoming archives should not be tracked
+artifacts/incoming/*.zip
+artifacts/incoming/*.tar.gz
+
+# temp/cache
+.cache/
+tmp/
+temp/

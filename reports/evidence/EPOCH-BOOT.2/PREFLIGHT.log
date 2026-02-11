@@ -1,0 +1,97 @@
+$ node -v
+v20.19.6
+$ npm -v
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+11.4.2
+$ pwd
+/workspace/Treasure_engine
+$ ls -la
+total 1116
+drwxr-xr-x 18 root root   4096 Feb 11 06:52 .
+drwxr-xr-x  3 root root   4096 Feb 10 19:41 ..
+drwxr-xr-x  8 root root   4096 Feb 11 07:01 .git
+-rw-r--r--  1 root root    432 Feb 11 06:46 .gitignore
+-rw-r--r--  1 root root   5368 Feb 10 19:41 AGENTS.md
+drwxr-xr-x  2 root root   4096 Feb 10 19:41 EVIDENCE_PACK
+-rw-r--r--  1 root root  24447 Feb 11 06:52 EVIDENCE_PACK_EPOCH-BOOT.1.tar.gz
+-rw-r--r--  1 root root     98 Feb 11 06:46 EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+-rw-r--r--  1 root root 921836 Feb 11 06:52 FINAL_VALIDATED.zip
+-rw-r--r--  1 root root     86 Feb 11 06:52 FINAL_VALIDATED.zip.sha256
+-rw-r--r--  1 root root  11768 Feb 10 19:41 QUICK_START.md
+-rw-r--r--  1 root root   1599 Feb 11 07:02 README.md
+-rw-r--r--  1 root root   9654 Feb 10 19:41 RUNBOOK_OPERATIONS.md
+-rw-r--r--  1 root root  28917 Feb 11 06:46 SDD_EPOCH_17_21.md
+-rw-r--r--  1 root root   1367 Feb 11 06:46 TASK_TRACKER.md
+drwxr-xr-x  3 root root   4096 Feb 10 19:41 artifacts
+drwxr-xr-x 23 root root   4096 Feb 10 19:41 core
+drwxr-xr-x  3 root root   4096 Feb 10 19:41 data
+drwxr-xr-x  2 root root   4096 Feb 10 19:41 dataset
+drwxr-xr-x  2 root root   4096 Feb 10 19:41 docs
+drwxr-xr-x  4 root root   4096 Feb 10 19:41 evidence
+drwxr-xr-x  2 root root   4096 Feb 10 19:41 examples
+drwxr-xr-x  4 root root   4096 Feb 11 06:50 logs
+drwxr-xr-x 47 root root   4096 Feb 11 06:49 node_modules
+-rw-r--r--  1 root root  19412 Feb 10 19:41 package-lock.json
+-rw-r--r--  1 root root   4348 Feb 11 07:02 package.json
+-rw-r--r--  1 root root   3186 Feb 10 19:41 package.json.bak
+drwxr-xr-x 11 root root   4096 Feb 11 06:46 reports
+drwxr-xr-x  5 root root   4096 Feb 10 19:41 scripts
+drwxr-xr-x  2 root root   4096 Feb 10 19:41 spec
+drwxr-xr-x  2 root root   4096 Feb 10 19:41 truth
+drwxr-xr-x  2 root root   4096 Feb 11 06:46 ui
+$ git status -sb
+## work
+ M README.md
+ M core/sim/engine_paper.mjs
+ M package.json
+ M scripts/verify/paper_e2e.mjs
+ M scripts/verify/run_with_context.mjs
+$ find . -maxdepth 3 -type f \( -name "*.zip" -o -name "*.tar.gz" -o -name "package.json" -o -name "package-lock.json" \) | sort
+./EVIDENCE_PACK_EPOCH-BOOT.1.tar.gz
+./FINAL_VALIDATED.zip
+./node_modules/ajv/package.json
+./node_modules/base64-js/package.json
+./node_modules/better-sqlite3/package.json
+./node_modules/bindings/package.json
+./node_modules/bl/package.json
+./node_modules/buffer/package.json
+./node_modules/chownr/package.json
+./node_modules/decompress-response/package.json
+./node_modules/deep-extend/package.json
+./node_modules/detect-libc/package.json
+./node_modules/end-of-stream/package.json
+./node_modules/expand-template/package.json
+./node_modules/fast-deep-equal/package.json
+./node_modules/fast-uri/package.json
+./node_modules/file-uri-to-path/package.json
+./node_modules/fs-constants/package.json
+./node_modules/github-from-package/package.json
+./node_modules/ieee754/package.json
+./node_modules/inherits/package.json
+./node_modules/ini/package.json
+./node_modules/json-schema-traverse/package.json
+./node_modules/mimic-response/package.json
+./node_modules/minimist/package.json
+./node_modules/mkdirp-classic/package.json
+./node_modules/napi-build-utils/package.json
+./node_modules/node-abi/package.json
+./node_modules/once/package.json
+./node_modules/prebuild-install/package.json
+./node_modules/pump/package.json
+./node_modules/rc/package.json
+./node_modules/readable-stream/package.json
+./node_modules/require-from-string/package.json
+./node_modules/safe-buffer/package.json
+./node_modules/semver/package.json
+./node_modules/simple-concat/package.json
+./node_modules/simple-get/package.json
+./node_modules/string_decoder/package.json
+./node_modules/strip-json-comments/package.json
+./node_modules/tar-fs/package.json
+./node_modules/tar-stream/package.json
+./node_modules/tunnel-agent/package.json
+./node_modules/util-deprecate/package.json
+./node_modules/wrappy/package.json
+./node_modules/ws/package.json
+./package-lock.json
+./package.json

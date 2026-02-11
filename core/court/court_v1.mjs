@@ -3,6 +3,9 @@
 import fs from 'fs';
 import crypto from 'crypto';
 
+import { RunContext } from '../sys/context.mjs';
+import { deterministicRunId, getLatestRunDir } from '../sys/run_artifacts.mjs';
+
 function loadJSON(filepath) {
   return JSON.parse(fs.readFileSync(filepath, 'utf8'));
 }
@@ -17,6 +20,15 @@ function main() {
   const ssot = loadJSON('spec/ssot.json');
   const HACK_IDS = ['HACK_A2', 'HACK_A3', 'HACK_B1', 'HACK_B3'];
   
+  const runDir = getLatestRunDir();
+  const runSeed = Number(process.env.SEED || 12345);
+  const ctx = new RunContext({
+    run_id: deterministicRunId({ epoch: process.env.TREASURE_EPOCH || 'EPOCH-17.0', seed: runSeed, hack_id: 'COURT' }),
+    run_seed: runSeed,
+    deterministic: true,
+    mode: 'sim'
+  });
+
   const decisions = [];
   
   for (const hackId of HACK_IDS) {
@@ -27,9 +39,9 @@ function main() {
     const evidence = {};
     
     try {
-      const optimistic = loadJSON(`reports/${hackId.toLowerCase()}_optimistic_report.json`);
-      const base = loadJSON(`reports/${hackId.toLowerCase()}_base_report.json`);
-      const hostile = loadJSON(`reports/${hackId.toLowerCase()}_hostile_report.json`);
+      const optimistic = loadJSON(`${runDir}/${hackId.toLowerCase()}_optimistic_report.json`);
+      const base = loadJSON(`${runDir}/${hackId.toLowerCase()}_base_report.json`);
+      const hostile = loadJSON(`${runDir}/${hackId.toLowerCase()}_hostile_report.json`);
       
       const tradeCountFilled = (base.summary.trade_count_filled ?? base.summary.trade_count ?? 0);
       
@@ -119,8 +131,8 @@ function main() {
   
   const courtReport = {
     version: '1.0',
-    run_id: crypto.randomBytes(8).toString('hex'),
-    timestamp_utc: new Date().toISOString(),
+    run_id: ctx.run_id,
+    timestamp_utc: ctx.toISOString(),
     ssot_ref: {
       path: 'spec/ssot.json',
       sha256: sha256Text(ssotText)
@@ -129,8 +141,9 @@ function main() {
     summary
   };
   
-  fs.writeFileSync('reports/court_report.json', JSON.stringify(courtReport, null, 2));
-  console.log('[court] Generated: reports/court_report.json');
+  const courtPath = `${runDir}/court_report.json`;
+  fs.writeFileSync(courtPath, JSON.stringify(courtReport, null, 2));
+  console.log(`[court] Generated: ${courtPath}`);
   console.log(`[court] Summary: ${summary.allowed} ALLOWED, ${summary.blocked} BLOCKED, ${summary.needs_data} NEEDS_DATA`);
 }
 

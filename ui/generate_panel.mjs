@@ -1,9 +1,11 @@
+import { getLatestRunDir } from '../core/sys/run_artifacts.mjs';
 // ui/generate_panel.mjs (E2.1 PENALIZED METRICS)
 import fs from "fs";
 function readJson(p){ try{ if(!fs.existsSync(p)) return null; return JSON.parse(fs.readFileSync(p,"utf8")); }catch{ return null; } }
 function esc(s){ return String(s).replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;"); }
 
-const courtReport=readJson("reports/court_report.json");
+const runDir = getLatestRunDir();
+const courtReport=readJson(`${runDir}/court_report.json`);
 const courtById=new Map();
 if(courtReport&&Array.isArray(courtReport.hacks)){ for(const h of courtReport.hacks) courtById.set(h.id,h); }
 
@@ -23,8 +25,8 @@ const tiles=HACK_IDS.map(hackId=>{
   let topPenalties = [];
   
   try {
-    const baseReport = readJson(`reports/${hackId.toLowerCase()}_base_report.json`);
-    const hostileReport = readJson(`reports/${hackId.toLowerCase()}_hostile_report.json`);
+    const baseReport = readJson(`${runDir}/${hackId.toLowerCase()}_base_report.json`);
+    const hostileReport = readJson(`${runDir}/${hackId.toLowerCase()}_hostile_report.json`);
     
     if (baseReport && baseReport.summary) {
       expectancyBase = baseReport.summary.expectancy_per_trade.toFixed(6);

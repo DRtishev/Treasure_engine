@@ -18,7 +18,7 @@
     "court:v2": "node core/court/court_v2.mjs",
     "verify:sim-schema": "node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports",
     "verify:eqs-schema": "node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json",
-    "verify:e2": "npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs",
+    "verify:e2": "node scripts/verify/run_with_context.mjs --gate e2 --seed ${SEED:-12345} --repeat default -- npm run verify:e2:raw",
     "verify:phase2": "node scripts/verify/phase2_verify.mjs",
     "verify:dataset": "node scripts/verify/dataset_check.mjs",
     "verify:binance": "node scripts/verify/binance_smoke.mjs",
@@ -26,7 +26,7 @@
     "verify:confidence": "node scripts/verify/confidence_score.test.mjs",
     "verify:agent": "node scripts/verify/agent_smoke.mjs",
     "verify:treasure": "node scripts/profit/__tests__/treasure_engine.test.mjs",
-    "verify:paper": "node scripts/verify/paper_e2e.mjs",
+    "verify:paper": "node scripts/verify/run_with_context.mjs --gate paper --seed ${SEED:-12345} --repeat default -- npm run verify:paper:raw",
     "verify:live": "node scripts/verify/live_adapter_smoke.mjs",
     "verify:adversarial": "node scripts/verify/adversarial_safety.mjs",
     "verify:godtier": "node scripts/verify/godtier_integration.mjs",
@@ -55,7 +55,12 @@
     "verify:events": "node scripts/verify/events_schema_check.mjs",
     "gate:obs": "npm run verify:events",
     "verify:integration": "node scripts/verify/master_integration_e2e.mjs",
-    "gate:integration": "npm run verify:integration"
+    "gate:integration": "npm run verify:integration",
+    "verify:safety": "node scripts/verify/safety_gates_check.mjs",
+    "verify:e2:raw": "npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs",
+    "verify:e2:multi": "node scripts/verify/e2_multi_seed.mjs",
+    "verify:core": "npm run verify:e2 && npm run verify:paper && npm run verify:e2:multi",
+    "verify:paper:raw": "node scripts/verify/paper_e2e.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

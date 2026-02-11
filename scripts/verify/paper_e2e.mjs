@@ -7,6 +7,7 @@ import fs from 'fs';
 import path from 'path';
 import { runSimulation } from '../../core/sim/engine_paper.mjs';
 import { validateEventLog } from '../../core/obs/event_log.mjs';
+import { deterministicRunId } from '../../core/sys/run_artifacts.mjs';
 
 const DATASET_PATH = 'dataset/BTCUSDT_5m_100bars.json';
 const SSOT_PATH = 'spec/ssot.json';
@@ -50,8 +51,10 @@ async function main() {
 
     // Run paper simulation
     console.log('━━━ PAPER SIMULATION ━━━');
-    const runId = `paper_test_${Date.now()}`;
+    const seed = Number(process.env.SEED || 12345);
+    const runId = `paper_test_${deterministicRunId({ epoch: process.env.TREASURE_EPOCH || 'EPOCH-17.0', seed, hack_id: 'PAPER_E2E' })}`;
     console.log(`Run ID: ${runId}`);
+    if (process.env.TREASURE_RUN_DIR) console.log(`Run Dir: ${process.env.TREASURE_RUN_DIR}`);
     console.log('Running simulation...');
     
     const results = await runSimulation(DATASET_PATH, SSOT_PATH, HACKS_PATH, runId);
@@ -64,7 +67,10 @@ async function main() {
 
     // Verify event log file
     console.log('━━━ EVENT LOG VERIFICATION ━━━');
-    const eventLogPath = path.join('logs/events', `run_${runId}.jsonl`);
+    const runDir = process.env.TREASURE_RUN_DIR || '';
+    const eventLogPath = runDir
+      ? path.join(runDir, `run_${runId}.jsonl`)
+      : (results?.meta?.event_log || path.join('logs/events', `run_${runId}.jsonl`));
     
     assert(fs.existsSync(eventLogPath), `Event log created: ${eventLogPath}`);
     
@@ -82,17 +88,10 @@ async function main() {
         assert(validation.total_events > 0, 'Event log not empty');
         assert((validation.by_category.SYS || 0) >= 2, 'SYS events logged (start/stop)');
         
-        // RISK events are optional - only present if trades executed
         const riskEvents = validation.by_category.RISK || 0;
-        if (riskEvents > 0) {
-          console.log(`  ✓ RISK events logged: ${riskEvents}`);
-        } else {
-          console.log(`  ℹ  RISK events: 0 (acceptable if no trades executed)`);
-        }
-        
-        // EXEC events may be 0 if no trades executed (acceptable)
         const execEvents = validation.by_category.EXEC || 0;
-        console.log(`  ℹ  EXEC events: ${execEvents} (may be 0 if no trades)`);
+        assert(execEvents > 0, 'EXEC events logged (>0)');
+        assert(riskEvents > 0, 'RISK events logged (>0)');
       } else {
         console.error(`  Validation error: ${validation.error}`);
       }
@@ -142,12 +141,7 @@ async function main() {
       assert(hasEngineStop, 'Found engine_stop event');
       assert(hasSysEvent, 'Found SYS events');
       
-      // RISK events optional if no trades
-      if (hasRiskEvent) {
-        console.log('  ✓ Found RISK events');
-      } else {
-        console.log('  ℹ  No RISK events (acceptable if no trades)');
-      }
+      assert(hasRiskEvent, 'Found RISK events');
     }
     console.log('');
 

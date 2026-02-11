@@ -14,13 +14,14 @@ import { DeterministicRNG, SystemRNG } from './rng.mjs';
 export class RunContext {
   constructor(options = {}) {
     // Run metadata
-    this.run_id = options.run_id || this._generateRunId();
     this.mode = options.mode || 'sim'; // sim, paper, live
     this.dataset_sha = options.dataset_sha || null;
     this.ssot_sha = options.ssot_sha || null;
 
     // Seed generation (deterministic from dataset + ssot)
     this.run_seed = this._generateSeed(options.run_seed);
+    this.metadata = options.metadata || {};
+    this.run_id = options.run_id || this._generateRunId();
 
     // Deterministic providers
     const useDeterministic = options.deterministic !== false && this.mode !== 'live';
@@ -34,7 +35,6 @@ export class RunContext {
     }
 
     // Additional context
-    this.metadata = options.metadata || {};
     this.persistence_enabled = options.persistence_enabled || false;
   }
 
@@ -68,9 +68,14 @@ export class RunContext {
    * @private
    */
   _generateRunId() {
-    const timestamp = Date.now();
-    const random = Math.random().toString(36).substring(2, 8);
-    return `run_${timestamp}_${random}`;
+    const epoch = this.metadata?.epoch || process.env.TREASURE_EPOCH || 'EPOCH-17.0';
+    const seed = this.run_seed ?? 0;
+    const mode = this.mode || 'sim';
+    const hash = createHash('sha256')
+      .update(`${epoch}::${seed}::${mode}`)
+      .digest('hex')
+      .slice(0, 16);
+    return `run_${hash}`;
   }
 
   /**
