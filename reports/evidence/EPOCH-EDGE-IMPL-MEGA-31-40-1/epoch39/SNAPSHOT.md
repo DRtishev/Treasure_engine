@@ -1,0 +1,3 @@
+- epoch: 39
+- seed: 39
+- offline: true

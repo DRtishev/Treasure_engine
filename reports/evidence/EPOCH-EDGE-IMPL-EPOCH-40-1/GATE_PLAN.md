@@ -1,0 +1,2 @@
+- run verify:epoch40 twice
+- compare deterministic output by anti-flake

@@ -1,0 +1,1 @@
+- bad fixture must fail (injected and verified).

@@ -1,0 +1,3 @@
+- validate schema
+- determinism replay
+- evidence check
