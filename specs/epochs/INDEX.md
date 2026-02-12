@@ -44,15 +44,23 @@
 
 ## Dependency notes (EDGE)
 - EPOCH-31 depends on EPOCH-30 (EDGE starts from completed legacy runway).
-- EPOCH-32 depends on EPOCH-31.
-- EPOCH-33 depends on EPOCH-32.
-- EPOCH-34 depends on EPOCH-33.
-- EPOCH-35 depends on EPOCH-34.
-- EPOCH-36 depends on EPOCH-35.
-- EPOCH-37 depends on EPOCH-36.
-- EPOCH-38 depends on EPOCH-37.
-- EPOCH-39 depends on EPOCH-38.
-- EPOCH-40 depends on EPOCH-39.
+- EPOCH-32 depends on EPOCH-31 (consumes FeatureFrame/FeatureManifest).
+- EPOCH-33 depends on EPOCH-32 (consumes SimReport).
+- EPOCH-34 depends on EPOCH-33 (consumes StrategyManifest).
+- EPOCH-35 depends on EPOCH-34 (consumes Signal/Intent).
+- EPOCH-36 depends on EPOCH-35 (consumes PortfolioState).
+- EPOCH-37 depends on EPOCH-36 (consumes RiskState for escalation).
+- EPOCH-38 depends on EPOCH-37 (consumes WFOReport for baseline).
+- EPOCH-39 depends on EPOCH-38 (consumes GapReport for canary decisions).
+- EPOCH-40 depends on EPOCH-39 (certifies all E31..E39 gates).
+
+## SSOT foundations
+- `docs/EDGE_RESEARCH/GLOSSARY.md` — canonical terminology for E31..E40.
+- `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md` — rounding, hashing, fingerprint, seed, ordering rules.
+- `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` — contract field definitions for all epoch schemas.
+- `docs/EDGE_RESEARCH/ANTI_PATTERNS.md` — anti-pattern matrix with detectors/mitigations per epoch.
+- `docs/EDGE_RESEARCH/AI_MODULE.md` — AI module allowed/forbidden behaviors.
+- `docs/EDGE_RESEARCH/TEST_VECTORS.md` — must-pass and must-fail vectors per epoch.
 
 ## Epoch spec files
 - `specs/epochs/EPOCH-01.md`

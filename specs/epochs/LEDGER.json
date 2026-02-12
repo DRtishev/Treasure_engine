@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-02-12T07:01:15Z",
+  "updated_at": "2026-02-12T12:00:00Z",
   "epochs": {
     "1": {
       "id": "EPOCH-01",
@@ -459,12 +459,12 @@
         "EPOCH-30"
       ],
       "gate_owner": "verify:epoch31",
-      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
       "completed_at": null,
       "commit_sha": "PENDING",
       "last_commit_sha": null,
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
-      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
     },
     "32": {
       "id": "EPOCH-32",
@@ -475,12 +475,12 @@
         "EPOCH-31"
       ],
       "gate_owner": "verify:epoch32",
-      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
       "completed_at": null,
       "commit_sha": "PENDING",
       "last_commit_sha": null,
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
-      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
     },
     "33": {
       "id": "EPOCH-33",
@@ -491,12 +491,12 @@
         "EPOCH-32"
       ],
       "gate_owner": "verify:epoch33",
-      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
       "completed_at": null,
       "commit_sha": "PENDING",
       "last_commit_sha": null,
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
-      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
     },
     "34": {
       "id": "EPOCH-34",
@@ -507,12 +507,12 @@
         "EPOCH-33"
       ],
       "gate_owner": "verify:epoch34",
-      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
       "completed_at": null,
       "commit_sha": "PENDING",
       "last_commit_sha": null,
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
-      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
     },
     "35": {
       "id": "EPOCH-35",
@@ -523,12 +523,12 @@
         "EPOCH-34"
       ],
       "gate_owner": "verify:epoch35",
-      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
       "completed_at": null,
       "commit_sha": "PENDING",
       "last_commit_sha": null,
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
-      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
     },
     "36": {
       "id": "EPOCH-36",
@@ -539,12 +539,12 @@
         "EPOCH-35"
       ],
       "gate_owner": "verify:epoch36",
-      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
       "completed_at": null,
       "commit_sha": "PENDING",
       "last_commit_sha": null,
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
-      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
     },
     "37": {
       "id": "EPOCH-37",
@@ -555,12 +555,12 @@
         "EPOCH-36"
       ],
       "gate_owner": "verify:epoch37",
-      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
       "completed_at": null,
       "commit_sha": "PENDING",
       "last_commit_sha": null,
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
-      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
     },
     "38": {
       "id": "EPOCH-38",
@@ -571,12 +571,12 @@
         "EPOCH-37"
       ],
       "gate_owner": "verify:epoch38",
-      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
       "completed_at": null,
       "commit_sha": "PENDING",
       "last_commit_sha": null,
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
-      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
     },
     "39": {
       "id": "EPOCH-39",
@@ -587,12 +587,12 @@
         "EPOCH-38"
       ],
       "gate_owner": "verify:epoch39",
-      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
       "completed_at": null,
       "commit_sha": "PENDING",
       "last_commit_sha": null,
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
-      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
     },
     "40": {
       "id": "EPOCH-40",
@@ -603,12 +603,12 @@
         "EPOCH-39"
       ],
       "gate_owner": "verify:epoch40",
-      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
       "completed_at": null,
       "commit_sha": "PENDING",
       "last_commit_sha": null,
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
-      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
     }
   }
 }
