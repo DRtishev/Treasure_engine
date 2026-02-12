@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:edge
+> node scripts/verify/edge_all_epochs.mjs
+
+PASS verify:edge run=run2 evidence=reports/evidence/EPOCH-EDGE-FOUNDATION-POLISH-01/verify_edge

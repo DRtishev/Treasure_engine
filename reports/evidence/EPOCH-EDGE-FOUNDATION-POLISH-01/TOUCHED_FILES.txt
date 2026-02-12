@@ -1,0 +1,6 @@
+docs/SDD_EDGE_EPOCHS_31_40.md
+scripts/verify/edge_all_epochs.mjs
+scripts/verify/edge_epoch_gate.mjs
+specs/epochs/INDEX.md
+tests/vectors/intent/epoch34.golden.json
+tests/vectors/signal/epoch34.golden.json

@@ -120,16 +120,16 @@
 - EPOCH-28: `verify:epoch28`
 - EPOCH-29: `verify:epoch29`
 - EPOCH-30: `verify:epoch30`
-- EPOCH-31: `verify:epoch31` (spec-defined, implementation pending)
-- EPOCH-32: `verify:epoch32` (spec-defined, implementation pending)
-- EPOCH-33: `verify:epoch33` (spec-defined, implementation pending)
-- EPOCH-34: `verify:epoch34` (spec-defined, implementation pending)
-- EPOCH-35: `verify:epoch35` (spec-defined, implementation pending)
-- EPOCH-36: `verify:epoch36` (spec-defined, implementation pending)
-- EPOCH-37: `verify:epoch37` (spec-defined, implementation pending)
-- EPOCH-38: `verify:epoch38` (spec-defined, implementation pending)
-- EPOCH-39: `verify:epoch39` (spec-defined, implementation pending)
-- EPOCH-40: `verify:epoch40` (spec-defined, implementation pending)
+- EPOCH-31: `verify:epoch31` via `scripts/verify/epoch31_edge_gate.mjs` (implemented)
+- EPOCH-32: `verify:epoch32` via `scripts/verify/epoch32_edge_gate.mjs` (implemented)
+- EPOCH-33: `verify:epoch33` via `scripts/verify/epoch33_edge_gate.mjs` (implemented)
+- EPOCH-34: `verify:epoch34` via `scripts/verify/epoch34_edge_gate.mjs` (implemented)
+- EPOCH-35: `verify:epoch35` via `scripts/verify/epoch35_edge_gate.mjs` (implemented)
+- EPOCH-36: `verify:epoch36` via `scripts/verify/epoch36_edge_gate.mjs` (implemented)
+- EPOCH-37: `verify:epoch37` via `scripts/verify/epoch37_edge_gate.mjs` (implemented)
+- EPOCH-38: `verify:epoch38` via `scripts/verify/epoch38_edge_gate.mjs` (implemented)
+- EPOCH-39: `verify:epoch39` via `scripts/verify/epoch39_edge_gate.mjs` (implemented)
+- EPOCH-40: `verify:epoch40` via `scripts/verify/epoch40_edge_gate.mjs` (implemented)
 
 ## Gate owners (31→40)
 - EPOCH-31: data-platform
@@ -142,3 +142,7 @@
 - EPOCH-38: runtime-safety
 - EPOCH-39: release-governor
 - EPOCH-40: certification
+
+
+## EDGE aggregate gate
+- `verify:edge` executes `scripts/verify/edge_all_epochs.mjs` and enforces evidence completeness for E31..E40.

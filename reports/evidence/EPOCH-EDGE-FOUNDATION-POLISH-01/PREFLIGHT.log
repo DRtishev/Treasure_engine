@@ -1,0 +1,7 @@
+pwd=/workspace/Treasure_engine
+git_status=## work
+?? reports/evidence/EPOCH-EDGE-FOUNDATION-POLISH-01/
+branch=work
+base_sha=cec454546c8720478335f9535765c06a54d44209
+node=v20.19.6
+npm=11.4.2
