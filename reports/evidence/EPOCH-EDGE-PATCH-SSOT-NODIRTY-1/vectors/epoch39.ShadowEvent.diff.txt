@@ -1,0 +1,6 @@
+contract=ShadowEvent
+--- golden
+{"contract":"ShadowEvent","event":"simulation-only","mode":"SHADOW"}
+
+--- actual
+{"deterministic_fingerprint":"bb496acd0da6f5807b20902b94a3fbb0c9f3dbf3cd6bd39983e2d0229206636c","event_id":"se-1","guards":{"adapter_disabled":true,"order_path_blocked":true},"intents_emitted":4,"orders_submitted":0,"schema_version":"1.0.0","timestamp":"2026-01-01T00:02:00Z"}

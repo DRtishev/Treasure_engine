@@ -1,0 +1,24 @@
+/workspace/Treasure_engine
+## codex/edge-epochs-31-40-mega-sprint-ironclad-1
+ M package.json
+?? core/edge/
+?? reports/evidence/EPOCH-EDGE-IMPL-BASELINE-1/
+?? reports/evidence/EPOCH-EDGE-IMPL-EPOCH-31-1/
+?? reports/evidence/EPOCH-EDGE-IMPL-EPOCH-32-1/
+?? scripts/verify/edge_all_epochs.mjs
+?? scripts/verify/edge_epoch_gate.mjs
+?? scripts/verify/epoch31_edge_gate.mjs
+?? scripts/verify/epoch32_edge_gate.mjs
+?? scripts/verify/epoch33_edge_gate.mjs
+?? scripts/verify/epoch34_edge_gate.mjs
+?? scripts/verify/epoch35_edge_gate.mjs
+?? scripts/verify/epoch36_edge_gate.mjs
+?? scripts/verify/epoch37_edge_gate.mjs
+?? scripts/verify/epoch38_edge_gate.mjs
+?? scripts/verify/epoch39_edge_gate.mjs
+?? scripts/verify/epoch40_edge_gate.mjs
+?? tests/
+codex/edge-epochs-31-40-mega-sprint-ironclad-1
+eb5e87dfda511abc69226666ad39b35d63d8da43
+v20.19.6
+11.4.2

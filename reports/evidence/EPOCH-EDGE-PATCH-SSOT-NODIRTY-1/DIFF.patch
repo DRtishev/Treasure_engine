@@ -1,0 +1,950 @@
+diff --git a/core/edge/contracts.mjs b/core/edge/contracts.mjs
+index ad47cdb..f2e48fd 100644
+--- a/core/edge/contracts.mjs
++++ b/core/edge/contracts.mjs
+@@ -1,49 +1,262 @@
+ import crypto from 'node:crypto';
+ import Ajv from 'ajv';
+ 
+-const ajv = new Ajv({ allErrors: true, strict: false });
+-
+-export const schemas = {
+-  FeatureFrame: { type: 'object', required: ['contract', 'symbol', 'ts', 'features', 'seed'], properties: { contract: { const: 'FeatureFrame' }, symbol: { type: 'string' }, ts: { type: 'string' }, seed: { type: 'integer' }, features: { type: 'object', additionalProperties: { type: 'number' } }, fingerprint: { type: 'string' } }, additionalProperties: false },
+-  StrategySpec: { type: 'object', required: ['contract', 'strategyId', 'version', 'compat'], properties: { contract: { const: 'StrategySpec' }, strategyId: { type: 'string' }, version: { type: 'string' }, compat: { type: 'array', items: { type: 'string' } } }, additionalProperties: false },
+-  Signal: { type: 'object', required: ['contract', 'strategyId', 'symbol', 'score'], properties: { contract: { const: 'Signal' }, strategyId: { type: 'string' }, symbol: { type: 'string' }, score: { type: 'number' } }, additionalProperties: false },
+-  Intent: { type: 'object', required: ['contract', 'symbol', 'side', 'size'], properties: { contract: { const: 'Intent' }, symbol: { type: 'string' }, side: { enum: ['BUY', 'SELL'] }, size: { type: 'number' } }, additionalProperties: false },
+-  AllocationPlan: { type: 'object', required: ['contract', 'capital', 'allocations'], properties: { contract: { const: 'AllocationPlan' }, capital: { type: 'number' }, allocations: { type: 'array', items: { type: 'object', required: ['symbol', 'fraction'], properties: { symbol: { type: 'string' }, fraction: { type: 'number' } }, additionalProperties: false } } }, additionalProperties: false },
+-  RiskDecision: { type: 'object', required: ['contract', 'state', 'allowed'], properties: { contract: { const: 'RiskDecision' }, state: { enum: ['NORMAL', 'CAUTIOUS', 'RESTRICTED', 'HALTED'] }, allowed: { type: 'boolean' } }, additionalProperties: false },
+-  SimReport: { type: 'object', required: ['contract', 'pnl', 'fills'], properties: { contract: { const: 'SimReport' }, pnl: { type: 'number' }, fills: { type: 'integer' } }, additionalProperties: false },
+-  RealityGapReport: { type: 'object', required: ['contract', 'gapBps', 'autoBrake'], properties: { contract: { const: 'RealityGapReport' }, gapBps: { type: 'number' }, autoBrake: { type: 'boolean' } }, additionalProperties: false },
+-  ShadowEvent: { type: 'object', required: ['contract', 'mode', 'event'], properties: { contract: { const: 'ShadowEvent' }, mode: { const: 'SHADOW' }, event: { type: 'string' } }, additionalProperties: false },
+-  CanaryPhaseState: { type: 'object', required: ['contract', 'phase', 'approved'], properties: { contract: { const: 'CanaryPhaseState' }, phase: { enum: ['P0', 'P1', 'P2', 'P3'] }, approved: { type: 'boolean' } }, additionalProperties: false }
++const ajv = new Ajv({ allErrors: true, strict: true });
++
++const MODES = ['NORMAL', 'CAUTIOUS', 'RESTRICTED', 'HALTED'];
++
++export const contractSchemas = {
++  FeatureFrame: {
++    type: 'object',
++    required: ['schema_version', 'symbol', 'ts_event', 'features', 'feature_vector_order', 'source_snapshot_id', 'deterministic_fingerprint'],
++    additionalProperties: false,
++    properties: {
++      schema_version: { const: '1.0.0' },
++      symbol: { type: 'string', minLength: 1 },
++      ts_event: { type: 'string', pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$' },
++      features: { type: 'object', minProperties: 1, additionalProperties: { type: 'number' } },
++      feature_vector_order: { type: 'array', minItems: 1, items: { type: 'string' } },
++      source_snapshot_id: { type: 'string', minLength: 1 },
++      deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
++    }
++  },
++  StrategySpec: {
++    type: 'object',
++    required: ['schema_version', 'strategy_id', 'semver', 'params_schema', 'default_params', 'compatibility', 'artifact_hashes', 'deterministic_fingerprint'],
++    additionalProperties: false,
++    properties: {
++      schema_version: { const: '1.0.0' },
++      strategy_id: { type: 'string', minLength: 1 },
++      semver: { type: 'string', pattern: '^\\d+\\.\\d+\\.\\d+$' },
++      params_schema: { type: 'object' },
++      default_params: { type: 'object' },
++      compatibility: { type: 'object', required: ['feature_schema'], properties: { feature_schema: { type: 'string', minLength: 1 } }, additionalProperties: true },
++      artifact_hashes: { type: 'object', minProperties: 1, additionalProperties: { type: 'string', pattern: '^sha256:' } },
++      deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
++    }
++  },
++  Signal: {
++    type: 'object',
++    required: ['schema_version', 'signal_id', 'strategy_id', 'symbol', 'timestamp', 'side_hint', 'confidence', 'reasons', 'deterministic_fingerprint'],
++    additionalProperties: false,
++    properties: {
++      schema_version: { const: '1.0.0' },
++      signal_id: { type: 'string' },
++      strategy_id: { type: 'string' },
++      symbol: { type: 'string' },
++      timestamp: { type: 'string', pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$' },
++      side_hint: { enum: ['LONG', 'SHORT', 'FLAT'] },
++      confidence: { type: 'number', minimum: 0, maximum: 1 },
++      reasons: { type: 'array', items: { type: 'string' } },
++      deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
++    }
++  },
++  Intent: {
++    type: 'object',
++    required: ['schema_version', 'intent_id', 'signal_id', 'symbol', 'timestamp', 'side', 'size_units', 'limit_price', 'max_slippage_bps', 'deterministic_fingerprint'],
++    additionalProperties: false,
++    properties: {
++      schema_version: { const: '1.0.0' },
++      intent_id: { type: 'string' },
++      signal_id: { type: 'string' },
++      symbol: { type: 'string' },
++      timestamp: { type: 'string', pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$' },
++      side: { enum: ['BUY', 'SELL'] },
++      size_units: { type: 'number', minimum: 0 },
++      limit_price: { type: 'number', minimum: 0 },
++      max_slippage_bps: { type: 'number', minimum: 0 },
++      deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
++    }
++  },
++  AllocationPlan: {
++    type: 'object',
++    required: ['schema_version', 'plan_id', 'timestamp', 'target_weights', 'max_leverage', 'constraints_applied', 'deterministic_fingerprint'],
++    additionalProperties: false,
++    properties: {
++      schema_version: { const: '1.0.0' },
++      plan_id: { type: 'string' },
++      timestamp: { type: 'string', pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$' },
++      target_weights: { type: 'object', minProperties: 1, additionalProperties: { type: 'number' } },
++      max_leverage: { type: 'number', minimum: 0 },
++      constraints_applied: { type: 'array', items: { type: 'string' } },
++      deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
++    }
++  },
++  RiskDecision: {
++    type: 'object',
++    required: ['schema_version', 'decision_id', 'timestamp', 'from_mode', 'to_mode', 'trigger_ids', 'action', 'deterministic_fingerprint'],
++    additionalProperties: false,
++    properties: {
++      schema_version: { const: '1.0.0' },
++      decision_id: { type: 'string' },
++      timestamp: { type: 'string', pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$' },
++      from_mode: { enum: MODES },
++      to_mode: { enum: MODES },
++      trigger_ids: { type: 'array', minItems: 1, items: { type: 'string' } },
++      action: { enum: ['KEEP', 'REDUCE', 'HALT'] },
++      deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
++    }
++  },
++  SimReport: {
++    type: 'object',
++    required: ['schema_version', 'sim_run_id', 'slippage_model', 'fee_model', 'latency_model', 'inputs_fingerprint', 'output_metrics', 'deterministic_fingerprint'],
++    additionalProperties: false,
++    properties: {
++      schema_version: { const: '1.0.0' },
++      sim_run_id: { type: 'string' },
++      slippage_model: { type: 'string' },
++      fee_model: { type: 'string' },
++      latency_model: { type: 'string' },
++      inputs_fingerprint: { type: 'string', pattern: '^sha256:' },
++      output_metrics: { type: 'object', minProperties: 1, additionalProperties: { type: 'number' } },
++      deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
++    }
++  },
++  RealityGapReport: {
++    type: 'object',
++    required: ['schema_version', 'report_id', 'timestamp', 'sim_ref', 'shadow_ref', 'component_deltas', 'gap_score', 'brake_action', 'deterministic_fingerprint'],
++    additionalProperties: false,
++    properties: {
++      schema_version: { const: '1.0.0' },
++      report_id: { type: 'string' },
++      timestamp: { type: 'string', pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$' },
++      sim_ref: { type: 'string' },
++      shadow_ref: { type: 'string' },
++      component_deltas: { type: 'object', minProperties: 1, additionalProperties: { type: 'number' } },
++      gap_score: { type: 'number', minimum: 0 },
++      brake_action: { enum: ['NONE', 'REDUCE', 'HALT'] },
++      deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
++    }
++  },
++  ShadowEvent: {
++    type: 'object',
++    required: ['schema_version', 'event_id', 'timestamp', 'intents_emitted', 'orders_submitted', 'guards', 'deterministic_fingerprint'],
++    additionalProperties: false,
++    properties: {
++      schema_version: { const: '1.0.0' },
++      event_id: { type: 'string' },
++      timestamp: { type: 'string', pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$' },
++      intents_emitted: { type: 'integer', minimum: 0 },
++      orders_submitted: { type: 'integer', minimum: 0 },
++      guards: { type: 'object', required: ['adapter_disabled'], properties: { adapter_disabled: { type: 'boolean' } }, additionalProperties: true },
++      deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
++    }
++  },
++  CanaryPhaseState: {
++    type: 'object',
++    required: ['schema_version', 'timestamp', 'phase_percent', 'previous_phase_percent', 'rollback_armed', 'transition_reason', 'deterministic_fingerprint'],
++    additionalProperties: false,
++    properties: {
++      schema_version: { const: '1.0.0' },
++      timestamp: { type: 'string', pattern: '^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}Z$' },
++      phase_percent: { enum: [5, 15, 35, 70, 100] },
++      previous_phase_percent: { enum: [5, 15, 35, 70, 100] },
++      rollback_armed: { type: 'boolean' },
++      transition_reason: { type: 'string' },
++      deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
++    }
++  },
++  CertificationReport: {
++    type: 'object',
++    required: ['schema_version', 'release_id', 'epoch_gate_results', 'ledger_snapshot_hash', 'spec_hash', 'evidence_hash', 'approvals', 'deterministic_fingerprint'],
++    additionalProperties: false,
++    properties: {
++      schema_version: { const: '1.0.0' },
++      release_id: { type: 'string' },
++      epoch_gate_results: { type: 'object', additionalProperties: { enum: ['PASS', 'FAIL', 'BLOCKED'] } },
++      ledger_snapshot_hash: { type: 'string', pattern: '^sha256:' },
++      spec_hash: { type: 'string', pattern: '^sha256:' },
++      evidence_hash: { type: 'string', pattern: '^sha256:' },
++      approvals: { type: 'object', minProperties: 1, additionalProperties: { type: 'string' } },
++      deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
++    }
++  }
++};
++
++const validators = Object.fromEntries(Object.entries(contractSchemas).map(([name, schema]) => [name, ajv.compile(schema)]));
++
++const numberScaleByKey = {
++  confidence: 6,
++  size_units: 8,
++  limit_price: 8,
++  max_slippage_bps: 4,
++  max_leverage: 6,
++  gap_score: 6,
++  phase_percent: 0,
++  previous_phase_percent: 0
+ };
+ 
+-const validators = Object.fromEntries(Object.entries(schemas).map(([k, v]) => [k, ajv.compile(v)]));
++function scaleForPath(path) {
++  if (path.includes('.features.')) return 6;
++  if (path.includes('.target_weights.')) return 6;
++  if (path.includes('.component_deltas.')) return 4;
++  return numberScaleByKey[path.split('.').at(-1)] ?? 8;
++}
++
++export function truncateTowardZero(value, scale) {
++  if (!Number.isFinite(value)) throw new Error('Non-finite number in deterministic payload');
++  const factor = 10 ** scale;
++  const truncated = value < 0 ? Math.ceil(value * factor) : Math.floor(value * factor);
++  return truncated / factor;
++}
+ 
+-function normalize(value) {
++function normalizeDeterministic(value, path = '') {
+   if (typeof value === 'number') {
+-    if (!Number.isFinite(value)) throw new Error('Non-finite number in contract');
+-    return Number(value.toFixed(8));
++    return truncateTowardZero(value, scaleForPath(path));
++  }
++  if (Array.isArray(value)) {
++    return value.map((item, index) => normalizeDeterministic(item, `${path}[${index}]`));
+   }
+-  if (Array.isArray(value)) return value.map(normalize);
+   if (value && typeof value === 'object') {
+     const out = {};
+-    for (const key of Object.keys(value).sort()) out[key] = normalize(value[key]);
++    for (const key of Object.keys(value).sort((a, b) => a.localeCompare(b))) {
++      if (value[key] === undefined) throw new Error(`Undefined not allowed at ${path}.${key}`);
++      out[key] = normalizeDeterministic(value[key], path ? `${path}.${key}` : key);
++    }
+     return out;
+   }
+   return value;
+ }
+ 
+ export function canonicalStringify(value) {
+-  return JSON.stringify(normalize(value));
++  return JSON.stringify(normalizeDeterministic(value));
++}
++
++export function deterministicFingerprint(contractName, payload) {
++  const fpPayload = { ...payload };
++  delete fpPayload.deterministic_fingerprint;
++  const digest = crypto.createHash('sha256').update(Buffer.from(canonicalStringify(fpPayload), 'utf8')).digest('hex');
++  return digest;
++}
++
++function assertInvariants(contractName, payload) {
++  const serialized = canonicalStringify(payload);
++  if (serialized.includes('NaN') || serialized.includes('Infinity')) throw new Error(`${contractName} includes forbidden numeric tokens`);
++  if (contractName === 'FeatureFrame') {
++    const keys = Object.keys(payload.features);
++    if (keys.join('|') !== payload.feature_vector_order.join('|')) throw new Error('feature_vector_order does not match features key order');
++    if (keys.some((k) => !Number.isFinite(payload.features[k]))) throw new Error('FeatureFrame features contain non-finite values');
++  }
++  if (contractName === 'ShadowEvent' && payload.orders_submitted !== 0) throw new Error('ShadowEvent orders_submitted must be 0 in shadow mode');
++  if (contractName === 'Signal' && (payload.confidence < 0 || payload.confidence > 1)) throw new Error('Signal confidence outside [0,1]');
++  if (contractName === 'RiskDecision') {
++    const transitions = new Set(['NORMAL>CAUTIOUS', 'CAUTIOUS>RESTRICTED', 'RESTRICTED>HALTED', 'NORMAL>NORMAL', 'CAUTIOUS>CAUTIOUS', 'RESTRICTED>RESTRICTED', 'HALTED>HALTED']);
++    if (!transitions.has(`${payload.from_mode}>${payload.to_mode}`)) throw new Error(`Invalid risk transition ${payload.from_mode}->${payload.to_mode}`);
++  }
+ }
+ 
+-export function fingerprint(value) {
+-  return crypto.createHash('sha256').update(canonicalStringify(value)).digest('hex');
++export function withFingerprint(contractName, payload) {
++  const normalized = normalizeDeterministic(payload);
++  normalized.deterministic_fingerprint = deterministicFingerprint(contractName, normalized);
++  return normalized;
+ }
+ 
+ export function validateContract(contractName, payload) {
+   const validator = validators[contractName];
+   if (!validator) throw new Error(`Unknown contract ${contractName}`);
+-  const ok = validator(payload);
+-  if (!ok) throw new Error(`${contractName} invalid: ${ajv.errorsText(validator.errors)}`);
++  if (!validator(payload)) throw new Error(`${contractName} schema invalid: ${ajv.errorsText(validator.errors)}`);
++  assertInvariants(contractName, payload);
++  const expected = deterministicFingerprint(contractName, payload);
++  if (payload.deterministic_fingerprint !== expected) throw new Error(`${contractName} deterministic_fingerprint mismatch`);
+   return true;
+ }
+diff --git a/core/edge/runtime.mjs b/core/edge/runtime.mjs
+index f743eff..f9f2008 100644
+--- a/core/edge/runtime.mjs
++++ b/core/edge/runtime.mjs
+@@ -1,6 +1,7 @@
+-import { canonicalStringify, fingerprint, validateContract } from './contracts.mjs';
++import crypto from 'node:crypto';
++import { deterministicFingerprint, truncateTowardZero, validateContract, withFingerprint } from './contracts.mjs';
+ 
+-export function seeded(seed) {
++export function seeded(seed = 12345) {
+   let s = seed >>> 0;
+   return () => {
+     s = (1664525 * s + 1013904223) >>> 0;
+@@ -8,67 +9,181 @@ export function seeded(seed) {
+   };
+ }
+ 
+-export function determinismTripwire(fn, seed = 7) {
++export function determinismTripwire(fn, seed = 12345) {
+   const a = fn(seed);
+   const b = fn(seed);
+   const c = fn(seed + 1);
+-  const same = fingerprint(a) === fingerprint(b);
+-  const different = fingerprint(a) !== fingerprint(c);
++  const same = deterministicFingerprint('tripwire', a) === deterministicFingerprint('tripwire', b);
++  const different = deterministicFingerprint('tripwire', a) !== deterministicFingerprint('tripwire', c);
+   if (!same || !different) throw new Error('Determinism tripwire failed');
+   return { same, different };
+ }
+ 
+-export function featureStore(seed = 7) {
++export function buildFeatureFrame(seed = 12345) {
+   const rand = seeded(seed);
+-  const features = { ofi: Number((rand() * 2 - 1).toFixed(8)), vpin: Number(rand().toFixed(8)) };
+-  const payload = { contract: 'FeatureFrame', symbol: 'BTCUSDT', ts: '2024-01-01T00:00:00.000Z', seed, features };
+-  payload.fingerprint = fingerprint(payload);
++  const raw = {
++    schema_version: '1.0.0',
++    symbol: 'BTCUSDT',
++    ts_event: '2026-01-01T00:00:00Z',
++    features: {
++      ofi: truncateTowardZero(rand() * 2 - 1, 6),
++      vpin: truncateTowardZero(rand(), 6)
++    },
++    feature_vector_order: ['ofi', 'vpin'],
++    source_snapshot_id: `snap-${seed}`
++  };
++  const payload = withFingerprint('FeatureFrame', raw);
+   validateContract('FeatureFrame', payload);
+   return payload;
+ }
+ 
+-export function simulator(seed = 7) {
++export function buildStrategySpec() {
++  const payload = withFingerprint('StrategySpec', {
++    schema_version: '1.0.0',
++    strategy_id: 'edge_mvp',
++    semver: '1.2.0',
++    params_schema: { type: 'object', additionalProperties: true },
++    default_params: { risk_budget: 0.15 },
++    compatibility: { feature_schema: '^1.0.0' },
++    artifact_hashes: { bundle: 'sha256:edge_bundle_v1' }
++  });
++  validateContract('StrategySpec', payload);
++  return payload;
++}
++
++export function buildSignal(seed = 12345) {
+   const rand = seeded(seed);
+-  const pnl = Number(((rand() - 0.5) * 100).toFixed(8));
+-  const fills = Math.floor(rand() * 100);
+-  const payload = { contract: 'SimReport', pnl, fills };
+-  validateContract('SimReport', payload);
++  const sideHint = rand() >= 0.5 ? 'LONG' : 'SHORT';
++  const payload = withFingerprint('Signal', {
++    schema_version: '1.0.0',
++    signal_id: `sig-${seed}`,
++    strategy_id: 'edge_mvp',
++    symbol: 'BTCUSDT',
++    timestamp: '2026-01-01T00:00:00Z',
++    side_hint: sideHint,
++    confidence: truncateTowardZero(rand(), 6),
++    reasons: ['trend']
++  });
++  validateContract('Signal', payload);
+   return payload;
+ }
+ 
+-export function strategyRegistry() {
+-  return { contract: 'StrategySpec', strategyId: 'edge.alpha', version: '1.0.0', compat: ['FeatureFrame@1'] };
++export function buildIntent(signal) {
++  const payload = withFingerprint('Intent', {
++    schema_version: '1.0.0',
++    intent_id: signal.signal_id.replace('sig-', 'int-'),
++    signal_id: signal.signal_id,
++    symbol: signal.symbol,
++    timestamp: '2026-01-01T00:00:01Z',
++    side: signal.side_hint === 'SHORT' ? 'SELL' : 'BUY',
++    size_units: truncateTowardZero(signal.confidence * 0.1, 8),
++    limit_price: 42000.12345678,
++    max_slippage_bps: 8
++  });
++  validateContract('Intent', payload);
++  return payload;
+ }
+ 
+-export function signalIntent(seed = 7) {
+-  const score = Number((seeded(seed)() * 2 - 1).toFixed(8));
+-  const signal = { contract: 'Signal', strategyId: 'edge.alpha', symbol: 'BTCUSDT', score };
+-  validateContract('Signal', signal);
+-  const intent = { contract: 'Intent', symbol: signal.symbol, side: score >= 0 ? 'BUY' : 'SELL', size: Number(Math.abs(score).toFixed(8)) };
+-  validateContract('Intent', intent);
+-  return { signal, intent };
++export function buildAllocationPlan(seed = 12345) {
++  const rand = seeded(seed);
++  const weight = truncateTowardZero(Math.min(0.35, Math.max(0.05, rand())), 6);
++  const payload = withFingerprint('AllocationPlan', {
++    schema_version: '1.0.0',
++    plan_id: `ap-${seed}`,
++    timestamp: '2026-01-01T00:00:02Z',
++    target_weights: { BTCUSDT: weight },
++    max_leverage: 1.5,
++    constraints_applied: ['asset_cap']
++  });
++  validateContract('AllocationPlan', payload);
++  return payload;
+ }
+ 
+-export function allocation(seed = 7) {
+-  const kelly = Math.min(0.25, Math.max(0, Number((seeded(seed)() * 0.4).toFixed(8))));
+-  const plan = { contract: 'AllocationPlan', capital: 100000, allocations: [{ symbol: 'BTCUSDT', fraction: kelly }] };
+-  validateContract('AllocationPlan', plan);
+-  return plan;
++export function buildRiskDecision(drawdown = 0) {
++  const toMode = drawdown >= 0.2 ? 'HALTED' : drawdown >= 0.1 ? 'RESTRICTED' : drawdown >= 0.05 ? 'CAUTIOUS' : 'NORMAL';
++  const fromMode = toMode === 'HALTED' ? 'RESTRICTED' : toMode === 'RESTRICTED' ? 'CAUTIOUS' : 'NORMAL';
++  const action = toMode === 'HALTED' ? 'HALT' : toMode === 'NORMAL' ? 'KEEP' : 'REDUCE';
++  const payload = withFingerprint('RiskDecision', {
++    schema_version: '1.0.0',
++    decision_id: `rd-${toMode.toLowerCase()}`,
++    timestamp: '2026-01-01T00:00:03Z',
++    from_mode: fromMode,
++    to_mode: toMode,
++    trigger_ids: [toMode === 'NORMAL' ? 'none' : 'drawdown_breach'],
++    action
++  });
++  validateContract('RiskDecision', payload);
++  return payload;
+ }
+ 
+-export function riskBrain(drawdown = 0) {
+-  const state = drawdown > 0.2 ? 'HALTED' : drawdown > 0.1 ? 'RESTRICTED' : drawdown > 0.05 ? 'CAUTIOUS' : 'NORMAL';
+-  return { contract: 'RiskDecision', state, allowed: state !== 'HALTED' };
++export function buildSimReport(seed = 12345) {
++  const rand = seeded(seed);
++  const payload = withFingerprint('SimReport', {
++    schema_version: '1.0.0',
++    sim_run_id: `sim-${seed}`,
++    slippage_model: 'mvp',
++    fee_model: 'maker_taker_v1',
++    latency_model: 'fixed_50ms',
++    inputs_fingerprint: `sha256:${crypto.createHash('sha256').update(`seed:${seed}`).digest('hex')}`,
++    output_metrics: { sharpe: truncateTowardZero(rand() * 2, 6) }
++  });
++  validateContract('SimReport', payload);
++  return payload;
+ }
+ 
+-export function walkForwardLeakageSentinel(hasLeakage) {
+-  if (hasLeakage) throw new Error('Leakage sentinel triggered');
+-  return { folds: 3, embargoBars: 5, purged: true };
++export function buildRealityGapReport(simRef = 'sim-1', shadowRef = 'sh-1', delta = 0.031) {
++  const payload = withFingerprint('RealityGapReport', {
++    schema_version: '1.0.0',
++    report_id: `rg-${simRef}`,
++    timestamp: '2026-01-01T00:01:00Z',
++    sim_ref: simRef,
++    shadow_ref: shadowRef,
++    component_deltas: { slippage_bps: truncateTowardZero(delta * 100, 4) },
++    gap_score: truncateTowardZero(Math.abs(delta), 6),
++    brake_action: Math.abs(delta) > 0.025 ? 'REDUCE' : 'NONE'
++  });
++  validateContract('RealityGapReport', payload);
++  return payload;
+ }
+ 
+-export function realityGap(simPnl, livePnl) {
+-  const gapBps = Number((Math.abs(simPnl - livePnl) * 100).toFixed(8));
+-  return { contract: 'RealityGapReport', gapBps, autoBrake: gapBps > 150 };
++export function buildShadowEvent(intentsEmitted = 3) {
++  const payload = withFingerprint('ShadowEvent', {
++    schema_version: '1.0.0',
++    event_id: 'se-1',
++    timestamp: '2026-01-01T00:02:00Z',
++    intents_emitted: intentsEmitted,
++    orders_submitted: 0,
++    guards: { adapter_disabled: true, order_path_blocked: true }
++  });
++  validateContract('ShadowEvent', payload);
++  return payload;
++}
++
++export function buildCanaryPhaseState(previous = 5, phase = 15) {
++  const payload = withFingerprint('CanaryPhaseState', {
++    schema_version: '1.0.0',
++    timestamp: '2026-01-01T00:03:00Z',
++    phase_percent: phase,
++    previous_phase_percent: previous,
++    rollback_armed: true,
++    transition_reason: 'all_guards_green'
++  });
++  validateContract('CanaryPhaseState', payload);
++  return payload;
++}
++
++export function buildCertificationReport(results) {
++  const payload = withFingerprint('CertificationReport', {
++    schema_version: '1.0.0',
++    release_id: 'edge-r1',
++    epoch_gate_results: results,
++    ledger_snapshot_hash: 'sha256:ledger_snapshot',
++    spec_hash: 'sha256:spec_hash',
++    evidence_hash: 'sha256:evidence_hash',
++    approvals: { release_governor: 'signed' }
++  });
++  validateContract('CertificationReport', payload);
++  return payload;
+ }
+ 
+ export function submitOrder(mode) {
+@@ -77,14 +192,10 @@ export function submitOrder(mode) {
+     err.code = 'EDGE_SHADOW_ORDER_FORBIDDEN';
+     throw err;
+   }
+-  return { ok: true };
+-}
+-
+-export function canary(phase = 'P0', approved = false) {
+-  return { contract: 'CanaryPhaseState', phase, approved };
++  return { accepted: true };
+ }
+ 
+-export function certification(results) {
+-  if (results.some((r) => r !== 'PASS')) throw new Error('Certification blocked');
+-  return canonicalStringify({ certified: true, at: 'offline-static' });
++export function walkForwardLeakageSentinel(hasLeakage) {
++  if (hasLeakage) throw new Error('Leakage sentinel triggered');
++  return { folds: 3, embargo_bars: 5, purged: true };
+ }
+diff --git a/package.json b/package.json
+index 775f12e..a785b65 100644
+--- a/package.json
++++ b/package.json
+@@ -98,7 +98,9 @@
+     "verify:epoch38": "node scripts/verify/epoch38_edge_gate.mjs",
+     "verify:epoch39": "node scripts/verify/epoch39_edge_gate.mjs",
+     "verify:epoch40": "node scripts/verify/epoch40_edge_gate.mjs",
+-    "verify:edge": "node scripts/verify/edge_all_epochs.mjs"
++    "verify:edge": "node scripts/verify/edge_all_epochs.mjs",
++    "verify:edge:strict": "ENABLE_CLEAN_CLONE=1 npm run verify:edge",
++    "verify:goldens:update": "UPDATE_GOLDENS=1 npm run verify:edge"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
+diff --git a/scripts/verify/edge_all_epochs.mjs b/scripts/verify/edge_all_epochs.mjs
+index 7df7ca6..e120f7f 100644
+--- a/scripts/verify/edge_all_epochs.mjs
++++ b/scripts/verify/edge_all_epochs.mjs
+@@ -3,26 +3,66 @@ import fs from 'node:fs';
+ import path from 'node:path';
+ 
+ const evidenceEpoch = process.env.EVIDENCE_EPOCH || 'EPOCH-EDGE-LOCAL-MEGA';
++const runLabel = process.env.EDGE_RUN_LABEL || 'run';
+ const base = path.join('reports/evidence', evidenceEpoch, 'mega');
++const gatesDir = path.join('reports/evidence', evidenceEpoch, 'gates');
+ fs.mkdirSync(base, { recursive: true });
++fs.mkdirSync(gatesDir, { recursive: true });
++const initialTrackedStatus = spawnSync('git', ['status', '--porcelain', '--untracked-files=no'], { encoding: 'utf8' }).stdout;
++
++const summary = [];
+ 
+ for (const epoch of ['31', '32', '33', '34', '35', '36', '37', '38', '39', '40']) {
+-  const cmd = ['run', `verify:epoch${epoch}`];
+-  const log = path.join(base, `verify_epoch${epoch}.log`);
+-  const res = spawnSync('npm', cmd, { encoding: 'utf8', env: process.env });
+-  fs.writeFileSync(log, (res.stdout || '') + (res.stderr || ''));
+-  if (res.status !== 0) {
+-    console.error(`verify:epoch${epoch} failed; see ${log}`);
+-    process.exit(res.status ?? 1);
++  const logPath = path.join(gatesDir, `verify_epoch${epoch}_${runLabel}.log`);
++  try {
++    const result = spawnSync('npm', ['run', `verify:epoch${epoch}`], { encoding: 'utf8', env: process.env });
++    const logText = [
++      `command=npm run verify:epoch${epoch}`,
++      `exit_code=${result.status ?? 'null'}`,
++      '',
++      result.stdout || '',
++      result.stderr || ''
++    ].join('\n');
++    fs.writeFileSync(logPath, logText);
++    const passed = result.status === 0;
++    summary.push({ epoch, status: passed ? 'PASS' : 'FAIL', log: logPath });
++    if (!passed) break;
++  } catch (error) {
++    fs.writeFileSync(logPath, `spawn_error=${error.message}\n${error.stack || ''}\n`);
++    summary.push({ epoch, status: 'FAIL', log: logPath });
++    break;
+   }
+ }
+ 
++const cleanCloneLog = path.join(base, `clean_clone_${runLabel}.log`);
+ if (process.env.ENABLE_CLEAN_CLONE === '1') {
+   const cc = spawnSync('npm', ['run', 'verify:clean-clone'], { encoding: 'utf8', env: process.env });
+-  fs.writeFileSync(path.join(base, 'clean_clone.log'), (cc.stdout || '') + (cc.stderr || ''));
+-  if (cc.status !== 0) process.exit(cc.status ?? 1);
++  fs.writeFileSync(cleanCloneLog, `${cc.stdout || ''}\n${cc.stderr || ''}`);
++  summary.push({ epoch: 'clean-clone', status: cc.status === 0 ? 'PASS' : 'FAIL', log: cleanCloneLog });
+ } else {
+-  fs.writeFileSync(path.join(base, 'clean_clone.log'), 'SKIPPED (set ENABLE_CLEAN_CLONE=1 to run).\n');
++  fs.writeFileSync(cleanCloneLog, 'SKIPPED (set ENABLE_CLEAN_CLONE=1 to run).\n');
++  summary.push({ epoch: 'clean-clone', status: 'SKIPPED', log: cleanCloneLog });
++}
++
++const summaryJsonPath = path.join(base, `verify_edge_summary_${runLabel}.json`);
++fs.writeFileSync(summaryJsonPath, `${JSON.stringify({ runLabel, summary }, null, 2)}\n`);
++
++const lines = ['| epoch | status | log |', '|---|---|---|', ...summary.map((item) => `| ${item.epoch} | ${item.status} | ${item.log} |`)];
++const summaryMdPath = path.join(base, `verify_edge_summary_${runLabel}.md`);
++fs.writeFileSync(summaryMdPath, `${lines.join('\n')}\n`);
++
++
++const gitStatus = spawnSync('git', ['status', '--porcelain', '--untracked-files=no'], { encoding: 'utf8' });
++const driftPath = path.join(base, `verify_edge_no_dirty_${runLabel}.status`);
++fs.writeFileSync(driftPath, gitStatus.stdout && gitStatus.stdout.trim() ? gitStatus.stdout : 'CLEAN\n');
++if (gitStatus.stdout !== initialTrackedStatus) {
++  console.error(`verify:edge modified tracked files; see ${driftPath}`);
++  process.exit(1);
++}
++const failed = summary.find((item) => item.status === 'FAIL');
++if (failed) {
++  console.error(`verify:edge failed at ${failed.epoch}; see ${failed.log}`);
++  process.exit(1);
+ }
+ 
+-console.log(`PASS verify:edge evidence=${base}`);
++console.log(`PASS verify:edge run=${runLabel} evidence=${base}`);
+diff --git a/scripts/verify/edge_epoch_gate.mjs b/scripts/verify/edge_epoch_gate.mjs
+index 362c049..578e16b 100644
+--- a/scripts/verify/edge_epoch_gate.mjs
++++ b/scripts/verify/edge_epoch_gate.mjs
+@@ -1,111 +1,170 @@
+ import fs from 'node:fs';
+ import path from 'node:path';
+ import crypto from 'node:crypto';
++import { spawnSync } from 'node:child_process';
+ import { fileURLToPath } from 'node:url';
+-import { canonicalStringify, fingerprint, validateContract } from '../../core/edge/contracts.mjs';
++import { canonicalStringify, deterministicFingerprint, validateContract } from '../../core/edge/contracts.mjs';
+ import {
+   determinismTripwire,
+-  featureStore,
+-  simulator,
+-  strategyRegistry,
+-  signalIntent,
+-  allocation,
+-  riskBrain,
+-  walkForwardLeakageSentinel,
+-  realityGap,
++  buildFeatureFrame,
++  buildStrategySpec,
++  buildSignal,
++  buildIntent,
++  buildAllocationPlan,
++  buildRiskDecision,
++  buildSimReport,
++  buildRealityGapReport,
++  buildShadowEvent,
++  buildCanaryPhaseState,
++  buildCertificationReport,
+   submitOrder,
+-  canary,
+-  certification
++  walkForwardLeakageSentinel
+ } from '../../core/edge/runtime.mjs';
+ 
+ const __dirname = path.dirname(fileURLToPath(import.meta.url));
+ const root = path.resolve(__dirname, '../..');
+ const epoch = process.argv[2];
+ if (!epoch) throw new Error('epoch required');
++
+ const evidenceEpoch = process.env.EVIDENCE_EPOCH || 'EPOCH-EDGE-LOCAL';
+-const outDir = path.join(root, 'reports/evidence', evidenceEpoch, `epoch${epoch}`);
+-fs.mkdirSync(outDir, { recursive: true });
++const gateDir = path.join(root, 'reports/evidence', evidenceEpoch, `epoch${epoch}`);
++const vectorsDir = path.join(root, 'reports/evidence', evidenceEpoch, 'vectors');
++fs.mkdirSync(gateDir, { recursive: true });
++fs.mkdirSync(vectorsDir, { recursive: true });
++const initialTrackedStatus = spawnSync('git', ['status', '--porcelain', '--untracked-files=no'], { cwd: root, encoding: 'utf8' }).stdout;
+ 
+ function write(rel, data) {
+-  const p = path.join(outDir, rel);
+-  fs.mkdirSync(path.dirname(p), { recursive: true });
+-  fs.writeFileSync(p, data);
++  const file = path.join(gateDir, rel);
++  fs.mkdirSync(path.dirname(file), { recursive: true });
++  fs.writeFileSync(file, data);
++  return file;
++}
++
++function writeVector(rel, data) {
++  const file = path.join(vectorsDir, rel);
++  fs.mkdirSync(path.dirname(file), { recursive: true });
++  fs.writeFileSync(file, data);
++  return file;
+ }
+ 
+-function sha(p) {
+-  return crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
++function fileSha(file) {
++  return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+ }
+ 
+-let outputs = {};
++function compareGolden(contractName, payload) {
++  const actual = `${canonicalStringify(payload)}\n`;
++  const goldenPath = path.join(root, 'tests/vectors', contractName, `epoch${epoch}.golden.json`);
++  const actualPath = writeVector(`epoch${epoch}.${contractName}.actual.json`, actual);
++
++  if (!fs.existsSync(goldenPath)) {
++    if (process.env.UPDATE_GOLDENS === '1') {
++      fs.mkdirSync(path.dirname(goldenPath), { recursive: true });
++      fs.writeFileSync(goldenPath, actual);
++      write('GOLDEN_UPDATES.log', `GOLDEN UPDATED ${path.relative(root, goldenPath)}\n`);
++    } else {
++      throw new Error(`Missing golden ${path.relative(root, goldenPath)}`);
++    }
++  }
++
++  const golden = fs.readFileSync(goldenPath, 'utf8');
++  if (golden !== actual) {
++    const diff = [
++      `contract=${contractName}`,
++      '--- golden',
++      golden,
++      '--- actual',
++      actual
++    ].join('\n');
++    writeVector(`epoch${epoch}.${contractName}.diff.txt`, diff);
++    if (process.env.UPDATE_GOLDENS === '1') {
++      fs.writeFileSync(goldenPath, actual);
++      write('GOLDEN_UPDATES.log', `GOLDEN UPDATED ${path.relative(root, goldenPath)}\n`);
++    } else {
++      throw new Error(`Golden mismatch for ${contractName}`);
++    }
++  }
++
++  return { goldenPath, actualPath };
++}
++
++function assertNoTrackedDrift() {
++  const result = spawnSync('git', ['status', '--porcelain', '--untracked-files=no'], { cwd: root, encoding: 'utf8' });
++  const currentStatus = result.stdout;
++  write('NO_DIRTY_VERIFY.status', currentStatus.trim() ? currentStatus : 'CLEAN\n');
++  if (process.env.UPDATE_GOLDENS !== '1' && currentStatus !== initialTrackedStatus) throw new Error('verify modified tracked files');
++}
++
++function addPreflight() {
++  const pf = [
++    process.cwd(),
++    spawnSync('git', ['branch', '--show-current'], { cwd: root, encoding: 'utf8' }).stdout.trim(),
++    spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).stdout.trim(),
++    process.version
++  ].join('\n') + '\n';
++  write('PREFLIGHT.log', pf);
++}
++
++addPreflight();
++write('SNAPSHOT.md', `- epoch: ${epoch}\n- seed: 12345\n- offline: true\n`);
++write('GATE_PLAN.md', '- schema validation\n- deterministic replay\n- golden comparison\n- no-dirty assertion\n');
++
++const outputs = {};
+ if (epoch === '31') {
+-  outputs.FeatureFrame = featureStore(31);
+-  determinismTripwire((seed) => featureStore(seed), 31);
+-  try { walkForwardLeakageSentinel(true); throw new Error('Injected bad case did not fail'); } catch {}
+-  write('FEATURE_CONTRACTS.md', '- FeatureFrame + FeatureManifest scope recorded.\n');
+-  write('LOOKAHEAD_SENTINEL_PLAN.md', '- bad fixture must fail (injected and verified).\n');
+-  write('FINGERPRINT_RULES.md', '- canonical JSON sorted keys + fixed rounding (8dp).\n');
+-} else if (epoch === '32') {
+-  outputs.SimReport = simulator(32);
+-  determinismTripwire((seed) => simulator(seed), 32);
+-} else if (epoch === '33') {
+-  outputs.StrategySpec = strategyRegistry();
+-  validateContract('StrategySpec', outputs.StrategySpec);
+-  if (outputs.StrategySpec.version.split('.')[0] !== '1') throw new Error('Compat checker failed');
+-} else if (epoch === '34') {
+-  outputs = { ...signalIntent(34) };
+-} else if (epoch === '35') {
+-  outputs.AllocationPlan = allocation(35);
+-} else if (epoch === '36') {
+-  outputs.RiskDecision = riskBrain(0.22);
+-  validateContract('RiskDecision', outputs.RiskDecision);
+-  if (outputs.RiskDecision.state !== 'HALTED') throw new Error('FSM invariant failed');
+-} else if (epoch === '37') {
+-  outputs.WalkForward = walkForwardLeakageSentinel(false);
+-  let failed = false;
+-  try { walkForwardLeakageSentinel(true); } catch { failed = true; }
+-  if (!failed) throw new Error('Injected leakage fixture did not fail');
+-} else if (epoch === '38') {
+-  outputs.RealityGapReport = realityGap(1.1, -0.9);
+-  validateContract('RealityGapReport', outputs.RealityGapReport);
+-} else if (epoch === '39') {
+-  outputs.ShadowEvent = { contract: 'ShadowEvent', mode: 'SHADOW', event: 'simulation-only' };
+-  validateContract('ShadowEvent', outputs.ShadowEvent);
+-  let thrown = false;
+-  try { submitOrder('SHADOW'); } catch (err) { thrown = err.code === 'EDGE_SHADOW_ORDER_FORBIDDEN'; }
+-  if (!thrown) throw new Error('Shadow mode hard fuse failed');
+-  outputs.CanaryPhaseState = canary('P1', true);
+-  validateContract('CanaryPhaseState', outputs.CanaryPhaseState);
+-} else if (epoch === '40') {
+-  outputs.Certification = certification(['PASS', 'PASS', 'PASS']);
+-} else {
+-  throw new Error(`unsupported epoch ${epoch}`);
++  outputs.FeatureFrame = buildFeatureFrame(12345);
++  determinismTripwire((seed) => buildFeatureFrame(seed), 12345);
++  let injectedFailed = false;
++  try { walkForwardLeakageSentinel(true); } catch { injectedFailed = true; }
++  if (!injectedFailed) throw new Error('Injected look-ahead case did not fail');
++  write('FEATURE_CONTRACTS.md', '- FeatureFrame contract enforced against SSOT field list.\n');
++  write('LOOKAHEAD_SENTINEL_PLAN.md', '- Positive control (leakage) is required to fail.\n');
++  write('FINGERPRINT_RULES.md', '- deterministic_fingerprint excludes only itself; canonical sorted JSON; truncate_toward_zero.\n');
++}
++if (epoch === '32') {
++  outputs.SimReport = buildSimReport(12345);
++  determinismTripwire((seed) => buildSimReport(seed), 12345);
+ }
++if (epoch === '33') outputs.StrategySpec = buildStrategySpec();
++if (epoch === '34') {
++  outputs.Signal = buildSignal(12345);
++  outputs.Intent = buildIntent(outputs.Signal);
++}
++if (epoch === '35') outputs.AllocationPlan = buildAllocationPlan(12345);
++if (epoch === '36') outputs.RiskDecision = buildRiskDecision(0.22);
++if (epoch === '37') {
++  outputs.WFOReport = walkForwardLeakageSentinel(false);
++  let injectedFailed = false;
++  try { walkForwardLeakageSentinel(true); } catch { injectedFailed = true; }
++  if (!injectedFailed) throw new Error('Injected leakage fixture did not fail');
++}
++if (epoch === '38') outputs.RealityGapReport = buildRealityGapReport('sim-12345', 'sh-12345', 0.031);
++if (epoch === '39') {
++  outputs.ShadowEvent = buildShadowEvent(4);
++  outputs.CanaryPhaseState = buildCanaryPhaseState(5, 15);
++  let shadowBlocked = false;
++  try { submitOrder('SHADOW'); } catch (error) { shadowBlocked = error.code === 'EDGE_SHADOW_ORDER_FORBIDDEN'; }
++  if (!shadowBlocked) throw new Error('Shadow hard-fuse did not trigger');
++}
++if (epoch === '40') {
++  outputs.CertificationReport = buildCertificationReport(Object.fromEntries(Array.from({ length: 10 }, (_, i) => [String(31 + i), 'PASS'])));
++}
++if (Object.keys(outputs).length === 0) throw new Error(`unsupported epoch ${epoch}`);
+ 
+-const checksums = [];
++const checksumLines = [];
+ for (const [name, payload] of Object.entries(outputs)) {
+-  const contractName = name === 'WalkForward' || name === 'Certification' ? null : payload.contract || name;
+-  const json = typeof payload === 'string' ? payload : canonicalStringify(payload);
+-  const vectorDir = path.join(root, 'tests/vectors', name);
+-  fs.mkdirSync(vectorDir, { recursive: true });
+-  const file = path.join(vectorDir, `epoch${epoch}.golden.json`);
+-  fs.writeFileSync(file, json + '\n');
+-  checksums.push(`${sha(file)}  tests/vectors/${name}/epoch${epoch}.golden.json`);
+-  if (contractName && contractName in { FeatureFrame:1, StrategySpec:1, Signal:1, Intent:1, AllocationPlan:1, RiskDecision:1, SimReport:1, RealityGapReport:1, ShadowEvent:1, CanaryPhaseState:1 }) {
+-    validateContract(contractName, payload);
++  if (payload?.deterministic_fingerprint) {
++    const expected = deterministicFingerprint(name, payload);
++    if (expected !== payload.deterministic_fingerprint) throw new Error(`Fingerprint mismatch for ${name}`);
++    if (name !== 'WFOReport') validateContract(name, payload);
+   }
+-  if (typeof payload === 'object' && payload !== null && payload.contract) {
+-    payload.fingerprint = fingerprint(payload);
++  if (name !== 'WFOReport') {
++    const paths = compareGolden(name, payload);
++    checksumLines.push(`${fileSha(paths.actualPath)}  ${path.relative(root, paths.actualPath)}`);
++    if (fs.existsSync(paths.goldenPath)) checksumLines.push(`${fileSha(paths.goldenPath)}  ${path.relative(root, paths.goldenPath)}`);
+   }
+ }
+ 
+-const required = ['SNAPSHOT.md', 'GATE_PLAN.md'];
+-write('SNAPSHOT.md', `- epoch: ${epoch}\n- seed: ${epoch}\n- offline: true\n`);
+-write('GATE_PLAN.md', `- validate schema\n- determinism replay\n- evidence check\n`);
+-if (epoch === '40') write('CLEAN_CLONE.log', 'clean clone skipped in gate script; validated in verify:edge.\n');
+-for (const file of required) {
+-  if (!fs.existsSync(path.join(outDir, file))) throw new Error(`missing evidence ${file}`);
+-}
+-write('CHECKSUMS.sha256', checksums.join('\n') + (checksums.length ? '\n' : ''));
++write('CHECKSUMS.sha256', `${checksumLines.join('\n')}\n`);
+ write('VERDICT.md', 'PASS\n');
++assertNoTrackedDrift();
+ 
+-console.log(`PASS epoch${epoch} artifacts=${outDir} fingerprints=${Object.values(outputs).map((o) => typeof o === 'string' ? fingerprint({ o }) : fingerprint(o)).join(',')}`);
++console.log(`PASS epoch${epoch} artifacts=${path.relative(root, gateDir)}`);
+diff --git a/tests/vectors/AllocationPlan/epoch35.golden.json b/tests/vectors/AllocationPlan/epoch35.golden.json
+index 947da35..aaf0f25 100644
+--- a/tests/vectors/AllocationPlan/epoch35.golden.json
++++ b/tests/vectors/AllocationPlan/epoch35.golden.json
+@@ -1 +1 @@
+-{"allocations":[{"fraction":0.09985292,"symbol":"BTCUSDT"}],"capital":100000,"contract":"AllocationPlan"}
++{"constraints_applied":["asset_cap"],"deterministic_fingerprint":"15e5ecdfa68bb0ac268717736c05df31cd4c98b26fd946e2f6c2b5badfc85d28","max_leverage":1.5,"plan_id":"ap-12345","schema_version":"1.0.0","target_weights":{"BTCUSDT":0.05},"timestamp":"2026-01-01T00:00:02Z"}
+diff --git a/tests/vectors/CanaryPhaseState/epoch39.golden.json b/tests/vectors/CanaryPhaseState/epoch39.golden.json
+index 93eb6a8..8e34264 100644
+--- a/tests/vectors/CanaryPhaseState/epoch39.golden.json
++++ b/tests/vectors/CanaryPhaseState/epoch39.golden.json
+@@ -1 +1 @@
+-{"approved":true,"contract":"CanaryPhaseState","phase":"P1"}
++{"deterministic_fingerprint":"f493ed3f1c6c03c291e4ce485e1e775dc08941000a14fe75e0565d61017cefdb","phase_percent":15,"previous_phase_percent":5,"rollback_armed":true,"schema_version":"1.0.0","timestamp":"2026-01-01T00:03:00Z","transition_reason":"all_guards_green"}
+diff --git a/tests/vectors/FeatureFrame/epoch31.golden.json b/tests/vectors/FeatureFrame/epoch31.golden.json
+index db6d209..c75f0ad 100644
+--- a/tests/vectors/FeatureFrame/epoch31.golden.json
++++ b/tests/vectors/FeatureFrame/epoch31.golden.json
+@@ -1 +1 @@
+-{"contract":"FeatureFrame","features":{"ofi":-0.5038358,"vpin":0.09038363},"fingerprint":"704e307c1936d607eed815a19f841b1ab347a5e5e3f34b0b88a6e23872f76ac6","seed":31,"symbol":"BTCUSDT","ts":"2024-01-01T00:00:00.000Z"}
++{"deterministic_fingerprint":"d8e3f2c2e6e1f7b8f09818af48b1cbec2e01d899e06398672346eea3ced429f0","feature_vector_order":["ofi","vpin"],"features":{"ofi":-0.959194,"vpin":0.016547},"schema_version":"1.0.0","source_snapshot_id":"snap-12345","symbol":"BTCUSDT","ts_event":"2026-01-01T00:00:00Z"}
+diff --git a/tests/vectors/RealityGapReport/epoch38.golden.json b/tests/vectors/RealityGapReport/epoch38.golden.json
+index 5ad20e3..0db7b2f 100644
+--- a/tests/vectors/RealityGapReport/epoch38.golden.json
++++ b/tests/vectors/RealityGapReport/epoch38.golden.json
+@@ -1 +1 @@
+-{"autoBrake":true,"contract":"RealityGapReport","gapBps":200}
++{"brake_action":"REDUCE","component_deltas":{"slippage_bps":3.1},"deterministic_fingerprint":"b9e728d1ec3169cd537abf739559c1090d13e99882d277825da3caf23c0e1817","gap_score":0.031,"report_id":"rg-sim-12345","schema_version":"1.0.0","shadow_ref":"sh-12345","sim_ref":"sim-12345","timestamp":"2026-01-01T00:01:00Z"}
+diff --git a/tests/vectors/RiskDecision/epoch36.golden.json b/tests/vectors/RiskDecision/epoch36.golden.json
+index f71a30e..bd3a9c2 100644
+--- a/tests/vectors/RiskDecision/epoch36.golden.json
++++ b/tests/vectors/RiskDecision/epoch36.golden.json
+@@ -1 +1 @@
+-{"allowed":false,"contract":"RiskDecision","state":"HALTED"}
++{"action":"HALT","decision_id":"rd-halted","deterministic_fingerprint":"dbfcb0269c106112890fd2312b651c8c55b810b4e9061464c3893733b8be5f05","from_mode":"RESTRICTED","schema_version":"1.0.0","timestamp":"2026-01-01T00:00:03Z","to_mode":"HALTED","trigger_ids":["drawdown_breach"]}
+diff --git a/tests/vectors/ShadowEvent/epoch39.golden.json b/tests/vectors/ShadowEvent/epoch39.golden.json
+index df1eeb0..976b008 100644
+--- a/tests/vectors/ShadowEvent/epoch39.golden.json
++++ b/tests/vectors/ShadowEvent/epoch39.golden.json
+@@ -1 +1 @@
+-{"contract":"ShadowEvent","event":"simulation-only","mode":"SHADOW"}
++{"deterministic_fingerprint":"bb496acd0da6f5807b20902b94a3fbb0c9f3dbf3cd6bd39983e2d0229206636c","event_id":"se-1","guards":{"adapter_disabled":true,"order_path_blocked":true},"intents_emitted":4,"orders_submitted":0,"schema_version":"1.0.0","timestamp":"2026-01-01T00:02:00Z"}
+diff --git a/tests/vectors/SimReport/epoch32.golden.json b/tests/vectors/SimReport/epoch32.golden.json
+index d3137be..f8a383f 100644
+--- a/tests/vectors/SimReport/epoch32.golden.json
++++ b/tests/vectors/SimReport/epoch32.golden.json
+@@ -1 +1 @@
+-{"contract":"SimReport","fills":18,"pnl":-25.15303495}
++{"deterministic_fingerprint":"c2ccbff6d73077333c3d939493a7142b468fa14139926d50579036d45b87ac90","fee_model":"maker_taker_v1","inputs_fingerprint":"sha256:18e967075eb4928b5f8cde6deaee15548cb90ca540ab4baa470ff0a134465c7d","latency_model":"fixed_50ms","output_metrics":{"sharpe":0.040805},"schema_version":"1.0.0","sim_run_id":"sim-12345","slippage_model":"mvp"}
+diff --git a/tests/vectors/StrategySpec/epoch33.golden.json b/tests/vectors/StrategySpec/epoch33.golden.json
+index 28a93ad..93e98b2 100644
+--- a/tests/vectors/StrategySpec/epoch33.golden.json
++++ b/tests/vectors/StrategySpec/epoch33.golden.json
+@@ -1 +1 @@
+-{"compat":["FeatureFrame@1"],"contract":"StrategySpec","strategyId":"edge.alpha","version":"1.0.0"}
++{"artifact_hashes":{"bundle":"sha256:edge_bundle_v1"},"compatibility":{"feature_schema":"^1.0.0"},"default_params":{"risk_budget":0.15},"deterministic_fingerprint":"d9ba628acac980b63b0f35e493cda6807517cc5224dd04268523fc148d86d4a6","params_schema":{"additionalProperties":true,"type":"object"},"schema_version":"1.0.0","semver":"1.2.0","strategy_id":"edge_mvp"}

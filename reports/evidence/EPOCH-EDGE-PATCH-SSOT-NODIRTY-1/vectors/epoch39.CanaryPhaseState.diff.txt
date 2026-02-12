@@ -1,0 +1,6 @@
+contract=CanaryPhaseState
+--- golden
+{"approved":true,"contract":"CanaryPhaseState","phase":"P1"}
+
+--- actual
+{"deterministic_fingerprint":"f493ed3f1c6c03c291e4ce485e1e775dc08941000a14fe75e0565d61017cefdb","phase_percent":15,"previous_phase_percent":5,"rollback_armed":true,"schema_version":"1.0.0","timestamp":"2026-01-01T00:03:00Z","transition_reason":"all_guards_green"}

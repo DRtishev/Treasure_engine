@@ -1,0 +1,60 @@
+{
+  "runLabel": "run1",
+  "summary": [
+    {
+      "epoch": "31",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/gates/verify_epoch31_run1.log"
+    },
+    {
+      "epoch": "32",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/gates/verify_epoch32_run1.log"
+    },
+    {
+      "epoch": "33",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/gates/verify_epoch33_run1.log"
+    },
+    {
+      "epoch": "34",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/gates/verify_epoch34_run1.log"
+    },
+    {
+      "epoch": "35",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/gates/verify_epoch35_run1.log"
+    },
+    {
+      "epoch": "36",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/gates/verify_epoch36_run1.log"
+    },
+    {
+      "epoch": "37",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/gates/verify_epoch37_run1.log"
+    },
+    {
+      "epoch": "38",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/gates/verify_epoch38_run1.log"
+    },
+    {
+      "epoch": "39",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/gates/verify_epoch39_run1.log"
+    },
+    {
+      "epoch": "40",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/gates/verify_epoch40_run1.log"
+    },
+    {
+      "epoch": "clean-clone",
+      "status": "SKIPPED",
+      "log": "reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/mega/clean_clone_run1.log"
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+{
+  "evidence_epoch": "EPOCH-EDGE-IMPL-MEGA-31-40-1",
+  "evidence_dir": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1",
+  "started_at": "2026-02-12T15:01:19.276Z",
+  "finished_at": "2026-02-12T15:02:34.011Z",
+  "status": "PASS",
+  "required_markers": [
+    "npm run verify:specs",
+    "npm run verify:paper",
+    "npm run verify:e2",
+    "npm run verify:e2:multi",
+    "npm run verify:paper:multi",
+    "npm run verify:phase2",
+    "npm run verify:integration",
+    "npm run verify:core",
+    "npm run export:validated",
+    "npm run regen:manifests"
+  ],
+  "steps": [
+    {
+      "command": "npm ci",
+      "started_at": "2026-02-12T15:01:19.281Z",
+      "finished_at": "2026-02-12T15:01:21.843Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/01_npm_ci.log"
+    },
+    {
+      "command": "npm run verify:specs",
+      "started_at": "2026-02-12T15:01:21.844Z",
+      "finished_at": "2026-02-12T15:01:23.460Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/02_npm_run_verify_specs.log"
+    },
+    {
+      "command": "npm run verify:specs",
+      "started_at": "2026-02-12T15:01:23.460Z",
+      "finished_at": "2026-02-12T15:01:25.311Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/03_npm_run_verify_specs.log"
+    },
+    {
+      "command": "npm run verify:paper",
+      "started_at": "2026-02-12T15:01:25.311Z",
+      "finished_at": "2026-02-12T15:01:27.302Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/04_npm_run_verify_paper.log"
+    },
+    {
+      "command": "npm run verify:paper",
+      "started_at": "2026-02-12T15:01:27.303Z",
+      "finished_at": "2026-02-12T15:01:29.260Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/05_npm_run_verify_paper.log"
+    },
+    {
+      "command": "npm run verify:e2",
+      "started_at": "2026-02-12T15:01:29.260Z",
+      "finished_at": "2026-02-12T15:01:33.670Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/06_npm_run_verify_e2.log"
+    },
+    {
+      "command": "npm run verify:e2",
+      "started_at": "2026-02-12T15:01:33.671Z",
+      "finished_at": "2026-02-12T15:01:38.254Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/07_npm_run_verify_e2.log"
+    },
+    {
+      "command": "npm run verify:e2:multi",
+      "started_at": "2026-02-12T15:01:38.255Z",
+      "finished_at": "2026-02-12T15:01:53.725Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/08_npm_run_verify_e2_multi.log"
+    },
+    {
+      "command": "npm run verify:paper:multi",
+      "started_at": "2026-02-12T15:01:53.726Z",
+      "finished_at": "2026-02-12T15:01:57.429Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/09_npm_run_verify_paper_multi.log"
+    },
+    {
+      "command": "npm run verify:phase2",
+      "started_at": "2026-02-12T15:01:57.430Z",
+      "finished_at": "2026-02-12T15:02:03.068Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/10_npm_run_verify_phase2.log"
+    },
+    {
+      "command": "npm run verify:integration",
+      "started_at": "2026-02-12T15:02:03.068Z",
+      "finished_at": "2026-02-12T15:02:04.694Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/11_npm_run_verify_integration.log"
+    },
+    {
+      "command": "npm run verify:core",
+      "started_at": "2026-02-12T15:02:04.694Z",
+      "finished_at": "2026-02-12T15:02:24.477Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/12_npm_run_verify_core.log"
+    },
+    {
+      "command": "npm run verify:epoch27",
+      "started_at": "2026-02-12T15:02:24.478Z",
+      "finished_at": "2026-02-12T15:02:26.384Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/13_npm_run_verify_epoch27.log"
+    },
+    {
+      "command": "npm run verify:epoch28",
+      "started_at": "2026-02-12T15:02:26.384Z",
+      "finished_at": "2026-02-12T15:02:28.296Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/14_npm_run_verify_epoch28.log"
+    },
+    {
+      "command": "npm run verify:epoch29",
+      "started_at": "2026-02-12T15:02:28.297Z",
+      "finished_at": "2026-02-12T15:02:30.105Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/15_npm_run_verify_epoch29.log"
+    },
+    {
+      "command": "npm run export:validated",
+      "started_at": "2026-02-12T15:02:30.106Z",
+      "finished_at": "2026-02-12T15:02:32.090Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/16_npm_run_export_validated.log"
+    },
+    {
+      "command": "npm run regen:manifests",
+      "started_at": "2026-02-12T15:02:32.091Z",
+      "finished_at": "2026-02-12T15:02:34.011Z",
+      "exit_code": 0,
+      "log_path": "reports/evidence/EPOCH-EDGE-IMPL-MEGA-31-40-1/gates/17_npm_run_regen_manifests.log"
+    }
+  ]
+}

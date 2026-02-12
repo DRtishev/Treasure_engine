@@ -1,0 +1,41 @@
+$ SKIP_CLEAN_CLONE_IN_WALL=1 SKIP_SHA_CHECKS_IN_WALL=1 npm run verify:wall
+
+> treasure-engine@1.0.0 verify:wall
+> node scripts/verify/wall.mjs
+
+verify:wall using EVIDENCE_EPOCH=EPOCH-EDGE-IMPL-MEGA-31-40-1
+
+$ npm ci
+
+$ npm run verify:specs
+
+$ npm run verify:specs
+
+$ npm run verify:paper
+
+$ npm run verify:paper
+
+$ npm run verify:e2
+
+$ npm run verify:e2
+
+$ npm run verify:e2:multi
+
+$ npm run verify:paper:multi
+
+$ npm run verify:phase2
+
+$ npm run verify:integration
+
+$ npm run verify:core
+
+$ npm run verify:epoch27
+
+$ npm run verify:epoch28
+
+$ npm run verify:epoch29
+
+$ npm run export:validated
+
+$ npm run regen:manifests
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

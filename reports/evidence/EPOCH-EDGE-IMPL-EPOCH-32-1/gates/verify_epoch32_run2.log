@@ -1,0 +1,6 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch32
+> node scripts/verify/epoch32_edge_gate.mjs
+
+PASS epoch32 artifacts=/workspace/Treasure_engine/reports/evidence/EPOCH-EDGE-IMPL-EPOCH-32-1/epoch32 fingerprints=669011e95227ab963ed674eae67964799745927cfd5ae80908b040dcba1af4db

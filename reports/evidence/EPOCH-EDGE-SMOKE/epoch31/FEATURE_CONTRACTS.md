@@ -1,0 +1,1 @@
+- FeatureFrame + FeatureManifest scope recorded.

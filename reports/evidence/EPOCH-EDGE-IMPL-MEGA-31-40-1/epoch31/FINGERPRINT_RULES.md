@@ -1,0 +1,1 @@
+- canonical JSON sorted keys + fixed rounding (8dp).

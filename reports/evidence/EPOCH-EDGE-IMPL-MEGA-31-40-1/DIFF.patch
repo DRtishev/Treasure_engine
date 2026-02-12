@@ -1,0 +1,31 @@
+diff --git a/FINAL_VALIDATED.zip.sha256 b/FINAL_VALIDATED.zip.sha256
+index 87afeb4..352b57a 100644
+--- a/FINAL_VALIDATED.zip.sha256
++++ b/FINAL_VALIDATED.zip.sha256
+@@ -1 +1 @@
+-1754d4f5c77b58e43921188f5e6552c837096cbc9dfe1af301d2b5b67ecc3600  FINAL_VALIDATED.zip
++20b3375703c92f205e62b42ea660f5149ca1e422f91844fef85979d22d6d0eb1  FINAL_VALIDATED.zip
+diff --git a/package.json b/package.json
+index 8312bc1..775f12e 100644
+--- a/package.json
++++ b/package.json
+@@ -87,7 +87,18 @@
+     "verify:epoch28": "node scripts/verify/run_with_context.mjs --gate epoch28 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch28_ai_signal_intent_safety_check.mjs",
+     "verify:epoch29": "node scripts/verify/run_with_context.mjs --gate epoch29 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch29_walkforward_leakage_sentinel.mjs",
+     "verify:epoch30": "node scripts/verify/epoch30_final_polish_release_freeze_check.mjs",
+-    "verify:clean-clone": "node scripts/ops/clean_clone_bootstrap.mjs"
++    "verify:clean-clone": "node scripts/ops/clean_clone_bootstrap.mjs",
++    "verify:epoch31": "node scripts/verify/epoch31_edge_gate.mjs",
++    "verify:epoch32": "node scripts/verify/epoch32_edge_gate.mjs",
++    "verify:epoch33": "node scripts/verify/epoch33_edge_gate.mjs",
++    "verify:epoch34": "node scripts/verify/epoch34_edge_gate.mjs",
++    "verify:epoch35": "node scripts/verify/epoch35_edge_gate.mjs",
++    "verify:epoch36": "node scripts/verify/epoch36_edge_gate.mjs",
++    "verify:epoch37": "node scripts/verify/epoch37_edge_gate.mjs",
++    "verify:epoch38": "node scripts/verify/epoch38_edge_gate.mjs",
++    "verify:epoch39": "node scripts/verify/epoch39_edge_gate.mjs",
++    "verify:epoch40": "node scripts/verify/epoch40_edge_gate.mjs",
++    "verify:edge": "node scripts/verify/edge_all_epochs.mjs"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"

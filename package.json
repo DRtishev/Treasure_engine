@@ -87,7 +87,20 @@
     "verify:epoch28": "node scripts/verify/run_with_context.mjs --gate epoch28 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch28_ai_signal_intent_safety_check.mjs",
     "verify:epoch29": "node scripts/verify/run_with_context.mjs --gate epoch29 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch29_walkforward_leakage_sentinel.mjs",
     "verify:epoch30": "node scripts/verify/epoch30_final_polish_release_freeze_check.mjs",
-    "verify:clean-clone": "node scripts/ops/clean_clone_bootstrap.mjs"
+    "verify:clean-clone": "node scripts/ops/clean_clone_bootstrap.mjs",
+    "verify:epoch31": "node scripts/verify/epoch31_edge_gate.mjs",
+    "verify:epoch32": "node scripts/verify/epoch32_edge_gate.mjs",
+    "verify:epoch33": "node scripts/verify/epoch33_edge_gate.mjs",
+    "verify:epoch34": "node scripts/verify/epoch34_edge_gate.mjs",
+    "verify:epoch35": "node scripts/verify/epoch35_edge_gate.mjs",
+    "verify:epoch36": "node scripts/verify/epoch36_edge_gate.mjs",
+    "verify:epoch37": "node scripts/verify/epoch37_edge_gate.mjs",
+    "verify:epoch38": "node scripts/verify/epoch38_edge_gate.mjs",
+    "verify:epoch39": "node scripts/verify/epoch39_edge_gate.mjs",
+    "verify:epoch40": "node scripts/verify/epoch40_edge_gate.mjs",
+    "verify:edge": "node scripts/verify/edge_all_epochs.mjs",
+    "verify:edge:strict": "ENABLE_CLEAN_CLONE=1 npm run verify:edge",
+    "verify:goldens:update": "UPDATE_GOLDENS=1 npm run verify:edge"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

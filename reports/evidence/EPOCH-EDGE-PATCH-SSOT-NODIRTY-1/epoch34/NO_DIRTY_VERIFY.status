@@ -1,0 +1,13 @@
+ M core/edge/contracts.mjs
+ M core/edge/runtime.mjs
+ M package.json
+ M scripts/verify/edge_all_epochs.mjs
+ M scripts/verify/edge_epoch_gate.mjs
+ M tests/vectors/AllocationPlan/epoch35.golden.json
+ M tests/vectors/CanaryPhaseState/epoch39.golden.json
+ M tests/vectors/FeatureFrame/epoch31.golden.json
+ M tests/vectors/RealityGapReport/epoch38.golden.json
+ M tests/vectors/RiskDecision/epoch36.golden.json
+ M tests/vectors/ShadowEvent/epoch39.golden.json
+ M tests/vectors/SimReport/epoch32.golden.json
+ M tests/vectors/StrategySpec/epoch33.golden.json
