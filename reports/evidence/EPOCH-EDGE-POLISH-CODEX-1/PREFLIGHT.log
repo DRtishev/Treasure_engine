@@ -1,0 +1,48 @@
+$ pwd
+/workspace/Treasure_engine
+$ ls
+AGENTS.md
+EVIDENCE_PACK
+EVIDENCE_PACK_EPOCH-17.tar.gz.sha256
+EVIDENCE_PACK_EPOCH-18.tar.gz.sha256
+EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
+EVIDENCE_PACK_EPOCH-21.tar.gz.sha256
+EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+FINAL_VALIDATED.zip.sha256
+NEXT_EPOCH_PLAN.md
+QUICK_START.md
+README.md
+RUNBOOK.md
+RUNBOOK_OPERATIONS.md
+SDD_EPOCH_17_21.md
+TASK_TRACKER.md
+agents.md
+artifacts
+core
+data
+dataset
+docs
+evidence
+examples
+node_modules
+package-lock.json
+package.json
+package.json.bak
+reports
+scripts
+spec
+specs
+truth
+ui
+$ git status -sb
+## work
+?? reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/
+$ git branch --show-current
+work
+$ git rev-parse HEAD
+6725229f87874b5e39e7f6ad6ea861a399476569
+$ git remote -v
+$ node -v
+v20.19.6
+$ npm -v
+11.4.2
