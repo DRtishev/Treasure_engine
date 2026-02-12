@@ -1,0 +1,78 @@
+$ pwd
+/workspace/Treasure_engine
+$ git status -sb
+## codex/edge-specs-final-polish-1
+?? reports/evidence/EPOCH-EDGE-SPECS-FINAL-1/
+$ git branch --show-current
+codex/edge-specs-final-polish-1
+$ git rev-parse HEAD
+fc34bec9b102404a4820b95b9d9b15d292ffb105
+$ git remote -v
+$ node -v
+v20.19.6
+$ npm -v
+11.4.2
+$ ls -la
+total 212
+drwxr-xr-x 18 root root  4096 Feb 12 12:34 .
+drwxr-xr-x  3 root root  4096 Feb 12 12:34 ..
+drwxr-xr-x  8 root root  4096 Feb 12 14:28 .git
+-rw-r--r--  1 root root   491 Feb 12 12:34 .gitignore
+-rw-r--r--  1 root root   147 Feb 12 12:34 AGENTS.md
+drwxr-xr-x  2 root root  4096 Feb 12 12:34 EVIDENCE_PACK
+-rw-r--r--  1 root root    96 Feb 12 12:34 EVIDENCE_PACK_EPOCH-17.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 12 12:34 EVIDENCE_PACK_EPOCH-18.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 12 12:34 EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 12 12:34 EVIDENCE_PACK_EPOCH-21.tar.gz.sha256
+-rw-r--r--  1 root root    98 Feb 12 12:34 EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+-rw-r--r--  1 root root    86 Feb 12 12:34 FINAL_VALIDATED.zip.sha256
+-rw-r--r--  1 root root  1677 Feb 12 12:34 NEXT_EPOCH_PLAN.md
+-rw-r--r--  1 root root 11768 Feb 12 12:34 QUICK_START.md
+-rw-r--r--  1 root root  2041 Feb 12 12:34 README.md
+-rw-r--r--  1 root root  2187 Feb 12 12:34 RUNBOOK.md
+-rw-r--r--  1 root root  9654 Feb 12 12:34 RUNBOOK_OPERATIONS.md
+-rw-r--r--  1 root root 28917 Feb 12 12:34 SDD_EPOCH_17_21.md
+-rw-r--r--  1 root root  1847 Feb 12 12:34 TASK_TRACKER.md
+-rw-r--r--  1 root root  1694 Feb 12 12:34 agents.md
+drwxr-xr-x  3 root root  4096 Feb 12 12:34 artifacts
+drwxr-xr-x 24 root root  4096 Feb 12 12:34 core
+drwxr-xr-x  3 root root  4096 Feb 12 12:34 data
+drwxr-xr-x  2 root root  4096 Feb 12 12:34 dataset
+drwxr-xr-x  3 root root  4096 Feb 12 12:34 docs
+drwxr-xr-x  4 root root  4096 Feb 12 12:34 evidence
+drwxr-xr-x  2 root root  4096 Feb 12 12:34 examples
+drwxr-xr-x 47 root root  4096 Feb 12 12:34 node_modules
+-rw-r--r--  1 root root 19412 Feb 12 12:34 package-lock.json
+-rw-r--r--  1 root root  6620 Feb 12 12:34 package.json
+-rw-r--r--  1 root root  3186 Feb 12 12:34 package.json.bak
+drwxr-xr-x 11 root root  4096 Feb 12 12:34 reports
+drwxr-xr-x  7 root root  4096 Feb 12 12:34 scripts
+drwxr-xr-x  2 root root  4096 Feb 12 12:34 spec
+drwxr-xr-x  3 root root  4096 Feb 12 12:34 specs
+drwxr-xr-x  2 root root  4096 Feb 12 12:34 truth
+drwxr-xr-x  2 root root  4096 Feb 12 12:34 ui
+$ find docs/EDGE_RESEARCH -maxdepth 1 -type f -print
+docs/EDGE_RESEARCH/TRACEABILITY.md
+docs/EDGE_RESEARCH/RECOMMENDED_STACK.md
+docs/EDGE_RESEARCH/DETERMINISM_POLICY.md
+docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md
+docs/EDGE_RESEARCH/SPEC_QUALITY_BAR.md
+docs/EDGE_RESEARCH/TEST_VECTORS.md
+docs/EDGE_RESEARCH/EDGE_WOW_PROPOSALS.md
+docs/EDGE_RESEARCH/AI_MODULE.md
+docs/EDGE_RESEARCH/SOURCES.md
+docs/EDGE_RESEARCH/DECISION_MATRIX.md
+docs/EDGE_RESEARCH/GLOSSARY.md
+docs/EDGE_RESEARCH/OPERATOR_PLAYBOOK.md
+docs/EDGE_RESEARCH/ANTI_PATTERNS.md
+$ ls -la specs/epochs | head
+total 376
+drwxr-xr-x 2 root root  4096 Feb 12 14:27 .
+drwxr-xr-x 3 root root  4096 Feb 12 12:34 ..
+-rw-r--r-- 1 root root  2226 Feb 12 12:34 EPOCH-01.md
+-rw-r--r-- 1 root root  2230 Feb 12 12:34 EPOCH-02.md
+-rw-r--r-- 1 root root  2222 Feb 12 12:34 EPOCH-03.md
+-rw-r--r-- 1 root root  2229 Feb 12 12:34 EPOCH-04.md
+-rw-r--r-- 1 root root  2228 Feb 12 12:34 EPOCH-05.md
+-rw-r--r-- 1 root root  2234 Feb 12 12:34 EPOCH-06.md
+-rw-r--r-- 1 root root  2228 Feb 12 12:34 EPOCH-07.md

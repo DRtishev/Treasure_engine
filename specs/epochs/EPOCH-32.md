@@ -99,6 +99,7 @@
 - Planned implementation gate: `npm run verify:epoch32`.
 - Gate inputs: SimReport contracts + deterministic fixtures (non-zero spread scenario) + seed config.
 - Gate outputs: gate log, contract validation log, deterministic replay diff, verdict file.
+- Machine-check gate rule: gate result is PASS only when exit code is 0 and every listed evidence file exists under `reports/evidence/<EVIDENCE_EPOCH>/epoch32/`.
 - PASS semantics: all invariants hold, non-zero slippage confirmed, evidence complete, replay fingerprint identical across 2 runs.
 - FAIL semantics: any of: fantasy fill detected (zero slippage under non-zero spread), negative fee/slippage/latency, fingerprint mismatch, missing evidence.
 - Test vectors (from `docs/EDGE_RESEARCH/TEST_VECTORS.md`):

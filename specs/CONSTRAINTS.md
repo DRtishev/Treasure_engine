@@ -46,3 +46,10 @@ This document defines non-negotiable engineering and QA constraints for TREASURE
 ## 7) Anti-regression policy
 - Critical gates run with anti-flake repeats where defined by epoch docs.
 - Spec changes MUST keep `verify:spec` green before merging implementation work.
+
+## 8) DOCS-ONLY discipline for EDGE specs cycles
+- Scope lock for this cycle: docs/specs/ledger/index/evidence text only; runtime epoch implementations are explicitly out of scope.
+- Forbidden in docs-only cycles: changing wall scope, introducing default-on network dependencies, expanding verify range, committing binary archives.
+- Mandatory anti-flake: `verify:specs` MUST run twice and both runs MUST pass in the same evidence cycle.
+- Required evidence checklist for specs cycle: `PREFLIGHT.log`, `SNAPSHOT.md`, `SUMMARY.md`, `DRIFT_MAP.md`, `RISK_REGISTER.md`, `VERDICT.md`, gate logs, checksums, and `DIFF.patch`.
+- SSOT-first conflict rule: resolve ambiguity in SSOT (`GLOSSARY`, `DETERMINISM_POLICY`, `CONTRACTS_CATALOG`) first, then sync all dependent docs/specs.

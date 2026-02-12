@@ -32,6 +32,20 @@
 - **EvidencePack**: complete logs/manifests/verdict for a run.
 - **Manifest**: immutable metadata file chaining hashes and schema versions.
 
+
+## SSOT linkage (authoritative)
+- Terminology SSOT: `docs/EDGE_RESEARCH/GLOSSARY.md`.
+- Determinism SSOT: `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+- Contract SSOT: `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md`.
+
+## Canonical term mapping for this SDD
+- `StrategyManifest` in legacy sections maps to canonical `StrategySpec`.
+- `PortfolioState` in legacy sections maps to canonical `AllocationPlan` output state.
+- `RiskState` in legacy sections maps to canonical `RiskDecision` state transition record.
+- `GapReport` maps to canonical `RealityGapReport`.
+- `ShadowRunRecord` maps to canonical `ShadowEvent`.
+- `CanaryPhase` maps to canonical `CanaryPhaseState`.
+
 ## Module Boundaries
 1. **Data Plane (E31)**: point-in-time market snapshots and deterministic feature pipeline.
 2. **Simulation Plane (E32)**: deterministic microstructure simulator (slippage, latency, fee, partial fills).

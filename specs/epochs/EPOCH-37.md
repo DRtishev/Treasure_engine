@@ -110,6 +110,7 @@
 - Planned implementation gate: `npm run verify:epoch37`.
 - Gate inputs: WFOReport contracts + leakage battery fixtures (positive and negative control) + seed config.
 - Gate outputs: gate log, leakage sentinel results, cross-seed dispersion report, verdict file.
+- Machine-check gate rule: gate result is PASS only when exit code is 0 and every listed evidence file exists under `reports/evidence/<EVIDENCE_EPOCH>/epoch37/`.
 - PASS semantics: clean dataset passes sentinel, injected leakage detected, cross-seed dispersion within bounds, evidence complete, replay stable.
 - FAIL semantics: any of: leakage not detected on positive control, clean data fails sentinel, dispersion exceeds bound, fingerprint mismatch, missing evidence.
 - Test vectors (from `docs/EDGE_RESEARCH/TEST_VECTORS.md`):

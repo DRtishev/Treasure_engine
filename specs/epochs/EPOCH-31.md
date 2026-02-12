@@ -121,6 +121,7 @@
 - Planned implementation gate: `npm run verify:epoch31`.
 - Gate inputs: epoch contracts + deterministic fixtures + seed config.
 - Gate outputs: gate log, contract validation log, deterministic replay diff, verdict file.
+- Machine-check gate rule: gate result is PASS only when exit code is 0 and every listed evidence file exists under `reports/evidence/<EVIDENCE_EPOCH>/epoch31/`.
 - PASS semantics: all invariants hold, all evidence files present, replay fingerprint identical across 2 runs.
 - FAIL semantics: any of: look-ahead leakage detected, normalization leakage detected, fingerprint mismatch, missing evidence file, forbidden value present.
 - Test vectors (from `docs/EDGE_RESEARCH/TEST_VECTORS.md`):
