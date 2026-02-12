@@ -1,0 +1,9 @@
+PREFLIGHT — EDGE SPECS CLAUDE EXPERIMENT 1
+============================================
+Date: 2026-02-12
+pwd: /home/user/Treasure_engine
+node: v22.22.0
+npm: 10.9.4
+git branch: claude/edge-specs-research-polish-rnIYG
+git HEAD: 0460be8f7ec35aa9c2df0983d20610dfd70483e2
+git status: clean (on feature branch)
