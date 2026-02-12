@@ -1,0 +1,260 @@
+diff --git a/scripts/verify/specs_check.mjs b/scripts/verify/specs_check.mjs
+index 3430a5a..147b330 100644
+--- a/scripts/verify/specs_check.mjs
++++ b/scripts/verify/specs_check.mjs
+@@ -3,7 +3,7 @@ import fs from 'node:fs';
+ import path from 'node:path';
+ 
+ const EPOCH_START = 1;
+-const EPOCH_END = 30;
++const EPOCH_END = 40;
+ const epochFiles = Array.from({ length: EPOCH_END - EPOCH_START + 1 }, (_, i) => `specs/epochs/EPOCH-${String(i + EPOCH_START).padStart(2, '0')}.md`);
+ 
+ const requiredFiles = [
+diff --git a/specs/epochs/INDEX.md b/specs/epochs/INDEX.md
+index 7934ac9..a791443 100644
+--- a/specs/epochs/INDEX.md
++++ b/specs/epochs/INDEX.md
+@@ -31,6 +31,16 @@
+ 28. EPOCH-28
+ 29. EPOCH-29
+ 30. EPOCH-30
++31. EPOCH-31
++32. EPOCH-32
++33. EPOCH-33
++34. EPOCH-34
++35. EPOCH-35
++36. EPOCH-36
++37. EPOCH-37
++38. EPOCH-38
++39. EPOCH-39
++40. EPOCH-40
+ 
+ ## Epoch spec files
+ - `specs/epochs/EPOCH-01.md`
+@@ -63,9 +73,19 @@
+ - `specs/epochs/EPOCH-28.md`
+ - `specs/epochs/EPOCH-29.md`
+ - `specs/epochs/EPOCH-30.md`
++- `specs/epochs/EPOCH-31.md`
++- `specs/epochs/EPOCH-32.md`
++- `specs/epochs/EPOCH-33.md`
++- `specs/epochs/EPOCH-34.md`
++- `specs/epochs/EPOCH-35.md`
++- `specs/epochs/EPOCH-36.md`
++- `specs/epochs/EPOCH-37.md`
++- `specs/epochs/EPOCH-38.md`
++- `specs/epochs/EPOCH-39.md`
++- `specs/epochs/EPOCH-40.md`
+ 
+ ## Gate map
+-- EPOCH-01..EPOCH-16: legacy/doc mapping validated by `verify:specs`.
++- EPOCH-01..EPOCH-16: legacy/doc mapping validated by `verify:specs`
+ - EPOCH-17: `verify:epoch17`
+ - EPOCH-18: `verify:epoch18`
+ - EPOCH-19: `verify:epoch19`
+@@ -80,3 +100,25 @@
+ - EPOCH-28: `verify:epoch28`
+ - EPOCH-29: `verify:epoch29`
+ - EPOCH-30: `verify:epoch30`
++- EPOCH-31: `verify:epoch31` (planned; spec-defined, not yet implemented)
++- EPOCH-32: `verify:epoch32` (planned; spec-defined, not yet implemented)
++- EPOCH-33: `verify:epoch33` (planned; spec-defined, not yet implemented)
++- EPOCH-34: `verify:epoch34` (planned; spec-defined, not yet implemented)
++- EPOCH-35: `verify:epoch35` (planned; spec-defined, not yet implemented)
++- EPOCH-36: `verify:epoch36` (planned; spec-defined, not yet implemented)
++- EPOCH-37: `verify:epoch37` (planned; spec-defined, not yet implemented)
++- EPOCH-38: `verify:epoch38` (planned; spec-defined, not yet implemented)
++- EPOCH-39: `verify:epoch39` (planned; spec-defined, not yet implemented)
++- EPOCH-40: `verify:epoch40` (planned; spec-defined, not yet implemented)
++
++## Gate owners (31→40)
++- EPOCH-31: data-platform
++- EPOCH-32: simulation
++- EPOCH-33: strategy-governance
++- EPOCH-34: execution-pipeline
++- EPOCH-35: portfolio-engine
++- EPOCH-36: risk-governor
++- EPOCH-37: quant-research
++- EPOCH-38: runtime-safety
++- EPOCH-39: release-governor
++- EPOCH-40: certification
+diff --git a/specs/epochs/LEDGER.json b/specs/epochs/LEDGER.json
+index bf27710..0208801 100644
+--- a/specs/epochs/LEDGER.json
++++ b/specs/epochs/LEDGER.json
+@@ -1,6 +1,6 @@
+ {
+   "schema_version": 2,
+-  "updated_at": "2026-02-11T19:48:39.778Z",
++  "updated_at": "2026-02-12T06:12:41Z",
+   "epochs": {
+     "1": {
+       "id": "EPOCH-01",
+@@ -449,6 +449,164 @@
+       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
+       "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+       "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
++    },
++    "31": {
++      "id": "EPOCH-31",
++      "title": "Deterministic Data Model + Point-in-Time Feature Pipeline",
++      "status": "READY",
++      "type": "edge_spec",
++      "depends_on": [],
++      "gate_owner": "docs",
++      "evidence_id": "EPOCH-EDGE-SPECS-CODEX-2",
++      "completed_at": null,
++      "commit_sha": "PENDING",
++      "last_commit_sha": null,
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CODEX-2/",
++      "last_gate_summary": "Spec authored; implementation gate pending."
++    },
++    "32": {
++      "id": "EPOCH-32",
++      "title": "Microstructure Simulator",
++      "status": "READY",
++      "type": "edge_spec",
++      "depends_on": [
++        "EPOCH-31"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "EPOCH-EDGE-SPECS-CODEX-2",
++      "completed_at": null,
++      "commit_sha": "PENDING",
++      "last_commit_sha": null,
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CODEX-2/",
++      "last_gate_summary": "Spec authored; implementation gate pending."
++    },
++    "33": {
++      "id": "EPOCH-33",
++      "title": "Strategy Registry + Contracts",
++      "status": "READY",
++      "type": "edge_spec",
++      "depends_on": [
++        "EPOCH-32"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "EPOCH-EDGE-SPECS-CODEX-2",
++      "completed_at": null,
++      "commit_sha": "PENDING",
++      "last_commit_sha": null,
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CODEX-2/",
++      "last_gate_summary": "Spec authored; implementation gate pending."
++    },
++    "34": {
++      "id": "EPOCH-34",
++      "title": "Signal to Intent Pipeline",
++      "status": "READY",
++      "type": "edge_spec",
++      "depends_on": [
++        "EPOCH-33"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "EPOCH-EDGE-SPECS-CODEX-2",
++      "completed_at": null,
++      "commit_sha": "PENDING",
++      "last_commit_sha": null,
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CODEX-2/",
++      "last_gate_summary": "Spec authored; implementation gate pending."
++    },
++    "35": {
++      "id": "EPOCH-35",
++      "title": "Portfolio Allocation",
++      "status": "READY",
++      "type": "edge_spec",
++      "depends_on": [
++        "EPOCH-34"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "EPOCH-EDGE-SPECS-CODEX-2",
++      "completed_at": null,
++      "commit_sha": "PENDING",
++      "last_commit_sha": null,
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CODEX-2/",
++      "last_gate_summary": "Spec authored; implementation gate pending."
++    },
++    "36": {
++      "id": "EPOCH-36",
++      "title": "Risk Brain",
++      "status": "READY",
++      "type": "edge_spec",
++      "depends_on": [
++        "EPOCH-35"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "EPOCH-EDGE-SPECS-CODEX-2",
++      "completed_at": null,
++      "commit_sha": "PENDING",
++      "last_commit_sha": null,
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CODEX-2/",
++      "last_gate_summary": "Spec authored; implementation gate pending."
++    },
++    "37": {
++      "id": "EPOCH-37",
++      "title": "Walk-Forward Optimization + Leakage Sentinel v2",
++      "status": "READY",
++      "type": "edge_spec",
++      "depends_on": [
++        "EPOCH-36"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "EPOCH-EDGE-SPECS-CODEX-2",
++      "completed_at": null,
++      "commit_sha": "PENDING",
++      "last_commit_sha": null,
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CODEX-2/",
++      "last_gate_summary": "Spec authored; implementation gate pending."
++    },
++    "38": {
++      "id": "EPOCH-38",
++      "title": "Reality Gap Monitor + Auto-Brake",
++      "status": "READY",
++      "type": "edge_spec",
++      "depends_on": [
++        "EPOCH-37"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "EPOCH-EDGE-SPECS-CODEX-2",
++      "completed_at": null,
++      "commit_sha": "PENDING",
++      "last_commit_sha": null,
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CODEX-2/",
++      "last_gate_summary": "Spec authored; implementation gate pending."
++    },
++    "39": {
++      "id": "EPOCH-39",
++      "title": "Shadow Live Harness + Canary Governor",
++      "status": "READY",
++      "type": "edge_spec",
++      "depends_on": [
++        "EPOCH-38"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "EPOCH-EDGE-SPECS-CODEX-2",
++      "completed_at": null,
++      "commit_sha": "PENDING",
++      "last_commit_sha": null,
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CODEX-2/",
++      "last_gate_summary": "Spec authored; implementation gate pending."
++    },
++    "40": {
++      "id": "EPOCH-40",
++      "title": "EDGE Freeze + Release Discipline",
++      "status": "READY",
++      "type": "edge_spec",
++      "depends_on": [
++        "EPOCH-39"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "EPOCH-EDGE-SPECS-CODEX-2",
++      "completed_at": null,
++      "commit_sha": "PENDING",
++      "last_commit_sha": null,
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CODEX-2/",
++      "last_gate_summary": "Spec authored; implementation gate pending."
+     }
+   }
+-}
++}
+\ No newline at end of file

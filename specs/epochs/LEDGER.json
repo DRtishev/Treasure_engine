@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-02-11T19:48:39.778Z",
+  "updated_at": "2026-02-12T07:01:15Z",
   "epochs": {
     "1": {
       "id": "EPOCH-01",
@@ -449,6 +449,166 @@
       "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
       "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
       "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+    },
+    "31": {
+      "id": "EPOCH-31",
+      "title": "Deterministic Data Model + Point-in-Time Feature Pipeline",
+      "status": "READY",
+      "type": "edge_spec",
+      "depends_on": [
+        "EPOCH-30"
+      ],
+      "gate_owner": "verify:epoch31",
+      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "completed_at": null,
+      "commit_sha": "PENDING",
+      "last_commit_sha": null,
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
+      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+    },
+    "32": {
+      "id": "EPOCH-32",
+      "title": "Microstructure Simulator",
+      "status": "READY",
+      "type": "edge_spec",
+      "depends_on": [
+        "EPOCH-31"
+      ],
+      "gate_owner": "verify:epoch32",
+      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "completed_at": null,
+      "commit_sha": "PENDING",
+      "last_commit_sha": null,
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
+      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+    },
+    "33": {
+      "id": "EPOCH-33",
+      "title": "Strategy Registry + Contracts",
+      "status": "READY",
+      "type": "edge_spec",
+      "depends_on": [
+        "EPOCH-32"
+      ],
+      "gate_owner": "verify:epoch33",
+      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "completed_at": null,
+      "commit_sha": "PENDING",
+      "last_commit_sha": null,
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
+      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+    },
+    "34": {
+      "id": "EPOCH-34",
+      "title": "Signal to Intent Pipeline",
+      "status": "READY",
+      "type": "edge_spec",
+      "depends_on": [
+        "EPOCH-33"
+      ],
+      "gate_owner": "verify:epoch34",
+      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "completed_at": null,
+      "commit_sha": "PENDING",
+      "last_commit_sha": null,
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
+      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+    },
+    "35": {
+      "id": "EPOCH-35",
+      "title": "Portfolio Allocation",
+      "status": "READY",
+      "type": "edge_spec",
+      "depends_on": [
+        "EPOCH-34"
+      ],
+      "gate_owner": "verify:epoch35",
+      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "completed_at": null,
+      "commit_sha": "PENDING",
+      "last_commit_sha": null,
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
+      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+    },
+    "36": {
+      "id": "EPOCH-36",
+      "title": "Risk Brain",
+      "status": "READY",
+      "type": "edge_spec",
+      "depends_on": [
+        "EPOCH-35"
+      ],
+      "gate_owner": "verify:epoch36",
+      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "completed_at": null,
+      "commit_sha": "PENDING",
+      "last_commit_sha": null,
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
+      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+    },
+    "37": {
+      "id": "EPOCH-37",
+      "title": "Walk-Forward Optimization + Leakage Sentinel v2",
+      "status": "READY",
+      "type": "edge_spec",
+      "depends_on": [
+        "EPOCH-36"
+      ],
+      "gate_owner": "verify:epoch37",
+      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "completed_at": null,
+      "commit_sha": "PENDING",
+      "last_commit_sha": null,
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
+      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+    },
+    "38": {
+      "id": "EPOCH-38",
+      "title": "Reality Gap Monitor + Auto-Brake",
+      "status": "READY",
+      "type": "edge_spec",
+      "depends_on": [
+        "EPOCH-37"
+      ],
+      "gate_owner": "verify:epoch38",
+      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "completed_at": null,
+      "commit_sha": "PENDING",
+      "last_commit_sha": null,
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
+      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+    },
+    "39": {
+      "id": "EPOCH-39",
+      "title": "Shadow Live Harness + Canary Governor",
+      "status": "READY",
+      "type": "edge_spec",
+      "depends_on": [
+        "EPOCH-38"
+      ],
+      "gate_owner": "verify:epoch39",
+      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "completed_at": null,
+      "commit_sha": "PENDING",
+      "last_commit_sha": null,
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
+      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
+    },
+    "40": {
+      "id": "EPOCH-40",
+      "title": "EDGE Freeze + Release Discipline",
+      "status": "READY",
+      "type": "edge_spec",
+      "depends_on": [
+        "EPOCH-39"
+      ],
+      "gate_owner": "verify:epoch40",
+      "evidence_id": "EPOCH-EDGE-POLISH-CODEX-1",
+      "completed_at": null,
+      "commit_sha": "PENDING",
+      "last_commit_sha": null,
+      "last_evidence_path": "reports/evidence/EPOCH-EDGE-POLISH-CODEX-1/",
+      "last_gate_summary": "Spec polished (WOW pass); implementation gate pending."
     }
   }
 }

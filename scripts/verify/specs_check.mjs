@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const EPOCH_START = 1;
-const EPOCH_END = 30;
+const EPOCH_END = 40;
 const epochFiles = Array.from({ length: EPOCH_END - EPOCH_START + 1 }, (_, i) => `specs/epochs/EPOCH-${String(i + EPOCH_START).padStart(2, '0')}.md`);
 
 const requiredFiles = [

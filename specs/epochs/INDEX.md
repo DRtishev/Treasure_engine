@@ -31,6 +31,28 @@
 28. EPOCH-28
 29. EPOCH-29
 30. EPOCH-30
+31. EPOCH-31
+32. EPOCH-32
+33. EPOCH-33
+34. EPOCH-34
+35. EPOCH-35
+36. EPOCH-36
+37. EPOCH-37
+38. EPOCH-38
+39. EPOCH-39
+40. EPOCH-40
+
+## Dependency notes (EDGE)
+- EPOCH-31 depends on EPOCH-30 (EDGE starts from completed legacy runway).
+- EPOCH-32 depends on EPOCH-31.
+- EPOCH-33 depends on EPOCH-32.
+- EPOCH-34 depends on EPOCH-33.
+- EPOCH-35 depends on EPOCH-34.
+- EPOCH-36 depends on EPOCH-35.
+- EPOCH-37 depends on EPOCH-36.
+- EPOCH-38 depends on EPOCH-37.
+- EPOCH-39 depends on EPOCH-38.
+- EPOCH-40 depends on EPOCH-39.
 
 ## Epoch spec files
 - `specs/epochs/EPOCH-01.md`
@@ -63,9 +85,19 @@
 - `specs/epochs/EPOCH-28.md`
 - `specs/epochs/EPOCH-29.md`
 - `specs/epochs/EPOCH-30.md`
+- `specs/epochs/EPOCH-31.md`
+- `specs/epochs/EPOCH-32.md`
+- `specs/epochs/EPOCH-33.md`
+- `specs/epochs/EPOCH-34.md`
+- `specs/epochs/EPOCH-35.md`
+- `specs/epochs/EPOCH-36.md`
+- `specs/epochs/EPOCH-37.md`
+- `specs/epochs/EPOCH-38.md`
+- `specs/epochs/EPOCH-39.md`
+- `specs/epochs/EPOCH-40.md`
 
 ## Gate map
-- EPOCH-01..EPOCH-16: legacy/doc mapping validated by `verify:specs`.
+- EPOCH-01..EPOCH-16: legacy/doc mapping validated by `verify:specs`
 - EPOCH-17: `verify:epoch17`
 - EPOCH-18: `verify:epoch18`
 - EPOCH-19: `verify:epoch19`
@@ -80,3 +112,25 @@
 - EPOCH-28: `verify:epoch28`
 - EPOCH-29: `verify:epoch29`
 - EPOCH-30: `verify:epoch30`
+- EPOCH-31: `verify:epoch31` (spec-defined, implementation pending)
+- EPOCH-32: `verify:epoch32` (spec-defined, implementation pending)
+- EPOCH-33: `verify:epoch33` (spec-defined, implementation pending)
+- EPOCH-34: `verify:epoch34` (spec-defined, implementation pending)
+- EPOCH-35: `verify:epoch35` (spec-defined, implementation pending)
+- EPOCH-36: `verify:epoch36` (spec-defined, implementation pending)
+- EPOCH-37: `verify:epoch37` (spec-defined, implementation pending)
+- EPOCH-38: `verify:epoch38` (spec-defined, implementation pending)
+- EPOCH-39: `verify:epoch39` (spec-defined, implementation pending)
+- EPOCH-40: `verify:epoch40` (spec-defined, implementation pending)
+
+## Gate owners (31→40)
+- EPOCH-31: data-platform
+- EPOCH-32: simulation
+- EPOCH-33: strategy-governance
+- EPOCH-34: execution-pipeline
+- EPOCH-35: portfolio-engine
+- EPOCH-36: risk-governor
+- EPOCH-37: quant-research
+- EPOCH-38: runtime-safety
+- EPOCH-39: release-governor
+- EPOCH-40: certification

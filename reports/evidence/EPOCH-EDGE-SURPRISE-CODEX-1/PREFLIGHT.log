@@ -1,0 +1,14 @@
+$ pwd
+/workspace/Treasure_engine
+$ git status -sb
+## work
+?? reports/evidence/EPOCH-EDGE-SURPRISE-CODEX-1/
+$ git branch --show-current
+work
+$ git rev-parse HEAD
+a8a1212f8a7de46c06ee3ee43b511bf1636f178a
+$ node -v
+v20.19.6
+$ npm -v
+11.4.2
+$ git remote -v

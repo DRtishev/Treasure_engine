@@ -1,0 +1,49 @@
+diff --git a/docs/SDD_EDGE_EPOCHS_31_40.md b/docs/SDD_EDGE_EPOCHS_31_40.md
+index f6a0e58..ee708ee 100644
+--- a/docs/SDD_EDGE_EPOCHS_31_40.md
++++ b/docs/SDD_EDGE_EPOCHS_31_40.md
+@@ -107,6 +107,44 @@ FSM:
+ - Epoch verify commands (`verify:epoch31`..`verify:epoch40`) are mandatory implementation gates and are spec-defined in this cycle.
+ - Two-run anti-flake is required for spec closeout evidence.
+ 
++
++## Visuals (offline Mermaid)
++### EDGE data and control boundaries
++```mermaid
++flowchart LR
++  A[PiT Data Snapshot
++E31] --> B[Feature Pipeline
++FeatureFrame/Manifest]
++  B --> C[Strategy Registry
++E33]
++  C --> D[Signal->Intent
++E34]
++  D --> E[Allocation
++E35]
++  E --> F[Risk FSM
++E36]
++  F --> G[Gap Monitor
++E38]
++  G --> H[Shadow+Canary
++E39]
++  H --> I[Freeze+Certification
++E40]
++  J[WFO+Leakage Court
++E37] --> D
++  J --> E
++```
++
++### Gate and evidence flow
++```mermaid
++flowchart TD
++  S[Spec Docs] --> V1[verify:specs run1]
++  S --> V2[verify:specs run2]
++  V1 --> E1[Evidence Logs]
++  V2 --> E1
++  E1 --> R[VERDICT.md]
++  R --> L[LEDGER READY/DONE decision]
++```
++
+ ## Release Discipline
+ - Epochs 31..40 remain `READY` until implementation gates are green with evidence.
+ - Live trading remains disabled; shadow-only governance is non-bypassable.
