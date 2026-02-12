@@ -1,0 +1,6 @@
+contract=SimReport
+--- golden
+{"contract":"SimReport","fills":18,"pnl":-25.15303495}
+
+--- actual
+{"deterministic_fingerprint":"c2ccbff6d73077333c3d939493a7142b468fa14139926d50579036d45b87ac90","fee_model":"maker_taker_v1","inputs_fingerprint":"sha256:18e967075eb4928b5f8cde6deaee15548cb90ca540ab4baa470ff0a134465c7d","latency_model":"fixed_50ms","output_metrics":{"sharpe":0.040805},"schema_version":"1.0.0","sim_run_id":"sim-12345","slippage_model":"mvp"}

@@ -1,0 +1,6 @@
+contract=FeatureFrame
+--- golden
+{"contract":"FeatureFrame","features":{"ofi":-0.5038358,"vpin":0.09038363},"fingerprint":"704e307c1936d607eed815a19f841b1ab347a5e5e3f34b0b88a6e23872f76ac6","seed":31,"symbol":"BTCUSDT","ts":"2024-01-01T00:00:00.000Z"}
+
+--- actual
+{"deterministic_fingerprint":"d8e3f2c2e6e1f7b8f09818af48b1cbec2e01d899e06398672346eea3ced429f0","feature_vector_order":["ofi","vpin"],"features":{"ofi":-0.959194,"vpin":0.016547},"schema_version":"1.0.0","source_snapshot_id":"snap-12345","symbol":"BTCUSDT","ts_event":"2026-01-01T00:00:00Z"}

@@ -1,0 +1,10 @@
+command=npm run verify:epoch35
+exit_code=0
+
+
+> treasure-engine@1.0.0 verify:epoch35
+> node scripts/verify/epoch35_edge_gate.mjs
+
+PASS epoch35 artifacts=reports/evidence/EPOCH-EDGE-PATCH-SSOT-NODIRTY-1/epoch35
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

@@ -1,0 +1,1 @@
+- deterministic_fingerprint excludes only itself; canonical sorted JSON; truncate_toward_zero.

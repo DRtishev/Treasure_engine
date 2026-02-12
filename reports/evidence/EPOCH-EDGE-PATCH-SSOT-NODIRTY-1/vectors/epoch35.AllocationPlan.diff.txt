@@ -1,0 +1,6 @@
+contract=AllocationPlan
+--- golden
+{"allocations":[{"fraction":0.09985292,"symbol":"BTCUSDT"}],"capital":100000,"contract":"AllocationPlan"}
+
+--- actual
+{"constraints_applied":["asset_cap"],"deterministic_fingerprint":"15e5ecdfa68bb0ac268717736c05df31cd4c98b26fd946e2f6c2b5badfc85d28","max_leverage":1.5,"plan_id":"ap-12345","schema_version":"1.0.0","target_weights":{"BTCUSDT":0.05},"timestamp":"2026-01-01T00:00:02Z"}

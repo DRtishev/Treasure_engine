@@ -1,0 +1,1 @@
+- FeatureFrame contract enforced against SSOT field list.

@@ -1,111 +1,170 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { canonicalStringify, fingerprint, validateContract } from '../../core/edge/contracts.mjs';
+import { canonicalStringify, deterministicFingerprint, validateContract } from '../../core/edge/contracts.mjs';
 import {
   determinismTripwire,
-  featureStore,
-  simulator,
-  strategyRegistry,
-  signalIntent,
-  allocation,
-  riskBrain,
-  walkForwardLeakageSentinel,
-  realityGap,
+  buildFeatureFrame,
+  buildStrategySpec,
+  buildSignal,
+  buildIntent,
+  buildAllocationPlan,
+  buildRiskDecision,
+  buildSimReport,
+  buildRealityGapReport,
+  buildShadowEvent,
+  buildCanaryPhaseState,
+  buildCertificationReport,
   submitOrder,
-  canary,
-  certification
+  walkForwardLeakageSentinel
 } from '../../core/edge/runtime.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, '../..');
 const epoch = process.argv[2];
 if (!epoch) throw new Error('epoch required');
+
 const evidenceEpoch = process.env.EVIDENCE_EPOCH || 'EPOCH-EDGE-LOCAL';
-const outDir = path.join(root, 'reports/evidence', evidenceEpoch, `epoch${epoch}`);
-fs.mkdirSync(outDir, { recursive: true });
+const gateDir = path.join(root, 'reports/evidence', evidenceEpoch, `epoch${epoch}`);
+const vectorsDir = path.join(root, 'reports/evidence', evidenceEpoch, 'vectors');
+fs.mkdirSync(gateDir, { recursive: true });
+fs.mkdirSync(vectorsDir, { recursive: true });
+const initialTrackedStatus = spawnSync('git', ['status', '--porcelain', '--untracked-files=no'], { cwd: root, encoding: 'utf8' }).stdout;
 
 function write(rel, data) {
-  const p = path.join(outDir, rel);
-  fs.mkdirSync(path.dirname(p), { recursive: true });
-  fs.writeFileSync(p, data);
+  const file = path.join(gateDir, rel);
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, data);
+  return file;
 }
 
-function sha(p) {
-  return crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+function writeVector(rel, data) {
+  const file = path.join(vectorsDir, rel);
+  fs.mkdirSync(path.dirname(file), { recursive: true });
+  fs.writeFileSync(file, data);
+  return file;
 }
 
-let outputs = {};
+function fileSha(file) {
+  return crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+}
+
+function compareGolden(contractName, payload) {
+  const actual = `${canonicalStringify(payload)}\n`;
+  const goldenPath = path.join(root, 'tests/vectors', contractName, `epoch${epoch}.golden.json`);
+  const actualPath = writeVector(`epoch${epoch}.${contractName}.actual.json`, actual);
+
+  if (!fs.existsSync(goldenPath)) {
+    if (process.env.UPDATE_GOLDENS === '1') {
+      fs.mkdirSync(path.dirname(goldenPath), { recursive: true });
+      fs.writeFileSync(goldenPath, actual);
+      write('GOLDEN_UPDATES.log', `GOLDEN UPDATED ${path.relative(root, goldenPath)}\n`);
+    } else {
+      throw new Error(`Missing golden ${path.relative(root, goldenPath)}`);
+    }
+  }
+
+  const golden = fs.readFileSync(goldenPath, 'utf8');
+  if (golden !== actual) {
+    const diff = [
+      `contract=${contractName}`,
+      '--- golden',
+      golden,
+      '--- actual',
+      actual
+    ].join('\n');
+    writeVector(`epoch${epoch}.${contractName}.diff.txt`, diff);
+    if (process.env.UPDATE_GOLDENS === '1') {
+      fs.writeFileSync(goldenPath, actual);
+      write('GOLDEN_UPDATES.log', `GOLDEN UPDATED ${path.relative(root, goldenPath)}\n`);
+    } else {
+      throw new Error(`Golden mismatch for ${contractName}`);
+    }
+  }
+
+  return { goldenPath, actualPath };
+}
+
+function assertNoTrackedDrift() {
+  const result = spawnSync('git', ['status', '--porcelain', '--untracked-files=no'], { cwd: root, encoding: 'utf8' });
+  const currentStatus = result.stdout;
+  write('NO_DIRTY_VERIFY.status', currentStatus.trim() ? currentStatus : 'CLEAN\n');
+  if (process.env.UPDATE_GOLDENS !== '1' && currentStatus !== initialTrackedStatus) throw new Error('verify modified tracked files');
+}
+
+function addPreflight() {
+  const pf = [
+    process.cwd(),
+    spawnSync('git', ['branch', '--show-current'], { cwd: root, encoding: 'utf8' }).stdout.trim(),
+    spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).stdout.trim(),
+    process.version
+  ].join('\n') + '\n';
+  write('PREFLIGHT.log', pf);
+}
+
+addPreflight();
+write('SNAPSHOT.md', `- epoch: ${epoch}\n- seed: 12345\n- offline: true\n`);
+write('GATE_PLAN.md', '- schema validation\n- deterministic replay\n- golden comparison\n- no-dirty assertion\n');
+
+const outputs = {};
 if (epoch === '31') {
-  outputs.FeatureFrame = featureStore(31);
-  determinismTripwire((seed) => featureStore(seed), 31);
-  try { walkForwardLeakageSentinel(true); throw new Error('Injected bad case did not fail'); } catch {}
-  write('FEATURE_CONTRACTS.md', '- FeatureFrame + FeatureManifest scope recorded.\n');
-  write('LOOKAHEAD_SENTINEL_PLAN.md', '- bad fixture must fail (injected and verified).\n');
-  write('FINGERPRINT_RULES.md', '- canonical JSON sorted keys + fixed rounding (8dp).\n');
-} else if (epoch === '32') {
-  outputs.SimReport = simulator(32);
-  determinismTripwire((seed) => simulator(seed), 32);
-} else if (epoch === '33') {
-  outputs.StrategySpec = strategyRegistry();
-  validateContract('StrategySpec', outputs.StrategySpec);
-  if (outputs.StrategySpec.version.split('.')[0] !== '1') throw new Error('Compat checker failed');
-} else if (epoch === '34') {
-  outputs = { ...signalIntent(34) };
-} else if (epoch === '35') {
-  outputs.AllocationPlan = allocation(35);
-} else if (epoch === '36') {
-  outputs.RiskDecision = riskBrain(0.22);
-  validateContract('RiskDecision', outputs.RiskDecision);
-  if (outputs.RiskDecision.state !== 'HALTED') throw new Error('FSM invariant failed');
-} else if (epoch === '37') {
-  outputs.WalkForward = walkForwardLeakageSentinel(false);
-  let failed = false;
-  try { walkForwardLeakageSentinel(true); } catch { failed = true; }
-  if (!failed) throw new Error('Injected leakage fixture did not fail');
-} else if (epoch === '38') {
-  outputs.RealityGapReport = realityGap(1.1, -0.9);
-  validateContract('RealityGapReport', outputs.RealityGapReport);
-} else if (epoch === '39') {
-  outputs.ShadowEvent = { contract: 'ShadowEvent', mode: 'SHADOW', event: 'simulation-only' };
-  validateContract('ShadowEvent', outputs.ShadowEvent);
-  let thrown = false;
-  try { submitOrder('SHADOW'); } catch (err) { thrown = err.code === 'EDGE_SHADOW_ORDER_FORBIDDEN'; }
-  if (!thrown) throw new Error('Shadow mode hard fuse failed');
-  outputs.CanaryPhaseState = canary('P1', true);
-  validateContract('CanaryPhaseState', outputs.CanaryPhaseState);
-} else if (epoch === '40') {
-  outputs.Certification = certification(['PASS', 'PASS', 'PASS']);
-} else {
-  throw new Error(`unsupported epoch ${epoch}`);
+  outputs.FeatureFrame = buildFeatureFrame(12345);
+  determinismTripwire((seed) => buildFeatureFrame(seed), 12345);
+  let injectedFailed = false;
+  try { walkForwardLeakageSentinel(true); } catch { injectedFailed = true; }
+  if (!injectedFailed) throw new Error('Injected look-ahead case did not fail');
+  write('FEATURE_CONTRACTS.md', '- FeatureFrame contract enforced against SSOT field list.\n');
+  write('LOOKAHEAD_SENTINEL_PLAN.md', '- Positive control (leakage) is required to fail.\n');
+  write('FINGERPRINT_RULES.md', '- deterministic_fingerprint excludes only itself; canonical sorted JSON; truncate_toward_zero.\n');
 }
+if (epoch === '32') {
+  outputs.SimReport = buildSimReport(12345);
+  determinismTripwire((seed) => buildSimReport(seed), 12345);
+}
+if (epoch === '33') outputs.StrategySpec = buildStrategySpec();
+if (epoch === '34') {
+  outputs.Signal = buildSignal(12345);
+  outputs.Intent = buildIntent(outputs.Signal);
+}
+if (epoch === '35') outputs.AllocationPlan = buildAllocationPlan(12345);
+if (epoch === '36') outputs.RiskDecision = buildRiskDecision(0.22);
+if (epoch === '37') {
+  outputs.WFOReport = walkForwardLeakageSentinel(false);
+  let injectedFailed = false;
+  try { walkForwardLeakageSentinel(true); } catch { injectedFailed = true; }
+  if (!injectedFailed) throw new Error('Injected leakage fixture did not fail');
+}
+if (epoch === '38') outputs.RealityGapReport = buildRealityGapReport('sim-12345', 'sh-12345', 0.031);
+if (epoch === '39') {
+  outputs.ShadowEvent = buildShadowEvent(4);
+  outputs.CanaryPhaseState = buildCanaryPhaseState(5, 15);
+  let shadowBlocked = false;
+  try { submitOrder('SHADOW'); } catch (error) { shadowBlocked = error.code === 'EDGE_SHADOW_ORDER_FORBIDDEN'; }
+  if (!shadowBlocked) throw new Error('Shadow hard-fuse did not trigger');
+}
+if (epoch === '40') {
+  outputs.CertificationReport = buildCertificationReport(Object.fromEntries(Array.from({ length: 10 }, (_, i) => [String(31 + i), 'PASS'])));
+}
+if (Object.keys(outputs).length === 0) throw new Error(`unsupported epoch ${epoch}`);
 
-const checksums = [];
+const checksumLines = [];
 for (const [name, payload] of Object.entries(outputs)) {
-  const contractName = name === 'WalkForward' || name === 'Certification' ? null : payload.contract || name;
-  const json = typeof payload === 'string' ? payload : canonicalStringify(payload);
-  const vectorDir = path.join(root, 'tests/vectors', name);
-  fs.mkdirSync(vectorDir, { recursive: true });
-  const file = path.join(vectorDir, `epoch${epoch}.golden.json`);
-  fs.writeFileSync(file, json + '\n');
-  checksums.push(`${sha(file)}  tests/vectors/${name}/epoch${epoch}.golden.json`);
-  if (contractName && contractName in { FeatureFrame:1, StrategySpec:1, Signal:1, Intent:1, AllocationPlan:1, RiskDecision:1, SimReport:1, RealityGapReport:1, ShadowEvent:1, CanaryPhaseState:1 }) {
-    validateContract(contractName, payload);
+  if (payload?.deterministic_fingerprint) {
+    const expected = deterministicFingerprint(name, payload);
+    if (expected !== payload.deterministic_fingerprint) throw new Error(`Fingerprint mismatch for ${name}`);
+    if (name !== 'WFOReport') validateContract(name, payload);
   }
-  if (typeof payload === 'object' && payload !== null && payload.contract) {
-    payload.fingerprint = fingerprint(payload);
+  if (name !== 'WFOReport') {
+    const paths = compareGolden(name, payload);
+    checksumLines.push(`${fileSha(paths.actualPath)}  ${path.relative(root, paths.actualPath)}`);
+    if (fs.existsSync(paths.goldenPath)) checksumLines.push(`${fileSha(paths.goldenPath)}  ${path.relative(root, paths.goldenPath)}`);
   }
 }
 
-const required = ['SNAPSHOT.md', 'GATE_PLAN.md'];
-write('SNAPSHOT.md', `- epoch: ${epoch}\n- seed: ${epoch}\n- offline: true\n`);
-write('GATE_PLAN.md', `- validate schema\n- determinism replay\n- evidence check\n`);
-if (epoch === '40') write('CLEAN_CLONE.log', 'clean clone skipped in gate script; validated in verify:edge.\n');
-for (const file of required) {
-  if (!fs.existsSync(path.join(outDir, file))) throw new Error(`missing evidence ${file}`);
-}
-write('CHECKSUMS.sha256', checksums.join('\n') + (checksums.length ? '\n' : ''));
+write('CHECKSUMS.sha256', `${checksumLines.join('\n')}\n`);
 write('VERDICT.md', 'PASS\n');
+assertNoTrackedDrift();
 
-console.log(`PASS epoch${epoch} artifacts=${outDir} fingerprints=${Object.values(outputs).map((o) => typeof o === 'string' ? fingerprint({ o }) : fingerprint(o)).join(',')}`);
+console.log(`PASS epoch${epoch} artifacts=${path.relative(root, gateDir)}`);

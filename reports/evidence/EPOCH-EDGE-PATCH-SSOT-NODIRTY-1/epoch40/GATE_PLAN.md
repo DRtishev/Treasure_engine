@@ -1,0 +1,4 @@
+- schema validation
+- deterministic replay
+- golden comparison
+- no-dirty assertion

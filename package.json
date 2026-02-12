@@ -98,7 +98,9 @@
     "verify:epoch38": "node scripts/verify/epoch38_edge_gate.mjs",
     "verify:epoch39": "node scripts/verify/epoch39_edge_gate.mjs",
     "verify:epoch40": "node scripts/verify/epoch40_edge_gate.mjs",
-    "verify:edge": "node scripts/verify/edge_all_epochs.mjs"
+    "verify:edge": "node scripts/verify/edge_all_epochs.mjs",
+    "verify:edge:strict": "ENABLE_CLEAN_CLONE=1 npm run verify:edge",
+    "verify:goldens:update": "UPDATE_GOLDENS=1 npm run verify:edge"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
