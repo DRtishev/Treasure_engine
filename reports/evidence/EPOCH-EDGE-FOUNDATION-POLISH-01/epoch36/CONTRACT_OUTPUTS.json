@@ -1,0 +1,14 @@
+{
+  "RiskDecision": {
+    "action": "HALT",
+    "decision_id": "rd-halted",
+    "from_mode": "RESTRICTED",
+    "schema_version": "1.0.0",
+    "timestamp": "2026-01-01T00:00:03Z",
+    "to_mode": "HALTED",
+    "trigger_ids": [
+      "drawdown_breach"
+    ],
+    "deterministic_fingerprint": "dbfcb0269c106112890fd2312b651c8c55b810b4e9061464c3893733b8be5f05"
+  }
+}

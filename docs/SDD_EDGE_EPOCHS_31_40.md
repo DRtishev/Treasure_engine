@@ -2,14 +2,14 @@
 
 ## Operator Summary
 - This SDD is the single architecture blueprint for EDGE epochs E31..E40.
-- Scope is specification only: no runtime trading implementation in this cycle.
+- Scope includes implemented verification gates for E31..E40 with offline evidence outputs.
 - Offline-first is mandatory; network paths require `ENABLE_NETWORK_TESTS=1`.
 - Determinism is mandatory: same inputs + seed + config = same fingerprint.
 - Point-in-time data discipline is mandatory: no future leakage.
 - Shadow/canary must remain no-order by default.
 - Every epoch defines explicit contracts, invariants, and fail-fast stop rules.
 - Every gate must produce evidence artifacts under `reports/evidence/<EVIDENCE_EPOCH>/`.
-- READY in ledger means implementation-ready spec, not runtime completed.
+- READY in ledger requires gate implementation plus evidence-complete PASS in the active evidence epoch.
 - E40 release freeze requires clean-clone reproducibility and certification report.
 
 ## Where to look next
@@ -118,7 +118,7 @@ FSM:
 
 ## Gate Strategy
 - `verify:specs` validates template conformance and epoch coverage E01..E40.
-- Epoch verify commands (`verify:epoch31`..`verify:epoch40`) are mandatory implementation gates and are spec-defined in this cycle.
+- Epoch verify commands (`verify:epoch31`..`verify:epoch40`) are mandatory implementation gates implemented under `scripts/verify/epoch*_edge_gate.mjs`.
 - Two-run anti-flake is required for spec closeout evidence.
 
 
@@ -160,6 +160,10 @@ flowchart TD
 ```
 
 ## Release Discipline
-- Epochs 31..40 remain `READY` until implementation gates are green with evidence.
+- Epochs 31..40 are considered complete only when implementation gates are green with required evidence files.
 - Live trading remains disabled; shadow-only governance is non-bypassable.
 - E40 certification requires clean-clone reproducibility and immutable evidence hashes.
+
+
+## Canonical vector paths
+- Canonical golden path uses contract case: `tests/vectors/Intent` and `tests/vectors/Signal` (legacy lowercase duplicates removed).

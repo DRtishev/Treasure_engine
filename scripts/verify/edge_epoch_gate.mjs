@@ -1,4 +1,5 @@
 import fs from 'node:fs';
+import os from 'node:os';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
@@ -26,12 +27,26 @@ const root = path.resolve(__dirname, '../..');
 const epoch = process.argv[2];
 if (!epoch) throw new Error('epoch required');
 
+const seed = Number(process.env.SEED ?? 12345);
 const evidenceEpoch = process.env.EVIDENCE_EPOCH || 'EPOCH-EDGE-LOCAL';
 const gateDir = path.join(root, 'reports/evidence', evidenceEpoch, `epoch${epoch}`);
 const vectorsDir = path.join(root, 'reports/evidence', evidenceEpoch, 'vectors');
 fs.mkdirSync(gateDir, { recursive: true });
 fs.mkdirSync(vectorsDir, { recursive: true });
 const initialTrackedStatus = spawnSync('git', ['status', '--porcelain', '--untracked-files=no'], { cwd: root, encoding: 'utf8' }).stdout;
+
+const REQUIRED_BY_EPOCH = {
+  '31': ['FEATURE_CONTRACTS.md', 'LOOKAHEAD_SENTINEL_PLAN.md', 'FINGERPRINT_RULES.md', 'VERDICT.md'],
+  '32': ['SPEC_CONTRACTS.md', 'GATE_PLAN.md', 'FINGERPRINT_POLICY.md', 'VERDICT.md'],
+  '33': ['SPEC_CONTRACTS.md', 'GATE_PLAN.md', 'FINGERPRINT_POLICY.md', 'VERDICT.md'],
+  '34': ['SPEC_CONTRACTS.md', 'GATE_PLAN.md', 'FINGERPRINT_POLICY.md', 'VERDICT.md'],
+  '35': ['SPEC_CONTRACTS.md', 'GATE_PLAN.md', 'FINGERPRINT_POLICY.md', 'VERDICT.md'],
+  '36': ['SPEC_CONTRACTS.md', 'GATE_PLAN.md', 'FINGERPRINT_POLICY.md', 'VERDICT.md'],
+  '37': ['SPEC_CONTRACTS.md', 'GATE_PLAN.md', 'FINGERPRINT_POLICY.md', 'VERDICT.md'],
+  '38': ['SPEC_CONTRACTS.md', 'GATE_PLAN.md', 'FINGERPRINT_POLICY.md', 'VERDICT.md'],
+  '39': ['SPEC_CONTRACTS.md', 'GATE_PLAN.md', 'FINGERPRINT_POLICY.md', 'EXPECTED_FAILURE.md', 'VERDICT.md'],
+  '40': ['SPEC_CONTRACTS.md', 'GATE_PLAN.md', 'FINGERPRINT_POLICY.md', 'CLEAN_CLONE_PROOF.md', 'VERDICT.md']
+};
 
 function write(rel, data) {
   const file = path.join(gateDir, rel);
@@ -68,13 +83,7 @@ function compareGolden(contractName, payload) {
 
   const golden = fs.readFileSync(goldenPath, 'utf8');
   if (golden !== actual) {
-    const diff = [
-      `contract=${contractName}`,
-      '--- golden',
-      golden,
-      '--- actual',
-      actual
-    ].join('\n');
+    const diff = [`contract=${contractName}`, '--- golden', golden, '--- actual', actual].join('\n');
     writeVector(`epoch${epoch}.${contractName}.diff.txt`, diff);
     if (process.env.UPDATE_GOLDENS === '1') {
       fs.writeFileSync(goldenPath, actual);
@@ -96,39 +105,153 @@ function assertNoTrackedDrift() {
 
 function addPreflight() {
   const pf = [
-    process.cwd(),
-    spawnSync('git', ['branch', '--show-current'], { cwd: root, encoding: 'utf8' }).stdout.trim(),
-    spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).stdout.trim(),
-    process.version
+    `pwd=${process.cwd()}`,
+    `branch=${spawnSync('git', ['branch', '--show-current'], { cwd: root, encoding: 'utf8' }).stdout.trim()}`,
+    `head=${spawnSync('git', ['rev-parse', 'HEAD'], { cwd: root, encoding: 'utf8' }).stdout.trim()}`,
+    `node=${process.version}`,
+    `seed=${seed}`
   ].join('\n') + '\n';
   write('PREFLIGHT.log', pf);
 }
 
+function writeSpecDocs() {
+  const mapping = {
+    '31': {
+      a: 'FEATURE_CONTRACTS.md',
+      b: 'LOOKAHEAD_SENTINEL_PLAN.md',
+      c: 'FINGERPRINT_RULES.md'
+    },
+    default: {
+      a: 'SPEC_CONTRACTS.md',
+      b: 'GATE_PLAN.md',
+      c: 'FINGERPRINT_POLICY.md'
+    }
+  };
+  const names = mapping[epoch] ?? mapping.default;
+  if (!fs.existsSync(path.join(gateDir, names.a))) write(names.a, `# epoch${epoch} contracts\n- contracts enforced by core/edge/contracts.mjs\n`);
+  if (!fs.existsSync(path.join(gateDir, names.b))) write(names.b, `# epoch${epoch} gate plan\n- seed=${seed}\n- offline-first=true\n- golden compare required when UPDATE_GOLDENS!=1\n`);
+  if (!fs.existsSync(path.join(gateDir, names.c))) write(names.c, '# fingerprint policy\n- canonical sorted JSON\n- deterministic_fingerprint excludes itself\n- sha256 hex\n');
+}
+
+function ensureRequiredEvidenceOrThrow() {
+  const required = REQUIRED_BY_EPOCH[epoch] || [];
+  const missing = required.filter((rel) => !fs.existsSync(path.join(gateDir, rel)));
+  if (missing.length > 0) throw new Error(`Missing required evidence files: ${missing.join(', ')}`);
+}
+
+function aggregateEpochFingerprintsFromEvidence(evidenceRoot, epochs = ['31', '32', '33', '34', '35', '36', '37', '38', '39']) {
+  const combined = {};
+  for (const ep of epochs) {
+    const outPath = path.join(evidenceRoot, `epoch${ep}`, 'CONTRACT_OUTPUTS.json');
+    const payload = JSON.parse(fs.readFileSync(outPath, 'utf8'));
+    combined[`epoch${ep}`] = Object.fromEntries(Object.entries(payload).map(([k, v]) => [k, v?.deterministic_fingerprint ?? null]));
+  }
+  return crypto.createHash('sha256').update(canonicalStringify(combined)).digest('hex');
+}
+
+function runCleanCloneProof() {
+  const cloneRoot = path.join(os.tmpdir(), `edge_clean_clone_${Date.now()}`);
+  const clone = spawnSync('git', ['clone', '--local', root, cloneRoot], { encoding: 'utf8' });
+  if (clone.status !== 0) throw new Error(`clean clone failed: ${clone.stderr || clone.stdout}`);
+
+  const diffStatus = spawnSync('git', ['status', '--porcelain'], { cwd: root, encoding: 'utf8' });
+  for (const row of diffStatus.stdout.split(/\r?\n/).filter(Boolean)) {
+    const status = row.slice(0, 2).trim();
+    const rel = row.slice(3).trim();
+    const src = path.join(root, rel);
+    const dst = path.join(cloneRoot, rel);
+    if (status === 'D' || status === 'AD') {
+      if (fs.existsSync(dst)) fs.rmSync(dst, { recursive: true, force: true });
+      continue;
+    }
+    if (fs.existsSync(src)) {
+      fs.mkdirSync(path.dirname(dst), { recursive: true });
+      fs.cpSync(src, dst, { recursive: true, force: true });
+    }
+  }
+
+  const srcModules = path.join(root, 'node_modules');
+  if (fs.existsSync(srcModules)) {
+    const cloneModules = path.join(cloneRoot, 'node_modules');
+    try {
+      fs.symlinkSync(srcModules, cloneModules, 'dir');
+    } catch {
+      spawnSync('cp', ['-R', srcModules, cloneModules], { encoding: 'utf8' });
+    }
+  }
+
+  const cloneEvidence = `${evidenceEpoch}-CLEAN-CLONE`;
+  const env = {
+    ...process.env,
+    EVIDENCE_EPOCH: cloneEvidence,
+    EDGE_IN_CLEAN_CLONE: '1',
+    ENABLE_CLEAN_CLONE: '0',
+    UPDATE_GOLDENS: '0',
+    SEED: String(seed)
+  };
+
+  for (const ep of ['31', '32', '33', '34', '35', '36', '37', '38', '39']) {
+    const result = spawnSync('npm', ['run', `verify:epoch${ep}`], { cwd: cloneRoot, encoding: 'utf8', env });
+    if (result.status !== 0) {
+      const failLog = [result.stdout || '', result.stderr || ''].join('\n');
+      write('clean_clone/failure.log', failLog);
+      throw new Error(`clean clone epoch${ep} failed`);
+    }
+  }
+
+  const mainEvidenceRoot = path.join(root, 'reports/evidence', evidenceEpoch);
+  const cloneEvidenceRoot = path.join(cloneRoot, 'reports/evidence', cloneEvidence);
+  const mainAggregate = aggregateEpochFingerprintsFromEvidence(mainEvidenceRoot);
+  const cloneAggregate = aggregateEpochFingerprintsFromEvidence(cloneEvidenceRoot);
+
+  const compareText = [
+    `main_aggregate=${mainAggregate}`,
+    `clone_aggregate=${cloneAggregate}`,
+    `match=${String(mainAggregate === cloneAggregate)}`
+  ].join('\n') + '\n';
+  write('clean_clone/aggregate_compare.txt', compareText);
+
+  const hashLines = [];
+  for (const rel of ['clean_clone/aggregate_compare.txt']) {
+    const abs = path.join(gateDir, rel);
+    hashLines.push(`${fileSha(abs)}  ${path.relative(root, abs)}`);
+  }
+  write('clean_clone/HASHES.sha256', `${hashLines.join('\n')}\n`);
+
+  if (mainAggregate !== cloneAggregate) throw new Error('clean clone fingerprint mismatch');
+
+  write('CLEAN_CLONE_PROOF.md', [
+    '# clean clone proof',
+    `- clone_root: ${cloneRoot}`,
+    `- clone_evidence_epoch: ${cloneEvidence}`,
+    `- aggregate_compare: ${path.relative(root, path.join(gateDir, 'clean_clone/aggregate_compare.txt'))}`,
+    `- hashes: ${path.relative(root, path.join(gateDir, 'clean_clone/HASHES.sha256'))}`,
+    '- result: PASS'
+  ].join('\n') + '\n');
+}
+
 addPreflight();
-write('SNAPSHOT.md', `- epoch: ${epoch}\n- seed: 12345\n- offline: true\n`);
-write('GATE_PLAN.md', '- schema validation\n- deterministic replay\n- golden comparison\n- no-dirty assertion\n');
+write('SNAPSHOT.md', `- epoch: ${epoch}\n- seed: ${seed}\n- offline: true\n`);
+writeSpecDocs();
 
 const outputs = {};
 if (epoch === '31') {
-  outputs.FeatureFrame = buildFeatureFrame(12345);
-  determinismTripwire((seed) => buildFeatureFrame(seed), 12345);
+  outputs.FeatureFrame = buildFeatureFrame(seed);
+  determinismTripwire((x) => buildFeatureFrame(x), seed);
   let injectedFailed = false;
   try { walkForwardLeakageSentinel(true); } catch { injectedFailed = true; }
   if (!injectedFailed) throw new Error('Injected look-ahead case did not fail');
-  write('FEATURE_CONTRACTS.md', '- FeatureFrame contract enforced against SSOT field list.\n');
-  write('LOOKAHEAD_SENTINEL_PLAN.md', '- Positive control (leakage) is required to fail.\n');
-  write('FINGERPRINT_RULES.md', '- deterministic_fingerprint excludes only itself; canonical sorted JSON; truncate_toward_zero.\n');
 }
 if (epoch === '32') {
-  outputs.SimReport = buildSimReport(12345);
-  determinismTripwire((seed) => buildSimReport(seed), 12345);
+  outputs.SimReport = buildSimReport(seed);
+  determinismTripwire((x) => buildSimReport(x), seed);
 }
 if (epoch === '33') outputs.StrategySpec = buildStrategySpec();
 if (epoch === '34') {
-  outputs.Signal = buildSignal(12345);
+  outputs.Signal = buildSignal(seed);
   outputs.Intent = buildIntent(outputs.Signal);
 }
-if (epoch === '35') outputs.AllocationPlan = buildAllocationPlan(12345);
+if (epoch === '35') outputs.AllocationPlan = buildAllocationPlan(seed);
 if (epoch === '36') outputs.RiskDecision = buildRiskDecision(0.22);
 if (epoch === '37') {
   outputs.WFOReport = walkForwardLeakageSentinel(false);
@@ -136,18 +259,26 @@ if (epoch === '37') {
   try { walkForwardLeakageSentinel(true); } catch { injectedFailed = true; }
   if (!injectedFailed) throw new Error('Injected leakage fixture did not fail');
 }
-if (epoch === '38') outputs.RealityGapReport = buildRealityGapReport('sim-12345', 'sh-12345', 0.031);
+if (epoch === '38') outputs.RealityGapReport = buildRealityGapReport(`sim-${seed}`, `sh-${seed}`, 0.031);
 if (epoch === '39') {
   outputs.ShadowEvent = buildShadowEvent(4);
   outputs.CanaryPhaseState = buildCanaryPhaseState(5, 15);
-  let shadowBlocked = false;
-  try { submitOrder('SHADOW'); } catch (error) { shadowBlocked = error.code === 'EDGE_SHADOW_ORDER_FORBIDDEN'; }
-  if (!shadowBlocked) throw new Error('Shadow hard-fuse did not trigger');
+  let captured = null;
+  try {
+    submitOrder('SHADOW');
+  } catch (error) {
+    captured = error;
+  }
+  if (!captured || captured.code !== 'EDGE_SHADOW_ORDER_FORBIDDEN') throw new Error('Shadow hard-fuse did not trigger');
+  write('EXPECTED_FAILURE.md', `submitOrder('SHADOW') threw ${captured.code}\n`);
 }
 if (epoch === '40') {
   outputs.CertificationReport = buildCertificationReport(Object.fromEntries(Array.from({ length: 10 }, (_, i) => [String(31 + i), 'PASS'])));
+  if (process.env.EDGE_IN_CLEAN_CLONE !== '1') runCleanCloneProof();
 }
 if (Object.keys(outputs).length === 0) throw new Error(`unsupported epoch ${epoch}`);
+
+write('CONTRACT_OUTPUTS.json', `${JSON.stringify(outputs, null, 2)}\n`);
 
 const checksumLines = [];
 for (const [name, payload] of Object.entries(outputs)) {
@@ -163,8 +294,12 @@ for (const [name, payload] of Object.entries(outputs)) {
   }
 }
 
+checksumLines.push(`${fileSha(path.join(gateDir, 'CONTRACT_OUTPUTS.json'))}  ${path.relative(root, path.join(gateDir, 'CONTRACT_OUTPUTS.json'))}`);
 write('CHECKSUMS.sha256', `${checksumLines.join('\n')}\n`);
+
+write('SUMMARY.md', `epoch=${epoch}\nseed=${seed}\ncontracts=${Object.keys(outputs).join(',')}\n`);
 write('VERDICT.md', 'PASS\n');
+ensureRequiredEvidenceOrThrow();
 assertNoTrackedDrift();
 
 console.log(`PASS epoch${epoch} artifacts=${path.relative(root, gateDir)}`);

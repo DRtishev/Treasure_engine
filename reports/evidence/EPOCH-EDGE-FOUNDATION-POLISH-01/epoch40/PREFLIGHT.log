@@ -1,0 +1,5 @@
+pwd=/workspace/Treasure_engine
+branch=work
+head=cec454546c8720478335f9535765c06a54d44209
+node=v20.19.6
+seed=12345
