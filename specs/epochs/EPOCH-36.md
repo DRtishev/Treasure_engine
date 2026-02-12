@@ -94,6 +94,7 @@
 - Planned implementation gate: `npm run verify:epoch36`.
 - Gate inputs: RiskState contracts + FSM transition fixtures + HALTED-bypass-attempt fixture + seed config.
 - Gate outputs: gate log, FSM transition log, HALTED-bypass rejection log, verdict file.
+- Machine-check gate rule: gate result is PASS only when exit code is 0 and every listed evidence file exists under `reports/evidence/<EVIDENCE_EPOCH>/epoch36/`.
 - PASS semantics: FSM transitions follow defined rules, HALTED non-bypassable, evidence complete, replay stable.
 - FAIL semantics: any of: HALTED bypassed without proper exit protocol, invalid FSM transition, fingerprint mismatch, missing evidence.
 - Test vectors (from `docs/EDGE_RESEARCH/TEST_VECTORS.md`):

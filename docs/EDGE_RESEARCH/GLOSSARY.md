@@ -1,56 +1,75 @@
-# EDGE Canonical Glossary
+# EDGE Canonical Glossary (SSOT)
 
-> **SSOT**: This is the single source of truth for terminology across E31..E40 specs.
-> All epoch specs, research docs, and contracts must use these definitions consistently.
-> Changes require review and `verify:specs` re-run.
+> This file is the single source of truth for terms used by E31..E40, SDD, and EDGE research docs.
+> New terms are forbidden unless they are added here first and linked to at least one spec section.
 
-## Terms
+## Law of Term Stability (Non-Bypassable)
+- Do not introduce new nouns in epoch specs without adding them to this glossary.
+- If a legacy synonym exists, keep one canonical term and list the legacy alias in the mapping table.
+- Any unresolved term drift is a `BLOCKED` condition for spec closeout.
 
-**CanaryPhase**: Staged allocation ramp (5 -> 15 -> 35 -> 70 -> 100 percent) with rollback gates at each transition. Phase skipping is forbidden.
+## Canonical terms
 
-**CertificationReport**: Immutable release artifact containing all epoch gate results, ledger snapshot hash, spec hash, evidence hash, clean-clone reproducibility references, and approvals.
+| Term | Definition |
+|---|---|
+| FeatureFrame | Point-in-time feature row keyed by `(symbol, ts_event)` with no-lookahead provenance. |
+| StrategySpec | Immutable strategy contract (versioned parameters, compatibility, artifact hashes). |
+| Signal | Strategy hypothesis with confidence and rationale; not executable by itself. |
+| Intent | Deterministic executable instruction derived from Signal + constraints. |
+| AllocationPlan | Deterministic portfolio sizing output from intents and portfolio state. |
+| RiskDecision | Risk FSM decision record containing mode transition, triggers, and required action. |
+| SimReport | Deterministic simulator assumptions + outputs + calibration references. |
+| RealityGapReport | Sim-vs-shadow drift report with component deltas and `gap_score`. |
+| ShadowEvent | No-order shadow execution event with guard outcomes and traceability. |
+| CanaryPhaseState | Deterministic canary progression state (`5→15→35→70→100`) with rollback status. |
+| CertificationReport | Immutable release certification artifact for E40 closeout. |
+| EvidencePack | Required logs/manifests/verdict under one evidence epoch folder. |
+| Deterministic Fingerprint | `sha256` of canonicalized material set; mismatch on same inputs is deterministic drift. |
 
-**Deterministic Fingerprint**: `sha256` hash over canonicalized JSON payload and declared input set. Identical inputs must always produce identical fingerprint. Any mismatch is a deterministic failure (FAIL).
+## Usage mapping (canonical ↔ legacy)
 
-**EvidencePack**: Complete set of logs, manifests, and verdict for a run. Must include PREFLIGHT, gate logs, SUMMARY, VERDICT, and checksums.
+| Canonical | Legacy alias in repo | Primary usage |
+|---|---|---|
+| StrategySpec | `StrategyManifest` | E33 strategy registry contracts |
+| AllocationPlan | `PortfolioState` (E35 output state) | E35 allocation/portfolio constraints |
+| RiskDecision | `RiskState` | E36 risk FSM transitions |
+| RealityGapReport | `GapReport` | E38 reality-gap controls |
+| ShadowEvent | `ShadowRunRecord` | E39 shadow safety + canary evidence |
+| CanaryPhaseState | `CanaryPhase` | E39 canary governor transitions |
 
-**FeatureFrame**: Point-in-time feature row keyed by `(symbol, ts_event)` with provenance. Must satisfy no-lookahead invariant: `source_ts <= ts_event` for all contributing data.
+## Micro JSON examples (minimal, valid)
 
-**FeatureManifest**: Immutable metadata for a feature extraction run. Chains dataset hash, feature hash, config hash, seed, and schema version.
+### FeatureFrame
+```json
+{"schema_version":"1.0.0","symbol":"BTCUSDT","ts_event":"2026-01-01T00:00:00Z","features":{"ret_1":0.001200},"feature_vector_order":["ret_1"]}
+```
 
-**Fill**: Simulated or live execution result with price, size, latency, and fees. Fantasy fills (zero spread/fees) are forbidden.
+### StrategySpec
+```json
+{"schema_version":"1.0.0","strategy_id":"edge_mvp","semver":"1.2.0","params_schema":{"type":"object"},"artifact_hashes":{"model":"sha256:abc"}}
+```
 
-**Fingerprint**: See **Deterministic Fingerprint**.
+### Signal → Intent
+```json
+{"signal":{"signal_id":"sig-1","side_hint":"LONG","confidence":0.72},"intent":{"intent_id":"int-1","side":"BUY","size_units":0.05000000,"limit_price":42000.12000000}}
+```
 
-**GapReport**: Drift comparison between simulation and shadow/live observations. Contains component deltas (slippage, fill-rate, latency, reject-rate, PnL) and a composite `gap_score`.
+### AllocationPlan
+```json
+{"schema_version":"1.0.0","plan_id":"ap-1","target_weights":{"BTCUSDT":0.350000},"max_leverage":1.500000}
+```
 
-**GapScore**: Scalar drift score aggregating deltas between simulation and shadow/live. Thresholds are **HEURISTIC** and require quarterly calibration.
+### RiskDecision
+```json
+{"schema_version":"1.0.0","decision_id":"rd-1","from_mode":"CAUTIOUS","to_mode":"RESTRICTED","trigger_ids":["gap_score_breach"]}
+```
 
-**HEURISTIC**: Any threshold, parameter, or constant without Tier-1 source backing. Must be labeled explicitly, include calibration protocol, and be reviewed quarterly.
+### RealityGapReport
+```json
+{"schema_version":"1.0.0","report_id":"rg-1","gap_score":0.031000,"brake_action":"REDUCE"}
+```
 
-**Intent**: Constrained executable instruction derived from a Signal. Includes side, size, limit price, time-in-force, max slippage, and risk tags. Must be deterministically reproducible from its inputs.
-
-**Manifest**: Immutable metadata file chaining hashes and schema versions. Used for datasets, features, models, and strategies.
-
-**Order**: Exchange-facing object. Forbidden in shadow mode by default. Only emitted when canary governor explicitly enables live order placement.
-
-**PortfolioState**: Snapshot of portfolio including equity, cash, exposure, leverage, positions, asset caps, turnover, and drawdown.
-
-**RiskState**: FSM mode (NORMAL, CAUTIOUS, RESTRICTED, HALTED) plus active triggers, cooldown timers, and kill-switch states.
-
-**ShadowRunRecord**: Record of a shadow execution run. Must have `orders_submitted == 0` and `order_adapter_state == "DISABLED"`.
-
-**Signal**: Strategy output hypothesis with confidence, side hint, and reasons. Does not authorize execution; must be transformed into Intent through deterministic mapping.
-
-**SimReport**: Deterministic simulator assumptions and output fingerprint. Includes slippage model, fee model, latency model, and partial fill assumptions.
-
-**StrategyManifest**: Immutable semver contract for a strategy artifact. Includes params schema, defaults, compatibility ranges, and artifact hashes.
-
-**WFOReport**: Walk-forward optimization report with pre-committed windows, purge/embargo bars, selection criteria, IS/OOS metrics, and seed dispersion.
-
-## Naming Conventions
-
-- Schema names use PascalCase: `FeatureFrame`, `SimReport`, `RiskState`.
-- Field names use snake_case: `schema_version`, `deterministic_fingerprint`, `gap_score`.
-- Epoch references use format: `E31`, `E32`, ... `E40` or `EPOCH-31`, `EPOCH-32`, ... `EPOCH-40`.
-- Evidence paths use format: `reports/evidence/<EVIDENCE_EPOCH>/epochNN/`.
+### ShadowEvent + CanaryPhaseState
+```json
+{"shadow_event":{"event_id":"se-1","orders_submitted":0},"canary_phase_state":{"phase_percent":15,"previous_phase_percent":5,"rollback_armed":true}}
+```

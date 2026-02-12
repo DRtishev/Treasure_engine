@@ -106,6 +106,7 @@
 - Planned implementation gate: `npm run verify:epoch40`.
 - Gate inputs: CertificationReport contracts + all E31..E39 gate results + clean-clone replay environment.
 - Gate outputs: gate log, certification report, clean-clone replay log, verdict file.
+- Machine-check gate rule: gate result is PASS only when exit code is 0 and every listed evidence file exists under `reports/evidence/<EVIDENCE_EPOCH>/epoch40/`.
 - PASS semantics: all epoch gates PASS, clean-clone replay reproduces fingerprint, evidence complete, all approvals present.
 - FAIL semantics: any of: epoch gate not PASS, clean-clone fingerprint mismatch, missing evidence or approval, hash mismatch.
 - Test vectors (from `docs/EDGE_RESEARCH/TEST_VECTORS.md`):

@@ -109,6 +109,7 @@
 - Planned implementation gate: `npm run verify:epoch33`.
 - Gate inputs: StrategyManifest contracts + version-change fixtures + seed config.
 - Gate outputs: gate log, contract validation log, compatibility check log, verdict file.
+- Machine-check gate rule: gate result is PASS only when exit code is 0 and every listed evidence file exists under `reports/evidence/<EVIDENCE_EPOCH>/epoch33/`.
 - PASS semantics: all invariants hold, semver bump policy enforced, evidence complete, replay stable.
 - FAIL semantics: any of: breaking change with non-MAJOR bump, invalid manifest, fingerprint mismatch, missing evidence.
 - Test vectors (from `docs/EDGE_RESEARCH/TEST_VECTORS.md`):

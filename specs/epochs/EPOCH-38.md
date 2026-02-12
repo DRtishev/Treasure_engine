@@ -95,6 +95,7 @@
 - Planned implementation gate: `npm run verify:epoch38`.
 - Gate inputs: GapReport contracts + threshold-crossing fixtures + FULL_STOP escalation fixture + seed config.
 - Gate outputs: gate log, gap score computation log, brake action log, RiskState escalation proof, verdict file.
+- Machine-check gate rule: gate result is PASS only when exit code is 0 and every listed evidence file exists under `reports/evidence/<EVIDENCE_EPOCH>/epoch38/`.
 - PASS semantics: gap_score thresholds correctly trigger brake actions, FULL_STOP escalates to HALTED, evidence complete, replay stable.
 - FAIL semantics: any of: FULL_STOP does not escalate to HALTED, threshold miscategorization, fingerprint mismatch, missing evidence.
 - Test vectors (from `docs/EDGE_RESEARCH/TEST_VECTORS.md`):

@@ -1,64 +1,63 @@
-# EDGE Determinism Policy
+# EDGE Determinism Policy (SSOT Law)
 
-> **SSOT**: This is the single source of truth for determinism rules across E31..E40.
-> All epoch specs must reference this document instead of redefining rules per-epoch.
-> Changes require review and `verify:specs` re-run.
+> This policy is normative (MUST/ MUST NOT), not advisory.
+> Any conflict in epoch specs must be resolved in favor of this file, then synced back to specs.
 
-## Rounding Policy
+## 1) Numeric and rounding law
+- Numeric business fields MUST use decimal semantics only.
+- Implicit JS `Number` floating behavior MUST NOT be relied upon for business rounding outcomes.
+- Rounding mode is `truncate_toward_zero` for all deterministic material.
 
-| Domain | Precision | Example |
-|--------|-----------|---------|
-| Prices | 1e-8 | `0.00012345` |
-| Sizes | 1e-8 | `0.01000000` |
-| Returns / Scores | 1e-6 | `0.001234` |
-| Probabilities | 1e-6 | `0.720000` |
-| Basis points | 1e-4 | `8.0000` |
+| Domain | Scale |
+|---|---|
+| price | 1e-8 |
+| size / qty | 1e-8 |
+| return / score / confidence | 1e-6 |
+| bps | 1e-4 |
+| leverage / weight | 1e-6 |
 
-All rounding uses truncation-toward-zero (deterministic, no banker's rounding).
+## 2) Serialization law
+- Fingerprint serialization MUST be UTF-8, no BOM, compact JSON.
+- Object keys MUST be recursively sorted lexicographically.
+- Array order is semantic and MUST remain stable.
+- `NaN`, `Infinity`, `-Infinity`, `undefined`, comments, trailing commas are forbidden.
+- Decimal values MUST be rendered in fixed-point notation (no scientific notation).
 
-## JSON Canonicalization
-
-- Encoding: UTF-8, no BOM.
-- Key ordering: lexicographic sort on all object keys at every nesting level.
-- Array ordering: stable; order is semantically meaningful and must not be shuffled.
-- Decimal formatting: fixed-point notation per rounding policy above. No scientific notation (`1e-8` is a precision spec, not a serialization format).
-- No trailing commas, no comments, no undefined values.
-- Whitespace: compact (no pretty-print) for fingerprint input. Pretty-print is allowed in evidence artifacts but must not be used as fingerprint material.
-
-## Fingerprint Algorithm
-
+## 3) Hash normalization law
 - Algorithm: `sha256`.
-- Input: canonical JSON of the declared material set.
-- Material set per contract is defined in each epoch spec's "Fingerprint rules" subsection.
-- Parent hashes, seed, and schema version are always included in fingerprint material.
-- Drift definition: any fingerprint mismatch for identical inputs is a deterministic failure.
+- Bytes hashed: exact UTF-8 bytes of canonical JSON payload.
+- Line endings for any text material included in hash MUST be normalized to LF (`\n`) before hashing.
+- String normalization: trim is forbidden unless explicitly defined by contract; hash what contract defines.
 
-## Seed Policy
+## 4) Fingerprint include/exclude law
+- Every contract MUST declare explicit include and exclude sets.
+- Include set MUST include at least: `schema_version`, deterministic payload fields, parent references/hashes, `seed` (if present).
+- Exclude set MUST include volatile metadata (`generated_at`, hostnames, PID, wall-clock durations) unless explicitly required.
+- Include/exclude mismatches across docs/specs are a deterministic-policy violation.
 
-- Default seed: `12345` (per `specs/CONSTRAINTS.md`).
-- Seed must be declared in every manifest and run config.
-- Stochastic paths without explicit seed are forbidden.
-- Cross-seed dispersion beyond **HEURISTIC** bound triggers WARN/FAIL per epoch policy.
+## 5) Ordering law
+- Record ordering keys MUST be explicit per contract and stable.
+- Default key when applicable: `(symbol, timestamp, row_id)`.
+- Timestamp monotonicity MUST hold within each partition key.
+- Ties MUST be resolved by deterministic secondary keys; nondeterministic iteration order is forbidden.
 
-## Ordering Policy
+## 6) Seed law
+- Default seed is `12345` unless epoch spec explicitly overrides.
+- Any stochastic path without explicit seed is forbidden.
+- Seed propagation chain MUST be auditable (manifest/run config/evidence).
 
-- Stable ordering key: `(symbol, timestamp, row_id)` where applicable.
-- Feature vector ordering: explicit `feature_vector_order` array in contract.
-- Position sets: sorted by `symbol` ascending.
-- Any ordering-sensitive operation must declare its sort key in the contract.
+## 7) Determinism break-glass law
+A determinism drift is any of:
+- same inputs + same seed + same config produce different fingerprint;
+- same ordered input records produce different output order;
+- canonicalization differences alter hash with unchanged logical payload.
 
-## Forbidden Values
+Required response:
+1. Mark gate `FAIL`.
+2. Mark epoch verdict `BLOCKED`.
+3. Publish drift diagnostic in evidence (`*_DRIFT.md`).
+4. Do not advance ledger status for affected epoch.
 
-All contracts forbid: `NaN`, `Inf`, `-Inf`, negative prices, negative volumes, negative fees, non-monotonic timestamps within `(symbol, bar_interval)`.
-
-## Offline-First Invariant
-
-- Default gates must pass without internet access.
-- Network paths require `ENABLE_NETWORK_TESTS=1`.
-- No hidden network dependencies in any default verification path.
-
-## Replay Invariant
-
-- Identical inputs + seed + config must produce identical fingerprint.
-- Two-run anti-flake is required for spec closeout evidence.
-- Any replay mismatch is a hard FAIL.
+## 8) Offline invariant
+- Default verify gates MUST run without network.
+- Network-dependent checks are opt-in only via `ENABLE_NETWORK_TESTS=1`.

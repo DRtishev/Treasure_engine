@@ -102,6 +102,7 @@
 - Planned implementation gate: `npm run verify:epoch39`.
 - Gate inputs: ShadowRunRecord contracts + shadow-mode fixtures + canary-phase-skip fixture + seed config.
 - Gate outputs: gate log, shadow guard assertion log, canary phase log, verdict file.
+- Machine-check gate rule: gate result is PASS only when exit code is 0 and every listed evidence file exists under `reports/evidence/<EVIDENCE_EPOCH>/epoch39/`.
 - PASS semantics: shadow run emits intents with `orders_submitted == 0`, canary phases follow sequence, evidence complete, replay stable.
 - FAIL semantics: any of: non-zero order submission in shadow, adapter not DISABLED, canary phase skipped, fingerprint mismatch, missing evidence.
 - Test vectors (from `docs/EDGE_RESEARCH/TEST_VECTORS.md`):

@@ -115,6 +115,7 @@
 - Planned implementation gate: `npm run verify:epoch34`.
 - Gate inputs: Signal/Intent contracts + deterministic fixtures + staleness scenario + seed config.
 - Gate outputs: gate log, contract validation log, deterministic replay diff, reject log, verdict file.
+- Machine-check gate rule: gate result is PASS only when exit code is 0 and every listed evidence file exists under `reports/evidence/<EVIDENCE_EPOCH>/epoch34/`.
 - PASS semantics: identical signal+context yields byte-identical Intent, stale signals rejected, evidence complete, replay stable.
 - FAIL semantics: any of: nondeterministic mapping, stale signal emitted as intent, missing reject reason, fingerprint mismatch, missing evidence.
 - Test vectors (from `docs/EDGE_RESEARCH/TEST_VECTORS.md`):

@@ -98,6 +98,7 @@
 - Planned implementation gate: `npm run verify:epoch35`.
 - Gate inputs: PortfolioState contracts + cap-violation fixtures + HALTED-mode fixture + seed config.
 - Gate outputs: gate log, contract validation log, cap enforcement log, verdict file.
+- Machine-check gate rule: gate result is PASS only when exit code is 0 and every listed evidence file exists under `reports/evidence/<EVIDENCE_EPOCH>/epoch35/`.
 - PASS semantics: allocation respects all caps, HALTED blocks new risk, evidence complete, replay stable.
 - FAIL semantics: any of: cap exceeded without rejection, HALTED mode allows new risk, fingerprint mismatch, missing evidence.
 - Test vectors (from `docs/EDGE_RESEARCH/TEST_VECTORS.md`):
