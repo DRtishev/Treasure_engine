@@ -46,3 +46,7 @@ This document defines non-negotiable engineering and QA constraints for TREASURE
 ## 7) Anti-regression policy
 - Critical gates run with anti-flake repeats where defined by epoch docs.
 - Spec changes MUST keep `verify:spec` green before merging implementation work.
+
+## 8) Docs-only artifact policy
+- Docs/spec-only cycles MUST NOT require runtime binary artifacts (e.g., `FINAL_VALIDATED.zip`) for PASS unless explicitly requested by the epoch spec.
+- In docs-only cycles, evidence focuses on gate logs, diffs, manifests, and verdict files.

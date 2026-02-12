@@ -1,0 +1,24 @@
+$ pwd
+/workspace/Treasure_engine
+$ node -v
+v20.19.6
+$ npm -v
+11.4.2
+$ git status -sb
+## work
+ M package.json
+ M specs/CONSTRAINTS.md
+ M specs/epochs/EPOCH-31.md
+ M specs/epochs/EPOCH-32.md
+ M specs/epochs/EPOCH-33.md
+ M specs/epochs/EPOCH-34.md
+ M specs/epochs/EPOCH-35.md
+ M specs/epochs/EPOCH-36.md
+ M specs/epochs/EPOCH-37.md
+ M specs/epochs/EPOCH-38.md
+ M specs/epochs/EPOCH-39.md
+ M specs/epochs/EPOCH-40.md
+?? reports/evidence/EPOCH-EDGE-SPECS-FREEZE-1/
+?? scripts/verify/specs_strict.mjs
+$ git rev-parse HEAD
+2aef2d56e81895565668f252f491b442e53232f6

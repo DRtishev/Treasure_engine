@@ -1,0 +1,196 @@
+diff --git a/package.json b/package.json
+index 8312bc1..2b24a58 100644
+--- a/package.json
++++ b/package.json
+@@ -87,7 +87,8 @@
+     "verify:epoch28": "node scripts/verify/run_with_context.mjs --gate epoch28 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch28_ai_signal_intent_safety_check.mjs",
+     "verify:epoch29": "node scripts/verify/run_with_context.mjs --gate epoch29 --seed ${SEED:-12345} --repeat default -- node scripts/verify/epoch29_walkforward_leakage_sentinel.mjs",
+     "verify:epoch30": "node scripts/verify/epoch30_final_polish_release_freeze_check.mjs",
+-    "verify:clean-clone": "node scripts/ops/clean_clone_bootstrap.mjs"
++    "verify:clean-clone": "node scripts/ops/clean_clone_bootstrap.mjs",
++    "verify:specs:strict": "node scripts/verify/specs_strict.mjs"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
+diff --git a/specs/CONSTRAINTS.md b/specs/CONSTRAINTS.md
+index 79a1b17..72fa75c 100644
+--- a/specs/CONSTRAINTS.md
++++ b/specs/CONSTRAINTS.md
+@@ -46,3 +46,7 @@ This document defines non-negotiable engineering and QA constraints for TREASURE
+ ## 7) Anti-regression policy
+ - Critical gates run with anti-flake repeats where defined by epoch docs.
+ - Spec changes MUST keep `verify:spec` green before merging implementation work.
++
++## 8) Docs-only artifact policy
++- Docs/spec-only cycles MUST NOT require runtime binary artifacts (e.g., `FINAL_VALIDATED.zip`) for PASS unless explicitly requested by the epoch spec.
++- In docs-only cycles, evidence focuses on gate logs, diffs, manifests, and verdict files.
+diff --git a/specs/epochs/EPOCH-31.md b/specs/epochs/EPOCH-31.md
+index aa83237..c0dcfd3 100644
+--- a/specs/epochs/EPOCH-31.md
++++ b/specs/epochs/EPOCH-31.md
+@@ -16,10 +16,11 @@
+ ## CONSTRAINTS
+ - Offline-first by default; optional network checks only behind `ENABLE_NETWORK_TESTS=1`.
+ - Determinism-first per `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+-- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and glossary.
++- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and `docs/EDGE_RESEARCH/GLOSSARY.md`.
+ - No secrets, no autonomous trading, no hidden dynamic dependencies.
+ 
+ ## DESIGN / CONTRACTS
++### Dependencies
+ - Dependency: `EPOCH-30` as declared in `specs/epochs/INDEX.md` and `specs/epochs/LEDGER.json`.
+ - Primary contract family: `FeatureFrame`.
+ - Local canonical example:
+diff --git a/specs/epochs/EPOCH-32.md b/specs/epochs/EPOCH-32.md
+index 1b365b2..e1f738b 100644
+--- a/specs/epochs/EPOCH-32.md
++++ b/specs/epochs/EPOCH-32.md
+@@ -16,10 +16,11 @@
+ ## CONSTRAINTS
+ - Offline-first by default; optional network checks only behind `ENABLE_NETWORK_TESTS=1`.
+ - Determinism-first per `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+-- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and glossary.
++- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and `docs/EDGE_RESEARCH/GLOSSARY.md`.
+ - No secrets, no autonomous trading, no hidden dynamic dependencies.
+ 
+ ## DESIGN / CONTRACTS
++### Dependencies
+ - Dependency: `EPOCH-31` as declared in `specs/epochs/INDEX.md` and `specs/epochs/LEDGER.json`.
+ - Primary contract family: `SimReport`.
+ - Local canonical example:
+diff --git a/specs/epochs/EPOCH-33.md b/specs/epochs/EPOCH-33.md
+index 13394c6..649a331 100644
+--- a/specs/epochs/EPOCH-33.md
++++ b/specs/epochs/EPOCH-33.md
+@@ -16,10 +16,11 @@
+ ## CONSTRAINTS
+ - Offline-first by default; optional network checks only behind `ENABLE_NETWORK_TESTS=1`.
+ - Determinism-first per `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+-- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and glossary.
++- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and `docs/EDGE_RESEARCH/GLOSSARY.md`.
+ - No secrets, no autonomous trading, no hidden dynamic dependencies.
+ 
+ ## DESIGN / CONTRACTS
++### Dependencies
+ - Dependency: `EPOCH-32` as declared in `specs/epochs/INDEX.md` and `specs/epochs/LEDGER.json`.
+ - Primary contract family: `StrategySpec`.
+ - Local canonical example:
+diff --git a/specs/epochs/EPOCH-34.md b/specs/epochs/EPOCH-34.md
+index 83ec469..5d587fe 100644
+--- a/specs/epochs/EPOCH-34.md
++++ b/specs/epochs/EPOCH-34.md
+@@ -16,10 +16,11 @@
+ ## CONSTRAINTS
+ - Offline-first by default; optional network checks only behind `ENABLE_NETWORK_TESTS=1`.
+ - Determinism-first per `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+-- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and glossary.
++- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and `docs/EDGE_RESEARCH/GLOSSARY.md`.
+ - No secrets, no autonomous trading, no hidden dynamic dependencies.
+ 
+ ## DESIGN / CONTRACTS
++### Dependencies
+ - Dependency: `EPOCH-33` as declared in `specs/epochs/INDEX.md` and `specs/epochs/LEDGER.json`.
+ - Primary contract family: `Signal + Intent`.
+ - Local canonical example:
+diff --git a/specs/epochs/EPOCH-35.md b/specs/epochs/EPOCH-35.md
+index c1cb562..d532559 100644
+--- a/specs/epochs/EPOCH-35.md
++++ b/specs/epochs/EPOCH-35.md
+@@ -16,10 +16,11 @@
+ ## CONSTRAINTS
+ - Offline-first by default; optional network checks only behind `ENABLE_NETWORK_TESTS=1`.
+ - Determinism-first per `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+-- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and glossary.
++- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and `docs/EDGE_RESEARCH/GLOSSARY.md`.
+ - No secrets, no autonomous trading, no hidden dynamic dependencies.
+ 
+ ## DESIGN / CONTRACTS
++### Dependencies
+ - Dependency: `EPOCH-34` as declared in `specs/epochs/INDEX.md` and `specs/epochs/LEDGER.json`.
+ - Primary contract family: `AllocationPlan`.
+ - Local canonical example:
+diff --git a/specs/epochs/EPOCH-36.md b/specs/epochs/EPOCH-36.md
+index ceb44b8..0255888 100644
+--- a/specs/epochs/EPOCH-36.md
++++ b/specs/epochs/EPOCH-36.md
+@@ -16,10 +16,11 @@
+ ## CONSTRAINTS
+ - Offline-first by default; optional network checks only behind `ENABLE_NETWORK_TESTS=1`.
+ - Determinism-first per `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+-- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and glossary.
++- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and `docs/EDGE_RESEARCH/GLOSSARY.md`.
+ - No secrets, no autonomous trading, no hidden dynamic dependencies.
+ 
+ ## DESIGN / CONTRACTS
++### Dependencies
+ - Dependency: `EPOCH-35` as declared in `specs/epochs/INDEX.md` and `specs/epochs/LEDGER.json`.
+ - Primary contract family: `RiskDecision`.
+ - Local canonical example:
+diff --git a/specs/epochs/EPOCH-37.md b/specs/epochs/EPOCH-37.md
+index 4d0169e..82ab734 100644
+--- a/specs/epochs/EPOCH-37.md
++++ b/specs/epochs/EPOCH-37.md
+@@ -16,10 +16,11 @@
+ ## CONSTRAINTS
+ - Offline-first by default; optional network checks only behind `ENABLE_NETWORK_TESTS=1`.
+ - Determinism-first per `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+-- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and glossary.
++- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and `docs/EDGE_RESEARCH/GLOSSARY.md`.
+ - No secrets, no autonomous trading, no hidden dynamic dependencies.
+ 
+ ## DESIGN / CONTRACTS
++### Dependencies
+ - Dependency: `EPOCH-36` as declared in `specs/epochs/INDEX.md` and `specs/epochs/LEDGER.json`.
+ - Primary contract family: `WFO/CPCV Report`.
+ - Local canonical example:
+diff --git a/specs/epochs/EPOCH-38.md b/specs/epochs/EPOCH-38.md
+index bcea4f1..5729791 100644
+--- a/specs/epochs/EPOCH-38.md
++++ b/specs/epochs/EPOCH-38.md
+@@ -16,10 +16,11 @@
+ ## CONSTRAINTS
+ - Offline-first by default; optional network checks only behind `ENABLE_NETWORK_TESTS=1`.
+ - Determinism-first per `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+-- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and glossary.
++- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and `docs/EDGE_RESEARCH/GLOSSARY.md`.
+ - No secrets, no autonomous trading, no hidden dynamic dependencies.
+ 
+ ## DESIGN / CONTRACTS
++### Dependencies
+ - Dependency: `EPOCH-37` as declared in `specs/epochs/INDEX.md` and `specs/epochs/LEDGER.json`.
+ - Primary contract family: `RealityGapReport`.
+ - Local canonical example:
+diff --git a/specs/epochs/EPOCH-39.md b/specs/epochs/EPOCH-39.md
+index 1610696..5f0a34a 100644
+--- a/specs/epochs/EPOCH-39.md
++++ b/specs/epochs/EPOCH-39.md
+@@ -16,10 +16,11 @@
+ ## CONSTRAINTS
+ - Offline-first by default; optional network checks only behind `ENABLE_NETWORK_TESTS=1`.
+ - Determinism-first per `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+-- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and glossary.
++- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and `docs/EDGE_RESEARCH/GLOSSARY.md`.
+ - No secrets, no autonomous trading, no hidden dynamic dependencies.
+ 
+ ## DESIGN / CONTRACTS
++### Dependencies
+ - Dependency: `EPOCH-38` as declared in `specs/epochs/INDEX.md` and `specs/epochs/LEDGER.json`.
+ - Primary contract family: `ShadowEvent + CanaryPhaseState`.
+ - Local canonical example:
+diff --git a/specs/epochs/EPOCH-40.md b/specs/epochs/EPOCH-40.md
+index 08da22b..cc69e51 100644
+--- a/specs/epochs/EPOCH-40.md
++++ b/specs/epochs/EPOCH-40.md
+@@ -16,10 +16,11 @@
+ ## CONSTRAINTS
+ - Offline-first by default; optional network checks only behind `ENABLE_NETWORK_TESTS=1`.
+ - Determinism-first per `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+-- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and glossary.
++- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and `docs/EDGE_RESEARCH/GLOSSARY.md`.
+ - No secrets, no autonomous trading, no hidden dynamic dependencies.
+ 
+ ## DESIGN / CONTRACTS
++### Dependencies
+ - Dependency: `EPOCH-39` as declared in `specs/epochs/INDEX.md` and `specs/epochs/LEDGER.json`.
+ - Primary contract family: `FreezeCertificationReport`.
+ - Local canonical example:

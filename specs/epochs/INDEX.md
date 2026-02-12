@@ -42,8 +42,8 @@
 39. EPOCH-39
 40. EPOCH-40
 
-## Dependency notes (EDGE)
-- EPOCH-31 depends on EPOCH-30 (EDGE starts from completed legacy runway).
+## EDGE dependency notes
+- EPOCH-31 depends on EPOCH-30.
 - EPOCH-32 depends on EPOCH-31.
 - EPOCH-33 depends on EPOCH-32.
 - EPOCH-34 depends on EPOCH-33.
@@ -53,6 +53,14 @@
 - EPOCH-38 depends on EPOCH-37.
 - EPOCH-39 depends on EPOCH-38.
 - EPOCH-40 depends on EPOCH-39.
+
+## Canonical EDGE references
+- `docs/EDGE_RESEARCH/GLOSSARY.md`
+- `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`
+- `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md`
+- `docs/EDGE_RESEARCH/AI_MODULE.md`
+- `docs/EDGE_RESEARCH/ANTI_PATTERNS.md`
+- `docs/SDD_EDGE_EPOCHS_31_40.md`
 
 ## Epoch spec files
 - `specs/epochs/EPOCH-01.md`
@@ -96,41 +104,29 @@
 - `specs/epochs/EPOCH-39.md`
 - `specs/epochs/EPOCH-40.md`
 
-## Gate map
-- EPOCH-01..EPOCH-16: legacy/doc mapping validated by `verify:specs`
-- EPOCH-17: `verify:epoch17`
-- EPOCH-18: `verify:epoch18`
-- EPOCH-19: `verify:epoch19`
-- EPOCH-20: `verify:epoch20`
-- EPOCH-21: `verify:epoch21`
-- EPOCH-22: `verify:epoch22`
-- EPOCH-23: `verify:epoch23`
-- EPOCH-24: `verify:epoch24`
-- EPOCH-25: `verify:epoch25`
-- EPOCH-26: `verify:epoch26`
-- EPOCH-27: `verify:epoch27`
-- EPOCH-28: `verify:epoch28`
-- EPOCH-29: `verify:epoch29`
-- EPOCH-30: `verify:epoch30`
-- EPOCH-31: `verify:epoch31` (spec-defined, implementation pending)
-- EPOCH-32: `verify:epoch32` (spec-defined, implementation pending)
-- EPOCH-33: `verify:epoch33` (spec-defined, implementation pending)
-- EPOCH-34: `verify:epoch34` (spec-defined, implementation pending)
-- EPOCH-35: `verify:epoch35` (spec-defined, implementation pending)
-- EPOCH-36: `verify:epoch36` (spec-defined, implementation pending)
-- EPOCH-37: `verify:epoch37` (spec-defined, implementation pending)
-- EPOCH-38: `verify:epoch38` (spec-defined, implementation pending)
-- EPOCH-39: `verify:epoch39` (spec-defined, implementation pending)
-- EPOCH-40: `verify:epoch40` (spec-defined, implementation pending)
-
-## Gate owners (31→40)
-- EPOCH-31: data-platform
-- EPOCH-32: simulation
-- EPOCH-33: strategy-governance
-- EPOCH-34: execution-pipeline
-- EPOCH-35: portfolio-engine
-- EPOCH-36: risk-governor
-- EPOCH-37: quant-research
-- EPOCH-38: runtime-safety
-- EPOCH-39: release-governor
-- EPOCH-40: certification
+## Gate map (owner + expected verifier)
+- EPOCH-01..EPOCH-16 — owner: docs, runner: `npm run verify:specs`
+- EPOCH-17 — owner: safety, runner: `npm run verify:epoch17`
+- EPOCH-18 — owner: strategy, runner: `npm run verify:epoch18`
+- EPOCH-19 — owner: governance, runner: `npm run verify:epoch19`
+- EPOCH-20 — owner: monitoring, runner: `npm run verify:epoch20`
+- EPOCH-21 — owner: release, runner: `npm run verify:epoch21`
+- EPOCH-22 — owner: ai, runner: `npm run verify:epoch22`
+- EPOCH-23 — owner: contracts, runner: `npm run verify:epoch23`
+- EPOCH-24 — owner: validation, runner: `npm run verify:epoch24`
+- EPOCH-25 — owner: testnet, runner: `npm run verify:epoch25`
+- EPOCH-26 — owner: governor, runner: `npm run verify:epoch26`
+- EPOCH-27 — owner: ai, runner: `npm run verify:epoch27`
+- EPOCH-28 — owner: ai-safety, runner: `npm run verify:epoch28`
+- EPOCH-29 — owner: leakage-court, runner: `npm run verify:epoch29`
+- EPOCH-30 — owner: release, runner: `npm run verify:epoch30`
+- EPOCH-31 — owner: edge-data, runner: `npm run verify:epoch31`
+- EPOCH-32 — owner: edge-sim, runner: `npm run verify:epoch32`
+- EPOCH-33 — owner: edge-strategy, runner: `npm run verify:epoch33`
+- EPOCH-34 — owner: edge-decision, runner: `npm run verify:epoch34`
+- EPOCH-35 — owner: edge-portfolio, runner: `npm run verify:epoch35`
+- EPOCH-36 — owner: edge-risk, runner: `npm run verify:epoch36`
+- EPOCH-37 — owner: edge-validation, runner: `npm run verify:epoch37`
+- EPOCH-38 — owner: edge-gap, runner: `npm run verify:epoch38`
+- EPOCH-39 — owner: edge-release-governor, runner: `npm run verify:epoch39`
+- EPOCH-40 — owner: edge-freeze, runner: `npm run verify:epoch40`

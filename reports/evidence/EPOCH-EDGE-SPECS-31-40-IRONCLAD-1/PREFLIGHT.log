@@ -1,0 +1,30 @@
+$ pwd
+/workspace/Treasure_engine
+$ node -v
+v20.19.6
+$ npm -v
+11.4.2
+$ git status -sb
+## work
+ M docs/EDGE_RESEARCH/AI_MODULE.md
+ M docs/EDGE_RESEARCH/ANTI_PATTERNS.md
+ M docs/SDD_EDGE_EPOCHS_31_40.md
+ M specs/epochs/EPOCH-31.md
+ M specs/epochs/EPOCH-32.md
+ M specs/epochs/EPOCH-33.md
+ M specs/epochs/EPOCH-34.md
+ M specs/epochs/EPOCH-35.md
+ M specs/epochs/EPOCH-36.md
+ M specs/epochs/EPOCH-37.md
+ M specs/epochs/EPOCH-38.md
+ M specs/epochs/EPOCH-39.md
+ M specs/epochs/EPOCH-40.md
+ M specs/epochs/INDEX.md
+ M specs/epochs/LEDGER.json
+?? docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md
+?? docs/EDGE_RESEARCH/DETERMINISM_POLICY.md
+?? docs/EDGE_RESEARCH/GLOSSARY.md
+?? docs/EDGE_RESEARCH/WOW_ROADMAP_POST_40.md
+?? reports/evidence/EPOCH-EDGE-SPECS-31-40-IRONCLAD-1/
+$ git rev-parse HEAD
+0460be8f7ec35aa9c2df0983d20610dfd70483e2

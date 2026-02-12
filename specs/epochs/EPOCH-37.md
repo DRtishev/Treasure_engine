@@ -1,97 +1,99 @@
-# EPOCH-37 — Walk-Forward Optimization + Leakage Sentinel v2
-
-## Operator Summary
-- This epoch is specification-only and implementation-ready.
-- It defines deterministic contracts, invariants, and gate semantics.
-- Offline-first, no-secrets, and no-live-order defaults are mandatory.
-- Evidence artifacts are required to claim completion.
-- Failure conditions are explicit and blocking.
-- Rollback path is required before implementation begins.
-- Contracts are designed for JSON Schema and TS-shape parity.
-- Fingerprint rules define reproducibility criteria.
-- Safety invariants are non-bypassable.
-- This document is authoritative for epoch implementation scope.
-
-## Where to look next
-- `docs/SDD_EDGE_EPOCHS_31_40.md`
-- `docs/EDGE_RESEARCH/AI_MODULE.md`
-- `docs/EDGE_RESEARCH/ANTI_PATTERNS.md`
+# EPOCH-37 — WFO + CPCV + Leakage Sentinel v2
 
 ## REALITY SNAPSHOT
-- EDGE runway specs exist; this epoch defines implementation contract quality bar.
+- E36 is the immediate upstream dependency and this epoch remains specification-only.
+- Runtime trading implementation is out of scope for this rewrite cycle.
 
 ## GOALS
-Define anti-overfit court with pre-committed windows, purging/embargo, and leakage battery controls.
+- Deliver implementation-ready contract language for WFO/CPCV Report without ambiguity.
+- Lock deterministic/offline-first gate semantics for future `npm run verify:epoch37` implementation.
+- Define evidence checklist and rollback paths that prevent false PASS claims.
 
 ## NON-GOALS
-- Implement runtime logic or integrations.
-- Relax safety constraints or default offline policy.
+- Implement production execution code, live adapters, or exchange integrations.
+- Depend on internet access for default verification.
 
 ## CONSTRAINTS
-- Offline-first default; network tests only via `ENABLE_NETWORK_TESTS=1`.
-- Determinism required: stable ordering, fixed seeds, canonical hashing.
-- No live trading by default; shadow/canary remain no-order unless explicitly unlocked in future governance.
-- No secrets in repo or evidence artifacts.
+- Offline-first by default; optional network checks only behind `ENABLE_NETWORK_TESTS=1`.
+- Determinism-first per `docs/EDGE_RESEARCH/DETERMINISM_POLICY.md`.
+- Contract terms and examples must align with `docs/EDGE_RESEARCH/CONTRACTS_CATALOG.md` and `docs/EDGE_RESEARCH/GLOSSARY.md`.
+- No secrets, no autonomous trading, no hidden dynamic dependencies.
 
 ## DESIGN / CONTRACTS
-### Contract
-- Schema: `WFOReport`.
-- Example:
+### Dependencies
+- Dependency: `EPOCH-36` as declared in `specs/epochs/INDEX.md` and `specs/epochs/LEDGER.json`.
+- Primary contract family: `WFO/CPCV Report`.
+- Local canonical example:
 ```json
-{"schema_version":"1.0.0","run_id":"wfo-1","windows":[{"is":"2025Q1","oos":"2025Q2"}],"purge_bars":10,"embargo_bars":5}
+{"schema_version":"1.0.0","epoch":37,"contract":"WFO/CPCV Report","seed":12345,"fingerprint":{"algo":"sha256","value":"<hex>"}}
 ```
-### Invariants
-- WFO windows are pre-committed and hash-locked.
-- Purge/embargo remove label-horizon overlap.
-- Leakage positive-control must fail sentinel.
-### Fingerprint rules
-- Hash window definition, purge/embargo config, metric set, seed vector.
+- Determinism invariant: canonical JSON serialization + hash normalization + boundary rounding.
+- Offline invariant: any optional network probe is skipped unless `ENABLE_NETWORK_TESTS=1`.
+- Gate semantics:
+  - Inputs: epoch spec, contract catalog references, deterministic fixtures, seed.
+  - Outputs: gate log, contract validation report, replay diff report, epoch verdict.
+  - PASS conditions:
+    - Contract fields map to catalog-required fields with no missing invariants.
+    - Deterministic replay under identical seed produces identical canonical digests.
+    - Stop-rule controls (BLOCKED/ROLLBACK) are machine-checkable in evidence.
+    - Required evidence files are present and hash-listed.
+    - Offline-default run passes without network calls.
+  - FAIL conditions:
+    - Ambiguous contract field or unverifiable acceptance wording.
+    - Replay drift, hash policy mismatch, or rounding mismatch.
+    - Missing evidence artifact or unverifiable verdict chain.
+    - Hidden network dependency in default mode.
+    - Any bypass path that allows trading behavior in prohibited modes.
 
 ## PATCH PLAN
-- Keep changes in docs/specs/gates only; no runtime trading logic.
-- Maintain canonical template heading order.
-- Keep dependency and gate mappings aligned with INDEX and LEDGER.
+- Keep edits within docs/specs and verification metadata only.
+- Preserve required epoch template headings and check-list formatting for `verify:specs`.
+- Update index/ledger references only when chain consistency requires it.
 
 ## VERIFY
-- `npm run verify:specs` must pass.
-- Planned implementation gate: `npm run verify:epoch37`.
-- Gate inputs: epoch contracts + deterministic fixtures + seed config.
-- Gate outputs: gate log, contract validation log, deterministic replay diff, verdict file.
-- PASS semantics: all invariants hold, evidence complete, replay stable.
-- FAIL semantics: leakage/bypass/nondeterminism/missing evidence triggers FAIL.
+- `npm run verify:specs`
+- Planned future gate command: `npm run verify:epoch37`.
+- Anti-flake policy: run `npm run verify:specs` twice; both runs must PASS.
+- Evidence routing: all outputs under `reports/evidence/<EVIDENCE_EPOCH>/gates/`.
 
 ## EVIDENCE REQUIREMENTS
-- `reports/evidence/<EVIDENCE_EPOCH>/epoch37/SPEC_CONTRACTS.md` (contracts + examples).
-- `reports/evidence/<EVIDENCE_EPOCH>/epoch37/GATE_PLAN.md` (inputs/outputs/pass-fail semantics).
-- `reports/evidence/<EVIDENCE_EPOCH>/epoch37/FINGERPRINT_POLICY.md` (hash material and drift definition).
-- `reports/evidence/<EVIDENCE_EPOCH>/epoch37/VERDICT.md` (PASS/BLOCKED with references).
+- `reports/evidence/<EVIDENCE_EPOCH>/gates/verify_specs_run1.log`
+- `reports/evidence/<EVIDENCE_EPOCH>/gates/verify_specs_run2.log`
+- `reports/evidence/<EVIDENCE_EPOCH>/SUMMARY.md`
+- `reports/evidence/<EVIDENCE_EPOCH>/RISK_REGISTER.md`
+- `reports/evidence/<EVIDENCE_EPOCH>/VERDICT.md`
+- `reports/evidence/<EVIDENCE_EPOCH>/DIFF.patch`
 
 ## STOP RULES
-- BLOCKED if any contract field/invariant is ambiguous or untestable.
-- BLOCKED if deterministic fingerprint rules are incomplete.
-- BLOCKED if a safety invariant can be bypassed.
-- Rollback trigger: revert epoch READY claim and restore previous ledger/index dependency state with diagnostic note.
+- BLOCKED if dependency chain (`EPOCH-36` -> `EPOCH-37`) is inconsistent between ledger and index.
+- BLOCKED if deterministic rules conflict with `DETERMINISM_POLICY.md`.
+- BLOCKED if PASS cannot be proven with required evidence files.
+- ROLLBACK trigger: revert epoch spec changes and mark epoch BLOCKED in ledger notes until ambiguity is removed.
 
 ## RISK REGISTER
-- Contract ambiguity leads to inconsistent implementation. Mitigation: explicit examples + invariant tests.
-- Deterministic replay drift. Mitigation: stable ordering and canonical serialization checks.
-- Missing evidence blocks auditability. Mitigation: evidence completeness checklist gate.
-- Safety invariant bypass under edge case. Mitigation: explicit negative fixtures and fail-fast checks.
-- HEURISTIC thresholds stale over time. Mitigation: scheduled calibration protocol and guardrails.
-- Dependency chain drift across docs. Mitigation: INDEX/LEDGER consistency checks.
-- Operator misuse due to unclear language. Mitigation: operator summary + concrete pass/fail semantics.
+- Contract drift between epoch file and shared catalog. Mitigation: single-source field list in catalog and link checks.
+- Evidence theater via incomplete logs. Mitigation: required-file checklist and verdict hash references.
+- Determinism regression from ad-hoc serialization. Mitigation: enforce canonical serialization and fixed seed in gate spec.
+- Operator misread of stop rules. Mitigation: explicit BLOCKED/ROLLBACK language in gate semantics.
 
 ## ACCEPTANCE CRITERIA
-- [ ] Contract schema name and required fields are explicit.
-- [ ] Minimal example payload is present and valid JSON.
-- [ ] Invariants are testable and include forbidden values.
-- [ ] Deterministic fingerprint inputs are explicitly defined.
-- [ ] Verify gate defines inputs, outputs, and pass/fail semantics.
-- [ ] Offline-first and no-live-default safety invariants are explicit.
-- [ ] Evidence file set is complete with purpose per file.
-- [ ] Stop rules include hard BLOCKED conditions.
-- [ ] Risks include concrete mitigations and owner actionability.
-- [ ] Rollback/disable path is explicit and safe.
+- [ ] Purpose, scope, and non-goals are explicit and implementation-ready.
+- [ ] Dependency is explicit and matches INDEX plus LEDGER.
+- [ ] Contract references shared catalog and includes valid local JSON example.
+- [ ] Determinism/offline invariants reference canonical policy and are testable.
+- [ ] PASS and FAIL conditions are concrete, checkable, and non-overlapping.
+- [ ] Evidence checklist includes required files and stable paths.
+- [ ] At least three risks and mitigations are concrete and operational.
+- [ ] Stop rules include BLOCKED criteria and an actionable rollback trigger.
+- [ ] Typical traps are listed with prevention guidance.
+- [ ] WOW hooks include priorities and proof method.
 
 ## NOTES
-- Rollback plan: revert EPOCH-37 spec, restore prior READY chain, and publish diagnostic evidence.
+- Typical traps:
+  - Treating example JSON as optional guidance instead of mandatory contract shape; avoid by schema linting.
+  - Claiming PASS after one run; avoid by mandatory 2-run anti-flake evidence.
+  - Hiding nondeterministic fields in fingerprints; avoid by canonical exclusion list.
+- WOW hooks:
+  - P0: WOW-14 CPCV court — prove via epoch gate report and deterministic replay digest.
+  - P1: WOW-15 DSR gate — prove via contract coverage checklist in evidence summary.
+  - P2: WOW-16 purge/embargo lock — prove via explicit artifact reference in future epoch gate.
