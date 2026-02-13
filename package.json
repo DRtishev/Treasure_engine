@@ -100,7 +100,8 @@
     "verify:epoch40": "node scripts/verify/epoch40_edge_gate.mjs",
     "verify:edge": "node scripts/verify/edge_all_epochs.mjs",
     "verify:edge:strict": "ENABLE_CLEAN_CLONE=1 npm run verify:edge",
-    "verify:goldens:update": "UPDATE_GOLDENS=1 npm run verify:edge"
+    "verify:goldens:update": "UPDATE_GOLDENS=1 npm run verify:edge",
+    "package:final-validated": "node scripts/ops/build_final_validated.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

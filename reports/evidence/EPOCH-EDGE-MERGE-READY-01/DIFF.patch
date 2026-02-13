@@ -1,0 +1,267 @@
+diff --git a/package.json b/package.json
+index a785b65..7c243c5 100644
+--- a/package.json
++++ b/package.json
+@@ -100,7 +100,8 @@
+     "verify:epoch40": "node scripts/verify/epoch40_edge_gate.mjs",
+     "verify:edge": "node scripts/verify/edge_all_epochs.mjs",
+     "verify:edge:strict": "ENABLE_CLEAN_CLONE=1 npm run verify:edge",
+-    "verify:goldens:update": "UPDATE_GOLDENS=1 npm run verify:edge"
++    "verify:goldens:update": "UPDATE_GOLDENS=1 npm run verify:edge",
++    "package:final-validated": "node scripts/ops/build_final_validated.mjs"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
+diff --git a/specs/epochs/INDEX.md b/specs/epochs/INDEX.md
+index 2e8aa60..1943b5e 100644
+--- a/specs/epochs/INDEX.md
++++ b/specs/epochs/INDEX.md
+@@ -131,6 +131,9 @@
+ - EPOCH-39: `verify:epoch39` via `scripts/verify/epoch39_edge_gate.mjs` (implemented)
+ - EPOCH-40: `verify:epoch40` via `scripts/verify/epoch40_edge_gate.mjs` (implemented)
+ 
++## Ledger semantics
++- EPOCH-31..EPOCH-40 are marked `DONE` when implementation gates are anti-flake green with required evidence under the active evidence epoch.
++
+ ## Gate owners (31→40)
+ - EPOCH-31: data-platform
+ - EPOCH-32: simulation
+diff --git a/specs/epochs/LEDGER.json b/specs/epochs/LEDGER.json
+index b8b0ea7..15efe46 100644
+--- a/specs/epochs/LEDGER.json
++++ b/specs/epochs/LEDGER.json
+@@ -453,162 +453,162 @@
+     "31": {
+       "id": "EPOCH-31",
+       "title": "Deterministic Data Model + Point-in-Time Feature Pipeline",
+-      "status": "READY",
++      "status": "DONE",
+       "type": "edge_spec",
+       "depends_on": [
+         "EPOCH-30"
+       ],
+       "gate_owner": "verify:epoch31",
+-      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
+-      "completed_at": null,
+-      "commit_sha": "PENDING",
+-      "last_commit_sha": null,
+-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+-      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
++      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
++      "completed_at": "2026-02-13T07:31:54Z",
++      "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
++      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+     },
+     "32": {
+       "id": "EPOCH-32",
+       "title": "Microstructure Simulator",
+-      "status": "READY",
++      "status": "DONE",
+       "type": "edge_spec",
+       "depends_on": [
+         "EPOCH-31"
+       ],
+       "gate_owner": "verify:epoch32",
+-      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
+-      "completed_at": null,
+-      "commit_sha": "PENDING",
+-      "last_commit_sha": null,
+-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+-      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
++      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
++      "completed_at": "2026-02-13T07:31:54Z",
++      "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
++      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+     },
+     "33": {
+       "id": "EPOCH-33",
+       "title": "Strategy Registry + Contracts",
+-      "status": "READY",
++      "status": "DONE",
+       "type": "edge_spec",
+       "depends_on": [
+         "EPOCH-32"
+       ],
+       "gate_owner": "verify:epoch33",
+-      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
+-      "completed_at": null,
+-      "commit_sha": "PENDING",
+-      "last_commit_sha": null,
+-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+-      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
++      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
++      "completed_at": "2026-02-13T07:31:54Z",
++      "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
++      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+     },
+     "34": {
+       "id": "EPOCH-34",
+       "title": "Signal to Intent Pipeline",
+-      "status": "READY",
++      "status": "DONE",
+       "type": "edge_spec",
+       "depends_on": [
+         "EPOCH-33"
+       ],
+       "gate_owner": "verify:epoch34",
+-      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
+-      "completed_at": null,
+-      "commit_sha": "PENDING",
+-      "last_commit_sha": null,
+-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+-      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
++      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
++      "completed_at": "2026-02-13T07:31:54Z",
++      "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
++      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+     },
+     "35": {
+       "id": "EPOCH-35",
+       "title": "Portfolio Allocation",
+-      "status": "READY",
++      "status": "DONE",
+       "type": "edge_spec",
+       "depends_on": [
+         "EPOCH-34"
+       ],
+       "gate_owner": "verify:epoch35",
+-      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
+-      "completed_at": null,
+-      "commit_sha": "PENDING",
+-      "last_commit_sha": null,
+-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+-      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
++      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
++      "completed_at": "2026-02-13T07:31:54Z",
++      "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
++      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+     },
+     "36": {
+       "id": "EPOCH-36",
+       "title": "Risk Brain",
+-      "status": "READY",
++      "status": "DONE",
+       "type": "edge_spec",
+       "depends_on": [
+         "EPOCH-35"
+       ],
+       "gate_owner": "verify:epoch36",
+-      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
+-      "completed_at": null,
+-      "commit_sha": "PENDING",
+-      "last_commit_sha": null,
+-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+-      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
++      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
++      "completed_at": "2026-02-13T07:31:54Z",
++      "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
++      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+     },
+     "37": {
+       "id": "EPOCH-37",
+       "title": "Walk-Forward Optimization + Leakage Sentinel v2",
+-      "status": "READY",
++      "status": "DONE",
+       "type": "edge_spec",
+       "depends_on": [
+         "EPOCH-36"
+       ],
+       "gate_owner": "verify:epoch37",
+-      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
+-      "completed_at": null,
+-      "commit_sha": "PENDING",
+-      "last_commit_sha": null,
+-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+-      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
++      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
++      "completed_at": "2026-02-13T07:31:54Z",
++      "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
++      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+     },
+     "38": {
+       "id": "EPOCH-38",
+       "title": "Reality Gap Monitor + Auto-Brake",
+-      "status": "READY",
++      "status": "DONE",
+       "type": "edge_spec",
+       "depends_on": [
+         "EPOCH-37"
+       ],
+       "gate_owner": "verify:epoch38",
+-      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
+-      "completed_at": null,
+-      "commit_sha": "PENDING",
+-      "last_commit_sha": null,
+-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+-      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
++      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
++      "completed_at": "2026-02-13T07:31:54Z",
++      "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
++      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+     },
+     "39": {
+       "id": "EPOCH-39",
+       "title": "Shadow Live Harness + Canary Governor",
+-      "status": "READY",
++      "status": "DONE",
+       "type": "edge_spec",
+       "depends_on": [
+         "EPOCH-38"
+       ],
+       "gate_owner": "verify:epoch39",
+-      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
+-      "completed_at": null,
+-      "commit_sha": "PENDING",
+-      "last_commit_sha": null,
+-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+-      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
++      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
++      "completed_at": "2026-02-13T07:31:54Z",
++      "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
++      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+     },
+     "40": {
+       "id": "EPOCH-40",
+       "title": "EDGE Freeze + Release Discipline",
+-      "status": "READY",
++      "status": "DONE",
+       "type": "edge_spec",
+       "depends_on": [
+         "EPOCH-39"
+       ],
+       "gate_owner": "verify:epoch40",
+-      "evidence_id": "EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1",
+-      "completed_at": null,
+-      "commit_sha": "PENDING",
+-      "last_commit_sha": null,
+-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-SPECS-CLAUDE-EXPERIMENT-1/",
+-      "last_gate_summary": "Spec rewritten with SSOT foundations, anti-pattern refs, WOW hooks, contract examples; implementation gate pending."
++      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
++      "completed_at": "2026-02-13T07:31:54Z",
++      "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
++      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
++      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+     }
+   }
+-}
+\ No newline at end of file
++}

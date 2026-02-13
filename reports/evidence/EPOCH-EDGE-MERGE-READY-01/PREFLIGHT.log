@@ -1,0 +1,7 @@
+pwd=/workspace/Treasure_engine
+git_status=## codex/edge-foundation-merge-ready-01
+?? reports/evidence/EPOCH-EDGE-MERGE-READY-01/
+branch=codex/edge-foundation-merge-ready-01
+head=bb9c190c706a1ba1f07979f0b4ac56db4c19496e
+node=v20.19.6
+npm=11.4.2
