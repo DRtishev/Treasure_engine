@@ -1,0 +1,10 @@
+
+> treasure-engine@1.0.0 verify:epoch46
+> node scripts/verify/epoch46_data_plane.mjs
+
+✓ deterministic replay x2
+✓ expected fixture row count
+✓ contract validation passes for all candles
+✓ no look-ahead ordering drift
+✓ dedup check passes
+PASS verify:epoch46 checks=5 fp=d66bf3c3874fad91c32b359cea32097a7e9a6a35998a3de0c3fd31e2d2c70f6f

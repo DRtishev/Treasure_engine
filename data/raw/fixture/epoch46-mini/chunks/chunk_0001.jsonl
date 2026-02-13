@@ -1,0 +1,4 @@
+{"type":"candle","symbol":"BTCUSDT","ts_open":"2026-01-01T00:00:00Z","ts_close":"2026-01-01T00:00:59Z","open":100,"high":101,"low":99.8,"close":100.5,"volume":12}
+{"type":"candle","symbol":"BTCUSDT","ts_open":"2026-01-01T00:01:00Z","ts_close":"2026-01-01T00:01:59Z","open":100.5,"high":100.9,"low":99.9,"close":100.1,"volume":9}
+{"type":"candle","symbol":"BTCUSDT","ts_open":"2026-01-01T00:02:00Z","ts_close":"2026-01-01T00:02:59Z","open":100.1,"high":102.2,"low":100.1,"close":101.8,"volume":20}
+{"type":"candle","symbol":"ETHUSDT","ts_open":"2026-01-01T00:00:00Z","ts_close":"2026-01-01T00:00:59Z","open":50,"high":50.5,"low":49.8,"close":50.2,"volume":30}

@@ -1,0 +1,9 @@
+
+> treasure-engine@1.0.0 verify:epoch44
+> node scripts/verify/epoch44_risk_fortress.mjs
+
+✓ crisis deterministic x2
+✓ sizing degrades as drawdown worsens
+✓ hard stop cannot be bypassed
+✓ normal path keeps sizing > 0
+PASS verify:epoch44 checks=4 fp=fc341196baaa21e08ffd5b7159088bfd787d753ea375857329ecbd3857da9cc4

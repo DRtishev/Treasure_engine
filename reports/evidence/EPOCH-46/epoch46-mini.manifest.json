@@ -1,0 +1,12 @@
+{
+  "dataset_id": "epoch46-mini",
+  "provider": "fixture",
+  "chunks": [
+    {
+      "path": "data/normalized/fixture/epoch46-mini/chunks/chunk_0001.jsonl",
+      "sha256": "69c0c770a879a98bcf41d4d8e043bcc0385b6d3a191c3f3685c5c62633ccef1e",
+      "records": 4
+    }
+  ],
+  "replay_fingerprint": "d66bf3c3874fad91c32b359cea32097a7e9a6a35998a3de0c3fd31e2d2c70f6f"
+}

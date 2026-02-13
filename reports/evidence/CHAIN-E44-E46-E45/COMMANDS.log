@@ -1,0 +1,9 @@
+npm ci
+CI=true npm run verify:specs (x2)
+CI=true npm run verify:repo (x2)
+CI=true npm run verify:edge (x2)
+CI=true npm run verify:treasure (x2)
+CI=true npm run verify:epoch43 (x2)
+CI=true npm run verify:epoch44 (x2)
+CI=true npm run verify:epoch46 (x2)
+CI=true npm run verify:epoch45 (x2)
