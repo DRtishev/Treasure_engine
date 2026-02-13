@@ -3,7 +3,7 @@
   "status": "PASS",
   "passed": 3,
   "failed": 0,
-  "frontier_fingerprint": "03100d554d0f36860f0a4984b339e085d9a3d6a3ba1b4f71714f786781347786",
+  "frontier_fingerprint": "b69d7a3dea7a2cc4eb741990c06cf75929fa191bca133120696ad6453d8f92e2",
   "checks": [
     {
       "ok": true,

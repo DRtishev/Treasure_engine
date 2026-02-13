@@ -1,9 +1,9 @@
 {
   "epoch_id": "EPOCH-44",
-  "sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
+  "sha": "de58f865cbeea8bc96d6a05b86f20863e3faff7a",
   "node": "v20.19.6",
   "npm": "11.4.2",
-  "date": "2026-02-13T14:02:01.008Z",
+  "date": "2026-02-13T18:45:41.599Z",
   "gate_runs": [
     {
       "path": "gates/verify_edge.run1.log",

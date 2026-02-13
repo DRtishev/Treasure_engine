@@ -1,9 +1,9 @@
 {
   "epoch_id": "EPOCH-42",
-  "sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
+  "sha": "de58f865cbeea8bc96d6a05b86f20863e3faff7a",
   "node": "v20.19.6",
   "npm": "11.4.2",
-  "date": "2026-02-13T14:02:00.012Z",
+  "date": "2026-02-13T18:45:40.253Z",
   "gate_runs": [
     {
       "path": "gates/npm_ci.run1.log",
@@ -69,7 +69,7 @@
   "artifacts": [
     {
       "path": "calibration_manifest.json",
-      "sha256": "40bab20605f80bc80dbcfcd2906f2c90ca7ef76d4272fc2a4b0dea7dd1b8928d"
+      "sha256": "8ab362367931a68c8f0b55f883a93cb5ab1e24a310af9cd9c31c0a1c639f4e8a"
     }
   ],
   "hashes": {

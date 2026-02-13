@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveEvidenceWriteContext } from '../../core/evidence/evidence_write_mode.mjs';
 import crypto from 'node:crypto';
 import { runOverfitDefense } from '../../core/edge/overfit_defense.mjs';
 
-const root = process.cwd();
 const evidenceEpoch = process.env.EVIDENCE_EPOCH || 'EPOCH-43';
 const runLabel = process.env.RUN_LABEL || 'manual';
-const evidenceDir = path.join(root, 'reports/evidence', evidenceEpoch);
+const { evidenceRoot: evidenceDir } = resolveEvidenceWriteContext(evidenceEpoch);
 const runDir = path.join(evidenceDir, 'gates', runLabel);
 fs.mkdirSync(runDir, { recursive: true });
 
@@ -18,7 +18,7 @@ const assert = (cond, msg) => {
   else { failed += 1; console.error(`✗ ${msg}`); }
 };
 
-const datasetPath = path.join(root, 'tests/vectors/overfit/epoch43_small_dataset.json');
+const datasetPath = path.join(process.cwd(), 'tests/vectors/overfit/epoch43_small_dataset.json');
 const input = JSON.parse(fs.readFileSync(datasetPath, 'utf8'));
 const datasetHash = crypto.createHash('sha256').update(fs.readFileSync(datasetPath)).digest('hex');
 
@@ -36,7 +36,7 @@ assert(Number.isFinite(run1.output.dsr_summary.best_dsr), 'DSR finite');
 
 fs.writeFileSync(path.join(runDir, 'splits_manifest.json'), `${JSON.stringify(run1.output.splits_manifest, null, 2)}\n`);
 fs.writeFileSync(path.join(runDir, 'overfit_metrics.json'), `${JSON.stringify({
-  dataset_path: path.relative(root, datasetPath),
+  dataset_path: path.relative(process.cwd(), datasetPath),
   dataset_hash: datasetHash,
   pbo_summary: run1.output.pbo_summary,
   dsr_summary: run1.output.dsr_summary,

@@ -21,5 +21,6 @@
       "side": "BUY",
       "notional_usd": 100
     }
-  ]
+  ],
+  "blocked_by_hard_stop": true
 }

@@ -3,8 +3,38 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const EPOCH_START = 1;
-const EPOCH_END = 55;
-const epochFiles = Array.from({ length: EPOCH_END - EPOCH_START + 1 }, (_, i) => `specs/epochs/EPOCH-${String(i + EPOCH_START).padStart(2, '0')}.md`);
+const read = (file) => fs.readFileSync(file, 'utf8');
+
+function buildEpochFilesFromLedger() {
+  const ledgerPath = 'specs/epochs/LEDGER.json';
+  if (!fs.existsSync(ledgerPath)) {
+    return { epochEnd: 0, epochFiles: [], errors: [`Missing required file: ${ledgerPath}`] };
+  }
+  const ledger = JSON.parse(read(ledgerPath));
+  const keys = Object.keys(ledger.epochs ?? {})
+    .map((k) => Number(k))
+    .filter((k) => Number.isInteger(k) && k >= EPOCH_START)
+    .sort((a, b) => a - b);
+  if (keys.length === 0) {
+    return { epochEnd: 0, epochFiles: [], errors: ['LEDGER has no epoch entries'] };
+  }
+  const maxEpoch = keys[keys.length - 1];
+  const localErrors = [];
+  for (let epoch = EPOCH_START; epoch <= maxEpoch; epoch += 1) {
+    if (!keys.includes(epoch)) {
+      localErrors.push(`LEDGER gap detected: missing epoch ${epoch} while max is ${maxEpoch}`);
+    }
+  }
+  const epochFiles = Array.from({ length: maxEpoch - EPOCH_START + 1 }, (_, i) => `specs/epochs/EPOCH-${String(i + EPOCH_START).padStart(2, '0')}.md`);
+  for (const file of epochFiles) {
+    if (!fs.existsSync(file)) localErrors.push(`Missing epoch spec for ledger epoch: ${file}`);
+  }
+  return { epochEnd: maxEpoch, epochFiles, errors: localErrors };
+}
+
+const ledgerEpochs = buildEpochFilesFromLedger();
+const EPOCH_END = ledgerEpochs.epochEnd;
+const epochFiles = ledgerEpochs.epochFiles;
 
 const requiredFiles = [
   'specs/SSOT_INDEX.md',
@@ -36,8 +66,8 @@ const requiredHeadings = [
 const forbiddenPlaceholderRegex = /\b(TBD|TODO|TBA)\b/i;
 const tabCharacterRegex = /\t/;
 const errors = [];
+errors.push(...ledgerEpochs.errors);
 
-const read = (file) => fs.readFileSync(file, 'utf8');
 
 for (const file of requiredFiles) {
   if (!fs.existsSync(file)) errors.push(`Missing required file: ${file}`);

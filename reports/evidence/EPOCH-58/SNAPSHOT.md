@@ -1,0 +1,31 @@
+# EPOCH-58 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-58/`
+- gate_logs: 25
+- failing_gate_logs: 0
+- unknown_gate_logs: 3
+- gate_runs:
+  - `gates/npm_ci_run1.log` [UNKNOWN] `ad615806a667812b38d25b7e05316933e06fab004a79fa1e385f59f944f962e5`
+  - `gates/npm_ci_run2.log` [UNKNOWN] `ad615806a667812b38d25b7e05316933e06fab004a79fa1e385f59f944f962e5`
+  - `gates/release_build.log` [UNKNOWN] `e6ae881ba60e3c414f1b67938f4dc22bed4a59070049ca7d953668d778edf2e4`
+  - `gates/verify_contracts_run1.log` [PASS] `1993fb35cf35509ac3229527acd13d7940eb16c547b23cbaa5890e367742dd3a`
+  - `gates/verify_contracts_run2.log` [PASS] `1993fb35cf35509ac3229527acd13d7940eb16c547b23cbaa5890e367742dd3a`
+  - `gates/verify_edge_run1.log` [PASS] `fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a`
+  - `gates/verify_edge_run2.log` [PASS] `fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a`
+  - `gates/verify_epochs_freeze_run1.log` [PASS] `4e9fd41fba43a134e465ad4fb54e37f28b0ac5aa0d5e83fa5faa30dacf17692a`
+  - `gates/verify_epochs_freeze_run2.log` [PASS] `4e9fd41fba43a134e465ad4fb54e37f28b0ac5aa0d5e83fa5faa30dacf17692a`
+  - `gates/verify_ledger_run1.log` [PASS] `e46907c6195f8b1f1db554f3c15b3c00af3a606ed49a45f8bca682bf6cec8ec4`
+  - `gates/verify_ledger_run2.log` [PASS] `e46907c6195f8b1f1db554f3c15b3c00af3a606ed49a45f8bca682bf6cec8ec4`
+  - `gates/verify_offline_run1.log` [PASS] `8965ecea26e7ced74a09e45fd2b18aa075813a7a731a1120aa795833e76c508a`
+  - `gates/verify_offline_run2.log` [PASS] `8965ecea26e7ced74a09e45fd2b18aa075813a7a731a1120aa795833e76c508a`
+  - `gates/verify_release_build_run1.log` [PASS] `4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2`
+  - `gates/verify_release_build_run2.log` [PASS] `4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2`
+  - `gates/verify_release_repro.log` [PASS] `4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2`
+  - `gates/verify_release_strict.log` [PASS] `4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2`
+  - `gates/verify_repo_run1.log` [PASS] `ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437`
+  - `gates/verify_repo_run2.log` [PASS] `ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437`
+  - `gates/verify_specs_run1.log` [PASS] `cf5c58df6dcc7aa36d677b82875a65d4d7175096d426984e3b594fe0386e06b6`
+  - `gates/verify_specs_run2.log` [PASS] `cf5c58df6dcc7aa36d677b82875a65d4d7175096d426984e3b594fe0386e06b6`
+  - `gates/verify_ssot_run1.log` [PASS] `27a8f0c09aba1925ce0408fb3c9d14bb06e17a04786dd4bb1bc3be6b3786fecc`
+  - `gates/verify_ssot_run2.log` [PASS] `27a8f0c09aba1925ce0408fb3c9d14bb06e17a04786dd4bb1bc3be6b3786fecc`
+  - `gates/verify_treasure_run1.log` [PASS] `4695b0854269e0aa73c8e3e73a6746cbaf45dd1cbed8fa104fa3a8b5630d7263`
+  - `gates/verify_treasure_run2.log` [PASS] `00da62c8641ba259cf72a0809a79cbbcc9a51167e57be6fad5e1c5650a10576d`

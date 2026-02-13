@@ -1,0 +1,244 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:treasure
+> node scripts/profit/__tests__/treasure_engine.test.mjs && node -e "if(process.env.CI==='true'&&process.env.FREEZE_REGRESSION!=='0'){process.exit(require('child_process').spawnSync('npm',['run','verify:epochs:freeze'],{stdio:'inherit'}).status??1)}"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TREASURE ENGINE PROFIT SYSTEM TESTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━ PROFIT/LOSS CALCULATION ━━━
+✓ LONG gross PnL correct
+✓ Fees/slippage reduce net PnL
+✓ LONG trade is profitable
+✓ SHORT gross PnL correct
+✓ SHORT trade is profitable
+✓ Losing trade identified
+
+━━━ BREAK-EVEN CALCULATION ━━━
+✓ Break-even price above entry
+✓ Break-even price reasonable
+
+━━━ TARGET EXIT CALCULATION ━━━
+✓ Target exit accounts for ROI + costs
+✓ Target exit reasonable
+
+━━━ POSITION SIZING ━━━
+✓ Risk amount is 1% of capital
+✓ Price distance to stop correct
+✓ Position size correct (100 / 2)
+
+━━━ RISK/REWARD RATIO ━━━
+✓ Reward distance correct
+✓ Risk distance correct
+✓ RR ratio correct (3:1)
+✓ RR ratio acceptable (>=2:1)
+
+━━━ FEE CONFIGURATION ━━━
+✓ Custom maker fee set
+✓ Custom taker fee set
+✓ Custom slippage set
+
+━━━ OPPORTUNITY DETECTOR INIT ━━━
+✓ Min score configured
+✓ Min profit configured
+✓ Price history starts empty
+
+━━━ PRICE HISTORY MANAGEMENT ━━━
+✓ History trimmed to max size
+✓ Oldest prices removed
+
+━━━ OPPORTUNITY SCORING ━━━
+✓ Excellent opportunity scores high
+✓ Poor opportunity scores low
+
+━━━ DETECTOR STATISTICS ━━━
+✓ Stats include total detected
+✓ Stats include recent count
+✓ Stats include history size
+
+━━━ OPPORTUNITY TYPES ━━━
+✓ PRICE_SPIKE type exists
+✓ VOLATILITY type exists
+✓ TREND_REVERSAL type exists
+✓ BREAKOUT type exists
+
+━━━ EDGE CASES ━━━
+✓ Throws on invalid side
+✓ Throws on invalid stop loss
+✓ No fees/slippage = gross equals net
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 37
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ All treasure engine tests passed
+
+💰 TREASURE ENGINE CAPABILITIES VERIFIED:
+   ✓ Profit/loss calculations (with fees/slippage)
+   ✓ Risk/reward analysis
+   ✓ Position sizing
+   ✓ Break-even calculations
+   ✓ Opportunity detection
+   ✓ Opportunity scoring
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epochs:freeze
+> node scripts/verify/epoch_freeze_regression.mjs
+
+pack:verify PASSED for EPOCH-41
+PASS verify:epoch41 evidence=.tmp/epoch_freeze/EPOCH-41
+freeze PASS EPOCH-41
+pack:verify PASSED for EPOCH-42
+✓ fill loader returns explicit fallback marker
+✓ fallback reason is explicit when fill file missing
+✓ fill contract rejects non-finite numbers
+✓ calibration params deterministic for same inputs
+✓ calibration fingerprints deterministic for same inputs
+✓ bucket classified as HIGH
+✓ HIGH fill_ratio in [0,1]
+✓ HIGH notional conservation invariant
+✓ bucket classified as MID
+✓ MID fill_ratio in [0,1]
+✓ MID notional conservation invariant
+✓ bucket classified as LOW
+✓ LOW fill_ratio in [0,1]
+✓ LOW notional conservation invariant
+✓ bucket classified as MICRO
+✓ MICRO fill_ratio in [0,1]
+✓ MICRO notional conservation invariant
+✓ partial-fill severity monotonic by liquidity bucket
+✓ freshness action ALLOW for HFT
+✓ freshness action BLOCK for HFT
+✓ freshness action DOWNWEIGHT for SWING
+✓ stale HFT signal blocked in signal->intent path
+✓ swing stale signal downweighted
+✓ signal->intent freshness path deterministic
+PASS verify:epoch42 checks=24 fingerprint=ea5d7a4a427c61664d774e2a86e77c831468122154f6305e323b1e6b7d301ebf
+freeze PASS EPOCH-42
+pack:verify PASSED for EPOCH-43
+✓ input fingerprint stable x2
+✓ output fingerprint stable x2
+✓ split count equals k
+✓ all splits have non-empty train/test
+✓ train/test leakage absent by index
+✓ PBO in [0,1]
+✓ DSR finite
+PASS verify:epoch43 checks=7 fingerprint=9023606b3e2ce243294c6879ed0fbae7ecbb1ba34e1af6e6fb133d37c094ac8f
+freeze PASS EPOCH-43
+pack:verify PASSED for EPOCH-44
+✓ crisis deterministic x2
+✓ sizing degrades as drawdown worsens
+✓ hard stop cannot be bypassed
+✓ normal path keeps sizing > 0
+PASS verify:epoch44 checks=4 fp=fc341196baaa21e08ffd5b7159088bfd787d753ea375857329ecbd3857da9cc4
+freeze PASS EPOCH-44
+pack:verify PASSED for EPOCH-45
+✓ deterministic outputs x2
+✓ replay from event log matches output
+✓ all events carry seed
+✓ policy: no risk FSM bypass
+✓ policy: network remains disabled by default
+PASS verify:epoch45 checks=5 fp=8292ff98ee4c7e767be6d1d69aa87444b8fbf39402320555bb3dfac561b6ca25
+freeze PASS EPOCH-45
+pack:verify PASSED for EPOCH-46
+✓ deterministic replay x2
+✓ expected fixture row count
+✓ contract validation passes for all candles
+✓ no look-ahead ordering drift
+✓ dedup check passes
+PASS verify:epoch46 checks=5 fp=d66bf3c3874fad91c32b359cea32097a7e9a6a35998a3de0c3fd31e2d2c70f6f
+freeze PASS EPOCH-46
+pack:verify PASSED for EPOCH-47
+freeze SKIP EPOCH-47 (no verifier + no mutable paths)
+pack:verify PASSED for EPOCH-48
+freeze SKIP EPOCH-48 (no verifier + no mutable paths)
+pack:verify PASSED for EPOCH-49
+✓ manifest exists
+✓ raw chunk exists
+✓ normalized chunk exists
+✓ SHA256SUMS.DATA exists
+✓ manifest chunk list complete
+✓ SHA256SUMS.DATA contains normalized chunk hash
+✓ deterministic replay fingerprint stable
+✓ dedup detected in fixture
+✓ gap detected in fixture
+✓ out-of-order detected in fixture
+PASS verify:epoch49 checks=10
+freeze PASS EPOCH-49
+pack:verify PASSED for EPOCH-50
+✓ strict ingest succeeds for fixture with fill_id
+✓ fills dataset manifest exists
+✓ private quality report exists
+✓ fixture calibration runs in REAL mode
+✓ calibration deterministic fingerprint stable
+✓ strict calibration succeeds on valid fixture
+✓ strict-mode negative test fails when fill_id missing (expected fail)
+PASS verify:epoch50 checks=7
+freeze PASS EPOCH-50
+pack:verify PASSED for EPOCH-51
+✓ rechunk ingest variants succeed
+✓ rechunk dataset fingerprint invariant
+✓ rechunk calibration manifest invariant
+✓ paper session deterministic x2
+✓ risk fortress hard stop triggered in fixture session
+✓ paper fills produced
+✓ strict expected-fail on missing REAL fills dataset
+PASS verify:epoch51 checks=7
+freeze PASS EPOCH-51
+pack:verify PASSED for EPOCH-52
+✓ SHADOW mode produces state log
+✓ SHADOW mode has no submission plan
+✓ PAPER mode produces paper pnl metric
+✓ PAPER mode has no submission plan
+✓ GUARDED_LIVE mode produces submission plan
+✓ GUARDED_LIVE never submits actions
+✓ determinism x2 fingerprint invariant
+✓ auto-pause triggers on injected crisis scenario
+✓ strict mode expected-fail when overfit metrics missing
+PASS verify:epoch52 checks=9
+freeze PASS EPOCH-52
+pack:verify PASSED for EPOCH-53
+✓ reason codes taxonomy exists
+✓ pause events include reason codes + metrics
+✓ risk events include reason codes + transitions
+✓ thresholds_used is complete
+✓ determinism x2 identical fingerprints
+✓ fitness suite output generated
+PASS verify:epoch53 checks=6
+freeze PASS EPOCH-53
+pack:verify PASSED for EPOCH-54
+✓ rechunk fingerprint invariant under chunk boundaries
+✓ strict dedup removes duplicate trade_id rows
+✓ heuristic dedup flagged when trade_id absent
+✓ strict mode fails when heuristic dedup would be required
+PASS verify:epoch54 checks=4
+freeze PASS EPOCH-54
+pack:verify PASSED for EPOCH-55
+✓ frontier report generated with bounded grid and top-k
+✓ determinism x2 frontier fingerprint invariant
+✓ frontier entries include params + metrics
+PASS verify:epoch55 checks=3
+freeze PASS EPOCH-55
+pack:verify PASSED for EPOCH-56
+✓ fitness v2 non-constant across scenarios
+✓ fitness v2 emits required per-scenario metrics
+✓ vault policy strict expected-fail enforced for tuning sweep
+✓ pause-recover deterministic x2 fingerprint invariant
+✓ pause-recover transition trace generated
+✓ hard stop remains enforced during recovery
+✓ recovery flow does not submit any action
+PASS verify:epoch56 checks=7
+freeze PASS EPOCH-56
+pack:verify PASSED for EPOCH-57
+freeze SKIP EPOCH-57 (no verifier + no mutable paths)
+pack:verify FAILED
+- gate run hash mismatch: gates/verify_treasure_run1.log
+- SHA256SUMS mismatch for gates/verify_treasure_run1.log
+- EPOCH-58: pack integrity failed
+verify:epochs:freeze FAILED
+- 1 epoch(s) drifted or failed

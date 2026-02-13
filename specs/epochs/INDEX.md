@@ -57,6 +57,8 @@
 54. EPOCH-54
 55. EPOCH-55
 56. EPOCH-56
+57. EPOCH-57
+58. EPOCH-58
 
 ## Dependency notes (EDGE)
 - EPOCH-31 depends on EPOCH-30 (EDGE starts from completed legacy runway).
@@ -85,6 +87,8 @@
 - EPOCH-54 depends on EPOCH-53 (live shadow recorder invariants + dedup policy hardening).
 - EPOCH-55 depends on EPOCH-54 (paper fitness lab bounded sweeps + anti-overfit constraints).
 - EPOCH-56 depends on EPOCH-55 (fitness v2 + vault holdout policy + pause-recover determinism).
+- EPOCH-57 depends on EPOCH-56 (truth-resync + freeze regression + SSOT auto-range).
+- EPOCH-58 depends on EPOCH-57 (factory sterility: ssot/contracts/offline/repro gates).
 
 ## SSOT foundations
 - `docs/EDGE_RESEARCH/GLOSSARY.md` — canonical terminology for E31..E40.
@@ -178,6 +182,8 @@
 - EPOCH-54: `verify:epoch54` via `scripts/verify/epoch54_live_shadow_record.mjs` (implemented).
 - EPOCH-55: `verify:epoch55` via `scripts/verify/epoch55_paper_fitness_lab.mjs` (implemented).
 - EPOCH-56: `verify:epoch56` via `scripts/verify/epoch56_trickpack01.mjs` (implemented).
+- EPOCH-57: `verify:epochs:freeze` + `verify:specs` (owner: docs, implemented).
+- EPOCH-58: `verify:ssot` + `verify:contracts` + `verify:offline` + `verify:epochs:freeze` (owner: docs, implemented).
 
 ## Gate owners (31→40)
 - EPOCH-31: data-platform
@@ -212,3 +218,7 @@
 - `specs/epochs/EPOCH-53.md`
 - `specs/epochs/EPOCH-54.md`
 - `specs/epochs/EPOCH-55.md`
+- `specs/epochs/EPOCH-56.md`
+- `specs/epochs/EPOCH-57.md`
+
+- `specs/epochs/EPOCH-58.md`

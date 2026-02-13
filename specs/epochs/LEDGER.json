@@ -895,6 +895,42 @@
       "last_commit_sha": "b1c6d0ea45d9580105c1329463496226c068eb95",
       "last_evidence_path": "reports/evidence/EPOCH-56/",
       "last_gate_summary": "Fitness v2 discrimination, vault strict expected-fail policy, and deterministic pause-recover checks passed offline."
+    },
+    "57": {
+      "id": "EPOCH-57",
+      "title": "Truth-Resync + Anti-Drift Factory",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-56"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-57",
+      "evidence_root": "reports/evidence/EPOCH-57/",
+      "completed_at": "2026-02-13T17:47:56Z",
+      "commit_sha": "78c852289e4c8bbe01b411d0797c0a265163250e",
+      "last_commit_sha": "78c852289e4c8bbe01b411d0797c0a265163250e",
+      "last_evidence_path": "reports/evidence/EPOCH-57/",
+      "last_gate_summary": "SSOT auto-range, freeze regression gate, and E55/E56 contract split validated with deterministic CI runs."
+    },
+    "58": {
+      "id": "EPOCH-58",
+      "title": "Factory Sterility Master",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-57"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-58",
+      "evidence_root": "reports/evidence/EPOCH-58/",
+      "completed_at": "2026-02-13T18:57:07Z",
+      "commit_sha": "de58f865cbeea8bc96d6a05b86f20863e3faff7a",
+      "last_commit_sha": "de58f865cbeea8bc96d6a05b86f20863e3faff7a",
+      "last_evidence_path": "reports/evidence/EPOCH-58/",
+      "last_gate_summary": "Factory sterility gates (ssot/contracts/freeze/offline/repro) passed with deterministic CI logs."
     }
   }
 }

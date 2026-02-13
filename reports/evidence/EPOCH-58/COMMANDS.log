@@ -1,0 +1,25 @@
+$ npm ci
+$ npm ci
+$ CI=true npm run verify:repo
+$ CI=true npm run verify:repo
+$ CI=true npm run verify:specs
+$ CI=true npm run verify:specs
+$ CI=true npm run verify:ssot
+$ CI=true npm run verify:ssot
+$ CI=true npm run verify:ledger
+$ CI=true npm run verify:ledger
+$ CI=true npm run verify:edge
+$ CI=true npm run verify:edge
+$ CI=true npm run verify:treasure
+$ CI=true npm run verify:treasure
+$ CI=true npm run verify:contracts
+$ CI=true npm run verify:contracts
+$ CI=true npm run verify:epochs:freeze
+$ CI=true npm run verify:epochs:freeze
+$ CI=true npm run verify:offline
+$ CI=true npm run verify:offline
+$ npm run release:build
+$ RELEASE_BUILD=1 CI=true npm run verify:release
+$ RELEASE_BUILD=1 CI=true npm run verify:release
+$ RELEASE_STRICT=1 CI=true npm run verify:release
+$ RELEASE_REPRO=1 CI=true npm run verify:release

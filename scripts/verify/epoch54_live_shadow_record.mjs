@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveEvidenceWriteContext } from '../../core/evidence/evidence_write_mode.mjs';
 import { parseJsonl, normalizeTradeEvent, fingerprintObject } from '../../core/edge/data_contracts.mjs';
 import { evaluateDataQuality } from '../../core/edge/data_quality.mjs';
 import { dedupPublicTrades } from '../../core/edge/public_trade_dedup.mjs';
 
-const root = process.cwd();
 const epoch = process.env.EVIDENCE_EPOCH || 'EPOCH-54';
-const manualDir = path.join(root, 'reports/evidence', epoch, 'gates', 'manual');
-fs.mkdirSync(manualDir, { recursive: true });
+const { manualDir, fitnessDir } = resolveEvidenceWriteContext(epoch);
 
 let passed = 0; let failed = 0;
 const checks = [];

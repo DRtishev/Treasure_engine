@@ -1,12 +1,12 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveEvidenceWriteContext } from '../../core/evidence/evidence_write_mode.mjs';
 import { runAgentMesh, replayAgentMeshFromLog } from '../../core/agent/mesh.mjs';
 
-const root = process.cwd();
 const evidence = process.env.EVIDENCE_EPOCH || 'EPOCH-45';
 const runLabel = process.env.RUN_LABEL || 'manual';
-const eDir = path.join(root, 'reports/evidence', evidence);
+const { evidenceRoot: eDir } = resolveEvidenceWriteContext(evidence);
 const rDir = path.join(eDir, 'gates', runLabel);
 fs.mkdirSync(rDir, { recursive: true });
 
@@ -14,6 +14,9 @@ const eventLogPath = path.join(eDir, 'event_log.jsonl');
 const run1 = runAgentMesh({ eventLogPath, seed: 4501 });
 const replay = replayAgentMeshFromLog(eventLogPath);
 const run2 = runAgentMesh({ seed: 4501 });
+if (fs.existsSync(eventLogPath)) {
+  fs.writeFileSync(path.join(eDir, 'event_log.copy.jsonl'), fs.readFileSync(eventLogPath));
+}
 
 let passed = 0; let failed = 0;
 const assert = (c, m) => c ? (passed++, console.log(`✓ ${m}`)) : (failed++, console.error(`✗ ${m}`));

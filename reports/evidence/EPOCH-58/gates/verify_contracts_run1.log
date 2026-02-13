@@ -1,0 +1,17 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:contracts
+> node scripts/verify/contracts_check.mjs
+
+✓ v1 schema_version fixed
+✓ v1 grid/top_k present
+✓ v1 result fields present
+✓ v2 schema_version fixed
+✓ v2 fitness contract fields present
+✓ E55 machine output exists
+✓ E56 machine output exists
+✓ E55 output schema_version=1.0.0
+✓ E55 output has all_results
+✓ E56 output has schema_version
+✓ E56 output has scenarios
+verify:contracts PASSED checks=11

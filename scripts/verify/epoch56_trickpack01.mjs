@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveEvidenceWriteContext } from '../../core/evidence/evidence_write_mode.mjs';
 import crypto from 'node:crypto';
 import { runPaperFitnessLab } from '../../core/paper/paper_fitness_lab.mjs';
 import { runCanaryController } from '../../core/canary/canary_runner.mjs';
 
-const root = process.cwd();
 const epoch = process.env.EVIDENCE_EPOCH || 'EPOCH-56';
-const manualDir = path.join(root, 'reports/evidence', epoch, 'gates', 'manual');
-fs.mkdirSync(manualDir, { recursive: true });
+const { manualDir, fitnessDir } = resolveEvidenceWriteContext(epoch);
 
 let passed = 0; let failed = 0;
 const checks = [];
