@@ -37,6 +37,72 @@ export function buildFeatureFrame(seed = 12345) {
   return payload;
 }
 
+
+
+function assertFiniteFeatureRow(row) {
+  for (const [key, value] of Object.entries(row.features || {})) {
+    if (!Number.isFinite(value)) {
+      throw new Error(`FeatureStore non-finite value at ${row.symbol}:${row.ts_event}:${key}`);
+    }
+  }
+}
+
+function assertMonotonicRows(rows) {
+  const bySymbol = new Map();
+  for (const row of rows) {
+    const bucket = bySymbol.get(row.symbol) || [];
+    bucket.push(row);
+    bySymbol.set(row.symbol, bucket);
+  }
+  for (const [symbol, bucket] of bySymbol.entries()) {
+    let previous = null;
+    for (const row of [...bucket].sort((a, b) => a.ts_event.localeCompare(b.ts_event))) {
+      if (previous && row.ts_event <= previous) {
+        throw new Error(`FeatureStore non-monotonic timestamps for ${symbol}`);
+      }
+      previous = row.ts_event;
+    }
+  }
+}
+
+export class FeatureStore {
+  constructor(rows = []) {
+    const normalized = rows.map((row) => ({
+      symbol: row.symbol,
+      ts_event: row.ts_event,
+      features: { ...row.features },
+      row_id: row.row_id || `${row.symbol}:${row.ts_event}`
+    }));
+    for (const row of normalized) {
+      if (!row.symbol || !row.ts_event || !row.features || typeof row.features !== 'object') {
+        throw new Error('FeatureStore row schema invalid');
+      }
+      assertFiniteFeatureRow(row);
+    }
+    assertMonotonicRows(normalized);
+    this.rows = normalized;
+  }
+
+  query({ symbol, ts_event }) {
+    if (!symbol || !ts_event) throw new Error('FeatureStore query requires symbol and ts_event');
+    const selected = this.rows
+      .filter((row) => row.symbol === symbol && row.ts_event <= ts_event)
+      .sort((a, b) => (a.ts_event === b.ts_event ? a.row_id.localeCompare(b.row_id) : a.ts_event.localeCompare(b.ts_event)));
+    return selected.map((row) => ({ symbol: row.symbol, ts_event: row.ts_event, row_id: row.row_id, features: { ...row.features } }));
+  }
+}
+
+export function buildFeatureStoreFixture() {
+  return [
+    { symbol: 'BTCUSDT', ts_event: '2026-01-01T00:00:00Z', features: { ofi: 0.1, vpin: 0.2 }, row_id: 'r1' },
+    { symbol: 'BTCUSDT', ts_event: '2026-01-01T00:01:00Z', features: { ofi: 0.11, vpin: 0.21 }, row_id: 'r2' },
+    { symbol: 'BTCUSDT', ts_event: '2026-01-01T00:02:00Z', features: { ofi: 0.12, vpin: 0.22 }, row_id: 'r3' }
+  ];
+}
+
+export function pitFingerprint(rows) {
+  return crypto.createHash('sha256').update(JSON.stringify(rows)).digest('hex');
+}
 export function buildStrategySpec() {
   const payload = withFingerprint('StrategySpec', {
     schema_version: '1.0.0',

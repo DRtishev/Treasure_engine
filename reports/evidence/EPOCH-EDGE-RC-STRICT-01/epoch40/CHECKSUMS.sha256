@@ -1,0 +1,3 @@
+2d9565916100306aa4f5e1bf0866af92ba852bbbb76c93a70a9c54feeff35cfd  reports/evidence/EPOCH-EDGE-RC-STRICT-01/vectors/epoch40.CertificationReport.actual.json
+2d9565916100306aa4f5e1bf0866af92ba852bbbb76c93a70a9c54feeff35cfd  tests/vectors/CertificationReport/epoch40.golden.json
+86733dd2ff1f6ec33690984c50e2d331a61c0c316dd3855d94cdc2cc6ef57112  reports/evidence/EPOCH-EDGE-RC-STRICT-01/epoch40/CONTRACT_OUTPUTS.json

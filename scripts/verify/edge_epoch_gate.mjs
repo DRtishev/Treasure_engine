@@ -8,6 +8,9 @@ import { canonicalStringify, deterministicFingerprint, validateContract } from '
 import {
   determinismTripwire,
   buildFeatureFrame,
+  FeatureStore,
+  buildFeatureStoreFixture,
+  pitFingerprint,
   buildStrategySpec,
   buildSignal,
   buildIntent,
@@ -238,9 +241,35 @@ const outputs = {};
 if (epoch === '31') {
   outputs.FeatureFrame = buildFeatureFrame(seed);
   determinismTripwire((x) => buildFeatureFrame(x), seed);
-  let injectedFailed = false;
-  try { walkForwardLeakageSentinel(true); } catch { injectedFailed = true; }
-  if (!injectedFailed) throw new Error('Injected look-ahead case did not fail');
+
+  const fixture = buildFeatureStoreFixture();
+  const store = new FeatureStore(fixture);
+  const pivotTs = '2026-01-01T00:01:00Z';
+  const baseline = store.query({ symbol: 'BTCUSDT', ts_event: pivotTs });
+
+  const mutatedFuture = fixture.map((row) => row.ts_event > pivotTs
+    ? { ...row, features: { ...row.features, ofi: row.features.ofi + 0.5 } }
+    : row);
+  const futureMutatedStore = new FeatureStore(mutatedFuture);
+  const afterFutureMutation = futureMutatedStore.query({ symbol: 'BTCUSDT', ts_event: pivotTs });
+  const baselineFp = pitFingerprint(baseline);
+  const futureMutationFp = pitFingerprint(afterFutureMutation);
+  if (baselineFp !== futureMutationFp) throw new Error('PiT query drifted after future-segment mutation');
+
+  let mustFailTriggered = false;
+  try {
+    const leakedRows = fixture.map((row) => row.ts_event === pivotTs
+      ? { ...row, ts_event: '2026-01-01T00:03:00Z' }
+      : row);
+    const leakedStore = new FeatureStore(leakedRows);
+    leakedStore.query({ symbol: 'BTCUSDT', ts_event: pivotTs });
+    walkForwardLeakageSentinel(true);
+  } catch {
+    mustFailTriggered = true;
+  }
+  if (!mustFailTriggered) throw new Error('Injected look-ahead case did not fail');
+
+  write('PIT_QUERY_PROOF.json', `${JSON.stringify({ pivotTs, baselineFp, futureMutationFp, equal: baselineFp === futureMutationFp }, null, 2)}\n`);
 }
 if (epoch === '32') {
   outputs.SimReport = buildSimReport(seed);

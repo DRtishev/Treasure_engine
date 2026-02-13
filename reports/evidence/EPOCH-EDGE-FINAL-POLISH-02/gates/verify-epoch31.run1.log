@@ -1,0 +1,5 @@
+
+> treasure-engine@1.0.0 verify:epoch31
+> node scripts/verify/epoch31_edge_gate.mjs
+
+PASS epoch31 artifacts=reports/evidence/EPOCH-EDGE-FINAL-POLISH-02/epoch31

@@ -1,0 +1,5 @@
+pwd=/workspace/Treasure_engine
+branch=codex/edge-rc-strict-and-e31-combat-01
+head=74bb9be2280b1eae2f23b81ab20ee786403d9b44
+node=v20.19.6
+seed=12345

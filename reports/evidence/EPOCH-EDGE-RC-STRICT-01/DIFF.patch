@@ -1,0 +1,144 @@
+diff --git a/core/edge/runtime.mjs b/core/edge/runtime.mjs
+index f9f2008..f4cd46d 100644
+--- a/core/edge/runtime.mjs
++++ b/core/edge/runtime.mjs
+@@ -37,6 +37,72 @@ export function buildFeatureFrame(seed = 12345) {
+   return payload;
+ }
+ 
++
++
++function assertFiniteFeatureRow(row) {
++  for (const [key, value] of Object.entries(row.features || {})) {
++    if (!Number.isFinite(value)) {
++      throw new Error(`FeatureStore non-finite value at ${row.symbol}:${row.ts_event}:${key}`);
++    }
++  }
++}
++
++function assertMonotonicRows(rows) {
++  const bySymbol = new Map();
++  for (const row of rows) {
++    const bucket = bySymbol.get(row.symbol) || [];
++    bucket.push(row);
++    bySymbol.set(row.symbol, bucket);
++  }
++  for (const [symbol, bucket] of bySymbol.entries()) {
++    let previous = null;
++    for (const row of [...bucket].sort((a, b) => a.ts_event.localeCompare(b.ts_event))) {
++      if (previous && row.ts_event <= previous) {
++        throw new Error(`FeatureStore non-monotonic timestamps for ${symbol}`);
++      }
++      previous = row.ts_event;
++    }
++  }
++}
++
++export class FeatureStore {
++  constructor(rows = []) {
++    const normalized = rows.map((row) => ({
++      symbol: row.symbol,
++      ts_event: row.ts_event,
++      features: { ...row.features },
++      row_id: row.row_id || `${row.symbol}:${row.ts_event}`
++    }));
++    for (const row of normalized) {
++      if (!row.symbol || !row.ts_event || !row.features || typeof row.features !== 'object') {
++        throw new Error('FeatureStore row schema invalid');
++      }
++      assertFiniteFeatureRow(row);
++    }
++    assertMonotonicRows(normalized);
++    this.rows = normalized;
++  }
++
++  query({ symbol, ts_event }) {
++    if (!symbol || !ts_event) throw new Error('FeatureStore query requires symbol and ts_event');
++    const selected = this.rows
++      .filter((row) => row.symbol === symbol && row.ts_event <= ts_event)
++      .sort((a, b) => (a.ts_event === b.ts_event ? a.row_id.localeCompare(b.row_id) : a.ts_event.localeCompare(b.ts_event)));
++    return selected.map((row) => ({ symbol: row.symbol, ts_event: row.ts_event, row_id: row.row_id, features: { ...row.features } }));
++  }
++}
++
++export function buildFeatureStoreFixture() {
++  return [
++    { symbol: 'BTCUSDT', ts_event: '2026-01-01T00:00:00Z', features: { ofi: 0.1, vpin: 0.2 }, row_id: 'r1' },
++    { symbol: 'BTCUSDT', ts_event: '2026-01-01T00:01:00Z', features: { ofi: 0.11, vpin: 0.21 }, row_id: 'r2' },
++    { symbol: 'BTCUSDT', ts_event: '2026-01-01T00:02:00Z', features: { ofi: 0.12, vpin: 0.22 }, row_id: 'r3' }
++  ];
++}
++
++export function pitFingerprint(rows) {
++  return crypto.createHash('sha256').update(JSON.stringify(rows)).digest('hex');
++}
+ export function buildStrategySpec() {
+   const payload = withFingerprint('StrategySpec', {
+     schema_version: '1.0.0',
+diff --git a/package.json b/package.json
+index 7c243c5..617dd60 100644
+--- a/package.json
++++ b/package.json
+@@ -101,7 +101,8 @@
+     "verify:edge": "node scripts/verify/edge_all_epochs.mjs",
+     "verify:edge:strict": "ENABLE_CLEAN_CLONE=1 npm run verify:edge",
+     "verify:goldens:update": "UPDATE_GOLDENS=1 npm run verify:edge",
+-    "package:final-validated": "node scripts/ops/build_final_validated.mjs"
++    "package:final-validated": "npm run export:final-validated",
++    "export:final-validated": "node scripts/export/final_validated.mjs"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
+diff --git a/scripts/verify/edge_epoch_gate.mjs b/scripts/verify/edge_epoch_gate.mjs
+index 0140548..15cbd21 100644
+--- a/scripts/verify/edge_epoch_gate.mjs
++++ b/scripts/verify/edge_epoch_gate.mjs
+@@ -8,6 +8,9 @@ import { canonicalStringify, deterministicFingerprint, validateContract } from '
+ import {
+   determinismTripwire,
+   buildFeatureFrame,
++  FeatureStore,
++  buildFeatureStoreFixture,
++  pitFingerprint,
+   buildStrategySpec,
+   buildSignal,
+   buildIntent,
+@@ -238,9 +241,35 @@ const outputs = {};
+ if (epoch === '31') {
+   outputs.FeatureFrame = buildFeatureFrame(seed);
+   determinismTripwire((x) => buildFeatureFrame(x), seed);
+-  let injectedFailed = false;
+-  try { walkForwardLeakageSentinel(true); } catch { injectedFailed = true; }
+-  if (!injectedFailed) throw new Error('Injected look-ahead case did not fail');
++
++  const fixture = buildFeatureStoreFixture();
++  const store = new FeatureStore(fixture);
++  const pivotTs = '2026-01-01T00:01:00Z';
++  const baseline = store.query({ symbol: 'BTCUSDT', ts_event: pivotTs });
++
++  const mutatedFuture = fixture.map((row) => row.ts_event > pivotTs
++    ? { ...row, features: { ...row.features, ofi: row.features.ofi + 0.5 } }
++    : row);
++  const futureMutatedStore = new FeatureStore(mutatedFuture);
++  const afterFutureMutation = futureMutatedStore.query({ symbol: 'BTCUSDT', ts_event: pivotTs });
++  const baselineFp = pitFingerprint(baseline);
++  const futureMutationFp = pitFingerprint(afterFutureMutation);
++  if (baselineFp !== futureMutationFp) throw new Error('PiT query drifted after future-segment mutation');
++
++  let mustFailTriggered = false;
++  try {
++    const leakedRows = fixture.map((row) => row.ts_event === pivotTs
++      ? { ...row, ts_event: '2026-01-01T00:03:00Z' }
++      : row);
++    const leakedStore = new FeatureStore(leakedRows);
++    leakedStore.query({ symbol: 'BTCUSDT', ts_event: pivotTs });
++    walkForwardLeakageSentinel(true);
++  } catch {
++    mustFailTriggered = true;
++  }
++  if (!mustFailTriggered) throw new Error('Injected look-ahead case did not fail');
++
++  write('PIT_QUERY_PROOF.json', `${JSON.stringify({ pivotTs, baselineFp, futureMutationFp, equal: baselineFp === futureMutationFp }, null, 2)}\n`);
+ }
+ if (epoch === '32') {
+   outputs.SimReport = buildSimReport(seed);

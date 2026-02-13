@@ -1,0 +1,7 @@
+
+> treasure-engine@1.0.0 export:final-validated
+> node scripts/export/final_validated.mjs
+
+FINAL_VALIDATED=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz
+SHA256=40819becb4cc90d45aa7fcab679bdc8ebb6f3d6226974a94898c49714e1aa83b
+SHA_FILE=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256

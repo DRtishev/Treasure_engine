@@ -1,0 +1,1 @@
+{"deterministic_fingerprint":"b516254b9ba3af0f045c93d5bd04c9f002e524c54386be2ec4a08811a332227c","intent_id":"int-12345","limit_price":42000.12345678,"max_slippage_bps":8,"schema_version":"1.0.0","side":"SELL","signal_id":"sig-12345","size_units":0.0016547,"symbol":"BTCUSDT","timestamp":"2026-01-01T00:00:01Z"}

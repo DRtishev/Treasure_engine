@@ -1,0 +1,21 @@
+{
+  "StrategySpec": {
+    "artifact_hashes": {
+      "bundle": "sha256:edge_bundle_v1"
+    },
+    "compatibility": {
+      "feature_schema": "^1.0.0"
+    },
+    "default_params": {
+      "risk_budget": 0.15
+    },
+    "params_schema": {
+      "additionalProperties": true,
+      "type": "object"
+    },
+    "schema_version": "1.0.0",
+    "semver": "1.2.0",
+    "strategy_id": "edge_mvp",
+    "deterministic_fingerprint": "d9ba628acac980b63b0f35e493cda6807517cc5224dd04268523fc148d86d4a6"
+  }
+}
