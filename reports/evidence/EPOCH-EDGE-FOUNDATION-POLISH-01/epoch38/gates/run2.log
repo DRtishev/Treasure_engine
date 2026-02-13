@@ -1,0 +1,10 @@
+command=npm run verify:epoch38
+exit_code=0
+
+
+> treasure-engine@1.0.0 verify:epoch38
+> node scripts/verify/epoch38_edge_gate.mjs
+
+PASS epoch38 artifacts=reports/evidence/EPOCH-EDGE-FOUNDATION-POLISH-01/epoch38
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

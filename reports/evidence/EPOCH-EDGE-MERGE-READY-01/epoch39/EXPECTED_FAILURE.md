@@ -1,0 +1,1 @@
+submitOrder('SHADOW') threw EDGE_SHADOW_ORDER_FORBIDDEN

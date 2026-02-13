@@ -1,0 +1,8 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 package:final-validated
+> node scripts/ops/build_final_validated.mjs
+
+PACKED artifacts/incoming/FINAL_VALIDATED_EDGE_MERGE_READY_01.tar.gz
+INPUT_HASHES reports/evidence/EPOCH-EDGE-MERGE-READY-01/FINAL_VALIDATED_INPUTS.sha256
+ARCHIVE_HASH reports/evidence/EPOCH-EDGE-MERGE-READY-01/FINAL_VALIDATED.tar.gz.sha256

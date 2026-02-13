@@ -1,0 +1,27 @@
+{
+  "Signal": {
+    "confidence": 0.016547,
+    "reasons": [
+      "trend"
+    ],
+    "schema_version": "1.0.0",
+    "side_hint": "SHORT",
+    "signal_id": "sig-12345",
+    "strategy_id": "edge_mvp",
+    "symbol": "BTCUSDT",
+    "timestamp": "2026-01-01T00:00:00Z",
+    "deterministic_fingerprint": "67b8e96ab37ee59060dd7384556d661f3ee47332d042aed04c4f50213e4cdfa2"
+  },
+  "Intent": {
+    "intent_id": "int-12345",
+    "limit_price": 42000.12345678,
+    "max_slippage_bps": 8,
+    "schema_version": "1.0.0",
+    "side": "SELL",
+    "signal_id": "sig-12345",
+    "size_units": 0.0016547,
+    "symbol": "BTCUSDT",
+    "timestamp": "2026-01-01T00:00:01Z",
+    "deterministic_fingerprint": "b516254b9ba3af0f045c93d5bd04c9f002e524c54386be2ec4a08811a332227c"
+  }
+}
