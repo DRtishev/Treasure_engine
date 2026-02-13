@@ -33,12 +33,21 @@ const requiredHeadings = [
 ];
 
 const forbiddenPlaceholderRegex = /\b(TBD|TODO|TBA)\b/i;
+const tabCharacterRegex = /\t/;
 const errors = [];
 
 const read = (file) => fs.readFileSync(file, 'utf8');
 
 for (const file of requiredFiles) {
   if (!fs.existsSync(file)) errors.push(`Missing required file: ${file}`);
+}
+
+for (const file of requiredFiles) {
+  if (!fs.existsSync(file)) continue;
+  const text = read(file);
+  if (tabCharacterRegex.test(text)) {
+    errors.push(`${file} contains tab characters; only spaces are allowed`);
+  }
 }
 
 function sectionBody(text, heading, nextHeading) {
@@ -73,6 +82,10 @@ for (const epochFile of epochFiles) {
   const riskCount = (riskBody.match(/^\s*-\s+/gm) || []).length;
   if (riskCount < 3) {
     errors.push(`${epochFile} RISK REGISTER must contain at least 3 bullet risks`);
+  }
+  const epochNumber = Number(path.basename(epochFile).match(/EPOCH-(\d+)/)?.[1] ?? 0);
+  if (epochNumber >= 31 && epochNumber <= 40 && riskCount < 7) {
+    errors.push(`${epochFile} RISK REGISTER must contain at least 7 bullet risks for EDGE epochs 31..40`);
   }
 
   const acceptanceBody = sectionBody(text, '## ACCEPTANCE CRITERIA', '## NOTES');

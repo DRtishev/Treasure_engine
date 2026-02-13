@@ -1,0 +1,70 @@
+{
+  "runLabel": "run2",
+  "summary": [
+    {
+      "epoch": "31",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/epoch31/gates/run2.log",
+      "requiredMissing": []
+    },
+    {
+      "epoch": "32",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/epoch32/gates/run2.log",
+      "requiredMissing": []
+    },
+    {
+      "epoch": "33",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/epoch33/gates/run2.log",
+      "requiredMissing": []
+    },
+    {
+      "epoch": "34",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/epoch34/gates/run2.log",
+      "requiredMissing": []
+    },
+    {
+      "epoch": "35",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/epoch35/gates/run2.log",
+      "requiredMissing": []
+    },
+    {
+      "epoch": "36",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/epoch36/gates/run2.log",
+      "requiredMissing": []
+    },
+    {
+      "epoch": "37",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/epoch37/gates/run2.log",
+      "requiredMissing": []
+    },
+    {
+      "epoch": "38",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/epoch38/gates/run2.log",
+      "requiredMissing": []
+    },
+    {
+      "epoch": "39",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/epoch39/gates/run2.log",
+      "requiredMissing": []
+    },
+    {
+      "epoch": "40",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/epoch40/gates/run2.log",
+      "requiredMissing": []
+    },
+    {
+      "epoch": "clean-clone",
+      "status": "PASS",
+      "log": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/verify_edge/clean_clone_run2.log"
+    }
+  ]
+}

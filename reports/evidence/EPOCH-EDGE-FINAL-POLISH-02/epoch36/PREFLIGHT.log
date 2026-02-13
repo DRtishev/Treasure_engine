@@ -1,0 +1,5 @@
+pwd=/workspace/Treasure_engine
+branch=codex/edge-final-polish-02
+head=c3e10ab3b3b94d2f8be121c2d97b735dbdc623f9
+node=v20.19.6
+seed=12345

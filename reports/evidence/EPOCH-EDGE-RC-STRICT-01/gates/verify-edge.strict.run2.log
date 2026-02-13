@@ -1,0 +1,5 @@
+
+> treasure-engine@1.0.0 verify:edge
+> node scripts/verify/edge_all_epochs.mjs
+
+PASS verify:edge run=run2 evidence=reports/evidence/EPOCH-EDGE-RC-STRICT-01/verify_edge

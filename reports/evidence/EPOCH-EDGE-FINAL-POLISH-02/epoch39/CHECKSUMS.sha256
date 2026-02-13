@@ -1,0 +1,5 @@
+7c8c39cd4aaf7ad5d72892dd7c6c4c53bdee9a04fb81ec1f3d0ba1bd508bfa1b  reports/evidence/EPOCH-EDGE-FINAL-POLISH-02/vectors/epoch39.ShadowEvent.actual.json
+7c8c39cd4aaf7ad5d72892dd7c6c4c53bdee9a04fb81ec1f3d0ba1bd508bfa1b  tests/vectors/ShadowEvent/epoch39.golden.json
+adceeffb969a19eb3369750b4f426b1a6cee0ae5530f6bb7ec3df427dd3065b9  reports/evidence/EPOCH-EDGE-FINAL-POLISH-02/vectors/epoch39.CanaryPhaseState.actual.json
+adceeffb969a19eb3369750b4f426b1a6cee0ae5530f6bb7ec3df427dd3065b9  tests/vectors/CanaryPhaseState/epoch39.golden.json
+0c7d8cf822365601022672f1ad959f75f7210fa57a2f888764e6291663d9dcbc  reports/evidence/EPOCH-EDGE-FINAL-POLISH-02/epoch39/CONTRACT_OUTPUTS.json

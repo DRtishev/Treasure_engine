@@ -1,0 +1,16 @@
+# PREFLIGHT
+2026-02-13T08:37:53Z
+## pwd
+/workspace/Treasure_engine
+## git status -sb
+## codex/edge-final-polish-02
+?? reports/evidence/EPOCH-EDGE-FINAL-POLISH-02/
+## git branch --show-current
+codex/edge-final-polish-02
+## git rev-parse HEAD
+c3e10ab3b3b94d2f8be121c2d97b735dbdc623f9
+## git remote -v
+## node -v
+v20.19.6
+## npm -v
+11.4.2

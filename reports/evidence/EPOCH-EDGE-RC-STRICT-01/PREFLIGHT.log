@@ -1,0 +1,16 @@
+# PREFLIGHT
+2026-02-13T08:58:42Z
+## pwd
+/workspace/Treasure_engine
+## git status -sb
+## codex/edge-rc-strict-and-e31-combat-01
+?? reports/evidence/EPOCH-EDGE-RC-STRICT-01/
+## git branch --show-current
+codex/edge-rc-strict-and-e31-combat-01
+## git rev-parse HEAD
+74bb9be2280b1eae2f23b81ab20ee786403d9b44
+## git remote -v
+## node -v
+v20.19.6
+## npm -v
+11.4.2
