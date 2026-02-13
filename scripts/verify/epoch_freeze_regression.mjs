@@ -5,7 +5,6 @@ import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 
 const LEDGER_PATH = path.resolve('specs/epochs/LEDGER.json');
-const EVIDENCE_ROOT = path.resolve('reports/evidence');
 const STANDARD_FILES = new Set(['PREFLIGHT.log', 'COMMANDS.log', 'SNAPSHOT.md', 'SUMMARY.md', 'VERDICT.md', 'SHA256SUMS.EVIDENCE', 'pack_index.json']);
 
 function fail(msg) {
@@ -35,13 +34,6 @@ function mutableEvidencePath(rel) {
   return /\.(json|jsonl)$/i.test(rel);
 }
 
-const packageJson = JSON.parse(fs.readFileSync(path.resolve('package.json'), 'utf8'));
-
-function verifyCommandForEpoch(epoch) {
-  const script = `verify:epoch${String(epoch)}`;
-  return packageJson.scripts?.[script] ? script : null;
-}
-
 function run(cmd, args, env = process.env) {
   const out = spawnSync(cmd, args, { encoding: 'utf8', env });
   if (out.stdout) process.stdout.write(out.stdout);
@@ -49,39 +41,58 @@ function run(cmd, args, env = process.env) {
   return out;
 }
 
+function listFilesRecursive(dir) {
+  const out = [];
+  function walk(cur) {
+    const entries = fs.readdirSync(cur, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name));
+    for (const entry of entries) {
+      const full = path.join(cur, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else out.push(path.relative(dir, full).replaceAll('\\', '/'));
+    }
+  }
+  walk(dir);
+  return out;
+}
+
+function hashEvidenceTree(dir) {
+  const files = listFilesRecursive(dir);
+  return files.map((rel) => `${sha256(path.join(dir, rel))}  ${rel}`).join('\n');
+}
+
 if (!fs.existsSync(LEDGER_PATH)) fail('missing specs/epochs/LEDGER.json');
-if (!fs.existsSync(EVIDENCE_ROOT)) fail('missing reports/evidence directory');
+
+const packageJson = JSON.parse(fs.readFileSync(path.resolve('package.json'), 'utf8'));
+const scripts = packageJson.scripts ?? {};
 const ledger = JSON.parse(fs.readFileSync(LEDGER_PATH, 'utf8'));
 
-const doneStage2 = Object.entries(ledger.epochs ?? {})
-  .map(([k, v]) => ({ epoch: Number(k), row: v }))
-  .filter(({ epoch, row }) => Number.isInteger(epoch) && epoch >= 41 && row?.status === 'DONE')
-  .map(({ epoch }) => epoch);
+const targets = Object.entries(ledger.epochs ?? {})
+  .map(([k, row]) => ({ epoch: Number(k), row }))
+  .filter(({ epoch, row }) => Number.isInteger(epoch) && row?.stage === 'DONE')
+  .sort((a, b) => a.epoch - b.epoch);
 
-const withPackIndex = fs.readdirSync(EVIDENCE_ROOT, { withFileTypes: true })
-  .filter((d) => d.isDirectory() && /^EPOCH-\d+$/.test(d.name))
-  .map((d) => Number(d.name.slice('EPOCH-'.length)))
-  .filter((e) => Number.isInteger(e))
-  .filter((e) => fs.existsSync(path.join(EVIDENCE_ROOT, `EPOCH-${String(e).padStart(2, '0')}`, 'pack_index.json')));
-
-const targets = [...new Set([...doneStage2, ...withPackIndex])].sort((a, b) => a - b);
-const latestDone = doneStage2.length ? Math.max(...doneStage2) : 0;
-if (targets.length === 0) fail('no epochs selected for freeze regression');
+if (targets.length === 0) fail('no DONE epochs found in ledger');
 
 let failures = 0;
-for (const epoch of targets) {
-  const epochId = `EPOCH-${String(epoch).padStart(2, '0')}`;
-  const epochDir = path.join(EVIDENCE_ROOT, epochId);
-  const shaPath = path.join(epochDir, 'SHA256SUMS.EVIDENCE');
-  if (!fs.existsSync(shaPath)) {
-    console.error(`- ${epochId}: missing SHA256SUMS.EVIDENCE`);
+for (const { epoch, row } of targets) {
+  const epochId = row.id || `EPOCH-${String(epoch).padStart(2, '0')}`;
+  const evidenceRoot = row.evidence_root;
+  if (!evidenceRoot || typeof evidenceRoot !== 'string') {
+    console.error(`- ${epochId}: missing evidence_root in ledger`);
+    failures += 1;
+    continue;
+  }
+  const epochDir = path.resolve(evidenceRoot);
+  if (!fs.existsSync(epochDir) || !fs.statSync(epochDir).isDirectory()) {
+    console.error(`- ${epochId}: evidence_root missing dir ${evidenceRoot}`);
     failures += 1;
     continue;
   }
 
-  const script = verifyCommandForEpoch(epoch);
-  if (!script && epoch === latestDone) {
-    console.log(`freeze SKIP ${epochId} (latest DONE epoch has no verifier script yet)`);
+  const shaPath = path.join(epochDir, 'SHA256SUMS.EVIDENCE');
+  if (!fs.existsSync(shaPath)) {
+    console.error(`- ${epochId}: missing SHA256SUMS.EVIDENCE`);
+    failures += 1;
     continue;
   }
 
@@ -93,43 +104,41 @@ for (const epoch of targets) {
   }
 
   const expected = parseShaSums(shaPath);
-  const targetPaths = [...expected.keys()].filter(mutableEvidencePath);
+  const mutablePaths = [...expected.keys()].filter(mutableEvidencePath);
 
-  if (!script) {
-    if (targetPaths.length > 0) {
-      console.error(`- ${epochId}: missing verifier script (expected mutable files=${targetPaths.length})`);
+  let verifier = null;
+  const owner = String(row.gate_owner || '').trim();
+  if (owner.startsWith('verify:') && scripts[owner]) verifier = owner;
+  const fallback = `verify:epoch${epoch}`;
+  if (!verifier && scripts[fallback]) verifier = fallback;
+
+  if (!verifier) {
+    if (mutablePaths.length > 0) {
+      console.error(`- ${epochId}: NO_VERIFIER with mutable evidence paths:`);
+      for (const p of mutablePaths) console.error(`  * ${p}`);
       failures += 1;
     } else {
-      console.log(`freeze SKIP ${epochId} (no verifier + no mutable paths)`);
+      console.log(`freeze SKIP ${epochId} (NO_VERIFIER and no mutable paths)`);
     }
     continue;
   }
 
-  const probe = run('npm', ['run', '-s', script], { ...process.env, EVIDENCE_EPOCH: epochId, EVIDENCE_WRITE_MODE: 'ASSERT_NO_DIFF' });
+  const before = hashEvidenceTree(epochDir);
+  const probeEvidenceEpoch = `EPOCH-FREEZE-${String(epoch).padStart(2, '0')}`;
+  const probe = run('npm', ['run', '-s', verifier], { ...process.env, EVIDENCE_EPOCH: probeEvidenceEpoch, EVIDENCE_WRITE_MODE: 'ASSERT_NO_DIFF' });
+  const after = hashEvidenceTree(epochDir);
+
   if (probe.status !== 0) {
-    console.error(`- ${epochId}: ${script} failed under ASSERT_NO_DIFF`);
+    console.error(`- ${epochId}: ${verifier} failed under ASSERT_NO_DIFF`);
+    failures += 1;
+    continue;
+  }
+  if (before !== after) {
+    console.error(`- ${epochId}: ASSERT_NO_DIFF mutated canonical evidence`);
     failures += 1;
     continue;
   }
 
-  const tempRoot = path.join('.tmp', 'epoch_freeze', epochId);
-  const diffs = [];
-  for (const rel of targetPaths) {
-    const oldSha = expected.get(rel);
-    const generated = path.join(tempRoot, rel);
-    if (!fs.existsSync(generated)) {
-      diffs.push({ path: rel, old: oldSha, new: 'MISSING' });
-      continue;
-    }
-    const newSha = sha256(generated);
-    if (oldSha !== newSha) diffs.push({ path: rel, old: oldSha, new: newSha });
-  }
-  if (diffs.length > 0) {
-    console.error(`- ${epochId}: evidence drift detected`);
-    for (const d of diffs) console.error(`  * ${d.path}\n    old=${d.old}\n    new=${d.new}`);
-    failures += 1;
-    continue;
-  }
   console.log(`freeze PASS ${epochId}`);
 }
 

@@ -1,0 +1,4 @@
+npm ci
+CI=true npm run verify:epochs:freeze
+CI=true npm run verify:phoenix (run1)
+CI=true npm run verify:phoenix (run2)

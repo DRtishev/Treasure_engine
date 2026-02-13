@@ -11,6 +11,9 @@ if (!fs.existsSync(ledgerPath)) {
 
 const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'));
 const epochs = ledger.epochs ?? {};
+const shaRe = /^[0-9a-f]{7,40}$/;
+const placeholderRe = /^(tbd|todo|unknown|na|n\/a)$/i;
+
 for (let i = 1; i <= 58; i += 1) {
   const row = epochs[String(i)];
   if (!row) {
@@ -24,6 +27,8 @@ for (let i = 1; i <= 58; i += 1) {
   if (row.stage === 'DONE') {
     if (!['PASS', 'FAIL'].includes(row.status)) errors.push(`epoch ${i} DONE must have PASS/FAIL status`);
     if (!row.evidence_root || typeof row.evidence_root !== 'string') errors.push(`epoch ${i} DONE requires evidence_root`);
+    const sha = String(row.commit_sha || '').trim();
+    if (placeholderRe.test(sha) || !shaRe.test(sha)) errors.push(`epoch ${i} DONE commit_sha invalid: ${row.commit_sha}`);
   } else {
     if (row.status != null && !['PASS', 'FAIL'].includes(row.status)) errors.push(`epoch ${i} non-DONE status must be null/omitted`);
   }

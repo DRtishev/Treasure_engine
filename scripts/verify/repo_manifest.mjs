@@ -22,7 +22,7 @@ const owner = (f) => {
 
 const rows = files.map((f) => ({
   path: f,
-  sha256: crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex'),
+  sha256: f === manifestPath ? null : crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex'),
   classification: classify(f),
   owner_epoch: owner(f),
   reason: classify(f) === 'GENERATED' ? 'Generated verification/release artifact tracked for reproducibility.' : classify(f) === 'ARCHIVED' ? 'Archived/quarantined content retained for historical auditability.' : 'Primary source tracked by SSOT.'
@@ -47,8 +47,10 @@ for (const f of files) {
     errors.push(`unlisted tracked file: ${f}`);
     continue;
   }
-  const sha = crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
-  if (row.sha256 !== sha) errors.push(`sha256 mismatch: ${f}`);
+  if (f !== manifestPath) {
+    const sha = crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
+    if (row.sha256 !== sha) errors.push(`sha256 mismatch: ${f}`);
+  }
   if (!['ACTIVE', 'ARCHIVED', 'GENERATED', 'VENDORED'].includes(row.classification)) errors.push(`invalid classification for ${f}`);
   if (!row.reason || typeof row.reason !== 'string') errors.push(`missing reason for ${f}`);
 }

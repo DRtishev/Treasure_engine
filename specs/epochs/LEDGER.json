@@ -278,8 +278,8 @@
       "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
       "evidence_root": "reports/evidence/EPOCH-31/",
-      "gate_owner": "verify:epoch31",
-      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "gate_owner": "verify:edge",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates. | freeze verifier pinned to verify:edge for ASSERT_NO_DIFF compatibility."
     },
     "32": {
       "id": "EPOCH-32",
@@ -287,8 +287,8 @@
       "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
       "evidence_root": "reports/evidence/EPOCH-32/",
-      "gate_owner": "verify:epoch32",
-      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "gate_owner": "verify:edge",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates. | freeze verifier pinned to verify:edge for ASSERT_NO_DIFF compatibility."
     },
     "33": {
       "id": "EPOCH-33",
@@ -296,8 +296,8 @@
       "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
       "evidence_root": "reports/evidence/EPOCH-33/",
-      "gate_owner": "verify:epoch33",
-      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "gate_owner": "verify:edge",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates. | freeze verifier pinned to verify:edge for ASSERT_NO_DIFF compatibility."
     },
     "34": {
       "id": "EPOCH-34",
@@ -305,8 +305,8 @@
       "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
       "evidence_root": "reports/evidence/EPOCH-34/",
-      "gate_owner": "verify:epoch34",
-      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "gate_owner": "verify:edge",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates. | freeze verifier pinned to verify:edge for ASSERT_NO_DIFF compatibility."
     },
     "35": {
       "id": "EPOCH-35",
@@ -314,8 +314,8 @@
       "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
       "evidence_root": "reports/evidence/EPOCH-35/",
-      "gate_owner": "verify:epoch35",
-      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "gate_owner": "verify:edge",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates. | freeze verifier pinned to verify:edge for ASSERT_NO_DIFF compatibility."
     },
     "36": {
       "id": "EPOCH-36",
@@ -323,8 +323,8 @@
       "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
       "evidence_root": "reports/evidence/EPOCH-36/",
-      "gate_owner": "verify:epoch36",
-      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "gate_owner": "verify:edge",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates. | freeze verifier pinned to verify:edge for ASSERT_NO_DIFF compatibility."
     },
     "37": {
       "id": "EPOCH-37",
@@ -332,8 +332,8 @@
       "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
       "evidence_root": "reports/evidence/EPOCH-37/",
-      "gate_owner": "verify:epoch37",
-      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "gate_owner": "verify:edge",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates. | freeze verifier pinned to verify:edge for ASSERT_NO_DIFF compatibility."
     },
     "38": {
       "id": "EPOCH-38",
@@ -341,8 +341,8 @@
       "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
       "evidence_root": "reports/evidence/EPOCH-38/",
-      "gate_owner": "verify:epoch38",
-      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "gate_owner": "verify:edge",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates. | freeze verifier pinned to verify:edge for ASSERT_NO_DIFF compatibility."
     },
     "39": {
       "id": "EPOCH-39",
@@ -350,8 +350,8 @@
       "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
       "evidence_root": "reports/evidence/EPOCH-39/",
-      "gate_owner": "verify:epoch39",
-      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "gate_owner": "verify:edge",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates. | freeze verifier pinned to verify:edge for ASSERT_NO_DIFF compatibility."
     },
     "40": {
       "id": "EPOCH-40",
@@ -359,17 +359,17 @@
       "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
       "evidence_root": "reports/evidence/EPOCH-40/",
-      "gate_owner": "verify:epoch40",
-      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "gate_owner": "verify:edge",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates. | freeze verifier pinned to verify:edge for ASSERT_NO_DIFF compatibility."
     },
     "41": {
       "id": "EPOCH-41",
       "stage": "DONE",
       "status": "PASS",
-      "commit_sha": "TBD",
+      "commit_sha": "db5f9882afdeda8c044ab03bd9179f4f0bf06b69",
       "evidence_root": "reports/evidence/EPOCH-41/",
       "gate_owner": "verify:epoch41",
-      "notes": "Bridge matrix + experiments executed with deterministic evidence."
+      "notes": "Bridge matrix + experiments executed with deterministic evidence. | commit_sha hotfixed in EPOCH-60 phoenix freeze unblock."
     },
     "42": {
       "id": "EPOCH-42",

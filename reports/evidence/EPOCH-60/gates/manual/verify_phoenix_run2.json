@@ -1,0 +1,6 @@
+{
+  "command": "CI=true npm run verify:phoenix",
+  "run": 2,
+  "log": "gates/verify_phoenix_run2.log",
+  "exit_code": 0
+}

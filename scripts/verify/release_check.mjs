@@ -21,15 +21,27 @@ const required = [
   'artifacts/out/evidence_allowlist.txt'
 ];
 
+function missingRequired() {
+  return required.filter((file) => !fs.existsSync(file));
+}
+
+if (enforceBuild) {
+  const missing = missingRequired();
+  if (missing.length) {
+    const build = spawnSync('npm', ['run', '-s', 'release:build'], { encoding: 'utf8', env: process.env });
+    if (build.status !== 0) errors.push(`release:build failed: ${build.stderr || build.stdout}`);
+  }
+}
+
 if (enforceBuild || repro) {
-  for (const file of required) if (!fs.existsSync(file)) errors.push(`missing ${file}`);
+  for (const file of missingRequired()) errors.push(`missing ${file}`);
 }
 
 if (strict) {
   const ledger = JSON.parse(fs.readFileSync('specs/epochs/LEDGER.json', 'utf8'));
   for (const [epoch, row] of Object.entries(ledger.epochs ?? {})) {
     const n = Number(epoch);
-    if (row.status !== 'DONE' || Number.isNaN(n) || n < 42) continue;
+    if (row.stage !== 'DONE' || Number.isNaN(n) || n < 17) continue;
     if (!row.evidence_root) {
       errors.push(`DONE epoch ${epoch} missing evidence_root`);
       continue;
@@ -48,7 +60,7 @@ function sha(file) {
 
 if (repro) {
   const ledger = JSON.parse(fs.readFileSync('specs/epochs/LEDGER.json', 'utf8'));
-  const doneEpochs = Object.keys(ledger.epochs ?? {}).map((k) => Number(k)).filter((n) => Number.isInteger(n) && ledger.epochs[String(n)]?.status === 'DONE').sort((a, b) => a - b);
+  const doneEpochs = Object.keys(ledger.epochs ?? {}).map((k) => Number(k)).filter((n) => Number.isInteger(n) && ledger.epochs[String(n)]?.stage === 'DONE').sort((a, b) => a - b);
   const latestDone = doneEpochs.length ? `EPOCH-${String(doneEpochs[doneEpochs.length - 1]).padStart(2, '0')}` : '';
   const reproEnv = { ...process.env, RELEASE_EXCLUDE_EPOCHS: latestDone };
 
