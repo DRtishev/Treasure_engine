@@ -1,9 +1,1 @@
-/workspace/Treasure_engine
-## work
- M scripts/verify/epoch_freeze_regression.mjs
- M scripts/verify/ledger_schema_strict.mjs
- M specs/epochs/LEDGER.json
-?? reports/evidence/EPOCH-60/
-db5f9882afdeda8c044ab03bd9179f4f0bf06b69
-v20.19.6
-11.4.2
+EPOCH-60 preflight: offline-first, deterministic gates, no network dependency in default flow.

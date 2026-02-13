@@ -1,0 +1,61 @@
+{
+  "id": "WOW-14",
+  "title": "CPCV (Combinatorial Purged Cross-Validation) Pipeline (MOONSHOT)",
+  "mechanism": "CPCV (Combinatorial Purged Cross-Validation) Pipeline (MOONSHOT) improves decision quality through deterministic implemented controls.",
+  "profit_hook": {
+    "affected_layer": "EDGE",
+    "integration_point": {
+      "modules": [
+        "core/edge/overfit_defense.mjs",
+        "scripts/verify/epoch43_overfit_defense.mjs"
+      ],
+      "gates": [
+        "verify:epoch43",
+        "verify:edge"
+      ]
+    },
+    "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+  },
+  "acceptance": {
+    "must_improve": [
+      "fitness_score_v2 variance stability",
+      "worst_scenario score",
+      "max_dd control"
+    ],
+    "must_not_break": [
+      "determinism",
+      "vault policy",
+      "hard-stops",
+      "offline-default"
+    ]
+  },
+  "kill_criteria": [
+    "No measurable improvement in acceptance metrics across two deterministic runs",
+    "Introduces regression in determinism or risk hard-stop gates"
+  ],
+  "linked_epochs": [
+    43
+  ],
+  "linked_gates": [
+    "verify:epoch43",
+    "verify:edge"
+  ],
+  "evidence": [
+    {
+      "epoch": 43,
+      "evidence_root": "reports/evidence/EPOCH-43/",
+      "path": "SUMMARY.md",
+      "sha256_pack_index": "6db33b5e65a531d735ac33be6de87a330aacb45d4ad8f87a6bf569c8b62240b7",
+      "sha256_sums": "6db33b5e65a531d735ac33be6de87a330aacb45d4ad8f87a6bf569c8b62240b7",
+      "sha256_file": "6db33b5e65a531d735ac33be6de87a330aacb45d4ad8f87a6bf569c8b62240b7"
+    },
+    {
+      "epoch": 43,
+      "evidence_root": "reports/evidence/EPOCH-43/",
+      "path": "VERDICT.md",
+      "sha256_pack_index": "32ae794cb19749a7e287a6b063c105f4462cad73b367963d975ce13b36439d1a",
+      "sha256_sums": "32ae794cb19749a7e287a6b063c105f4462cad73b367963d975ce13b36439d1a",
+      "sha256_file": "32ae794cb19749a7e287a6b063c105f4462cad73b367963d975ce13b36439d1a"
+    }
+  ]
+}

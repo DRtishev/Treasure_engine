@@ -1,0 +1,61 @@
+{
+  "id": "WOW-30",
+  "title": "Leakage Sentinel v3: Automated Fuzzing Pipeline (MOONSHOT)",
+  "mechanism": "Leakage Sentinel v3: Automated Fuzzing Pipeline (MOONSHOT) improves decision quality through deterministic implemented controls.",
+  "profit_hook": {
+    "affected_layer": "CANARY",
+    "integration_point": {
+      "modules": [
+        "core/edge/runtime.mjs",
+        "scripts/verify/epoch38_edge_gate.mjs"
+      ],
+      "gates": [
+        "verify:epoch38",
+        "verify:edge"
+      ]
+    },
+    "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+  },
+  "acceptance": {
+    "must_improve": [
+      "fitness_score_v2 variance stability",
+      "worst_scenario score",
+      "max_dd control"
+    ],
+    "must_not_break": [
+      "determinism",
+      "vault policy",
+      "hard-stops",
+      "offline-default"
+    ]
+  },
+  "kill_criteria": [
+    "No measurable improvement in acceptance metrics across two deterministic runs",
+    "Introduces regression in determinism or risk hard-stop gates"
+  ],
+  "linked_epochs": [
+    38
+  ],
+  "linked_gates": [
+    "verify:epoch38",
+    "verify:edge"
+  ],
+  "evidence": [
+    {
+      "epoch": 38,
+      "evidence_root": "reports/evidence/EPOCH-38/",
+      "path": "SUMMARY.md",
+      "sha256_pack_index": "86a2c9c680b8026fec65131524371db6519525f8bea5a2b4a489ea12330897ea",
+      "sha256_sums": "86a2c9c680b8026fec65131524371db6519525f8bea5a2b4a489ea12330897ea",
+      "sha256_file": "86a2c9c680b8026fec65131524371db6519525f8bea5a2b4a489ea12330897ea"
+    },
+    {
+      "epoch": 38,
+      "evidence_root": "reports/evidence/EPOCH-38/",
+      "path": "VERDICT.md",
+      "sha256_pack_index": "eb332f5def1606be8b303875b17b6ac41cba78e63ac261732843e54a6cf0f63b",
+      "sha256_sums": "eb332f5def1606be8b303875b17b6ac41cba78e63ac261732843e54a6cf0f63b",
+      "sha256_file": "eb332f5def1606be8b303875b17b6ac41cba78e63ac261732843e54a6cf0f63b"
+    }
+  ]
+}

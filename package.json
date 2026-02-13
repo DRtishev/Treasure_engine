@@ -69,7 +69,7 @@
     "verify:epoch20": "npm run verify:monitoring",
     "verify:release-governor": "node scripts/verify/release_governor_check.mjs",
     "verify:epoch21": "node scripts/verify/epoch_fallback_gate.mjs 21",
-    "verify:specs": "npm run verify:ssot && node scripts/verify/specs_check.mjs && npm run verify:ledger && npm run verify:repo",
+    "verify:specs": "npm run verify:ssot && node scripts/verify/specs_check.mjs && npm run verify:wow && npm run verify:kb && npm run verify:passports && npm run verify:ledger && npm run verify:repo",
     "regen:manifests": "node scripts/ops/regen_manifests.mjs",
     "export:validated": "node scripts/export_validated.mjs",
     "verify:wall": "node scripts/verify/wall.mjs",
@@ -112,7 +112,7 @@
     "verify:epoch46": "node scripts/verify/epoch46_data_plane.mjs",
     "data:fetch:binance:klines": "node scripts/data/provider_binance_klines.mjs",
     "verify:ledger": "npm run verify:ledger:schema && node scripts/verify/ledger_check.mjs",
-    "release:build": "node scripts/release/build_release_artifacts.mjs",
+    "release:build": "npm run truth:passports && node scripts/release/build_release_artifacts.mjs",
     "verify:release": "node scripts/verify/release_check.mjs",
     "evidence:pack:epoch": "node scripts/evidence/packager.mjs pack:epoch --id ${EPOCH_ID:-48}",
     "evidence:pack:verify": "node scripts/evidence/packager.mjs pack:verify --id ${EPOCH_ID:-48}",
@@ -137,7 +137,11 @@
     "verify:manifest": "node scripts/verify/repo_manifest.mjs",
     "verify:determinism:strict": "node scripts/verify/determinism.mjs",
     "verify:epochs:sweep": "node scripts/verify/epoch_sweep_1_58.mjs",
-    "verify:phoenix": "CI=true npm run verify:specs && CI=true npm run verify:repo && CI=true npm run verify:manifest && CI=true npm run verify:determinism:strict && CI=true npm run verify:ledger && CI=true npm run verify:epochs:sweep && node -e \"const cp=require('child_process');if(require('fs').existsSync('scripts/verify/epoch_freeze_regression.mjs')){process.exit(cp.spawnSync('npm',['run','verify:epochs:freeze'],{stdio:'inherit',env:process.env}).status??1)}\" && CI=true npm run verify:edge && CI=true npm run verify:treasure && RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release"
+    "verify:phoenix": "CI=true npm run verify:specs && CI=true npm run verify:repo && CI=true npm run verify:manifest && CI=true npm run verify:determinism:strict && CI=true npm run verify:ledger && CI=true npm run verify:epochs:sweep && node -e \"const cp=require('child_process');if(require('fs').existsSync('scripts/verify/epoch_freeze_regression.mjs')){process.exit(cp.spawnSync('npm',['run','verify:epochs:freeze'],{stdio:'inherit',env:process.env}).status??1)}\" && CI=true npm run verify:edge && CI=true npm run verify:treasure && RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release",
+    "verify:wow": "node scripts/verify/wow_specs_check.mjs",
+    "truth:passports": "node scripts/truth/passport_builder.mjs",
+    "verify:passports": "node scripts/verify/passports_check.mjs",
+    "verify:kb": "node scripts/verify/kb_check.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

@@ -1,9 +1,9 @@
 {
   "epoch_id": "EPOCH-60",
-  "sha": "db5f9882afdeda8c044ab03bd9179f4f0bf06b69",
+  "sha": "777acea9a070531552365767c255f71a2010c4ac",
   "node": "v20.19.6",
   "npm": "11.4.2",
-  "date": "2026-02-13T21:29:36.497Z",
+  "date": "2026-02-13T22:14:19.502Z",
   "gate_runs": [
     {
       "path": "gates/npm_ci.log",
@@ -11,8 +11,53 @@
       "status": "UNKNOWN"
     },
     {
+      "path": "gates/release_build.log",
+      "sha256": "d5ecc16e4d0a8ebc2718d86fd6a22e080af331f213165eb788dfe5d8a2babfc3",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/verify_edge.run1.log",
+      "sha256": "fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_edge.run2.log",
+      "sha256": "fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a",
+      "status": "PASS"
+    },
+    {
       "path": "gates/verify_epochs_freeze.log",
       "sha256": "c848a0ce89fc2f3fd8e03c5dd1d702b88ff28bd0e8b3b9a6ac705e5a1c271435",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_kb.run1.log",
+      "sha256": "137203fe75e7095cd8fd1e722998a4c9a46a6b1e82f2b960f532d03177b6d13b",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_kb.run2.log",
+      "sha256": "137203fe75e7095cd8fd1e722998a4c9a46a6b1e82f2b960f532d03177b6d13b",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_ledger.run1.log",
+      "sha256": "1646832c735233e3df77ed66b8bd1b06ddc3ead017ee0f2d50c1e2311fd32e5f",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_ledger.run2.log",
+      "sha256": "1646832c735233e3df77ed66b8bd1b06ddc3ead017ee0f2d50c1e2311fd32e5f",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_passports.run1.log",
+      "sha256": "1a5feb628c2cb6a30f9d79d321f13a60fe5697156acf1d05e564bceef3fe09ec",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_passports.run2.log",
+      "sha256": "1a5feb628c2cb6a30f9d79d321f13a60fe5697156acf1d05e564bceef3fe09ec",
       "status": "PASS"
     },
     {
@@ -24,14 +69,64 @@
       "path": "gates/verify_phoenix_run2.log",
       "sha256": "0901603cbb9df82a933134d11be0590b6cd268e580f0514d0fb9ceba0ded4263",
       "status": "PASS"
+    },
+    {
+      "path": "gates/verify_release.run1.log",
+      "sha256": "4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_release.run2.log",
+      "sha256": "4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_repo.run1.log",
+      "sha256": "72a1658eef22d6038e185391a9439db66c6e3422b0b9f76b818375051f4fb6b6",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_repo.run2.log",
+      "sha256": "72a1658eef22d6038e185391a9439db66c6e3422b0b9f76b818375051f4fb6b6",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_specs.run1.log",
+      "sha256": "dac7816fbc2a6e7086ef162e8ad4b7fec59031e083feb66c7008ecf2c1b2de8b",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_specs.run2.log",
+      "sha256": "dac7816fbc2a6e7086ef162e8ad4b7fec59031e083feb66c7008ecf2c1b2de8b",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_treasure.run1.log",
+      "sha256": "52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_treasure.run2.log",
+      "sha256": "52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_wow.run1.log",
+      "sha256": "07fa1e7b6a8cd834826c4ae27a94c9d02d1dd7a330b3ab26dddc842dfe7ec86b",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_wow.run2.log",
+      "sha256": "07fa1e7b6a8cd834826c4ae27a94c9d02d1dd7a330b3ab26dddc842dfe7ec86b",
+      "status": "PASS"
     }
   ],
   "artifacts": [],
   "hashes": {
-    "PREFLIGHT.log": "ddd2c7dafef04fc22917338993a646abf7397f300973369312ce623a47af9ab0",
-    "COMMANDS.log": "572c72abc9228679eb0b46633a02907f3b1a799e95d852a5de9b45b3c39c9f84",
-    "SNAPSHOT.md": "39c60b50d12c33d5b4cb9d39b0c5de4e9b694819513452243374627cd1e72f53",
-    "SUMMARY.md": "ea88222720e575532a41562d97001bafd4a2b6ac522682189168f3507cf35ee6",
+    "PREFLIGHT.log": "a473f5ebdc40d7b31fb4b2fc7192e5b4e05e00a8491f2db480953fc0b0d6126b",
+    "COMMANDS.log": "a0beaf829301c6fb6c9dbc1ad3c014890edd5cb2661996df110aca82346b6cb0",
+    "SNAPSHOT.md": "5b06141ab2ce5b4ea75cdf7dc29d579fa106be7a249ff813479a28f087fe8b6f",
+    "SUMMARY.md": "ad880b3cc712d3d0378053f887e1081dde4ce235eff778593913736d63c0291e",
     "VERDICT.md": "bf6e272b51498cd650f3f3d5eef7b1ae21f49d52f3a70077dbe2d7f8af450b53"
   }
 }

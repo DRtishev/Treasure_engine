@@ -1,10 +1,29 @@
 # EPOCH-60 SNAPSHOT
 - evidence_root: `reports/evidence/EPOCH-60/`
-- gate_logs: 4
+- gate_logs: 23
 - failing_gate_logs: 0
-- unknown_gate_logs: 1
+- unknown_gate_logs: 2
 - gate_runs:
   - `gates/npm_ci.log` [UNKNOWN] `5e16090a3ae3800676cac0fa3ee28c0c645529d8250deaec0cbbfc76e77848b6`
+  - `gates/release_build.log` [UNKNOWN] `d5ecc16e4d0a8ebc2718d86fd6a22e080af331f213165eb788dfe5d8a2babfc3`
+  - `gates/verify_edge.run1.log` [PASS] `fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a`
+  - `gates/verify_edge.run2.log` [PASS] `fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a`
   - `gates/verify_epochs_freeze.log` [PASS] `c848a0ce89fc2f3fd8e03c5dd1d702b88ff28bd0e8b3b9a6ac705e5a1c271435`
+  - `gates/verify_kb.run1.log` [PASS] `137203fe75e7095cd8fd1e722998a4c9a46a6b1e82f2b960f532d03177b6d13b`
+  - `gates/verify_kb.run2.log` [PASS] `137203fe75e7095cd8fd1e722998a4c9a46a6b1e82f2b960f532d03177b6d13b`
+  - `gates/verify_ledger.run1.log` [PASS] `1646832c735233e3df77ed66b8bd1b06ddc3ead017ee0f2d50c1e2311fd32e5f`
+  - `gates/verify_ledger.run2.log` [PASS] `1646832c735233e3df77ed66b8bd1b06ddc3ead017ee0f2d50c1e2311fd32e5f`
+  - `gates/verify_passports.run1.log` [PASS] `1a5feb628c2cb6a30f9d79d321f13a60fe5697156acf1d05e564bceef3fe09ec`
+  - `gates/verify_passports.run2.log` [PASS] `1a5feb628c2cb6a30f9d79d321f13a60fe5697156acf1d05e564bceef3fe09ec`
   - `gates/verify_phoenix_run1.log` [PASS] `e3794ad64d2ff8a3589832ea655bfeb64c69c18d938d9ed1c25cbccd275f7895`
   - `gates/verify_phoenix_run2.log` [PASS] `0901603cbb9df82a933134d11be0590b6cd268e580f0514d0fb9ceba0ded4263`
+  - `gates/verify_release.run1.log` [PASS] `4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2`
+  - `gates/verify_release.run2.log` [PASS] `4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2`
+  - `gates/verify_repo.run1.log` [PASS] `72a1658eef22d6038e185391a9439db66c6e3422b0b9f76b818375051f4fb6b6`
+  - `gates/verify_repo.run2.log` [PASS] `72a1658eef22d6038e185391a9439db66c6e3422b0b9f76b818375051f4fb6b6`
+  - `gates/verify_specs.run1.log` [PASS] `dac7816fbc2a6e7086ef162e8ad4b7fec59031e083feb66c7008ecf2c1b2de8b`
+  - `gates/verify_specs.run2.log` [PASS] `dac7816fbc2a6e7086ef162e8ad4b7fec59031e083feb66c7008ecf2c1b2de8b`
+  - `gates/verify_treasure.run1.log` [PASS] `52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a`
+  - `gates/verify_treasure.run2.log` [PASS] `52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a`
+  - `gates/verify_wow.run1.log` [PASS] `07fa1e7b6a8cd834826c4ae27a94c9d02d1dd7a330b3ab26dddc842dfe7ec86b`
+  - `gates/verify_wow.run2.log` [PASS] `07fa1e7b6a8cd834826c4ae27a94c9d02d1dd7a330b3ab26dddc842dfe7ec86b`

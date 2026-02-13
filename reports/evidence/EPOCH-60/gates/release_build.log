@@ -1,0 +1,14 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 release:build
+> npm run truth:passports && node scripts/release/build_release_artifacts.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 truth:passports
+> node scripts/truth/passport_builder.mjs
+
+truth:passports generated 10 passports
+release:build complete
+dbfaf9d109271fa4829d557be3eef434250ef3d4b35c3815a2aad4eb9d167d96  /workspace/Treasure_engine/artifacts/out/FINAL_VALIDATED.zip
+85cea451eec057fa7e734548ca3ba6d779ed5836a3f9de14b8394575ef0d7d8e  /workspace/Treasure_engine/artifacts/out/evidence_chain.tar.gz

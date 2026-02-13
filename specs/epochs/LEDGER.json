@@ -523,6 +523,24 @@
       "evidence_root": "reports/evidence/EPOCH-58/",
       "gate_owner": "docs",
       "notes": "Factory sterility gates (ssot/contracts/freeze/offline/repro) passed with deterministic CI logs."
+    },
+    "59": {
+      "id": "EPOCH-59",
+      "stage": "DONE",
+      "status": "PASS",
+      "commit_sha": "777acea9a070531552365767c255f71a2010c4ac",
+      "evidence_root": "reports/evidence/EPOCH-59/",
+      "gate_owner": "docs",
+      "notes": "Phoenix hardening consolidation preserved offline deterministic release chain."
+    },
+    "60": {
+      "id": "EPOCH-60",
+      "stage": "DONE",
+      "status": "PASS",
+      "commit_sha": "777acea9a070531552365767c255f71a2010c4ac",
+      "evidence_root": "reports/evidence/EPOCH-60/",
+      "gate_owner": "docs",
+      "notes": "WOW SSOT + KB + passports verified with evidence pack and strict release checks."
     }
   }
 }

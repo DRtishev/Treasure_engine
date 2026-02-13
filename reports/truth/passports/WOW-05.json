@@ -1,0 +1,61 @@
+{
+  "id": "WOW-05",
+  "title": "Latency-Aware Signal Freshness Engine",
+  "mechanism": "Latency-Aware Signal Freshness Engine improves decision quality through deterministic implemented controls.",
+  "profit_hook": {
+    "affected_layer": "EXECUTION",
+    "integration_point": {
+      "modules": [
+        "core/exec/strategy_aware_executor.mjs",
+        "core/edge/execution_realism.mjs"
+      ],
+      "gates": [
+        "verify:epoch42",
+        "verify:edge"
+      ]
+    },
+    "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+  },
+  "acceptance": {
+    "must_improve": [
+      "fitness_score_v2 variance stability",
+      "worst_scenario score",
+      "max_dd control"
+    ],
+    "must_not_break": [
+      "determinism",
+      "vault policy",
+      "hard-stops",
+      "offline-default"
+    ]
+  },
+  "kill_criteria": [
+    "No measurable improvement in acceptance metrics across two deterministic runs",
+    "Introduces regression in determinism or risk hard-stop gates"
+  ],
+  "linked_epochs": [
+    42
+  ],
+  "linked_gates": [
+    "verify:epoch42",
+    "verify:edge"
+  ],
+  "evidence": [
+    {
+      "epoch": 42,
+      "evidence_root": "reports/evidence/EPOCH-42/",
+      "path": "SUMMARY.md",
+      "sha256_pack_index": "cda18482435f66acefe07c42a7e133ad7d672dec70a13021a03afeefacc7ef60",
+      "sha256_sums": "cda18482435f66acefe07c42a7e133ad7d672dec70a13021a03afeefacc7ef60",
+      "sha256_file": "cda18482435f66acefe07c42a7e133ad7d672dec70a13021a03afeefacc7ef60"
+    },
+    {
+      "epoch": 42,
+      "evidence_root": "reports/evidence/EPOCH-42/",
+      "path": "VERDICT.md",
+      "sha256_pack_index": "1f830d2a623c6da2dd96d3c769335e9c767ef01a13dd685146a72f01734d8b24",
+      "sha256_sums": "1f830d2a623c6da2dd96d3c769335e9c767ef01a13dd685146a72f01734d8b24",
+      "sha256_file": "1f830d2a623c6da2dd96d3c769335e9c767ef01a13dd685146a72f01734d8b24"
+    }
+  ]
+}

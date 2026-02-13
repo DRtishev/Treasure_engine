@@ -1,0 +1,56 @@
+{
+  "generated_at": "2026-02-13T22:13:49.266Z",
+  "shipped_count": 10,
+  "passports": [
+    {
+      "id": "WOW-01",
+      "file": "reports/truth/passports/WOW-01.json",
+      "sha256": "dbd2ff7278ddcb3487a4ede75a4450cf60dde5c87eed5a1a10cf0890fb372da8"
+    },
+    {
+      "id": "WOW-03",
+      "file": "reports/truth/passports/WOW-03.json",
+      "sha256": "6cefa4629aa6d901af55b425786da4032777f691485899ded83949c0b0751df7"
+    },
+    {
+      "id": "WOW-04",
+      "file": "reports/truth/passports/WOW-04.json",
+      "sha256": "674ffc0f1d399606fa8d76b67cb6b903c7c4bf5f56519ba6aba67905ff0bc515"
+    },
+    {
+      "id": "WOW-05",
+      "file": "reports/truth/passports/WOW-05.json",
+      "sha256": "382fc58e9c59ca5ccd0c40e9588eee2b9c12dbe0e17a6d71a8a1beb29a37b053"
+    },
+    {
+      "id": "WOW-14",
+      "file": "reports/truth/passports/WOW-14.json",
+      "sha256": "27b3b11aeba195b519ea4f0a4079de5a4900189cbbfac1b77a77f83e88a778ea"
+    },
+    {
+      "id": "WOW-22",
+      "file": "reports/truth/passports/WOW-22.json",
+      "sha256": "7873e1ac6850123f31dfc5bf7cba3b67bee9e3cdc6231ac77e22fdd07c1c3877"
+    },
+    {
+      "id": "WOW-24",
+      "file": "reports/truth/passports/WOW-24.json",
+      "sha256": "b027fec3ad12fb64ccf7e0309aa2796e5aea5265bce0a55e6e276c2d72034c7b"
+    },
+    {
+      "id": "WOW-30",
+      "file": "reports/truth/passports/WOW-30.json",
+      "sha256": "1c672d5743d61dc17eb93b495d150fd35af96dc01c375ce05810a0a1a4a4a4bc"
+    },
+    {
+      "id": "WOW-32",
+      "file": "reports/truth/passports/WOW-32.json",
+      "sha256": "3be7687a475791f0c3a7cb2cd8b7124582b7388722816d5a2960db508822d533"
+    },
+    {
+      "id": "WOW-35",
+      "file": "reports/truth/passports/WOW-35.json",
+      "sha256": "ca51a1a6fc92039fec07390bf18c5f677de7185b44e935b72867afd5860f502a"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "epoch": "EPOCH-60",
+  "status": "PASS",
+  "gates": [
+    "verify:repo",
+    "verify:specs",
+    "verify:wow",
+    "verify:kb",
+    "verify:passports",
+    "verify:ledger",
+    "verify:edge",
+    "verify:treasure",
+    "release:build",
+    "verify:release"
+  ],
+  "repeats": 2
+}
