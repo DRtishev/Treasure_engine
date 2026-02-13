@@ -1,6 +1,18 @@
-timestamp=2026-02-13T12:18:11Z
-cwd=/workspace/Treasure_engine
-branch=work
-sha=9c79731e3689becc1b04ca9c59ab0bb7bb565c76
-node=v20.19.6
-npm=11.4.2
+# EPOCH-42 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-42/`
+- gate_logs: 12
+- failing_gate_logs: 0
+- unknown_gate_logs: 2
+- gate_runs:
+  - `gates/npm_ci.run1.log` [UNKNOWN] `5e16090a3ae3800676cac0fa3ee28c0c645529d8250deaec0cbbfc76e77848b6`
+  - `gates/npm_ci.run2.log` [UNKNOWN] `5e16090a3ae3800676cac0fa3ee28c0c645529d8250deaec0cbbfc76e77848b6`
+  - `gates/verify_edge.run1.log` [PASS] `fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a`
+  - `gates/verify_edge.run2.log` [PASS] `fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a`
+  - `gates/verify_epoch42.run1.log` [PASS] `041e54ebdffe322dec2c51b99092d6ca6957ff093272e284ba62dc46c9e2675e`
+  - `gates/verify_epoch42.run2.log` [PASS] `041e54ebdffe322dec2c51b99092d6ca6957ff093272e284ba62dc46c9e2675e`
+  - `gates/verify_repo.run1.log` [PASS] `ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437`
+  - `gates/verify_repo.run2.log` [PASS] `ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437`
+  - `gates/verify_specs.run1.log` [PASS] `7472453ab52454cd17da74fd96358f5b45898687253543a607cfb9bd6b265041`
+  - `gates/verify_specs.run2.log` [PASS] `7472453ab52454cd17da74fd96358f5b45898687253543a607cfb9bd6b265041`
+  - `gates/verify_treasure.run1.log` [PASS] `52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a`
+  - `gates/verify_treasure.run2.log` [PASS] `52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a`

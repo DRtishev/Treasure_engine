@@ -1,0 +1,34 @@
+{
+  "epoch": "EPOCH-53",
+  "status": "PASS",
+  "passed": 6,
+  "failed": 0,
+  "fingerprint": "6ab070e1f85cf424cd60eb2c385472e44d85b7ea4fe89925c0b210eb90321a5a",
+  "fitness_score": 0,
+  "checks": [
+    {
+      "ok": true,
+      "msg": "reason codes taxonomy exists"
+    },
+    {
+      "ok": true,
+      "msg": "pause events include reason codes + metrics"
+    },
+    {
+      "ok": true,
+      "msg": "risk events include reason codes + transitions"
+    },
+    {
+      "ok": true,
+      "msg": "thresholds_used is complete"
+    },
+    {
+      "ok": true,
+      "msg": "determinism x2 identical fingerprints"
+    },
+    {
+      "ok": true,
+      "msg": "fitness suite output generated"
+    }
+  ]
+}

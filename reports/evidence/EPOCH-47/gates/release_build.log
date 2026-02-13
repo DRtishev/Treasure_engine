@@ -1,0 +1,7 @@
+
+> treasure-engine@1.0.0 release:build
+> node scripts/release/build_release_artifacts.mjs
+
+release:build complete
+4f961c874fa1371c91d6e02ba287ce98742694e73f0407b0d13fcbbb1a8f5880  /workspace/Treasure_engine/artifacts/out/FINAL_VALIDATED.zip
+74596ca6c2dd075912397411df3ed77e8cd3b8f909169a9e174e894ac09d8476  /workspace/Treasure_engine/artifacts/out/evidence_chain.tar.gz

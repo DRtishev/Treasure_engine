@@ -70,7 +70,7 @@
     "verify:epoch20": "npm run verify:monitoring",
     "verify:release-governor": "node scripts/verify/release_governor_check.mjs",
     "verify:epoch21": "npm run verify:release-governor",
-    "verify:specs": "node scripts/verify/specs_check.mjs && npm run verify:repo",
+    "verify:specs": "node scripts/verify/specs_check.mjs && npm run verify:ledger && npm run verify:repo",
     "regen:manifests": "node scripts/ops/regen_manifests.mjs",
     "export:validated": "node scripts/export_validated.mjs",
     "verify:wall": "node scripts/verify/wall.mjs",
@@ -111,7 +111,23 @@
     "verify:epoch44": "node scripts/verify/epoch44_risk_fortress.mjs",
     "verify:epoch45": "node scripts/verify/epoch45_agent_mesh.mjs",
     "verify:epoch46": "node scripts/verify/epoch46_data_plane.mjs",
-    "data:fetch:binance:klines": "node scripts/data/provider_binance_klines.mjs"
+    "data:fetch:binance:klines": "node scripts/data/provider_binance_klines.mjs",
+    "verify:ledger": "node scripts/verify/ledger_check.mjs",
+    "release:build": "node scripts/release/build_release_artifacts.mjs",
+    "verify:release": "node scripts/verify/release_check.mjs",
+    "evidence:pack:epoch": "node scripts/evidence/packager.mjs pack:epoch --id ${EPOCH_ID:-48}",
+    "evidence:pack:verify": "node scripts/evidence/packager.mjs pack:verify --id ${EPOCH_ID:-48}",
+    "data:record:public": "node scripts/data/record_live_public.mjs record",
+    "data:replay:public": "node scripts/data/record_live_public.mjs replay",
+    "verify:epoch49": "node scripts/verify/epoch49_live_public_collector.mjs",
+    "data:ingest:private_fills": "node scripts/data/ingest_private_fills.mjs",
+    "data:fetch:private_fills:binance": "node scripts/data/fetch_private_fills_binance.mjs",
+    "verify:epoch50": "node scripts/verify/epoch50_private_fills_calibration.mjs",
+    "verify:epoch51": "node scripts/verify/epoch51_paper_trading_harness.mjs",
+    "verify:epoch52": "node scripts/verify/epoch52_canary_controller.mjs",
+    "verify:epoch53": "node scripts/verify/epoch53_canary_forensics.mjs",
+    "verify:epoch54": "node scripts/verify/epoch54_live_shadow_record.mjs",
+    "verify:epoch55": "node scripts/verify/epoch55_paper_fitness_lab.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

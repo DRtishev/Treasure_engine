@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-02-13T11:45:18Z",
+  "updated_at": "2026-02-13T15:04:34.938Z",
   "epochs": {
     "1": {
       "id": "EPOCH-01",
@@ -629,66 +629,254 @@
     "42": {
       "id": "EPOCH-42",
       "title": "Execution Realism Hardening",
-      "status": "READY",
+      "status": "DONE",
+      "verdict": "PASS",
       "type": "stage2_plan",
       "depends_on": [
         "EPOCH-41"
       ],
       "gate_owner": "docs",
-      "evidence_id": "PENDING",
-      "completed_at": "",
-      "commit_sha": "",
-      "last_commit_sha": "",
-      "last_evidence_path": "",
-      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
+      "evidence_id": "EPOCH-42",
+      "evidence_root": "reports/evidence/EPOCH-42/",
+      "completed_at": "2026-02-13T13:44:17.170Z",
+      "commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
+      "last_commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
+      "last_evidence_path": "reports/evidence/EPOCH-42/",
+      "last_gate_summary": "verify:epoch42 + repo/spec/edge/treasure gates passed with evidence."
     },
     "43": {
       "id": "EPOCH-43",
       "title": "Overfit Defense: CPCV + PBO + DSR",
-      "status": "READY",
+      "status": "DONE",
+      "verdict": "PASS",
       "type": "stage2_plan",
       "depends_on": [
         "EPOCH-42"
       ],
       "gate_owner": "docs",
-      "evidence_id": "PENDING",
-      "completed_at": "",
-      "commit_sha": "",
-      "last_commit_sha": "",
-      "last_evidence_path": "",
-      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
+      "evidence_id": "EPOCH-43",
+      "evidence_root": "reports/evidence/EPOCH-43/",
+      "completed_at": "2026-02-13T13:44:17.170Z",
+      "commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
+      "last_commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
+      "last_evidence_path": "reports/evidence/EPOCH-43/",
+      "last_gate_summary": "verify:epoch43 + repo/spec/edge/treasure gates passed with evidence."
     },
     "44": {
       "id": "EPOCH-44",
       "title": "Risk Fortress Evolution",
-      "status": "READY",
+      "status": "DONE",
+      "verdict": "PASS",
       "type": "stage2_plan",
       "depends_on": [
         "EPOCH-43"
       ],
       "gate_owner": "docs",
-      "evidence_id": "PENDING",
-      "completed_at": "",
-      "commit_sha": "",
-      "last_commit_sha": "",
-      "last_evidence_path": "",
-      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
+      "evidence_id": "EPOCH-44",
+      "evidence_root": "reports/evidence/EPOCH-44/",
+      "completed_at": "2026-02-13T13:44:17.170Z",
+      "commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
+      "last_commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
+      "last_evidence_path": "reports/evidence/EPOCH-44/",
+      "last_gate_summary": "verify:epoch44 + repo/spec/edge/treasure gates passed with evidence."
     },
     "45": {
       "id": "EPOCH-45",
       "title": "Agent Mesh MVP (Deterministic)",
-      "status": "READY",
+      "status": "DONE",
+      "verdict": "PASS",
       "type": "stage2_plan",
       "depends_on": [
         "EPOCH-44"
       ],
       "gate_owner": "docs",
-      "evidence_id": "PENDING",
-      "completed_at": "",
-      "commit_sha": "",
-      "last_commit_sha": "",
-      "last_evidence_path": "",
-      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
+      "evidence_id": "EPOCH-45",
+      "evidence_root": "reports/evidence/EPOCH-45/",
+      "completed_at": "2026-02-13T13:44:17.170Z",
+      "commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
+      "last_commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
+      "last_evidence_path": "reports/evidence/EPOCH-45/",
+      "last_gate_summary": "verify:epoch45 + repo/spec/edge/treasure gates passed with evidence."
+    },
+    "46": {
+      "id": "EPOCH-46",
+      "title": "Data Plane Determinism & Evidence Bridge",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-45"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-46",
+      "evidence_root": "reports/evidence/EPOCH-46/",
+      "completed_at": "2026-02-13T13:44:17.170Z",
+      "commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
+      "last_commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
+      "last_evidence_path": "reports/evidence/EPOCH-46/",
+      "last_gate_summary": "verify:epoch46 + repo/spec/edge/treasure gates passed with evidence."
+    },
+    "47": {
+      "id": "EPOCH-47",
+      "title": "Truth Sync + Evidence Uniformity + Release Discipline",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-46"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-47",
+      "evidence_root": "reports/evidence/EPOCH-47/",
+      "completed_at": "2026-02-13T14:00:55.791Z",
+      "commit_sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
+      "last_commit_sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
+      "last_evidence_path": "reports/evidence/EPOCH-47/",
+      "last_gate_summary": "Truth sync and release discipline validated with two-run gates."
+    },
+    "48": {
+      "id": "EPOCH-48",
+      "title": "WOW-32 Close: Evidence Pack Automation + Release Governor",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-47"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-48",
+      "evidence_root": "reports/evidence/EPOCH-48/",
+      "completed_at": "2026-02-13T14:04:06.440Z",
+      "commit_sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
+      "last_commit_sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
+      "last_evidence_path": "reports/evidence/EPOCH-48/",
+      "last_gate_summary": "Packager-driven evidence pack generated and validated; required gates passed with release strict checks."
+    },
+    "49": {
+      "id": "EPOCH-49",
+      "title": "Live Public Collector: Shadow Record/Replay + Data Quality",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-48"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-49",
+      "evidence_root": "reports/evidence/EPOCH-49/",
+      "completed_at": "2026-02-13T14:28:12.602Z",
+      "commit_sha": "999c59a5c06528a4b0994da688de0a722876c71c",
+      "last_commit_sha": "999c59a5c06528a4b0994da688de0a722876c71c",
+      "last_evidence_path": "reports/evidence/EPOCH-49/",
+      "last_gate_summary": "Offline fixture replay determinism and quality checks passed; evidence pack generated by packager."
+    },
+    "50": {
+      "id": "EPOCH-50",
+      "title": "Private Fills Ingest + Real Calibration Upgrade",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-49"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-50",
+      "evidence_root": "reports/evidence/EPOCH-50/",
+      "completed_at": "2026-02-13T14:44:52.866Z",
+      "commit_sha": "48a13098010a2506870c01e6c7a73d4ac2da6ece",
+      "last_commit_sha": "48a13098010a2506870c01e6c7a73d4ac2da6ece",
+      "last_evidence_path": "reports/evidence/EPOCH-50/",
+      "last_gate_summary": "Private fills ingest + REAL calibration strict checks passed with expected-fail negative test."
+    },
+    "51": {
+      "id": "EPOCH-51",
+      "title": "Paper Trading Harness + Adapter Hardening + Multi-Chunk Invariants",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-50"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-51",
+      "evidence_root": "reports/evidence/EPOCH-51/",
+      "completed_at": "2026-02-13T15:04:34.938Z",
+      "commit_sha": "dddfd5a04226da755c2000fdf3a575c3a0bf23ea",
+      "last_commit_sha": "dddfd5a04226da755c2000fdf3a575c3a0bf23ea",
+      "last_evidence_path": "reports/evidence/EPOCH-51/",
+      "last_gate_summary": "Paper session determinism, rechunk invariants, and strict expected-fail checks passed."
+    },
+    "52": {
+      "id": "EPOCH-52",
+      "title": "Canary Controller (Shadow \u2192 Paper \u2192 Guarded Live)",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-51"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-52",
+      "evidence_root": "reports/evidence/EPOCH-52/",
+      "completed_at": "2026-02-13T15:24:44Z",
+      "commit_sha": "338bf597829588f98a066e5bf99e2ca1c95521d0",
+      "last_commit_sha": "338bf597829588f98a066e5bf99e2ca1c95521d0",
+      "last_evidence_path": "reports/evidence/EPOCH-52/",
+      "last_gate_summary": "Canary controller modes verified offline with deterministic fingerprints and no-submit guarded-live plan."
+    },
+    "53": {
+      "id": "EPOCH-53",
+      "title": "Canary Forensics + Fitness Score",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-52"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-53",
+      "evidence_root": "reports/evidence/EPOCH-53/",
+      "completed_at": "2026-02-13T15:40:30Z",
+      "commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
+      "last_commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
+      "last_evidence_path": "reports/evidence/EPOCH-53/",
+      "last_gate_summary": "Offline deterministic gate and evidence pack passed."
+    },
+    "54": {
+      "id": "EPOCH-54",
+      "title": "Live Shadow Record at Scale",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-53"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-54",
+      "evidence_root": "reports/evidence/EPOCH-54/",
+      "completed_at": "2026-02-13T15:40:30Z",
+      "commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
+      "last_commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
+      "last_evidence_path": "reports/evidence/EPOCH-54/",
+      "last_gate_summary": "Offline deterministic gate and evidence pack passed."
+    },
+    "55": {
+      "id": "EPOCH-55",
+      "title": "Paper Fitness Lab (Bounded Sweeps)",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-54"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-55",
+      "evidence_root": "reports/evidence/EPOCH-55/",
+      "completed_at": "2026-02-13T15:40:30Z",
+      "commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
+      "last_commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
+      "last_evidence_path": "reports/evidence/EPOCH-55/",
+      "last_gate_summary": "Offline deterministic gate and evidence pack passed."
     }
   }
 }

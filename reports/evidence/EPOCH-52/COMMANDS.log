@@ -1,0 +1,21 @@
+npm run release:build
+RELEASE_BUILD=1 CI=true npm run verify:release
+RELEASE_BUILD=1 CI=true npm run verify:release
+node scripts/evidence/packager.mjs pack:epoch --id 52
+node scripts/evidence/packager.mjs pack:verify --id 52
+CI=true npm run verify:epoch52
+CI=true npm run verify:epoch52
+CI=true npm run verify:specs
+CI=true npm run verify:specs
+CI=true npm run verify:repo
+CI=true npm run verify:repo
+CI=true npm run verify:edge
+CI=true npm run verify:edge
+CI=true npm run verify:ledger
+CI=true npm run verify:ledger
+CI=true npm run verify:treasure
+CI=true npm run verify:treasure
+RELEASE_BUILD=1 CI=true npm run verify:release
+RELEASE_BUILD=1 CI=true npm run verify:release
+node scripts/evidence/packager.mjs pack:epoch --id 52
+node scripts/evidence/packager.mjs pack:verify --id 52

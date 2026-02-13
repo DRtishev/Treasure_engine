@@ -1,0 +1,5 @@
+
+> treasure-engine@1.0.0 verify:ledger
+> node scripts/verify/ledger_check.mjs
+
+verify:ledger PASSED

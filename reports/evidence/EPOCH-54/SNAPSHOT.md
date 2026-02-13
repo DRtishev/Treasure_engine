@@ -1,0 +1,20 @@
+# EPOCH-54 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-54/`
+- gate_logs: 14
+- failing_gate_logs: 0
+- unknown_gate_logs: 2
+- gate_runs:
+  - `gates/npm_ci.log` [UNKNOWN] `ad615806a667812b38d25b7e05316933e06fab004a79fa1e385f59f944f962e5`
+  - `gates/release_build.log` [UNKNOWN] `a11a98237914d53af252a6ea73e5fd57c4f3456186d673890a55e04f9e067bf0`
+  - `gates/verify_edge.run1.log` [PASS] `fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a`
+  - `gates/verify_edge.run2.log` [PASS] `fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a`
+  - `gates/verify_epoch54.run1.log` [PASS] `9648edbe2daa8e3a5d70d5f7fd469ec41c225933fd9eb8016f25a570bccba0ea`
+  - `gates/verify_epoch54.run2.log` [PASS] `9648edbe2daa8e3a5d70d5f7fd469ec41c225933fd9eb8016f25a570bccba0ea`
+  - `gates/verify_ledger.run1.log` [PASS] `e46907c6195f8b1f1db554f3c15b3c00af3a606ed49a45f8bca682bf6cec8ec4`
+  - `gates/verify_ledger.run2.log` [PASS] `e46907c6195f8b1f1db554f3c15b3c00af3a606ed49a45f8bca682bf6cec8ec4`
+  - `gates/verify_release.run1.log` [PASS] `4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2`
+  - `gates/verify_release.run2.log` [PASS] `4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2`
+  - `gates/verify_repo.run1.log` [PASS] `ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437`
+  - `gates/verify_repo.run2.log` [PASS] `ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437`
+  - `gates/verify_specs.run1.log` [PASS] `6f0890341b0a4dd4249ae03174497e274700fdabff71fc193e1709d4e1c62130`
+  - `gates/verify_specs.run2.log` [PASS] `6f0890341b0a4dd4249ae03174497e274700fdabff71fc193e1709d4e1c62130`

@@ -1,0 +1,15 @@
+
+> treasure-engine@1.0.0 verify:epoch49
+> node scripts/verify/epoch49_live_public_collector.mjs
+
+✓ manifest exists
+✓ raw chunk exists
+✓ normalized chunk exists
+✓ SHA256SUMS.DATA exists
+✓ manifest chunk list complete
+✓ SHA256SUMS.DATA contains normalized chunk hash
+✓ deterministic replay fingerprint stable
+✓ dedup detected in fixture
+✓ gap detected in fixture
+✓ out-of-order detected in fixture
+PASS verify:epoch49 checks=10

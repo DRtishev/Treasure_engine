@@ -1,0 +1,112 @@
+{
+  "schema_version": "1.0.0",
+  "grid_size": 6,
+  "top_k": [
+    {
+      "rank_seed": 2,
+      "params": {
+        "slip_scale": 1.1,
+        "size_scale": 0.8
+      },
+      "net_pnl": -0.09530868,
+      "hard_stops": 1,
+      "score": -12.530868,
+      "fingerprint": "0fbf0dc5d013dc41e4de5b5ae3d314c4d2ad07193f152289f5ae965a97bdfef1"
+    },
+    {
+      "rank_seed": 1,
+      "params": {
+        "slip_scale": 1,
+        "size_scale": 0.8
+      },
+      "net_pnl": -0.10483955,
+      "hard_stops": 1,
+      "score": -13.483955,
+      "fingerprint": "b7e0892e3df59a48ac28d8a82faa8a6fd943061e3c3f6b670e3c190fb23a76a4"
+    },
+    {
+      "rank_seed": 0,
+      "params": {
+        "slip_scale": 0.9,
+        "size_scale": 0.8
+      },
+      "net_pnl": -0.11648839,
+      "hard_stops": 1,
+      "score": -14.648839,
+      "fingerprint": "35edfd57a3694a9c39b41c70b9c76b5e66bd006e020f282d6b99d882203c764d"
+    }
+  ],
+  "all_results": [
+    {
+      "rank_seed": 2,
+      "params": {
+        "slip_scale": 1.1,
+        "size_scale": 0.8
+      },
+      "net_pnl": -0.09530868,
+      "hard_stops": 1,
+      "score": -12.530868,
+      "fingerprint": "0fbf0dc5d013dc41e4de5b5ae3d314c4d2ad07193f152289f5ae965a97bdfef1"
+    },
+    {
+      "rank_seed": 1,
+      "params": {
+        "slip_scale": 1,
+        "size_scale": 0.8
+      },
+      "net_pnl": -0.10483955,
+      "hard_stops": 1,
+      "score": -13.483955,
+      "fingerprint": "b7e0892e3df59a48ac28d8a82faa8a6fd943061e3c3f6b670e3c190fb23a76a4"
+    },
+    {
+      "rank_seed": 0,
+      "params": {
+        "slip_scale": 0.9,
+        "size_scale": 0.8
+      },
+      "net_pnl": -0.11648839,
+      "hard_stops": 1,
+      "score": -14.648839,
+      "fingerprint": "35edfd57a3694a9c39b41c70b9c76b5e66bd006e020f282d6b99d882203c764d"
+    },
+    {
+      "rank_seed": 5,
+      "params": {
+        "slip_scale": 1.1,
+        "size_scale": 1
+      },
+      "net_pnl": -0.11913585,
+      "hard_stops": 1,
+      "score": -14.913585,
+      "fingerprint": "80eb1ced151962f974c6aded6aef72b4bc2585099575da092973c40027f79616"
+    },
+    {
+      "rank_seed": 4,
+      "params": {
+        "slip_scale": 1,
+        "size_scale": 1
+      },
+      "net_pnl": -0.13104944,
+      "hard_stops": 1,
+      "score": -16.104944,
+      "fingerprint": "1af9a071d38f4bd68572e1f9008a14fa4b7416ca964e2b2d76a0f0b35e181be9"
+    },
+    {
+      "rank_seed": 3,
+      "params": {
+        "slip_scale": 0.9,
+        "size_scale": 1
+      },
+      "net_pnl": -0.14561049,
+      "hard_stops": 1,
+      "score": -17.561049,
+      "fingerprint": "3b73e28d9f41e3badb234a80f5fc25d83c6ff348b92be39be524e11d2a0f1f3c"
+    }
+  ],
+  "overfit_constraint": {
+    "status": "present",
+    "path": "reports/evidence/EPOCH-43/gates/manual/overfit_metrics.json"
+  },
+  "frontier_fingerprint": "03100d554d0f36860f0a4984b339e085d9a3d6a3ba1b4f71714f786781347786"
+}

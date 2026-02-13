@@ -1,0 +1,16 @@
+
+> treasure-engine@1.0.0 verify:specs
+> node scripts/verify/specs_check.mjs && npm run verify:ledger && npm run verify:repo
+
+verify:specs PASSED
+Validated 56 required files in /workspace/Treasure_engine
+
+> treasure-engine@1.0.0 verify:ledger
+> node scripts/verify/ledger_check.mjs
+
+verify:ledger PASSED
+
+> treasure-engine@1.0.0 verify:repo
+> node scripts/verify/repo_sanity_check.mjs
+
+verify:repo PASSED

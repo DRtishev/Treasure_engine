@@ -1,0 +1,6 @@
+{"ts_ms":1700000000000,"event":"PAUSE","reason":"CRISIS_SCENARIO","crisis_fingerprint":"363c62419d230db1e5912da870f3296f1654703c9a89305551611c70475641aa"}
+{"ts_ms":1700000001000,"event":"RISK_EVAL","index":0,"state":"ACTIVE","hard_stop":{"limits":{"trade":0.025,"day":0.06,"week":0.12},"triggered":{"trade":false,"day":false,"week":false},"halt":false,"reason":"NONE"}}
+{"ts_ms":1700000002000,"event":"RISK_EVAL","index":1,"state":"ACTIVE","hard_stop":{"limits":{"trade":0.025,"day":0.06,"week":0.12},"triggered":{"trade":false,"day":false,"week":false},"halt":false,"reason":"NONE"}}
+{"ts_ms":1700000003000,"event":"RISK_EVAL","index":2,"state":"HALTED","hard_stop":{"limits":{"trade":0.025,"day":0.06,"week":0.12},"triggered":{"trade":true,"day":false,"week":false},"halt":true,"reason":"TRADE_STOP"}}
+{"ts_ms":1700000004000,"event":"PAUSE","reason":"RISK_LIMIT"}
+{"ts_ms":1700000005000,"event":"PAPER_SESSION","paper_fills":3}

@@ -1,0 +1,16 @@
+npm ci
+CI=true npm run verify:specs
+CI=true npm run verify:specs
+CI=true npm run verify:repo
+CI=true npm run verify:repo
+CI=true npm run verify:edge
+CI=true npm run verify:edge
+CI=true npm run verify:epoch50
+CI=true npm run verify:epoch50
+CI=true npm run verify:ledger
+CI=true npm run verify:ledger
+npm run release:build
+RELEASE_BUILD=1 CI=true npm run verify:release
+RELEASE_BUILD=1 CI=true npm run verify:release
+node scripts/evidence/packager.mjs pack:epoch --id 50
+node scripts/evidence/packager.mjs pack:verify --id 50

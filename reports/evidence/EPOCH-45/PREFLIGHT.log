@@ -1,0 +1,3 @@
+EPOCH-45 evidence normalization preflight
+source: existing gate logs in reports/evidence/EPOCH-45/gates
+mode: no rerun, summarize existing evidence only

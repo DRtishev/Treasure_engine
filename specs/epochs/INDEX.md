@@ -46,6 +46,16 @@
 43. EPOCH-43
 44. EPOCH-44
 45. EPOCH-45
+46. EPOCH-46
+47. EPOCH-47
+48. EPOCH-48
+49. EPOCH-49
+50. EPOCH-50
+51. EPOCH-51
+52. EPOCH-52
+53. EPOCH-53
+54. EPOCH-54
+55. EPOCH-55
 
 ## Dependency notes (EDGE)
 - EPOCH-31 depends on EPOCH-30 (EDGE starts from completed legacy runway).
@@ -63,6 +73,16 @@
 - EPOCH-43 depends on EPOCH-42 (CPCV/PBO overfit defense).
 - EPOCH-44 depends on EPOCH-43 (risk fortress upgrades).
 - EPOCH-45 depends on EPOCH-44 (deterministic agent mesh MVP).
+- EPOCH-46 depends on EPOCH-45 (deterministic data plane bridge).
+- EPOCH-47 depends on EPOCH-46 (truth sync and release discipline).
+- EPOCH-48 depends on EPOCH-47 (evidence pack automation + release governor strictness).
+- EPOCH-49 depends on EPOCH-48 (live public collector + deterministic replay quality gate).
+- EPOCH-50 depends on EPOCH-49 (private fills ingest + real calibration strict mode).
+- EPOCH-51 depends on EPOCH-50 (paper harness + rechunk invariants + adapter hardening).
+- EPOCH-52 depends on EPOCH-51 (canary controller shadow→paper→guarded-live with no-submit fuse).
+- EPOCH-53 depends on EPOCH-52 (canary forensics + fitness score).
+- EPOCH-54 depends on EPOCH-53 (live shadow recorder invariants + dedup policy hardening).
+- EPOCH-55 depends on EPOCH-54 (paper fitness lab bounded sweeps + anti-overfit constraints).
 
 ## SSOT foundations
 - `docs/EDGE_RESEARCH/GLOSSARY.md` — canonical terminology for E31..E40.
@@ -141,10 +161,20 @@
 - EPOCH-39: `verify:epoch39` via `scripts/verify/epoch39_edge_gate.mjs` (implemented)
 - EPOCH-40: `verify:epoch40` via `scripts/verify/epoch40_edge_gate.mjs` (implemented)
 - EPOCH-41: `verify:epoch41` via `scripts/verify/epoch41_bridge.mjs` (implemented)
-- EPOCH-42: planned stage2 gate (TBD in epoch implementation).
-- EPOCH-43: planned stage2 gate (TBD in epoch implementation).
-- EPOCH-44: planned stage2 gate (TBD in epoch implementation).
-- EPOCH-45: planned stage2 gate (TBD in epoch implementation).
+- EPOCH-42: `verify:epoch42` via `scripts/verify/epoch42_execution_realism.mjs` (implemented).
+- EPOCH-43: `verify:epoch43` via `scripts/verify/epoch43_overfit_defense.mjs` (implemented).
+- EPOCH-44: `verify:epoch44` via `scripts/verify/epoch44_risk_fortress.mjs` (implemented).
+- EPOCH-45: `verify:epoch45` via `scripts/verify/epoch45_agent_mesh.mjs` (implemented).
+- EPOCH-46: `verify:epoch46` via `scripts/verify/epoch46_data_plane.mjs` (implemented).
+- EPOCH-47: `verify:specs` + `verify:repo` + `verify:edge` + `verify:treasure` + `verify:ledger` + `verify:release` (implemented).
+- EPOCH-48: `verify:specs` + `verify:repo` + `verify:edge` + `verify:treasure` + `verify:ledger` + `verify:release` + `evidence:pack:verify` (implemented).
+- EPOCH-49: `verify:epoch49` via `scripts/verify/epoch49_live_public_collector.mjs` (implemented).
+- EPOCH-50: `verify:epoch50` via `scripts/verify/epoch50_private_fills_calibration.mjs` (implemented).
+- EPOCH-51: `verify:epoch51` via `scripts/verify/epoch51_paper_trading_harness.mjs` (implemented).
+- EPOCH-52: `verify:epoch52` via `scripts/verify/epoch52_canary_controller.mjs` (implemented).
+- EPOCH-53: `verify:epoch53` via `scripts/verify/epoch53_canary_forensics.mjs` (implemented).
+- EPOCH-54: `verify:epoch54` via `scripts/verify/epoch54_live_shadow_record.mjs` (implemented).
+- EPOCH-55: `verify:epoch55` via `scripts/verify/epoch55_paper_fitness_lab.mjs` (implemented).
 
 ## Gate owners (31→40)
 - EPOCH-31: data-platform
@@ -167,3 +197,15 @@
 - `specs/epochs/EPOCH-43.md`
 - `specs/epochs/EPOCH-44.md`
 - `specs/epochs/EPOCH-45.md`
+- `specs/epochs/EPOCH-46.md`
+- `specs/epochs/EPOCH-47.md`
+- `specs/epochs/EPOCH-48.md`
+- `specs/epochs/EPOCH-49.md`
+- `specs/epochs/EPOCH-50.md`
+- `specs/epochs/EPOCH-51.md`
+
+- `specs/epochs/EPOCH-52.md`
+
+- `specs/epochs/EPOCH-53.md`
+- `specs/epochs/EPOCH-54.md`
+- `specs/epochs/EPOCH-55.md`

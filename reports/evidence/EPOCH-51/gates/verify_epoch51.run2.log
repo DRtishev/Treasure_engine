@@ -1,0 +1,13 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch51
+> node scripts/verify/epoch51_paper_trading_harness.mjs
+
+✓ rechunk ingest variants succeed
+✓ rechunk dataset fingerprint invariant
+✓ rechunk calibration manifest invariant
+✓ paper session deterministic x2
+✓ risk fortress hard stop triggered in fixture session
+✓ paper fills produced
+✓ strict expected-fail on missing REAL fills dataset
+PASS verify:epoch51 checks=7

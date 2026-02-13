@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "mode": "PAPER",
+  "config_fingerprint": "3437f2cf0bc9b048c4b0ee0f12dcaba774c6d9bc59c54eb721e7bb7726bfe7ac",
+  "calibration_mode": "REAL",
+  "monitors": {
+    "reality_gap": 0.0015,
+    "risk_events": 1,
+    "overfit_status": "present"
+  },
+  "metrics": {
+    "pause_triggers": 2,
+    "risk_events_count": 1,
+    "paper_pnl": -0.13104944
+  },
+  "invariants": {
+    "network_guard": true,
+    "submitted": false,
+    "live_submit_fuse": true
+  }
+}

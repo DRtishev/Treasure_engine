@@ -1,0 +1,18 @@
+{
+  "schema_version": "1.0.0",
+  "mode": "REAL",
+  "fills_dataset_id": "epoch50_fixture",
+  "provider": "binance",
+  "strict_mode": false,
+  "fills_fingerprint": "14aaa48d91877797c399e8195333b07feebdfdcd37dabf0040a4a5eed83896d6",
+  "seed": 5050,
+  "params": {
+    "slip_mean_bps": 1.600814,
+    "slip_std_bps": 0.299965,
+    "latency_mean_ms": 0,
+    "latency_std_ms": 1
+  },
+  "inputs_hash": "d424607914db3b373dfb0e4ccd44065237be28fe1b233b15af5231b7772e524f",
+  "outputs_hash": "e2b7c097d10e8dfd4ff9ea08b993a05b8ec270ade9daf2e4aad9a87e9fffcbc4",
+  "warnings": []
+}

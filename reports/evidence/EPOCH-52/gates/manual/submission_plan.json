@@ -1,0 +1,25 @@
+{
+  "mode": "GUARDED_LIVE",
+  "submitted": false,
+  "submitted_actions": 0,
+  "intents": [
+    {
+      "ts_ms": 1700000000000,
+      "symbol": "BTCUSDT",
+      "side": "BUY",
+      "notional_usd": 100
+    },
+    {
+      "ts_ms": 1700000000050,
+      "symbol": "BTCUSDT",
+      "side": "SELL",
+      "notional_usd": 100
+    },
+    {
+      "ts_ms": 1700000000100,
+      "symbol": "BTCUSDT",
+      "side": "BUY",
+      "notional_usd": 100
+    }
+  ]
+}

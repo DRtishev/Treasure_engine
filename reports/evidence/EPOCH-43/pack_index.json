@@ -1,0 +1,72 @@
+{
+  "epoch_id": "EPOCH-43",
+  "sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
+  "node": "v20.19.6",
+  "npm": "11.4.2",
+  "date": "2026-02-13T14:02:00.495Z",
+  "gate_runs": [
+    {
+      "path": "gates/npm_ci.run1.log",
+      "sha256": "ad615806a667812b38d25b7e05316933e06fab004a79fa1e385f59f944f962e5",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/verify_edge.run1.log",
+      "sha256": "fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_edge.run2.log",
+      "sha256": "fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_epoch43.run1.log",
+      "sha256": "70c5abc9fd7e69e028c38de880b2d0b0cd7fc4d0634e48ea89cc6e7734d15adb",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_epoch43.run2.log",
+      "sha256": "70c5abc9fd7e69e028c38de880b2d0b0cd7fc4d0634e48ea89cc6e7734d15adb",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_repo.run1.log",
+      "sha256": "ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_repo.run2.log",
+      "sha256": "ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_specs.run1.log",
+      "sha256": "7472453ab52454cd17da74fd96358f5b45898687253543a607cfb9bd6b265041",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_specs.run2.log",
+      "sha256": "7472453ab52454cd17da74fd96358f5b45898687253543a607cfb9bd6b265041",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_treasure.run1.log",
+      "sha256": "52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_treasure.run2.log",
+      "sha256": "52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a",
+      "status": "PASS"
+    }
+  ],
+  "artifacts": [],
+  "hashes": {
+    "PREFLIGHT.log": "615b9a34e0c5bddd073d08b65dd01fc183a3eaf869cbbe7495789891be9daa9f",
+    "COMMANDS.log": "71f98e81bf9de003123fd5dc505dc6be286806ab00b2c5c254b7d12a9580bf68",
+    "SNAPSHOT.md": "2cb4a27b94bcfa25344cd5f8906f417b45eb58ba61a389e968b923f9ccec4e6a",
+    "SUMMARY.md": "6db33b5e65a531d735ac33be6de87a330aacb45d4ad8f87a6bf569c8b62240b7",
+    "VERDICT.md": "32ae794cb19749a7e287a6b063c105f4462cad73b367963d975ce13b36439d1a"
+  }
+}

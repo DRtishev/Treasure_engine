@@ -1,0 +1,11 @@
+npm ci
+CI=true npm run verify:specs
+CI=true npm run verify:specs
+CI=true npm run verify:repo
+CI=true npm run verify:repo
+CI=true npm run verify:edge
+CI=true npm run verify:edge
+CI=true npm run verify:ledger
+CI=true npm run verify:ledger
+CI=true npm run verify:treasure
+CI=true npm run verify:treasure
