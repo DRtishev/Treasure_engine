@@ -1,0 +1,26 @@
+
+> treasure-engine@1.0.0 verify:epoch20
+> npm run verify:monitoring
+
+
+> treasure-engine@1.0.0 verify:monitoring
+> node scripts/verify/monitoring_perf_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-20 MONITORING/PERF CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ monitoring report deterministic under frozen clock
+✓ monitoring safety score is finite
+✓ monitoring reject ratio bounded [0,1]
+✓ performance report deterministic under frozen clock
+✓ performance report has no NaN/Inf metrics
+✓ monitoring/performance report passes schema
+WROTE: reports/monitoring_report.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 6
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

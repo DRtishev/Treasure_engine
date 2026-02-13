@@ -68,3 +68,5 @@
 
 ## NOTES
 This epoch closes WOW-32 by replacing manual evidence normalization with deterministic automation.
+
+Fallback verifier: This epoch is evidence-only; fallback verifier is epoch sweep pack_index validation.

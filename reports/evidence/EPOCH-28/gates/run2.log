@@ -1,0 +1,7 @@
+
+> treasure-engine@1.0.0 verify:epoch28
+> node scripts/verify/epoch_fallback_gate.mjs 28
+
+verify:epoch28 PASSED (fallback deterministic gate)
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

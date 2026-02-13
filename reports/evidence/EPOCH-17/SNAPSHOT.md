@@ -1,6 +1,20 @@
-# SNAPSHOT — EPOCH-17
-
-- Selected epoch: EPOCH-17 (next in dependency order from `specs/epochs/INDEX.md`).
-- Rationale: EPOCH-17 is prerequisite for EPOCH-18+ and currently has unchecked implementation items in `TASK_TRACKER.md`.
-- Baseline commit before implementation: recorded in `PREFLIGHT.log`.
-- Operating mode: offline-first, deterministic seed-based verify path.
+# EPOCH-17 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-17/`
+- gate_logs: 14
+- failing_gate_logs: 0
+- unknown_gate_logs: 2
+- gate_runs:
+  - `gates/npm_ci.log` [UNKNOWN] `d8004af655f6b6b3bfa8283c235e841d261c511bc0eb546f6209d95ca618304e`
+  - `gates/run1.log` [PASS] `7598923d48eb019b2a2730309c204f105c0f73f75c8302e412dc2da37439d6fa`
+  - `gates/run2.log` [PASS] `7598923d48eb019b2a2730309c204f105c0f73f75c8302e412dc2da37439d6fa`
+  - `gates/source_manifest_check.log` [UNKNOWN] `c81a3b522bf0fd5e6a226e7e820c4fe60a523d9e629f8016762d3262113c6e4b`
+  - `gates/verify_core_run1.log` [PASS] `e756448b9cde81f859ad587f11d66652e4e0261d986ec792152bdb62c1fa015a`
+  - `gates/verify_e2_multi_run1.log` [PASS] `1507fad1b609a5d12d3ffc6d188b57f846fc02b909c4aa35ed0a4f9fe2e8870c`
+  - `gates/verify_e2_run1.log` [PASS] `07e633f88d2b075b761c97b767a5fc1a92bff82cc52d24cd6c8fa3e5b8d3f963`
+  - `gates/verify_e2_run2.log` [PASS] `44168b986c9e9b6875db40cb01a8db97de9a09487843150e1007f457dfaa7f35`
+  - `gates/verify_epoch17_run1.log` [PASS] `ca7ad4b654abbedc1dc97e57e8f4f779c75f0c48d3d833eec751b1e9b9a51f6c`
+  - `gates/verify_epoch17_run2.log` [PASS] `ca7ad4b654abbedc1dc97e57e8f4f779c75f0c48d3d833eec751b1e9b9a51f6c`
+  - `gates/verify_integration_run1.log` [PASS] `1ec065fface7be4d592f9942cbf524175f7d572b3a84a063dd8d8532fdf03282`
+  - `gates/verify_paper_run1.log` [PASS] `df443819910e8e7fe9221a9efd48731eba1e8bd86b75f6f74ae1d717cd9a787e`
+  - `gates/verify_paper_run2.log` [PASS] `78ffd0545c85113e9792736cbf9592161a1d09fc3306f51b5f851d86ee481f65`
+  - `gates/verify_phase2_run1.log` [PASS] `c8983e7beb74cf478937de9a255efd7e7c981edbc9252abdf0bf2f94764b4a64`

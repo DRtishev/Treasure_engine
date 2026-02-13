@@ -1,8 +1,4 @@
-# VERDICT (EPOCH-23)
-
-Status: SAFE
-
-Reason:
-- Deterministic AI->Signal->Intent contract implemented and verified with anti-flake repeats.
-- Baseline and wall invariants remain green.
-- EPOCH-23 checksum manifests validated.
+# EPOCH-23 VERDICT
+- Verdict: PASS
+- Derived from gate log statuses in `gates/*.log`.
+- Criteria met: all discovered logs indicate PASS.

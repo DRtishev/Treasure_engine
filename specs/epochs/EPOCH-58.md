@@ -64,3 +64,5 @@
 
 ## NOTES
 - This epoch is strictly governance/factory hardening.
+
+Fallback verifier: This epoch is evidence-only; fallback verifier is epoch sweep pack_index validation.

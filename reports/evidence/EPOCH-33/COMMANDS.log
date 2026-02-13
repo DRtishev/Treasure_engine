@@ -1,0 +1,2 @@
+CI=true npm run verify:epoch33 run1
+CI=true npm run verify:epoch33 run2

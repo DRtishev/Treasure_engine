@@ -1,3 +1,4 @@
-# VERDICT (EPOCH-20)
-Status: SAFE
-Reason: Monitoring/performance schema and deterministic checks pass twice without baseline regression.
+# EPOCH-20 VERDICT
+- Verdict: PASS
+- Derived from gate log statuses in `gates/*.log`.
+- Criteria met: all discovered logs indicate PASS.

@@ -1,936 +1,528 @@
 {
-  "schema_version": 2,
+  "schema_version": "2.0.0",
   "updated_at": "2026-02-13T15:04:34.938Z",
   "epochs": {
     "1": {
       "id": "EPOCH-01",
-      "title": "Foundation Baseline",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "2": {
       "id": "EPOCH-02",
-      "title": "Data Pipeline Bootstrap",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "3": {
       "id": "EPOCH-03",
-      "title": "Simulation Core",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "4": {
       "id": "EPOCH-04",
-      "title": "Paper Runtime Baseline",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "5": {
       "id": "EPOCH-05",
-      "title": "Truth-Layer Contracts",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "6": {
       "id": "EPOCH-06",
-      "title": "Deterministic Orchestration",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "7": {
       "id": "EPOCH-07",
-      "title": "Integration Hardening",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "8": {
       "id": "EPOCH-08",
-      "title": "Safety Gate Skeleton",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "9": {
       "id": "EPOCH-09",
-      "title": "Governance Prework",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "10": {
       "id": "EPOCH-10",
-      "title": "Execution Adapter Baseline",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "11": {
       "id": "EPOCH-11",
-      "title": "Master Orchestrator",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "12": {
       "id": "EPOCH-12",
-      "title": "Persistence and Config Guardrails",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "13": {
       "id": "EPOCH-13",
-      "title": "Observability Contracts",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "14": {
       "id": "EPOCH-14",
-      "title": "Adversarial Safety",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "15": {
       "id": "EPOCH-15",
-      "title": "Reality Gap Controls",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "16": {
       "id": "EPOCH-16",
-      "title": "Pre-Spec Consolidation",
-      "status": "LEGACY_DONE",
-      "type": "legacy",
-      "depends_on": [],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "LEGACY_DONE",
+      "status": null,
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
+      "gate_owner": "docs",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "17": {
       "id": "EPOCH-17",
-      "title": "Safety Integrated Executor",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-16"
-      ],
-      "gate_owner": "verify:epoch17",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-17/",
+      "gate_owner": "verify:epoch17",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "18": {
       "id": "EPOCH-18",
-      "title": "Strategy Layer",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-17"
-      ],
-      "gate_owner": "verify:epoch18",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-18/",
+      "gate_owner": "verify:epoch18",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "19": {
       "id": "EPOCH-19",
-      "title": "Governance FSM",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-18"
-      ],
-      "gate_owner": "verify:epoch19",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-19/",
+      "gate_owner": "verify:epoch19",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "20": {
       "id": "EPOCH-20",
-      "title": "Monitoring and Performance",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-19"
-      ],
-      "gate_owner": "verify:epoch20",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-20/",
+      "gate_owner": "verify:epoch20",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "21": {
       "id": "EPOCH-21",
-      "title": "Deployment and Release Governor",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-20"
-      ],
-      "gate_owner": "verify:epoch21",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-21/",
+      "gate_owner": "verify:epoch21",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "22": {
       "id": "EPOCH-22",
-      "title": "AI Validation Harness",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-21"
-      ],
-      "gate_owner": "verify:epoch22",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-22/",
+      "gate_owner": "verify:epoch22",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "23": {
       "id": "EPOCH-23",
-      "title": "Signal to Intent Contracts",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-22"
-      ],
-      "gate_owner": "verify:epoch23",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-23/",
+      "gate_owner": "verify:epoch23",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "24": {
       "id": "EPOCH-24",
-      "title": "Walk-forward Reality Gap",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-23"
-      ],
-      "gate_owner": "verify:epoch24",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-24/",
+      "gate_owner": "verify:epoch24",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "25": {
       "id": "EPOCH-25",
-      "title": "Testnet Campaign (Opt-in Network)",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-24"
-      ],
-      "gate_owner": "verify:epoch25",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-25/",
+      "gate_owner": "verify:epoch25",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "26": {
       "id": "EPOCH-26",
-      "title": "Micro-Live Governor Rehearsal",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-25"
-      ],
-      "gate_owner": "verify:epoch26",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-26/",
+      "gate_owner": "verify:epoch26",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "27": {
       "id": "EPOCH-27",
-      "title": "AI Contracts + Deterministic Harness",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-26"
-      ],
-      "gate_owner": "verify:epoch27",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-27/",
+      "gate_owner": "verify:epoch27",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "28": {
       "id": "EPOCH-28",
-      "title": "AI Signal to Intent Integration with Safety",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-27"
-      ],
-      "gate_owner": "verify:epoch28",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-28/",
+      "gate_owner": "verify:epoch28",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "29": {
       "id": "EPOCH-29",
-      "title": "Walk-Forward + Leakage Sentinel",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-28"
-      ],
-      "gate_owner": "verify:epoch29",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-29/",
+      "gate_owner": "verify:epoch29",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "30": {
       "id": "EPOCH-30",
-      "title": "Final Polish + Release Freeze + Operator Readiness",
-      "status": "DONE",
-      "type": "runtime",
-      "depends_on": [
-        "EPOCH-29"
-      ],
-      "gate_owner": "verify:epoch30",
-      "evidence_id": "EPOCH-30-CLOSEOUT-STRONG",
-      "completed_at": "2026-02-11T18:38:49.842Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "5683352acefdb9303c6a69ab39893240ed6954f3",
-      "last_commit_sha": "1325dd48fc193756bd4557feb77686149928e896",
-      "last_evidence_path": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/",
-      "last_gate_summary": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
+      "evidence_root": "reports/evidence/EPOCH-30/",
+      "gate_owner": "verify:epoch30",
+      "notes": "Unified hard-sync closeout cycle (wall/governor evidence coherence)"
     },
     "31": {
       "id": "EPOCH-31",
-      "title": "Deterministic Data Model + Point-in-Time Feature Pipeline",
-      "status": "DONE",
-      "type": "edge_spec",
-      "depends_on": [
-        "EPOCH-30"
-      ],
-      "gate_owner": "verify:epoch31",
-      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
-      "completed_at": "2026-02-13T07:31:54Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
-      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "evidence_root": "reports/evidence/EPOCH-31/",
+      "gate_owner": "verify:epoch31",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
     },
     "32": {
       "id": "EPOCH-32",
-      "title": "Microstructure Simulator",
-      "status": "DONE",
-      "type": "edge_spec",
-      "depends_on": [
-        "EPOCH-31"
-      ],
-      "gate_owner": "verify:epoch32",
-      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
-      "completed_at": "2026-02-13T07:31:54Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
-      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "evidence_root": "reports/evidence/EPOCH-32/",
+      "gate_owner": "verify:epoch32",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
     },
     "33": {
       "id": "EPOCH-33",
-      "title": "Strategy Registry + Contracts",
-      "status": "DONE",
-      "type": "edge_spec",
-      "depends_on": [
-        "EPOCH-32"
-      ],
-      "gate_owner": "verify:epoch33",
-      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
-      "completed_at": "2026-02-13T07:31:54Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
-      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "evidence_root": "reports/evidence/EPOCH-33/",
+      "gate_owner": "verify:epoch33",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
     },
     "34": {
       "id": "EPOCH-34",
-      "title": "Signal to Intent Pipeline",
-      "status": "DONE",
-      "type": "edge_spec",
-      "depends_on": [
-        "EPOCH-33"
-      ],
-      "gate_owner": "verify:epoch34",
-      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
-      "completed_at": "2026-02-13T07:31:54Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
-      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "evidence_root": "reports/evidence/EPOCH-34/",
+      "gate_owner": "verify:epoch34",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
     },
     "35": {
       "id": "EPOCH-35",
-      "title": "Portfolio Allocation",
-      "status": "DONE",
-      "type": "edge_spec",
-      "depends_on": [
-        "EPOCH-34"
-      ],
-      "gate_owner": "verify:epoch35",
-      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
-      "completed_at": "2026-02-13T07:31:54Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
-      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "evidence_root": "reports/evidence/EPOCH-35/",
+      "gate_owner": "verify:epoch35",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
     },
     "36": {
       "id": "EPOCH-36",
-      "title": "Risk Brain",
-      "status": "DONE",
-      "type": "edge_spec",
-      "depends_on": [
-        "EPOCH-35"
-      ],
-      "gate_owner": "verify:epoch36",
-      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
-      "completed_at": "2026-02-13T07:31:54Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
-      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "evidence_root": "reports/evidence/EPOCH-36/",
+      "gate_owner": "verify:epoch36",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
     },
     "37": {
       "id": "EPOCH-37",
-      "title": "Walk-Forward Optimization + Leakage Sentinel v2",
-      "status": "DONE",
-      "type": "edge_spec",
-      "depends_on": [
-        "EPOCH-36"
-      ],
-      "gate_owner": "verify:epoch37",
-      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
-      "completed_at": "2026-02-13T07:31:54Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
-      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "evidence_root": "reports/evidence/EPOCH-37/",
+      "gate_owner": "verify:epoch37",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
     },
     "38": {
       "id": "EPOCH-38",
-      "title": "Reality Gap Monitor + Auto-Brake",
-      "status": "DONE",
-      "type": "edge_spec",
-      "depends_on": [
-        "EPOCH-37"
-      ],
-      "gate_owner": "verify:epoch38",
-      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
-      "completed_at": "2026-02-13T07:31:54Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
-      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "evidence_root": "reports/evidence/EPOCH-38/",
+      "gate_owner": "verify:epoch38",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
     },
     "39": {
       "id": "EPOCH-39",
-      "title": "Shadow Live Harness + Canary Governor",
-      "status": "DONE",
-      "type": "edge_spec",
-      "depends_on": [
-        "EPOCH-38"
-      ],
-      "gate_owner": "verify:epoch39",
-      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
-      "completed_at": "2026-02-13T07:31:54Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
-      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "evidence_root": "reports/evidence/EPOCH-39/",
+      "gate_owner": "verify:epoch39",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
     },
     "40": {
       "id": "EPOCH-40",
-      "title": "EDGE Freeze + Release Discipline",
-      "status": "DONE",
-      "type": "edge_spec",
-      "depends_on": [
-        "EPOCH-39"
-      ],
-      "gate_owner": "verify:epoch40",
-      "evidence_id": "EPOCH-EDGE-MERGE-READY-01",
-      "completed_at": "2026-02-13T07:31:54Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
-      "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
-      "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+      "evidence_root": "reports/evidence/EPOCH-40/",
+      "gate_owner": "verify:epoch40",
+      "notes": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
     },
     "41": {
       "id": "EPOCH-41",
-      "title": "Stage2 Bridge: WOW Audit + Fast Experiments",
-      "status": "DONE",
-      "type": "stage2_bridge",
-      "depends_on": [
-        "EPOCH-40"
-      ],
-      "gate_owner": "verify:epoch41",
-      "evidence_id": "EPOCH-41",
-      "completed_at": "2026-02-13T11:45:18Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "TBD",
-      "last_commit_sha": "TBD",
-      "last_evidence_path": "reports/evidence/EPOCH-41/",
-      "last_gate_summary": "Bridge matrix + experiments executed with deterministic evidence."
+      "evidence_root": "reports/evidence/EPOCH-41/",
+      "gate_owner": "verify:epoch41",
+      "notes": "Bridge matrix + experiments executed with deterministic evidence."
     },
     "42": {
       "id": "EPOCH-42",
-      "title": "Execution Realism Hardening",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-41"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-42",
-      "evidence_root": "reports/evidence/EPOCH-42/",
-      "completed_at": "2026-02-13T13:44:17.170Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
-      "last_commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
-      "last_evidence_path": "reports/evidence/EPOCH-42/",
-      "last_gate_summary": "verify:epoch42 + repo/spec/edge/treasure gates passed with evidence."
+      "evidence_root": "reports/evidence/EPOCH-42/",
+      "gate_owner": "docs",
+      "notes": "verify:epoch42 + repo/spec/edge/treasure gates passed with evidence."
     },
     "43": {
       "id": "EPOCH-43",
-      "title": "Overfit Defense: CPCV + PBO + DSR",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-42"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-43",
-      "evidence_root": "reports/evidence/EPOCH-43/",
-      "completed_at": "2026-02-13T13:44:17.170Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
-      "last_commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
-      "last_evidence_path": "reports/evidence/EPOCH-43/",
-      "last_gate_summary": "verify:epoch43 + repo/spec/edge/treasure gates passed with evidence."
+      "evidence_root": "reports/evidence/EPOCH-43/",
+      "gate_owner": "docs",
+      "notes": "verify:epoch43 + repo/spec/edge/treasure gates passed with evidence."
     },
     "44": {
       "id": "EPOCH-44",
-      "title": "Risk Fortress Evolution",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-43"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-44",
-      "evidence_root": "reports/evidence/EPOCH-44/",
-      "completed_at": "2026-02-13T13:44:17.170Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
-      "last_commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
-      "last_evidence_path": "reports/evidence/EPOCH-44/",
-      "last_gate_summary": "verify:epoch44 + repo/spec/edge/treasure gates passed with evidence."
+      "evidence_root": "reports/evidence/EPOCH-44/",
+      "gate_owner": "docs",
+      "notes": "verify:epoch44 + repo/spec/edge/treasure gates passed with evidence."
     },
     "45": {
       "id": "EPOCH-45",
-      "title": "Agent Mesh MVP (Deterministic)",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-44"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-45",
-      "evidence_root": "reports/evidence/EPOCH-45/",
-      "completed_at": "2026-02-13T13:44:17.170Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
-      "last_commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
-      "last_evidence_path": "reports/evidence/EPOCH-45/",
-      "last_gate_summary": "verify:epoch45 + repo/spec/edge/treasure gates passed with evidence."
+      "evidence_root": "reports/evidence/EPOCH-45/",
+      "gate_owner": "docs",
+      "notes": "verify:epoch45 + repo/spec/edge/treasure gates passed with evidence."
     },
     "46": {
       "id": "EPOCH-46",
-      "title": "Data Plane Determinism & Evidence Bridge",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-45"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-46",
-      "evidence_root": "reports/evidence/EPOCH-46/",
-      "completed_at": "2026-02-13T13:44:17.170Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
-      "last_commit_sha": "fb3435e55778a66d5badd4673601002eaecc5c35",
-      "last_evidence_path": "reports/evidence/EPOCH-46/",
-      "last_gate_summary": "verify:epoch46 + repo/spec/edge/treasure gates passed with evidence."
+      "evidence_root": "reports/evidence/EPOCH-46/",
+      "gate_owner": "docs",
+      "notes": "verify:epoch46 + repo/spec/edge/treasure gates passed with evidence."
     },
     "47": {
       "id": "EPOCH-47",
-      "title": "Truth Sync + Evidence Uniformity + Release Discipline",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-46"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-47",
-      "evidence_root": "reports/evidence/EPOCH-47/",
-      "completed_at": "2026-02-13T14:00:55.791Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
-      "last_commit_sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
-      "last_evidence_path": "reports/evidence/EPOCH-47/",
-      "last_gate_summary": "Truth sync and release discipline validated with two-run gates."
+      "evidence_root": "reports/evidence/EPOCH-47/",
+      "gate_owner": "docs",
+      "notes": "Truth sync and release discipline validated with two-run gates."
     },
     "48": {
       "id": "EPOCH-48",
-      "title": "WOW-32 Close: Evidence Pack Automation + Release Governor",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-47"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-48",
-      "evidence_root": "reports/evidence/EPOCH-48/",
-      "completed_at": "2026-02-13T14:04:06.440Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
-      "last_commit_sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
-      "last_evidence_path": "reports/evidence/EPOCH-48/",
-      "last_gate_summary": "Packager-driven evidence pack generated and validated; required gates passed with release strict checks."
+      "evidence_root": "reports/evidence/EPOCH-48/",
+      "gate_owner": "docs",
+      "notes": "Packager-driven evidence pack generated and validated; required gates passed with release strict checks."
     },
     "49": {
       "id": "EPOCH-49",
-      "title": "Live Public Collector: Shadow Record/Replay + Data Quality",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-48"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-49",
-      "evidence_root": "reports/evidence/EPOCH-49/",
-      "completed_at": "2026-02-13T14:28:12.602Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "999c59a5c06528a4b0994da688de0a722876c71c",
-      "last_commit_sha": "999c59a5c06528a4b0994da688de0a722876c71c",
-      "last_evidence_path": "reports/evidence/EPOCH-49/",
-      "last_gate_summary": "Offline fixture replay determinism and quality checks passed; evidence pack generated by packager."
+      "evidence_root": "reports/evidence/EPOCH-49/",
+      "gate_owner": "docs",
+      "notes": "Offline fixture replay determinism and quality checks passed; evidence pack generated by packager."
     },
     "50": {
       "id": "EPOCH-50",
-      "title": "Private Fills Ingest + Real Calibration Upgrade",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-49"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-50",
-      "evidence_root": "reports/evidence/EPOCH-50/",
-      "completed_at": "2026-02-13T14:44:52.866Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "48a13098010a2506870c01e6c7a73d4ac2da6ece",
-      "last_commit_sha": "48a13098010a2506870c01e6c7a73d4ac2da6ece",
-      "last_evidence_path": "reports/evidence/EPOCH-50/",
-      "last_gate_summary": "Private fills ingest + REAL calibration strict checks passed with expected-fail negative test."
+      "evidence_root": "reports/evidence/EPOCH-50/",
+      "gate_owner": "docs",
+      "notes": "Private fills ingest + REAL calibration strict checks passed with expected-fail negative test."
     },
     "51": {
       "id": "EPOCH-51",
-      "title": "Paper Trading Harness + Adapter Hardening + Multi-Chunk Invariants",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-50"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-51",
-      "evidence_root": "reports/evidence/EPOCH-51/",
-      "completed_at": "2026-02-13T15:04:34.938Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "dddfd5a04226da755c2000fdf3a575c3a0bf23ea",
-      "last_commit_sha": "dddfd5a04226da755c2000fdf3a575c3a0bf23ea",
-      "last_evidence_path": "reports/evidence/EPOCH-51/",
-      "last_gate_summary": "Paper session determinism, rechunk invariants, and strict expected-fail checks passed."
+      "evidence_root": "reports/evidence/EPOCH-51/",
+      "gate_owner": "docs",
+      "notes": "Paper session determinism, rechunk invariants, and strict expected-fail checks passed."
     },
     "52": {
       "id": "EPOCH-52",
-      "title": "Canary Controller (Shadow \u2192 Paper \u2192 Guarded Live)",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-51"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-52",
-      "evidence_root": "reports/evidence/EPOCH-52/",
-      "completed_at": "2026-02-13T15:24:44Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "338bf597829588f98a066e5bf99e2ca1c95521d0",
-      "last_commit_sha": "338bf597829588f98a066e5bf99e2ca1c95521d0",
-      "last_evidence_path": "reports/evidence/EPOCH-52/",
-      "last_gate_summary": "Canary controller modes verified offline with deterministic fingerprints and no-submit guarded-live plan."
+      "evidence_root": "reports/evidence/EPOCH-52/",
+      "gate_owner": "docs",
+      "notes": "Canary controller modes verified offline with deterministic fingerprints and no-submit guarded-live plan."
     },
     "53": {
       "id": "EPOCH-53",
-      "title": "Canary Forensics + Fitness Score",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-52"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-53",
-      "evidence_root": "reports/evidence/EPOCH-53/",
-      "completed_at": "2026-02-13T15:40:30Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
-      "last_commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
-      "last_evidence_path": "reports/evidence/EPOCH-53/",
-      "last_gate_summary": "Offline deterministic gate and evidence pack passed."
+      "evidence_root": "reports/evidence/EPOCH-53/",
+      "gate_owner": "docs",
+      "notes": "Offline deterministic gate and evidence pack passed."
     },
     "54": {
       "id": "EPOCH-54",
-      "title": "Live Shadow Record at Scale",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-53"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-54",
-      "evidence_root": "reports/evidence/EPOCH-54/",
-      "completed_at": "2026-02-13T15:40:30Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
-      "last_commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
-      "last_evidence_path": "reports/evidence/EPOCH-54/",
-      "last_gate_summary": "Offline deterministic gate and evidence pack passed."
+      "evidence_root": "reports/evidence/EPOCH-54/",
+      "gate_owner": "docs",
+      "notes": "Offline deterministic gate and evidence pack passed."
     },
     "55": {
       "id": "EPOCH-55",
-      "title": "Paper Fitness Lab (Bounded Sweeps)",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-54"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-55",
-      "evidence_root": "reports/evidence/EPOCH-55/",
-      "completed_at": "2026-02-13T15:40:30Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
-      "last_commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
-      "last_evidence_path": "reports/evidence/EPOCH-55/",
-      "last_gate_summary": "Offline deterministic gate and evidence pack passed."
+      "evidence_root": "reports/evidence/EPOCH-55/",
+      "gate_owner": "docs",
+      "notes": "Offline deterministic gate and evidence pack passed."
     },
     "56": {
       "id": "EPOCH-56",
-      "title": "TRICKPACK-01: Fitness Score v2 + Vault Holdout + Pause-Recover",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-55"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-56",
-      "evidence_root": "reports/evidence/EPOCH-56/",
-      "completed_at": "2026-02-13T16:16:12Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "b1c6d0ea45d9580105c1329463496226c068eb95",
-      "last_commit_sha": "b1c6d0ea45d9580105c1329463496226c068eb95",
-      "last_evidence_path": "reports/evidence/EPOCH-56/",
-      "last_gate_summary": "Fitness v2 discrimination, vault strict expected-fail policy, and deterministic pause-recover checks passed offline."
+      "evidence_root": "reports/evidence/EPOCH-56/",
+      "gate_owner": "docs",
+      "notes": "Fitness v2 discrimination, vault strict expected-fail policy, and deterministic pause-recover checks passed offline."
     },
     "57": {
       "id": "EPOCH-57",
-      "title": "Truth-Resync + Anti-Drift Factory",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-56"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-57",
-      "evidence_root": "reports/evidence/EPOCH-57/",
-      "completed_at": "2026-02-13T17:47:56Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "78c852289e4c8bbe01b411d0797c0a265163250e",
-      "last_commit_sha": "78c852289e4c8bbe01b411d0797c0a265163250e",
-      "last_evidence_path": "reports/evidence/EPOCH-57/",
-      "last_gate_summary": "SSOT auto-range, freeze regression gate, and E55/E56 contract split validated with deterministic CI runs."
+      "evidence_root": "reports/evidence/EPOCH-57/",
+      "gate_owner": "docs",
+      "notes": "SSOT auto-range, freeze regression gate, and E55/E56 contract split validated with deterministic CI runs."
     },
     "58": {
       "id": "EPOCH-58",
-      "title": "Factory Sterility Master",
-      "status": "DONE",
-      "verdict": "PASS",
-      "type": "stage2_plan",
-      "depends_on": [
-        "EPOCH-57"
-      ],
-      "gate_owner": "docs",
-      "evidence_id": "EPOCH-58",
-      "evidence_root": "reports/evidence/EPOCH-58/",
-      "completed_at": "2026-02-13T18:57:07Z",
+      "stage": "DONE",
+      "status": "PASS",
       "commit_sha": "de58f865cbeea8bc96d6a05b86f20863e3faff7a",
-      "last_commit_sha": "de58f865cbeea8bc96d6a05b86f20863e3faff7a",
-      "last_evidence_path": "reports/evidence/EPOCH-58/",
-      "last_gate_summary": "Factory sterility gates (ssot/contracts/freeze/offline/repro) passed with deterministic CI logs."
+      "evidence_root": "reports/evidence/EPOCH-58/",
+      "gate_owner": "docs",
+      "notes": "Factory sterility gates (ssot/contracts/freeze/offline/repro) passed with deterministic CI logs."
     }
   }
 }

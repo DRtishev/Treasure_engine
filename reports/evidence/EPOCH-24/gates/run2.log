@@ -1,0 +1,21 @@
+
+> treasure-engine@1.0.0 verify:epoch24
+> node scripts/verify/epoch24_walkforward_reality_gap_check.mjs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-24 WALK-FORWARD + REALITY GAP CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ walk-forward has >=3 folds
+✓ fold reality gaps are finite/non-negative
+✓ max reality gap 0.00275 within drift budget 0.005
+✓ drift fingerprint is sha256
+✓ court_report.json exists (produced by baseline gates)
+✓ court report contains reality_gap_cliff evidence
+✓ reality_gap_cliff values bounded [0,1]
+WROTE: reports/walkforward_reality_gap_report.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 7
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

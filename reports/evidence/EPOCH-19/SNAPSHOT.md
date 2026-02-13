@@ -1,5 +1,21 @@
-# SNAPSHOT — EPOCH-19
-
-- Selected epoch: EPOCH-19 (next READY after EPOCH-18 in `specs/epochs/INDEX.md`).
-- Prerequisite status: EPOCH-18 complete in `TASK_TRACKER.md`.
-- Mode: offline deterministic verification workflow.
+# EPOCH-19 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-19/`
+- gate_logs: 15
+- failing_gate_logs: 0
+- unknown_gate_logs: 2
+- gate_runs:
+  - `gates/npm_ci.log` [UNKNOWN] `66c7121eceb9117f327f52b5ea3ecd88eb40c45462d2466b8e98ebabc391b4a9`
+  - `gates/run1.log` [PASS] `15edca7d33ca1d42025dd478f98fa3a18e8a91b13da52d55e17b719a95177470`
+  - `gates/run2.log` [PASS] `15edca7d33ca1d42025dd478f98fa3a18e8a91b13da52d55e17b719a95177470`
+  - `gates/source_manifest_check.log` [UNKNOWN] `dd7160e304bc70d43f0f71d6199c9e7c5f6ba9a02d2e2d75f6a3276410e1c9aa`
+  - `gates/verify_core_run1.log` [PASS] `32ebad3e2c45624f7826fde5ca81ba47280e6bceb81251da30c28c6b23124509`
+  - `gates/verify_e2_multi_run1.log` [PASS] `db519326af5b7d10e937eaa5b0928c11629bc03db935d88aa5be9af898790514`
+  - `gates/verify_e2_run1.log` [PASS] `4a82775c5187d9999d7b27eff1dcc1758a99715acbf88ace3b6bcbdee6cd1b45`
+  - `gates/verify_e2_run2.log` [PASS] `bf106c0bc41f477cdbf7511d4f37caf02ab1617c6f093c7e01acbfe024775138`
+  - `gates/verify_epoch19_run1.log` [PASS] `36c9a303db61e91fc05392af6da485a07eb75008bc6dd3fe74a8b1bd561ea1b4`
+  - `gates/verify_governance_run1.log` [PASS] `3c313a14b1fb4f6bb871a28abc611db34e71e522edfa2094ad837180cbcec4c4`
+  - `gates/verify_governance_run2.log` [PASS] `3c313a14b1fb4f6bb871a28abc611db34e71e522edfa2094ad837180cbcec4c4`
+  - `gates/verify_integration_run1.log` [PASS] `1ec065fface7be4d592f9942cbf524175f7d572b3a84a063dd8d8532fdf03282`
+  - `gates/verify_paper_run1.log` [PASS] `702f5c929ff32ea1cc749438b26b7032c0468a164ef129d72789773d7fe9882a`
+  - `gates/verify_paper_run2.log` [PASS] `5b23f0c5a5f700ecb4f1a087faa0c84f1464703f38803fff18b7383c181da3e0`
+  - `gates/verify_phase2_run1.log` [PASS] `defc6cde88bba5459837eaf656ed7279a7ebf9f6a3f62df9b819ccab501e52ab`

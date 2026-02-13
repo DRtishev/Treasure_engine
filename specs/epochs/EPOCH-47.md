@@ -64,3 +64,5 @@
 
 ## NOTES
 This epoch establishes deterministic truth-sync discipline for stage-2 continuation.
+
+Fallback verifier: This epoch is evidence-only; fallback verifier is epoch sweep pack_index validation.

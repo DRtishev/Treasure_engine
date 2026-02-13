@@ -1,0 +1,7 @@
+CI=true npm run verify:repo (x2)
+CI=true npm run verify:specs (x2)
+CI=true npm run verify:ledger (x2)
+CI=true npm run verify:edge (x2)
+CI=true npm run verify:treasure (x2)
+CI=true npm run verify:epochs:sweep
+CI=true npm run verify:phoenix

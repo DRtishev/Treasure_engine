@@ -1,132 +1,37 @@
-$ node -v
-v20.19.6
-$ npm -v
-11.4.2
-$ git status -sb
+/workspace/Treasure_engine
 ## work
-?? reports/evidence/EPOCH-17/
-$ git rev-parse HEAD
-a4d4535326feb291b623f8e73d7ce1184e07896f
-$ ls -la
-total 1188
-drwxr-xr-x 19 root root   4096 Feb 11 08:16 .
-drwxr-xr-x  3 root root   4096 Feb 11 06:47 ..
-drwxr-xr-x  8 root root   4096 Feb 11 08:32 .git
--rw-r--r--  1 root root    491 Feb 11 08:14 .gitignore
--rw-r--r--  1 root root   5368 Feb 11 06:47 AGENTS.md
-drwxr-xr-x  2 root root   4096 Feb 11 06:47 EVIDENCE_PACK
--rw-r--r--  1 root root  84395 Feb 11 08:16 EVIDENCE_PACK_EPOCH-BOOT.tar.gz
--rw-r--r--  1 root root     98 Feb 11 08:16 EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
--rw-r--r--  1 root root 923439 Feb 11 08:14 FINAL_VALIDATED.zip
--rw-r--r--  1 root root     86 Feb 11 08:14 FINAL_VALIDATED.zip.sha256
--rw-r--r--  1 root root   1677 Feb 11 08:11 NEXT_EPOCH_PLAN.md
--rw-r--r--  1 root root  11768 Feb 11 06:47 QUICK_START.md
--rw-r--r--  1 root root   1338 Feb 11 08:14 README.md
--rw-r--r--  1 root root    648 Feb 11 08:11 RUNBOOK.md
--rw-r--r--  1 root root   9654 Feb 11 06:47 RUNBOOK_OPERATIONS.md
--rw-r--r--  1 root root  28917 Feb 11 08:11 SDD_EPOCH_17_21.md
--rw-r--r--  1 root root   1367 Feb 11 08:11 TASK_TRACKER.md
-drwxr-xr-x  3 root root   4096 Feb 11 06:47 artifacts
-drwxr-xr-x 23 root root   4096 Feb 11 06:47 core
-drwxr-xr-x  3 root root   4096 Feb 11 06:47 data
-drwxr-xr-x  2 root root   4096 Feb 11 06:47 dataset
-drwxr-xr-x  2 root root   4096 Feb 11 08:23 docs
-drwxr-xr-x  4 root root   4096 Feb 11 06:47 evidence
-drwxr-xr-x  2 root root   4096 Feb 11 06:47 examples
-drwxr-xr-x  3 root root   4096 Feb 11 08:12 logs
-drwxr-xr-x 47 root root   4096 Feb 11 08:12 node_modules
--rw-r--r--  1 root root  19412 Feb 11 06:47 package-lock.json
--rw-r--r--  1 root root   4348 Feb 11 08:11 package.json
--rw-r--r--  1 root root   3186 Feb 11 06:47 package.json.bak
-drwxr-xr-x 11 root root   4096 Feb 11 08:11 reports
-drwxr-xr-x  5 root root   4096 Feb 11 06:47 scripts
-drwxr-xr-x  2 root root   4096 Feb 11 06:47 spec
-drwxr-xr-x  3 root root   4096 Feb 11 08:11 specs
-drwxr-xr-x  2 root root   4096 Feb 11 06:47 truth
-drwxr-xr-x  2 root root   4096 Feb 11 08:11 ui
-$ find . -maxdepth 2 -type f | sort
-./.git/COMMIT_EDITMSG
-./.git/FETCH_HEAD
-./.git/HEAD
-./.git/config
-./.git/description
-./.git/index
-./.git/packed-refs
-./.gitignore
-./AGENTS.md
-./EVIDENCE_PACK/00_run_meta.json
-./EVIDENCE_PACK/01_inventory.txt
-./EVIDENCE_PACK/02_tree.txt
-./EVIDENCE_PACK/03_sha256_all.txt
-./EVIDENCE_PACK/09_diff.patch
-./EVIDENCE_PACK/10_results_summary.md
-./EVIDENCE_PACK/12_known_limits.md
-./EVIDENCE_PACK_EPOCH-BOOT.tar.gz
-./EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
-./FINAL_VALIDATED.zip
-./FINAL_VALIDATED.zip.sha256
-./NEXT_EPOCH_PLAN.md
-./QUICK_START.md
-./README.md
-./RUNBOOK.md
-./RUNBOOK_OPERATIONS.md
-./SDD_EPOCH_17_21.md
-./TASK_TRACKER.md
-./data/synthetic_1000bars_5m.json
-./dataset/BTCUSDT_5m_100bars.json
-./docs/API_DOCUMENTATION.md
-./docs/DEPLOYMENT_GUIDE.md
-./docs/NEXT_ACTIONS_ROADMAP.md
-./docs/PIPELINE_DOCTRINE.md
-./docs/SPEC_OF_SPECS.md
-./evidence/checksums_manifest.txt
-./evidence/checksums_manifest_epoch13.txt
-./examples/swarm_trading_demo.mjs
-./node_modules/.package-lock.json
-./package-lock.json
-./package.json
-./package.json.bak
-./reports/EPOCH-06_EXECUTION_REPORT.md
-./reports/EPOCH-10_EXECUTION_REPORT.md
-./reports/EPOCH-11_MASTER_ORCHESTRATOR_REPORT.md
-./reports/FINAL_ASSEMBLY_REPORT.md
-./reports/court_report.json
-./reports/court_report_run1.json
-./reports/eqs_report.json
-./reports/events_report.json
-./reports/hack_a2_base_report.json
-./reports/hack_a2_hostile_report.json
-./reports/hack_a2_optimistic_report.json
-./reports/hack_a3_base_report.json
-./reports/hack_a3_hostile_report.json
-./reports/hack_a3_optimistic_report.json
-./reports/hack_b1_base_report.json
-./reports/hack_b1_hostile_report.json
-./reports/hack_b1_optimistic_report.json
-./reports/hack_b3_base_report.json
-./reports/hack_b3_hostile_report.json
-./reports/hack_b3_optimistic_report.json
-./reports/recon_report.json
-./spec/config.schema.json
-./spec/hacks.json
-./spec/ssot.json
-./specs/CONSTRAINTS.md
-./specs/DECISIONS.md
-./specs/DETERMINISM_AUDIT.md
-./specs/GATE_VALIDATION_MATRIX.md
-./specs/PIPELINE.md
-./specs/QUALITY_BAR.md
-./specs/SPECS_QA_REPORT.md
-./specs/SPEC_AUDIT_ASSUMPTIONS.md
-./specs/SPEC_CONFLICTS.md
-./specs/SSOT_INDEX.md
-./truth/court_report.schema.json
-./truth/eqs_report.schema.json
-./truth/event.schema.json
-./truth/events_report.schema.json
-./truth/recon_report.schema.json
-./truth/sim_report.schema.json
-./ui/ai_brain_visualizer.html
-./ui/dashboard.html
-./ui/generate_panel.mjs
-./ui/panel.html
+R  scripts/verify/epoch09_integration.mjs.backup -> archive/phoenix_20260213/epoch09_integration.mjs.backup
+R  package.json.bak -> archive/phoenix_20260213/package.json.bak
+R  core/ai/ai_signal_bridge.mjs -> labs/legacy_ultimate/core/ai/ai_signal_bridge.mjs
+R  core/ai/autonomous_agent.mjs -> labs/legacy_ultimate/core/ai/autonomous_agent.mjs
+R  core/ai/cognitive_brain.mjs -> labs/legacy_ultimate/core/ai/cognitive_brain.mjs
+R  core/ai/hypothesis_generator.mjs -> labs/legacy_ultimate/core/ai/hypothesis_generator.mjs
+R  core/ai/learning_system.mjs -> labs/legacy_ultimate/core/ai/learning_system.mjs
+R  core/ai/master_orchestrator.mjs -> labs/legacy_ultimate/core/ai/master_orchestrator.mjs
+R  core/ai/meta_learning_engine.mjs -> labs/legacy_ultimate/core/ai/meta_learning_engine.mjs
+R  core/ai/metacognitive_controller.mjs -> labs/legacy_ultimate/core/ai/metacognitive_controller.mjs
+R  core/ai/self_reflection_system.mjs -> labs/legacy_ultimate/core/ai/self_reflection_system.mjs
+R  core/ai/strategy_generator.mjs -> labs/legacy_ultimate/core/ai/strategy_generator.mjs
+R  core/ai/superintelligent_agent.mjs -> labs/legacy_ultimate/core/ai/superintelligent_agent.mjs
+R  core/ultimate/ultimate_system.mjs -> labs/legacy_ultimate/core/ultimate/ultimate_system.mjs
+R  scripts/verify/epochX_integration.mjs -> labs/legacy_ultimate/scripts/verify/epochX_integration.mjs
+ M package.json
+ M scripts/verify/determinism.mjs
+ M scripts/verify/ledger_check.mjs
+ M specs/epochs/LEDGER.json
+?? .tmp/
+?? data/manifests/epoch51_rechunk_a.fills.manifest.json
+?? data/manifests/epoch51_rechunk_b.fills.manifest.json
+?? data/private/normalized/binance/epoch51_rechunk_a/
+?? data/private/normalized/binance/epoch51_rechunk_b/
+?? data/private/raw/binance/epoch51_rechunk_a/
+?? data/private/raw/binance/epoch51_rechunk_b/
+?? docs/ARCHIVE_POLICY.md
+?? reports/evidence/EPOCH-EDGE-LOCAL-MEGA/
+?? scripts/verify/epoch_sweep_1_58.mjs
+?? scripts/verify/ledger_schema_strict.mjs
+?? scripts/verify/repo_manifest.mjs
+?? specs/DETERMINISM_ALLOWLIST.md
+88236ad746d0b81866e75a47f2f9b2dd41d1f1ab
+v20.19.6
+11.4.2

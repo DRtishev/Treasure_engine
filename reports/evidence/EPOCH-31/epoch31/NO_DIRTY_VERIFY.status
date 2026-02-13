@@ -1,0 +1,57 @@
+R  scripts/verify/epoch09_integration.mjs.backup -> archive/phoenix_20260213/epoch09_integration.mjs.backup.archived
+R  package.json.bak -> archive/phoenix_20260213/package.json.bak.archived
+R  core/ai/ai_signal_bridge.mjs -> labs/legacy_ultimate/core/ai/ai_signal_bridge.mjs
+R  core/ai/autonomous_agent.mjs -> labs/legacy_ultimate/core/ai/autonomous_agent.mjs
+R  core/ai/cognitive_brain.mjs -> labs/legacy_ultimate/core/ai/cognitive_brain.mjs
+R  core/ai/hypothesis_generator.mjs -> labs/legacy_ultimate/core/ai/hypothesis_generator.mjs
+R  core/ai/learning_system.mjs -> labs/legacy_ultimate/core/ai/learning_system.mjs
+R  core/ai/master_orchestrator.mjs -> labs/legacy_ultimate/core/ai/master_orchestrator.mjs
+R  core/ai/meta_learning_engine.mjs -> labs/legacy_ultimate/core/ai/meta_learning_engine.mjs
+R  core/ai/metacognitive_controller.mjs -> labs/legacy_ultimate/core/ai/metacognitive_controller.mjs
+R  core/ai/self_reflection_system.mjs -> labs/legacy_ultimate/core/ai/self_reflection_system.mjs
+R  core/ai/strategy_generator.mjs -> labs/legacy_ultimate/core/ai/strategy_generator.mjs
+R  core/ai/superintelligent_agent.mjs -> labs/legacy_ultimate/core/ai/superintelligent_agent.mjs
+R  core/ultimate/ultimate_system.mjs -> labs/legacy_ultimate/core/ultimate/ultimate_system.mjs
+R  scripts/verify/epochX_integration.mjs -> labs/legacy_ultimate/scripts/verify/epochX_integration.mjs
+ M package.json
+ M reports/evidence/EPOCH-17/PREFLIGHT.log
+ M reports/evidence/EPOCH-17/SNAPSHOT.md
+ M reports/evidence/EPOCH-17/SUMMARY.md
+ M reports/evidence/EPOCH-17/VERDICT.md
+ M reports/evidence/EPOCH-18/PREFLIGHT.log
+ M reports/evidence/EPOCH-18/SNAPSHOT.md
+ M reports/evidence/EPOCH-18/SUMMARY.md
+ M reports/evidence/EPOCH-18/VERDICT.md
+ M reports/evidence/EPOCH-19/PREFLIGHT.log
+ M reports/evidence/EPOCH-19/SNAPSHOT.md
+ M reports/evidence/EPOCH-19/SUMMARY.md
+ M reports/evidence/EPOCH-19/VERDICT.md
+ M reports/evidence/EPOCH-20/SUMMARY.md
+ M reports/evidence/EPOCH-20/VERDICT.md
+ M reports/evidence/EPOCH-21/SUMMARY.md
+ M reports/evidence/EPOCH-21/VERDICT.md
+ M reports/evidence/EPOCH-22/SUMMARY.md
+ M reports/evidence/EPOCH-22/VERDICT.md
+ M reports/evidence/EPOCH-23/SUMMARY.md
+ M reports/evidence/EPOCH-23/VERDICT.md
+ M reports/evidence/EPOCH-24/SUMMARY.md
+ M reports/evidence/EPOCH-24/VERDICT.md
+ M reports/evidence/EPOCH-25/SUMMARY.md
+ M reports/evidence/EPOCH-25/VERDICT.md
+ M reports/evidence/EPOCH-26/SUMMARY.md
+ M reports/evidence/EPOCH-41/COMMANDS.log
+ M reports/evidence/EPOCH-41/PREFLIGHT.log
+ M reports/evidence/EPOCH-41/SHA256SUMS.EVIDENCE
+ M reports/evidence/EPOCH-41/SHA256SUMS.txt
+ M reports/evidence/EPOCH-41/SNAPSHOT.md
+ M reports/evidence/EPOCH-41/SUMMARY.md
+ M reports/evidence/EPOCH-41/pack_index.json
+ M scripts/verify/determinism.mjs
+ M scripts/verify/ledger_check.mjs
+ M scripts/verify/release_governor_check.mjs
+ M scripts/verify/specs_check.mjs
+ M specs/epochs/EPOCH-47.md
+ M specs/epochs/EPOCH-48.md
+ M specs/epochs/EPOCH-57.md
+ M specs/epochs/EPOCH-58.md
+ M specs/epochs/LEDGER.json

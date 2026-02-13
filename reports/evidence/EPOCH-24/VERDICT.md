@@ -1,8 +1,4 @@
-# VERDICT (EPOCH-24)
-
-Status: SAFE
-
-Reason:
-- Deterministic walk-forward + reality-gap budget gate implemented and validated.
-- Baseline and wall invariants remain green.
-- EPOCH-24 checksum manifests validate.
+# EPOCH-24 VERDICT
+- Verdict: PASS
+- Derived from gate log statuses in `gates/*.log`.
+- Criteria met: all discovered logs indicate PASS.
