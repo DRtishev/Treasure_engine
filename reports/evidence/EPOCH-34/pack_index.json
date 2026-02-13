@@ -1,0 +1,27 @@
+{
+  "epoch_id": "EPOCH-34",
+  "sha": "88236ad746d0b81866e75a47f2f9b2dd41d1f1ab",
+  "node": "v20.19.6",
+  "npm": "11.4.2",
+  "date": "2026-02-13T20:28:46.175Z",
+  "gate_runs": [
+    {
+      "path": "gates/run1.log",
+      "sha256": "c76d27564067d65d1b24ec634efad8e3d198ed2f86e426930e3535072e49872f",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/run2.log",
+      "sha256": "c76d27564067d65d1b24ec634efad8e3d198ed2f86e426930e3535072e49872f",
+      "status": "PASS"
+    }
+  ],
+  "artifacts": [],
+  "hashes": {
+    "PREFLIGHT.log": "d9d6be8adc48444e2263b355e0ac9e17b061b54c3cb591926c486a32d257554a",
+    "COMMANDS.log": "bf8cd5cde5dcec49b0f2b3f98670629d95ace3d0f9f7213346288db40a2fb6d9",
+    "SNAPSHOT.md": "e7a2ef447db1180cddab7a83c0211477680bb9b51bf9efe9b62a15bd2567d8f3",
+    "SUMMARY.md": "26d964fca8087a9dcef0c33e3b3bdeb3ef29789f118841aae211e52d71cb8f1e",
+    "VERDICT.md": "2f9cd0e5cce50be70d7d332fd6f7eb363f2d5553cbad123889f92f51affb77eb"
+  }
+}

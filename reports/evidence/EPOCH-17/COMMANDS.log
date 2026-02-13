@@ -1,0 +1,2 @@
+CI=true npm run verify:epoch17
+CI=true npm run verify:epoch17

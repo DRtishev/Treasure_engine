@@ -1,0 +1,6 @@
+{
+  "epoch": "EPOCH-33",
+  "run": 1,
+  "command": "CI=true npm run verify:epoch33",
+  "exit_code": 0
+}

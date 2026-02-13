@@ -1,0 +1,11 @@
+# EPOCH-21 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-21/`
+- gate_logs: 5
+- failing_gate_logs: 0
+- unknown_gate_logs: 0
+- gate_runs:
+  - `gates/run1.log` [PASS] `553aa4fcf67982a6146ea8e3eb7a0b5623e651b3b5c0d877e78ac3100a48683a`
+  - `gates/run2.log` [PASS] `553aa4fcf67982a6146ea8e3eb7a0b5623e651b3b5c0d877e78ac3100a48683a`
+  - `gates/verify_epoch21_run1.log` [PASS] `4f42e59d235160ea33d203e5109388461e32484bf255bd3d0aebbab3b6563488`
+  - `gates/verify_release_governor_run1.log` [PASS] `4935d1a5fe0a179ad009ac99422a0eb02da11725ae16d0737d9f625eec56a375`
+  - `gates/verify_release_governor_run2.log` [PASS] `4935d1a5fe0a179ad009ac99422a0eb02da11725ae16d0737d9f625eec56a375`

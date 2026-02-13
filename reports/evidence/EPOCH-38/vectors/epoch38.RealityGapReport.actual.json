@@ -1,0 +1,1 @@
+{"brake_action":"REDUCE","component_deltas":{"slippage_bps":3.1},"deterministic_fingerprint":"b9e728d1ec3169cd537abf739559c1090d13e99882d277825da3caf23c0e1817","gap_score":0.031,"report_id":"rg-sim-12345","schema_version":"1.0.0","shadow_ref":"sh-12345","sim_ref":"sim-12345","timestamp":"2026-01-01T00:01:00Z"}

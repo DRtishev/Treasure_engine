@@ -1,9 +1,11 @@
 # EPOCH-41 SNAPSHOT
 - evidence_root: `reports/evidence/EPOCH-41/`
-- gate_logs: 14
+- gate_logs: 16
 - failing_gate_logs: 0
 - unknown_gate_logs: 0
 - gate_runs:
+  - `gates/run1.log` [PASS] `0777b64980bbf03554ab41e3e2eb3b01c767b977cdc4013e223c51d20bef349f`
+  - `gates/run2.log` [PASS] `0777b64980bbf03554ab41e3e2eb3b01c767b977cdc4013e223c51d20bef349f`
   - `gates/verify_config_run1.log` [PASS] `c33466b21d2a822f880247fc712c945c6c6ea4715530222e37b0588bc35c56c5`
   - `gates/verify_config_run2.log` [PASS] `c33466b21d2a822f880247fc712c945c6c6ea4715530222e37b0588bc35c56c5`
   - `gates/verify_e2_multi_run1.log` [PASS] `3630f8019159a8fc6467359f89822bdf77836310ff878bcdb34e682bea01d91d`

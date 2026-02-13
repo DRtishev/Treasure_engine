@@ -1,0 +1,17 @@
+# EPOCH-26 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-26/`
+- gate_logs: 11
+- failing_gate_logs: 0
+- unknown_gate_logs: 4
+- gate_runs:
+  - `gates/npm_ci.log` [UNKNOWN] `5e16090a3ae3800676cac0fa3ee28c0c645529d8250deaec0cbbfc76e77848b6`
+  - `gates/regen_manifests_epoch26.log` [UNKNOWN] `15adc1534e788b2419f6fdc277829ae7d35aa33a4ab5ddc3e89966c709f87617`
+  - `gates/run1.log` [PASS] `485edb93dba85f04f62fc1db45c7d8d172d09c6c38efff973a94806463cde2c6`
+  - `gates/run2.log` [PASS] `485edb93dba85f04f62fc1db45c7d8d172d09c6c38efff973a94806463cde2c6`
+  - `gates/sha_evidence_check.log` [UNKNOWN] `0de39e823a36f6293a4138a2d5b2d0a7703a8a708793181df34f63f68eb6a6b2`
+  - `gates/sha_source_check.log` [UNKNOWN] `9a147627d1cb57d40af7f764db091cf57e218f3a374446aad5d12f26035730d7`
+  - `gates/verify_core.log` [PASS] `422159685c8a9a5f5a0ac9b3308aa0cb3f698de136ec75431eec48b393f6f110`
+  - `gates/verify_epoch26_run1.log` [PASS] `a934eb9b6c230fe4ecf27cb09ea603d00caa3c27d9b70c7d02c35b8cd161cfaf`
+  - `gates/verify_epoch26_run2.log` [PASS] `a934eb9b6c230fe4ecf27cb09ea603d00caa3c27d9b70c7d02c35b8cd161cfaf`
+  - `gates/verify_integration.log` [PASS] `6c976634e4acc90e3b8655b7af54f5d290b97ec97b7bdf3bf8c89783fe15e3dd`
+  - `gates/verify_phase2.log` [PASS] `3f603d019f6e971b290999b58aae232487b099a649140261b07bb85886874aa5`

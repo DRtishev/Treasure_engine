@@ -1,0 +1,20 @@
+# EPOCH-23 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-23/`
+- gate_logs: 14
+- failing_gate_logs: 0
+- unknown_gate_logs: 6
+- gate_runs:
+  - `gates/export_validated.log` [UNKNOWN] `e94f9de3289da57f9c168dd1ceaa49fba9fb6f5f8e37cc2e26df794896959aa3`
+  - `gates/npm_ci.log` [UNKNOWN] `60be1d9925ea05cdf0498e47564faeee727f29ae5db49c6eec9f11d4fef0fc52`
+  - `gates/regen_manifests_boot.log` [UNKNOWN] `04bc2523154e0151929296da66c1485947d3b58e9272314489fc10e49edb7108`
+  - `gates/regen_manifests_epoch23.log` [UNKNOWN] `7fe33a257f67c7d3567011b056a75d2aaf5af804dd52ba465111464decadf352`
+  - `gates/run1.log` [PASS] `4bc68940dfeb97114ec6a98fe9741e5407037b373565f8c22fd6640e3d21db0a`
+  - `gates/run2.log` [PASS] `4bc68940dfeb97114ec6a98fe9741e5407037b373565f8c22fd6640e3d21db0a`
+  - `gates/sha_evidence_check.log` [UNKNOWN] `1f57192297ea55f499ba7fae4ce406d873e76794fa13b4d8d3b17253eda3484e`
+  - `gates/sha_source_check.log` [UNKNOWN] `609a4559f5343694026f4b263c5b98da5ff4f2546fc73df58329b24924b616f0`
+  - `gates/verify_core.log` [PASS] `304069bf8afa1f3e4df32c5c2ecf9c57ab9e5eb8b271ea7ed70add97500e6d3a`
+  - `gates/verify_epoch23_run1.log` [PASS] `e2aed72add9d3f259afa5c3e43c25d2a625a9d928396d06d5889edc9a089a915`
+  - `gates/verify_epoch23_run2.log` [PASS] `e2aed72add9d3f259afa5c3e43c25d2a625a9d928396d06d5889edc9a089a915`
+  - `gates/verify_integration.log` [PASS] `3472aff1fae36e6b678a6f9927777cdc1282a7f250b7abaf001251fc14624089`
+  - `gates/verify_phase2.log` [PASS] `68b8223673de32b9fa1523f0967da765ede5d613a6fa4ddbe251386a36bde03d`
+  - `gates/verify_wall.log` [PASS] `b5cca83c7a782aa6f8f2df2d9c7a5d54078e9b9fd6f197c2f5446a8fc1b581d2`

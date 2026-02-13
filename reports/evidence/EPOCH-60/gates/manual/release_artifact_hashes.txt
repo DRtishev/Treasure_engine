@@ -1,0 +1,2 @@
+036d7be9f9f4a351742e6a061524e68a97d03c40c69d94f854c136381ab390a8  artifacts/out/FINAL_VALIDATED.zip
+85cea451eec057fa7e734548ca3ba6d779ed5836a3f9de14b8394575ef0d7d8e  artifacts/out/evidence_chain.tar.gz

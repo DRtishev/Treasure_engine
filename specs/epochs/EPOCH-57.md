@@ -65,3 +65,5 @@
 
 ## NOTES
 - E57 is the anti-drift factory baseline for future epoch additions.
+
+Fallback verifier: This epoch is evidence-only; fallback verifier is epoch sweep pack_index validation.

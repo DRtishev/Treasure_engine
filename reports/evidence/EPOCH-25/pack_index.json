@@ -1,0 +1,124 @@
+{
+  "epoch_id": "EPOCH-25",
+  "sha": "88236ad746d0b81866e75a47f2f9b2dd41d1f1ab",
+  "node": "v20.19.6",
+  "npm": "11.4.2",
+  "date": "2026-02-13T20:28:07.782Z",
+  "gate_runs": [
+    {
+      "path": "gates/export_validated.log",
+      "sha256": "63c695d54c4a4cc7d905e10420a2ab94fa1d0ad288a3705aaa85ce679904b934",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/npm_ci.log",
+      "sha256": "fce38ce057893af0195475e2ffdecc10223d758ab530b454847f09c879553b1e",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/regen_manifests_boot.log",
+      "sha256": "04bc2523154e0151929296da66c1485947d3b58e9272314489fc10e49edb7108",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/regen_manifests_epoch25.log",
+      "sha256": "163deb17b9445e2e6926313f23e1a8de4db7263e8952d4b31f7eaf1c597b5bb8",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/run1.log",
+      "sha256": "3c2b57ab05a98ac61931689dd09ce948ccc41e6be36a86763ca2697dad28fe5e",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/run2.log",
+      "sha256": "3c2b57ab05a98ac61931689dd09ce948ccc41e6be36a86763ca2697dad28fe5e",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/sha_evidence_check.log",
+      "sha256": "a6f8a596e6e375400119bb7694b0aea0dfc8676914393ec821437791facf72b8",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/sha_source_check.log",
+      "sha256": "e314515377339c331934653d27a95a4b0d324a97703fd2c888895b769967f34c",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/verify_core.log",
+      "sha256": "b4f1f11e6187bed5636188f226b9d9b30d619177bc9b3faf1dcb7064c6055c38",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_epoch25_run1.log",
+      "sha256": "7c5637fe3d0d200ce57da914662f334c751c40fae8da793a0f14640cfe137e32",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_epoch25_run2.log",
+      "sha256": "7c5637fe3d0d200ce57da914662f334c751c40fae8da793a0f14640cfe137e32",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_integration.log",
+      "sha256": "6c976634e4acc90e3b8655b7af54f5d290b97ec97b7bdf3bf8c89783fe15e3dd",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_phase2.log",
+      "sha256": "f4ab08728fbd406208ed356e2c025b5a515b2395822e48c0df7f3a3123172566",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_wall.log",
+      "sha256": "896b3df1c1b1c64f082ba2c7fa12132b3b751fa9e327cdb4d35fe20710a3238c",
+      "status": "PASS"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "ASSUMPTIONS.md",
+      "sha256": "a46d2f07bc985c9cb38126f407137564bf6538c6bf6fc3b26e351f3ead2ee291"
+    },
+    {
+      "path": "DIFF.patch",
+      "sha256": "a0262e392d2cad05764b6d51b87eaed982e2646118e4008c2b6faeba8cf9a338"
+    },
+    {
+      "path": "GATE_PLAN.md",
+      "sha256": "39983cbbf71e21a6dc17033314051dfbcf918be794a445a1f68654222952173c"
+    },
+    {
+      "path": "INVENTORY.txt",
+      "sha256": "eacca3ebb51134165b7f45d56948c339451cd80d2f1023189a4ad877715e5cdb"
+    },
+    {
+      "path": "PREFLIGHT.md",
+      "sha256": "9b13e6e2404ad41cdc2d500cee5862bf510797b6a2867644b3ef9b8bf957bef7"
+    },
+    {
+      "path": "RISK_REGISTER.md",
+      "sha256": "d6d6ff6cf73a6c388ce51bcaf0bf62c12343682d93abe5a444404d778338fab4"
+    },
+    {
+      "path": "SHA256SUMS.EVIDENCE.txt",
+      "sha256": "f5bbd4f7342a8a7d43ace09265150c124471bbebf1fde1b6226cb01e305fde9c"
+    },
+    {
+      "path": "SHA256SUMS.EXPORT.txt",
+      "sha256": "f5a584b10f21a3828a15537f3336e1fc0c0c12aa82913028745fafc162d2d65a"
+    },
+    {
+      "path": "SHA256SUMS.SOURCE.txt",
+      "sha256": "3a9c03ab8db685dcf8e495674ab2c7c9cae5fb26041808fbcc4b4dcfbc255335"
+    }
+  ],
+  "hashes": {
+    "PREFLIGHT.log": "d9d6be8adc48444e2263b355e0ac9e17b061b54c3cb591926c486a32d257554a",
+    "COMMANDS.log": "8b46c1ada6ed34a57f012eea00eb23890e25904112c2ce0f543c40bbf7e93edc",
+    "SNAPSHOT.md": "623a67a747ecba301ef0fd210cc7788e34e32f8461b5dba8853f7da9b3062398",
+    "SUMMARY.md": "8e1f9356dc9c79ccd90e7165fa2e68fa1b95ea3f732bb39814bbb7837b4669b0",
+    "VERDICT.md": "b3f015119694c3b1edb04c24f9331ada85e3967aa94559fbc7bce144cf14ee03"
+  }
+}

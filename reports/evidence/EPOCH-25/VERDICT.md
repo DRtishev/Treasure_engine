@@ -1,8 +1,4 @@
-# VERDICT (EPOCH-25)
-
-Status: SAFE
-
-Reason:
-- Deterministic testnet campaign profiling gate implemented with offline-first behavior.
-- Network path is explicitly opt-in and skipped by default.
-- Baseline and wall invariants remain green; EPOCH-25 checksum manifests validate.
+# EPOCH-25 VERDICT
+- Verdict: PASS
+- Derived from gate log statuses in `gates/*.log`.
+- Criteria met: all discovered logs indicate PASS.

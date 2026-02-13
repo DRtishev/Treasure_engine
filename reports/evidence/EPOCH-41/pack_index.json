@@ -1,10 +1,20 @@
 {
   "epoch_id": "EPOCH-41",
-  "sha": "de58f865cbeea8bc96d6a05b86f20863e3faff7a",
+  "sha": "88236ad746d0b81866e75a47f2f9b2dd41d1f1ab",
   "node": "v20.19.6",
   "npm": "11.4.2",
-  "date": "2026-02-13T18:45:39.571Z",
+  "date": "2026-02-13T20:29:23.768Z",
   "gate_runs": [
+    {
+      "path": "gates/run1.log",
+      "sha256": "0777b64980bbf03554ab41e3e2eb3b01c767b977cdc4013e223c51d20bef349f",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/run2.log",
+      "sha256": "0777b64980bbf03554ab41e3e2eb3b01c767b977cdc4013e223c51d20bef349f",
+      "status": "PASS"
+    },
     {
       "path": "gates/verify_config_run1.log",
       "sha256": "c33466b21d2a822f880247fc712c945c6c6ea4715530222e37b0588bc35c56c5",
@@ -99,7 +109,7 @@
     },
     {
       "path": "SHA256SUMS.txt",
-      "sha256": "fb6921cce0c4e2d86fad90dfe55ade4874a4d2937058244e20ed39d8a034f98e"
+      "sha256": "bd82dc4ac3538ef2f64789cb938b323e083c00bf9644a302839dfbd0bd6ce18b"
     },
     {
       "path": "verify_epoch41.log",
@@ -107,10 +117,10 @@
     }
   ],
   "hashes": {
-    "PREFLIGHT.log": "8a64aa0dbd57908b7a7e3f7755ce3e0370c4e120d760fe3b9adca8e2a234295a",
-    "COMMANDS.log": "4470f3a897a12f027f9663f3c5f920916c8f19ddc178d68df71a26d5aead92c3",
-    "SNAPSHOT.md": "7069c86cb6d19e099b57db484b84a9404a4569b19c32bea48ac78923ad31a2fe",
-    "SUMMARY.md": "9c4c81ec93be2b052e31b3930f67b81b8329537db573c25359730c85b93c8e9a",
+    "PREFLIGHT.log": "d9d6be8adc48444e2263b355e0ac9e17b061b54c3cb591926c486a32d257554a",
+    "COMMANDS.log": "099e284f15032df014868a8ed9a16fb22ffdedd6a2bf4d950e8b0e5e64d98985",
+    "SNAPSHOT.md": "684bbd7128d08d281fd8effd9babe8027dc8c24def87b47535dcff05a8eda06d",
+    "SUMMARY.md": "eb44a2de3e01d93aecbf228a01d5054dbcde4fd291ceb8508e4669676c9cec1b",
     "VERDICT.md": "973732655260436419829b1ebf6d7c301d9d68bc77bcbfa63538a50224a9568d"
   }
 }

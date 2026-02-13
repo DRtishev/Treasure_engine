@@ -33,7 +33,7 @@ if (!fs.existsSync(ledgerPath)) {
 const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'));
 for (const [epoch, row] of Object.entries(ledger.epochs ?? {})) {
   const epochNum = Number(epoch);
-  if (row.status !== 'DONE' || Number.isNaN(epochNum) || epochNum < 42) continue;
+  if (row.stage !== 'DONE' || Number.isNaN(epochNum) || epochNum < 17) continue;
 
   const evidenceRoot = row.evidence_root;
   if (!evidenceRoot || typeof evidenceRoot !== 'string') {

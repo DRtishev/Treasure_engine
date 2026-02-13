@@ -1,0 +1,300 @@
+{
+  "ok": true,
+  "errors": [],
+  "report": {
+    "legacy": [
+      {
+        "id": "EPOCH-01",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-02",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-03",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-04",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-05",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-06",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-07",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-08",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-09",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-10",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-11",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-12",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-13",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-14",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-15",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      },
+      {
+        "id": "EPOCH-16",
+        "stage": "LEGACY_DONE",
+        "evidence_root": "reports/evidence/EPOCH-30-CLOSEOUT-STRONG/"
+      }
+    ],
+    "done": [
+      {
+        "id": "EPOCH-17",
+        "evidence_root": "reports/evidence/EPOCH-17/",
+        "verifier": "verify:epoch17"
+      },
+      {
+        "id": "EPOCH-18",
+        "evidence_root": "reports/evidence/EPOCH-18/",
+        "verifier": "verify:epoch18"
+      },
+      {
+        "id": "EPOCH-19",
+        "evidence_root": "reports/evidence/EPOCH-19/",
+        "verifier": "verify:epoch19"
+      },
+      {
+        "id": "EPOCH-20",
+        "evidence_root": "reports/evidence/EPOCH-20/",
+        "verifier": "verify:epoch20"
+      },
+      {
+        "id": "EPOCH-21",
+        "evidence_root": "reports/evidence/EPOCH-21/",
+        "verifier": "verify:epoch21"
+      },
+      {
+        "id": "EPOCH-22",
+        "evidence_root": "reports/evidence/EPOCH-22/",
+        "verifier": "verify:epoch22"
+      },
+      {
+        "id": "EPOCH-23",
+        "evidence_root": "reports/evidence/EPOCH-23/",
+        "verifier": "verify:epoch23"
+      },
+      {
+        "id": "EPOCH-24",
+        "evidence_root": "reports/evidence/EPOCH-24/",
+        "verifier": "verify:epoch24"
+      },
+      {
+        "id": "EPOCH-25",
+        "evidence_root": "reports/evidence/EPOCH-25/",
+        "verifier": "verify:epoch25"
+      },
+      {
+        "id": "EPOCH-26",
+        "evidence_root": "reports/evidence/EPOCH-26/",
+        "verifier": "verify:epoch26"
+      },
+      {
+        "id": "EPOCH-27",
+        "evidence_root": "reports/evidence/EPOCH-27/",
+        "verifier": "verify:epoch27"
+      },
+      {
+        "id": "EPOCH-28",
+        "evidence_root": "reports/evidence/EPOCH-28/",
+        "verifier": "verify:epoch28"
+      },
+      {
+        "id": "EPOCH-29",
+        "evidence_root": "reports/evidence/EPOCH-29/",
+        "verifier": "verify:epoch29"
+      },
+      {
+        "id": "EPOCH-30",
+        "evidence_root": "reports/evidence/EPOCH-30/",
+        "verifier": "verify:epoch30"
+      },
+      {
+        "id": "EPOCH-31",
+        "evidence_root": "reports/evidence/EPOCH-31/",
+        "verifier": "verify:epoch31"
+      },
+      {
+        "id": "EPOCH-32",
+        "evidence_root": "reports/evidence/EPOCH-32/",
+        "verifier": "verify:epoch32"
+      },
+      {
+        "id": "EPOCH-33",
+        "evidence_root": "reports/evidence/EPOCH-33/",
+        "verifier": "verify:epoch33"
+      },
+      {
+        "id": "EPOCH-34",
+        "evidence_root": "reports/evidence/EPOCH-34/",
+        "verifier": "verify:epoch34"
+      },
+      {
+        "id": "EPOCH-35",
+        "evidence_root": "reports/evidence/EPOCH-35/",
+        "verifier": "verify:epoch35"
+      },
+      {
+        "id": "EPOCH-36",
+        "evidence_root": "reports/evidence/EPOCH-36/",
+        "verifier": "verify:epoch36"
+      },
+      {
+        "id": "EPOCH-37",
+        "evidence_root": "reports/evidence/EPOCH-37/",
+        "verifier": "verify:epoch37"
+      },
+      {
+        "id": "EPOCH-38",
+        "evidence_root": "reports/evidence/EPOCH-38/",
+        "verifier": "verify:epoch38"
+      },
+      {
+        "id": "EPOCH-39",
+        "evidence_root": "reports/evidence/EPOCH-39/",
+        "verifier": "verify:epoch39"
+      },
+      {
+        "id": "EPOCH-40",
+        "evidence_root": "reports/evidence/EPOCH-40/",
+        "verifier": "verify:epoch40"
+      },
+      {
+        "id": "EPOCH-41",
+        "evidence_root": "reports/evidence/EPOCH-41/",
+        "verifier": "verify:epoch41"
+      },
+      {
+        "id": "EPOCH-42",
+        "evidence_root": "reports/evidence/EPOCH-42/",
+        "verifier": "verify:epoch42"
+      },
+      {
+        "id": "EPOCH-43",
+        "evidence_root": "reports/evidence/EPOCH-43/",
+        "verifier": "verify:epoch43"
+      },
+      {
+        "id": "EPOCH-44",
+        "evidence_root": "reports/evidence/EPOCH-44/",
+        "verifier": "verify:epoch44"
+      },
+      {
+        "id": "EPOCH-45",
+        "evidence_root": "reports/evidence/EPOCH-45/",
+        "verifier": "verify:epoch45"
+      },
+      {
+        "id": "EPOCH-46",
+        "evidence_root": "reports/evidence/EPOCH-46/",
+        "verifier": "verify:epoch46"
+      },
+      {
+        "id": "EPOCH-47",
+        "evidence_root": "reports/evidence/EPOCH-47/",
+        "verifier": "fallback"
+      },
+      {
+        "id": "EPOCH-48",
+        "evidence_root": "reports/evidence/EPOCH-48/",
+        "verifier": "fallback"
+      },
+      {
+        "id": "EPOCH-49",
+        "evidence_root": "reports/evidence/EPOCH-49/",
+        "verifier": "verify:epoch49"
+      },
+      {
+        "id": "EPOCH-50",
+        "evidence_root": "reports/evidence/EPOCH-50/",
+        "verifier": "verify:epoch50"
+      },
+      {
+        "id": "EPOCH-51",
+        "evidence_root": "reports/evidence/EPOCH-51/",
+        "verifier": "verify:epoch51"
+      },
+      {
+        "id": "EPOCH-52",
+        "evidence_root": "reports/evidence/EPOCH-52/",
+        "verifier": "verify:epoch52"
+      },
+      {
+        "id": "EPOCH-53",
+        "evidence_root": "reports/evidence/EPOCH-53/",
+        "verifier": "verify:epoch53"
+      },
+      {
+        "id": "EPOCH-54",
+        "evidence_root": "reports/evidence/EPOCH-54/",
+        "verifier": "verify:epoch54"
+      },
+      {
+        "id": "EPOCH-55",
+        "evidence_root": "reports/evidence/EPOCH-55/",
+        "verifier": "verify:epoch55"
+      },
+      {
+        "id": "EPOCH-56",
+        "evidence_root": "reports/evidence/EPOCH-56/",
+        "verifier": "verify:epoch56"
+      },
+      {
+        "id": "EPOCH-57",
+        "evidence_root": "reports/evidence/EPOCH-57/",
+        "verifier": "fallback"
+      },
+      {
+        "id": "EPOCH-58",
+        "evidence_root": "reports/evidence/EPOCH-58/",
+        "verifier": "fallback"
+      }
+    ]
+  }
+}

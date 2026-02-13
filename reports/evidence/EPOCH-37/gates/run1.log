@@ -1,0 +1,7 @@
+
+> treasure-engine@1.0.0 verify:epoch37
+> node scripts/verify/epoch37_edge_gate.mjs
+
+PASS epoch37 artifacts=reports/evidence/EPOCH-EDGE-LOCAL/epoch37
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.

@@ -1,5 +1,21 @@
-# SNAPSHOT — EPOCH-18
-
-- Selected epoch: EPOCH-18 from `specs/epochs/INDEX.md` dependency order.
-- Prerequisite check: EPOCH-17 completed in `TASK_TRACKER.md`.
-- Mode: offline deterministic verify flow.
+# EPOCH-18 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-18/`
+- gate_logs: 15
+- failing_gate_logs: 0
+- unknown_gate_logs: 2
+- gate_runs:
+  - `gates/npm_ci.log` [UNKNOWN] `d8004af655f6b6b3bfa8283c235e841d261c511bc0eb546f6209d95ca618304e`
+  - `gates/run1.log` [PASS] `766f4dd6317772f927b7eba4cdf32b050cca91c1bab351caa65a2b19d5bc685d`
+  - `gates/run2.log` [PASS] `766f4dd6317772f927b7eba4cdf32b050cca91c1bab351caa65a2b19d5bc685d`
+  - `gates/source_manifest_check.log` [UNKNOWN] `04b2827166347478b0772d6023e493edc391afe938e7846c128d838e6cbe3870`
+  - `gates/verify_core_run1.log` [PASS] `075acde0a7f3c887e64160f0a3e91da48d6fc968bf78390aadbbc3261f893120`
+  - `gates/verify_e2_multi_run1.log` [PASS] `e1ed69a512d8397684b0312494185a746eeb32c6ae19fe62bb978bd1a8183b11`
+  - `gates/verify_e2_run1.log` [PASS] `ebfcd216d73a3f7ab046b035c2566cd168bf6e38168f6a375597d93c827572ff`
+  - `gates/verify_e2_run2.log` [PASS] `6f4a1dec824a71a4c7ab6d7ff7529fd0f12a8dacd06c254e14a7f1cafc4d544f`
+  - `gates/verify_epoch18_run1.log` [PASS] `83c3a06705bbc08c15284635a71bb7e72ca3785f10a095f966143a34bb00a151`
+  - `gates/verify_integration_run1.log` [PASS] `1ec065fface7be4d592f9942cbf524175f7d572b3a84a063dd8d8532fdf03282`
+  - `gates/verify_paper_run1.log` [PASS] `840678d68f1940ebdf5d528d3711e819bde0042336a29d680ba5913885c38eba`
+  - `gates/verify_paper_run2.log` [PASS] `0e32c9e83b78e745c6ba3a43ba2502f735fe21bbe227a886365b60831a90da6e`
+  - `gates/verify_phase2_run1.log` [PASS] `43d1b2d093ff28cacd6860264fea3498ec79b1392aadc5a7cb5d5666a78c3a59`
+  - `gates/verify_strategy_run1.log` [PASS] `f0158eb8bd0946232ad8063248a6fc3f21fb86cf67a07cdf0f7ca3d944682e56`
+  - `gates/verify_strategy_run2.log` [PASS] `f0158eb8bd0946232ad8063248a6fc3f21fb86cf67a07cdf0f7ca3d944682e56`

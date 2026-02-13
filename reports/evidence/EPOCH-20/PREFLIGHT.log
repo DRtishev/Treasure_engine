@@ -1,0 +1,67 @@
+/workspace/Treasure_engine
+## work
+R  scripts/verify/epoch09_integration.mjs.backup -> archive/phoenix_20260213/epoch09_integration.mjs.backup
+R  package.json.bak -> archive/phoenix_20260213/package.json.bak
+R  core/ai/ai_signal_bridge.mjs -> labs/legacy_ultimate/core/ai/ai_signal_bridge.mjs
+R  core/ai/autonomous_agent.mjs -> labs/legacy_ultimate/core/ai/autonomous_agent.mjs
+R  core/ai/cognitive_brain.mjs -> labs/legacy_ultimate/core/ai/cognitive_brain.mjs
+R  core/ai/hypothesis_generator.mjs -> labs/legacy_ultimate/core/ai/hypothesis_generator.mjs
+R  core/ai/learning_system.mjs -> labs/legacy_ultimate/core/ai/learning_system.mjs
+R  core/ai/master_orchestrator.mjs -> labs/legacy_ultimate/core/ai/master_orchestrator.mjs
+R  core/ai/meta_learning_engine.mjs -> labs/legacy_ultimate/core/ai/meta_learning_engine.mjs
+R  core/ai/metacognitive_controller.mjs -> labs/legacy_ultimate/core/ai/metacognitive_controller.mjs
+R  core/ai/self_reflection_system.mjs -> labs/legacy_ultimate/core/ai/self_reflection_system.mjs
+R  core/ai/strategy_generator.mjs -> labs/legacy_ultimate/core/ai/strategy_generator.mjs
+R  core/ai/superintelligent_agent.mjs -> labs/legacy_ultimate/core/ai/superintelligent_agent.mjs
+R  core/ultimate/ultimate_system.mjs -> labs/legacy_ultimate/core/ultimate/ultimate_system.mjs
+R  scripts/verify/epochX_integration.mjs -> labs/legacy_ultimate/scripts/verify/epochX_integration.mjs
+ M package.json
+ M reports/evidence/EPOCH-17/PREFLIGHT.log
+ M reports/evidence/EPOCH-17/SNAPSHOT.md
+ M reports/evidence/EPOCH-17/SUMMARY.md
+ M reports/evidence/EPOCH-17/VERDICT.md
+ M reports/evidence/EPOCH-18/PREFLIGHT.log
+ M reports/evidence/EPOCH-18/SNAPSHOT.md
+ M reports/evidence/EPOCH-18/SUMMARY.md
+ M reports/evidence/EPOCH-18/VERDICT.md
+ M reports/evidence/EPOCH-19/PREFLIGHT.log
+ M reports/evidence/EPOCH-19/SNAPSHOT.md
+ M reports/evidence/EPOCH-19/SUMMARY.md
+ M reports/evidence/EPOCH-19/VERDICT.md
+ M scripts/verify/determinism.mjs
+ M scripts/verify/ledger_check.mjs
+ M specs/epochs/LEDGER.json
+?? .tmp/
+?? data/manifests/epoch51_rechunk_a.fills.manifest.json
+?? data/manifests/epoch51_rechunk_b.fills.manifest.json
+?? data/private/normalized/binance/epoch51_rechunk_a/
+?? data/private/normalized/binance/epoch51_rechunk_b/
+?? data/private/raw/binance/epoch51_rechunk_a/
+?? data/private/raw/binance/epoch51_rechunk_b/
+?? docs/ARCHIVE_POLICY.md
+?? reports/evidence/EPOCH-17/COMMANDS.log
+?? reports/evidence/EPOCH-17/SHA256SUMS.EVIDENCE
+?? reports/evidence/EPOCH-17/gates/manual/
+?? reports/evidence/EPOCH-17/gates/run1.log
+?? reports/evidence/EPOCH-17/gates/run2.log
+?? reports/evidence/EPOCH-17/pack_index.json
+?? reports/evidence/EPOCH-18/COMMANDS.log
+?? reports/evidence/EPOCH-18/SHA256SUMS.EVIDENCE
+?? reports/evidence/EPOCH-18/gates/manual/
+?? reports/evidence/EPOCH-18/gates/run1.log
+?? reports/evidence/EPOCH-18/gates/run2.log
+?? reports/evidence/EPOCH-18/pack_index.json
+?? reports/evidence/EPOCH-19/COMMANDS.log
+?? reports/evidence/EPOCH-19/SHA256SUMS.EVIDENCE
+?? reports/evidence/EPOCH-19/gates/manual/
+?? reports/evidence/EPOCH-19/gates/run1.log
+?? reports/evidence/EPOCH-19/gates/run2.log
+?? reports/evidence/EPOCH-19/pack_index.json
+?? reports/evidence/EPOCH-EDGE-LOCAL-MEGA/
+?? scripts/verify/epoch_sweep_1_58.mjs
+?? scripts/verify/ledger_schema_strict.mjs
+?? scripts/verify/repo_manifest.mjs
+?? specs/DETERMINISM_ALLOWLIST.md
+88236ad746d0b81866e75a47f2f9b2dd41d1f1ab
+v20.19.6
+11.4.2
