@@ -33,7 +33,7 @@
 ## VERIFY
 - `npm run verify:specs`
 - `npm run verify:edge`
-- `npm run verify:truth-layer`
+- `npm run verify:epoch43`
 
 ## EVIDENCE REQUIREMENTS
 - `PREFLIGHT.log` and `COMMANDS.log` for execution traceability.

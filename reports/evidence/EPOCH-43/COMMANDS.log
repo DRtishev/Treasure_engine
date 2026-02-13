@@ -1,0 +1,22 @@
+npm ci
+exit_code=0 gate=npm_ci run=1
+CI=true npm run verify:specs
+exit_code=0 gate=verify_specs run=1
+CI=true npm run verify:specs
+exit_code=0 gate=verify_specs run=2
+CI=true npm run verify:repo
+exit_code=0 gate=verify_repo run=1
+CI=true npm run verify:repo
+exit_code=0 gate=verify_repo run=2
+CI=true npm run verify:edge
+exit_code=0 gate=verify_edge run=1
+CI=true npm run verify:edge
+exit_code=0 gate=verify_edge run=2
+CI=true npm run verify:epoch43
+exit_code=0 gate=verify_epoch43 run=1
+CI=true npm run verify:epoch43
+exit_code=0 gate=verify_epoch43 run=2
+CI=true npm run verify:treasure
+exit_code=0 gate=verify_treasure run=1
+CI=true npm run verify:treasure
+exit_code=0 gate=verify_treasure run=2

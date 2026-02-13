@@ -4,6 +4,7 @@
 import { StrategyOrchestrator } from '../strategy/strategy_orchestrator.mjs';
 import { signalToIntent } from './signal_converter.mjs';
 import { PortfolioAllocator } from '../portfolio/portfolio_allocator.mjs';
+import { scoreSignalFreshness } from '../edge/execution_realism.mjs';
 
 export class StrategyAwareExecutor {
   constructor(options = {}) {
@@ -12,7 +13,20 @@ export class StrategyAwareExecutor {
   }
 
   prepareIntents(signals = [], options = {}) {
-    const ranked = this.orchestrator.rankSignals(signals);
+    const nowMs = Number.isFinite(options.now_ms) ? options.now_ms : null;
+    const ranked = this.orchestrator.rankSignals(signals)
+      .map((signal) => {
+        const freshness = nowMs === null
+          ? { freshness_score: 1, action: 'ALLOW', age_ms: 0 }
+          : scoreSignalFreshness(signal, { now_ms: nowMs });
+        const confidence = Number.isFinite(signal.confidence) ? signal.confidence : 0;
+        const adjusted_confidence = freshness.action === 'DOWNWEIGHT'
+          ? confidence * freshness.freshness_score
+          : confidence;
+        return { ...signal, confidence: adjusted_confidence, freshness };
+      })
+      .filter((signal) => signal.freshness.action !== 'BLOCK');
+
     const intents = ranked.map((signal, idx) => signalToIntent(signal, {
       ...options,
       order_seq: idx,
@@ -27,6 +41,7 @@ export class StrategyAwareExecutor {
         ...intent,
         size_usd,
         size,
+        freshness: intent.freshness || ranked.find((s) => s.strategy_id === intent.strategy_id && s.symbol === intent.symbol)?.freshness,
         allocation: alloc,
       };
     });

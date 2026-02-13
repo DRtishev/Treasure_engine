@@ -37,6 +37,7 @@ export function signalToIntent(signal, options = {}) {
     reason: signal.reason || 'strategy_signal',
     mode,
     confidence: Number.isFinite(signal.confidence) ? signal.confidence : 0,
+    freshness: signal.freshness || null,
   };
 }
 

@@ -1,0 +1,229 @@
+{
+  "embargo": 1,
+  "k": 6,
+  "manifest_hash": "35e740c7f770a6ebc07f3a4777ea08003bf1e562cad2f32991c6ca6acb64c3e7",
+  "purge": 1,
+  "seed": 43001,
+  "split_count": 6,
+  "splits": [
+    {
+      "split_hash": "8aa430cac9ae3520f6debb9ccacf5c6f67e856a7a93f4ef404a5909faa38be4e",
+      "split_id": "split_0",
+      "test_count": 4,
+      "test_idx": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "test_range": [
+        0,
+        3
+      ],
+      "train_count": 19,
+      "train_idx": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "split_hash": "b93c9c01811c12a8b2389e7e8cfec85d32342ac013039175f029355a2859c945",
+      "split_id": "split_1",
+      "test_count": 4,
+      "test_idx": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "test_range": [
+        4,
+        7
+      ],
+      "train_count": 18,
+      "train_idx": [
+        0,
+        1,
+        2,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "split_hash": "de858a281c5a8535974502500277e16e67dd012832f2e66d4c4a24456af28447",
+      "split_id": "split_2",
+      "test_count": 4,
+      "test_idx": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "test_range": [
+        8,
+        11
+      ],
+      "train_count": 18,
+      "train_idx": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "split_hash": "65ef896af4beae6b40a228090de0dd9131ebc3eaa8e51f91f07a7872556ffaf4",
+      "split_id": "split_3",
+      "test_count": 4,
+      "test_idx": [
+        12,
+        13,
+        14,
+        15
+      ],
+      "test_range": [
+        12,
+        15
+      ],
+      "train_count": 18,
+      "train_idx": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "split_hash": "d31e990dd1e45b13b2c9a23831f5da92827aa105d2716b09184fdceef367d1c8",
+      "split_id": "split_4",
+      "test_count": 4,
+      "test_idx": [
+        16,
+        17,
+        18,
+        19
+      ],
+      "test_range": [
+        16,
+        19
+      ],
+      "train_count": 18,
+      "train_idx": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        21,
+        22,
+        23
+      ]
+    },
+    {
+      "split_hash": "5217677119091e845485836cf6bf00d43fbb444b1e312434aadd3f428b152ef5",
+      "split_id": "split_5",
+      "test_count": 4,
+      "test_idx": [
+        20,
+        21,
+        22,
+        23
+      ],
+      "test_range": [
+        20,
+        23
+      ],
+      "train_count": 19,
+      "train_idx": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18
+      ]
+    }
+  ],
+  "timeline_hash": "20b2102ec1165e6785deba920c03790d5f28fde7755ee869fdcb5b360dd57d57"
+}
