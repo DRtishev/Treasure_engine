@@ -1,0 +1,48 @@
+{
+  "epoch": "EPOCH-52",
+  "status": "PASS",
+  "passed": 9,
+  "failed": 0,
+  "fingerprint": "be51b7aee7fd55c781a30ce94a7ec9444a6c3da6bf13ae2cd6e09c3a777e49df",
+  "paper_pnl": -0.13104944,
+  "risk_events_count": 1,
+  "pause_triggers": 2,
+  "checks": [
+    {
+      "ok": true,
+      "msg": "SHADOW mode produces state log"
+    },
+    {
+      "ok": true,
+      "msg": "SHADOW mode has no submission plan"
+    },
+    {
+      "ok": true,
+      "msg": "PAPER mode produces paper pnl metric"
+    },
+    {
+      "ok": true,
+      "msg": "PAPER mode has no submission plan"
+    },
+    {
+      "ok": true,
+      "msg": "GUARDED_LIVE mode produces submission plan"
+    },
+    {
+      "ok": true,
+      "msg": "GUARDED_LIVE never submits actions"
+    },
+    {
+      "ok": true,
+      "msg": "determinism x2 fingerprint invariant"
+    },
+    {
+      "ok": true,
+      "msg": "auto-pause triggers on injected crisis scenario"
+    },
+    {
+      "ok": true,
+      "msg": "strict mode expected-fail when overfit metrics missing"
+    }
+  ]
+}

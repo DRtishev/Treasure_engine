@@ -1,0 +1,21 @@
+{
+  "epoch": "EPOCH-55",
+  "status": "PASS",
+  "passed": 3,
+  "failed": 0,
+  "frontier_fingerprint": "03100d554d0f36860f0a4984b339e085d9a3d6a3ba1b4f71714f786781347786",
+  "checks": [
+    {
+      "ok": true,
+      "msg": "frontier report generated with bounded grid and top-k"
+    },
+    {
+      "ok": true,
+      "msg": "determinism x2 frontier fingerprint invariant"
+    },
+    {
+      "ok": true,
+      "msg": "frontier entries include params + metrics"
+    }
+  ]
+}

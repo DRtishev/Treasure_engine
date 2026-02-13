@@ -1,3 +1,4 @@
-# VERDICT
-
-PASS — EPOCH-43 overfit defense delivered with deterministic outputs and required gate evidence.
+# EPOCH-43 VERDICT
+- Verdict: PASS
+- Derived from gate log statuses in `gates/*.log`.
+- Criteria met: all discovered logs indicate PASS.

@@ -1,0 +1,14 @@
+{
+  "schema_version": "1.0.0",
+  "input_rows": 4,
+  "output_rows": 3,
+  "dedup_count": 1,
+  "gap_count": 1,
+  "outlier_count": 0,
+  "heuristic_used": false,
+  "warnings": [
+    "dedups:1",
+    "gaps:1"
+  ],
+  "fingerprint": "ad3a60ad4df80117dbb1ef325d7c448752159c39ab48534c245184ed2c50d4f4"
+}

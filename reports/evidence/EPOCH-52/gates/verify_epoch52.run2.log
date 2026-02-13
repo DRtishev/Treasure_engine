@@ -1,0 +1,15 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch52
+> node scripts/verify/epoch52_canary_controller.mjs
+
+✓ SHADOW mode produces state log
+✓ SHADOW mode has no submission plan
+✓ PAPER mode produces paper pnl metric
+✓ PAPER mode has no submission plan
+✓ GUARDED_LIVE mode produces submission plan
+✓ GUARDED_LIVE never submits actions
+✓ determinism x2 fingerprint invariant
+✓ auto-pause triggers on injected crisis scenario
+✓ strict mode expected-fail when overfit metrics missing
+PASS verify:epoch52 checks=9

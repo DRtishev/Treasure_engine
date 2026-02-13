@@ -1,0 +1,82 @@
+{
+  "epoch_id": "EPOCH-42",
+  "sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
+  "node": "v20.19.6",
+  "npm": "11.4.2",
+  "date": "2026-02-13T14:02:00.012Z",
+  "gate_runs": [
+    {
+      "path": "gates/npm_ci.run1.log",
+      "sha256": "5e16090a3ae3800676cac0fa3ee28c0c645529d8250deaec0cbbfc76e77848b6",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/npm_ci.run2.log",
+      "sha256": "5e16090a3ae3800676cac0fa3ee28c0c645529d8250deaec0cbbfc76e77848b6",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/verify_edge.run1.log",
+      "sha256": "fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_edge.run2.log",
+      "sha256": "fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_epoch42.run1.log",
+      "sha256": "041e54ebdffe322dec2c51b99092d6ca6957ff093272e284ba62dc46c9e2675e",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_epoch42.run2.log",
+      "sha256": "041e54ebdffe322dec2c51b99092d6ca6957ff093272e284ba62dc46c9e2675e",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_repo.run1.log",
+      "sha256": "ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_repo.run2.log",
+      "sha256": "ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_specs.run1.log",
+      "sha256": "7472453ab52454cd17da74fd96358f5b45898687253543a607cfb9bd6b265041",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_specs.run2.log",
+      "sha256": "7472453ab52454cd17da74fd96358f5b45898687253543a607cfb9bd6b265041",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_treasure.run1.log",
+      "sha256": "52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_treasure.run2.log",
+      "sha256": "52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a",
+      "status": "PASS"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "calibration_manifest.json",
+      "sha256": "40bab20605f80bc80dbcfcd2906f2c90ca7ef76d4272fc2a4b0dea7dd1b8928d"
+    }
+  ],
+  "hashes": {
+    "PREFLIGHT.log": "44477b73914281dd37f135872aa8301c7e0dc21bd7f5ff4566432fbf880ff3ae",
+    "COMMANDS.log": "f168badfe155d286ad61b7f8dda857329be17773f792f6c6af4b13f2a02a70d9",
+    "SNAPSHOT.md": "d0313c632b1c49804aa61d79e16d7dab21b0139ba4a1b7f6fb240c0dd16ec16c",
+    "SUMMARY.md": "cda18482435f66acefe07c42a7e133ad7d672dec70a13021a03afeefacc7ef60",
+    "VERDICT.md": "1f830d2a623c6da2dd96d3c769335e9c767ef01a13dd685146a72f01734d8b24"
+  }
+}

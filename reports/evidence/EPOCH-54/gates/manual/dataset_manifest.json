@@ -1,0 +1,10 @@
+{
+  "dataset_id": "e49_fixture",
+  "provider": "binance",
+  "reconnect_count": 0,
+  "gap_count": 0,
+  "dedup_count": 1,
+  "out_of_order_count": 0,
+  "heuristic_dedup_used": false,
+  "replay_fingerprint": "d30a64ebe72a3d84c3ac6e43d9c3abb97f8479c9fbab2c997d96cbdf02fbae15"
+}

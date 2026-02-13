@@ -1,0 +1,15 @@
+{
+  "schema_version": "1.0.0",
+  "input_events": 5,
+  "output_events": 4,
+  "dedup_count": 1,
+  "heuristic_dedup_key_events": 0,
+  "gap_count": 1,
+  "out_of_order_count": 1,
+  "reconnect_count": 1,
+  "warnings": [
+    "time_gaps:1",
+    "dedups:1"
+  ],
+  "fingerprint": "fe393d5bde3fff0ebb9c442a496a725ddc05d1e9066128679e9b2786f8556c5c"
+}

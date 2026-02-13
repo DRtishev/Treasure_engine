@@ -1,0 +1,73 @@
+{
+  "epoch": "EPOCH-53",
+  "fingerprint": "6ab070e1f85cf424cd60eb2c385472e44d85b7ea4fe89925c0b210eb90321a5a",
+  "pause_events": [
+    {
+      "code": "PAUSE_VOL_SPIKE",
+      "metric": "vol_spike",
+      "value": 1,
+      "threshold": 0.5,
+      "ts_ms": 1700000000000,
+      "context_fingerprint": "ee8a1044c4fb9189c40fb9ec1a9c983569d987834c39ba46e30a18159c4aabad"
+    },
+    {
+      "code": "PAUSE_DD_SPEED",
+      "metric": "dd_speed",
+      "value": 0.08,
+      "threshold": 0.03,
+      "ts_ms": 1700000001000,
+      "context_fingerprint": "ee8a1044c4fb9189c40fb9ec1a9c983569d987834c39ba46e30a18159c4aabad"
+    },
+    {
+      "code": "PAUSE_DATA_GAP",
+      "metric": "data_gap_count",
+      "value": 1,
+      "threshold": 0,
+      "ts_ms": 1700000002000,
+      "context_fingerprint": "ee8a1044c4fb9189c40fb9ec1a9c983569d987834c39ba46e30a18159c4aabad"
+    },
+    {
+      "code": "PAUSE_VOL_SPIKE",
+      "metric": "vol_spike",
+      "value": 1,
+      "threshold": 0.5,
+      "ts_ms": 1700000003000,
+      "context_fingerprint": "993973ad87bfc80c16053901cc0f2add539e058fb26816558d3ee02f4f726255"
+    },
+    {
+      "code": "PAUSE_RISK_HARDSTOP",
+      "metric": "risk_events_count",
+      "value": 1,
+      "threshold": 0,
+      "ts_ms": 1700000007000,
+      "context_fingerprint": "e880d511e7b8014e2db801839e039d0d65db6e7ed6e23ceb8d949bc3d0a81200"
+    }
+  ],
+  "risk_events": [
+    {
+      "code": "PAUSE_RISK_HARDSTOP",
+      "reason": "TRADE_STOP",
+      "state_transition": "ACTIVE->HALTED",
+      "ts_ms": 1700000006000
+    }
+  ],
+  "thresholds_used": {
+    "max_reality_gap": 0.6,
+    "max_risk_events": 0,
+    "max_exposure_usd": 500,
+    "max_dd_speed": 0.03,
+    "max_vol_spike": 0.5,
+    "max_data_gap_count": 0,
+    "strict_overfit_required": false
+  },
+  "decision_trace": {
+    "pause_event_count": 5,
+    "risk_event_count": 1,
+    "code_counts": {
+      "PAUSE_VOL_SPIKE": 2,
+      "PAUSE_DD_SPEED": 1,
+      "PAUSE_DATA_GAP": 1,
+      "PAUSE_RISK_HARDSTOP": 2
+    }
+  }
+}

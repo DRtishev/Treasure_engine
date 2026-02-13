@@ -1,0 +1,72 @@
+{
+  "epoch_id": "EPOCH-44",
+  "sha": "ab3d62409ec2f00f1b4f8a16706a8fd5292e99f6",
+  "node": "v20.19.6",
+  "npm": "11.4.2",
+  "date": "2026-02-13T14:02:01.008Z",
+  "gate_runs": [
+    {
+      "path": "gates/verify_edge.run1.log",
+      "sha256": "516ad70a50c5fdea9afc1ddcd9fc5991d3c8944aea5119e88153319f4647e5d4",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_edge.run2.log",
+      "sha256": "516ad70a50c5fdea9afc1ddcd9fc5991d3c8944aea5119e88153319f4647e5d4",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_epoch44.run1.log",
+      "sha256": "e2e1c050846418d0d82e51ef7433c15250d0acfdb4a595281d5644b68631251f",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_epoch44.run2.log",
+      "sha256": "e2e1c050846418d0d82e51ef7433c15250d0acfdb4a595281d5644b68631251f",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_repo.run1.log",
+      "sha256": "c0ac40edfbe626c04716082f200b4963b7ab64b4eaa5abc33bc411910427775e",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_repo.run2.log",
+      "sha256": "c0ac40edfbe626c04716082f200b4963b7ab64b4eaa5abc33bc411910427775e",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_specs.run1.log",
+      "sha256": "91b60ae4694739451c146cef5f9c797a55983f1d3ce64df14ece6fcfa8bec123",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_specs.run2.log",
+      "sha256": "91b60ae4694739451c146cef5f9c797a55983f1d3ce64df14ece6fcfa8bec123",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_treasure.run1.log",
+      "sha256": "4af177783b24869435770bff0ca27c05efd897ec2e4bbd4112dc7422f4c1aede",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_treasure.run2.log",
+      "sha256": "4af177783b24869435770bff0ca27c05efd897ec2e4bbd4112dc7422f4c1aede",
+      "status": "PASS"
+    }
+  ],
+  "artifacts": [
+    {
+      "path": "crisis_manifest.json",
+      "sha256": "95d168521b5f22f88428a607f71dc94544caf41b8ee6f7a34e7f6e8a10472a0d"
+    }
+  ],
+  "hashes": {
+    "PREFLIGHT.log": "a94c2b5190f29ea8a698240151fb8fd6d7e823df3411c89343dfe5d28e5dcb11",
+    "COMMANDS.log": "3138def906a63d922a1f3de792dd6267594b89b1ee784d51ccb77006bcefba6c",
+    "SNAPSHOT.md": "3f29a3dc4df409ca2ec8cefcea697b1bfaeeb89ca49c5a7dd389c872aeac927d",
+    "SUMMARY.md": "79ecd27148b2fdcfaaac5b5ad861e91a0f05e5272e376460616111a244bc4b24",
+    "VERDICT.md": "bc41921395bbc6885cfa4e2d90e062e545e278eadb3053a22b4680652f1d278e"
+  }
+}

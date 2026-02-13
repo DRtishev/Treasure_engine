@@ -1,0 +1,12 @@
+
+> treasure-engine@1.0.0 verify:epoch50
+> node scripts/verify/epoch50_private_fills_calibration.mjs
+
+✓ strict ingest succeeds for fixture with fill_id
+✓ fills dataset manifest exists
+✓ private quality report exists
+✓ fixture calibration runs in REAL mode
+✓ calibration deterministic fingerprint stable
+✓ strict calibration succeeds on valid fixture
+✓ strict-mode negative test fails when fill_id missing (expected fail)
+PASS verify:epoch50 checks=7

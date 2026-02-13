@@ -1,0 +1,97 @@
+{
+  "epoch_id": "EPOCH-51",
+  "sha": "338bf597829588f98a066e5bf99e2ca1c95521d0",
+  "node": "v20.19.6",
+  "npm": "11.4.2",
+  "date": "2026-02-13T15:26:56.244Z",
+  "gate_runs": [
+    {
+      "path": "gates/npm_ci.log",
+      "sha256": "fce38ce057893af0195475e2ffdecc10223d758ab530b454847f09c879553b1e",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/release_build.log",
+      "sha256": "39686f539e6af3a8d5b7ec7ed4f03b4a4d4cf354e8d038493a9888e84ba649b7",
+      "status": "UNKNOWN"
+    },
+    {
+      "path": "gates/verify_edge.run1.log",
+      "sha256": "fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_edge.run2.log",
+      "sha256": "fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_epoch51.run1.log",
+      "sha256": "2c6bd779c773feeb376c48d982195c58e7b8944800f1fd9c29b361b34f75ed24",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_epoch51.run2.log",
+      "sha256": "2c6bd779c773feeb376c48d982195c58e7b8944800f1fd9c29b361b34f75ed24",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_ledger.run1.log",
+      "sha256": "e46907c6195f8b1f1db554f3c15b3c00af3a606ed49a45f8bca682bf6cec8ec4",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_ledger.run2.log",
+      "sha256": "e46907c6195f8b1f1db554f3c15b3c00af3a606ed49a45f8bca682bf6cec8ec4",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_release.run1.log",
+      "sha256": "4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_release.run2.log",
+      "sha256": "4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_repo.run1.log",
+      "sha256": "ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_repo.run2.log",
+      "sha256": "ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_specs.run1.log",
+      "sha256": "e709d179358a212e95d69f17931444264abb16e26e863cb69eefb4b1b53fb5fe",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_specs.run2.log",
+      "sha256": "e709d179358a212e95d69f17931444264abb16e26e863cb69eefb4b1b53fb5fe",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_treasure.run1.log",
+      "sha256": "52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a",
+      "status": "PASS"
+    },
+    {
+      "path": "gates/verify_treasure.run2.log",
+      "sha256": "52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a",
+      "status": "PASS"
+    }
+  ],
+  "artifacts": [],
+  "hashes": {
+    "PREFLIGHT.log": "9c2f67242d4e41a215c2ec3d685dedf87bd602f7bdfdbdb5a9edcbb80a9865ab",
+    "COMMANDS.log": "c05cda6667e12cfba7c1d031abff275f0dfa27ae2cff456614e2abce2e6bf784",
+    "SNAPSHOT.md": "4b8c903be0069f559c49a8a62616f99fbf41b6da9089a97e791189b988d3e77c",
+    "SUMMARY.md": "34fa2910530c953628f63967072eda37922e4648d4c5f5cb98c18f6ed72c77da",
+    "VERDICT.md": "ad7a34b110835b454f335879ea5ceec7a82cbcf62e82b785da91a497e524ed0d"
+  }
+}

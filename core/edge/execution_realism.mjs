@@ -1,4 +1,7 @@
 import crypto from 'node:crypto';
+import fs from 'node:fs';
+import path from 'node:path';
+import { jsonlParse } from './private_fill_contracts.mjs';
 
 function round(value, scale = 6) {
   const p = 10 ** scale;
@@ -12,17 +15,21 @@ function median(arr) {
   return s.length % 2 === 0 ? (s[m - 1] + s[m]) / 2 : s[m];
 }
 
-export function calibrateMicrostructure(records = [], options = {}) {
-  const seed = Number.isFinite(options.seed) ? options.seed : 4242;
-  const mode = options.mode || (records.length ? 'fills' : 'shadow-proxy');
 
-  const source = records.length ? records : [
-    { qty: 0.4, price: 100, fees: 0.02, latency_ms: 80 },
-    { qty: 0.6, price: 100, fees: 0.03, latency_ms: 100 },
-    { qty: 0.8, price: 100, fees: 0.05, latency_ms: 130 }
-  ];
+function loadPrivateFillDataset(provider, datasetId) {
+  const dir = path.resolve(`data/private/normalized/${provider}/${datasetId}/chunks`);
+  if (!fs.existsSync(dir)) return null;
+  const files = fs.readdirSync(dir).filter((f) => f.endsWith('.jsonl')).sort();
+  let rows = [];
+  for (const f of files) {
+    rows = rows.concat(jsonlParse(fs.readFileSync(path.join(dir, f), 'utf8')));
+  }
+  rows.sort((a, b) => a.ts_ms - b.ts_ms || String(a.fill_id).localeCompare(String(b.fill_id)) || a.output_fingerprint.localeCompare(b.output_fingerprint));
+  return rows;
+}
 
-  const feeBps = source.map((r) => (r.fees / Math.max(1e-9, r.qty * r.price)) * 10000);
+function buildCalibration(source, mode, seed) {
+  const feeBps = source.map((r) => (r.fee / Math.max(1e-9, r.qty * r.price)) * 10000);
   const latency = source.map((r) => Number.isFinite(r.latency_ms) ? r.latency_ms : 0).filter((v) => v >= 0);
   const qty = source.map((r) => r.qty);
 
@@ -36,13 +43,84 @@ export function calibrateMicrostructure(records = [], options = {}) {
   const outputs = {
     sample_count: source.length,
     calibration_mode: mode,
-    fallback_used: !records.length
+    fallback_used: mode !== 'REAL'
   };
 
   const inputsHash = crypto.createHash('sha256').update(JSON.stringify({ seed, mode, source })).digest('hex');
   const outputsHash = crypto.createHash('sha256').update(JSON.stringify({ params, outputs })).digest('hex');
 
   return { seed, params, outputs, inputs_hash: inputsHash, outputs_hash: outputsHash };
+}
+
+export function calibrateMicrostructure(records = [], options = {}) {
+  const seed = Number.isFinite(options.seed) ? options.seed : 4242;
+  const source = records.length ? records.map((r) => ({
+    qty: Number(r.qty),
+    price: Number(r.price),
+    fee: Number(r.fee ?? r.fees ?? 0),
+    latency_ms: Number.isFinite(Number(r.latency_ms)) ? Number(r.latency_ms) : 0,
+    fill_id: r.fill_id ?? null
+  })) : [
+    { qty: 0.4, price: 100, fee: 0.02, latency_ms: 80, fill_id: null },
+    { qty: 0.6, price: 100, fee: 0.03, latency_ms: 100, fill_id: null },
+    { qty: 0.8, price: 100, fee: 0.05, latency_ms: 130, fill_id: null }
+  ];
+  const mode = options.mode || (records.length ? 'fills' : 'shadow-proxy');
+  return buildCalibration(source, mode, seed);
+}
+
+export function calibrateExecutionRealismFromPrivateFills(options = {}) {
+  const seed = Number.isFinite(options.seed) ? options.seed : 5050;
+  const strict = process.env.EXEC_REALISM_STRICT === '1' || options.strict === true;
+  const datasetId = options.fills_dataset_id || '';
+  const provider = (options.provider || 'binance').toLowerCase();
+
+  let mode = 'PROXY';
+  let source = [
+    { qty: 0.4, price: 100, fee: 0.02, latency_ms: 80, fill_id: null },
+    { qty: 0.6, price: 100, fee: 0.03, latency_ms: 100, fill_id: null },
+    { qty: 0.8, price: 100, fee: 0.05, latency_ms: 130, fill_id: null }
+  ];
+  const warnings = [];
+  let fillsFingerprint = null;
+
+  if (datasetId) {
+    const rows = loadPrivateFillDataset(provider, datasetId);
+    if (!rows || rows.length === 0) {
+      if (strict) throw new Error('EXEC_REALISM_STRICT: requested fills dataset is missing');
+      warnings.push('fills_dataset_missing_fallback_proxy');
+    } else {
+      if (strict && rows.some((r) => !r.fill_id)) throw new Error('EXEC_REALISM_STRICT: fill_id missing in private fills');
+      source = rows.map((r) => ({
+        qty: Number(r.qty),
+        price: Number(r.price),
+        fee: Number(r.fee ?? 0),
+        latency_ms: 0,
+        fill_id: r.fill_id ?? null
+      }));
+      mode = 'REAL';
+      fillsFingerprint = crypto.createHash('sha256').update(JSON.stringify(rows.map((r) => r.output_fingerprint))).digest('hex');
+    }
+  } else if (strict) {
+    throw new Error('EXEC_REALISM_STRICT: fills dataset id required');
+  }
+
+  const cal = buildCalibration(source, mode, seed);
+  const manifest = {
+    schema_version: '1.0.0',
+    mode,
+    fills_dataset_id: datasetId || null,
+    provider,
+    strict_mode: strict,
+    fills_fingerprint: fillsFingerprint,
+    seed,
+    params: cal.params,
+    inputs_hash: cal.inputs_hash,
+    outputs_hash: cal.outputs_hash,
+    warnings
+  };
+  const manifestFp = crypto.createHash('sha256').update(JSON.stringify(manifest)).digest('hex');
+  return { ...cal, mode, manifest, manifest_fingerprint: manifestFp };
 }
 
 const BUCKETS = [

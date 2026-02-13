@@ -1,0 +1,74 @@
+{
+  "schema_version": "1.0.0",
+  "mode": "REAL",
+  "calibration_manifest": {
+    "schema_version": "1.0.0",
+    "mode": "REAL",
+    "fills_dataset_id": "epoch51_rechunk_a",
+    "provider": "binance",
+    "strict_mode": true,
+    "fills_fingerprint": "14aaa48d91877797c399e8195333b07feebdfdcd37dabf0040a4a5eed83896d6",
+    "seed": 5151,
+    "params": {
+      "slip_mean_bps": 1.600814,
+      "slip_std_bps": 0.299965,
+      "latency_mean_ms": 0,
+      "latency_std_ms": 1
+    },
+    "inputs_hash": "3e6e5e622a09520d9f62f880c5cc6942c8844a56e48cf721c3455910176cf0c2",
+    "outputs_hash": "e2b7c097d10e8dfd4ff9ea08b993a05b8ec270ade9daf2e4aad9a87e9fffcbc4",
+    "warnings": []
+  },
+  "trades": [
+    {
+      "ts_ms": 1700000000000,
+      "side": "BUY",
+      "qty": 0.0015284441896646751,
+      "market_price": 43000.1,
+      "exec_price": 43006.983516208136,
+      "fee": 0.0262893012,
+      "risk_state": "ACTIVE",
+      "hard_stop": false
+    },
+    {
+      "ts_ms": 1700000000050,
+      "side": "SELL",
+      "qty": 0.0015094408824206566,
+      "market_price": 42999.9,
+      "exec_price": 42993.01651580814,
+      "fee": 0.0259623228,
+      "risk_state": "ACTIVE",
+      "hard_stop": false
+    },
+    {
+      "ts_ms": 1700000000100,
+      "side": "BUY",
+      "qty": 0.0015281832875199484,
+      "market_price": 43000.19999999,
+      "exec_price": 43007.08353220628,
+      "fee": 0.0262848748,
+      "risk_state": "ACTIVE",
+      "hard_stop": false
+    }
+  ],
+  "metrics": {
+    "paper_fills": 3,
+    "gross_pnl": -0.02108236,
+    "fees": 0.0785365,
+    "slippage_cost": 0.03143058,
+    "net_pnl": -0.13104944,
+    "hard_stops_triggered": 1
+  },
+  "risk_events": [
+    {
+      "ts_ms": 1700000004000,
+      "reason": "TRADE_STOP",
+      "state": "HALTED"
+    }
+  ],
+  "freshness_stats": {
+    "allow": 3,
+    "blocked": 1
+  },
+  "overfit_advisory_path": "reports/evidence/EPOCH-43/gates/manual/overfit_metrics.json"
+}

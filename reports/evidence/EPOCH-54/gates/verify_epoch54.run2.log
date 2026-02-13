@@ -1,0 +1,10 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch54
+> node scripts/verify/epoch54_live_shadow_record.mjs
+
+✓ rechunk fingerprint invariant under chunk boundaries
+✓ strict dedup removes duplicate trade_id rows
+✓ heuristic dedup flagged when trade_id absent
+✓ strict mode fails when heuristic dedup would be required
+PASS verify:epoch54 checks=4

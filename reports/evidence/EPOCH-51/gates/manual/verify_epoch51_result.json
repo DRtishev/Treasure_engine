@@ -1,0 +1,45 @@
+{
+  "epoch": "EPOCH-51",
+  "status": "PASS",
+  "passed": 7,
+  "failed": 0,
+  "paper_metrics": {
+    "paper_fills": 3,
+    "gross_pnl": -0.02108236,
+    "fees": 0.0785365,
+    "slippage_cost": 0.03143058,
+    "net_pnl": -0.13104944,
+    "hard_stops_triggered": 1
+  },
+  "strict_expected_fail": true,
+  "checks": [
+    {
+      "ok": true,
+      "msg": "rechunk ingest variants succeed"
+    },
+    {
+      "ok": true,
+      "msg": "rechunk dataset fingerprint invariant"
+    },
+    {
+      "ok": true,
+      "msg": "rechunk calibration manifest invariant"
+    },
+    {
+      "ok": true,
+      "msg": "paper session deterministic x2"
+    },
+    {
+      "ok": true,
+      "msg": "risk fortress hard stop triggered in fixture session"
+    },
+    {
+      "ok": true,
+      "msg": "paper fills produced"
+    },
+    {
+      "ok": true,
+      "msg": "strict expected-fail on missing REAL fills dataset"
+    }
+  ]
+}

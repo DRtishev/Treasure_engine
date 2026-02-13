@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0.0",
+  "provider": "binance",
+  "account_label": "acct-fixture",
+  "fills_dataset_id": "epoch50_fixture",
+  "time_range": {
+    "start_ts_ms": 1701000000000,
+    "end_ts_ms": 1701087000000
+  },
+  "input_source": {
+    "type": "file-csv",
+    "path": "data/fixtures/private/epoch50_fixture/fills_fixture.csv"
+  },
+  "chunks": [
+    {
+      "type": "raw",
+      "path": "data/private/raw/binance/epoch50_fixture/chunks/chunk_0001.jsonl",
+      "sha256": "cd0502d66250dd1bedf725add139cfbc76e61ffd5d746a8cf31c3229cf48bb52",
+      "records": 4
+    },
+    {
+      "type": "normalized",
+      "path": "data/private/normalized/binance/epoch50_fixture/chunks/chunk_0001.jsonl",
+      "sha256": "c37099d55e4f768a829a01241cbacac3704baf721078cdd9759fc161984dfc0a",
+      "records": 4
+    }
+  ],
+  "schema_versions": {
+    "fill_record": "1.0.0"
+  },
+  "normalization_version": "1.0.0",
+  "ingest_version": "e50-v1",
+  "strict_mode": true,
+  "quality_summary": {
+    "dedup_count": 1,
+    "gap_count": 1,
+    "outlier_count": 0,
+    "heuristic_used": false,
+    "warnings": [
+      "dedups:1",
+      "gaps:1"
+    ]
+  },
+  "quality_fingerprint": "ad3a60ad4df80117dbb1ef325d7c448752159c39ab48534c245184ed2c50d4f4"
+}

@@ -1,0 +1,12 @@
+{
+  "schema_version": "1.0.0",
+  "input_events": 2,
+  "output_events": 2,
+  "dedup_count": 0,
+  "heuristic_dedup_key_events": 0,
+  "gap_count": 0,
+  "out_of_order_count": 0,
+  "reconnect_count": 0,
+  "warnings": [],
+  "fingerprint": "96739c618181215bf57e177d39264671b742213e15cf77b3968c7bdcf0788e50"
+}

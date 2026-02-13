@@ -1,0 +1,41 @@
+{
+  "schema_version": "1.0.0",
+  "provider": "binance",
+  "dataset_id": "e49_fixture",
+  "topics": [
+    "btcusdt@trade"
+  ],
+  "params": {
+    "symbol": "BTCUSDT"
+  },
+  "time_range": {
+    "start_ts_ms": 1700000000000,
+    "end_ts_ms": 1700000004000
+  },
+  "chunks": [
+    {
+      "type": "raw",
+      "path": "data/fixtures/binance/e49_fixture/raw/chunks/chunk_1700000000000_0001.jsonl",
+      "sha256": "f811a368999769ce7d175e659696a201032c270ab444883be6a051185e933984",
+      "records": 5
+    },
+    {
+      "type": "normalized",
+      "path": "data/fixtures/binance/e49_fixture/normalized/chunks/chunk_1700000000000_0001.jsonl",
+      "sha256": "468132aa09861814e39d10011c6ca5c6431666adddf09a78ad59e8057e64d244",
+      "records": 4
+    }
+  ],
+  "schema_versions": {
+    "trade_event": "1.0.0"
+  },
+  "normalization_version": "1.0.0",
+  "recorder_version": "e49-v1",
+  "warnings": {
+    "gaps": 1,
+    "dedups": 1,
+    "reconnect_count": 1,
+    "out_of_order_count": 1
+  },
+  "quality_fingerprint": "fe393d5bde3fff0ebb9c442a496a725ddc05d1e9066128679e9b2786f8556c5c"
+}

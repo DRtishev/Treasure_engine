@@ -1,0 +1,38 @@
+{
+  "epoch": "EPOCH-50",
+  "status": "PASS",
+  "passed": 7,
+  "failed": 0,
+  "mode": "REAL",
+  "strict_negative_test_expected_fail": true,
+  "checks": [
+    {
+      "ok": true,
+      "msg": "strict ingest succeeds for fixture with fill_id"
+    },
+    {
+      "ok": true,
+      "msg": "fills dataset manifest exists"
+    },
+    {
+      "ok": true,
+      "msg": "private quality report exists"
+    },
+    {
+      "ok": true,
+      "msg": "fixture calibration runs in REAL mode"
+    },
+    {
+      "ok": true,
+      "msg": "calibration deterministic fingerprint stable"
+    },
+    {
+      "ok": true,
+      "msg": "strict calibration succeeds on valid fixture"
+    },
+    {
+      "ok": true,
+      "msg": "strict-mode negative test fails when fill_id missing (expected fail)"
+    }
+  ]
+}

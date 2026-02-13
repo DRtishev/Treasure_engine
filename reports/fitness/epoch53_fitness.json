@@ -1,0 +1,67 @@
+{
+  "schema_version": "1.0.0",
+  "scenarios": [
+    {
+      "scenario": "baseline",
+      "paper_pnl": -0.13104944,
+      "drawdown_proxy": 0.013105,
+      "pauses": 1,
+      "risk_events": 1,
+      "trade_count": 3,
+      "stability_score": 1,
+      "shadow_fingerprint": "8de07c7db86b720a452548a763e88caf1896a279a3c041fdf4815b08e8bcce59",
+      "paper_fingerprint": "432d30d2340482f9a11ce44c66511a08141e28d45c7c0366269abb3912650744",
+      "scenario_score": 0
+    },
+    {
+      "scenario": "gap_down",
+      "paper_pnl": -0.05897225,
+      "drawdown_proxy": 0.005897,
+      "pauses": 4,
+      "risk_events": 1,
+      "trade_count": 3,
+      "stability_score": 1,
+      "shadow_fingerprint": "b862734dff318e0667695cde90936c70eef5ec5352ce191597808632986ad88e",
+      "paper_fingerprint": "1bc8f5abfbeb3d33c71fad35f67805ec85a61e9a60e1696621cb91023173eb58",
+      "scenario_score": 0
+    },
+    {
+      "scenario": "liquidity_vacuum",
+      "paper_pnl": -0.07862966,
+      "drawdown_proxy": 0.007863,
+      "pauses": 4,
+      "risk_events": 1,
+      "trade_count": 3,
+      "stability_score": 1,
+      "shadow_fingerprint": "2b1432f516ad64aa54f627497930d1eeeb46c3e65d6639c01090129c428b3f6d",
+      "paper_fingerprint": "0ea131895a08f9bd6f3641cbe43e2236c4f5019d0ffdba0fe53b9a96c8594a58",
+      "scenario_score": 0
+    },
+    {
+      "scenario": "vol_expansion",
+      "paper_pnl": -0.09173461,
+      "drawdown_proxy": 0.009173,
+      "pauses": 3,
+      "risk_events": 1,
+      "trade_count": 3,
+      "stability_score": 1,
+      "shadow_fingerprint": "67322270594e059a0f854ff58ea6dd47319e69442e433829b3cb7ea86b24d3e7",
+      "paper_fingerprint": "6fd70a943c8ae6c86325830c9438fc021c8665af1c2d40861ebad063138dcc7c",
+      "scenario_score": 0
+    },
+    {
+      "scenario": "whipsaw",
+      "paper_pnl": -0.10483955,
+      "drawdown_proxy": 0.010484,
+      "pauses": 3,
+      "risk_events": 1,
+      "trade_count": 3,
+      "stability_score": 1,
+      "shadow_fingerprint": "b84ac44d31c2130cc32b31e0bd54ccb16b8f744bffe3deb9d1fb3b063a8c3aac",
+      "paper_fingerprint": "2a054d2a9a0d02976c21e10d32d092b5ce97c46d392c0e97add81b67d4d5c035",
+      "scenario_score": 0
+    }
+  ],
+  "fitness_score": 0,
+  "fitness_fingerprint": "d916b73feb569661d238f0ba99c78fce9577895123f01624a7f2879b1c3c2b83"
+}

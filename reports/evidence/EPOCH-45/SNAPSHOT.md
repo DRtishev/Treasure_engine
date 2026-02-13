@@ -1,0 +1,16 @@
+# EPOCH-45 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-45/`
+- gate_logs: 10
+- failing_gate_logs: 0
+- unknown_gate_logs: 0
+- gate_runs:
+  - `gates/verify_edge.run1.log` [PASS] `516ad70a50c5fdea9afc1ddcd9fc5991d3c8944aea5119e88153319f4647e5d4`
+  - `gates/verify_edge.run2.log` [PASS] `516ad70a50c5fdea9afc1ddcd9fc5991d3c8944aea5119e88153319f4647e5d4`
+  - `gates/verify_epoch45.run1.log` [PASS] `db5d0a5ed62ce975805788ddc23c8fcfb23d30e92ec0bf234f78e001dcbace1c`
+  - `gates/verify_epoch45.run2.log` [PASS] `db5d0a5ed62ce975805788ddc23c8fcfb23d30e92ec0bf234f78e001dcbace1c`
+  - `gates/verify_repo.run1.log` [PASS] `c0ac40edfbe626c04716082f200b4963b7ab64b4eaa5abc33bc411910427775e`
+  - `gates/verify_repo.run2.log` [PASS] `c0ac40edfbe626c04716082f200b4963b7ab64b4eaa5abc33bc411910427775e`
+  - `gates/verify_specs.run1.log` [PASS] `91b60ae4694739451c146cef5f9c797a55983f1d3ce64df14ece6fcfa8bec123`
+  - `gates/verify_specs.run2.log` [PASS] `91b60ae4694739451c146cef5f9c797a55983f1d3ce64df14ece6fcfa8bec123`
+  - `gates/verify_treasure.run1.log` [PASS] `4af177783b24869435770bff0ca27c05efd897ec2e4bbd4112dc7422f4c1aede`
+  - `gates/verify_treasure.run2.log` [PASS] `4af177783b24869435770bff0ca27c05efd897ec2e4bbd4112dc7422f4c1aede`

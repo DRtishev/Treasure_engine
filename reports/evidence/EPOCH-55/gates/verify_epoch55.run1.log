@@ -1,0 +1,9 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch55
+> node scripts/verify/epoch55_paper_fitness_lab.mjs
+
+✓ frontier report generated with bounded grid and top-k
+✓ determinism x2 frontier fingerprint invariant
+✓ frontier entries include params + metrics
+PASS verify:epoch55 checks=3

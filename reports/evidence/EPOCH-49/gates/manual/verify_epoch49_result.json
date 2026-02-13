@@ -1,0 +1,49 @@
+{
+  "epoch": "EPOCH-49",
+  "run_label": "manual",
+  "passed": 10,
+  "failed": 0,
+  "status": "PASS",
+  "checks": [
+    {
+      "msg": "manifest exists",
+      "ok": true
+    },
+    {
+      "msg": "raw chunk exists",
+      "ok": true
+    },
+    {
+      "msg": "normalized chunk exists",
+      "ok": true
+    },
+    {
+      "msg": "SHA256SUMS.DATA exists",
+      "ok": true
+    },
+    {
+      "msg": "manifest chunk list complete",
+      "ok": true
+    },
+    {
+      "msg": "SHA256SUMS.DATA contains normalized chunk hash",
+      "ok": true
+    },
+    {
+      "msg": "deterministic replay fingerprint stable",
+      "ok": true
+    },
+    {
+      "msg": "dedup detected in fixture",
+      "ok": true
+    },
+    {
+      "msg": "gap detected in fixture",
+      "ok": true
+    },
+    {
+      "msg": "out-of-order detected in fixture",
+      "ok": true
+    }
+  ]
+}

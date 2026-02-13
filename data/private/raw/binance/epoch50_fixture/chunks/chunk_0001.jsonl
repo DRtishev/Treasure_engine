@@ -1,0 +1,4 @@
+{"fill_id":"f-1001","order_id":"o-9001","ts_ms":"1701000000000","symbol":"BTCUSDT","side":"BUY","qty":"0.0100","price":"43100.0","fee":"0.0862","fee_asset":"USDT","liquidity_flag":"TAKER"}
+{"fill_id":"f-1002","order_id":"o-9001","ts_ms":"1701000000500","symbol":"BTCUSDT","side":"BUY","qty":"0.0050","price":"43110.0","fee":"0.0431","fee_asset":"USDT","liquidity_flag":"MAKER"}
+{"fill_id":"f-1002","order_id":"o-9001","ts_ms":"1701000000500","symbol":"BTCUSDT","side":"BUY","qty":"0.0050","price":"43110.0","fee":"0.0431","fee_asset":"USDT","liquidity_flag":"MAKER"}
+{"fill_id":"f-1003","order_id":"o-9002","ts_ms":"1701087000000","symbol":"BTCUSDT","side":"SELL","qty":"0.0040","price":"43250.0","fee":"0.0346","fee_asset":"USDT","liquidity_flag":"TAKER"}

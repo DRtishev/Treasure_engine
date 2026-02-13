@@ -1,3 +1,4 @@
-# VERDICT
-
-PASS — All required gates passed twice with CI=true and deterministic epoch42 harness outputs.
+# EPOCH-42 VERDICT
+- Verdict: PASS
+- Derived from gate log statuses in `gates/*.log`.
+- Criteria met: all discovered logs indicate PASS.

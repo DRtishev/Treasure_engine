@@ -1,0 +1,12 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch53
+> node scripts/verify/epoch53_canary_forensics.mjs
+
+✓ reason codes taxonomy exists
+✓ pause events include reason codes + metrics
+✓ risk events include reason codes + transitions
+✓ thresholds_used is complete
+✓ determinism x2 identical fingerprints
+✓ fitness suite output generated
+PASS verify:epoch53 checks=6

@@ -1,0 +1,5 @@
+
+> treasure-engine@1.0.0 verify:release
+> node scripts/verify/release_check.mjs
+
+verify:release PASSED
