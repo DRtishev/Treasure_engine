@@ -1,4 +1,4 @@
-# NEURO-MEV API DOCUMENTATION
+# TREASURE ENGINE API DOCUMENTATION
 
 **Version**: 3.0.0  
 **Date**: 2026-02-10  
@@ -23,7 +23,7 @@
 
 ## OVERVIEW
 
-NEURO-MEV provides a production-grade trading system with authoritative Truth Layer governance, multi-strategy support, real-time data feeds, ML-based anomaly detection, and comprehensive safety mechanisms.
+TREASURE ENGINE provides a production-grade trading system with authoritative Truth Layer governance, multi-strategy support, real-time data feeds, ML-based anomaly detection, and comprehensive safety mechanisms.
 
 **Core Principles**:
 - Hierarchy: Safety > Truth > Profit

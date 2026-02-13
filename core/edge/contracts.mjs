@@ -200,9 +200,40 @@ export function truncateTowardZero(value, scale) {
   return truncated / factor;
 }
 
+function toPlainDecimal(numberValue) {
+  if (!Number.isFinite(numberValue)) throw new Error('Non-finite number in deterministic payload');
+  if (Object.is(numberValue, -0)) return '0';
+  const raw = String(numberValue);
+  if (!/[eE]/.test(raw)) return raw;
+
+  const sign = raw.startsWith('-') ? '-' : '';
+  const unsigned = raw.replace(/^[+-]/, '');
+  const [mantissa, exponentPart] = unsigned.split(/[eE]/);
+  const exponent = Number(exponentPart);
+  const mantissaDigits = mantissa.replace('.', '');
+  const decimalIndex = mantissa.includes('.') ? mantissa.indexOf('.') : mantissa.length;
+  const shiftedIndex = decimalIndex + exponent;
+
+  let plain;
+  if (shiftedIndex <= 0) {
+    plain = `0.${'0'.repeat(Math.abs(shiftedIndex))}${mantissaDigits}`;
+  } else if (shiftedIndex >= mantissaDigits.length) {
+    plain = `${mantissaDigits}${'0'.repeat(shiftedIndex - mantissaDigits.length)}`;
+  } else {
+    plain = `${mantissaDigits.slice(0, shiftedIndex)}.${mantissaDigits.slice(shiftedIndex)}`;
+  }
+
+  const [intPartRaw, fracPartRaw = ''] = plain.split('.');
+  const intPart = intPartRaw.replace(/^0+(?=\d)/, '') || '0';
+  const fracPart = fracPartRaw.replace(/0+$/, '');
+  const normalized = fracPart ? `${intPart}.${fracPart}` : intPart;
+  return normalized === '0' ? '0' : `${sign}${normalized}`;
+}
+
 function normalizeDeterministic(value, path = '') {
   if (typeof value === 'number') {
-    return truncateTowardZero(value, scaleForPath(path));
+    const normalized = truncateTowardZero(value, scaleForPath(path));
+    return Object.is(normalized, -0) ? 0 : normalized;
   }
   if (Array.isArray(value)) {
     return value.map((item, index) => normalizeDeterministic(item, `${path}[${index}]`));
@@ -219,7 +250,20 @@ function normalizeDeterministic(value, path = '') {
 }
 
 export function canonicalStringify(value) {
-  return JSON.stringify(normalizeDeterministic(value));
+  const normalized = normalizeDeterministic(value);
+  const render = (node) => {
+    if (typeof node === 'number') return toPlainDecimal(node);
+    if (node === null) return 'null';
+    if (typeof node === 'boolean') return node ? 'true' : 'false';
+    if (typeof node === 'string') return JSON.stringify(node);
+    if (Array.isArray(node)) return `[${node.map((item) => render(item)).join(',')}]`;
+    if (typeof node === 'object') {
+      const entries = Object.keys(node).sort((a, b) => a.localeCompare(b)).map((key) => `${JSON.stringify(key)}:${render(node[key])}`);
+      return `{${entries.join(',')}}`;
+    }
+    throw new Error(`Unsupported canonical type: ${typeof node}`);
+  };
+  return render(normalized);
 }
 
 export function deterministicFingerprint(contractName, payload) {

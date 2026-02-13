@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const EPOCH_START = 1;
-const EPOCH_END = 40;
+const EPOCH_END = 45;
 const epochFiles = Array.from({ length: EPOCH_END - EPOCH_START + 1 }, (_, i) => `specs/epochs/EPOCH-${String(i + EPOCH_START).padStart(2, '0')}.md`);
 
 const requiredFiles = [
@@ -14,6 +14,7 @@ const requiredFiles = [
   'docs/SPECS_PLAYBOOK.md',
   'specs/epochs/LEDGER.json',
   'agents.md',
+  'AGENTS_NOTICE.md',
   ...epochFiles
 ];
 
@@ -171,6 +172,22 @@ if (fs.existsSync('specs/epochs/INDEX.md')) {
   if (!/Dependency chain|READY order/i.test(indexText)) {
     errors.push('INDEX missing dependency chain / READY order section');
   }
+}
+
+
+const ssotDocs = ['README.md', 'QUICK_START.md', 'docs/DEPLOYMENT_GUIDE.md', 'docs/API_DOCUMENTATION.md'];
+const forbiddenSsotClaims = [/NEURO-MEV/i, /specs\/epochs\/ directory was not found/i, /specs\/epochs missing/i];
+
+for (const file of ssotDocs) {
+  if (!fs.existsSync(file)) continue;
+  const text = read(file);
+  for (const pattern of forbiddenSsotClaims) {
+    if (pattern.test(text)) errors.push(`${file} contains forbidden SSOT claim: ${pattern}`);
+  }
+}
+
+for (const legacyTodo of ['specs/epochs/EPOCH-17_TODO.md','specs/epochs/EPOCH-18_TODO.md','specs/epochs/EPOCH-19_TODO.md','specs/epochs/EPOCH-20_TODO.md','specs/epochs/EPOCH-21_TODO.md']) {
+  if (fs.existsSync(legacyTodo)) errors.push(`Legacy TODO file must be moved out of specs/epochs: ${legacyTodo}`);
 }
 
 if (errors.length > 0) {

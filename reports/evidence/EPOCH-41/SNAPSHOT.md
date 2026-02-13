@@ -1,0 +1,4 @@
+- branch: work
+- sha: 007ed0ae9c81c7b95b99c62c481344d5a14c28d2
+- node: v20.19.6
+- npm: 11.4.2

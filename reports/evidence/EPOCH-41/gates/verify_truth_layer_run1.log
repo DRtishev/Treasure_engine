@@ -1,0 +1,106 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:truth-layer
+> node scripts/verify/truth_layer_check.mjs
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-06: TRUTH LAYER VERIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━ TEST 1: TRUTH ENGINE INITIALIZATION ━━━
+✓ Truth Engine created
+✓ Truth Engine has config
+✓ Reality gap halt threshold correct
+
+━━━ TEST 2: FIXTURE EVALUATION ━━━
+Testing 11 scenarios...
+
+✓ ALLOW_OK - All healthy - schema valid
+✓ ALLOW_OK - All healthy - verdict ALLOW === ALLOW
+✓ ALLOW_OK - All healthy - reason code ALLOW_OK present
+✓ HALT_KILL_SWITCH - Kill switch active - schema valid
+✓ HALT_KILL_SWITCH - Kill switch active - verdict HALT === HALT
+✓ HALT_KILL_SWITCH - Kill switch active - reason code HALT_KILL_SWITCH_ACTIVE present
+✓ HALT_KILL_SWITCH - Kill switch active - HALT activates kill switch
+✓ HALT_KILL_SWITCH - Kill switch active - HALT confidence is 0.0
+✓ HALT_KILL_SWITCH - Kill switch active - HALT mode is OFF
+✓ HALT_EMERGENCY_STOP - Emergency stop active - schema valid
+✓ HALT_EMERGENCY_STOP - Emergency stop active - verdict HALT === HALT
+✓ HALT_EMERGENCY_STOP - Emergency stop active - reason code HALT_EMERGENCY_STOP present
+✓ HALT_EMERGENCY_STOP - Emergency stop active - HALT activates kill switch
+✓ HALT_EMERGENCY_STOP - Emergency stop active - HALT confidence is 0.0
+✓ HALT_EMERGENCY_STOP - Emergency stop active - HALT mode is OFF
+✓ HALT_REALITY_GAP - Reality gap too high - schema valid
+✓ HALT_REALITY_GAP - Reality gap too high - verdict HALT === HALT
+✓ HALT_REALITY_GAP - Reality gap too high - reason code HALT_REALITY_GAP present
+✓ HALT_REALITY_GAP - Reality gap too high - HALT activates kill switch
+✓ HALT_REALITY_GAP - Reality gap too high - HALT confidence is 0.0
+✓ HALT_REALITY_GAP - Reality gap too high - HALT mode is OFF
+✓ HALT_DATA_STALE - Data too old - schema valid
+✓ HALT_DATA_STALE - Data too old - verdict HALT === HALT
+✓ HALT_DATA_STALE - Data too old - reason code HALT_DATA_STALE present
+✓ HALT_DATA_STALE - Data too old - HALT activates kill switch
+✓ HALT_DATA_STALE - Data too old - HALT confidence is 0.0
+✓ HALT_DATA_STALE - Data too old - HALT mode is OFF
+✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - schema valid
+✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - verdict HALT === HALT
+✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - reason code HALT_MAX_DRAWDOWN present
+✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - HALT activates kill switch
+✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - HALT confidence is 0.0
+✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - HALT mode is OFF
+✓ HALT_DAILY_LOSS - Daily loss exceeded - schema valid
+✓ HALT_DAILY_LOSS - Daily loss exceeded - verdict HALT === HALT
+✓ HALT_DAILY_LOSS - Daily loss exceeded - reason code HALT_DAILY_LOSS present
+✓ HALT_DAILY_LOSS - Daily loss exceeded - HALT activates kill switch
+✓ HALT_DAILY_LOSS - Daily loss exceeded - HALT confidence is 0.0
+✓ HALT_DAILY_LOSS - Daily loss exceeded - HALT mode is OFF
+✓ DEGRADED_PERF_P99 - High latency - schema valid
+✓ DEGRADED_PERF_P99 - High latency - verdict DEGRADED === DEGRADED
+✓ DEGRADED_PERF_P99 - High latency - reason code DEGRADED_PERF_P99 present
+✓ DEGRADED_HIGH_REJECT - High rejection rate - schema valid
+✓ DEGRADED_HIGH_REJECT - High rejection rate - verdict DEGRADED === DEGRADED
+✓ DEGRADED_HIGH_REJECT - High rejection rate - reason code DEGRADED_HIGH_REJECT present
+✓ DEGRADED_HIGH_SLIPPAGE - High slippage - schema valid
+✓ DEGRADED_HIGH_SLIPPAGE - High slippage - verdict DEGRADED === DEGRADED
+✓ DEGRADED_HIGH_SLIPPAGE - High slippage - reason code DEGRADED_HIGH_SLIPPAGE present
+✓ DEGRADED_LOW_CONFIDENCE - Low system confidence - schema valid
+✓ DEGRADED_LOW_CONFIDENCE - Low system confidence - verdict DEGRADED === DEGRADED
+✓ DEGRADED_LOW_CONFIDENCE - Low system confidence - reason code DEGRADED_LOW_CONFIDENCE present
+
+━━━ TEST 3: DETERMINISM ━━━
+✓ Determinism: verdict1 === verdict2
+✓ Determinism: verdict2 === verdict3
+
+━━━ TEST 4: GOVERNANCE FSM ━━━
+✓ FSM starts in OFF mode
+✓ OFF → PAPER transition successful
+✓ FSM now in PAPER mode
+✓ HALT activated
+✓ FSM forced to OFF on HALT
+✓ Cannot transition from HALT without manual reset
+✓ Manual reset required flag set
+✓ Manual reset requested
+✓ Transition successful after manual reset
+✓ HALT cleared after manual reset
+
+━━━ TEST 5: GENERATE REPORT ━━━
+✓ truth_report.json generated
+   Report: /workspace/Treasure_engine/reports/truth_report.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 67
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ Truth Layer verification PASSED
+
+TRUTH LAYER: OPERATIONAL
+  • Deterministic: ✓
+  • HALT terminal: ✓
+  • Schema valid: ✓
+  • FSM working: ✓
+  • Report generated: ✓
+

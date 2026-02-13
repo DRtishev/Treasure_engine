@@ -1,0 +1,21 @@
+$ pwd
+/workspace/Treasure_engine
+$ git status -sb
+## work
+ M package.json
+ M scripts/verify/specs_check.mjs
+ M specs/epochs/INDEX.md
+ M specs/epochs/LEDGER.json
+?? docs/STAGE2_BOOT_PROMPT.md
+?? docs/STAGE2_IMPLEMENTATION_MATRIX.md
+?? reports/evidence/EPOCH-41/
+?? scripts/verify/epoch41_bridge.mjs
+?? specs/epochs/EPOCH-41.md
+?? specs/epochs/EPOCH-42.md
+?? specs/epochs/EPOCH-43.md
+?? specs/epochs/EPOCH-44.md
+?? specs/epochs/EPOCH-45.md
+$ node -v
+v20.19.6
+$ npm -v
+11.4.2

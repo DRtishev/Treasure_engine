@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "updated_at": "2026-02-12T12:00:00Z",
+  "updated_at": "2026-02-13T11:45:18Z",
   "epochs": {
     "1": {
       "id": "EPOCH-01",
@@ -609,6 +609,86 @@
       "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
       "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
       "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
+    },
+    "41": {
+      "id": "EPOCH-41",
+      "title": "Stage2 Bridge: WOW Audit + Fast Experiments",
+      "status": "DONE",
+      "type": "stage2_bridge",
+      "depends_on": [
+        "EPOCH-40"
+      ],
+      "gate_owner": "verify:epoch41",
+      "evidence_id": "EPOCH-41",
+      "completed_at": "2026-02-13T11:45:18Z",
+      "commit_sha": "TBD",
+      "last_commit_sha": "TBD",
+      "last_evidence_path": "reports/evidence/EPOCH-41/",
+      "last_gate_summary": "Bridge matrix + experiments executed with deterministic evidence."
+    },
+    "42": {
+      "id": "EPOCH-42",
+      "title": "Execution Realism Hardening",
+      "status": "READY",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-41"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "PENDING",
+      "completed_at": "",
+      "commit_sha": "",
+      "last_commit_sha": "",
+      "last_evidence_path": "",
+      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
+    },
+    "43": {
+      "id": "EPOCH-43",
+      "title": "Overfit Defense: CPCV + PBO + DSR",
+      "status": "READY",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-42"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "PENDING",
+      "completed_at": "",
+      "commit_sha": "",
+      "last_commit_sha": "",
+      "last_evidence_path": "",
+      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
+    },
+    "44": {
+      "id": "EPOCH-44",
+      "title": "Risk Fortress Evolution",
+      "status": "READY",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-43"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "PENDING",
+      "completed_at": "",
+      "commit_sha": "",
+      "last_commit_sha": "",
+      "last_evidence_path": "",
+      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
+    },
+    "45": {
+      "id": "EPOCH-45",
+      "title": "Agent Mesh MVP (Deterministic)",
+      "status": "READY",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-44"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "PENDING",
+      "completed_at": "",
+      "commit_sha": "",
+      "last_commit_sha": "",
+      "last_evidence_path": "",
+      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
     }
   }
 }

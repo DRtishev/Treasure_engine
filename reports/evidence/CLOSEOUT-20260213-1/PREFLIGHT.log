@@ -1,0 +1,54 @@
+$ pwd
+/workspace/Treasure_engine
+$ ls -la
+total 212
+drwxr-xr-x 19 root root  4096 Feb 13 11:31 .
+drwxr-xr-x  3 root root  4096 Feb 13 08:38 ..
+drwxr-xr-x  8 root root  4096 Feb 13 11:31 .git
+-rw-r--r--  1 root root   491 Feb 13 08:38 .gitignore
+-rw-r--r--  1 root root   188 Feb 13 11:31 AGENTS_NOTICE.md
+drwxr-xr-x  2 root root  4096 Feb 13 08:38 EVIDENCE_PACK
+-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-17.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-18.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
+-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-21.tar.gz.sha256
+-rw-r--r--  1 root root    98 Feb 13 08:38 EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+-rw-r--r--  1 root root    86 Feb 13 08:38 FINAL_VALIDATED.zip.sha256
+-rw-r--r--  1 root root 11754 Feb 13 11:31 QUICK_START.md
+-rw-r--r--  1 root root  2041 Feb 13 08:38 README.md
+-rw-r--r--  1 root root  2187 Feb 13 08:38 RUNBOOK.md
+-rw-r--r--  1 root root  9654 Feb 13 08:38 RUNBOOK_OPERATIONS.md
+-rw-r--r--  1 root root 28917 Feb 13 08:38 SDD_EPOCH_17_21.md
+-rw-r--r--  1 root root  1847 Feb 13 08:38 TASK_TRACKER.md
+-rw-r--r--  1 root root  1694 Feb 13 08:38 agents.md
+drwxr-xr-x  3 root root  4096 Feb 13 08:38 artifacts
+drwxr-xr-x 25 root root  4096 Feb 13 08:38 core
+drwxr-xr-x  3 root root  4096 Feb 13 08:38 data
+drwxr-xr-x  2 root root  4096 Feb 13 08:38 dataset
+drwxr-xr-x  4 root root  4096 Feb 13 11:31 docs
+drwxr-xr-x  4 root root  4096 Feb 13 08:38 evidence
+drwxr-xr-x  2 root root  4096 Feb 13 08:38 examples
+drwxr-xr-x 47 root root  4096 Feb 13 08:38 node_modules
+-rw-r--r--  1 root root 19412 Feb 13 08:38 package-lock.json
+-rw-r--r--  1 root root  7785 Feb 13 11:31 package.json
+-rw-r--r--  1 root root  3186 Feb 13 08:38 package.json.bak
+drwxr-xr-x 11 root root  4096 Feb 13 08:38 reports
+drwxr-xr-x  8 root root  4096 Feb 13 11:31 scripts
+drwxr-xr-x  2 root root  4096 Feb 13 08:38 spec
+drwxr-xr-x  3 root root  4096 Feb 13 08:38 specs
+drwxr-xr-x  3 root root  4096 Feb 13 08:38 tests
+drwxr-xr-x  2 root root  4096 Feb 13 08:38 truth
+drwxr-xr-x  2 root root  4096 Feb 13 08:38 ui
+$ git status -sb
+## work
+ M reports/evidence/CLOSEOUT-20260213-1/COMMANDS.log
+ M reports/evidence/CLOSEOUT-20260213-1/PREFLIGHT.log
+$ git rev-parse HEAD
+b381b802080a5ff0849dde124086d84a14c397e2
+$ git branch --show-current
+work
+$ git remote -v
+$ node -v
+v20.19.6
+$ npm -v
+11.4.2

@@ -1,0 +1,2193 @@
+diff --git a/reports/evidence/CLOSEOUT-20260213-1/COMMANDS.log b/reports/evidence/CLOSEOUT-20260213-1/COMMANDS.log
+index 3f75426..83bb44a 100644
+--- a/reports/evidence/CLOSEOUT-20260213-1/COMMANDS.log
++++ b/reports/evidence/CLOSEOUT-20260213-1/COMMANDS.log
+@@ -1761,3 +1761,1611 @@ npm warn Unknown env config "http-proxy". This will stop working in the next maj
+ PASS verify:edge run=run evidence=reports/evidence/EPOCH-EDGE-LOCAL-MEGA/verify_edge
+ $ git diff --binary
+ $ git ls-files | sort | xargs sha256sum
++$ pwd
++/workspace/Treasure_engine
++$ ls -la
++total 212
++drwxr-xr-x 19 root root  4096 Feb 13 11:31 .
++drwxr-xr-x  3 root root  4096 Feb 13 08:38 ..
++drwxr-xr-x  8 root root  4096 Feb 13 11:31 .git
++-rw-r--r--  1 root root   491 Feb 13 08:38 .gitignore
++-rw-r--r--  1 root root   188 Feb 13 11:31 AGENTS_NOTICE.md
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 EVIDENCE_PACK
++-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-17.tar.gz.sha256
++-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-18.tar.gz.sha256
++-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
++-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-21.tar.gz.sha256
++-rw-r--r--  1 root root    98 Feb 13 08:38 EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
++-rw-r--r--  1 root root    86 Feb 13 08:38 FINAL_VALIDATED.zip.sha256
++-rw-r--r--  1 root root 11754 Feb 13 11:31 QUICK_START.md
++-rw-r--r--  1 root root  2041 Feb 13 08:38 README.md
++-rw-r--r--  1 root root  2187 Feb 13 08:38 RUNBOOK.md
++-rw-r--r--  1 root root  9654 Feb 13 08:38 RUNBOOK_OPERATIONS.md
++-rw-r--r--  1 root root 28917 Feb 13 08:38 SDD_EPOCH_17_21.md
++-rw-r--r--  1 root root  1847 Feb 13 08:38 TASK_TRACKER.md
++-rw-r--r--  1 root root  1694 Feb 13 08:38 agents.md
++drwxr-xr-x  3 root root  4096 Feb 13 08:38 artifacts
++drwxr-xr-x 25 root root  4096 Feb 13 08:38 core
++drwxr-xr-x  3 root root  4096 Feb 13 08:38 data
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 dataset
++drwxr-xr-x  4 root root  4096 Feb 13 11:31 docs
++drwxr-xr-x  4 root root  4096 Feb 13 08:38 evidence
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 examples
++drwxr-xr-x 47 root root  4096 Feb 13 08:38 node_modules
++-rw-r--r--  1 root root 19412 Feb 13 08:38 package-lock.json
++-rw-r--r--  1 root root  7785 Feb 13 11:31 package.json
++-rw-r--r--  1 root root  3186 Feb 13 08:38 package.json.bak
++drwxr-xr-x 11 root root  4096 Feb 13 08:38 reports
++drwxr-xr-x  8 root root  4096 Feb 13 11:31 scripts
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 spec
++drwxr-xr-x  3 root root  4096 Feb 13 08:38 specs
++drwxr-xr-x  3 root root  4096 Feb 13 08:38 tests
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 truth
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 ui
++$ git status -sb
++## work
++ M reports/evidence/CLOSEOUT-20260213-1/COMMANDS.log
++ M reports/evidence/CLOSEOUT-20260213-1/PREFLIGHT.log
++$ git rev-parse HEAD
++b381b802080a5ff0849dde124086d84a14c397e2
++$ git branch --show-current
++work
++$ git remote -v
++$ node -v
++v20.19.6
++$ npm -v
++11.4.2
++$ rg -n "NEURO-MEV" README.md QUICK_START.md docs specs --glob "!docs/legacy/**"
++$ node scripts/verify/repo_sanity_check.mjs
++verify:repo PASSED
++$ git ls-files | awk ... case-collision
++NO_COLLISION
++$ npm ci
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++added 44 packages, and audited 45 packages in 2s
++
++11 packages are looking for funding
++  run `npm fund` for details
++
++found 0 vulnerabilities
++$ npm ci
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++added 44 packages, and audited 45 packages in 1s
++
++11 packages are looking for funding
++  run `npm fund` for details
++
++found 0 vulnerabilities
++$ CI=true npm run verify:specs
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:specs
++> node scripts/verify/specs_check.mjs && npm run verify:repo
++
++verify:specs PASSED
++Validated 48 required files in /workspace/Treasure_engine
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:repo
++> node scripts/verify/repo_sanity_check.mjs
++
++verify:repo PASSED
++$ CI=true npm run verify:specs
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:specs
++> node scripts/verify/specs_check.mjs && npm run verify:repo
++
++verify:specs PASSED
++Validated 48 required files in /workspace/Treasure_engine
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:repo
++> node scripts/verify/repo_sanity_check.mjs
++
++verify:repo PASSED
++$ CI=true npm run verify:repo
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:repo
++> node scripts/verify/repo_sanity_check.mjs
++
++verify:repo PASSED
++$ CI=true npm run verify:repo
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:repo
++> node scripts/verify/repo_sanity_check.mjs
++
++verify:repo PASSED
++$ CI=true npm run verify:edge
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:edge
++> node scripts/verify/edge_all_epochs.mjs
++
++PASS verify:edge run=run evidence=reports/evidence/EPOCH-EDGE-LOCAL-MEGA/verify_edge
++$ CI=true npm run verify:edge
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:edge
++> node scripts/verify/edge_all_epochs.mjs
++
++PASS verify:edge run=run evidence=reports/evidence/EPOCH-EDGE-LOCAL-MEGA/verify_edge
++$ CI=true npm run verify:truth-layer
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:truth-layer
++> node scripts/verify/truth_layer_check.mjs
++
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++EPOCH-06: TRUTH LAYER VERIFICATION
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++━━━ TEST 1: TRUTH ENGINE INITIALIZATION ━━━
++✓ Truth Engine created
++✓ Truth Engine has config
++✓ Reality gap halt threshold correct
++
++━━━ TEST 2: FIXTURE EVALUATION ━━━
++Testing 11 scenarios...
++
++✓ ALLOW_OK - All healthy - schema valid
++✓ ALLOW_OK - All healthy - verdict ALLOW === ALLOW
++✓ ALLOW_OK - All healthy - reason code ALLOW_OK present
++✓ HALT_KILL_SWITCH - Kill switch active - schema valid
++✓ HALT_KILL_SWITCH - Kill switch active - verdict HALT === HALT
++✓ HALT_KILL_SWITCH - Kill switch active - reason code HALT_KILL_SWITCH_ACTIVE present
++✓ HALT_KILL_SWITCH - Kill switch active - HALT activates kill switch
++✓ HALT_KILL_SWITCH - Kill switch active - HALT confidence is 0.0
++✓ HALT_KILL_SWITCH - Kill switch active - HALT mode is OFF
++✓ HALT_EMERGENCY_STOP - Emergency stop active - schema valid
++✓ HALT_EMERGENCY_STOP - Emergency stop active - verdict HALT === HALT
++✓ HALT_EMERGENCY_STOP - Emergency stop active - reason code HALT_EMERGENCY_STOP present
++✓ HALT_EMERGENCY_STOP - Emergency stop active - HALT activates kill switch
++✓ HALT_EMERGENCY_STOP - Emergency stop active - HALT confidence is 0.0
++✓ HALT_EMERGENCY_STOP - Emergency stop active - HALT mode is OFF
++✓ HALT_REALITY_GAP - Reality gap too high - schema valid
++✓ HALT_REALITY_GAP - Reality gap too high - verdict HALT === HALT
++✓ HALT_REALITY_GAP - Reality gap too high - reason code HALT_REALITY_GAP present
++✓ HALT_REALITY_GAP - Reality gap too high - HALT activates kill switch
++✓ HALT_REALITY_GAP - Reality gap too high - HALT confidence is 0.0
++✓ HALT_REALITY_GAP - Reality gap too high - HALT mode is OFF
++✓ HALT_DATA_STALE - Data too old - schema valid
++✓ HALT_DATA_STALE - Data too old - verdict HALT === HALT
++✓ HALT_DATA_STALE - Data too old - reason code HALT_DATA_STALE present
++✓ HALT_DATA_STALE - Data too old - HALT activates kill switch
++✓ HALT_DATA_STALE - Data too old - HALT confidence is 0.0
++✓ HALT_DATA_STALE - Data too old - HALT mode is OFF
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - schema valid
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - verdict HALT === HALT
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - reason code HALT_MAX_DRAWDOWN present
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - HALT activates kill switch
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - HALT confidence is 0.0
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - HALT mode is OFF
++✓ HALT_DAILY_LOSS - Daily loss exceeded - schema valid
++✓ HALT_DAILY_LOSS - Daily loss exceeded - verdict HALT === HALT
++✓ HALT_DAILY_LOSS - Daily loss exceeded - reason code HALT_DAILY_LOSS present
++✓ HALT_DAILY_LOSS - Daily loss exceeded - HALT activates kill switch
++✓ HALT_DAILY_LOSS - Daily loss exceeded - HALT confidence is 0.0
++✓ HALT_DAILY_LOSS - Daily loss exceeded - HALT mode is OFF
++✓ DEGRADED_PERF_P99 - High latency - schema valid
++✓ DEGRADED_PERF_P99 - High latency - verdict DEGRADED === DEGRADED
++✓ DEGRADED_PERF_P99 - High latency - reason code DEGRADED_PERF_P99 present
++✓ DEGRADED_HIGH_REJECT - High rejection rate - schema valid
++✓ DEGRADED_HIGH_REJECT - High rejection rate - verdict DEGRADED === DEGRADED
++✓ DEGRADED_HIGH_REJECT - High rejection rate - reason code DEGRADED_HIGH_REJECT present
++✓ DEGRADED_HIGH_SLIPPAGE - High slippage - schema valid
++✓ DEGRADED_HIGH_SLIPPAGE - High slippage - verdict DEGRADED === DEGRADED
++✓ DEGRADED_HIGH_SLIPPAGE - High slippage - reason code DEGRADED_HIGH_SLIPPAGE present
++✓ DEGRADED_LOW_CONFIDENCE - Low system confidence - schema valid
++✓ DEGRADED_LOW_CONFIDENCE - Low system confidence - verdict DEGRADED === DEGRADED
++✓ DEGRADED_LOW_CONFIDENCE - Low system confidence - reason code DEGRADED_LOW_CONFIDENCE present
++
++━━━ TEST 3: DETERMINISM ━━━
++✓ Determinism: verdict1 === verdict2
++✓ Determinism: verdict2 === verdict3
++
++━━━ TEST 4: GOVERNANCE FSM ━━━
++✓ FSM starts in OFF mode
++✓ OFF → PAPER transition successful
++✓ FSM now in PAPER mode
++✓ HALT activated
++✓ FSM forced to OFF on HALT
++✓ Cannot transition from HALT without manual reset
++✓ Manual reset required flag set
++✓ Manual reset requested
++✓ Transition successful after manual reset
++✓ HALT cleared after manual reset
++
++━━━ TEST 5: GENERATE REPORT ━━━
++✓ truth_report.json generated
++   Report: /workspace/Treasure_engine/reports/truth_report.json
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++RESULTS
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++✓ PASSED: 67
++✗ FAILED: 0
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++✓ Truth Layer verification PASSED
++
++TRUTH LAYER: OPERATIONAL
++  • Deterministic: ✓
++  • HALT terminal: ✓
++  • Schema valid: ✓
++  • FSM working: ✓
++  • Report generated: ✓
++
++$ CI=true npm run verify:truth-layer
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:truth-layer
++> node scripts/verify/truth_layer_check.mjs
++
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++EPOCH-06: TRUTH LAYER VERIFICATION
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++━━━ TEST 1: TRUTH ENGINE INITIALIZATION ━━━
++✓ Truth Engine created
++✓ Truth Engine has config
++✓ Reality gap halt threshold correct
++
++━━━ TEST 2: FIXTURE EVALUATION ━━━
++Testing 11 scenarios...
++
++✓ ALLOW_OK - All healthy - schema valid
++✓ ALLOW_OK - All healthy - verdict ALLOW === ALLOW
++✓ ALLOW_OK - All healthy - reason code ALLOW_OK present
++✓ HALT_KILL_SWITCH - Kill switch active - schema valid
++✓ HALT_KILL_SWITCH - Kill switch active - verdict HALT === HALT
++✓ HALT_KILL_SWITCH - Kill switch active - reason code HALT_KILL_SWITCH_ACTIVE present
++✓ HALT_KILL_SWITCH - Kill switch active - HALT activates kill switch
++✓ HALT_KILL_SWITCH - Kill switch active - HALT confidence is 0.0
++✓ HALT_KILL_SWITCH - Kill switch active - HALT mode is OFF
++✓ HALT_EMERGENCY_STOP - Emergency stop active - schema valid
++✓ HALT_EMERGENCY_STOP - Emergency stop active - verdict HALT === HALT
++✓ HALT_EMERGENCY_STOP - Emergency stop active - reason code HALT_EMERGENCY_STOP present
++✓ HALT_EMERGENCY_STOP - Emergency stop active - HALT activates kill switch
++✓ HALT_EMERGENCY_STOP - Emergency stop active - HALT confidence is 0.0
++✓ HALT_EMERGENCY_STOP - Emergency stop active - HALT mode is OFF
++✓ HALT_REALITY_GAP - Reality gap too high - schema valid
++✓ HALT_REALITY_GAP - Reality gap too high - verdict HALT === HALT
++✓ HALT_REALITY_GAP - Reality gap too high - reason code HALT_REALITY_GAP present
++✓ HALT_REALITY_GAP - Reality gap too high - HALT activates kill switch
++✓ HALT_REALITY_GAP - Reality gap too high - HALT confidence is 0.0
++✓ HALT_REALITY_GAP - Reality gap too high - HALT mode is OFF
++✓ HALT_DATA_STALE - Data too old - schema valid
++✓ HALT_DATA_STALE - Data too old - verdict HALT === HALT
++✓ HALT_DATA_STALE - Data too old - reason code HALT_DATA_STALE present
++✓ HALT_DATA_STALE - Data too old - HALT activates kill switch
++✓ HALT_DATA_STALE - Data too old - HALT confidence is 0.0
++✓ HALT_DATA_STALE - Data too old - HALT mode is OFF
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - schema valid
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - verdict HALT === HALT
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - reason code HALT_MAX_DRAWDOWN present
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - HALT activates kill switch
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - HALT confidence is 0.0
++✓ HALT_MAX_DRAWDOWN - Drawdown exceeded - HALT mode is OFF
++✓ HALT_DAILY_LOSS - Daily loss exceeded - schema valid
++✓ HALT_DAILY_LOSS - Daily loss exceeded - verdict HALT === HALT
++✓ HALT_DAILY_LOSS - Daily loss exceeded - reason code HALT_DAILY_LOSS present
++✓ HALT_DAILY_LOSS - Daily loss exceeded - HALT activates kill switch
++✓ HALT_DAILY_LOSS - Daily loss exceeded - HALT confidence is 0.0
++✓ HALT_DAILY_LOSS - Daily loss exceeded - HALT mode is OFF
++✓ DEGRADED_PERF_P99 - High latency - schema valid
++✓ DEGRADED_PERF_P99 - High latency - verdict DEGRADED === DEGRADED
++✓ DEGRADED_PERF_P99 - High latency - reason code DEGRADED_PERF_P99 present
++✓ DEGRADED_HIGH_REJECT - High rejection rate - schema valid
++✓ DEGRADED_HIGH_REJECT - High rejection rate - verdict DEGRADED === DEGRADED
++✓ DEGRADED_HIGH_REJECT - High rejection rate - reason code DEGRADED_HIGH_REJECT present
++✓ DEGRADED_HIGH_SLIPPAGE - High slippage - schema valid
++✓ DEGRADED_HIGH_SLIPPAGE - High slippage - verdict DEGRADED === DEGRADED
++✓ DEGRADED_HIGH_SLIPPAGE - High slippage - reason code DEGRADED_HIGH_SLIPPAGE present
++✓ DEGRADED_LOW_CONFIDENCE - Low system confidence - schema valid
++✓ DEGRADED_LOW_CONFIDENCE - Low system confidence - verdict DEGRADED === DEGRADED
++✓ DEGRADED_LOW_CONFIDENCE - Low system confidence - reason code DEGRADED_LOW_CONFIDENCE present
++
++━━━ TEST 3: DETERMINISM ━━━
++✓ Determinism: verdict1 === verdict2
++✓ Determinism: verdict2 === verdict3
++
++━━━ TEST 4: GOVERNANCE FSM ━━━
++✓ FSM starts in OFF mode
++✓ OFF → PAPER transition successful
++✓ FSM now in PAPER mode
++✓ HALT activated
++✓ FSM forced to OFF on HALT
++✓ Cannot transition from HALT without manual reset
++✓ Manual reset required flag set
++✓ Manual reset requested
++✓ Transition successful after manual reset
++✓ HALT cleared after manual reset
++
++━━━ TEST 5: GENERATE REPORT ━━━
++✓ truth_report.json generated
++   Report: /workspace/Treasure_engine/reports/truth_report.json
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++RESULTS
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++✓ PASSED: 67
++✗ FAILED: 0
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++✓ Truth Layer verification PASSED
++
++TRUTH LAYER: OPERATIONAL
++  • Deterministic: ✓
++  • HALT terminal: ✓
++  • Schema valid: ✓
++  • FSM working: ✓
++  • Report generated: ✓
++
++$ CI=true npm run verify:config
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:config
++> node scripts/verify/config_check.mjs
++
++
++╔════════════════════════════════════════════════════════════╗
++║  EPOCH-12: CONFIG VALIDATION                             ║
++╚════════════════════════════════════════════════════════════╝
++
++✓ Config schema loaded: ./spec/config.schema.json
++
++━━━ SCHEMA STRUCTURE VALIDATION ━━━
++
++✓ Schema has "$schema"
++✓ Schema has "title"
++✓ Schema has "type"
++✓ Schema has "properties"
++
++━━━ PROPERTY DEFINITIONS ━━━
++
++✓ Property defined: mode
++✓ Property defined: persistence
++✓ Property defined: event_log
++✓ Property defined: execution
++
++━━━ MODE ENUM VALIDATION ━━━
++
++✓ Mode supported: sim
++✓ Mode supported: paper
++✓ Mode supported: live
++
++━━━ VALIDATION FUNCTION TEST ━━━
++
++✓ Valid config passes validation
++✓ Invalid config (missing mode) correctly rejected
++✓ Invalid config (bad mode) correctly rejected
++✓ Invalid run_id format correctly rejected
++
++━━━ NETWORK ISOLATION CHECK ━━━
++
++✓ No network modules imported (network-isolated)
++⚠ Warning: .env usage detected (acceptable if not required)
++
++━━━ SUMMARY ━━━
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++RESULTS
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++✓ PASSED: 16
++✗ FAILED: 0
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++🎉 CONFIG VALIDATION: PASS
++
++✅ DELIVERABLES VERIFIED:
++
++   ✓ Config schema well-formed
++   ✓ Required properties defined
++   ✓ Mode enum validated
++   ✓ Validation function operational
++   ✓ Network-isolated (no http/https/net imports)
++   ✓ No .env dependency
++
++$ CI=true npm run verify:config
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:config
++> node scripts/verify/config_check.mjs
++
++
++╔════════════════════════════════════════════════════════════╗
++║  EPOCH-12: CONFIG VALIDATION                             ║
++╚════════════════════════════════════════════════════════════╝
++
++✓ Config schema loaded: ./spec/config.schema.json
++
++━━━ SCHEMA STRUCTURE VALIDATION ━━━
++
++✓ Schema has "$schema"
++✓ Schema has "title"
++✓ Schema has "type"
++✓ Schema has "properties"
++
++━━━ PROPERTY DEFINITIONS ━━━
++
++✓ Property defined: mode
++✓ Property defined: persistence
++✓ Property defined: event_log
++✓ Property defined: execution
++
++━━━ MODE ENUM VALIDATION ━━━
++
++✓ Mode supported: sim
++✓ Mode supported: paper
++✓ Mode supported: live
++
++━━━ VALIDATION FUNCTION TEST ━━━
++
++✓ Valid config passes validation
++✓ Invalid config (missing mode) correctly rejected
++✓ Invalid config (bad mode) correctly rejected
++✓ Invalid run_id format correctly rejected
++
++━━━ NETWORK ISOLATION CHECK ━━━
++
++✓ No network modules imported (network-isolated)
++⚠ Warning: .env usage detected (acceptable if not required)
++
++━━━ SUMMARY ━━━
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++RESULTS
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++✓ PASSED: 16
++✗ FAILED: 0
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++🎉 CONFIG VALIDATION: PASS
++
++✅ DELIVERABLES VERIFIED:
++
++   ✓ Config schema well-formed
++   ✓ Required properties defined
++   ✓ Mode enum validated
++   ✓ Validation function operational
++   ✓ Network-isolated (no http/https/net imports)
++   ✓ No .env dependency
++
++$ CI=true npm run verify:e2:multi
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:e2:multi
++> node scripts/verify/e2_multi_seed.mjs
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++E2 MULTI-SEED STABILITY GATE
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++[run_with_context] gate=e2 seed=12345 repeat=multi_r1
++[run_with_context] run_id=ecb7712de5f0ccb8
++[run_with_context] run_dir=reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8
++
++> treasure-engine@1.0.0 verify:e2:raw
++> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
++
++
++> treasure-engine@1.0.0 verify:hacks
++> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
++
++[verify:hacks] STUB PASS
++
++> treasure-engine@1.0.0 verify:truth
++> bash scripts/verify/truth.sh
++
++[verify:truth] STUB PASS
++
++> treasure-engine@1.0.0 sim:all
++> npm run sim:data && node core/sim/engine.mjs
++
++
++> treasure-engine@1.0.0 sim:data
++> node core/sim/bar_generator.mjs
++
++[bar_generator] Generated data/synthetic_1000bars_5m.json
++[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
++[engine] Running HACK_A2 in optimistic mode...
++[engine] Running HACK_A2 in base mode...
++[engine] Running HACK_A2 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a2_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[engine] Running HACK_A3 in optimistic mode...
++[engine] Running HACK_A3 in base mode...
++[engine] Running HACK_A3 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a3_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[engine] Running HACK_B1 in optimistic mode...
++[engine] Running HACK_B1 in base mode...
++[engine] Running HACK_B1 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b1_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[engine] Running HACK_B3 in optimistic mode...
++[engine] Running HACK_B3 in base mode...
++[engine] Running HACK_B3 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b3_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/eqs_report.json
++[engine] E2.1 PENALIZED METRICS simulation complete!
++
++> treasure-engine@1.0.0 verify:sim-schema
++> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
++
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++
++> treasure-engine@1.0.0 verify:eqs-schema
++> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
++
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/eqs_report.json
++[schema] SUMMARY: pass 1/1
++
++> treasure-engine@1.0.0 court:v1
++> node core/court/court_v1.mjs
++
++[court] Starting Court v1 adjudication (PENALIZED METRICS)...
++[court] Judging HACK_A2...
++[court] Judging HACK_A3...
++[court] Judging HACK_B1...
++[court] Judging HACK_B3...
++[court] Generated: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/court_report.json
++[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/court_report.json
++[schema] SUMMARY: pass 1/1
++WROTE: ui/panel.html
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/eqs_report.json
++[schema] SUMMARY: pass 1/1
++[schema] PASS: reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8/court_report.json
++[schema] SUMMARY: pass 1/1
++✓ seed=12345 repeat=multi_r1 validated @ reports/runs/e2/12345/multi_r1/ecb7712de5f0ccb8
++[run_with_context] gate=e2 seed=12345 repeat=multi_r2
++[run_with_context] run_id=ecb7712de5f0ccb8
++[run_with_context] run_dir=reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8
++
++> treasure-engine@1.0.0 verify:e2:raw
++> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
++
++
++> treasure-engine@1.0.0 verify:hacks
++> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
++
++[verify:hacks] STUB PASS
++
++> treasure-engine@1.0.0 verify:truth
++> bash scripts/verify/truth.sh
++
++[verify:truth] STUB PASS
++
++> treasure-engine@1.0.0 sim:all
++> npm run sim:data && node core/sim/engine.mjs
++
++
++> treasure-engine@1.0.0 sim:data
++> node core/sim/bar_generator.mjs
++
++[bar_generator] Generated data/synthetic_1000bars_5m.json
++[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
++[engine] Running HACK_A2 in optimistic mode...
++[engine] Running HACK_A2 in base mode...
++[engine] Running HACK_A2 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a2_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[engine] Running HACK_A3 in optimistic mode...
++[engine] Running HACK_A3 in base mode...
++[engine] Running HACK_A3 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a3_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[engine] Running HACK_B1 in optimistic mode...
++[engine] Running HACK_B1 in base mode...
++[engine] Running HACK_B1 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b1_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[engine] Running HACK_B3 in optimistic mode...
++[engine] Running HACK_B3 in base mode...
++[engine] Running HACK_B3 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b3_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/eqs_report.json
++[engine] E2.1 PENALIZED METRICS simulation complete!
++
++> treasure-engine@1.0.0 verify:sim-schema
++> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
++
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++
++> treasure-engine@1.0.0 verify:eqs-schema
++> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
++
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/eqs_report.json
++[schema] SUMMARY: pass 1/1
++
++> treasure-engine@1.0.0 court:v1
++> node core/court/court_v1.mjs
++
++[court] Starting Court v1 adjudication (PENALIZED METRICS)...
++[court] Judging HACK_A2...
++[court] Judging HACK_A3...
++[court] Judging HACK_B1...
++[court] Judging HACK_B3...
++[court] Generated: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/court_report.json
++[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/court_report.json
++[schema] SUMMARY: pass 1/1
++WROTE: ui/panel.html
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/eqs_report.json
++[schema] SUMMARY: pass 1/1
++[schema] PASS: reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8/court_report.json
++[schema] SUMMARY: pass 1/1
++✓ seed=12345 repeat=multi_r2 validated @ reports/runs/e2/12345/multi_r2/ecb7712de5f0ccb8
++✓ seed=12345 repeat comparison stable (no structural drift)
++[run_with_context] gate=e2 seed=23456 repeat=multi_r1
++[run_with_context] run_id=44a630287f05571a
++[run_with_context] run_dir=reports/runs/e2/23456/multi_r1/44a630287f05571a
++
++> treasure-engine@1.0.0 verify:e2:raw
++> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
++
++
++> treasure-engine@1.0.0 verify:hacks
++> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
++
++[verify:hacks] STUB PASS
++
++> treasure-engine@1.0.0 verify:truth
++> bash scripts/verify/truth.sh
++
++[verify:truth] STUB PASS
++
++> treasure-engine@1.0.0 sim:all
++> npm run sim:data && node core/sim/engine.mjs
++
++
++> treasure-engine@1.0.0 sim:data
++> node core/sim/bar_generator.mjs
++
++[bar_generator] Generated data/synthetic_1000bars_5m.json
++[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
++[engine] Running HACK_A2 in optimistic mode...
++[engine] Running HACK_A2 in base mode...
++[engine] Running HACK_A2 in hostile mode...
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a2_optimistic_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a2_base_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a2_hostile_report.json
++[engine] Running HACK_A3 in optimistic mode...
++[engine] Running HACK_A3 in base mode...
++[engine] Running HACK_A3 in hostile mode...
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a3_optimistic_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a3_base_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a3_hostile_report.json
++[engine] Running HACK_B1 in optimistic mode...
++[engine] Running HACK_B1 in base mode...
++[engine] Running HACK_B1 in hostile mode...
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b1_optimistic_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b1_base_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b1_hostile_report.json
++[engine] Running HACK_B3 in optimistic mode...
++[engine] Running HACK_B3 in base mode...
++[engine] Running HACK_B3 in hostile mode...
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b3_optimistic_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b3_base_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b3_hostile_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/eqs_report.json
++[engine] E2.1 PENALIZED METRICS simulation complete!
++
++> treasure-engine@1.0.0 verify:sim-schema
++> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
++
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++
++> treasure-engine@1.0.0 verify:eqs-schema
++> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
++
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/eqs_report.json
++[schema] SUMMARY: pass 1/1
++
++> treasure-engine@1.0.0 court:v1
++> node core/court/court_v1.mjs
++
++[court] Starting Court v1 adjudication (PENALIZED METRICS)...
++[court] Judging HACK_A2...
++[court] Judging HACK_A3...
++[court] Judging HACK_B1...
++[court] Judging HACK_B3...
++[court] Generated: reports/runs/e2/23456/multi_r1/44a630287f05571a/court_report.json
++[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/court_report.json
++[schema] SUMMARY: pass 1/1
++WROTE: ui/panel.html
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/eqs_report.json
++[schema] SUMMARY: pass 1/1
++[schema] PASS: reports/runs/e2/23456/multi_r1/44a630287f05571a/court_report.json
++[schema] SUMMARY: pass 1/1
++✓ seed=23456 repeat=multi_r1 validated @ reports/runs/e2/23456/multi_r1/44a630287f05571a
++[run_with_context] gate=e2 seed=34567 repeat=multi_r1
++[run_with_context] run_id=58e729ccc40a7cdf
++[run_with_context] run_dir=reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf
++
++> treasure-engine@1.0.0 verify:e2:raw
++> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
++
++
++> treasure-engine@1.0.0 verify:hacks
++> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
++
++[verify:hacks] STUB PASS
++
++> treasure-engine@1.0.0 verify:truth
++> bash scripts/verify/truth.sh
++
++[verify:truth] STUB PASS
++
++> treasure-engine@1.0.0 sim:all
++> npm run sim:data && node core/sim/engine.mjs
++
++
++> treasure-engine@1.0.0 sim:data
++> node core/sim/bar_generator.mjs
++
++[bar_generator] Generated data/synthetic_1000bars_5m.json
++[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
++[engine] Running HACK_A2 in optimistic mode...
++[engine] Running HACK_A2 in base mode...
++[engine] Running HACK_A2 in hostile mode...
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a2_optimistic_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a2_base_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a2_hostile_report.json
++[engine] Running HACK_A3 in optimistic mode...
++[engine] Running HACK_A3 in base mode...
++[engine] Running HACK_A3 in hostile mode...
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a3_optimistic_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a3_base_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a3_hostile_report.json
++[engine] Running HACK_B1 in optimistic mode...
++[engine] Running HACK_B1 in base mode...
++[engine] Running HACK_B1 in hostile mode...
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b1_optimistic_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b1_base_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b1_hostile_report.json
++[engine] Running HACK_B3 in optimistic mode...
++[engine] Running HACK_B3 in base mode...
++[engine] Running HACK_B3 in hostile mode...
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b3_optimistic_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b3_base_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b3_hostile_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/eqs_report.json
++[engine] E2.1 PENALIZED METRICS simulation complete!
++
++> treasure-engine@1.0.0 verify:sim-schema
++> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
++
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++
++> treasure-engine@1.0.0 verify:eqs-schema
++> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
++
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/eqs_report.json
++[schema] SUMMARY: pass 1/1
++
++> treasure-engine@1.0.0 court:v1
++> node core/court/court_v1.mjs
++
++[court] Starting Court v1 adjudication (PENALIZED METRICS)...
++[court] Judging HACK_A2...
++[court] Judging HACK_A3...
++[court] Judging HACK_B1...
++[court] Judging HACK_B3...
++[court] Generated: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/court_report.json
++[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/court_report.json
++[schema] SUMMARY: pass 1/1
++WROTE: ui/panel.html
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/eqs_report.json
++[schema] SUMMARY: pass 1/1
++[schema] PASS: reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf/court_report.json
++[schema] SUMMARY: pass 1/1
++✓ seed=34567 repeat=multi_r1 validated @ reports/runs/e2/34567/multi_r1/58e729ccc40a7cdf
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++✓ PASSED: seeds=3, repeats=2 for seed 12345
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++$ CI=true npm run verify:e2:multi
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:e2:multi
++> node scripts/verify/e2_multi_seed.mjs
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++E2 MULTI-SEED STABILITY GATE
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++[run_with_context] gate=e2 seed=12345 repeat=multi_r1_2
++[run_with_context] run_id=ecb7712de5f0ccb8
++[run_with_context] run_dir=reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8
++
++> treasure-engine@1.0.0 verify:e2:raw
++> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
++
++
++> treasure-engine@1.0.0 verify:hacks
++> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
++
++[verify:hacks] STUB PASS
++
++> treasure-engine@1.0.0 verify:truth
++> bash scripts/verify/truth.sh
++
++[verify:truth] STUB PASS
++
++> treasure-engine@1.0.0 sim:all
++> npm run sim:data && node core/sim/engine.mjs
++
++
++> treasure-engine@1.0.0 sim:data
++> node core/sim/bar_generator.mjs
++
++[bar_generator] Generated data/synthetic_1000bars_5m.json
++[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
++[engine] Running HACK_A2 in optimistic mode...
++[engine] Running HACK_A2 in base mode...
++[engine] Running HACK_A2 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a2_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[engine] Running HACK_A3 in optimistic mode...
++[engine] Running HACK_A3 in base mode...
++[engine] Running HACK_A3 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a3_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[engine] Running HACK_B1 in optimistic mode...
++[engine] Running HACK_B1 in base mode...
++[engine] Running HACK_B1 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b1_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[engine] Running HACK_B3 in optimistic mode...
++[engine] Running HACK_B3 in base mode...
++[engine] Running HACK_B3 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b3_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/eqs_report.json
++[engine] E2.1 PENALIZED METRICS simulation complete!
++
++> treasure-engine@1.0.0 verify:sim-schema
++> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
++
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++
++> treasure-engine@1.0.0 verify:eqs-schema
++> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
++
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/eqs_report.json
++[schema] SUMMARY: pass 1/1
++
++> treasure-engine@1.0.0 court:v1
++> node core/court/court_v1.mjs
++
++[court] Starting Court v1 adjudication (PENALIZED METRICS)...
++[court] Judging HACK_A2...
++[court] Judging HACK_A3...
++[court] Judging HACK_B1...
++[court] Judging HACK_B3...
++[court] Generated: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/court_report.json
++[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/court_report.json
++[schema] SUMMARY: pass 1/1
++WROTE: ui/panel.html
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/eqs_report.json
++[schema] SUMMARY: pass 1/1
++[schema] PASS: reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8/court_report.json
++[schema] SUMMARY: pass 1/1
++✓ seed=12345 repeat=multi_r1 validated @ reports/runs/e2/12345/multi_r1_2/ecb7712de5f0ccb8
++[run_with_context] gate=e2 seed=12345 repeat=multi_r2_2
++[run_with_context] run_id=ecb7712de5f0ccb8
++[run_with_context] run_dir=reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8
++
++> treasure-engine@1.0.0 verify:e2:raw
++> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
++
++
++> treasure-engine@1.0.0 verify:hacks
++> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
++
++[verify:hacks] STUB PASS
++
++> treasure-engine@1.0.0 verify:truth
++> bash scripts/verify/truth.sh
++
++[verify:truth] STUB PASS
++
++> treasure-engine@1.0.0 sim:all
++> npm run sim:data && node core/sim/engine.mjs
++
++
++> treasure-engine@1.0.0 sim:data
++> node core/sim/bar_generator.mjs
++
++[bar_generator] Generated data/synthetic_1000bars_5m.json
++[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
++[engine] Running HACK_A2 in optimistic mode...
++[engine] Running HACK_A2 in base mode...
++[engine] Running HACK_A2 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a2_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[engine] Running HACK_A3 in optimistic mode...
++[engine] Running HACK_A3 in base mode...
++[engine] Running HACK_A3 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a3_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[engine] Running HACK_B1 in optimistic mode...
++[engine] Running HACK_B1 in base mode...
++[engine] Running HACK_B1 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b1_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[engine] Running HACK_B3 in optimistic mode...
++[engine] Running HACK_B3 in base mode...
++[engine] Running HACK_B3 in hostile mode...
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b3_base_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[engine] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/eqs_report.json
++[engine] E2.1 PENALIZED METRICS simulation complete!
++
++> treasure-engine@1.0.0 verify:sim-schema
++> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
++
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++
++> treasure-engine@1.0.0 verify:eqs-schema
++> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
++
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/eqs_report.json
++[schema] SUMMARY: pass 1/1
++
++> treasure-engine@1.0.0 court:v1
++> node core/court/court_v1.mjs
++
++[court] Starting Court v1 adjudication (PENALIZED METRICS)...
++[court] Judging HACK_A2...
++[court] Judging HACK_A3...
++[court] Judging HACK_B1...
++[court] Judging HACK_B3...
++[court] Generated: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/court_report.json
++[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/court_report.json
++[schema] SUMMARY: pass 1/1
++WROTE: ui/panel.html
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/eqs_report.json
++[schema] SUMMARY: pass 1/1
++[schema] PASS: reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8/court_report.json
++[schema] SUMMARY: pass 1/1
++✓ seed=12345 repeat=multi_r2 validated @ reports/runs/e2/12345/multi_r2_2/ecb7712de5f0ccb8
++✓ seed=12345 repeat comparison stable (no structural drift)
++[run_with_context] gate=e2 seed=23456 repeat=multi_r1_2
++[run_with_context] run_id=44a630287f05571a
++[run_with_context] run_dir=reports/runs/e2/23456/multi_r1_2/44a630287f05571a
++
++> treasure-engine@1.0.0 verify:e2:raw
++> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
++
++
++> treasure-engine@1.0.0 verify:hacks
++> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
++
++[verify:hacks] STUB PASS
++
++> treasure-engine@1.0.0 verify:truth
++> bash scripts/verify/truth.sh
++
++[verify:truth] STUB PASS
++
++> treasure-engine@1.0.0 sim:all
++> npm run sim:data && node core/sim/engine.mjs
++
++
++> treasure-engine@1.0.0 sim:data
++> node core/sim/bar_generator.mjs
++
++[bar_generator] Generated data/synthetic_1000bars_5m.json
++[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
++[engine] Running HACK_A2 in optimistic mode...
++[engine] Running HACK_A2 in base mode...
++[engine] Running HACK_A2 in hostile mode...
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a2_optimistic_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a2_base_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a2_hostile_report.json
++[engine] Running HACK_A3 in optimistic mode...
++[engine] Running HACK_A3 in base mode...
++[engine] Running HACK_A3 in hostile mode...
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a3_optimistic_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a3_base_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a3_hostile_report.json
++[engine] Running HACK_B1 in optimistic mode...
++[engine] Running HACK_B1 in base mode...
++[engine] Running HACK_B1 in hostile mode...
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b1_optimistic_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b1_base_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b1_hostile_report.json
++[engine] Running HACK_B3 in optimistic mode...
++[engine] Running HACK_B3 in base mode...
++[engine] Running HACK_B3 in hostile mode...
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b3_optimistic_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b3_base_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b3_hostile_report.json
++[engine] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/eqs_report.json
++[engine] E2.1 PENALIZED METRICS simulation complete!
++
++> treasure-engine@1.0.0 verify:sim-schema
++> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
++
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++
++> treasure-engine@1.0.0 verify:eqs-schema
++> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
++
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/eqs_report.json
++[schema] SUMMARY: pass 1/1
++
++> treasure-engine@1.0.0 court:v1
++> node core/court/court_v1.mjs
++
++[court] Starting Court v1 adjudication (PENALIZED METRICS)...
++[court] Judging HACK_A2...
++[court] Judging HACK_A3...
++[court] Judging HACK_B1...
++[court] Judging HACK_B3...
++[court] Generated: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/court_report.json
++[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/court_report.json
++[schema] SUMMARY: pass 1/1
++WROTE: ui/panel.html
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/eqs_report.json
++[schema] SUMMARY: pass 1/1
++[schema] PASS: reports/runs/e2/23456/multi_r1_2/44a630287f05571a/court_report.json
++[schema] SUMMARY: pass 1/1
++✓ seed=23456 repeat=multi_r1 validated @ reports/runs/e2/23456/multi_r1_2/44a630287f05571a
++[run_with_context] gate=e2 seed=34567 repeat=multi_r1_2
++[run_with_context] run_id=58e729ccc40a7cdf
++[run_with_context] run_dir=reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf
++
++> treasure-engine@1.0.0 verify:e2:raw
++> npm run verify:hacks && npm run verify:truth || true && npm run sim:all && npm run verify:sim-schema && npm run verify:eqs-schema && npm run court:v1 && node scripts/verify/json_schema_check.mjs truth/court_report.schema.json reports/court_report.json && node ui/generate_panel.mjs
++
++
++> treasure-engine@1.0.0 verify:hacks
++> node scripts/verify/hacks_validate.mjs hacks/hack_pack_v1.json
++
++[verify:hacks] STUB PASS
++
++> treasure-engine@1.0.0 verify:truth
++> bash scripts/verify/truth.sh
++
++[verify:truth] STUB PASS
++
++> treasure-engine@1.0.0 sim:all
++> npm run sim:data && node core/sim/engine.mjs
++
++
++> treasure-engine@1.0.0 sim:data
++> node core/sim/bar_generator.mjs
++
++[bar_generator] Generated data/synthetic_1000bars_5m.json
++[engine] Starting Phase 2.2 PROFIT DOMINATOR simulation...
++[engine] Running HACK_A2 in optimistic mode...
++[engine] Running HACK_A2 in base mode...
++[engine] Running HACK_A2 in hostile mode...
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a2_optimistic_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a2_base_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a2_hostile_report.json
++[engine] Running HACK_A3 in optimistic mode...
++[engine] Running HACK_A3 in base mode...
++[engine] Running HACK_A3 in hostile mode...
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a3_optimistic_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a3_base_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a3_hostile_report.json
++[engine] Running HACK_B1 in optimistic mode...
++[engine] Running HACK_B1 in base mode...
++[engine] Running HACK_B1 in hostile mode...
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b1_optimistic_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b1_base_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b1_hostile_report.json
++[engine] Running HACK_B3 in optimistic mode...
++[engine] Running HACK_B3 in base mode...
++[engine] Running HACK_B3 in hostile mode...
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b3_optimistic_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b3_base_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b3_hostile_report.json
++[engine] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/eqs_report.json
++[engine] E2.1 PENALIZED METRICS simulation complete!
++
++> treasure-engine@1.0.0 verify:sim-schema
++> node scripts/verify/json_schema_check.mjs truth/sim_report.schema.json reports
++
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++
++> treasure-engine@1.0.0 verify:eqs-schema
++> node scripts/verify/json_schema_check.mjs truth/eqs_report.schema.json reports/eqs_report.json
++
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/eqs_report.json
++[schema] SUMMARY: pass 1/1
++
++> treasure-engine@1.0.0 court:v1
++> node core/court/court_v1.mjs
++
++[court] Starting Court v1 adjudication (PENALIZED METRICS)...
++[court] Judging HACK_A2...
++[court] Judging HACK_A3...
++[court] Judging HACK_B1...
++[court] Judging HACK_B3...
++[court] Generated: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/court_report.json
++[court] Summary: 0 ALLOWED, 4 BLOCKED, 0 NEEDS_DATA
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/court_report.json
++[schema] SUMMARY: pass 1/1
++WROTE: ui/panel.html
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a2_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a2_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a2_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a3_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a3_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_a3_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b1_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b1_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b1_optimistic_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b3_base_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b3_hostile_report.json
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/hack_b3_optimistic_report.json
++[schema] SUMMARY: pass 12/12
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/eqs_report.json
++[schema] SUMMARY: pass 1/1
++[schema] PASS: reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf/court_report.json
++[schema] SUMMARY: pass 1/1
++✓ seed=34567 repeat=multi_r1 validated @ reports/runs/e2/34567/multi_r1_2/58e729ccc40a7cdf
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++✓ PASSED: seeds=3, repeats=2 for seed 12345
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++$ CI=true npm run verify:treasure
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:treasure
++> node scripts/profit/__tests__/treasure_engine.test.mjs
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++TREASURE ENGINE PROFIT SYSTEM TESTS
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++━━━ PROFIT/LOSS CALCULATION ━━━
++✓ LONG gross PnL correct
++✓ Fees/slippage reduce net PnL
++✓ LONG trade is profitable
++✓ SHORT gross PnL correct
++✓ SHORT trade is profitable
++✓ Losing trade identified
++
++━━━ BREAK-EVEN CALCULATION ━━━
++✓ Break-even price above entry
++✓ Break-even price reasonable
++
++━━━ TARGET EXIT CALCULATION ━━━
++✓ Target exit accounts for ROI + costs
++✓ Target exit reasonable
++
++━━━ POSITION SIZING ━━━
++✓ Risk amount is 1% of capital
++✓ Price distance to stop correct
++✓ Position size correct (100 / 2)
++
++━━━ RISK/REWARD RATIO ━━━
++✓ Reward distance correct
++✓ Risk distance correct
++✓ RR ratio correct (3:1)
++✓ RR ratio acceptable (>=2:1)
++
++━━━ FEE CONFIGURATION ━━━
++✓ Custom maker fee set
++✓ Custom taker fee set
++✓ Custom slippage set
++
++━━━ OPPORTUNITY DETECTOR INIT ━━━
++✓ Min score configured
++✓ Min profit configured
++✓ Price history starts empty
++
++━━━ PRICE HISTORY MANAGEMENT ━━━
++✓ History trimmed to max size
++✓ Oldest prices removed
++
++━━━ OPPORTUNITY SCORING ━━━
++✓ Excellent opportunity scores high
++✓ Poor opportunity scores low
++
++━━━ DETECTOR STATISTICS ━━━
++✓ Stats include total detected
++✓ Stats include recent count
++✓ Stats include history size
++
++━━━ OPPORTUNITY TYPES ━━━
++✓ PRICE_SPIKE type exists
++✓ VOLATILITY type exists
++✓ TREND_REVERSAL type exists
++✓ BREAKOUT type exists
++
++━━━ EDGE CASES ━━━
++✓ Throws on invalid side
++✓ Throws on invalid stop loss
++✓ No fees/slippage = gross equals net
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++RESULTS
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++✓ PASSED: 37
++✗ FAILED: 0
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++✓ All treasure engine tests passed
++
++💰 TREASURE ENGINE CAPABILITIES VERIFIED:
++   ✓ Profit/loss calculations (with fees/slippage)
++   ✓ Risk/reward analysis
++   ✓ Position sizing
++   ✓ Break-even calculations
++   ✓ Opportunity detection
++   ✓ Opportunity scoring
++
++$ CI=true npm run verify:treasure
++npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
++
++> treasure-engine@1.0.0 verify:treasure
++> node scripts/profit/__tests__/treasure_engine.test.mjs
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++TREASURE ENGINE PROFIT SYSTEM TESTS
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++━━━ PROFIT/LOSS CALCULATION ━━━
++✓ LONG gross PnL correct
++✓ Fees/slippage reduce net PnL
++✓ LONG trade is profitable
++✓ SHORT gross PnL correct
++✓ SHORT trade is profitable
++✓ Losing trade identified
++
++━━━ BREAK-EVEN CALCULATION ━━━
++✓ Break-even price above entry
++✓ Break-even price reasonable
++
++━━━ TARGET EXIT CALCULATION ━━━
++✓ Target exit accounts for ROI + costs
++✓ Target exit reasonable
++
++━━━ POSITION SIZING ━━━
++✓ Risk amount is 1% of capital
++✓ Price distance to stop correct
++✓ Position size correct (100 / 2)
++
++━━━ RISK/REWARD RATIO ━━━
++✓ Reward distance correct
++✓ Risk distance correct
++✓ RR ratio correct (3:1)
++✓ RR ratio acceptable (>=2:1)
++
++━━━ FEE CONFIGURATION ━━━
++✓ Custom maker fee set
++✓ Custom taker fee set
++✓ Custom slippage set
++
++━━━ OPPORTUNITY DETECTOR INIT ━━━
++✓ Min score configured
++✓ Min profit configured
++✓ Price history starts empty
++
++━━━ PRICE HISTORY MANAGEMENT ━━━
++✓ History trimmed to max size
++✓ Oldest prices removed
++
++━━━ OPPORTUNITY SCORING ━━━
++✓ Excellent opportunity scores high
++✓ Poor opportunity scores low
++
++━━━ DETECTOR STATISTICS ━━━
++✓ Stats include total detected
++✓ Stats include recent count
++✓ Stats include history size
++
++━━━ OPPORTUNITY TYPES ━━━
++✓ PRICE_SPIKE type exists
++✓ VOLATILITY type exists
++✓ TREND_REVERSAL type exists
++✓ BREAKOUT type exists
++
++━━━ EDGE CASES ━━━
++✓ Throws on invalid side
++✓ Throws on invalid stop loss
++✓ No fees/slippage = gross equals net
++
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++RESULTS
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++✓ PASSED: 37
++✗ FAILED: 0
++━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
++
++✓ All treasure engine tests passed
++
++💰 TREASURE ENGINE CAPABILITIES VERIFIED:
++   ✓ Profit/loss calculations (with fees/slippage)
++   ✓ Risk/reward analysis
++   ✓ Position sizing
++   ✓ Break-even calculations
++   ✓ Opportunity detection
++   ✓ Opportunity scoring
++
++$ git diff --binary
+diff --git a/reports/evidence/CLOSEOUT-20260213-1/DIFF.patch b/reports/evidence/CLOSEOUT-20260213-1/DIFF.patch
+index 21a6a73..22a1637 100644
+--- a/reports/evidence/CLOSEOUT-20260213-1/DIFF.patch
++++ b/reports/evidence/CLOSEOUT-20260213-1/DIFF.patch
+@@ -1,403 +0,0 @@
+-diff --git a/AGENTS_NOTICE.md b/AGENTS_NOTICE.md
+-index 64e1785..f936f52 100644
+---- a/AGENTS_NOTICE.md
+-+++ b/AGENTS_NOTICE.md
+-@@ -1,4 +1,5 @@
+--# AGENTS.md Stub
+-+# AGENTS_NOTICE.md
+- 
+--Authoritative policy moved to `agents.md`.
+--Use `agents.md` as the single source of truth for repository-wide agent instructions.
+-+Legacy compatibility notice: repository-wide agent instructions are defined in `agents.md` (lowercase).
+-+
+-+`agents.md` is the single source of truth for this repository.
+-diff --git a/QUICK_START.md b/QUICK_START.md
+-index 705127d..361c212 100644
+---- a/QUICK_START.md
+-+++ b/QUICK_START.md
+-@@ -1,4 +1,4 @@
+--# NEURO-MEV SUPERINTELLIGENT AI — QUICK START GUIDE
+-+# TREASURE ENGINE — QUICK START GUIDE
+- 
+- ## 🎯 WHAT YOU HAVE
+- 
+-diff --git a/core/edge/contracts.mjs b/core/edge/contracts.mjs
+-index f2e48fd..257587e 100644
+---- a/core/edge/contracts.mjs
+-+++ b/core/edge/contracts.mjs
+-@@ -200,9 +200,40 @@ export function truncateTowardZero(value, scale) {
+-   return truncated / factor;
+- }
+- 
+-+function toPlainDecimal(numberValue) {
+-+  if (!Number.isFinite(numberValue)) throw new Error('Non-finite number in deterministic payload');
+-+  if (Object.is(numberValue, -0)) return '0';
+-+  const raw = String(numberValue);
+-+  if (!/[eE]/.test(raw)) return raw;
+-+
+-+  const sign = raw.startsWith('-') ? '-' : '';
+-+  const unsigned = raw.replace(/^[+-]/, '');
+-+  const [mantissa, exponentPart] = unsigned.split(/[eE]/);
+-+  const exponent = Number(exponentPart);
+-+  const mantissaDigits = mantissa.replace('.', '');
+-+  const decimalIndex = mantissa.includes('.') ? mantissa.indexOf('.') : mantissa.length;
+-+  const shiftedIndex = decimalIndex + exponent;
+-+
+-+  let plain;
+-+  if (shiftedIndex <= 0) {
+-+    plain = `0.${'0'.repeat(Math.abs(shiftedIndex))}${mantissaDigits}`;
+-+  } else if (shiftedIndex >= mantissaDigits.length) {
+-+    plain = `${mantissaDigits}${'0'.repeat(shiftedIndex - mantissaDigits.length)}`;
+-+  } else {
+-+    plain = `${mantissaDigits.slice(0, shiftedIndex)}.${mantissaDigits.slice(shiftedIndex)}`;
+-+  }
+-+
+-+  const [intPartRaw, fracPartRaw = ''] = plain.split('.');
+-+  const intPart = intPartRaw.replace(/^0+(?=\d)/, '') || '0';
+-+  const fracPart = fracPartRaw.replace(/0+$/, '');
+-+  const normalized = fracPart ? `${intPart}.${fracPart}` : intPart;
+-+  return normalized === '0' ? '0' : `${sign}${normalized}`;
+-+}
+-+
+- function normalizeDeterministic(value, path = '') {
+-   if (typeof value === 'number') {
+--    return truncateTowardZero(value, scaleForPath(path));
+-+    const normalized = truncateTowardZero(value, scaleForPath(path));
+-+    return Object.is(normalized, -0) ? 0 : normalized;
+-   }
+-   if (Array.isArray(value)) {
+-     return value.map((item, index) => normalizeDeterministic(item, `${path}[${index}]`));
+-@@ -219,7 +250,20 @@ function normalizeDeterministic(value, path = '') {
+- }
+- 
+- export function canonicalStringify(value) {
+--  return JSON.stringify(normalizeDeterministic(value));
+-+  const normalized = normalizeDeterministic(value);
+-+  const render = (node) => {
+-+    if (typeof node === 'number') return toPlainDecimal(node);
+-+    if (node === null) return 'null';
+-+    if (typeof node === 'boolean') return node ? 'true' : 'false';
+-+    if (typeof node === 'string') return JSON.stringify(node);
+-+    if (Array.isArray(node)) return `[${node.map((item) => render(item)).join(',')}]`;
+-+    if (typeof node === 'object') {
+-+      const entries = Object.keys(node).sort((a, b) => a.localeCompare(b)).map((key) => `${JSON.stringify(key)}:${render(node[key])}`);
+-+      return `{${entries.join(',')}}`;
+-+    }
+-+    throw new Error(`Unsupported canonical type: ${typeof node}`);
+-+  };
+-+  return render(normalized);
+- }
+- 
+- export function deterministicFingerprint(contractName, payload) {
+-diff --git a/docs/API_DOCUMENTATION.md b/docs/API_DOCUMENTATION.md
+-index 66e2486..e19807f 100644
+---- a/docs/API_DOCUMENTATION.md
+-+++ b/docs/API_DOCUMENTATION.md
+-@@ -1,4 +1,4 @@
+--# NEURO-MEV API DOCUMENTATION
+-+# TREASURE ENGINE API DOCUMENTATION
+- 
+- **Version**: 3.0.0  
+- **Date**: 2026-02-10  
+-@@ -23,7 +23,7 @@
+- 
+- ## OVERVIEW
+- 
+--NEURO-MEV provides a production-grade trading system with authoritative Truth Layer governance, multi-strategy support, real-time data feeds, ML-based anomaly detection, and comprehensive safety mechanisms.
+-+TREASURE ENGINE provides a production-grade trading system with authoritative Truth Layer governance, multi-strategy support, real-time data feeds, ML-based anomaly detection, and comprehensive safety mechanisms.
+- 
+- **Core Principles**:
+- - Hierarchy: Safety > Truth > Profit
+-diff --git a/docs/DEPLOYMENT_GUIDE.md b/docs/DEPLOYMENT_GUIDE.md
+-index 59a0149..bb90d7b 100644
+---- a/docs/DEPLOYMENT_GUIDE.md
+-+++ b/docs/DEPLOYMENT_GUIDE.md
+-@@ -1,4 +1,4 @@
+--# NEURO-MEV DEPLOYMENT GUIDE
+-+# TREASURE ENGINE DEPLOYMENT GUIDE
+- 
+- **Version**: 3.0.0  
+- **Date**: 2026-02-10  
+-@@ -60,8 +60,8 @@ Required for live trading:
+- ### Step 1: Clone Repository
+- 
+- ```bash
+--git clone https://github.com/your-org/neuro-mev.git
+--cd neuro-mev
+-+git clone https://github.com/your-org/treasure-engine.git
+-+cd treasure-engine
+- ```
+- 
+- ### Step 2: Install Dependencies
+-@@ -623,7 +623,7 @@ tail -f logs/events/run_*.jsonl
+- ### File Structure
+- 
+- ```
+--neuro-mev/
+-+treasure-engine/
+- ├── core/                   # Core system modules
+- │   ├── control/            # Master Control System
+- │   ├── truth/              # Truth Engine
+-@@ -647,7 +647,7 @@ neuro-mev/
+- ### Support
+- 
+- **Issues**: Check GitHub Issues  
+--**Email**: support@neuro-mev.io  
+-+**Email**: support@treasure-engine.io  
+- **Discord**: (if applicable)
+- 
+- ---
+-diff --git a/docs/legacy/NEXT_EPOCH_PLAN.md b/docs/legacy/NEXT_EPOCH_PLAN.md
+-index 0ff5590..1b5f2d5 100644
+---- a/docs/legacy/NEXT_EPOCH_PLAN.md
+-+++ b/docs/legacy/NEXT_EPOCH_PLAN.md
+-@@ -1,3 +1,10 @@
+-+# LEGACY / NOT SSOT
+-+
+-+This document is archived for historical traceability and is not authoritative.
+-+Current SSOT lives under `specs/` and `agents.md`.
+-+
+-+---
+-+
+- # NEXT EPOCH PLAN
+- 
+- ## Spec source discovery
+-diff --git a/docs/legacy/notes/EPOCH-17_TODO.md b/docs/legacy/notes/EPOCH-17_TODO.md
+-index 3c9d17a..e5d40a4 100644
+---- a/docs/legacy/notes/EPOCH-17_TODO.md
+-+++ b/docs/legacy/notes/EPOCH-17_TODO.md
+-@@ -1,3 +1,10 @@
+-+# LEGACY / NOT SSOT
+-+
+-+This document is archived for historical traceability and is not authoritative.
+-+Current SSOT lives under `specs/` and `agents.md`.
+-+
+-+---
+-+
+- # EPOCH-17 TODO
+- - [ ] Implement `core/exec/safety_integrated_executor.mjs`.
+- - [ ] Implement `core/risk/risk_governor_wrapper.mjs`.
+-diff --git a/docs/legacy/notes/EPOCH-18_TODO.md b/docs/legacy/notes/EPOCH-18_TODO.md
+-index 562f24e..ae113d7 100644
+---- a/docs/legacy/notes/EPOCH-18_TODO.md
+-+++ b/docs/legacy/notes/EPOCH-18_TODO.md
+-@@ -1,3 +1,10 @@
+-+# LEGACY / NOT SSOT
+-+
+-+This document is archived for historical traceability and is not authoritative.
+-+Current SSOT lives under `specs/` and `agents.md`.
+-+
+-+---
+-+
+- # EPOCH-18 TODO
+- - [ ] Implement `core/strategy/strategy_orchestrator.mjs`.
+- - [ ] Implement `core/exec/signal_converter.mjs`.
+-diff --git a/docs/legacy/notes/EPOCH-19_TODO.md b/docs/legacy/notes/EPOCH-19_TODO.md
+-index 63d0e92..94c6002 100644
+---- a/docs/legacy/notes/EPOCH-19_TODO.md
+-+++ b/docs/legacy/notes/EPOCH-19_TODO.md
+-@@ -1,3 +1,10 @@
+-+# LEGACY / NOT SSOT
+-+
+-+This document is archived for historical traceability and is not authoritative.
+-+Current SSOT lives under `specs/` and `agents.md`.
+-+
+-+---
+-+
+- # EPOCH-19 TODO
+- - [ ] Implement `core/governance/governance_engine.mjs`.
+- - [ ] Implement `core/governance/rules_engine.mjs`.
+-diff --git a/docs/legacy/notes/EPOCH-20_TODO.md b/docs/legacy/notes/EPOCH-20_TODO.md
+-index 5531d93..b0c2651 100644
+---- a/docs/legacy/notes/EPOCH-20_TODO.md
+-+++ b/docs/legacy/notes/EPOCH-20_TODO.md
+-@@ -1,3 +1,10 @@
+-+# LEGACY / NOT SSOT
+-+
+-+This document is archived for historical traceability and is not authoritative.
+-+Current SSOT lives under `specs/` and `agents.md`.
+-+
+-+---
+-+
+- # EPOCH-20 TODO
+- - [ ] Integrate monitoring/performance modules referenced in SDD.
+- - [ ] Define `verify:monitoring` gate (TO IMPLEMENT).
+-diff --git a/docs/legacy/notes/EPOCH-21_TODO.md b/docs/legacy/notes/EPOCH-21_TODO.md
+-index 84a52c7..11bf6f9 100644
+---- a/docs/legacy/notes/EPOCH-21_TODO.md
+-+++ b/docs/legacy/notes/EPOCH-21_TODO.md
+-@@ -1,3 +1,10 @@
+-+# LEGACY / NOT SSOT
+-+
+-+This document is archived for historical traceability and is not authoritative.
+-+Current SSOT lives under `specs/` and `agents.md`.
+-+
+-+---
+-+
+- # EPOCH-21 TODO
+- - [ ] Define production-readiness checklist with dry-run default preserved.
+- - [ ] Introduce `verify:prod` gate (TO IMPLEMENT, offline-safe checks only).
+-diff --git a/package.json b/package.json
+-index 617dd60..45af8a7 100644
+---- a/package.json
+-+++ b/package.json
+-@@ -70,7 +70,7 @@
+-     "verify:epoch20": "npm run verify:monitoring",
+-     "verify:release-governor": "node scripts/verify/release_governor_check.mjs",
+-     "verify:epoch21": "npm run verify:release-governor",
+--    "verify:specs": "node scripts/verify/specs_check.mjs",
+-+    "verify:specs": "node scripts/verify/specs_check.mjs && npm run verify:repo",
+-     "regen:manifests": "node scripts/ops/regen_manifests.mjs",
+-     "export:validated": "node scripts/export_validated.mjs",
+-     "verify:wall": "node scripts/verify/wall.mjs",
+-@@ -102,7 +102,9 @@
+-     "verify:edge:strict": "ENABLE_CLEAN_CLONE=1 npm run verify:edge",
+-     "verify:goldens:update": "UPDATE_GOLDENS=1 npm run verify:edge",
+-     "package:final-validated": "npm run export:final-validated",
+--    "export:final-validated": "node scripts/export/final_validated.mjs"
+-+    "export:final-validated": "node scripts/export/final_validated.mjs",
+-+    "verify:repo": "node scripts/verify/repo_sanity_check.mjs",
+-+    "verify:e2_multi_seed": "node scripts/verify/e2_multi_seed.mjs"
+-   },
+-   "devDependencies": {
+-     "ajv": "^8.17.1"
+-diff --git a/scripts/verify/edge_all_epochs.mjs b/scripts/verify/edge_all_epochs.mjs
+-index f87c574..be12d96 100644
+---- a/scripts/verify/edge_all_epochs.mjs
+-+++ b/scripts/verify/edge_all_epochs.mjs
+-@@ -29,7 +29,7 @@ for (const epoch of ['31', '32', '33', '34', '35', '36', '37', '38', '39', '40']
+-   fs.mkdirSync(epochGateDir, { recursive: true });
+-   const logPath = path.join(epochGateDir, `${runLabel}.log`);
+- 
+--  const result = spawnSync('npm', ['run', `verify:epoch${epoch}`], { encoding: 'utf8', env: process.env });
+-+  const result = spawnSync('npm', ['run', `verify:epoch${epoch}`], { encoding: 'utf8', env: { ...process.env, EVIDENCE_EPOCH: evidenceEpoch } });
+-   const logText = [
+-     `command=npm run verify:epoch${epoch}`,
+-     `exit_code=${result.status ?? 'null'}`,
+-diff --git a/scripts/verify/edge_epoch_gate.mjs b/scripts/verify/edge_epoch_gate.mjs
+-index 15cbd21..20ae22f 100644
+---- a/scripts/verify/edge_epoch_gate.mjs
+-+++ b/scripts/verify/edge_epoch_gate.mjs
+-@@ -131,9 +131,9 @@ function writeSpecDocs() {
+-     }
+-   };
+-   const names = mapping[epoch] ?? mapping.default;
+--  if (!fs.existsSync(path.join(gateDir, names.a))) write(names.a, `# epoch${epoch} contracts\n- contracts enforced by core/edge/contracts.mjs\n`);
+--  if (!fs.existsSync(path.join(gateDir, names.b))) write(names.b, `# epoch${epoch} gate plan\n- seed=${seed}\n- offline-first=true\n- golden compare required when UPDATE_GOLDENS!=1\n`);
+--  if (!fs.existsSync(path.join(gateDir, names.c))) write(names.c, '# fingerprint policy\n- canonical sorted JSON\n- deterministic_fingerprint excludes itself\n- sha256 hex\n');
+-+  if (!fs.existsSync(path.join(gateDir, names.a))) write(names.a, `# epoch${epoch} contracts\n- source: core/edge/contracts.mjs\n- verified_contracts: FeatureFrame, StrategySpec, Signal, Intent, AllocationPlan, RiskDecision, SimReport, RealityGapReport, ShadowEvent, CanaryPhaseState, CertificationReport\n`);
+-+  if (!fs.existsSync(path.join(gateDir, names.b))) write(names.b, `# epoch${epoch} gate execution\n- seed=${seed}\n- offline_first=true\n- update_goldens=${process.env.UPDATE_GOLDENS === '1' ? 'enabled' : 'disabled'}\n`);
+-+  if (!fs.existsSync(path.join(gateDir, names.c))) write(names.c, '# fingerprint policy\n- canonical sorted JSON with fixed-point numeric notation\n- deterministic_fingerprint excludes itself\n- sha256 digest, utf-8 canonical bytes\n');
+- }
+- 
+- function ensureRequiredEvidenceOrThrow() {
+-@@ -142,6 +142,66 @@ function ensureRequiredEvidenceOrThrow() {
+-   if (missing.length > 0) throw new Error(`Missing required evidence files: ${missing.join(', ')}`);
+- }
+- 
+-+
+-+function collectNumericPaths(value, basePath = '') {
+-+  if (typeof value === 'number') return [basePath];
+-+  if (Array.isArray(value)) return value.flatMap((item, idx) => collectNumericPaths(item, `${basePath}[${idx}]`));
+-+  if (value && typeof value === 'object') {
+-+    return Object.keys(value).flatMap((k) => collectNumericPaths(value[k], basePath ? `${basePath}.${k}` : k));
+-+  }
+-+  return [];
+-+}
+-+
+-+function setPathValue(target, pathExpr, nextValue) {
+-+  const parts = pathExpr.replace(/\[(\d+)\]/g, '.$1').split('.');
+-+  let node = target;
+-+  for (let i = 0; i < parts.length - 1; i += 1) node = node[parts[i]];
+-+  node[parts.at(-1)] = nextValue;
+-+}
+-+
+-+function assertDeterminismPolicy(outputsByContract) {
+-+  for (const [name, payload] of Object.entries(outputsByContract)) {
+-+    const numericPath = collectNumericPaths(payload).find((p) => p !== 'deterministic_fingerprint');
+-+    if (!numericPath) continue;
+-+
+-+    for (const bad of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
+-+      const mutated = JSON.parse(JSON.stringify(payload));
+-+      setPathValue(mutated, numericPath, bad);
+-+      let rejected = false;
+-+      try {
+-+        validateContract(name, mutated);
+-+      } catch {
+-+        rejected = true;
+-+      }
+-+      if (!rejected) throw new Error(`${name} accepted forbidden non-finite number at ${numericPath}`);
+-+    }
+-+  }
+-+
+-+  const serializationProbe = canonicalStringify({
+-+    tinyA: 1e-8,
+-+    tinyB: 1e-7,
+-+    huge: 1e21,
+-+    negTiny: -1e-8,
+-+    negZero: -0
+-+  });
+-+  if (/-?\d+(?:\.\d+)?e[+-]?\d+/i.test(serializationProbe)) throw new Error('canonicalStringify emitted scientific notation');
+-+  if (/(^|[\[,:{])-0(?=[,}\]])/.test(serializationProbe)) throw new Error('canonicalStringify retained negative zero');
+-+
+-+  const stableInput = {
+-+    schema_version: '1.0.0',
+-+    signal_id: 'sig-stable',
+-+    strategy_id: 'edge_mvp',
+-+    symbol: 'BTCUSDT',
+-+    timestamp: '2026-01-01T00:00:00Z',
+-+    side_hint: 'LONG',
+-+    confidence: 0.123456789,
+-+    reasons: ['policy-test']
+-+  };
+-+  const fpA = deterministicFingerprint('Signal', stableInput);
+-+  const fpB = deterministicFingerprint('Signal', stableInput);
+-+  if (fpA !== fpB) throw new Error('deterministicFingerprint unstable across repeated runs');
+-+}
+-+
+- function aggregateEpochFingerprintsFromEvidence(evidenceRoot, epochs = ['31', '32', '33', '34', '35', '36', '37', '38', '39']) {
+-   const combined = {};
+-   for (const ep of epochs) {
+-@@ -328,6 +388,7 @@ write('CHECKSUMS.sha256', `${checksumLines.join('\n')}\n`);
+- 
+- write('SUMMARY.md', `epoch=${epoch}\nseed=${seed}\ncontracts=${Object.keys(outputs).join(',')}\n`);
+- write('VERDICT.md', 'PASS\n');
+-+assertDeterminismPolicy(outputs);
+- ensureRequiredEvidenceOrThrow();
+- assertNoTrackedDrift();
+- 
+-diff --git a/scripts/verify/specs_check.mjs b/scripts/verify/specs_check.mjs
+-index 6f38db1..30206c3 100644
+---- a/scripts/verify/specs_check.mjs
+-+++ b/scripts/verify/specs_check.mjs
+-@@ -14,6 +14,7 @@ const requiredFiles = [
+-   'docs/SPECS_PLAYBOOK.md',
+-   'specs/epochs/LEDGER.json',
+-   'agents.md',
+-+  'AGENTS_NOTICE.md',
+-   ...epochFiles
+- ];
+- 
+-@@ -173,6 +174,22 @@ if (fs.existsSync('specs/epochs/INDEX.md')) {
+-   }
+- }
+- 
+-+
+-+const ssotDocs = ['README.md', 'QUICK_START.md', 'docs/DEPLOYMENT_GUIDE.md', 'docs/API_DOCUMENTATION.md'];
+-+const forbiddenSsotClaims = [/NEURO-MEV/i, /specs\/epochs\/ directory was not found/i, /specs\/epochs missing/i];
+-+
+-+for (const file of ssotDocs) {
+-+  if (!fs.existsSync(file)) continue;
+-+  const text = read(file);
+-+  for (const pattern of forbiddenSsotClaims) {
+-+    if (pattern.test(text)) errors.push(`${file} contains forbidden SSOT claim: ${pattern}`);
+-+  }
+-+}
+-+
+-+for (const legacyTodo of ['specs/epochs/EPOCH-17_TODO.md','specs/epochs/EPOCH-18_TODO.md','specs/epochs/EPOCH-19_TODO.md','specs/epochs/EPOCH-20_TODO.md','specs/epochs/EPOCH-21_TODO.md']) {
+-+  if (fs.existsSync(legacyTodo)) errors.push(`Legacy TODO file must be moved out of specs/epochs: ${legacyTodo}`);
+-+}
+-+
+- if (errors.length > 0) {
+-   console.error('verify:specs FAILED');
+-   for (const e of errors) console.error(`- ${e}`);
+diff --git a/reports/evidence/CLOSEOUT-20260213-1/PREFLIGHT.log b/reports/evidence/CLOSEOUT-20260213-1/PREFLIGHT.log
+index 41bf64f..dbbedec 100644
+--- a/reports/evidence/CLOSEOUT-20260213-1/PREFLIGHT.log
++++ b/reports/evidence/CLOSEOUT-20260213-1/PREFLIGHT.log
+@@ -1,120 +1,54 @@
+ $ pwd
+ /workspace/Treasure_engine
+-$ ls
+-AGENTS.md
+-EVIDENCE_PACK
+-EVIDENCE_PACK_EPOCH-17.tar.gz.sha256
+-EVIDENCE_PACK_EPOCH-18.tar.gz.sha256
+-EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
+-EVIDENCE_PACK_EPOCH-21.tar.gz.sha256
+-EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
+-FINAL_VALIDATED.zip.sha256
+-NEXT_EPOCH_PLAN.md
+-QUICK_START.md
+-README.md
+-RUNBOOK.md
+-RUNBOOK_OPERATIONS.md
+-SDD_EPOCH_17_21.md
+-TASK_TRACKER.md
+-agents.md
+-artifacts
+-core
+-data
+-dataset
+-docs
+-evidence
+-examples
+-node_modules
+-package-lock.json
+-package.json
+-package.json.bak
+-reports
+-scripts
+-spec
+-specs
+-tests
+-truth
+-ui
++$ ls -la
++total 212
++drwxr-xr-x 19 root root  4096 Feb 13 11:31 .
++drwxr-xr-x  3 root root  4096 Feb 13 08:38 ..
++drwxr-xr-x  8 root root  4096 Feb 13 11:31 .git
++-rw-r--r--  1 root root   491 Feb 13 08:38 .gitignore
++-rw-r--r--  1 root root   188 Feb 13 11:31 AGENTS_NOTICE.md
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 EVIDENCE_PACK
++-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-17.tar.gz.sha256
++-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-18.tar.gz.sha256
++-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-19.tar.gz.sha256
++-rw-r--r--  1 root root    96 Feb 13 08:38 EVIDENCE_PACK_EPOCH-21.tar.gz.sha256
++-rw-r--r--  1 root root    98 Feb 13 08:38 EVIDENCE_PACK_EPOCH-BOOT.tar.gz.sha256
++-rw-r--r--  1 root root    86 Feb 13 08:38 FINAL_VALIDATED.zip.sha256
++-rw-r--r--  1 root root 11754 Feb 13 11:31 QUICK_START.md
++-rw-r--r--  1 root root  2041 Feb 13 08:38 README.md
++-rw-r--r--  1 root root  2187 Feb 13 08:38 RUNBOOK.md
++-rw-r--r--  1 root root  9654 Feb 13 08:38 RUNBOOK_OPERATIONS.md
++-rw-r--r--  1 root root 28917 Feb 13 08:38 SDD_EPOCH_17_21.md
++-rw-r--r--  1 root root  1847 Feb 13 08:38 TASK_TRACKER.md
++-rw-r--r--  1 root root  1694 Feb 13 08:38 agents.md
++drwxr-xr-x  3 root root  4096 Feb 13 08:38 artifacts
++drwxr-xr-x 25 root root  4096 Feb 13 08:38 core
++drwxr-xr-x  3 root root  4096 Feb 13 08:38 data
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 dataset
++drwxr-xr-x  4 root root  4096 Feb 13 11:31 docs
++drwxr-xr-x  4 root root  4096 Feb 13 08:38 evidence
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 examples
++drwxr-xr-x 47 root root  4096 Feb 13 08:38 node_modules
++-rw-r--r--  1 root root 19412 Feb 13 08:38 package-lock.json
++-rw-r--r--  1 root root  7785 Feb 13 11:31 package.json
++-rw-r--r--  1 root root  3186 Feb 13 08:38 package.json.bak
++drwxr-xr-x 11 root root  4096 Feb 13 08:38 reports
++drwxr-xr-x  8 root root  4096 Feb 13 11:31 scripts
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 spec
++drwxr-xr-x  3 root root  4096 Feb 13 08:38 specs
++drwxr-xr-x  3 root root  4096 Feb 13 08:38 tests
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 truth
++drwxr-xr-x  2 root root  4096 Feb 13 08:38 ui
+ $ git status -sb
+ ## work
+-?? reports/evidence/CLOSEOUT-20260213-1/
++ M reports/evidence/CLOSEOUT-20260213-1/COMMANDS.log
++ M reports/evidence/CLOSEOUT-20260213-1/PREFLIGHT.log
+ $ git rev-parse HEAD
+-4267652c8318aa0796207e50dd668e41dd58a15d
+-$ git branch --show-current || true
++b381b802080a5ff0849dde124086d84a14c397e2
++$ git branch --show-current
+ work
++$ git remote -v
+ $ node -v
+ v20.19.6
+ $ npm -v
+ 11.4.2
+-$ printenv | sort | sed -n '1,120p'
+-CODEX_CI=1
+-CODEX_ENV_BUN_VERSION=1.2.14
+-CODEX_ENV_GO_VERSION=1.24.3
+-CODEX_ENV_JAVA_VERSION=21
+-CODEX_ENV_NODE_VERSION=20
+-CODEX_ENV_PHP_VERSION=8.4
+-CODEX_ENV_PYTHON_VERSION=3.12
+-CODEX_ENV_RUBY_VERSION=3.4.4
+-CODEX_ENV_RUST_VERSION=1.89.0
+-CODEX_ENV_SWIFT_VERSION=6.1
+-CODEX_HOME=/opt/codex
+-CODEX_INTERNAL_ORIGINATOR_OVERRIDE=codex_web_agent
+-CODEX_PROXY_CERT=/usr/local/share/ca-certificates/envoy-mitmproxy-ca-cert.crt
+-COLORTERM=
+-COREPACK_DEFAULT_TO_LATEST=0
+-COREPACK_ENABLE_AUTO_PIN=0
+-COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+-COREPACK_ENABLE_STRICT=0
+-DEBIAN_FRONTEND=noninteractive
+-ELECTRON_GET_USE_PROXY=true
+-GH_PAGER=cat
+-GIT_PAGER=cat
+-GOBIN=/root/.local/share/mise/installs/go/1.24.3/bin
+-GOROOT=/root/.local/share/mise/installs/go/1.24.3
+-GRADLE_OPTS=-Dhttp.proxyHost=proxy -Dhttp.proxyPort=8080 -Dhttps.proxyHost=proxy -Dhttps.proxyPort=8080
+-HOME=/root
+-HOSTNAME=f754871e664b
+-HTTPS_PROXY=http://proxy:8080
+-HTTP_PROXY=http://proxy:8080
+-JAVA_HOME=/root/.local/share/mise/installs/java/21.0.2
+-LANG=C.UTF-8
+-LC_ALL=C.UTF-8
+-LC_CTYPE=C.UTF-8
+-MISE_SHELL=bash
+-MIX_ARCHIVES=/root/.local/share/mise/installs/elixir/1.18.3-otp-27/.mix/archives
+-MIX_HOME=/root/.local/share/mise/installs/elixir/1.18.3-otp-27/.mix
+-NODE_EXTRA_CA_CERTS=/usr/local/share/ca-certificates/envoy-mitmproxy-ca-cert.crt
+-NO_COLOR=1
+-NO_PROXY=browser
+-NVM_BIN=/root/.nvm/versions/node/v20.19.6/bin
+-NVM_CD_FLAGS=
+-NVM_DIR=/root/.nvm
+-NVM_INC=/root/.nvm/versions/node/v20.19.6/include/node
+-OPENAI_BASE_URL=https://api.openai.com:18080/
+-PAGER=cat
+-PATH=/root/.phpenv/shims:/root/.cargo/bin:/root/.nvm/versions/node/v20.19.6/bin:/root/.pyenv/shims:/root/.pyenv/bin:/root/.local/share/mise/installs/bun/1.2.14/bin:/root/.local/share/mise/installs/erlang/27.1.2/bin:/root/.local/share/mise/installs/go/1.24.3/bin:/root/.local/share/mise/installs/golangci-lint/2.1.6/golangci-lint-2.1.6-linux-amd64:/root/.local/share/mise/installs/gradle/8.14.3/gradle-8.14.3/bin:/root/.local/share/mise/installs/java/21.0.2/bin:/root/.local/share/mise/installs/maven/3.9.10/apache-maven-3.9.10/bin:/root/.local/share/mise/installs/ruby/3.4.4/bin:/root/.local/share/mise/installs/elixir/1.18.3-otp-27/bin:/root/.local/share/mise/installs/elixir/1.18.3-otp-27/.mix/escripts:/opt/codex/tmp/path/codex-arg0TulXEn:/root/.phpenv/bin:/root/.phpenv/shims:/usr/local/go/bin:/root/go/bin:/root/.swiftly/bin:/root/.local/bin:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+-PHPENV_ROOT=/root/.phpenv
+-PIPX_BIN_DIR=/root/.local/bin
+-PIP_CERT=/usr/local/share/ca-certificates/envoy-mitmproxy-ca-cert.crt
+-PWD=/workspace/Treasure_engine
+-PYENV_ROOT=/root/.pyenv
+-PYENV_SHELL=bash
+-REQUESTS_CA_BUNDLE=/usr/local/share/ca-certificates/envoy-mitmproxy-ca-cert.crt
+-SHLVL=1
+-SSL_CERT_FILE=/usr/local/share/ca-certificates/envoy-mitmproxy-ca-cert.crt
+-SWIFTLY_BIN_DIR=/root/.swiftly/bin
+-SWIFTLY_HOME_DIR=/root/.local/share/swiftly
+-SWIFTLY_TOOLCHAINS_DIR=/root/.local/share/swiftly/toolchains
+-TERM=dumb
+-UV_NO_PROGRESS=1
+-YARN_HTTPS_PROXY=http://proxy:8080
+-YARN_HTTP_PROXY=http://proxy:8080
+-_=/usr/bin/printenv
+-__MISE_DIFF=eAFqXpyfk9KwOC+1vHWpu7+Tp99NPf2i/PwSfb2c/OTEHP3ijMSiVP3czOJU/cy84pLEnJxi/fR8fUM9IxM9Y/2kzLxl7v5B/v4hN7WI17bSyzHMMd7D39f1pg5BXVmJZYn6RoZ6BnpGa3w9I+Idg5w9PMNcg286E9SampNZkVmkb6hnaKFnrJtfUqBrZK6vl5tZoZ9YlJyRWZZavAJkItghVuSbtqQgsSRj1k19giYkleaBAk7P0AQUcDeNCGpILcpJzEvXNzLXM9QzAushMXJuhhC0Iz0fZEdypm5OZl6JvpGeoZ6ZPoqYLlgMJF1aoZuYm2JmctOBsKlFiSk5qfoWeoagZJIO5ulCeUmZeTcNCJqAFO+AgX3uSlBHbmJZap6+sZ6lnqGBfmJBYnJGqi5YTBcqBrKYcCwVlSZV6hvrmehBYsmSoL1YkxnILkpSaGpxclFmQUkxAAc+SC4
+-__MISE_ORIG_PATH=/opt/codex/tmp/path/codex-arg0TulXEn:/root/.phpenv/bin:/root/.phpenv/shims:/usr/local/go/bin:/root/go/bin:/root/.swiftly/bin:/root/.local/bin:/root/.pyenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+-__MISE_SESSION=eAHqWJOTn5iSmhJfkp+fUzxhHZSXnJ+XlplePHGfflF+fom+HoSvn5tZnKoPYeuV5OfmrIGw4wsSSzKKJyxOzStrXeru7+Tpd1MPqjEnPzkxR784I7EoFaI7M6+4JDEnp1g/PV/fUM/IRM9YPykzb5m7f5C/f8hNLeK1rfRyDHOM9/D3db2pQ1BXVmIZYIn6RoZ6BnpGa3w9I+Idg5w9PMNcg286E9SampNZkVmkb6hnaKFnrJtfUqBrZK6vl5tZoZ9YlJyRWZZavAJkItghVuSbtjwxJzOxOLW4YXFKZtEu/fL8ouzigsTkVP2QotTE4tKi1PjUvPTMvNQ1qXll8WWJRfEZicUZG5KMLQ1T00wNkswNkw1NLczW5iSWpBaXxJcWpCSWpB4RYIADxjlhE8vcACgBtD0
+-http_proxy=http://proxy:8080
+-https_proxy=http://proxy:8080
+-no_proxy=localhost,127.0.0.1,::1
+-npm_config_http_proxy=http://proxy:8080
+-npm_config_https_proxy=http://proxy:8080

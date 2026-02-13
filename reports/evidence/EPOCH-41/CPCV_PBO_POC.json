@@ -1,0 +1,51 @@
+{
+  "mode": "simplified-cpcv-pbo",
+  "folds": 6,
+  "purge": 2,
+  "embargo": 2,
+  "pbo_estimate": 0.333333,
+  "fold_results": [
+    {
+      "fold": 1,
+      "param": 1.4,
+      "train_score": 0.00111011,
+      "valid_score": 0.00687036,
+      "overfit": false
+    },
+    {
+      "fold": 2,
+      "param": 1.4,
+      "train_score": 0.0030765,
+      "valid_score": -0.00199703,
+      "overfit": true
+    },
+    {
+      "fold": 3,
+      "param": 1.4,
+      "train_score": 0.00248452,
+      "valid_score": 0.0007063,
+      "overfit": false
+    },
+    {
+      "fold": 4,
+      "param": 1.4,
+      "train_score": 0.00141154,
+      "valid_score": 0.00560609,
+      "overfit": false
+    },
+    {
+      "fold": 5,
+      "param": 1.4,
+      "train_score": 0.00372272,
+      "valid_score": -0.00494809,
+      "overfit": true
+    },
+    {
+      "fold": 6,
+      "param": 1.4,
+      "train_score": 0.00128167,
+      "valid_score": 0.00669914,
+      "overfit": false
+    }
+  ]
+}

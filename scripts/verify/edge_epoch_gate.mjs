@@ -131,15 +131,75 @@ function writeSpecDocs() {
     }
   };
   const names = mapping[epoch] ?? mapping.default;
-  if (!fs.existsSync(path.join(gateDir, names.a))) write(names.a, `# epoch${epoch} contracts\n- contracts enforced by core/edge/contracts.mjs\n`);
-  if (!fs.existsSync(path.join(gateDir, names.b))) write(names.b, `# epoch${epoch} gate plan\n- seed=${seed}\n- offline-first=true\n- golden compare required when UPDATE_GOLDENS!=1\n`);
-  if (!fs.existsSync(path.join(gateDir, names.c))) write(names.c, '# fingerprint policy\n- canonical sorted JSON\n- deterministic_fingerprint excludes itself\n- sha256 hex\n');
+  if (!fs.existsSync(path.join(gateDir, names.a))) write(names.a, `# epoch${epoch} contracts\n- source: core/edge/contracts.mjs\n- verified_contracts: FeatureFrame, StrategySpec, Signal, Intent, AllocationPlan, RiskDecision, SimReport, RealityGapReport, ShadowEvent, CanaryPhaseState, CertificationReport\n`);
+  if (!fs.existsSync(path.join(gateDir, names.b))) write(names.b, `# epoch${epoch} gate execution\n- seed=${seed}\n- offline_first=true\n- update_goldens=${process.env.UPDATE_GOLDENS === '1' ? 'enabled' : 'disabled'}\n`);
+  if (!fs.existsSync(path.join(gateDir, names.c))) write(names.c, '# fingerprint policy\n- canonical sorted JSON with fixed-point numeric notation\n- deterministic_fingerprint excludes itself\n- sha256 digest, utf-8 canonical bytes\n');
 }
 
 function ensureRequiredEvidenceOrThrow() {
   const required = REQUIRED_BY_EPOCH[epoch] || [];
   const missing = required.filter((rel) => !fs.existsSync(path.join(gateDir, rel)));
   if (missing.length > 0) throw new Error(`Missing required evidence files: ${missing.join(', ')}`);
+}
+
+
+function collectNumericPaths(value, basePath = '') {
+  if (typeof value === 'number') return [basePath];
+  if (Array.isArray(value)) return value.flatMap((item, idx) => collectNumericPaths(item, `${basePath}[${idx}]`));
+  if (value && typeof value === 'object') {
+    return Object.keys(value).flatMap((k) => collectNumericPaths(value[k], basePath ? `${basePath}.${k}` : k));
+  }
+  return [];
+}
+
+function setPathValue(target, pathExpr, nextValue) {
+  const parts = pathExpr.replace(/\[(\d+)\]/g, '.$1').split('.');
+  let node = target;
+  for (let i = 0; i < parts.length - 1; i += 1) node = node[parts[i]];
+  node[parts.at(-1)] = nextValue;
+}
+
+function assertDeterminismPolicy(outputsByContract) {
+  for (const [name, payload] of Object.entries(outputsByContract)) {
+    const numericPath = collectNumericPaths(payload).find((p) => p !== 'deterministic_fingerprint');
+    if (!numericPath) continue;
+
+    for (const bad of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
+      const mutated = JSON.parse(JSON.stringify(payload));
+      setPathValue(mutated, numericPath, bad);
+      let rejected = false;
+      try {
+        validateContract(name, mutated);
+      } catch {
+        rejected = true;
+      }
+      if (!rejected) throw new Error(`${name} accepted forbidden non-finite number at ${numericPath}`);
+    }
+  }
+
+  const serializationProbe = canonicalStringify({
+    tinyA: 1e-8,
+    tinyB: 1e-7,
+    huge: 1e21,
+    negTiny: -1e-8,
+    negZero: -0
+  });
+  if (/-?\d+(?:\.\d+)?e[+-]?\d+/i.test(serializationProbe)) throw new Error('canonicalStringify emitted scientific notation');
+  if (/(^|[\[,:{])-0(?=[,}\]])/.test(serializationProbe)) throw new Error('canonicalStringify retained negative zero');
+
+  const stableInput = {
+    schema_version: '1.0.0',
+    signal_id: 'sig-stable',
+    strategy_id: 'edge_mvp',
+    symbol: 'BTCUSDT',
+    timestamp: '2026-01-01T00:00:00Z',
+    side_hint: 'LONG',
+    confidence: 0.123456789,
+    reasons: ['policy-test']
+  };
+  const fpA = deterministicFingerprint('Signal', stableInput);
+  const fpB = deterministicFingerprint('Signal', stableInput);
+  if (fpA !== fpB) throw new Error('deterministicFingerprint unstable across repeated runs');
 }
 
 function aggregateEpochFingerprintsFromEvidence(evidenceRoot, epochs = ['31', '32', '33', '34', '35', '36', '37', '38', '39']) {
@@ -328,6 +388,7 @@ write('CHECKSUMS.sha256', `${checksumLines.join('\n')}\n`);
 
 write('SUMMARY.md', `epoch=${epoch}\nseed=${seed}\ncontracts=${Object.keys(outputs).join(',')}\n`);
 write('VERDICT.md', 'PASS\n');
+assertDeterminismPolicy(outputs);
 ensureRequiredEvidenceOrThrow();
 assertNoTrackedDrift();
 

@@ -41,6 +41,11 @@
 38. EPOCH-38
 39. EPOCH-39
 40. EPOCH-40
+41. EPOCH-41
+42. EPOCH-42
+43. EPOCH-43
+44. EPOCH-44
+45. EPOCH-45
 
 ## Dependency notes (EDGE)
 - EPOCH-31 depends on EPOCH-30 (EDGE starts from completed legacy runway).
@@ -53,6 +58,11 @@
 - EPOCH-38 depends on EPOCH-37 (consumes WFOReport for baseline).
 - EPOCH-39 depends on EPOCH-38 (consumes GapReport for canary decisions).
 - EPOCH-40 depends on EPOCH-39 (certifies all E31..E39 gates).
+- EPOCH-41 depends on EPOCH-40 (bridge audit + experiment layer).
+- EPOCH-42 depends on EPOCH-41 (execution realism hardening).
+- EPOCH-43 depends on EPOCH-42 (CPCV/PBO overfit defense).
+- EPOCH-44 depends on EPOCH-43 (risk fortress upgrades).
+- EPOCH-45 depends on EPOCH-44 (deterministic agent mesh MVP).
 
 ## SSOT foundations
 - `docs/EDGE_RESEARCH/GLOSSARY.md` — canonical terminology for E31..E40.
@@ -130,6 +140,11 @@
 - EPOCH-38: `verify:epoch38` via `scripts/verify/epoch38_edge_gate.mjs` (implemented)
 - EPOCH-39: `verify:epoch39` via `scripts/verify/epoch39_edge_gate.mjs` (implemented)
 - EPOCH-40: `verify:epoch40` via `scripts/verify/epoch40_edge_gate.mjs` (implemented)
+- EPOCH-41: `verify:epoch41` via `scripts/verify/epoch41_bridge.mjs` (implemented)
+- EPOCH-42: planned stage2 gate (TBD in epoch implementation).
+- EPOCH-43: planned stage2 gate (TBD in epoch implementation).
+- EPOCH-44: planned stage2 gate (TBD in epoch implementation).
+- EPOCH-45: planned stage2 gate (TBD in epoch implementation).
 
 ## Gate owners (31→40)
 - EPOCH-31: data-platform
@@ -146,3 +161,9 @@
 
 ## EDGE aggregate gate
 - `verify:edge` executes `scripts/verify/edge_all_epochs.mjs` and enforces evidence completeness for E31..E40.
+
+- `specs/epochs/EPOCH-41.md`
+- `specs/epochs/EPOCH-42.md`
+- `specs/epochs/EPOCH-43.md`
+- `specs/epochs/EPOCH-44.md`
+- `specs/epochs/EPOCH-45.md`
