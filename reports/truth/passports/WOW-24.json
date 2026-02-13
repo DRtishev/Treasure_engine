@@ -1,0 +1,61 @@
+{
+  "id": "WOW-24",
+  "title": "Maximum Loss Governor (Hard Stop per-Trade + per-Day + per-Week)",
+  "mechanism": "Maximum Loss Governor (Hard Stop per-Trade + per-Day + per-Week) improves decision quality through deterministic implemented controls.",
+  "profit_hook": {
+    "affected_layer": "RISK",
+    "integration_point": {
+      "modules": [
+        "core/edge/risk_fortress.mjs",
+        "scripts/verify/epoch44_risk_fortress.mjs"
+      ],
+      "gates": [
+        "verify:epoch44",
+        "verify:edge"
+      ]
+    },
+    "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+  },
+  "acceptance": {
+    "must_improve": [
+      "fitness_score_v2 variance stability",
+      "worst_scenario score",
+      "max_dd control"
+    ],
+    "must_not_break": [
+      "determinism",
+      "vault policy",
+      "hard-stops",
+      "offline-default"
+    ]
+  },
+  "kill_criteria": [
+    "No measurable improvement in acceptance metrics across two deterministic runs",
+    "Introduces regression in determinism or risk hard-stop gates"
+  ],
+  "linked_epochs": [
+    44
+  ],
+  "linked_gates": [
+    "verify:epoch44",
+    "verify:edge"
+  ],
+  "evidence": [
+    {
+      "epoch": 44,
+      "evidence_root": "reports/evidence/EPOCH-44/",
+      "path": "SUMMARY.md",
+      "sha256_pack_index": "79ecd27148b2fdcfaaac5b5ad861e91a0f05e5272e376460616111a244bc4b24",
+      "sha256_sums": "79ecd27148b2fdcfaaac5b5ad861e91a0f05e5272e376460616111a244bc4b24",
+      "sha256_file": "79ecd27148b2fdcfaaac5b5ad861e91a0f05e5272e376460616111a244bc4b24"
+    },
+    {
+      "epoch": 44,
+      "evidence_root": "reports/evidence/EPOCH-44/",
+      "path": "VERDICT.md",
+      "sha256_pack_index": "bc41921395bbc6885cfa4e2d90e062e545e278eadb3053a22b4680652f1d278e",
+      "sha256_sums": "bc41921395bbc6885cfa4e2d90e062e545e278eadb3053a22b4680652f1d278e",
+      "sha256_file": "bc41921395bbc6885cfa4e2d90e062e545e278eadb3053a22b4680652f1d278e"
+    }
+  ]
+}

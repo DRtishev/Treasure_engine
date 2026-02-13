@@ -1,0 +1,61 @@
+{
+  "id": "WOW-01",
+  "title": "Point-in-Time Feature Store с Temporal Join Engine",
+  "mechanism": "Point-in-Time Feature Store с Temporal Join Engine improves decision quality through deterministic implemented controls.",
+  "profit_hook": {
+    "affected_layer": "DATA",
+    "integration_point": {
+      "modules": [
+        "core/edge/runtime.mjs",
+        "scripts/verify/epoch31_edge_gate.mjs"
+      ],
+      "gates": [
+        "verify:epoch31",
+        "verify:edge"
+      ]
+    },
+    "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+  },
+  "acceptance": {
+    "must_improve": [
+      "fitness_score_v2 variance stability",
+      "worst_scenario score",
+      "max_dd control"
+    ],
+    "must_not_break": [
+      "determinism",
+      "vault policy",
+      "hard-stops",
+      "offline-default"
+    ]
+  },
+  "kill_criteria": [
+    "No measurable improvement in acceptance metrics across two deterministic runs",
+    "Introduces regression in determinism or risk hard-stop gates"
+  ],
+  "linked_epochs": [
+    31
+  ],
+  "linked_gates": [
+    "verify:epoch31",
+    "verify:edge"
+  ],
+  "evidence": [
+    {
+      "epoch": 31,
+      "evidence_root": "reports/evidence/EPOCH-31/",
+      "path": "SUMMARY.md",
+      "sha256_pack_index": "f3cd5f07443f06ba8270e3cabcfa06da954e42043bbb3e7c5f80e7fa2f5c19b2",
+      "sha256_sums": "f3cd5f07443f06ba8270e3cabcfa06da954e42043bbb3e7c5f80e7fa2f5c19b2",
+      "sha256_file": "f3cd5f07443f06ba8270e3cabcfa06da954e42043bbb3e7c5f80e7fa2f5c19b2"
+    },
+    {
+      "epoch": 31,
+      "evidence_root": "reports/evidence/EPOCH-31/",
+      "path": "VERDICT.md",
+      "sha256_pack_index": "380745c1697a88bd2c76d1abf45560d3d1422112540a53cde3e4b4a04dc5845c",
+      "sha256_sums": "380745c1697a88bd2c76d1abf45560d3d1422112540a53cde3e4b4a04dc5845c",
+      "sha256_file": "380745c1697a88bd2c76d1abf45560d3d1422112540a53cde3e4b4a04dc5845c"
+    }
+  ]
+}

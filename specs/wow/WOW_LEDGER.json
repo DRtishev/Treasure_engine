@@ -1,0 +1,1996 @@
+{
+  "version": "E60",
+  "updated_at": "2026-02-13T22:06:06.757Z",
+  "items": [
+    {
+      "id": "WOW-01",
+      "title": "Point-in-Time Feature Store с Temporal Join Engine",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "mechanism": "Point-in-Time Feature Store с Temporal Join Engine improves decision quality through deterministic implemented controls.",
+      "profit_hook": {
+        "affected_layer": "DATA",
+        "integration_point": {
+          "modules": [
+            "core/edge/runtime.mjs",
+            "scripts/verify/epoch31_edge_gate.mjs"
+          ],
+          "gates": [
+            "verify:epoch31",
+            "verify:edge"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [
+          31
+        ],
+        "gates": [
+          "verify:epoch31",
+          "verify:edge"
+        ],
+        "modules": [
+          "core/edge/runtime.mjs",
+          "scripts/verify/epoch31_edge_gate.mjs"
+        ],
+        "evidence_outputs": [
+          "SUMMARY.md",
+          "VERDICT.md"
+        ]
+      }
+    },
+    {
+      "id": "WOW-02",
+      "title": "Order Flow Imbalance Features (OFI) из L2 Snapshots",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Order Flow Imbalance Features (OFI) из L2 Snapshots improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-03",
+      "title": "Адаптивная модель микроструктуры с калибровкой по реальным fills (MOONSHOT)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "mechanism": "Адаптивная модель микроструктуры с калибровкой по реальным fills (MOONSHOT) improves decision quality through deterministic implemented controls.",
+      "profit_hook": {
+        "affected_layer": "EXECUTION",
+        "integration_point": {
+          "modules": [
+            "core/edge/execution_realism.mjs",
+            "scripts/data/ingest_private_fills.mjs"
+          ],
+          "gates": [
+            "verify:epoch50",
+            "verify:treasure"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [
+          50
+        ],
+        "gates": [
+          "verify:epoch50",
+          "verify:treasure"
+        ],
+        "modules": [
+          "core/edge/execution_realism.mjs",
+          "scripts/data/ingest_private_fills.mjs"
+        ],
+        "evidence_outputs": [
+          "SUMMARY.md",
+          "VERDICT.md"
+        ]
+      }
+    },
+    {
+      "id": "WOW-04",
+      "title": "Partial Fill Simulator с Liquidity Buckets",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "mechanism": "Partial Fill Simulator с Liquidity Buckets improves decision quality through deterministic implemented controls.",
+      "profit_hook": {
+        "affected_layer": "EXECUTION",
+        "integration_point": {
+          "modules": [
+            "core/edge/execution_realism.mjs",
+            "scripts/verify/epoch42_execution_realism.mjs"
+          ],
+          "gates": [
+            "verify:epoch42",
+            "verify:edge"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [
+          42
+        ],
+        "gates": [
+          "verify:epoch42",
+          "verify:edge"
+        ],
+        "modules": [
+          "core/edge/execution_realism.mjs",
+          "scripts/verify/epoch42_execution_realism.mjs"
+        ],
+        "evidence_outputs": [
+          "SUMMARY.md",
+          "VERDICT.md"
+        ]
+      }
+    },
+    {
+      "id": "WOW-05",
+      "title": "Latency-Aware Signal Freshness Engine",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "mechanism": "Latency-Aware Signal Freshness Engine improves decision quality through deterministic implemented controls.",
+      "profit_hook": {
+        "affected_layer": "EXECUTION",
+        "integration_point": {
+          "modules": [
+            "core/exec/strategy_aware_executor.mjs",
+            "core/edge/execution_realism.mjs"
+          ],
+          "gates": [
+            "verify:epoch42",
+            "verify:edge"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [
+          42
+        ],
+        "gates": [
+          "verify:epoch42",
+          "verify:edge"
+        ],
+        "modules": [
+          "core/exec/strategy_aware_executor.mjs",
+          "core/edge/execution_realism.mjs"
+        ],
+        "evidence_outputs": [
+          "SUMMARY.md",
+          "VERDICT.md"
+        ]
+      }
+    },
+    {
+      "id": "WOW-06",
+      "title": "Cross-Venue Feature Divergence Detector",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Cross-Venue Feature Divergence Detector improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-07",
+      "title": "Regime Detection Engine: HMM + Vol Clustering (MOONSHOT)",
+      "status": "STAGED",
+      "tier": "P1",
+      "mechanism": "Regime Detection Engine: HMM + Vol Clustering (MOONSHOT) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-08",
+      "title": "Funding Rate Alpha с Decay-Adjusted Carry",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Funding Rate Alpha с Decay-Adjusted Carry improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-09",
+      "title": "Volatility Surface Features (IV Skew + Term Structure)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Volatility Surface Features (IV Skew + Term Structure) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-10",
+      "title": "Smart Execution Router с TWAP/VWAP Fallback",
+      "status": "STAGED",
+      "tier": "P1",
+      "mechanism": "Smart Execution Router с TWAP/VWAP Fallback improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-11",
+      "title": "Feature Importance Drift Detector",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Feature Importance Drift Detector improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-12",
+      "title": "Dynamic Fee Model с Exchange-Specific Calibration",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Dynamic Fee Model с Exchange-Specific Calibration improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-13",
+      "title": "Multi-Symbol Correlation Feature Engine",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Multi-Symbol Correlation Feature Engine improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-14",
+      "title": "CPCV (Combinatorial Purged Cross-Validation) Pipeline (MOONSHOT)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "mechanism": "CPCV (Combinatorial Purged Cross-Validation) Pipeline (MOONSHOT) improves decision quality through deterministic implemented controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "core/edge/overfit_defense.mjs",
+            "scripts/verify/epoch43_overfit_defense.mjs"
+          ],
+          "gates": [
+            "verify:epoch43",
+            "verify:edge"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [
+          43
+        ],
+        "gates": [
+          "verify:epoch43",
+          "verify:edge"
+        ],
+        "modules": [
+          "core/edge/overfit_defense.mjs",
+          "scripts/verify/epoch43_overfit_defense.mjs"
+        ],
+        "evidence_outputs": [
+          "SUMMARY.md",
+          "VERDICT.md"
+        ]
+      }
+    },
+    {
+      "id": "WOW-15",
+      "title": "Deflated Sharpe Ratio (DSR) Gate",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Deflated Sharpe Ratio (DSR) Gate improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-16",
+      "title": "Walk-Forward Anchored Backtesting (WFAB)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Walk-Forward Anchored Backtesting (WFAB) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-17",
+      "title": "Transaction Cost Sensitivity Analysis",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Transaction Cost Sensitivity Analysis improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-18",
+      "title": "Multi-Horizon Signal Ensemble с Confidence Decay (MOONSHOT)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Multi-Horizon Signal Ensemble с Confidence Decay (MOONSHOT) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-19",
+      "title": "Synthetic Stress Scenario Generator",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Synthetic Stress Scenario Generator improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-20",
+      "title": "Drawdown Speed Monitor с Early Warning",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Drawdown Speed Monitor с Early Warning improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-21",
+      "title": "Correlation Breakdown Detector для Portfolio Risk",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Correlation Breakdown Detector для Portfolio Risk improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-22",
+      "title": "Anti-Blowup Shield: Drawdown-Conditional Dynamic Sizing (MOONSHOT)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "mechanism": "Anti-Blowup Shield: Drawdown-Conditional Dynamic Sizing (MOONSHOT) improves decision quality through deterministic implemented controls.",
+      "profit_hook": {
+        "affected_layer": "RISK",
+        "integration_point": {
+          "modules": [
+            "core/edge/risk_fortress.mjs",
+            "scripts/verify/epoch44_risk_fortress.mjs"
+          ],
+          "gates": [
+            "verify:epoch44",
+            "verify:edge"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [
+          44
+        ],
+        "gates": [
+          "verify:epoch44",
+          "verify:edge"
+        ],
+        "modules": [
+          "core/edge/risk_fortress.mjs",
+          "scripts/verify/epoch44_risk_fortress.mjs"
+        ],
+        "evidence_outputs": [
+          "SUMMARY.md",
+          "VERDICT.md"
+        ]
+      }
+    },
+    {
+      "id": "WOW-23",
+      "title": "Tail Risk Budget с Conditional VaR (CVaR)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Tail Risk Budget с Conditional VaR (CVaR) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-24",
+      "title": "Maximum Loss Governor (Hard Stop per-Trade + per-Day + per-Week)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "mechanism": "Maximum Loss Governor (Hard Stop per-Trade + per-Day + per-Week) improves decision quality through deterministic implemented controls.",
+      "profit_hook": {
+        "affected_layer": "RISK",
+        "integration_point": {
+          "modules": [
+            "core/edge/risk_fortress.mjs",
+            "scripts/verify/epoch44_risk_fortress.mjs"
+          ],
+          "gates": [
+            "verify:epoch44",
+            "verify:edge"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [
+          44
+        ],
+        "gates": [
+          "verify:epoch44",
+          "verify:edge"
+        ],
+        "modules": [
+          "core/edge/risk_fortress.mjs",
+          "scripts/verify/epoch44_risk_fortress.mjs"
+        ],
+        "evidence_outputs": [
+          "SUMMARY.md",
+          "VERDICT.md"
+        ]
+      }
+    },
+    {
+      "id": "WOW-25",
+      "title": "PnL Attribution Engine (Decomposition: Alpha + Beta + Costs + Slippage)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "PnL Attribution Engine (Decomposition: Alpha + Beta + Costs + Slippage) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-26",
+      "title": "Hypothesis Generator Agent (Automated Feature Discovery)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Hypothesis Generator Agent (Automated Feature Discovery) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-27",
+      "title": "Leakage Sentinel Agent (Automated Leakage Hunting)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Leakage Sentinel Agent (Automated Leakage Hunting) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-28",
+      "title": "WFO Orchestrator Agent (Parallel Walk-Forward Executor)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "WFO Orchestrator Agent (Parallel Walk-Forward Executor) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-29",
+      "title": "Risk Governor Agent (Automated Risk State Management)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Risk Governor Agent (Automated Risk State Management) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-30",
+      "title": "Leakage Sentinel v3: Automated Fuzzing Pipeline (MOONSHOT)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "mechanism": "Leakage Sentinel v3: Automated Fuzzing Pipeline (MOONSHOT) improves decision quality through deterministic implemented controls.",
+      "profit_hook": {
+        "affected_layer": "CANARY",
+        "integration_point": {
+          "modules": [
+            "core/edge/runtime.mjs",
+            "scripts/verify/epoch38_edge_gate.mjs"
+          ],
+          "gates": [
+            "verify:epoch38",
+            "verify:edge"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [
+          38
+        ],
+        "gates": [
+          "verify:epoch38",
+          "verify:edge"
+        ],
+        "modules": [
+          "core/edge/runtime.mjs",
+          "scripts/verify/epoch38_edge_gate.mjs"
+        ],
+        "evidence_outputs": [
+          "SUMMARY.md",
+          "VERDICT.md"
+        ]
+      }
+    },
+    {
+      "id": "WOW-31",
+      "title": "Data Provenance Chain Agent",
+      "status": "STAGED",
+      "tier": "P1",
+      "mechanism": "Data Provenance Chain Agent improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-32",
+      "title": "Evidence Packager Agent (Automated Gate Report Generation)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "mechanism": "Evidence Packager Agent (Automated Gate Report Generation) improves decision quality through deterministic implemented controls.",
+      "profit_hook": {
+        "affected_layer": "RELEASE",
+        "integration_point": {
+          "modules": [
+            "scripts/evidence/packager.mjs",
+            "scripts/verify/ledger_check.mjs"
+          ],
+          "gates": [
+            "evidence:pack:epoch",
+            "verify:ledger"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [
+          48
+        ],
+        "gates": [
+          "evidence:pack:epoch",
+          "verify:ledger"
+        ],
+        "modules": [
+          "scripts/evidence/packager.mjs",
+          "scripts/verify/ledger_check.mjs"
+        ],
+        "evidence_outputs": [
+          "SUMMARY.md",
+          "VERDICT.md"
+        ]
+      }
+    },
+    {
+      "id": "WOW-33",
+      "title": "Red-Team Agent (Adversarial Strategy Tester)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Red-Team Agent (Adversarial Strategy Tester) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-34",
+      "title": "Microstructure Calibrator Agent (Sim↔Shadow Alignment)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Microstructure Calibrator Agent (Sim↔Shadow Alignment) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-35",
+      "title": "AI Research Agent Mesh с детерминистичным воспроизведением (MOONSHOT)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "mechanism": "AI Research Agent Mesh с детерминистичным воспроизведением (MOONSHOT) improves decision quality through deterministic implemented controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "core/agent/mesh.mjs",
+            "scripts/verify/epoch45_agent_mesh.mjs"
+          ],
+          "gates": [
+            "verify:epoch45",
+            "verify:edge"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [
+          45
+        ],
+        "gates": [
+          "verify:epoch45",
+          "verify:edge"
+        ],
+        "modules": [
+          "core/agent/mesh.mjs",
+          "scripts/verify/epoch45_agent_mesh.mjs"
+        ],
+        "evidence_outputs": [
+          "SUMMARY.md",
+          "VERDICT.md"
+        ]
+      }
+    },
+    {
+      "id": "WOW-36",
+      "title": "Anomaly Detection Agent (Market + System Anomalies)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Anomaly Detection Agent (Market + System Anomalies) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-37",
+      "title": "Strategy Performance Decay Predictor",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Strategy Performance Decay Predictor improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    },
+    {
+      "id": "WOW-38",
+      "title": "Governance Automation Agent (Policy Enforcement)",
+      "status": "PROPOSED",
+      "tier": "P2",
+      "mechanism": "Governance Automation Agent (Policy Enforcement) improves decision quality through deterministic planned controls.",
+      "profit_hook": {
+        "affected_layer": "EDGE",
+        "integration_point": {
+          "modules": [
+            "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+          ],
+          "gates": [
+            "verify:specs"
+          ]
+        },
+        "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+      },
+      "acceptance": {
+        "must_improve": [
+          "fitness_score_v2 variance stability",
+          "worst_scenario score",
+          "max_dd control"
+        ],
+        "must_not_break": [
+          "determinism",
+          "vault policy",
+          "hard-stops",
+          "offline-default"
+        ]
+      },
+      "self_deception_risks": [
+        "Backtest-only gains that fail in replay/live-like paths",
+        "Metric cherry-picking that hides tail-risk degradation"
+      ],
+      "kill_criteria": [
+        "No measurable improvement in acceptance metrics across two deterministic runs",
+        "Introduces regression in determinism or risk hard-stop gates"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:specs"
+        ],
+        "modules": [
+          "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
+        ],
+        "evidence_outputs": []
+      }
+    }
+  ]
+}

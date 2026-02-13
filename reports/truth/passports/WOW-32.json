@@ -1,0 +1,61 @@
+{
+  "id": "WOW-32",
+  "title": "Evidence Packager Agent (Automated Gate Report Generation)",
+  "mechanism": "Evidence Packager Agent (Automated Gate Report Generation) improves decision quality through deterministic implemented controls.",
+  "profit_hook": {
+    "affected_layer": "RELEASE",
+    "integration_point": {
+      "modules": [
+        "scripts/evidence/packager.mjs",
+        "scripts/verify/ledger_check.mjs"
+      ],
+      "gates": [
+        "evidence:pack:epoch",
+        "verify:ledger"
+      ]
+    },
+    "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+  },
+  "acceptance": {
+    "must_improve": [
+      "fitness_score_v2 variance stability",
+      "worst_scenario score",
+      "max_dd control"
+    ],
+    "must_not_break": [
+      "determinism",
+      "vault policy",
+      "hard-stops",
+      "offline-default"
+    ]
+  },
+  "kill_criteria": [
+    "No measurable improvement in acceptance metrics across two deterministic runs",
+    "Introduces regression in determinism or risk hard-stop gates"
+  ],
+  "linked_epochs": [
+    48
+  ],
+  "linked_gates": [
+    "evidence:pack:epoch",
+    "verify:ledger"
+  ],
+  "evidence": [
+    {
+      "epoch": 48,
+      "evidence_root": "reports/evidence/EPOCH-48/",
+      "path": "SUMMARY.md",
+      "sha256_pack_index": "4dfbaaa0918b8e9eb65d27e21e799ccabc12789de0862a1d9fe10e01d9c3c708",
+      "sha256_sums": "4dfbaaa0918b8e9eb65d27e21e799ccabc12789de0862a1d9fe10e01d9c3c708",
+      "sha256_file": "4dfbaaa0918b8e9eb65d27e21e799ccabc12789de0862a1d9fe10e01d9c3c708"
+    },
+    {
+      "epoch": 48,
+      "evidence_root": "reports/evidence/EPOCH-48/",
+      "path": "VERDICT.md",
+      "sha256_pack_index": "437ef468f6a2c6dc01e8ce31a513df632430981605c24500681fb8f8e8a7312d",
+      "sha256_sums": "437ef468f6a2c6dc01e8ce31a513df632430981605c24500681fb8f8e8a7312d",
+      "sha256_file": "437ef468f6a2c6dc01e8ce31a513df632430981605c24500681fb8f8e8a7312d"
+    }
+  ]
+}

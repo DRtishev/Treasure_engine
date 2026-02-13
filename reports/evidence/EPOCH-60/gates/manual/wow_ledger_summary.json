@@ -1,0 +1,20 @@
+{
+  "total": 38,
+  "counts": {
+    "SHIPPED": 10,
+    "PROPOSED": 25,
+    "STAGED": 3
+  },
+  "shipped": [
+    "WOW-01",
+    "WOW-03",
+    "WOW-04",
+    "WOW-05",
+    "WOW-14",
+    "WOW-22",
+    "WOW-24",
+    "WOW-30",
+    "WOW-32",
+    "WOW-35"
+  ]
+}

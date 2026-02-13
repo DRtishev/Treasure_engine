@@ -59,6 +59,8 @@
 56. EPOCH-56
 57. EPOCH-57
 58. EPOCH-58
+59. EPOCH-59
+60. EPOCH-60
 
 ## Dependency notes (EDGE)
 - EPOCH-31 depends on EPOCH-30 (EDGE starts from completed legacy runway).
@@ -89,6 +91,8 @@
 - EPOCH-56 depends on EPOCH-55 (fitness v2 + vault holdout policy + pause-recover determinism).
 - EPOCH-57 depends on EPOCH-56 (truth-resync + freeze regression + SSOT auto-range).
 - EPOCH-58 depends on EPOCH-57 (factory sterility: ssot/contracts/offline/repro gates).
+- EPOCH-59 depends on EPOCH-58 (Phoenix hardening consolidation).
+- EPOCH-60 depends on EPOCH-59 (WOW SSOT + KB + passports truth layer).
 
 ## SSOT foundations
 - `docs/EDGE_RESEARCH/GLOSSARY.md` — canonical terminology for E31..E40.
@@ -222,3 +226,5 @@
 - `specs/epochs/EPOCH-57.md`
 
 - `specs/epochs/EPOCH-58.md`
+- `specs/epochs/EPOCH-59.md`
+- `specs/epochs/EPOCH-60.md`

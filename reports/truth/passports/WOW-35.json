@@ -1,0 +1,61 @@
+{
+  "id": "WOW-35",
+  "title": "AI Research Agent Mesh с детерминистичным воспроизведением (MOONSHOT)",
+  "mechanism": "AI Research Agent Mesh с детерминистичным воспроизведением (MOONSHOT) improves decision quality through deterministic implemented controls.",
+  "profit_hook": {
+    "affected_layer": "EDGE",
+    "integration_point": {
+      "modules": [
+        "core/agent/mesh.mjs",
+        "scripts/verify/epoch45_agent_mesh.mjs"
+      ],
+      "gates": [
+        "verify:epoch45",
+        "verify:edge"
+      ]
+    },
+    "expected_effect": "Improves risk-adjusted PnL decisions by tightening filters, sizing, and release confidence."
+  },
+  "acceptance": {
+    "must_improve": [
+      "fitness_score_v2 variance stability",
+      "worst_scenario score",
+      "max_dd control"
+    ],
+    "must_not_break": [
+      "determinism",
+      "vault policy",
+      "hard-stops",
+      "offline-default"
+    ]
+  },
+  "kill_criteria": [
+    "No measurable improvement in acceptance metrics across two deterministic runs",
+    "Introduces regression in determinism or risk hard-stop gates"
+  ],
+  "linked_epochs": [
+    45
+  ],
+  "linked_gates": [
+    "verify:epoch45",
+    "verify:edge"
+  ],
+  "evidence": [
+    {
+      "epoch": 45,
+      "evidence_root": "reports/evidence/EPOCH-45/",
+      "path": "SUMMARY.md",
+      "sha256_pack_index": "1bdb151895949f610e94bce8c739393169addc272bf0e55974ef76dc6734583f",
+      "sha256_sums": "1bdb151895949f610e94bce8c739393169addc272bf0e55974ef76dc6734583f",
+      "sha256_file": "1bdb151895949f610e94bce8c739393169addc272bf0e55974ef76dc6734583f"
+    },
+    {
+      "epoch": 45,
+      "evidence_root": "reports/evidence/EPOCH-45/",
+      "path": "VERDICT.md",
+      "sha256_pack_index": "2c44010118d29bfff1fb327641e2b98f40f0ec17cb132372fd5436c70ab15b8a",
+      "sha256_sums": "2c44010118d29bfff1fb327641e2b98f40f0ec17cb132372fd5436c70ab15b8a",
+      "sha256_file": "2c44010118d29bfff1fb327641e2b98f40f0ec17cb132372fd5436c70ab15b8a"
+    }
+  ]
+}

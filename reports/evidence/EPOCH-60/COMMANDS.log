@@ -1,4 +1,11 @@
 npm ci
-CI=true npm run verify:epochs:freeze
-CI=true npm run verify:phoenix (run1)
-CI=true npm run verify:phoenix (run2)
+CI=true npm run verify:repo (x2)
+CI=true npm run verify:specs (x2)
+CI=true npm run verify:wow (x2)
+CI=true npm run verify:kb (x2)
+CI=true npm run verify:passports (x2)
+CI=true npm run verify:ledger (x2)
+CI=true npm run verify:edge (x2)
+CI=true npm run verify:treasure (x2)
+npm run release:build
+RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release (x2)
