@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0.0",
+  "expected_fail": {
+    "ok": true,
+    "reason": "FAIL_VAULT_DATASET_FOR_TUNING"
+  },
+  "policy": "strict tuning must reject tier=vault datasets"
+}

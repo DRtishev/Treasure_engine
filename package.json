@@ -127,7 +127,8 @@
     "verify:epoch52": "node scripts/verify/epoch52_canary_controller.mjs",
     "verify:epoch53": "node scripts/verify/epoch53_canary_forensics.mjs",
     "verify:epoch54": "node scripts/verify/epoch54_live_shadow_record.mjs",
-    "verify:epoch55": "node scripts/verify/epoch55_paper_fitness_lab.mjs"
+    "verify:epoch55": "node scripts/verify/epoch55_paper_fitness_lab.mjs",
+    "verify:epoch56": "node scripts/verify/epoch56_trickpack01.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

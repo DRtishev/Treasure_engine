@@ -23,3 +23,11 @@
 - No network access unless `ENABLE_NETWORK=1`.
 - No real submit path: `submitted` is always `false`.
 - Deterministic clocks only; no wall-clock dependency.
+
+
+## Pause-recover protocol (E56)
+- Any pause reason code enters `RECOVERY` state immediately.
+- Recovery enforces deterministic cooldown (`cooldown_bars=2`, `cooldown_ms=2000` in fixture flow).
+- Recovery ladder is fixed: `RECOVERY -> COOLDOWN -> SHADOW -> PAPER -> PRIOR_MODE`.
+- If E44 hard stop exists, prior mode transition is logged as blocked (`exposure_blocked=true`) and exposure stays fused off.
+- Recovery is shadow/paper only and never submits actions.

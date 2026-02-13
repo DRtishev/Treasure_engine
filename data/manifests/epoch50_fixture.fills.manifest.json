@@ -41,5 +41,8 @@
       "gaps:1"
     ]
   },
-  "quality_fingerprint": "ad3a60ad4df80117dbb1ef325d7c448752159c39ab48534c245184ed2c50d4f4"
+  "quality_fingerprint": "ad3a60ad4df80117dbb1ef325d7c448752159c39ab48534c245184ed2c50d4f4",
+  "tag": {
+    "tier": "train"
+  }
 }

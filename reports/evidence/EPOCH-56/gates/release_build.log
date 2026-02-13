@@ -1,0 +1,8 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 release:build
+> node scripts/release/build_release_artifacts.mjs
+
+release:build complete
+6c6ae0d30480c614fefcba15ab61ddb4f38cbbc9ea566bd593708dbdbef08b11  /workspace/Treasure_engine/artifacts/out/FINAL_VALIDATED.zip
+8ff6d7e28bb3c31a62d579a17a3d69a8bfe06300a4b7e5d22a5c683dc65d3c8e  /workspace/Treasure_engine/artifacts/out/evidence_chain.tar.gz

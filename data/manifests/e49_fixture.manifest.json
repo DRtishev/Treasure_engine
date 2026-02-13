@@ -37,5 +37,8 @@
     "reconnect_count": 1,
     "out_of_order_count": 1
   },
-  "quality_fingerprint": "fe393d5bde3fff0ebb9c442a496a725ddc05d1e9066128679e9b2786f8556c5c"
+  "quality_fingerprint": "fe393d5bde3fff0ebb9c442a496a725ddc05d1e9066128679e9b2786f8556c5c",
+  "tag": {
+    "tier": "train"
+  }
 }
