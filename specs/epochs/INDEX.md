@@ -131,9 +131,6 @@
 - EPOCH-39: `verify:epoch39` via `scripts/verify/epoch39_edge_gate.mjs` (implemented)
 - EPOCH-40: `verify:epoch40` via `scripts/verify/epoch40_edge_gate.mjs` (implemented)
 
-## Ledger semantics
-- EPOCH-31..EPOCH-40 are marked `DONE` when implementation gates are anti-flake green with required evidence under the active evidence epoch.
-
 ## Gate owners (31→40)
 - EPOCH-31: data-platform
 - EPOCH-32: simulation
