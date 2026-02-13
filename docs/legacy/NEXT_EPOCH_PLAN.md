@@ -1,3 +1,10 @@
+# LEGACY / NOT SSOT
+
+This document is archived for historical traceability and is not authoritative.
+Current SSOT lives under `specs/` and `agents.md`.
+
+---
+
 # NEXT EPOCH PLAN
 
 ## Spec source discovery

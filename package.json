@@ -70,7 +70,7 @@
     "verify:epoch20": "npm run verify:monitoring",
     "verify:release-governor": "node scripts/verify/release_governor_check.mjs",
     "verify:epoch21": "npm run verify:release-governor",
-    "verify:specs": "node scripts/verify/specs_check.mjs",
+    "verify:specs": "node scripts/verify/specs_check.mjs && npm run verify:repo",
     "regen:manifests": "node scripts/ops/regen_manifests.mjs",
     "export:validated": "node scripts/export_validated.mjs",
     "verify:wall": "node scripts/verify/wall.mjs",
@@ -102,7 +102,10 @@
     "verify:edge:strict": "ENABLE_CLEAN_CLONE=1 npm run verify:edge",
     "verify:goldens:update": "UPDATE_GOLDENS=1 npm run verify:edge",
     "package:final-validated": "npm run export:final-validated",
-    "export:final-validated": "node scripts/export/final_validated.mjs"
+    "export:final-validated": "node scripts/export/final_validated.mjs",
+    "verify:repo": "node scripts/verify/repo_sanity_check.mjs",
+    "verify:e2_multi_seed": "node scripts/verify/e2_multi_seed.mjs",
+    "verify:epoch41": "node scripts/verify/epoch41_bridge.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

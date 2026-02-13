@@ -1,4 +1,4 @@
-# NEURO-MEV DEPLOYMENT GUIDE
+# TREASURE ENGINE DEPLOYMENT GUIDE
 
 **Version**: 3.0.0  
 **Date**: 2026-02-10  
@@ -60,8 +60,8 @@ Required for live trading:
 ### Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/your-org/neuro-mev.git
-cd neuro-mev
+git clone https://github.com/your-org/treasure-engine.git
+cd treasure-engine
 ```
 
 ### Step 2: Install Dependencies
@@ -623,7 +623,7 @@ tail -f logs/events/run_*.jsonl
 ### File Structure
 
 ```
-neuro-mev/
+treasure-engine/
 ├── core/                   # Core system modules
 │   ├── control/            # Master Control System
 │   ├── truth/              # Truth Engine
@@ -647,7 +647,7 @@ neuro-mev/
 ### Support
 
 **Issues**: Check GitHub Issues  
-**Email**: support@neuro-mev.io  
+**Email**: support@treasure-engine.io  
 **Discord**: (if applicable)
 
 ---

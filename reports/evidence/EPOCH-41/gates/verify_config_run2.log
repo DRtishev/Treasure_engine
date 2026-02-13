@@ -1,0 +1,64 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:config
+> node scripts/verify/config_check.mjs
+
+
+╔════════════════════════════════════════════════════════════╗
+║  EPOCH-12: CONFIG VALIDATION                             ║
+╚════════════════════════════════════════════════════════════╝
+
+✓ Config schema loaded: ./spec/config.schema.json
+
+━━━ SCHEMA STRUCTURE VALIDATION ━━━
+
+✓ Schema has "$schema"
+✓ Schema has "title"
+✓ Schema has "type"
+✓ Schema has "properties"
+
+━━━ PROPERTY DEFINITIONS ━━━
+
+✓ Property defined: mode
+✓ Property defined: persistence
+✓ Property defined: event_log
+✓ Property defined: execution
+
+━━━ MODE ENUM VALIDATION ━━━
+
+✓ Mode supported: sim
+✓ Mode supported: paper
+✓ Mode supported: live
+
+━━━ VALIDATION FUNCTION TEST ━━━
+
+✓ Valid config passes validation
+✓ Invalid config (missing mode) correctly rejected
+✓ Invalid config (bad mode) correctly rejected
+✓ Invalid run_id format correctly rejected
+
+━━━ NETWORK ISOLATION CHECK ━━━
+
+✓ No network modules imported (network-isolated)
+⚠ Warning: .env usage detected (acceptable if not required)
+
+━━━ SUMMARY ━━━
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 16
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎉 CONFIG VALIDATION: PASS
+
+✅ DELIVERABLES VERIFIED:
+
+   ✓ Config schema well-formed
+   ✓ Required properties defined
+   ✓ Mode enum validated
+   ✓ Validation function operational
+   ✓ Network-isolated (no http/https/net imports)
+   ✓ No .env dependency
+

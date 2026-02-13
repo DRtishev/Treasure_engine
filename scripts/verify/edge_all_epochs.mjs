@@ -29,7 +29,7 @@ for (const epoch of ['31', '32', '33', '34', '35', '36', '37', '38', '39', '40']
   fs.mkdirSync(epochGateDir, { recursive: true });
   const logPath = path.join(epochGateDir, `${runLabel}.log`);
 
-  const result = spawnSync('npm', ['run', `verify:epoch${epoch}`], { encoding: 'utf8', env: process.env });
+  const result = spawnSync('npm', ['run', `verify:epoch${epoch}`], { encoding: 'utf8', env: { ...process.env, EVIDENCE_EPOCH: evidenceEpoch } });
   const logText = [
     `command=npm run verify:epoch${epoch}`,
     `exit_code=${result.status ?? 'null'}`,

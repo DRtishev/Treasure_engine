@@ -1,0 +1,7 @@
+{
+  "mode": "fallback-shadow-proxy",
+  "reason": "no real fill records found under data/live or reports/live",
+  "sample_count": 10,
+  "median_gap_bps": 0.4,
+  "fallback_used": true
+}

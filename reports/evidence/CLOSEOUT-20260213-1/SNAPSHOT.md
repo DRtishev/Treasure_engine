@@ -1,0 +1,7 @@
+- branch: work
+- sha: 7965d8afff60e923e8958f0a146bf8b0ac5111f5
+- node: v20.19.6
+- npm: 11.4.2
+- date: 2026-02-13T10:42:41+00:00
+- CI: false
+- os: Linux f754871e664b 6.12.47 #1 SMP Mon Oct 27 10:01:15 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux

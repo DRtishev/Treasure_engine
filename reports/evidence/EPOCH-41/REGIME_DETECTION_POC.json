@@ -1,0 +1,18 @@
+{
+  "mode": "vol-regime-fallback",
+  "reason": "HMM not yet productionized in repository; using deterministic rolling-volatility clustering",
+  "states": [
+    "LOW_VOL",
+    "MID_VOL",
+    "HIGH_VOL"
+  ],
+  "thresholds": {
+    "q33": 0.00170067,
+    "q66": 0.00234693
+  },
+  "counts": {
+    "HIGH_VOL": 36,
+    "MID_VOL": 36,
+    "LOW_VOL": 36
+  }
+}

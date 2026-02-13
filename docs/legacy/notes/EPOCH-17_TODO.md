@@ -1,3 +1,10 @@
+# LEGACY / NOT SSOT
+
+This document is archived for historical traceability and is not authoritative.
+Current SSOT lives under `specs/` and `agents.md`.
+
+---
+
 # EPOCH-17 TODO
 - [ ] Implement `core/exec/safety_integrated_executor.mjs`.
 - [ ] Implement `core/risk/risk_governor_wrapper.mjs`.

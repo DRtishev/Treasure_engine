@@ -1,0 +1,177 @@
+diff --git a/package.json b/package.json
+index 45af8a7..0090b4d 100644
+--- a/package.json
++++ b/package.json
+@@ -104,7 +104,8 @@
+     "package:final-validated": "npm run export:final-validated",
+     "export:final-validated": "node scripts/export/final_validated.mjs",
+     "verify:repo": "node scripts/verify/repo_sanity_check.mjs",
+-    "verify:e2_multi_seed": "node scripts/verify/e2_multi_seed.mjs"
++    "verify:e2_multi_seed": "node scripts/verify/e2_multi_seed.mjs",
++    "verify:epoch41": "node scripts/verify/epoch41_bridge.mjs"
+   },
+   "devDependencies": {
+     "ajv": "^8.17.1"
+diff --git a/scripts/verify/specs_check.mjs b/scripts/verify/specs_check.mjs
+index 30206c3..f3ef9ee 100644
+--- a/scripts/verify/specs_check.mjs
++++ b/scripts/verify/specs_check.mjs
+@@ -3,7 +3,7 @@ import fs from 'node:fs';
+ import path from 'node:path';
+ 
+ const EPOCH_START = 1;
+-const EPOCH_END = 40;
++const EPOCH_END = 45;
+ const epochFiles = Array.from({ length: EPOCH_END - EPOCH_START + 1 }, (_, i) => `specs/epochs/EPOCH-${String(i + EPOCH_START).padStart(2, '0')}.md`);
+ 
+ const requiredFiles = [
+diff --git a/specs/epochs/INDEX.md b/specs/epochs/INDEX.md
+index 2e8aa60..477eac2 100644
+--- a/specs/epochs/INDEX.md
++++ b/specs/epochs/INDEX.md
+@@ -41,6 +41,11 @@
+ 38. EPOCH-38
+ 39. EPOCH-39
+ 40. EPOCH-40
++41. EPOCH-41
++42. EPOCH-42
++43. EPOCH-43
++44. EPOCH-44
++45. EPOCH-45
+ 
+ ## Dependency notes (EDGE)
+ - EPOCH-31 depends on EPOCH-30 (EDGE starts from completed legacy runway).
+@@ -53,6 +58,11 @@
+ - EPOCH-38 depends on EPOCH-37 (consumes WFOReport for baseline).
+ - EPOCH-39 depends on EPOCH-38 (consumes GapReport for canary decisions).
+ - EPOCH-40 depends on EPOCH-39 (certifies all E31..E39 gates).
++- EPOCH-41 depends on EPOCH-40 (bridge audit + experiment layer).
++- EPOCH-42 depends on EPOCH-41 (execution realism hardening).
++- EPOCH-43 depends on EPOCH-42 (CPCV/PBO overfit defense).
++- EPOCH-44 depends on EPOCH-43 (risk fortress upgrades).
++- EPOCH-45 depends on EPOCH-44 (deterministic agent mesh MVP).
+ 
+ ## SSOT foundations
+ - `docs/EDGE_RESEARCH/GLOSSARY.md` — canonical terminology for E31..E40.
+@@ -130,6 +140,11 @@
+ - EPOCH-38: `verify:epoch38` via `scripts/verify/epoch38_edge_gate.mjs` (implemented)
+ - EPOCH-39: `verify:epoch39` via `scripts/verify/epoch39_edge_gate.mjs` (implemented)
+ - EPOCH-40: `verify:epoch40` via `scripts/verify/epoch40_edge_gate.mjs` (implemented)
++- EPOCH-41: `verify:epoch41` via `scripts/verify/epoch41_bridge.mjs` (implemented)
++- EPOCH-42: planned stage2 gate (TBD in epoch implementation).
++- EPOCH-43: planned stage2 gate (TBD in epoch implementation).
++- EPOCH-44: planned stage2 gate (TBD in epoch implementation).
++- EPOCH-45: planned stage2 gate (TBD in epoch implementation).
+ 
+ ## Gate owners (31→40)
+ - EPOCH-31: data-platform
+@@ -146,3 +161,9 @@
+ 
+ ## EDGE aggregate gate
+ - `verify:edge` executes `scripts/verify/edge_all_epochs.mjs` and enforces evidence completeness for E31..E40.
++
++- `specs/epochs/EPOCH-41.md`
++- `specs/epochs/EPOCH-42.md`
++- `specs/epochs/EPOCH-43.md`
++- `specs/epochs/EPOCH-44.md`
++- `specs/epochs/EPOCH-45.md`
+\ No newline at end of file
+diff --git a/specs/epochs/LEDGER.json b/specs/epochs/LEDGER.json
+index 15efe46..0700ff6 100644
+--- a/specs/epochs/LEDGER.json
++++ b/specs/epochs/LEDGER.json
+@@ -1,6 +1,6 @@
+ {
+   "schema_version": 2,
+-  "updated_at": "2026-02-12T12:00:00Z",
++  "updated_at": "2026-02-13T11:45:18Z",
+   "epochs": {
+     "1": {
+       "id": "EPOCH-01",
+@@ -609,6 +609,86 @@
+       "last_commit_sha": "bb9c190c706a1ba1f07979f0b4ac56db4c19496e",
+       "last_evidence_path": "reports/evidence/EPOCH-EDGE-MERGE-READY-01/",
+       "last_gate_summary": "EDGE foundation implementation verified with anti-flake runs and evidence-complete gates."
++    },
++    "41": {
++      "id": "EPOCH-41",
++      "title": "Stage2 Bridge: WOW Audit + Fast Experiments",
++      "status": "DONE",
++      "type": "stage2_bridge",
++      "depends_on": [
++        "EPOCH-40"
++      ],
++      "gate_owner": "verify:epoch41",
++      "evidence_id": "EPOCH-41",
++      "completed_at": "2026-02-13T11:45:18Z",
++      "commit_sha": "TBD",
++      "last_commit_sha": "TBD",
++      "last_evidence_path": "reports/evidence/EPOCH-41/",
++      "last_gate_summary": "Bridge matrix + experiments executed with deterministic evidence."
++    },
++    "42": {
++      "id": "EPOCH-42",
++      "title": "Execution Realism Hardening",
++      "status": "READY",
++      "type": "stage2_plan",
++      "depends_on": [
++        "EPOCH-41"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "PENDING",
++      "completed_at": "",
++      "commit_sha": "",
++      "last_commit_sha": "",
++      "last_evidence_path": "",
++      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
++    },
++    "43": {
++      "id": "EPOCH-43",
++      "title": "Overfit Defense: CPCV + PBO + DSR",
++      "status": "READY",
++      "type": "stage2_plan",
++      "depends_on": [
++        "EPOCH-42"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "PENDING",
++      "completed_at": "",
++      "commit_sha": "",
++      "last_commit_sha": "",
++      "last_evidence_path": "",
++      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
++    },
++    "44": {
++      "id": "EPOCH-44",
++      "title": "Risk Fortress Evolution",
++      "status": "READY",
++      "type": "stage2_plan",
++      "depends_on": [
++        "EPOCH-43"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "PENDING",
++      "completed_at": "",
++      "commit_sha": "",
++      "last_commit_sha": "",
++      "last_evidence_path": "",
++      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
++    },
++    "45": {
++      "id": "EPOCH-45",
++      "title": "Agent Mesh MVP (Deterministic)",
++      "status": "READY",
++      "type": "stage2_plan",
++      "depends_on": [
++        "EPOCH-44"
++      ],
++      "gate_owner": "docs",
++      "evidence_id": "PENDING",
++      "completed_at": "",
++      "commit_sha": "",
++      "last_commit_sha": "",
++      "last_evidence_path": "",
++      "last_gate_summary": "Planned in Stage2 bridge (EPOCH-41)."
+     }
+   }
+ }
