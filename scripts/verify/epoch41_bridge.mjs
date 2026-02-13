@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveEvidenceWriteContext } from '../../core/evidence/evidence_write_mode.mjs';
 import crypto from 'node:crypto';
 
-const root = process.cwd();
 const evidenceId = process.env.EVIDENCE_EPOCH || 'EPOCH-41';
-const evidenceDir = path.join(root, 'reports/evidence', evidenceId);
-fs.mkdirSync(evidenceDir, { recursive: true });
+const { evidenceRoot: evidenceDir } = resolveEvidenceWriteContext(evidenceId);
 
 function write(rel, body) {
   const out = path.join(evidenceDir, rel);
@@ -16,9 +15,9 @@ function write(rel, body) {
 }
 
 const cmdLog = [];
-const now = new Date().toISOString();
+const now = new Date('2026-01-01T00:00:00.000Z').toISOString();
 cmdLog.push(`timestamp=${now}`);
-cmdLog.push(`cwd=${root}`);
+cmdLog.push(`cwd=${process.cwd()}`);
 cmdLog.push(`evidence=${evidenceDir}`);
 
 function median(values) {
@@ -29,8 +28,8 @@ function median(values) {
 
 // EXPERIMENT 1: Microstructure Reality Check (fallback if no live fills)
 const liveFillCandidates = [
-  path.join(root, 'data/live/fills.json'),
-  path.join(root, 'reports/live/fills.json')
+  path.join(process.cwd(), 'data/live/fills.json'),
+  path.join(process.cwd(), 'reports/live/fills.json')
 ].filter((p) => fs.existsSync(p));
 let micro;
 if (liveFillCandidates.length > 0) {
@@ -38,7 +37,7 @@ if (liveFillCandidates.length > 0) {
   const deltas = fills.filter((x) => Number.isFinite(x.sim_slip_bps) && Number.isFinite(x.real_slip_bps)).map((x) => Math.abs(x.sim_slip_bps - x.real_slip_bps));
   micro = {
     mode: 'live-fill-calibration',
-    source: path.relative(root, liveFillCandidates[0]),
+    source: path.relative(process.cwd(), liveFillCandidates[0]),
     sample_count: deltas.length,
     median_gap_bps: deltas.length ? Number(median(deltas).toFixed(6)) : null,
     fallback_used: false
@@ -135,7 +134,7 @@ const files = fs.readdirSync(evidenceDir)
   })
   .filter((f) => !f.endsWith('SHA256SUMS.txt'))
   .sort();
-const sums = files.map((f) => `${crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex')}  ${path.relative(root, f)}`);
+const sums = files.map((f) => `${crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex')}  ${path.relative(process.cwd(), f)}`);
 write('SHA256SUMS.txt', `${sums.join('\n')}\n`);
 
-console.log(`PASS verify:epoch41 evidence=${path.relative(root, evidenceDir)}`);
+console.log(`PASS verify:epoch41 evidence=${path.relative(process.cwd(), evidenceDir)}`);

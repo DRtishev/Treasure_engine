@@ -38,8 +38,7 @@ function toEpochId(idArg) {
 function gateStatusFromText(text) {
   if (/FAILED:\s*0\b/.test(text)) return 'PASS';
   if (/verify:[^\n]* FAILED/.test(text)) return 'FAIL';
-  if (/\bFAILED\b/.test(text)) return 'FAIL';
-  if (/\bFAIL\b/.test(text) && !/\bFAIL:\s*0\b/.test(text)) return 'FAIL';
+  if (/\bFAILED:\s*[1-9]\d*\b/.test(text)) return 'FAIL';
   if (/\bPASSED\b|\bPASS\b/.test(text)) return 'PASS';
   return 'UNKNOWN';
 }

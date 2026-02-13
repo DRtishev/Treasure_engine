@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveEvidenceWriteContext } from '../../core/evidence/evidence_write_mode.mjs';
 import crypto from 'node:crypto';
 import { applyRiskFortress, sizingPolicy, generateDeterministicCrisisSuite } from '../../core/edge/risk_fortress.mjs';
 
-const root = process.cwd();
 const evidence = process.env.EVIDENCE_EPOCH || 'EPOCH-44';
 const runLabel = process.env.RUN_LABEL || 'manual';
-const eDir = path.join(root, 'reports/evidence', evidence);
+const { evidenceRoot: eDir } = resolveEvidenceWriteContext(evidence);
 const rDir = path.join(eDir, 'gates', runLabel);
 fs.mkdirSync(rDir, { recursive: true });
 

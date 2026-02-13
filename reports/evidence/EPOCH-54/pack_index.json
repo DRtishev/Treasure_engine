@@ -1,9 +1,9 @@
 {
   "epoch_id": "EPOCH-54",
-  "sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
+  "sha": "de58f865cbeea8bc96d6a05b86f20863e3faff7a",
   "node": "v20.19.6",
   "npm": "11.4.2",
-  "date": "2026-02-13T15:44:21.694Z",
+  "date": "2026-02-13T18:45:47.897Z",
   "gate_runs": [
     {
       "path": "gates/npm_ci.log",
@@ -79,7 +79,7 @@
   "artifacts": [],
   "hashes": {
     "PREFLIGHT.log": "35b7605baac3ae989d5025760eef0e3dbccef19f353016b9e69a8945f38df136",
-    "COMMANDS.log": "283d47a4cd54f4742e9d48598bdf53346da698b981a754e4018c2d854fed7205",
+    "COMMANDS.log": "2fa323493144f61b2f6c09d39021a94c85240f6ad6485559c44ec97ca12e8848",
     "SNAPSHOT.md": "85f06d451a389b95c6f394f8dd0ab37330115cd00a461e038195f5e6d4e3d2b1",
     "SUMMARY.md": "141e77f41969986f58c15f2ba4c271976a1c55dadc3a87d1f56558b52df449ca",
     "VERDICT.md": "0f1b2f613b19750c64f8ae65aad22bab2e70da1aa33ba36ca4aab1feebb77728"

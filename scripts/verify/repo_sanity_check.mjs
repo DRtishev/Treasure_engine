@@ -41,6 +41,40 @@ for (const rel of files) {
   }
 }
 
+const deterministicRoots = ['core/edge', 'core/paper', 'core/canary', 'core/sys'];
+const deterministicAllowlist = new Set([
+  'core/sys/clock.mjs',
+  'core/sys/rng.mjs'
+]);
+const primitivePatterns = [
+  { name: 'Date.now()', re: /\bDate\.now\s*\(/g },
+  { name: 'new Date()', re: /\bnew\s+Date\s*\(\s*\)/g },
+  { name: 'Math.random()', re: /\bMath\.random\s*\(/g }
+];
+
+const lintTargets = files.filter((rel) => rel.endsWith('.mjs') && deterministicRoots.some((prefix) => rel.startsWith(prefix)));
+for (const rel of lintTargets) {
+  if (deterministicAllowlist.has(rel)) continue;
+  const text = fs.readFileSync(path.join(root, rel), 'utf8');
+  for (const pat of primitivePatterns) {
+    let m;
+    while ((m = pat.re.exec(text)) !== null) {
+      const before = text.slice(0, m.index);
+      const line = before.split(/\r?\n/).length;
+      errors.push(`Determinism lint: ${rel}:${line} uses forbidden ${pat.name}`);
+    }
+    pat.re.lastIndex = 0;
+  }
+}
+
+if (process.env.VERIFY_REPO_SELF_TEST === '1') {
+  const selfPath = 'scripts/verify/fixtures/nondeterminism_bad.mjs';
+  const text = fs.readFileSync(selfPath, 'utf8');
+  const hit = primitivePatterns.some((pat) => pat.re.test(text));
+  if (!hit) errors.push('self-test fixture did not trigger nondeterminism lint');
+  else errors.push('self-test fixture intentionally triggers nondeterminism lint');
+}
+
 if (errors.length) {
   console.error('verify:repo FAILED');
   for (const err of errors) console.error(`- ${err}`);

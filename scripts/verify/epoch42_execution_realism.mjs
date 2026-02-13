@@ -1,15 +1,15 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveEvidenceWriteContext } from '../../core/evidence/evidence_write_mode.mjs';
 import crypto from 'node:crypto';
 import { loadFillRecords, normalizeFillRecord } from '../../core/edge/fill_record_contract.mjs';
 import { calibrateMicrostructure, deterministicPartialFill, scoreSignalFreshness } from '../../core/edge/execution_realism.mjs';
 import { StrategyAwareExecutor } from '../../core/exec/strategy_aware_executor.mjs';
 
-const root = process.cwd();
 const evidenceEpoch = process.env.EVIDENCE_EPOCH || 'EPOCH-42';
 const runLabel = process.env.RUN_LABEL || 'manual';
-const evidenceDir = path.join(root, 'reports/evidence', evidenceEpoch);
+const { evidenceRoot: evidenceDir } = resolveEvidenceWriteContext(evidenceEpoch);
 const gateDir = path.join(evidenceDir, 'gates');
 const runDir = path.join(gateDir, runLabel);
 fs.mkdirSync(runDir, { recursive: true });
@@ -27,7 +27,7 @@ function assert(cond, msg) {
 }
 
 // 1) Fill record contract
-const fillLoad = loadFillRecords({ root });
+const fillLoad = loadFillRecords({ root: process.cwd() });
 assert(typeof fillLoad.fallback_used === 'boolean', 'fill loader returns explicit fallback marker');
 if (fillLoad.fallback_used) {
   assert(fillLoad.fallback_reason === 'FILL_RECORD_FILE_MISSING', 'fallback reason is explicit when fill file missing');

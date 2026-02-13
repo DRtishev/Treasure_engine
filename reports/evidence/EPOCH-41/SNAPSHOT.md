@@ -1,4 +1,20 @@
-- branch: work
-- sha: 007ed0ae9c81c7b95b99c62c481344d5a14c28d2
-- node: v20.19.6
-- npm: 11.4.2
+# EPOCH-41 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-41/`
+- gate_logs: 14
+- failing_gate_logs: 0
+- unknown_gate_logs: 0
+- gate_runs:
+  - `gates/verify_config_run1.log` [PASS] `c33466b21d2a822f880247fc712c945c6c6ea4715530222e37b0588bc35c56c5`
+  - `gates/verify_config_run2.log` [PASS] `c33466b21d2a822f880247fc712c945c6c6ea4715530222e37b0588bc35c56c5`
+  - `gates/verify_e2_multi_run1.log` [PASS] `3630f8019159a8fc6467359f89822bdf77836310ff878bcdb34e682bea01d91d`
+  - `gates/verify_e2_multi_run2.log` [PASS] `f2822749b451ede373527afb474e989bba6c9f2388935c6b459845b5442e9bfb`
+  - `gates/verify_edge_run1.log` [PASS] `fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a`
+  - `gates/verify_edge_run2.log` [PASS] `fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a`
+  - `gates/verify_repo_run1.log` [PASS] `ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437`
+  - `gates/verify_repo_run2.log` [PASS] `ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437`
+  - `gates/verify_specs_run1.log` [PASS] `7472453ab52454cd17da74fd96358f5b45898687253543a607cfb9bd6b265041`
+  - `gates/verify_specs_run2.log` [PASS] `7472453ab52454cd17da74fd96358f5b45898687253543a607cfb9bd6b265041`
+  - `gates/verify_treasure_run1.log` [PASS] `52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a`
+  - `gates/verify_treasure_run2.log` [PASS] `52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a`
+  - `gates/verify_truth_layer_run1.log` [PASS] `0a94df2150f48fe1cac39433783954dc71b090024c669df127eaaa3b8db43d31`
+  - `gates/verify_truth_layer_run2.log` [PASS] `0a94df2150f48fe1cac39433783954dc71b090024c669df127eaaa3b8db43d31`

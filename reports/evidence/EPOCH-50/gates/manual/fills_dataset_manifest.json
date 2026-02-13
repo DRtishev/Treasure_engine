@@ -15,7 +15,7 @@
     {
       "type": "raw",
       "path": "data/private/raw/binance/epoch50_fixture/chunks/chunk_0001.jsonl",
-      "sha256": "cd0502d66250dd1bedf725add139cfbc76e61ffd5d746a8cf31c3229cf48bb52",
+      "sha256": "c37099d55e4f768a829a01241cbacac3704baf721078cdd9759fc161984dfc0a",
       "records": 4
     },
     {
@@ -25,12 +25,14 @@
       "records": 4
     }
   ],
+  "chunk_size": 1000,
   "schema_versions": {
     "fill_record": "1.0.0"
   },
   "normalization_version": "1.0.0",
-  "ingest_version": "e50-v1",
+  "ingest_version": "e51-v1",
   "strict_mode": true,
+  "dataset_fingerprint": "14aaa48d91877797c399e8195333b07feebdfdcd37dabf0040a4a5eed83896d6",
   "quality_summary": {
     "dedup_count": 1,
     "gap_count": 1,

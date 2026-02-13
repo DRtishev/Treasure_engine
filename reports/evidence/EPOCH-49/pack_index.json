@@ -1,9 +1,9 @@
 {
   "epoch_id": "EPOCH-49",
-  "sha": "999c59a5c06528a4b0994da688de0a722876c71c",
+  "sha": "de58f865cbeea8bc96d6a05b86f20863e3faff7a",
   "node": "v20.19.6",
   "npm": "11.4.2",
-  "date": "2026-02-13T14:29:33.676Z",
+  "date": "2026-02-13T18:45:44.795Z",
   "gate_runs": [
     {
       "path": "gates/npm_ci.log",

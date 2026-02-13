@@ -1,0 +1,32 @@
+$ npm ci
+$ npm ci
+$ CI=true npm run verify:specs
+$ CI=true npm run verify:specs
+$ CI=true npm run verify:repo
+$ CI=true npm run verify:repo
+$ CI=true npm run verify:edge
+$ CI=true npm run verify:edge
+$ CI=true npm run verify:treasure
+$ CI=true npm run verify:treasure
+$ CI=true npm run verify:ledger
+$ CI=true npm run verify:ledger
+$ CI=true npm run verify:epochs:freeze
+$ CI=true npm run verify:epochs:freeze
+$ npm ci
+$ npm ci
+$ CI=true npm run verify:specs
+$ CI=true npm run verify:specs
+$ CI=true npm run verify:repo
+$ CI=true npm run verify:repo
+$ CI=true npm run verify:edge
+$ CI=true npm run verify:edge
+$ CI=true npm run verify:treasure
+$ CI=true npm run verify:treasure
+$ CI=true npm run verify:ledger
+$ CI=true npm run verify:ledger
+$ CI=true npm run verify:epochs:freeze
+$ CI=true npm run verify:epochs:freeze
+$ npm run release:build
+$ RELEASE_BUILD=1 CI=true npm run verify:release
+$ RELEASE_BUILD=1 CI=true npm run verify:release
+$ RELEASE_STRICT=1 CI=true npm run verify:release

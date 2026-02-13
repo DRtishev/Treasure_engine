@@ -25,7 +25,7 @@
     "verify:websocket": "node scripts/verify/websocket_smoke.mjs",
     "verify:confidence": "node scripts/verify/confidence_score.test.mjs",
     "verify:agent": "node scripts/verify/agent_smoke.mjs",
-    "verify:treasure": "node scripts/profit/__tests__/treasure_engine.test.mjs",
+    "verify:treasure": "node scripts/profit/__tests__/treasure_engine.test.mjs && node -e \"if(process.env.CI==='true'&&process.env.FREEZE_REGRESSION!=='0'){process.exit(require('child_process').spawnSync('npm',['run','verify:epochs:freeze'],{stdio:'inherit'}).status??1)}\"",
     "verify:paper": "node scripts/verify/run_with_context.mjs --gate paper --seed ${SEED:-12345} --repeat default -- npm run verify:paper:raw",
     "verify:live": "node scripts/verify/live_adapter_smoke.mjs",
     "verify:adversarial": "node scripts/verify/adversarial_safety.mjs",
@@ -70,7 +70,7 @@
     "verify:epoch20": "npm run verify:monitoring",
     "verify:release-governor": "node scripts/verify/release_governor_check.mjs",
     "verify:epoch21": "npm run verify:release-governor",
-    "verify:specs": "node scripts/verify/specs_check.mjs && npm run verify:ledger && npm run verify:repo",
+    "verify:specs": "npm run verify:ssot && node scripts/verify/specs_check.mjs && npm run verify:ledger && npm run verify:repo",
     "regen:manifests": "node scripts/ops/regen_manifests.mjs",
     "export:validated": "node scripts/export_validated.mjs",
     "verify:wall": "node scripts/verify/wall.mjs",
@@ -128,7 +128,12 @@
     "verify:epoch53": "node scripts/verify/epoch53_canary_forensics.mjs",
     "verify:epoch54": "node scripts/verify/epoch54_live_shadow_record.mjs",
     "verify:epoch55": "node scripts/verify/epoch55_paper_fitness_lab.mjs",
-    "verify:epoch56": "node scripts/verify/epoch56_trickpack01.mjs"
+    "verify:epoch56": "node scripts/verify/epoch56_trickpack01.mjs",
+    "verify:epochs:freeze": "node scripts/verify/epoch_freeze_regression.mjs",
+    "verify:ssot": "node scripts/verify/ssot_check.mjs",
+    "verify:contracts": "node scripts/verify/contracts_check.mjs",
+    "verify:offline": "node scripts/verify/offline_check.mjs",
+    "verify:repo:selftest": "node -e \"const cp=require('child_process');const r=cp.spawnSync('npm',['run','-s','verify:repo'],{stdio:'inherit',env:{...process.env,VERIFY_REPO_SELF_TEST:'1'}});process.exit(r.status===0?1:0)\""
   },
   "devDependencies": {
     "ajv": "^8.17.1"

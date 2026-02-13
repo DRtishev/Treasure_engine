@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { assertNetworkAllowed } from '../../core/net/network_guard.mjs';
 
-const ENABLE = process.env.ENABLE_NETWORK === '1';
-if (!ENABLE) {
-  console.log('SKIP network fetch (ENABLE_NETWORK!=1)');
-  process.exit(0);
+try {
+  assertNetworkAllowed('binance');
+} catch (err) {
+  console.error(`provider_binance_klines blocked: ${err.code || err.message}`);
+  process.exit(1);
 }
 
 const symbol = process.env.SYMBOL || 'BTCUSDT';

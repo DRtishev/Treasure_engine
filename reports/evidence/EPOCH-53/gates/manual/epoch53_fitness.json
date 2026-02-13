@@ -9,8 +9,8 @@
       "risk_events": 1,
       "trade_count": 3,
       "stability_score": 1,
-      "shadow_fingerprint": "8de07c7db86b720a452548a763e88caf1896a279a3c041fdf4815b08e8bcce59",
-      "paper_fingerprint": "432d30d2340482f9a11ce44c66511a08141e28d45c7c0366269abb3912650744",
+      "shadow_fingerprint": "c38675fc244cffa6433d4c3824b43e12b4a120a33cab7a08ae60bfe65d6ba272",
+      "paper_fingerprint": "bee73e80e00f7e67c32098adc73fef8e8dd07ad7062dc42c7c3514cd6ab24c9d",
       "scenario_score": 0
     },
     {
@@ -21,8 +21,8 @@
       "risk_events": 1,
       "trade_count": 3,
       "stability_score": 1,
-      "shadow_fingerprint": "b862734dff318e0667695cde90936c70eef5ec5352ce191597808632986ad88e",
-      "paper_fingerprint": "1bc8f5abfbeb3d33c71fad35f67805ec85a61e9a60e1696621cb91023173eb58",
+      "shadow_fingerprint": "96c22b6d20f5c268c7b32160c73ce8ec02324e702548401902af439bc89566f9",
+      "paper_fingerprint": "1435033b14e81e43dec322d928dc53453eda63a3a76021b1e9fbccc0d57dbfa9",
       "scenario_score": 0
     },
     {
@@ -33,8 +33,8 @@
       "risk_events": 1,
       "trade_count": 3,
       "stability_score": 1,
-      "shadow_fingerprint": "2b1432f516ad64aa54f627497930d1eeeb46c3e65d6639c01090129c428b3f6d",
-      "paper_fingerprint": "0ea131895a08f9bd6f3641cbe43e2236c4f5019d0ffdba0fe53b9a96c8594a58",
+      "shadow_fingerprint": "d33f5459bc482104e826c7926a30e55f9cdd749cd3e65920e2c4531e48dd2eeb",
+      "paper_fingerprint": "ce5bcee08ca02e30e4f0801a44c8b66e9b7ced7f19e77d09792820530a3da147",
       "scenario_score": 0
     },
     {
@@ -45,8 +45,8 @@
       "risk_events": 1,
       "trade_count": 3,
       "stability_score": 1,
-      "shadow_fingerprint": "67322270594e059a0f854ff58ea6dd47319e69442e433829b3cb7ea86b24d3e7",
-      "paper_fingerprint": "6fd70a943c8ae6c86325830c9438fc021c8665af1c2d40861ebad063138dcc7c",
+      "shadow_fingerprint": "b2450e381122018655d776b60119d85c85b32d1f32faeaa63c5bcaa363ce678f",
+      "paper_fingerprint": "f54acd4dd4f7fba5ea60541e9f38b0792e904b3200dc31953a2018659b1afcec",
       "scenario_score": 0
     },
     {
@@ -57,11 +57,11 @@
       "risk_events": 1,
       "trade_count": 3,
       "stability_score": 1,
-      "shadow_fingerprint": "b84ac44d31c2130cc32b31e0bd54ccb16b8f744bffe3deb9d1fb3b063a8c3aac",
-      "paper_fingerprint": "2a054d2a9a0d02976c21e10d32d092b5ce97c46d392c0e97add81b67d4d5c035",
+      "shadow_fingerprint": "0304211431c38f1dd277f2b55869beb89c99d0bd341ddb238abf5d704259f81f",
+      "paper_fingerprint": "fd8c1b6c937e30b488c517db7a622d340cf92c05b2ddc108f714b5c365e10e6e",
       "scenario_score": 0
     }
   ],
   "fitness_score": 0,
-  "fitness_fingerprint": "d916b73feb569661d238f0ba99c78fce9577895123f01624a7f2879b1c3c2b83"
+  "fitness_fingerprint": "8c4cdab681643f90b7b60d69009affa032f5bf881338f5a615262e64fd14cfae"
 }

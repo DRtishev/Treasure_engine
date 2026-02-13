@@ -1,22 +1,21 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveEvidenceWriteContext } from '../../core/evidence/evidence_write_mode.mjs';
 import crypto from 'node:crypto';
 import { parseJsonl, fingerprintObject, normalizeTradeEvent } from '../../core/edge/data_contracts.mjs';
 import { evaluateDataQuality } from '../../core/edge/data_quality.mjs';
 
-const root = process.cwd();
 const evidenceEpoch = process.env.EVIDENCE_EPOCH || 'EPOCH-49';
 const runLabel = process.env.RUN_LABEL || 'manual';
-const manualDir = path.join(root, 'reports/evidence', evidenceEpoch, 'gates', 'manual');
-fs.mkdirSync(manualDir, { recursive: true });
+const { manualDir, fitnessDir } = resolveEvidenceWriteContext(evidenceEpoch);
 
 const datasetId = process.env.DATASET_ID || 'e49_fixture';
 const provider = process.env.PROVIDER || 'binance';
-const manifestPath = path.join(root, 'data/manifests', `${datasetId}.manifest.json`);
-const rawChunk = path.join(root, `data/raw/${provider}/${datasetId}/chunks/chunk_1700000000000_0001.jsonl`);
-const normalizedChunk = path.join(root, `data/normalized/${provider}/${datasetId}/chunks/chunk_1700000000000_0001.jsonl`);
-const shaDataPath = path.join(root, 'data/SHA256SUMS.DATA');
+const manifestPath = path.resolve('data/manifests', `${datasetId}.manifest.json`);
+const rawChunk = path.resolve(`data/raw/${provider}/${datasetId}/chunks/chunk_1700000000000_0001.jsonl`);
+const normalizedChunk = path.resolve(`data/normalized/${provider}/${datasetId}/chunks/chunk_1700000000000_0001.jsonl`);
+const shaDataPath = path.resolve('data/SHA256SUMS.DATA');
 
 let passed = 0;
 let failed = 0;

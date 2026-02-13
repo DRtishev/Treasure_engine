@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveEvidenceWriteContext } from '../../core/evidence/evidence_write_mode.mjs';
 import { runCanaryController } from '../../core/canary/canary_runner.mjs';
 import { runEpoch53Fitness } from '../../core/canary/fitness_suite.mjs';
 import { listReasonCodes } from '../../core/canary/reason_codes.mjs';
 
-const root = process.cwd();
 const epoch = process.env.EVIDENCE_EPOCH || 'EPOCH-53';
-const manualDir = path.join(root, 'reports/evidence', epoch, 'gates', 'manual');
-fs.mkdirSync(manualDir, { recursive: true });
+const { manualDir, fitnessDir } = resolveEvidenceWriteContext(epoch);
 
 let passed = 0; let failed = 0;
 const checks = [];
@@ -36,10 +35,10 @@ const outForensics = {
   decision_trace: forensic.report.decision_trace
 };
 
-fs.mkdirSync(path.resolve('reports/fitness'), { recursive: true });
+fs.mkdirSync(fitnessDir, { recursive: true });
 fs.writeFileSync(path.join(manualDir, 'canary_forensics_report.json'), JSON.stringify(outForensics, null, 2) + '\n');
 fs.writeFileSync(path.join(manualDir, 'epoch53_fitness.json'), JSON.stringify(fitness, null, 2) + '\n');
-fs.writeFileSync(path.resolve('reports/fitness/epoch53_fitness.json'), JSON.stringify(fitness, null, 2) + '\n');
+fs.writeFileSync(path.join(fitnessDir, 'epoch53_fitness.json'), JSON.stringify(fitness, null, 2) + '\n');
 
 const result = { epoch: 'EPOCH-53', status: failed === 0 ? 'PASS' : 'FAIL', passed, failed, fingerprint: forensic.fingerprint, fitness_score: fitness.fitness_score, checks };
 fs.writeFileSync(path.join(manualDir, 'verify_epoch53_result.json'), JSON.stringify(result, null, 2) + '\n');

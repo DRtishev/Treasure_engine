@@ -6,6 +6,7 @@
 import fs from 'fs';
 import path from 'path';
 import { BinanceFetcher } from './binance_fetcher.mjs';
+import { assertNetworkAllowed } from '../../core/net/network_guard.mjs';
 
 function die(msg) {
   console.error('[fetch:binance] ERROR: ' + msg);
@@ -38,6 +39,12 @@ async function main() {
   
   if (args.length === 0 || args[0] === '--help' || args[0] === '-h') {
     usage();
+  }
+
+  try {
+    assertNetworkAllowed('binance');
+  } catch (err) {
+    die(`network blocked by policy flags (${err.code || err.message})`);
   }
 
   const symbol = args[0];

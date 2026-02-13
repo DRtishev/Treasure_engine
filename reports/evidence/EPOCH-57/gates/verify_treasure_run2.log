@@ -1,0 +1,109 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:treasure
+> node scripts/profit/__tests__/treasure_engine.test.mjs && node -e "if(process.env.CI==='true'&&process.env.FREEZE_REGRESSION!=='0'){process.exit(require('child_process').spawnSync('npm',['run','verify:epochs:freeze'],{stdio:'inherit'}).status??1)}"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TREASURE ENGINE PROFIT SYSTEM TESTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━ PROFIT/LOSS CALCULATION ━━━
+✓ LONG gross PnL correct
+✓ Fees/slippage reduce net PnL
+✓ LONG trade is profitable
+✓ SHORT gross PnL correct
+✓ SHORT trade is profitable
+✓ Losing trade identified
+
+━━━ BREAK-EVEN CALCULATION ━━━
+✓ Break-even price above entry
+✓ Break-even price reasonable
+
+━━━ TARGET EXIT CALCULATION ━━━
+✓ Target exit accounts for ROI + costs
+✓ Target exit reasonable
+
+━━━ POSITION SIZING ━━━
+✓ Risk amount is 1% of capital
+✓ Price distance to stop correct
+✓ Position size correct (100 / 2)
+
+━━━ RISK/REWARD RATIO ━━━
+✓ Reward distance correct
+✓ Risk distance correct
+✓ RR ratio correct (3:1)
+✓ RR ratio acceptable (>=2:1)
+
+━━━ FEE CONFIGURATION ━━━
+✓ Custom maker fee set
+✓ Custom taker fee set
+✓ Custom slippage set
+
+━━━ OPPORTUNITY DETECTOR INIT ━━━
+✓ Min score configured
+✓ Min profit configured
+✓ Price history starts empty
+
+━━━ PRICE HISTORY MANAGEMENT ━━━
+✓ History trimmed to max size
+✓ Oldest prices removed
+
+━━━ OPPORTUNITY SCORING ━━━
+✓ Excellent opportunity scores high
+✓ Poor opportunity scores low
+
+━━━ DETECTOR STATISTICS ━━━
+✓ Stats include total detected
+✓ Stats include recent count
+✓ Stats include history size
+
+━━━ OPPORTUNITY TYPES ━━━
+✓ PRICE_SPIKE type exists
+✓ VOLATILITY type exists
+✓ TREND_REVERSAL type exists
+✓ BREAKOUT type exists
+
+━━━ EDGE CASES ━━━
+✓ Throws on invalid side
+✓ Throws on invalid stop loss
+✓ No fees/slippage = gross equals net
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 37
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ All treasure engine tests passed
+
+💰 TREASURE ENGINE CAPABILITIES VERIFIED:
+   ✓ Profit/loss calculations (with fees/slippage)
+   ✓ Risk/reward analysis
+   ✓ Position sizing
+   ✓ Break-even calculations
+   ✓ Opportunity detection
+   ✓ Opportunity scoring
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epochs:freeze
+> node scripts/verify/epoch_freeze_regression.mjs
+
+pack:verify PASSED for EPOCH-55
+✓ frontier report generated with bounded grid and top-k
+✓ determinism x2 frontier fingerprint invariant
+✓ frontier entries include params + metrics
+PASS verify:epoch55 checks=3
+freeze PASS EPOCH-55
+pack:verify PASSED for EPOCH-56
+✓ fitness v2 non-constant across scenarios
+✓ fitness v2 emits required per-scenario metrics
+✓ vault policy strict expected-fail enforced for tuning sweep
+✓ pause-recover deterministic x2 fingerprint invariant
+✓ pause-recover transition trace generated
+✓ hard stop remains enforced during recovery
+✓ recovery flow does not submit any action
+PASS verify:epoch56 checks=7
+freeze PASS EPOCH-56
+verify:epochs:freeze PASSED (epochs=2)

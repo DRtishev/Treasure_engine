@@ -1,14 +1,13 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { resolveEvidenceWriteContext } from '../../core/evidence/evidence_write_mode.mjs';
 import { spawnSync } from 'node:child_process';
 import { calibrateExecutionRealismFromPrivateFills } from '../../core/edge/execution_realism.mjs';
 
-const root = process.cwd();
 const evidenceEpoch = process.env.EVIDENCE_EPOCH || 'EPOCH-50';
 const runLabel = process.env.RUN_LABEL || 'manual';
-const manualDir = path.join(root, 'reports/evidence', evidenceEpoch, 'gates', 'manual');
-fs.mkdirSync(manualDir, { recursive: true });
+const { manualDir, fitnessDir } = resolveEvidenceWriteContext(evidenceEpoch);
 
 let passed = 0;
 let failed = 0;

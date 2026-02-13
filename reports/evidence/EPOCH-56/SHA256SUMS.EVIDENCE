@@ -4,7 +4,8 @@
 9bbac5e62953012fdad77cbb6ffd14715689f932369182d7ebb99b8a3b2e815e  ./gates/manual/vault_policy_test.json
 2a1897f0a4f03a36815611fc7c06b0340600833a9b0c95252205f472c2bb574c  ./gates/manual/verify_epoch56_result.json
 5e16090a3ae3800676cac0fa3ee28c0c645529d8250deaec0cbbfc76e77848b6  ./gates/npm_ci.log
-e2acf7b3696423def667c47296842e8a8bec99cd6c0dbc9c28347c3650dcae39  ./gates/pack_epoch.log
+bd4a832e45b8850e256d9d1b8bc3e00551d880642531dbf399c2c4896a940344  ./gates/pack_epoch.log
+b16fa2d846840e4e1b4871644301966c1c957f5082655ac29fe091f62650d282  ./gates/pack_verify.log
 ed84c72002397b12fec01779b2180886dc54eafe2bc443630361dade7c6e1f6b  ./gates/release_build.log
 fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a  ./gates/verify_edge.run1.log
 fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a  ./gates/verify_edge.run2.log
@@ -18,7 +19,7 @@ ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437  ./gates/verify
 ae90f9f2d25db3e4eac35fff99048c97e5b26e993f8cfb23f9adf8e105964437  ./gates/verify_repo.run2.log
 6f0890341b0a4dd4249ae03174497e274700fdabff71fc193e1709d4e1c62130  ./gates/verify_specs.run1.log
 6f0890341b0a4dd4249ae03174497e274700fdabff71fc193e1709d4e1c62130  ./gates/verify_specs.run2.log
-102fb82636b18927dbbae51b79fb41b2d8bace205112514fbe008fd40f9f1172  ./pack_index.json
+3f8bd54eec0f3dc8fab076bec789326d347319cc0c906b62a8822af14d3b804b  ./pack_index.json
 3304e8dede72166f66395d39731236d63b14f28deb0575b2bb8cf4e66e503f06  ./PREFLIGHT.log
 93c69735ec8efe74830084709ae7c46116fb1ba377a8b80a76179d1bade483a5  ./SNAPSHOT.md
 0278d94b1ca6a9446b436b941fc07da7befbf1da85e4efda8c89807918a47c8a  ./SUMMARY.md
