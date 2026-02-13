@@ -1,0 +1,10 @@
+
+> treasure-engine@1.0.0 verify:epoch45
+> node scripts/verify/epoch45_agent_mesh.mjs
+
+✓ deterministic outputs x2
+✓ replay from event log matches output
+✓ all events carry seed
+✓ policy: no risk FSM bypass
+✓ policy: network remains disabled by default
+PASS verify:epoch45 checks=5 fp=8292ff98ee4c7e767be6d1d69aa87444b8fbf39402320555bb3dfac561b6ca25
