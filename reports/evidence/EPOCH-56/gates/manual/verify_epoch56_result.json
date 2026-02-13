@@ -1,0 +1,37 @@
+{
+  "epoch": "EPOCH-56",
+  "status": "PASS",
+  "passed": 7,
+  "failed": 0,
+  "fingerprint": "a16737a4c97ef121c161b400b9f0fc38b1831b946566b5e20197fafaccdc95ea",
+  "checks": [
+    {
+      "ok": true,
+      "msg": "fitness v2 non-constant across scenarios"
+    },
+    {
+      "ok": true,
+      "msg": "fitness v2 emits required per-scenario metrics"
+    },
+    {
+      "ok": true,
+      "msg": "vault policy strict expected-fail enforced for tuning sweep"
+    },
+    {
+      "ok": true,
+      "msg": "pause-recover deterministic x2 fingerprint invariant"
+    },
+    {
+      "ok": true,
+      "msg": "pause-recover transition trace generated"
+    },
+    {
+      "ok": true,
+      "msg": "hard stop remains enforced during recovery"
+    },
+    {
+      "ok": true,
+      "msg": "recovery flow does not submit any action"
+    }
+  ]
+}

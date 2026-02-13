@@ -877,6 +877,24 @@
       "last_commit_sha": "774c7f55160f7e78fa2df78def8f0cf2dfd1aca5",
       "last_evidence_path": "reports/evidence/EPOCH-55/",
       "last_gate_summary": "Offline deterministic gate and evidence pack passed."
+    },
+    "56": {
+      "id": "EPOCH-56",
+      "title": "TRICKPACK-01: Fitness Score v2 + Vault Holdout + Pause-Recover",
+      "status": "DONE",
+      "verdict": "PASS",
+      "type": "stage2_plan",
+      "depends_on": [
+        "EPOCH-55"
+      ],
+      "gate_owner": "docs",
+      "evidence_id": "EPOCH-56",
+      "evidence_root": "reports/evidence/EPOCH-56/",
+      "completed_at": "2026-02-13T16:16:12Z",
+      "commit_sha": "b1c6d0ea45d9580105c1329463496226c068eb95",
+      "last_commit_sha": "b1c6d0ea45d9580105c1329463496226c068eb95",
+      "last_evidence_path": "reports/evidence/EPOCH-56/",
+      "last_gate_summary": "Fitness v2 discrimination, vault strict expected-fail policy, and deterministic pause-recover checks passed offline."
     }
   }
 }

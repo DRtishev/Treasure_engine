@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0.0",
+  "provider": "binance",
+  "dataset_id": "e56_vault_fixture",
+  "topics": [
+    "btcusdt@trade"
+  ],
+  "params": {
+    "symbol": "BTCUSDT"
+  },
+  "time_range": {
+    "start_ts_ms": 1700001000000,
+    "end_ts_ms": 1700001000300
+  },
+  "chunks": [
+    {
+      "type": "raw",
+      "path": "data/raw/binance/e56_vault_fixture/chunks/chunk_1700001000000_0001.jsonl",
+      "sha256": "206d619c6be8489de035d9126632a913dac4ffdf77742ccb9265fbba96750ebc",
+      "records": 4
+    },
+    {
+      "type": "normalized",
+      "path": "data/normalized/binance/e56_vault_fixture/chunks/chunk_1700001000000_0001.jsonl",
+      "sha256": "206d619c6be8489de035d9126632a913dac4ffdf77742ccb9265fbba96750ebc",
+      "records": 4
+    }
+  ],
+  "schema_versions": {
+    "trade_event": "1.0.0"
+  },
+  "normalization_version": "1.0.0",
+  "recorder_version": "e56-vault-v1",
+  "warnings": {
+    "gaps": 0,
+    "dedups": 0,
+    "reconnect_count": 0,
+    "out_of_order_count": 0
+  },
+  "quality_fingerprint": "vault-fixture-e56",
+  "tag": {
+    "tier": "vault"
+  }
+}

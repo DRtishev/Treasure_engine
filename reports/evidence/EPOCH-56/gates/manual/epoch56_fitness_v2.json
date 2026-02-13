@@ -1,0 +1,129 @@
+{
+  "schema_version": "1.0.0",
+  "formula": "fitness = pnl_net*180 - max_dd*600 + min(2.5,trade_count*0.2) - risk_events_count*7 - pause_count*4 - stability_penalty*100 - data_quality_penalty*100",
+  "best_score": -479.1603,
+  "worst_score": -501.361506,
+  "unique_score_count": 6,
+  "scenarios": [
+    {
+      "rank_seed": 0,
+      "params": {
+        "slip_scale": 0.85,
+        "size_scale": 0.75
+      },
+      "metrics": {
+        "pnl_net": -0.08672389,
+        "max_dd": 0.75,
+        "trade_count": 2,
+        "pause_count": 1,
+        "risk_events_count": 1,
+        "stability_penalty": 0.017,
+        "data_quality_penalty": 0.0125
+      },
+      "fitness_score": -479.1603,
+      "score_formula": "fitness = pnl_net*180 - max_dd*600 + min(2.5,trade_count*0.2) - risk_events_count*7 - pause_count*4 - stability_penalty*100 - data_quality_penalty*100",
+      "clamp_reason": null,
+      "fingerprint": "2a504e30a87d92331693673dba3605e253909680425663d3a11847c753480d45"
+    },
+    {
+      "rank_seed": 1,
+      "params": {
+        "slip_scale": 1,
+        "size_scale": 0.8
+      },
+      "metrics": {
+        "pnl_net": -0.09225881,
+        "max_dd": 0.75000006,
+        "trade_count": 2,
+        "pause_count": 1,
+        "risk_events_count": 1,
+        "stability_penalty": 0.03,
+        "data_quality_penalty": 0.018
+      },
+      "fitness_score": -482.006622,
+      "score_formula": "fitness = pnl_net*180 - max_dd*600 + min(2.5,trade_count*0.2) - risk_events_count*7 - pause_count*4 - stability_penalty*100 - data_quality_penalty*100",
+      "clamp_reason": null,
+      "fingerprint": "c9bfa6e9d3a2e1604510de8c719a650651611b6aff8c5f7a393001a41283848a"
+    },
+    {
+      "rank_seed": 2,
+      "params": {
+        "slip_scale": 1.15,
+        "size_scale": 0.9
+      },
+      "metrics": {
+        "pnl_net": -0.10358604,
+        "max_dd": 0.75,
+        "trade_count": 3,
+        "pause_count": 1,
+        "risk_events_count": 1,
+        "stability_penalty": 0.046,
+        "data_quality_penalty": 0.022
+      },
+      "fitness_score": -485.845487,
+      "score_formula": "fitness = pnl_net*180 - max_dd*600 + min(2.5,trade_count*0.2) - risk_events_count*7 - pause_count*4 - stability_penalty*100 - data_quality_penalty*100",
+      "clamp_reason": null,
+      "fingerprint": "2199942084f515029bb9875d64c8a911c4c4cfaa6640e4ea89967afee0e40fee"
+    },
+    {
+      "rank_seed": 4,
+      "params": {
+        "slip_scale": 1.1,
+        "size_scale": 1
+      },
+      "metrics": {
+        "pnl_net": -0.15130254,
+        "max_dd": 0.74999994,
+        "trade_count": 3,
+        "pause_count": 1,
+        "risk_events_count": 1,
+        "stability_penalty": 0.066,
+        "data_quality_penalty": 0.03
+      },
+      "fitness_score": -497.234421,
+      "score_formula": "fitness = pnl_net*180 - max_dd*600 + min(2.5,trade_count*0.2) - risk_events_count*7 - pause_count*4 - stability_penalty*100 - data_quality_penalty*100",
+      "clamp_reason": null,
+      "fingerprint": "a8a97dbfaa92d7c5fecc2687ca0d668c38d9e547a6d37a9e3fdff1856697061d"
+    },
+    {
+      "rank_seed": 3,
+      "params": {
+        "slip_scale": 0.9,
+        "size_scale": 1
+      },
+      "metrics": {
+        "pnl_net": -0.16599596,
+        "max_dd": 0.75,
+        "trade_count": 3,
+        "pause_count": 1,
+        "risk_events_count": 1,
+        "stability_penalty": 0.045,
+        "data_quality_penalty": 0.025
+      },
+      "fitness_score": -497.279273,
+      "score_formula": "fitness = pnl_net*180 - max_dd*600 + min(2.5,trade_count*0.2) - risk_events_count*7 - pause_count*4 - stability_penalty*100 - data_quality_penalty*100",
+      "clamp_reason": null,
+      "fingerprint": "7468f4fe24db126907fa358a79ebb450d4624bf58dd8d151860263fb21e2f9b4"
+    },
+    {
+      "rank_seed": 5,
+      "params": {
+        "slip_scale": 1.25,
+        "size_scale": 1.1
+      },
+      "metrics": {
+        "pnl_net": -0.16145291,
+        "max_dd": 0.74999997,
+        "trade_count": 3,
+        "pause_count": 1,
+        "risk_events_count": 1,
+        "stability_penalty": 0.0875,
+        "data_quality_penalty": 0.0315
+      },
+      "fitness_score": -501.361506,
+      "score_formula": "fitness = pnl_net*180 - max_dd*600 + min(2.5,trade_count*0.2) - risk_events_count*7 - pause_count*4 - stability_penalty*100 - data_quality_penalty*100",
+      "clamp_reason": null,
+      "fingerprint": "034de629e0d76e02fe489e7ec15d8526217529401c8cc9d7a485a8e5fdc81d6b"
+    }
+  ]
+}

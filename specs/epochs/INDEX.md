@@ -56,6 +56,7 @@
 53. EPOCH-53
 54. EPOCH-54
 55. EPOCH-55
+56. EPOCH-56
 
 ## Dependency notes (EDGE)
 - EPOCH-31 depends on EPOCH-30 (EDGE starts from completed legacy runway).
@@ -83,6 +84,7 @@
 - EPOCH-53 depends on EPOCH-52 (canary forensics + fitness score).
 - EPOCH-54 depends on EPOCH-53 (live shadow recorder invariants + dedup policy hardening).
 - EPOCH-55 depends on EPOCH-54 (paper fitness lab bounded sweeps + anti-overfit constraints).
+- EPOCH-56 depends on EPOCH-55 (fitness v2 + vault holdout policy + pause-recover determinism).
 
 ## SSOT foundations
 - `docs/EDGE_RESEARCH/GLOSSARY.md` — canonical terminology for E31..E40.
@@ -175,6 +177,7 @@
 - EPOCH-53: `verify:epoch53` via `scripts/verify/epoch53_canary_forensics.mjs` (implemented).
 - EPOCH-54: `verify:epoch54` via `scripts/verify/epoch54_live_shadow_record.mjs` (implemented).
 - EPOCH-55: `verify:epoch55` via `scripts/verify/epoch55_paper_fitness_lab.mjs` (implemented).
+- EPOCH-56: `verify:epoch56` via `scripts/verify/epoch56_trickpack01.mjs` (implemented).
 
 ## Gate owners (31→40)
 - EPOCH-31: data-platform

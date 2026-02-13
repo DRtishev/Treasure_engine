@@ -1,0 +1,4 @@
+{"schema_version":"1.0.0","ts_ms":1700001000000,"symbol":"BTCUSDT","price":43120.5,"qty":0.0012,"side":"BUY","trade_id":"2001","source_seq":6001,"input_fingerprint":"a1","output_fingerprint":"b1"}
+{"schema_version":"1.0.0","ts_ms":1700001000100,"symbol":"BTCUSDT","price":43140.1,"qty":0.0011,"side":"SELL","trade_id":"2002","source_seq":6002,"input_fingerprint":"a2","output_fingerprint":"b2"}
+{"schema_version":"1.0.0","ts_ms":1700001000200,"symbol":"BTCUSDT","price":43080.4,"qty":0.0013,"side":"BUY","trade_id":"2003","source_seq":6003,"input_fingerprint":"a3","output_fingerprint":"b3"}
+{"schema_version":"1.0.0","ts_ms":1700001000300,"symbol":"BTCUSDT","price":43110.9,"qty":0.0014,"side":"SELL","trade_id":"2004","source_seq":6004,"input_fingerprint":"a4","output_fingerprint":"b4"}

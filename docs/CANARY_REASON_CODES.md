@@ -11,3 +11,13 @@
 | `WARN_HEURISTIC_DEDUP_USED` | `heuristic_dedup_used` | `strict_dedup_ids_required` | `WARN` | `provider, dataset_id` |
 
 All pause/risk events must emit machine-readable code + metric + threshold + value + context fingerprint.
+
+
+## Recovery transition codes (E56)
+| code | phase | note |
+|---|---|---|
+| `RECOVERY_COOLDOWN` | RECOVERY->COOLDOWN | deterministic cooldown stage |
+| `RECOVERY_STEP_SHADOW` | COOLDOWN->SHADOW | shadow-first recovery stage |
+| `RECOVERY_STEP_PAPER` | SHADOW->PAPER | paper validation stage |
+| `RECOVERY_PRIOR_MODE_READY` | PAPER->PRIOR_MODE | prior mode resumed (no hard-stop block) |
+| `RECOVERY_PRIOR_MODE_BLOCKED` | PAPER->PRIOR_MODE | prior mode transition logged but exposure blocked by hard-stop policy |

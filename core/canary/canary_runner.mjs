@@ -41,6 +41,22 @@ function loadOverfit(pathName) {
   return { status: 'present', metrics: parsed };
 }
 
+function buildRecoveryTrace({ pauseEvents, hardStops, config, clock }) {
+  const transitions = [];
+  if (pauseEvents.length === 0) return transitions;
+  const reason = pauseEvents[0].code;
+  const thresholds_used = { ...config.thresholds, cooldown_bars: 2, cooldown_ms: 2000 };
+  const prior_mode = config.mode;
+  const hardStopBlocking = hardStops > 0;
+
+  transitions.push({ ts_ms: clock.nowMs(), from: 'ACTIVE', to: 'RECOVERY', reason_code: reason, thresholds_used, prior_mode, exposure_blocked: hardStopBlocking, shadow_only: true });
+  transitions.push({ ts_ms: clock.nowMs(), from: 'RECOVERY', to: 'COOLDOWN', reason_code: 'RECOVERY_COOLDOWN', thresholds_used, prior_mode, cooldown_bars_remaining: 2, exposure_blocked: hardStopBlocking, shadow_only: true });
+  transitions.push({ ts_ms: clock.nowMs(), from: 'COOLDOWN', to: 'SHADOW', reason_code: 'RECOVERY_STEP_SHADOW', thresholds_used, prior_mode, exposure_blocked: hardStopBlocking, shadow_only: true });
+  transitions.push({ ts_ms: clock.nowMs(), from: 'SHADOW', to: 'PAPER', reason_code: 'RECOVERY_STEP_PAPER', thresholds_used, prior_mode, exposure_blocked: hardStopBlocking, shadow_only: true });
+  transitions.push({ ts_ms: clock.nowMs(), from: 'PAPER', to: prior_mode, reason_code: hardStopBlocking ? 'RECOVERY_PRIOR_MODE_BLOCKED' : 'RECOVERY_PRIOR_MODE_READY', thresholds_used, prior_mode, exposure_blocked: hardStopBlocking, shadow_only: true });
+  return transitions;
+}
+
 export function runCanaryController(input = {}, deps = {}) {
   const { config, config_fingerprint } = validateCanaryConfig(input);
   if (config.network_requested && process.env.ENABLE_NETWORK !== '1') throw new Error('Network disabled unless ENABLE_NETWORK=1');
@@ -103,9 +119,12 @@ export function runCanaryController(input = {}, deps = {}) {
   let submissionPlan = null;
   if (config.mode === 'GUARDED_LIVE') {
     const intents = market.slice(0, 3).map((row, i) => ({ ts_ms: row.ts_ms, symbol: row.symbol, side: i % 2 === 0 ? 'BUY' : 'SELL', notional_usd: Math.min(100, config.thresholds.max_exposure_usd) }));
-    submissionPlan = { mode: 'GUARDED_LIVE', submitted: false, submitted_actions: 0, intents };
+    submissionPlan = { mode: 'GUARDED_LIVE', submitted: false, submitted_actions: 0, intents, blocked_by_hard_stop: risk_events.length > 0 };
     stateLog.push({ ts_ms: clock.nowMs(), event: 'SUBMISSION_PLAN_READY', intents: intents.length, submitted: false });
   }
+
+  const recoveryTransitions = buildRecoveryTrace({ pauseEvents: pause_events, hardStops: risk_events.length, config, clock });
+  for (const t of recoveryTransitions) stateLog.push({ ts_ms: t.ts_ms, event: 'RECOVERY_TRANSITION', ...t });
 
   pause_events.sort((a, b) => a.ts_ms - b.ts_ms || a.code.localeCompare(b.code));
   risk_events.sort((a, b) => a.ts_ms - b.ts_ms || a.code.localeCompare(b.code));
@@ -113,11 +132,12 @@ export function runCanaryController(input = {}, deps = {}) {
   const decision_trace = {
     pause_event_count: pause_events.length,
     risk_event_count: risk_events.length,
-    code_counts: [...pause_events, ...risk_events].reduce((acc, e) => { acc[e.code] = (acc[e.code] || 0) + 1; return acc; }, {})
+    recovery_transition_count: recoveryTransitions.length,
+    code_counts: [...pause_events, ...risk_events, ...recoveryTransitions.map((x) => ({ code: x.reason_code }))].reduce((acc, e) => { acc[e.code] = (acc[e.code] || 0) + 1; return acc; }, {})
   };
 
   const report = {
-    schema_version: '1.1.0',
+    schema_version: '1.2.0',
     mode: config.mode,
     scenario: config.scenario,
     config_fingerprint,
@@ -125,10 +145,11 @@ export function runCanaryController(input = {}, deps = {}) {
     thresholds_used,
     pause_events,
     risk_events,
+    recovery_transitions: recoveryTransitions,
     decision_trace,
     monitors: { reality_gap: realityGap, risk_events: risk_events.length, overfit_status: overfit.status, vol_spike: volSpike, dd_speed: ddSpeed, data_gap_count: s.data_gap },
     metrics: { pause_triggers: pause_events.length, risk_events_count: risk_events.length, paper_pnl: paperMetrics?.net_pnl ?? null, trade_count: paperMetrics?.paper_fills ?? 0 },
-    invariants: { network_guard: !config.network_requested, submitted: false, live_submit_fuse: true }
+    invariants: { network_guard: !config.network_requested, submitted: false, live_submit_fuse: true, hard_stop_enforced: risk_events.length > 0 }
   };
 
   const fingerprint = fp({ config, report, stateLog, submissionPlan });

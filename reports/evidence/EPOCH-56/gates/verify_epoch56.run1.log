@@ -1,0 +1,13 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch56
+> node scripts/verify/epoch56_trickpack01.mjs
+
+✓ fitness v2 non-constant across scenarios
+✓ fitness v2 emits required per-scenario metrics
+✓ vault policy strict expected-fail enforced for tuning sweep
+✓ pause-recover deterministic x2 fingerprint invariant
+✓ pause-recover transition trace generated
+✓ hard stop remains enforced during recovery
+✓ recovery flow does not submit any action
+PASS verify:epoch56 checks=7
