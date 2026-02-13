@@ -1,0 +1,13 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch43
+> node scripts/verify/epoch43_overfit_defense.mjs
+
+✓ input fingerprint stable x2
+✓ output fingerprint stable x2
+✓ split count equals k
+✓ all splits have non-empty train/test
+✓ train/test leakage absent by index
+✓ PBO in [0,1]
+✓ DSR finite
+PASS verify:epoch43 checks=7 fingerprint=9023606b3e2ce243294c6879ed0fbae7ecbb1ba34e1af6e6fb133d37c094ac8f

@@ -1,0 +1,21 @@
+{
+  "epoch": "EPOCH-42",
+  "mode": "fallback-shadow-proxy",
+  "fallback_used": true,
+  "fallback_reason": "FILL_RECORD_FILE_MISSING",
+  "source": null,
+  "inputs_hash": "8cd701de74c6ce782c40a7beeac8bf5c5d0095c25247b5bc002dd16ae975cefd",
+  "outputs_hash": "08cdbac1bfbc16d5e6d7115ccaca161d737d61c80ba37c1ae58f63af1cfd44f1",
+  "seed": 4242,
+  "params": {
+    "slip_mean_bps": 4.12,
+    "slip_std_bps": 0.75,
+    "latency_mean_ms": 100,
+    "latency_std_ms": 20
+  },
+  "outputs": {
+    "sample_count": 3,
+    "calibration_mode": "fallback-shadow-proxy",
+    "fallback_used": true
+  }
+}

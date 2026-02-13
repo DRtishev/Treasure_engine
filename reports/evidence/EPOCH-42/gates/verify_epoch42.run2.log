@@ -1,0 +1,30 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epoch42
+> node scripts/verify/epoch42_execution_realism.mjs
+
+✓ fill loader returns explicit fallback marker
+✓ fallback reason is explicit when fill file missing
+✓ fill contract rejects non-finite numbers
+✓ calibration params deterministic for same inputs
+✓ calibration fingerprints deterministic for same inputs
+✓ bucket classified as HIGH
+✓ HIGH fill_ratio in [0,1]
+✓ HIGH notional conservation invariant
+✓ bucket classified as MID
+✓ MID fill_ratio in [0,1]
+✓ MID notional conservation invariant
+✓ bucket classified as LOW
+✓ LOW fill_ratio in [0,1]
+✓ LOW notional conservation invariant
+✓ bucket classified as MICRO
+✓ MICRO fill_ratio in [0,1]
+✓ MICRO notional conservation invariant
+✓ partial-fill severity monotonic by liquidity bucket
+✓ freshness action ALLOW for HFT
+✓ freshness action BLOCK for HFT
+✓ freshness action DOWNWEIGHT for SWING
+✓ stale HFT signal blocked in signal->intent path
+✓ swing stale signal downweighted
+✓ signal->intent freshness path deterministic
+PASS verify:epoch42 checks=24 fingerprint=78fde6dfda340db5b2a85dd01bd290c8436691c02a198ab45d1bb91b7adf7acd

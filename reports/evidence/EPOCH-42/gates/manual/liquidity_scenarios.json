@@ -1,0 +1,54 @@
+[
+  {
+    "adv": 2000000000,
+    "order": 1000000,
+    "expectedBucket": "HIGH",
+    "out": {
+      "bucket": "HIGH",
+      "order_usd": 1000000,
+      "participation": 0.5,
+      "fill_ratio": 0.975,
+      "filled_usd": 975000,
+      "unfilled_usd": 25000
+    }
+  },
+  {
+    "adv": 200000000,
+    "order": 500000,
+    "expectedBucket": "MID",
+    "out": {
+      "bucket": "MID",
+      "order_usd": 500000,
+      "participation": 1,
+      "fill_ratio": 0.7,
+      "filled_usd": 350000,
+      "unfilled_usd": 150000
+    }
+  },
+  {
+    "adv": 20000000,
+    "order": 200000,
+    "expectedBucket": "LOW",
+    "out": {
+      "bucket": "LOW",
+      "order_usd": 200000,
+      "participation": 1,
+      "fill_ratio": 0.4,
+      "filled_usd": 80000,
+      "unfilled_usd": 120000
+    }
+  },
+  {
+    "adv": 2000000,
+    "order": 100000,
+    "expectedBucket": "MICRO",
+    "out": {
+      "bucket": "MICRO",
+      "order_usd": 100000,
+      "participation": 1,
+      "fill_ratio": 0.1,
+      "filled_usd": 10000,
+      "unfilled_usd": 90000
+    }
+  }
+]

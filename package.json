@@ -105,7 +105,9 @@
     "export:final-validated": "node scripts/export/final_validated.mjs",
     "verify:repo": "node scripts/verify/repo_sanity_check.mjs",
     "verify:e2_multi_seed": "node scripts/verify/e2_multi_seed.mjs",
-    "verify:epoch41": "node scripts/verify/epoch41_bridge.mjs"
+    "verify:epoch41": "node scripts/verify/epoch41_bridge.mjs",
+    "verify:epoch42": "node scripts/verify/epoch42_execution_realism.mjs",
+    "verify:epoch43": "node scripts/verify/epoch43_overfit_defense.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
