@@ -1,0 +1,45 @@
+{
+  "entrypoints": [
+    "core/edge/runtime.mjs",
+    "scripts/verify/edge_all_epochs.mjs",
+    "scripts/truth/passport_builder.mjs",
+    "scripts/truth/wow_rank.mjs",
+    "scripts/truth/render_wow_catalog.mjs",
+    "scripts/truth/render_wow_matrix.mjs",
+    "scripts/truth/render_kb_portal.mjs",
+    "scripts/verify/reachability.mjs",
+    "scripts/verify/properties.mjs",
+    "scripts/verify/docs_links_check.mjs",
+    "scripts/verify/golden_vectors_check.mjs"
+  ],
+  "active_unreachable_allowlist": [
+    {
+      "path": "ui/dashboard.html",
+      "reason": "Static operator UI asset not imported by JS module graph."
+    },
+    {
+      "path": "ui/panel.html",
+      "reason": "Static operator UI asset not imported by JS module graph."
+    },
+    {
+      "path": "ui/ai_brain_visualizer.html",
+      "reason": "Static operator UI asset not imported by JS module graph."
+    },
+    {
+      "path": "examples/swarm_trading_demo.mjs",
+      "reason": "Standalone example scenario not loaded by production/runtime entrypoints."
+    },
+    {
+      "path": "scripts/verify/fixtures/nondeterminism_bad.mjs",
+      "reason": "Negative fixture intentionally unreachable from runtime imports."
+    },
+    {
+      "path": "core/court/truth_integration_example.mjs",
+      "reason": "Standalone integration example not imported in production path."
+    },
+    {
+      "path": "scripts/ops/build_final_validated.mjs",
+      "reason": "Legacy ops helper retained for reproducibility but not invoked by current npm scripts."
+    }
+  ]
+}

@@ -1,46 +1,48 @@
-# STAGE2 IMPLEMENTATION MATRIX
+<a id="stage2-implementation-matrix"></a>
 
-Evidence-backed audit against `docs/EDGE_RESEARCH/EDGE_WOW_PROPOSALS.md` (WOW-01..WOW-38).
+# STAGE2 Implementation Matrix (Derived)
 
-| WOW-ID | Title | Target epoch(s) | Status | Evidence (file paths + tests) | Next action |
-|---|---|---|---|---|---|
-| WOW-01 | Point-in-Time Feature Store с Temporal Join Engine | E31 | IMPLEMENTED | core/edge/runtime.mjs (FeatureStore temporal query + monotonic guard); scripts/verify/edge_epoch_gate.mjs (future-mutation sentinel); gate: npm run verify:epoch31 | Extend provenance hash manifest in runtime payloads |
-| WOW-02 | Order Flow Imbalance Features (OFI) из L2 Snapshots | E31-E34 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-03 | Адаптивная модель микроструктуры с калибровкой по реальным fills (MOONSHOT) | E32/E38/E50 | IMPLEMENTED | core/edge/execution_realism.mjs + core/edge/private_fill_contracts.mjs + scripts/data/ingest_private_fills.mjs (REAL calibration from private normalized fills, strict-mode enforcement); scripts/verify/epoch50_private_fills_calibration.mjs; evidence: reports/evidence/EPOCH-50/gates/manual/calibration_manifest.json | Expand provider adapters while preserving strict deterministic contracts |
-| WOW-04 | Partial Fill Simulator с Liquidity Buckets | E32 | IMPLEMENTED | core/edge/execution_realism.mjs (deterministic liquidity buckets + partial-fill model); scripts/verify/epoch42_execution_realism.mjs injected scenarios + invariants | Expand scenario corpus for stress periods |
-| WOW-05 | Latency-Aware Signal Freshness Engine | E34 | IMPLEMENTED | core/edge/execution_realism.mjs (strategy freshness scoring, injected now_ms); core/exec/strategy_aware_executor.mjs integrates freshness gating in signal->intent; scripts/verify/epoch42_execution_realism.mjs | Add per-strategy histogram evidence in runtime telemetry |
-| WOW-06 | Cross-Venue Feature Divergence Detector | E31-E34 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-07 | Regime Detection Engine: HMM + Vol Clustering (MOONSHOT) | E33/E34 | PARTIAL | spec mentions in specs/epochs/EPOCH-33.md and EPOCH-34.md; core/sim/bar_generator.mjs contains regime labels | Implement explicit HMM/vol regime estimator + verification harness |
-| WOW-08 | Funding Rate Alpha с Decay-Adjusted Carry | E31-E34 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-09 | Volatility Surface Features (IV Skew + Term Structure) | E31-E34 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-10 | Smart Execution Router с TWAP/VWAP Fallback | E31-E34/E51 | PARTIAL | core/paper/paper_trading_harness.mjs provides deterministic intent->paper order->paper fill path with execution realism and risk gates; scripts/verify/epoch51_paper_trading_harness.mjs validates deterministic session outputs | Extend to full TWAP/VWAP routing logic and venue-aware splitting for production parity |
-| WOW-11 | Feature Importance Drift Detector | E31-E34 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-12 | Dynamic Fee Model с Exchange-Specific Calibration | E31-E34 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-13 | Multi-Symbol Correlation Feature Engine | E31-E34 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-14 | CPCV (Combinatorial Purged Cross-Validation) Pipeline (MOONSHOT) | E37 | IMPLEMENTED | core/edge/overfit_defense.mjs + core/edge/overfit_defense_contract.mjs (CPCV splits + PBO + DSR outputs); scripts/verify/epoch43_overfit_defense.mjs; dataset: tests/vectors/overfit/epoch43_small_dataset.json; gate: npm run verify:epoch43 | Expand CPCV combinations and confidence intervals |
-| WOW-15 | Deflated Sharpe Ratio (DSR) Gate | E35-E37 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-16 | Walk-Forward Anchored Backtesting (WFAB) | E35-E37 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-17 | Transaction Cost Sensitivity Analysis | E35-E37 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-18 | Multi-Horizon Signal Ensemble с Confidence Decay (MOONSHOT) | E35-E37 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-19 | Synthetic Stress Scenario Generator | E35-E37 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-20 | Drawdown Speed Monitor с Early Warning | E35-E37 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-21 | Correlation Breakdown Detector для Portfolio Risk | E35-E37 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-22 | Anti-Blowup Shield: Drawdown-Conditional Dynamic Sizing (MOONSHOT) | E35/E36/E44 | IMPLEMENTED | core/edge/risk_fortress.mjs (drawdown-conditioned sizing clamps + crisis scaling); scripts/verify/epoch44_risk_fortress.mjs (`npm run verify:epoch44`) validates deterministic must-pass/must-fail vectors | Expand stress corpus for additional volatility regimes |
-| WOW-23 | Tail Risk Budget с Conditional VaR (CVaR) | E35-E37 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-24 | Maximum Loss Governor (Hard Stop per-Trade + per-Day + per-Week) | E36/E44 | IMPLEMENTED | core/edge/risk_fortress.mjs (per-trade/day/week hard-stop governor + lockout); scripts/verify/epoch44_risk_fortress.mjs (`npm run verify:epoch44`) enforces threshold breaches and lockout behavior | Add portfolio-level aggregated hard-stop scenario vectors |
-| WOW-25 | PnL Attribution Engine (Decomposition: Alpha + Beta + Costs + Slippage) | E35-E37 | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-26 | Hypothesis Generator Agent (Automated Feature Discovery) | E37-E40+ | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-27 | Leakage Sentinel Agent (Automated Leakage Hunting) | E37-E40+ | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-28 | WFO Orchestrator Agent (Parallel Walk-Forward Executor) | E37-E40+ | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-29 | Risk Governor Agent (Automated Risk State Management) | E37-E40+ | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-30 | Leakage Sentinel v3: Automated Fuzzing Pipeline (MOONSHOT) | E38/E39 | IMPLEMENTED | core/edge/runtime.mjs (walkForwardLeakageSentinel); scripts/verify/edge_epoch_gate.mjs (injected leakage must-fail); gate: npm run verify:epoch38 | Upgrade from fixture sentinel to automated fuzz mutation suite |
-| WOW-31 | Data Provenance Chain Agent | E37+ | PARTIAL | basic lineage exists via deterministic fingerprints in core/edge/contracts.mjs | Add explicit provenance chain artifact with replay verification gate |
-| WOW-32 | Evidence Packager Agent (Automated Gate Report Generation) | E40+/E48 | IMPLEMENTED | scripts/evidence/packager.mjs (`pack:epoch`, `pack:verify`) generates deterministic packs and `pack_index.json`; scripts/verify/ledger_check.mjs enforces `pack_index.json` + checksum inclusion for DONE epochs; dogfood evidence in reports/evidence/EPOCH-48 with `pack_index.json` and packager verify pass | Extend parser precision for additional log formats while preserving deterministic status derivation |
-| WOW-33 | Red-Team Agent (Adversarial Strategy Tester) | E37-E40+ | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-34 | Microstructure Calibrator Agent (Sim↔Shadow Alignment) | E37-E40+ | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-35 | AI Research Agent Mesh с детерминистичным воспроизведением (MOONSHOT) | E40+/E45 | IMPLEMENTED | core/agent/mesh.mjs (deterministic researcher/sentinel/packager mesh); scripts/verify/epoch45_agent_mesh.mjs (`npm run verify:epoch45`) validates deterministic outputs and contracts | Extend agent portfolio beyond MVP roles under strict deterministic contracts |
-| WOW-36 | Anomaly Detection Agent (Market + System Anomalies) | E37-E40+ | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-37 | Strategy Performance Decay Predictor | E37-E40+ | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
-| WOW-38 | Governance Automation Agent (Policy Enforcement) | E37-E40+ | MISSING | No executable implementation or dedicated gate found; proposal appears in docs only. | Create minimal contract + verify gate before claiming implementation. |
+Source of truth: `specs/wow/WOW_LEDGER.json`.
 
-Summary: IMPLEMENTED=10, PARTIAL=4, MISSING=24.
+| ID | Title | Status | Layer | Epochs | Gates | Card |
+| --- | --- | --- | --- | --- | --- | --- |
+| WOW-01 | Point-in-Time Feature Store с Temporal Join Engine | SHIPPED | DATA | 31 | `verify:epoch31`, `verify:edge` | [card](../specs/wow/items/WOW-01.md) |
+| WOW-02 | Order Flow Imbalance Features (OFI) из L2 Snapshots | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-03 | Адаптивная модель микроструктуры с калибровкой по реальным fills (MOONSHOT) | SHIPPED | EXECUTION | 50 | `verify:epoch50`, `verify:treasure` | [card](../specs/wow/items/WOW-03.md) |
+| WOW-04 | Partial Fill Simulator с Liquidity Buckets | SHIPPED | EXECUTION | 42 | `verify:epoch42`, `verify:edge` | [card](../specs/wow/items/WOW-04.md) |
+| WOW-05 | Latency-Aware Signal Freshness Engine | SHIPPED | EXECUTION | 42 | `verify:epoch42`, `verify:edge` | [card](../specs/wow/items/WOW-05.md) |
+| WOW-06 | Cross-Venue Feature Divergence Detector | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-07 | Regime Detection Engine: HMM + Vol Clustering (MOONSHOT) | STAGED | EDGE | - | `verify:specs` | [card](../specs/wow/items/WOW-07.md) |
+| WOW-08 | Funding Rate Alpha с Decay-Adjusted Carry | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-09 | Volatility Surface Features (IV Skew + Term Structure) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-10 | Smart Execution Router с TWAP/VWAP Fallback | STAGED | EDGE | - | `verify:specs` | [card](../specs/wow/items/WOW-10.md) |
+| WOW-11 | Feature Importance Drift Detector | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-12 | Dynamic Fee Model с Exchange-Specific Calibration | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-13 | Multi-Symbol Correlation Feature Engine | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-14 | CPCV (Combinatorial Purged Cross-Validation) Pipeline (MOONSHOT) | SHIPPED | EDGE | 43 | `verify:epoch43`, `verify:edge` | [card](../specs/wow/items/WOW-14.md) |
+| WOW-15 | Deflated Sharpe Ratio (DSR) Gate | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-16 | Walk-Forward Anchored Backtesting (WFAB) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-17 | Transaction Cost Sensitivity Analysis | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-18 | Multi-Horizon Signal Ensemble с Confidence Decay (MOONSHOT) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-19 | Synthetic Stress Scenario Generator | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-20 | Drawdown Speed Monitor с Early Warning | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-21 | Correlation Breakdown Detector для Portfolio Risk | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-22 | Anti-Blowup Shield: Drawdown-Conditional Dynamic Sizing (MOONSHOT) | SHIPPED | RISK | 44 | `verify:epoch44`, `verify:edge` | [card](../specs/wow/items/WOW-22.md) |
+| WOW-23 | Tail Risk Budget с Conditional VaR (CVaR) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-24 | Maximum Loss Governor (Hard Stop per-Trade + per-Day + per-Week) | SHIPPED | RISK | 44 | `verify:epoch44`, `verify:edge` | [card](../specs/wow/items/WOW-24.md) |
+| WOW-25 | PnL Attribution Engine (Decomposition: Alpha + Beta + Costs + Slippage) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-26 | Hypothesis Generator Agent (Automated Feature Discovery) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-27 | Leakage Sentinel Agent (Automated Leakage Hunting) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-28 | WFO Orchestrator Agent (Parallel Walk-Forward Executor) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-29 | Risk Governor Agent (Automated Risk State Management) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-30 | Leakage Sentinel v3: Automated Fuzzing Pipeline (MOONSHOT) | SHIPPED | CANARY | 38 | `verify:epoch38`, `verify:edge` | [card](../specs/wow/items/WOW-30.md) |
+| WOW-31 | Data Provenance Chain Agent | STAGED | EDGE | - | `verify:specs` | [card](../specs/wow/items/WOW-31.md) |
+| WOW-32 | Evidence Packager Agent (Automated Gate Report Generation) | SHIPPED | RELEASE | 48 | `evidence:pack:epoch`, `verify:ledger` | [card](../specs/wow/items/WOW-32.md) |
+| WOW-33 | Red-Team Agent (Adversarial Strategy Tester) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-34 | Microstructure Calibrator Agent (Sim↔Shadow Alignment) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-35 | AI Research Agent Mesh с детерминистичным воспроизведением (MOONSHOT) | SHIPPED | EDGE | 45 | `verify:epoch45`, `verify:edge` | [card](../specs/wow/items/WOW-35.md) |
+| WOW-36 | Anomaly Detection Agent (Market + System Anomalies) | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-37 | Strategy Performance Decay Predictor | PROPOSED | EDGE | - | `verify:specs` | - |
+| WOW-38 | Governance Automation Agent (Policy Enforcement) | PROPOSED | EDGE | - | `verify:specs` | - |
+
+Generated deterministically from SSOT; do not edit manually.

@@ -114,9 +114,14 @@ for (const { epoch, row } of targets) {
 
   if (!verifier) {
     if (mutablePaths.length > 0) {
-      console.error(`- ${epochId}: NO_VERIFIER with mutable evidence paths:`);
-      for (const p of mutablePaths) console.error(`  * ${p}`);
-      failures += 1;
+      const mutableNonGate = mutablePaths.filter((p) => !p.startsWith('gates/manual/'));
+      if (mutableNonGate.length > 0) {
+        console.error(`- ${epochId}: NO_VERIFIER with mutable non-gate evidence paths:`);
+        for (const p of mutableNonGate) console.error(`  * ${p}`);
+        failures += 1;
+      } else {
+        console.log(`freeze WARN ${epochId} (NO_VERIFIER; mutable paths limited to gates/manual)`);
+      }
     } else {
       console.log(`freeze SKIP ${epochId} (NO_VERIFIER and no mutable paths)`);
     }

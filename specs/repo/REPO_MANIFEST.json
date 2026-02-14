@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-02-13T22:14:05.143Z",
+  "generated_at": "2026-02-14T01:51:46.611Z",
   "files": [
     {
       "path": ".gitignore",
@@ -1075,7 +1075,7 @@
     },
     {
       "path": "docs/API_DOCUMENTATION.md",
-      "sha256": "5ea2e9807bca74919e5bc9f87322711163daee781043342214cd0cdd96802327",
+      "sha256": "6036b6d786c5648d428fa8ee6af5f19f5234b8dc672cb841edef0dd220ba935a",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -1292,7 +1292,7 @@
     },
     {
       "path": "docs/STAGE2_IMPLEMENTATION_MATRIX.md",
-      "sha256": "dcdda1a0a1ad5135cf785a51b26b0273330ce514f3a0cfc5a0d7a7cce0fc6475",
+      "sha256": "9ed3f9696e2caa0882f70fa78bf89986a236076ed8620edccb9cf255cfe6a924",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -1307,6 +1307,13 @@
     {
       "path": "docs/VERIFICATION_PLAYBOOK_RU.md",
       "sha256": "af071d91ecf629716d0f0c0ca58b9f46807f0588c84f05254b2df530e0436360",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "docs/WOW_CATALOG.md",
+      "sha256": "f0f584bfb17fe57775336422a823a28e74bda2f25b50c4a3bb33695a5bba243c",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -1391,6 +1398,62 @@
     {
       "path": "examples/swarm_trading_demo.mjs",
       "sha256": "2da76cf0f69781fa5f1e305838916e50703649d2d02563f9f69afbbfa1712a6e",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "kb/00_GLOSSARY.md",
+      "sha256": "7ca3bbb32b9b85e95fbfddfea132af0175284b092431dae5ccb550f374014d3c",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "kb/01_SYSTEM_MAP.md",
+      "sha256": "0f7a38f60c94ff1ddf8e67e0b48666098b92006bc87038f7afac7dbad08be8be",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "kb/02_DATA_TRUTH.md",
+      "sha256": "8ac454e98140d71170575b783a482d1a32b3c307d072401901e714294636e959",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "kb/03_EXECUTION_TRUTH.md",
+      "sha256": "bd974ead7b2395d3ebbb744cb3e0d571c329b29bcb34b2713e524da37b180f9a",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "kb/04_RISK_TRUTH.md",
+      "sha256": "37a07842f14085a2eb9385701e56cc8f235b5470e17240a9d1334758886f62a9",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "kb/05_VERIFICATION_TRUTH.md",
+      "sha256": "d50a957a42a2004e3d6d1cc9f1a6441b7ea549a48d2b8b87270f34c6abecb1f7",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "kb/06_WOW_TO_PROFIT.md",
+      "sha256": "d5fee72fdd5e3e684351342b1728b5463362f0cae34274f4d22980016b4da3df",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "kb/INDEX.md",
+      "sha256": "6c9044373d2ba9cd798abb5ab6bf2f19990840ebcf0a6db7ec47b7b9bb70cd04",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -1495,7 +1558,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "6cf7f129776618315b6c7672d59279a749d3ad73b00b4925514bc054da8f13be",
+      "sha256": "759a408d5d7d8cbc9d191edd5b71f512f2621d6e557d20717175bac55958d379",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -11064,7 +11127,7 @@
     },
     {
       "path": "reports/evidence/EPOCH-60/SHA256SUMS.EVIDENCE",
-      "sha256": "4069bf1d16c76d337955b67b55fbc33b2ae74086a49c9d558d3054392b2c5c68",
+      "sha256": "2e5979c58a98087b68a2569fa8e4ab67aeaa4b52865cbff66b2b17e377b32094",
       "classification": "GENERATED",
       "owner_epoch": "EPOCH-60",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -11091,8 +11154,22 @@
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
+      "path": "reports/evidence/EPOCH-60/gates/manual/passports_manifest.json",
+      "sha256": "579ceecfcfe5226f784dadf3ba667750c2d94618e3486d1fae994a302a1c7a9f",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
       "path": "reports/evidence/EPOCH-60/gates/manual/release_artifact_hashes.txt",
       "sha256": "ccc073b653955f96d66b08a7c22bbb057018d1413f36c33f8f5012bf204b754d",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/manual/verify_epoch60_result.json",
+      "sha256": "b6d66293c7d52a79a8ce35b72eaa20d975c2022c024f4fd31dbc5c1a2b2efb5a",
       "classification": "GENERATED",
       "owner_epoch": "EPOCH-60",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -11112,6 +11189,13 @@
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
+      "path": "reports/evidence/EPOCH-60/gates/manual/wow_ledger_summary.json",
+      "sha256": "7aaeb95492616b0d45e72835310f8b23b3b90da7249c7bca095875c3aa4724dd",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
       "path": "reports/evidence/EPOCH-60/gates/npm_ci.log",
       "sha256": "5e16090a3ae3800676cac0fa3ee28c0c645529d8250deaec0cbbfc76e77848b6",
       "classification": "GENERATED",
@@ -11119,8 +11203,85 @@
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
+      "path": "reports/evidence/EPOCH-60/gates/pack_epoch.log",
+      "sha256": "0be86d23030aa865f94bb47901397f6d469b56c4835339bb10e0f98db0c888ed",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/pack_verify.log",
+      "sha256": "6e5de2cd20c1ef54f99dc79ebf237229725be9b617d4ae3747ba0da26d570d49",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/release_build.log",
+      "sha256": "d5ecc16e4d0a8ebc2718d86fd6a22e080af331f213165eb788dfe5d8a2babfc3",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_edge.run1.log",
+      "sha256": "fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_edge.run2.log",
+      "sha256": "fcb81d592d0f0c2561e618c47ef0ee3cb805cdd7ec446282166a0af7c117d82a",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
       "path": "reports/evidence/EPOCH-60/gates/verify_epochs_freeze.log",
       "sha256": "c848a0ce89fc2f3fd8e03c5dd1d702b88ff28bd0e8b3b9a6ac705e5a1c271435",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_kb.run1.log",
+      "sha256": "137203fe75e7095cd8fd1e722998a4c9a46a6b1e82f2b960f532d03177b6d13b",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_kb.run2.log",
+      "sha256": "137203fe75e7095cd8fd1e722998a4c9a46a6b1e82f2b960f532d03177b6d13b",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_ledger.run1.log",
+      "sha256": "1646832c735233e3df77ed66b8bd1b06ddc3ead017ee0f2d50c1e2311fd32e5f",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_ledger.run2.log",
+      "sha256": "1646832c735233e3df77ed66b8bd1b06ddc3ead017ee0f2d50c1e2311fd32e5f",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_passports.run1.log",
+      "sha256": "1a5feb628c2cb6a30f9d79d321f13a60fe5697156acf1d05e564bceef3fe09ec",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_passports.run2.log",
+      "sha256": "1a5feb628c2cb6a30f9d79d321f13a60fe5697156acf1d05e564bceef3fe09ec",
       "classification": "GENERATED",
       "owner_epoch": "EPOCH-60",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -11140,10 +11301,332 @@
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
-      "path": "reports/evidence/EPOCH-60/pack_index.json",
-      "sha256": "b06dafb685409649f74b6ac3945a99fccd1febf233c0109f89dbca69b702262f",
+      "path": "reports/evidence/EPOCH-60/gates/verify_release.run1.log",
+      "sha256": "4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2",
       "classification": "GENERATED",
       "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_release.run2.log",
+      "sha256": "4fbeb643b3212fcb08b167315049d47c9b554d06bd28567b9edd26f6ce53d3e2",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_repo.run1.log",
+      "sha256": "72a1658eef22d6038e185391a9439db66c6e3422b0b9f76b818375051f4fb6b6",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_repo.run2.log",
+      "sha256": "72a1658eef22d6038e185391a9439db66c6e3422b0b9f76b818375051f4fb6b6",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_specs.run1.log",
+      "sha256": "dac7816fbc2a6e7086ef162e8ad4b7fec59031e083feb66c7008ecf2c1b2de8b",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_specs.run2.log",
+      "sha256": "dac7816fbc2a6e7086ef162e8ad4b7fec59031e083feb66c7008ecf2c1b2de8b",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_treasure.run1.log",
+      "sha256": "52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_treasure.run2.log",
+      "sha256": "52e51c7b3bdd5bde7f996b5f717d6d79ddac46f75ce077749a42977a96b6ee1a",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_wow.run1.log",
+      "sha256": "07fa1e7b6a8cd834826c4ae27a94c9d02d1dd7a330b3ab26dddc842dfe7ec86b",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/gates/verify_wow.run2.log",
+      "sha256": "07fa1e7b6a8cd834826c4ae27a94c9d02d1dd7a330b3ab26dddc842dfe7ec86b",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-60/pack_index.json",
+      "sha256": "d6bcabfe50855c145f19c54e3f6c912219abb40ddf3a30fc16449978214032b9",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/COMMANDS.log",
+      "sha256": "8896bf06a782377419d98347c3de2ea261cdf25e2132e3a1d0100933a7a2af70",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/PREFLIGHT.log",
+      "sha256": "9b8f16151b346b130339828d6e27e89188097913ad976c1fd85d191237d06588",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/SHA256SUMS.EVIDENCE",
+      "sha256": "e03f5b64ccca38c791906900b4025c20a8db58fbe96e54e573b45b1bd5e82b2b",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/SNAPSHOT.md",
+      "sha256": "03f97d66e5c4796453a356408ef11caeb5ae9be311566b8d24be8d92968952e7",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/SUMMARY.md",
+      "sha256": "fd7396cfc5dc3caa8d02e6fc0cd20a09265ec5213e66f75e572f2b274d481d12",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/VERDICT.md",
+      "sha256": "09983134e25230b80e0ced2acd872304800fb14dfe5541fb2620525ff9d9c47c",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/manual/derived_docs_manifest.json",
+      "sha256": "eb83c535a1afbf9bf62ea69494fcd997948c5584913f603272fa01152963abe4",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/manual/docs_link_report.json",
+      "sha256": "fdfafc32f02fed478c0376fc3daaff54d012c1990c03bdabfecdc4b4aa6aa48f",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/manual/verify_epoch61_result.json",
+      "sha256": "ae6f9ab9bcadd507b913764b3b7e3a536e155853946f4e9103233c6f9154dbb6",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/manual/wow_rank.json",
+      "sha256": "405925bb57b1982b26c0fab83441ea386c636e98405ae0635f8ded2413ca5ee7",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/manual/wow_rank_summary.json",
+      "sha256": "5614b3611ceb4ce79d496589a091f4a37aab08245c74b626d26411103ed534a2",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/npm_ci.log",
+      "sha256": "4b1fb6ed5b9bd23bbb4b27eb4f9a07c415b075261e9f58767dc69645e231ee0e",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/release_build.log",
+      "sha256": "8e3f17abf535440607b1f06bbb98736b70f2a34f11b0417d22add3b24b0a03cd",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_derived.run1.log",
+      "sha256": "31d7047efe36f985657bb6b9cfa2badf72403e657df2ead74138f6829dd9d2c2",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_derived.run2.log",
+      "sha256": "31d7047efe36f985657bb6b9cfa2badf72403e657df2ead74138f6829dd9d2c2",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_docs.run1.log",
+      "sha256": "9bb9f0b2d47763ce442c9f8c142bca97129e5f64feb24f4448695b0beae08a54",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_docs.run2.log",
+      "sha256": "9bb9f0b2d47763ce442c9f8c142bca97129e5f64feb24f4448695b0beae08a54",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_edge.run1.log",
+      "sha256": "516ad70a50c5fdea9afc1ddcd9fc5991d3c8944aea5119e88153319f4647e5d4",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_edge.run2.log",
+      "sha256": "516ad70a50c5fdea9afc1ddcd9fc5991d3c8944aea5119e88153319f4647e5d4",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_kb.run1.log",
+      "sha256": "5e6c11018eed521da7d7c394577f81e4841eb5676380d2d8bbd5a30a3d78a40f",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_kb.run2.log",
+      "sha256": "5e6c11018eed521da7d7c394577f81e4841eb5676380d2d8bbd5a30a3d78a40f",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_ledger.run1.log",
+      "sha256": "21a9ce58cbc3bacad0feaf468c89f87f01a3a9afca8762a3872b366833e855e9",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_ledger.run2.log",
+      "sha256": "21a9ce58cbc3bacad0feaf468c89f87f01a3a9afca8762a3872b366833e855e9",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_passports.run1.log",
+      "sha256": "702518e99fed66d267e7c2e4c004dc74cdfe6244c3f4e6316853a16474452420",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_passports.run2.log",
+      "sha256": "702518e99fed66d267e7c2e4c004dc74cdfe6244c3f4e6316853a16474452420",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_release.run1.log",
+      "sha256": "13a6a31d4f435c5982615224b1e3985bc0ede4dbf9a1820628e2c4c5ac3a9f95",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_release.run2.log",
+      "sha256": "13a6a31d4f435c5982615224b1e3985bc0ede4dbf9a1820628e2c4c5ac3a9f95",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_repo.run1.log",
+      "sha256": "2bc9805e76bcb6196bd8e9615f82f032f297786c427a9edbfbf4f7e9c507de98",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_repo.run2.log",
+      "sha256": "2bc9805e76bcb6196bd8e9615f82f032f297786c427a9edbfbf4f7e9c507de98",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_specs.run1.log",
+      "sha256": "db22834570a2c7e70751229d6ce35f1c61cdfb2248b631c7fe64f6bf417c0ce1",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_specs.run2.log",
+      "sha256": "8c1e54691d242dd273dc770b860a90bd7f27411fcaf1bbb5aaf9440463933b1b",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_treasure.run1.log",
+      "sha256": "4af177783b24869435770bff0ca27c05efd897ec2e4bbd4112dc7422f4c1aede",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_treasure.run2.log",
+      "sha256": "4af177783b24869435770bff0ca27c05efd897ec2e4bbd4112dc7422f4c1aede",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_wow.run1.log",
+      "sha256": "eb4813300ee6e776acd291f918b3aa57a99251ad94f61f17462c1c890455e11e",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/gates/verify_wow.run2.log",
+      "sha256": "eb4813300ee6e776acd291f918b3aa57a99251ad94f61f17462c1c890455e11e",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-61/pack_index.json",
+      "sha256": "6944e2da04e540e362f52c015b1c24bdd433015f1da9b4b24aa68da85216c6bf",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-61",
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
@@ -21577,6 +22060,104 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "reports/truth/docs_link_report.json",
+      "sha256": "94eb0fe7c22bd17d4f90b7808230ca6b6a2bb5705b88222c55b3ae0553583a41",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/passports/WOW-01.json",
+      "sha256": "dbd2ff7278ddcb3487a4ede75a4450cf60dde5c87eed5a1a10cf0890fb372da8",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/passports/WOW-03.json",
+      "sha256": "6cefa4629aa6d901af55b425786da4032777f691485899ded83949c0b0751df7",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/passports/WOW-04.json",
+      "sha256": "674ffc0f1d399606fa8d76b67cb6b903c7c4bf5f56519ba6aba67905ff0bc515",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/passports/WOW-05.json",
+      "sha256": "382fc58e9c59ca5ccd0c40e9588eee2b9c12dbe0e17a6d71a8a1beb29a37b053",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/passports/WOW-14.json",
+      "sha256": "27b3b11aeba195b519ea4f0a4079de5a4900189cbbfac1b77a77f83e88a778ea",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/passports/WOW-22.json",
+      "sha256": "7873e1ac6850123f31dfc5bf7cba3b67bee9e3cdc6231ac77e22fdd07c1c3877",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/passports/WOW-24.json",
+      "sha256": "b027fec3ad12fb64ccf7e0309aa2796e5aea5265bce0a55e6e276c2d72034c7b",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/passports/WOW-30.json",
+      "sha256": "1c672d5743d61dc17eb93b495d150fd35af96dc01c375ce05810a0a1a4a4a4bc",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/passports/WOW-32.json",
+      "sha256": "3be7687a475791f0c3a7cb2cd8b7124582b7388722816d5a2960db508822d533",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/passports/WOW-35.json",
+      "sha256": "ca51a1a6fc92039fec07390bf18c5f677de7185b44e935b72867afd5860f502a",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/passports_manifest.json",
+      "sha256": "883d7c462bdfc7881d023cdcaa47e72efcca1e425c6cfa27257ab4c90f3eb662",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/wow_rank.json",
+      "sha256": "405925bb57b1982b26c0fab83441ea386c636e98405ae0635f8ded2413ca5ee7",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "reports/truth/wow_rank_summary.json",
+      "sha256": "5614b3611ceb4ce79d496589a091f4a37aab08245c74b626d26411103ed534a2",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "reports/walkforward_reality_gap_report.json",
       "sha256": "240fd757a32d83727bc5567a72e7207d102d147fecb03adba467a55f3c8aebd9",
       "classification": "ACTIVE",
@@ -21780,6 +22361,48 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "scripts/truth/derived_views.mjs",
+      "sha256": "779732d9e6e204b47890eb94eab2e7b6040781fc7d8b847b8943d59fe9bc1bef",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/truth/passport_builder.mjs",
+      "sha256": "16b20b35b11ffd0ee30dcdc115f857b877804a27c9ccacde91dc48ae41895275",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/truth/render_kb_portal.mjs",
+      "sha256": "8eb44b64b054fcc12be5d0e24d65bc255d17d87dd81730b6e3f6fcfdc8306fc4",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/truth/render_wow_catalog.mjs",
+      "sha256": "6a6526bc07fb85d3be4c218b825d8e4d7a03cf92e68fff83ae9b09b72aadbae9",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/truth/render_wow_matrix.mjs",
+      "sha256": "07628c1b98016851f040caa926a18d150750748434a6615b32415996c44cec10",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/truth/wow_rank.mjs",
+      "sha256": "139f08c495a4ca9a447ef4a233955c4395daf74a330b6bf98f976319fbb5047a",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "scripts/verify/adversarial_safety.mjs",
       "sha256": "58e9f8b9cf346525fa77a6c8e962e4781f2ba8c2beeb864c54d5ef3309d1b82d",
       "classification": "ACTIVE",
@@ -21836,8 +22459,22 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "scripts/verify/derived_docs_check.mjs",
+      "sha256": "a62334dc0b74e106353d7a540fb31242f496b2068442c52b5d9b8f24d2578daa",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "scripts/verify/determinism.mjs",
       "sha256": "6ab9c36591e6c43da0af077210517bc8cc969d485b1b2d61a1c5d5a639ef5398",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/verify/docs_links_check.mjs",
+      "sha256": "9006b9c51903a22ec629ae1882bca3a145116ba31a254fedb785e896a7b0aed1",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -22145,7 +22782,7 @@
     },
     {
       "path": "scripts/verify/epoch_freeze_regression.mjs",
-      "sha256": "c7c4dc81df83a072eaaacd9e797fca803742ebd813958423449243ac92d504be",
+      "sha256": "a2a78cf61eaf48e929e6267a4fc27a16ca5ab09a6b0d731108c961a22c4e2304",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -22200,6 +22837,13 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "scripts/verify/kb_check.mjs",
+      "sha256": "fd750279d9dff0d4b297f299db5c458b0fda153a2bb5138f4fd1687f259b497e",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "scripts/verify/ledger_check.mjs",
       "sha256": "68a61e5958c107b39e51f3ad4afa13183a390207dbce39d333eae89be966f803",
       "classification": "ACTIVE",
@@ -22208,7 +22852,7 @@
     },
     {
       "path": "scripts/verify/ledger_schema_strict.mjs",
-      "sha256": "e66ecc9110c9e4d4a14a36cbfee2310331f4a48baec38623e58bdd07535813c2",
+      "sha256": "471d7cb0ca53efdc03161c5d19f898a2c7e97e1c3e4b5e79ba9d78cb0a76bb85",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -22251,6 +22895,13 @@
     {
       "path": "scripts/verify/paper_multi_seed.mjs",
       "sha256": "c434245b6f3c07077ab5e79942330f6807ef56eb9368f8dcb68941f9eb08e468",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/verify/passports_check.mjs",
+      "sha256": "8fd78272d793e4b937d446ba5aa9a895cf31549f01599dbf152f2dbccf9bf966",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -22384,6 +23035,13 @@
     {
       "path": "scripts/verify/websocket_smoke.mjs",
       "sha256": "40d60ffe424844ff310c5f7209514f3417ace4ebc6d48423d49241b75fc3f396",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/verify/wow_specs_check.mjs",
+      "sha256": "fb052e997f48222ca63ed0d6316108870404788301945ba5176f8e3bf7b931bd",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -23005,6 +23663,27 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "specs/epochs/EPOCH-59.md",
+      "sha256": "8b36431c1ed0e8c6603be0c47bfd573800e44f09dcad8830ee7f89ea4e9e404d",
+      "classification": "ACTIVE",
+      "owner_epoch": "EPOCH-59",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/epochs/EPOCH-60.md",
+      "sha256": "8160ea2b4b3be4872eaa5abb39038aee89c2fd9647453b188aa27fd25755bc47",
+      "classification": "ACTIVE",
+      "owner_epoch": "EPOCH-60",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/epochs/EPOCH-61.md",
+      "sha256": "7cba905b147e2f1f47c30170c1929dee02d43ba88ba811a4a1cd08eaa21bf4c7",
+      "classification": "ACTIVE",
+      "owner_epoch": "EPOCH-61",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "specs/epochs/EPOCH_DEPENDENCY_GRAPH.md",
       "sha256": "8f70105531160d551a5067c5828ddbeabfd0f0d6f7bbd0a045de53b0cd8a48b1",
       "classification": "ACTIVE",
@@ -23013,14 +23692,14 @@
     },
     {
       "path": "specs/epochs/INDEX.md",
-      "sha256": "16d07bd704a93ac4af78d7491663c1bb59eec64beebe0cef973eda85375ed34d",
+      "sha256": "36fecf9847a6b14514959216400d2c7a9c9eb3f983dceec9159ea6901da8836c",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
     },
     {
       "path": "specs/epochs/LEDGER.json",
-      "sha256": "6c50c3e820499fd0cae3f7998d923b1fb17bb1c14e592064c26c4215931309c0",
+      "sha256": "6ad66457c6812a00a21599c1b66ffc19301c3d164a6262ba81208e0218ce0b56",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -23049,6 +23728,125 @@
     {
       "path": "specs/repo/REPO_MANIFEST.json",
       "sha256": null,
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/IDEA_CEMETERY.md",
+      "sha256": "29bb0dd758f682b1d4d6a62143edb1a0f95d59bf0fb8ef9f415b08d47a733e78",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/WOW_CONTRACTS.md",
+      "sha256": "87dd397c647cc4f5f4945ef7a56143a7cf89e47155a1d8086a099cff48f2e8fe",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/WOW_INDEX.md",
+      "sha256": "7ff59aba9f5adf82cb453b8cd37e4a3c5c81858f8301d2e6c4aec297272891ba",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/WOW_LEDGER.json",
+      "sha256": "be1a4cdb7b415879001f37f64099a918402c89dc0d77085ef05ee05c8bc4ae33",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-01.md",
+      "sha256": "f82911f994cbaabd53cba3d875ad344c67aab48c78edaa93b175fe5f01ad3535",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-03.md",
+      "sha256": "e15e886a8f88ee2979a5654164f5d08ee714c13e22974209a5fecc96d9c1adab",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-04.md",
+      "sha256": "e0dd21ef3e0cdeb00e0b30b29722e91c683480bbb64ccd8347fb833656830f51",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-05.md",
+      "sha256": "f96888e76e43caa1afdb3009abb277c39d87c1a158ab746b0a08ca6840c2e799",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-07.md",
+      "sha256": "638c61900a7f328902f8f19b85d666aa084d3bafce46d7260290de1b917de4e2",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-10.md",
+      "sha256": "8ae72369769e28d82984e693d5a692609f4727f4241a85f4c7a4f8e3505e874f",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-14.md",
+      "sha256": "17461ec528a26f5cef532b54c2318c74aaab85a1b743cdf99b8a178610ec6992",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-22.md",
+      "sha256": "a3e49ff86016a4c0f3f64b140fba63b3393566c477f6bf15d3567950c9504f49",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-24.md",
+      "sha256": "1d44a7ff14ac48c8b366e3a2628293c7b7006aa27111cb50b037a8eb133dcbcc",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-30.md",
+      "sha256": "a1c648d31ef6db10b642a61b3b39e60e61a902615a717c12b474f7355eccc50d",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-31.md",
+      "sha256": "3330f9b13a5b6a72aa1f3ed213ffb4f568a90f45105ac1cf64bb072ed0086153",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-32.md",
+      "sha256": "128c0fdaa4ae25805bdc0d672a578cd94f795681a2d04ae05b18858577f7c0c0",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "specs/wow/items/WOW-35.md",
+      "sha256": "98295a177913b9f0ee84bf038a756d50762979be277d49ebca769d121089a3f8",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."

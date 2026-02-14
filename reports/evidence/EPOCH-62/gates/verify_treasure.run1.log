@@ -1,0 +1,95 @@
+
+> treasure-engine@1.0.0 verify:treasure
+> node scripts/profit/__tests__/treasure_engine.test.mjs && npm run verify:golden
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TREASURE ENGINE PROFIT SYSTEM TESTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━ PROFIT/LOSS CALCULATION ━━━
+✓ LONG gross PnL correct
+✓ Fees/slippage reduce net PnL
+✓ LONG trade is profitable
+✓ SHORT gross PnL correct
+✓ SHORT trade is profitable
+✓ Losing trade identified
+
+━━━ BREAK-EVEN CALCULATION ━━━
+✓ Break-even price above entry
+✓ Break-even price reasonable
+
+━━━ TARGET EXIT CALCULATION ━━━
+✓ Target exit accounts for ROI + costs
+✓ Target exit reasonable
+
+━━━ POSITION SIZING ━━━
+✓ Risk amount is 1% of capital
+✓ Price distance to stop correct
+✓ Position size correct (100 / 2)
+
+━━━ RISK/REWARD RATIO ━━━
+✓ Reward distance correct
+✓ Risk distance correct
+✓ RR ratio correct (3:1)
+✓ RR ratio acceptable (>=2:1)
+
+━━━ FEE CONFIGURATION ━━━
+✓ Custom maker fee set
+✓ Custom taker fee set
+✓ Custom slippage set
+
+━━━ OPPORTUNITY DETECTOR INIT ━━━
+✓ Min score configured
+✓ Min profit configured
+✓ Price history starts empty
+
+━━━ PRICE HISTORY MANAGEMENT ━━━
+✓ History trimmed to max size
+✓ Oldest prices removed
+
+━━━ OPPORTUNITY SCORING ━━━
+✓ Excellent opportunity scores high
+✓ Poor opportunity scores low
+
+━━━ DETECTOR STATISTICS ━━━
+✓ Stats include total detected
+✓ Stats include recent count
+✓ Stats include history size
+
+━━━ OPPORTUNITY TYPES ━━━
+✓ PRICE_SPIKE type exists
+✓ VOLATILITY type exists
+✓ TREND_REVERSAL type exists
+✓ BREAKOUT type exists
+
+━━━ EDGE CASES ━━━
+✓ Throws on invalid side
+✓ Throws on invalid stop loss
+✓ No fees/slippage = gross equals net
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 37
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ All treasure engine tests passed
+
+💰 TREASURE ENGINE CAPABILITIES VERIFIED:
+   ✓ Profit/loss calculations (with fees/slippage)
+   ✓ Risk/reward analysis
+   ✓ Position sizing
+   ✓ Break-even calculations
+   ✓ Opportunity detection
+   ✓ Opportunity scoring
+
+
+> treasure-engine@1.0.0 verify:golden
+> node scripts/verify/golden_vectors_check.mjs
+
+verify:golden PASSED
+{
+  "vectors": 3,
+  "mismatches": 0
+}

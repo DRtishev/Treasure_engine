@@ -228,3 +228,9 @@
 - `specs/epochs/EPOCH-58.md`
 - `specs/epochs/EPOCH-59.md`
 - `specs/epochs/EPOCH-60.md`
+
+- EPOCH-61 depends on EPOCH-60 (polishpack: WOW encyclopedia, derived docs, link hygiene, WOW rank).
+- `specs/epochs/EPOCH-61.md`
+
+- EPOCH-62 depends on EPOCH-61 (gold seal verification hardening: anchors/reachability/properties/golden vectors).
+- `specs/epochs/EPOCH-62.md`

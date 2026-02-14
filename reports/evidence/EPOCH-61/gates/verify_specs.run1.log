@@ -1,0 +1,9 @@
+
+> treasure-engine@1.0.0 verify:specs
+> npm run verify:ssot && node scripts/verify/specs_check.mjs && npm run verify:wow && npm run verify:kb && npm run verify:passports && npm run verify:derived && npm run verify:docs && npm run verify:ledger && npm run verify:repo
+
+
+> treasure-engine@1.0.0 verify:ssot
+> node scripts/verify/ssot_check.mjs
+
+verify:ssot PASSED (epochs=1..61)

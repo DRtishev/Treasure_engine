@@ -1,0 +1,10 @@
+
+> treasure-engine@1.0.0 verify:ledger
+> npm run verify:ledger:schema && node scripts/verify/ledger_check.mjs
+
+
+> treasure-engine@1.0.0 verify:ledger:schema
+> node scripts/verify/ledger_schema_strict.mjs
+
+verify:ledger:schema PASSED
+verify:ledger PASSED

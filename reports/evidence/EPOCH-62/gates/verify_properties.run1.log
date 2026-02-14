@@ -1,0 +1,9 @@
+
+> treasure-engine@1.0.0 verify:properties
+> node scripts/verify/properties.mjs
+
+verify:properties PASSED
+{
+  "total_properties": 35,
+  "fingerprint": "7c98a1bfd170802135a5b1343cdd7f2ac52eb2381c3137cb3105826bfdd852fa"
+}

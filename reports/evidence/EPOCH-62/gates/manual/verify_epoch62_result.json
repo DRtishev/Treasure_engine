@@ -1,0 +1,9 @@
+{
+  "epoch": "EPOCH-62",
+  "status": "PASS",
+  "verify_docs": ["PASS", "PASS"],
+  "verify_reachability": ["PASS", "PASS"],
+  "verify_properties": ["PASS", "PASS"],
+  "verify_golden": ["PASS", "PASS"],
+  "verify_phoenix": ["PASS", "PASS"]
+}

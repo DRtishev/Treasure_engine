@@ -1,0 +1,13 @@
+
+> treasure-engine@1.0.0 verify:wow
+> node scripts/verify/wow_specs_check.mjs
+
+verify:wow PASSED
+{
+  "total": 38,
+  "counts": {
+    "SHIPPED": 10,
+    "PROPOSED": 25,
+    "STAGED": 3
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "total_ranked": 13,
+  "shipped_staged_ranked": 13,
+  "top10_ids": [
+    "WOW-32",
+    "WOW-01",
+    "WOW-04",
+    "WOW-14",
+    "WOW-24",
+    "WOW-22",
+    "WOW-30",
+    "WOW-05",
+    "WOW-03",
+    "WOW-35"
+  ],
+  "top10_shipped_staged_ids": [
+    "WOW-32",
+    "WOW-01",
+    "WOW-04",
+    "WOW-14",
+    "WOW-24",
+    "WOW-22",
+    "WOW-30",
+    "WOW-05",
+    "WOW-03",
+    "WOW-35"
+  ]
+}
