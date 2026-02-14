@@ -541,6 +541,24 @@
       "evidence_root": "reports/evidence/EPOCH-60/",
       "gate_owner": "docs",
       "notes": "WOW SSOT + KB + passports verified with evidence pack and strict release checks."
+    },
+    "61": {
+      "id": "EPOCH-61",
+      "stage": "DONE",
+      "status": "PASS",
+      "commit_sha": "d6c8ea5b9184f312437e930b026e0e29ef4f8cbb",
+      "evidence_root": "reports/evidence/EPOCH-61/",
+      "gate_owner": "docs",
+      "notes": "Polishpack: WOW cards/rank, derived docs, KB expansion, docs link hygiene."
+    },
+    "62": {
+      "id": "EPOCH-62",
+      "stage": "DONE",
+      "status": "PASS",
+      "commit_sha": "ac2f4aadeef7db01d57519be89ecad85cbfb0bd7",
+      "evidence_root": "reports/evidence/EPOCH-62/",
+      "gate_owner": "docs",
+      "notes": "Gold seal verification hardening: canonical anchors, reachability, properties, golden vectors."
     }
   }
 }

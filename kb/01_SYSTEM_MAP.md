@@ -1,19 +1,36 @@
 # System Map
 
 ## Data layer
-Primary contracts and manifests in `core/data/` and checks in `npm run verify:repo`.
+Deterministic ingestion, manifests, and schema checks.
 
 ## Edge layer
-Signal/feature logic in `core/edge/` gated by `npm run verify:edge`.
+Runtime contracts and epoch edge gates.
 
 ## Execution layer
-Execution realism and adapters in `core/exec/` and `core/edge/execution_realism.mjs`.
+Mode-aware execution, realism and fill calibration controls.
 
 ## Risk layer
-Risk fortress controls in `core/edge/risk_fortress.mjs` with `npm run verify:epoch44`.
+Hard-stop governors and drawdown fortification.
 
 ## Canary layer
-Canary controls and forensic checks under `scripts/verify/epoch52_canary_controller.mjs` and `scripts/verify/epoch53_canary_forensics.mjs`.
+Reason-code based canary governance and monitors.
 
 ## Governance layer
-Release/evidence controls in `scripts/verify/release_check.mjs` and `scripts/evidence/packager.mjs`.
+Release checks, policy enforcement, and evidence readiness.
+
+## Canonical pointers
+- `core/data/`
+- `core/edge/`
+- `core/exec/`
+- `core/risk/`
+- `scripts/verify/edge_all_epochs.mjs`
+
+## Operator checklist
+- `npm run verify:edge`
+- `npm run verify:treasure`
+- `npm run verify:release`
+
+## Failure modes
+- Layer contracts diverge from implementation.
+- Gate map references scripts that no longer exist.
+- Release gate passes while a lower layer silently regressed.

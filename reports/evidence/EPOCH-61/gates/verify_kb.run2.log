@@ -1,0 +1,8 @@
+
+> treasure-engine@1.0.0 verify:kb
+> node scripts/verify/kb_check.mjs
+
+verify:kb PASSED
+{
+  "files": 7
+}

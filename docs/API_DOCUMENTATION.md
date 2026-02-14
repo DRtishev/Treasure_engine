@@ -807,3 +807,13 @@ For issues or questions:
 ---
 
 **End of API Documentation**
+
+
+## SAFETY MONITOR API
+
+See `core/monitoring/safety_monitor.mjs` for deterministic safety checks and monitor contracts.
+
+
+## COURT V2 API
+
+See `core/court/court_v2.mjs` and `truth/court_report.schema.json` for adjudication contracts.

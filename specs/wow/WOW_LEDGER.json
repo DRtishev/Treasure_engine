@@ -1,6 +1,6 @@
 {
-  "version": "E60",
-  "updated_at": "2026-02-13T22:06:06.757Z",
+  "version": "E61",
+  "updated_at": "2026-02-14T00:00:00.000Z",
   "items": [
     {
       "id": "WOW-01",
@@ -59,6 +59,17 @@
           "SUMMARY.md",
           "VERDICT.md"
         ]
+      },
+      "doc_path": "specs/wow/items/WOW-01.md",
+      "scores": {
+        "impact": 9,
+        "confidence": 8,
+        "complexity": 4,
+        "verification_cost": 3,
+        "risk": 3
+      },
+      "computed": {
+        "priority_score": 7.2
       }
     },
     {
@@ -168,6 +179,17 @@
           "SUMMARY.md",
           "VERDICT.md"
         ]
+      },
+      "doc_path": "specs/wow/items/WOW-03.md",
+      "scores": {
+        "impact": 10,
+        "confidence": 7,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "computed": {
+        "priority_score": 5.384615
       }
     },
     {
@@ -227,6 +249,17 @@
           "SUMMARY.md",
           "VERDICT.md"
         ]
+      },
+      "doc_path": "specs/wow/items/WOW-04.md",
+      "scores": {
+        "impact": 8,
+        "confidence": 8,
+        "complexity": 4,
+        "verification_cost": 3,
+        "risk": 3
+      },
+      "computed": {
+        "priority_score": 6.4
       }
     },
     {
@@ -286,6 +319,17 @@
           "SUMMARY.md",
           "VERDICT.md"
         ]
+      },
+      "doc_path": "specs/wow/items/WOW-05.md",
+      "scores": {
+        "impact": 8,
+        "confidence": 7,
+        "complexity": 4,
+        "verification_cost": 3,
+        "risk": 3
+      },
+      "computed": {
+        "priority_score": 5.6
       }
     },
     {
@@ -386,6 +430,17 @@
           "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
         ],
         "evidence_outputs": []
+      },
+      "doc_path": "specs/wow/items/WOW-07.md",
+      "scores": {
+        "impact": 7,
+        "confidence": 6,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "computed": {
+        "priority_score": 3.230769
       }
     },
     {
@@ -536,6 +591,17 @@
           "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
         ],
         "evidence_outputs": []
+      },
+      "doc_path": "specs/wow/items/WOW-10.md",
+      "scores": {
+        "impact": 8,
+        "confidence": 6,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "computed": {
+        "priority_score": 3.692308
       }
     },
     {
@@ -745,6 +811,17 @@
           "SUMMARY.md",
           "VERDICT.md"
         ]
+      },
+      "doc_path": "specs/wow/items/WOW-14.md",
+      "scores": {
+        "impact": 8,
+        "confidence": 8,
+        "complexity": 4,
+        "verification_cost": 3,
+        "risk": 3
+      },
+      "computed": {
+        "priority_score": 6.4
       }
     },
     {
@@ -1154,6 +1231,17 @@
           "SUMMARY.md",
           "VERDICT.md"
         ]
+      },
+      "doc_path": "specs/wow/items/WOW-22.md",
+      "scores": {
+        "impact": 10,
+        "confidence": 8,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "computed": {
+        "priority_score": 6.153846
       }
     },
     {
@@ -1263,6 +1351,17 @@
           "SUMMARY.md",
           "VERDICT.md"
         ]
+      },
+      "doc_path": "specs/wow/items/WOW-24.md",
+      "scores": {
+        "impact": 9,
+        "confidence": 9,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "computed": {
+        "priority_score": 6.230769
       }
     },
     {
@@ -1572,6 +1671,17 @@
           "SUMMARY.md",
           "VERDICT.md"
         ]
+      },
+      "doc_path": "specs/wow/items/WOW-30.md",
+      "scores": {
+        "impact": 8,
+        "confidence": 8,
+        "complexity": 4,
+        "verification_cost": 4,
+        "risk": 3
+      },
+      "computed": {
+        "priority_score": 5.818182
       }
     },
     {
@@ -1622,6 +1732,17 @@
           "docs/STAGE2_IMPLEMENTATION_MATRIX.md"
         ],
         "evidence_outputs": []
+      },
+      "doc_path": "specs/wow/items/WOW-31.md",
+      "scores": {
+        "impact": 7,
+        "confidence": 6,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "computed": {
+        "priority_score": 3.230769
       }
     },
     {
@@ -1681,6 +1802,17 @@
           "SUMMARY.md",
           "VERDICT.md"
         ]
+      },
+      "doc_path": "specs/wow/items/WOW-32.md",
+      "scores": {
+        "impact": 7,
+        "confidence": 9,
+        "complexity": 3,
+        "verification_cost": 3,
+        "risk": 2
+      },
+      "computed": {
+        "priority_score": 7.875
       }
     },
     {
@@ -1840,6 +1972,17 @@
           "SUMMARY.md",
           "VERDICT.md"
         ]
+      },
+      "doc_path": "specs/wow/items/WOW-35.md",
+      "scores": {
+        "impact": 9,
+        "confidence": 7,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "computed": {
+        "priority_score": 4.846154
       }
     },
     {

@@ -1,0 +1,200 @@
+{
+  "formula": "priority_score = (impact * confidence) / (complexity + verification_cost + risk)",
+  "ranked": [
+    {
+      "id": "WOW-32",
+      "title": "Evidence Packager Agent (Automated Gate Report Generation)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "scores": {
+        "impact": 7,
+        "confidence": 9,
+        "complexity": 3,
+        "verification_cost": 3,
+        "risk": 2
+      },
+      "priority_score": 7.875,
+      "doc_path": "specs/wow/items/WOW-32.md"
+    },
+    {
+      "id": "WOW-01",
+      "title": "Point-in-Time Feature Store с Temporal Join Engine",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "scores": {
+        "impact": 9,
+        "confidence": 8,
+        "complexity": 4,
+        "verification_cost": 3,
+        "risk": 3
+      },
+      "priority_score": 7.2,
+      "doc_path": "specs/wow/items/WOW-01.md"
+    },
+    {
+      "id": "WOW-04",
+      "title": "Partial Fill Simulator с Liquidity Buckets",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "scores": {
+        "impact": 8,
+        "confidence": 8,
+        "complexity": 4,
+        "verification_cost": 3,
+        "risk": 3
+      },
+      "priority_score": 6.4,
+      "doc_path": "specs/wow/items/WOW-04.md"
+    },
+    {
+      "id": "WOW-14",
+      "title": "CPCV (Combinatorial Purged Cross-Validation) Pipeline (MOONSHOT)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "scores": {
+        "impact": 8,
+        "confidence": 8,
+        "complexity": 4,
+        "verification_cost": 3,
+        "risk": 3
+      },
+      "priority_score": 6.4,
+      "doc_path": "specs/wow/items/WOW-14.md"
+    },
+    {
+      "id": "WOW-24",
+      "title": "Maximum Loss Governor (Hard Stop per-Trade + per-Day + per-Week)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "scores": {
+        "impact": 9,
+        "confidence": 9,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "priority_score": 6.230769,
+      "doc_path": "specs/wow/items/WOW-24.md"
+    },
+    {
+      "id": "WOW-22",
+      "title": "Anti-Blowup Shield: Drawdown-Conditional Dynamic Sizing (MOONSHOT)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "scores": {
+        "impact": 10,
+        "confidence": 8,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "priority_score": 6.153846,
+      "doc_path": "specs/wow/items/WOW-22.md"
+    },
+    {
+      "id": "WOW-30",
+      "title": "Leakage Sentinel v3: Automated Fuzzing Pipeline (MOONSHOT)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "scores": {
+        "impact": 8,
+        "confidence": 8,
+        "complexity": 4,
+        "verification_cost": 4,
+        "risk": 3
+      },
+      "priority_score": 5.818182,
+      "doc_path": "specs/wow/items/WOW-30.md"
+    },
+    {
+      "id": "WOW-05",
+      "title": "Latency-Aware Signal Freshness Engine",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "scores": {
+        "impact": 8,
+        "confidence": 7,
+        "complexity": 4,
+        "verification_cost": 3,
+        "risk": 3
+      },
+      "priority_score": 5.6,
+      "doc_path": "specs/wow/items/WOW-05.md"
+    },
+    {
+      "id": "WOW-03",
+      "title": "Адаптивная модель микроструктуры с калибровкой по реальным fills (MOONSHOT)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "scores": {
+        "impact": 10,
+        "confidence": 7,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "priority_score": 5.384615,
+      "doc_path": "specs/wow/items/WOW-03.md"
+    },
+    {
+      "id": "WOW-35",
+      "title": "AI Research Agent Mesh с детерминистичным воспроизведением (MOONSHOT)",
+      "status": "SHIPPED",
+      "tier": "P0",
+      "scores": {
+        "impact": 9,
+        "confidence": 7,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "priority_score": 4.846154,
+      "doc_path": "specs/wow/items/WOW-35.md"
+    },
+    {
+      "id": "WOW-10",
+      "title": "Smart Execution Router с TWAP/VWAP Fallback",
+      "status": "STAGED",
+      "tier": "P1",
+      "scores": {
+        "impact": 8,
+        "confidence": 6,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "priority_score": 3.692308,
+      "doc_path": "specs/wow/items/WOW-10.md"
+    },
+    {
+      "id": "WOW-07",
+      "title": "Regime Detection Engine: HMM + Vol Clustering (MOONSHOT)",
+      "status": "STAGED",
+      "tier": "P1",
+      "scores": {
+        "impact": 7,
+        "confidence": 6,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "priority_score": 3.230769,
+      "doc_path": "specs/wow/items/WOW-07.md"
+    },
+    {
+      "id": "WOW-31",
+      "title": "Data Provenance Chain Agent",
+      "status": "STAGED",
+      "tier": "P1",
+      "scores": {
+        "impact": 7,
+        "confidence": 6,
+        "complexity": 5,
+        "verification_cost": 4,
+        "risk": 4
+      },
+      "priority_score": 3.230769,
+      "doc_path": "specs/wow/items/WOW-31.md"
+    }
+  ]
+}

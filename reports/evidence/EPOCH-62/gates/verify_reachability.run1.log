@@ -1,0 +1,9 @@
+
+> treasure-engine@1.0.0 verify:reachability
+> node scripts/verify/reachability.mjs
+
+verify:reachability PASSED
+{
+  "active_unreachable_count": 0,
+  "reachable_modules": 213
+}

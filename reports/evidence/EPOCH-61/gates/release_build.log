@@ -1,0 +1,17 @@
+
+> treasure-engine@1.0.0 release:build
+> npm run truth:wow:rank && npm run truth:passports && node scripts/release/build_release_artifacts.mjs
+
+
+> treasure-engine@1.0.0 truth:wow:rank
+> node scripts/truth/wow_rank.mjs
+
+truth:wow:rank wrote reports/truth/wow_rank.json and reports/truth/wow_rank_summary.json
+
+> treasure-engine@1.0.0 truth:passports
+> node scripts/truth/passport_builder.mjs
+
+truth:passports generated 10 passports
+release:build complete
+657d33d92de0d337847b1143a8ac5eb08b799202ba1cb5492fdbcc5d6e890c92  /workspace/Treasure_engine/artifacts/out/FINAL_VALIDATED.zip
+85cea451eec057fa7e734548ca3ba6d779ed5836a3f9de14b8394575ef0d7d8e  /workspace/Treasure_engine/artifacts/out/evidence_chain.tar.gz

@@ -1,0 +1,30 @@
+{
+  "checked_files": 145,
+  "files_with_explicit_anchors": 3,
+  "duplicate_anchor_errors": [],
+  "invalid_anchor_errors": [],
+  "derived_docs_required_anchor_check": {
+    "docs/WOW_CATALOG.md": {
+      "required": [
+        "wow-catalog",
+        "shipped-staged-summary"
+      ],
+      "missing": []
+    },
+    "docs/STAGE2_IMPLEMENTATION_MATRIX.md": {
+      "required": [
+        "stage2-implementation-matrix"
+      ],
+      "missing": []
+    },
+    "kb/INDEX.md": {
+      "required": [
+        "knowledge-base-portal",
+        "kb-foundations",
+        "policy-docs",
+        "wow-verification-entrypoints"
+      ],
+      "missing": []
+    }
+  }
+}

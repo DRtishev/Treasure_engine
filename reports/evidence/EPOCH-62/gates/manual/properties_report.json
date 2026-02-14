@@ -1,0 +1,148 @@
+{
+  "total_properties": 35,
+  "passed": 35,
+  "failed": 0,
+  "fingerprint": "7c98a1bfd170802135a5b1343cdd7f2ac52eb2381c3137cb3105826bfdd852fa",
+  "checks": [
+    {
+      "name": "canonicalize removes volatile fields",
+      "ok": true
+    },
+    {
+      "name": "areEquivalent ignores volatile fields",
+      "ok": true
+    },
+    {
+      "name": "truncateTowardZero keeps sign",
+      "ok": true
+    },
+    {
+      "name": "canonicalStringify stable object key ordering",
+      "ok": true
+    },
+    {
+      "name": "FeatureFrame fingerprint deterministic",
+      "ok": true
+    },
+    {
+      "name": "FeatureFrame validates with fingerprint",
+      "ok": true
+    },
+    {
+      "name": "StrategySpec fingerprint deterministic",
+      "ok": true
+    },
+    {
+      "name": "StrategySpec validates with fingerprint",
+      "ok": true
+    },
+    {
+      "name": "Signal fingerprint deterministic",
+      "ok": true
+    },
+    {
+      "name": "Signal validates with fingerprint",
+      "ok": true
+    },
+    {
+      "name": "Intent fingerprint deterministic",
+      "ok": true
+    },
+    {
+      "name": "Intent validates with fingerprint",
+      "ok": true
+    },
+    {
+      "name": "AllocationPlan fingerprint deterministic",
+      "ok": true
+    },
+    {
+      "name": "AllocationPlan validates with fingerprint",
+      "ok": true
+    },
+    {
+      "name": "RiskDecision fingerprint deterministic",
+      "ok": true
+    },
+    {
+      "name": "RiskDecision validates with fingerprint",
+      "ok": true
+    },
+    {
+      "name": "SimReport fingerprint deterministic",
+      "ok": true
+    },
+    {
+      "name": "SimReport validates with fingerprint",
+      "ok": true
+    },
+    {
+      "name": "RealityGapReport fingerprint deterministic",
+      "ok": true
+    },
+    {
+      "name": "RealityGapReport validates with fingerprint",
+      "ok": true
+    },
+    {
+      "name": "data quality dedup count positive with duplicates",
+      "ok": true
+    },
+    {
+      "name": "data quality gap count positive with large gap",
+      "ok": true
+    },
+    {
+      "name": "data quality out-of-order counted",
+      "ok": true
+    },
+    {
+      "name": "data quality normalized output sorted by ts",
+      "ok": true
+    },
+    {
+      "name": "hard stop trade threshold halts",
+      "ok": true
+    },
+    {
+      "name": "hard stop day threshold halts",
+      "ok": true
+    },
+    {
+      "name": "hard stop week threshold halts",
+      "ok": true
+    },
+    {
+      "name": "applyRiskFortress non-bypassable on halt",
+      "ok": true
+    },
+    {
+      "name": "sizingPolicy bounded [0,1]",
+      "ok": true
+    },
+    {
+      "name": "vault policy strict expected-fail reason",
+      "ok": true
+    },
+    {
+      "name": "pause/recover transition trace has >=5 entries",
+      "ok": true
+    },
+    {
+      "name": "pause/recover keeps exposure blocked",
+      "ok": true
+    },
+    {
+      "name": "fsm halt forces OFF",
+      "ok": true
+    },
+    {
+      "name": "fsm blocks transition without manual reset after halt",
+      "ok": true
+    },
+    {
+      "name": "fsm allows transition after manual reset",
+      "ok": true
+    }
+  ]
+}

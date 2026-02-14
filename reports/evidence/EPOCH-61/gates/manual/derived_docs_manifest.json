@@ -1,0 +1,16 @@
+{
+  "files": [
+    {
+      "path": "docs/WOW_CATALOG.md",
+      "sha256": "b58ea0021fb0704f547879f938db3dcd0355cee2cec3223f5aa95c52ec65d53e"
+    },
+    {
+      "path": "docs/STAGE2_IMPLEMENTATION_MATRIX.md",
+      "sha256": "e1334a4240994632b7b706d723a79bc707fa080f1f7a91d5771fa4348ae44e66"
+    },
+    {
+      "path": "kb/INDEX.md",
+      "sha256": "a5983ed0aa77a61f0367f8ce5d120ab93884bce9c6bfbf0a84e0ed42821e7397"
+    }
+  ]
+}

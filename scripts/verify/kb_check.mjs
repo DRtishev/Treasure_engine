@@ -2,13 +2,13 @@
 import fs from 'node:fs';
 
 const required = {
-  'kb/00_GLOSSARY.md': ['# Glossary', '## Core terms'],
-  'kb/01_SYSTEM_MAP.md': ['# System Map', '## Data layer', '## Edge layer', '## Execution layer', '## Risk layer', '## Canary layer', '## Governance layer'],
-  'kb/02_DATA_TRUTH.md': ['# Data Truth', '## Tier model', '## Manifests and invariants', '## Quality engine'],
-  'kb/03_EXECUTION_TRUTH.md': ['# Execution Truth', '## REAL vs PROXY', '## Calibration', '## Partial fills and freshness'],
-  'kb/04_RISK_TRUTH.md': ['# Risk Truth', '## Risk Fortress', '## Hard stops', '## Pause and recover'],
-  'kb/05_VERIFICATION_TRUTH.md': ['# Verification Truth', '## TruthStack', '## Phoenix and freeze', '## Evidence and release doctrine'],
-  'kb/06_WOW_TO_PROFIT.md': ['# WOW to Profit', '## Acceptance as falsification', '## Kill criteria discipline', '## Passports as proof']
+  'kb/00_GLOSSARY.md': ['# Glossary', '## Core terms', '## Canonical pointers', '## Operator checklist', '## Failure modes'],
+  'kb/01_SYSTEM_MAP.md': ['# System Map', '## Data layer', '## Edge layer', '## Execution layer', '## Risk layer', '## Canary layer', '## Governance layer', '## Canonical pointers', '## Operator checklist', '## Failure modes'],
+  'kb/02_DATA_TRUTH.md': ['# Data Truth', '## Tier model', '## Manifests and invariants', '## Quality engine', '## Canonical pointers', '## Operator checklist', '## Failure modes'],
+  'kb/03_EXECUTION_TRUTH.md': ['# Execution Truth', '## REAL vs PROXY', '## Calibration', '## Partial fills and freshness', '## Canonical pointers', '## Operator checklist', '## Failure modes'],
+  'kb/04_RISK_TRUTH.md': ['# Risk Truth', '## Risk Fortress', '## Hard stops', '## Pause and recover', '## Canonical pointers', '## Operator checklist', '## Failure modes'],
+  'kb/05_VERIFICATION_TRUTH.md': ['# Verification Truth', '## TruthStack', '## Phoenix and freeze', '## Evidence and release doctrine', '## Canonical pointers', '## Operator checklist', '## Failure modes'],
+  'kb/06_WOW_TO_PROFIT.md': ['# WOW to Profit', '## Acceptance as falsification', '## Kill criteria discipline', '## Passports as proof', '## Canonical pointers', '## Operator checklist', '## Failure modes']
 };
 
 const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
@@ -26,13 +26,16 @@ for (const [file, headings] of Object.entries(required)) {
   }
 
   const pathRefs = [...text.matchAll(/`((?:core|scripts|specs|reports|docs|kb)\/[\w./-]+)`/g)].map((m) => m[1]);
-  for (const p of pathRefs) if (!fs.existsSync(p)) errors.push(`${file} references missing path: ${p}`);
+  for (const p of pathRefs) {
+    if (!fs.existsSync(p)) errors.push(`${file} references missing path: ${p}`);
+  }
 }
 
 if (errors.length) {
   console.error('verify:kb FAILED');
-  for (const e of errors) console.error(`- ${e}`);
+  for (const err of errors) console.error(`- ${err}`);
   process.exit(1);
 }
 
-console.log(`verify:kb PASSED (${Object.keys(required).length} files)`);
+console.log('verify:kb PASSED');
+console.log(JSON.stringify({ files: Object.keys(required).length }, null, 2));
