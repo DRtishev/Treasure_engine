@@ -1,0 +1,675 @@
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:phoenix
+> CI=true npm run verify:specs && CI=true npm run verify:repo && CI=true npm run verify:manifest && CI=true npm run verify:determinism:strict && LEDGER_PACK_VERIFY=1 CI=true npm run verify:ledger && CI=true npm run verify:epochs:sweep && node -e "const cp=require('child_process');if(require('fs').existsSync('scripts/verify/epoch_freeze_regression.mjs')){process.exit(cp.spawnSync('npm',['run','verify:epochs:freeze'],{stdio:'inherit',env:process.env}).status??1)}" && CI=true npm run verify:edge && CI=true npm run verify:treasure && RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release && RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release:chain
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:specs
+> npm run verify:ssot && node scripts/verify/specs_check.mjs && npm run verify:wow && npm run verify:kb && npm run verify:passports && npm run verify:derived && npm run verify:docs && npm run verify:reachability && npm run verify:properties && npm run verify:ledger && npm run verify:repo
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:ssot
+> node scripts/verify/ssot_check.mjs
+
+verify:ssot PASSED (epochs=1..62)
+verify:specs PASSED
+Validated 70 required files in /workspace/Treasure_engine
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:wow
+> node scripts/verify/wow_specs_check.mjs
+
+verify:wow PASSED
+{
+  "total": 38,
+  "counts": {
+    "SHIPPED": 10,
+    "PROPOSED": 25,
+    "STAGED": 3
+  }
+}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:kb
+> node scripts/verify/kb_check.mjs
+
+verify:kb PASSED
+{
+  "files": 7
+}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:passports
+> node scripts/verify/passports_check.mjs
+
+verify:passports PASSED (10 shipped WOW passports)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:derived
+> node scripts/verify/derived_docs_check.mjs
+
+verify:derived PASSED
+{
+  "files": [
+    {
+      "file": "docs/WOW_CATALOG.md",
+      "sha256": "f0f584bfb17fe57775336422a823a28e74bda2f25b50c4a3bb33695a5bba243c"
+    },
+    {
+      "file": "docs/STAGE2_IMPLEMENTATION_MATRIX.md",
+      "sha256": "9ed3f9696e2caa0882f70fa78bf89986a236076ed8620edccb9cf255cfe6a924"
+    },
+    {
+      "file": "kb/INDEX.md",
+      "sha256": "6c9044373d2ba9cd798abb5ab6bf2f19990840ebcf0a6db7ec47b7b9bb70cd04"
+    }
+  ]
+}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:docs
+> node scripts/verify/docs_links_check.mjs
+
+verify:docs PASSED
+{
+  "checked_files": 147,
+  "broken_links": 0
+}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:reachability
+> node scripts/verify/reachability.mjs
+
+verify:reachability PASSED
+{
+  "active_unreachable_count": 0,
+  "reachable_modules": 214
+}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:properties
+> node scripts/verify/properties.mjs
+
+verify:properties PASSED
+{
+  "total_properties": 35,
+  "fingerprint": "7c98a1bfd170802135a5b1343cdd7f2ac52eb2381c3137cb3105826bfdd852fa"
+}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:ledger
+> npm run verify:ledger:schema && node scripts/verify/ledger_check.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:ledger:schema
+> node scripts/verify/ledger_schema_strict.mjs
+
+verify:ledger:schema PASSED
+verify:ledger PASSED
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:repo
+> node scripts/verify/repo_sanity_check.mjs && npm run verify:manifest && npm run verify:determinism:strict
+
+verify:repo PASSED
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:manifest
+> node scripts/verify/repo_manifest.mjs
+
+verify:manifest PASSED
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:determinism:strict
+> node scripts/verify/determinism.mjs
+
+verify:determinism:strict PASSED
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:repo
+> node scripts/verify/repo_sanity_check.mjs && npm run verify:manifest && npm run verify:determinism:strict
+
+verify:repo PASSED
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:manifest
+> node scripts/verify/repo_manifest.mjs
+
+verify:manifest PASSED
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:determinism:strict
+> node scripts/verify/determinism.mjs
+
+verify:determinism:strict PASSED
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:manifest
+> node scripts/verify/repo_manifest.mjs
+
+verify:manifest PASSED
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:determinism:strict
+> node scripts/verify/determinism.mjs
+
+verify:determinism:strict PASSED
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:ledger
+> npm run verify:ledger:schema && node scripts/verify/ledger_check.mjs
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:ledger:schema
+> node scripts/verify/ledger_schema_strict.mjs
+
+verify:ledger:schema PASSED
+verify:ledger PASSED
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epochs:sweep
+> node scripts/verify/epoch_sweep_1_58.mjs
+
+verify:epochs:sweep PASSED report=reports/evidence/EPOCH-59/gates/manual/epoch_sweep_report.json
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:epochs:freeze
+> node scripts/verify/epoch_freeze_regression.mjs
+
+pack:verify PASSED for EPOCH-17
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-17 SAFETY INTEGRATED EXECUTOR CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ invalid intent blocked by safety gate
+✓ blocked stage is safety
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ daily loss cap blocked by risk precheck
+✓ blocked stage is risk_precheck
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ valid intent executes successfully
+✓ execution returns order_id
+✓ route event logged
+✓ result event logged
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 8
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-17
+pack:verify PASSED for EPOCH-18
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-18 STRATEGY LAYER CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ same-seed ranking is stable
+✓ rankings are produced
+✓ intent_id deterministic format
+✓ signal side normalized to BUY/SELL
+✓ notional preserved before allocation
+✓ per-intent cap enforced
+✓ portfolio cap enforced
+✓ prepared intents count matches signals
+✓ allocation attached to every intent
+✓ default mode remains DRY_RUN for strategy layer
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 10
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-18
+pack:verify PASSED for EPOCH-19
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-19 GOVERNANCE CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ default mode is DRY_RUN
+✓ LIVE_TESTNET blocked without governance approval
+✓ LIVE_TESTNET blocked without non-empty reason
+✓ approval workflow validates scoped approval artifact
+✓ LIVE_TESTNET allowed with governance/risk/safety ready
+✓ mode updated to LIVE_TESTNET
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ execution blocked when kill switch active
+✓ mode-aware executor allows execution in LIVE_TESTNET when conditions met
+✓ live intent audit event emitted
+✓ transition blocked when from_mode does not match engine state
+✓ LIVE_PRODUCTION blocked without manual confirmation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 11
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-19
+pack:verify PASSED for EPOCH-20
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-20 MONITORING/PERF CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ monitoring report deterministic under frozen clock
+✓ monitoring safety score is finite
+✓ monitoring reject ratio bounded [0,1]
+✓ performance report deterministic under frozen clock
+✓ performance report has no NaN/Inf metrics
+✓ monitoring/performance report passes schema
+WROTE: reports/monitoring_report.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 6
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-20
+pack:verify PASSED for EPOCH-21
+verify:epoch21 PASSED (fallback deterministic gate)
+freeze PASS EPOCH-21
+pack:verify PASSED for EPOCH-22
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-22 AI VALIDATION HARNESS CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ baseline exists: specs/ai_determinism_baseline.json
+✓ core/ai/autonomous_agent.mjs Math.random count 0 <= baseline 0
+✓ core/ai/autonomous_agent.mjs Date.now count 0 <= baseline 3
+✓ core/ai/cognitive_brain.mjs Math.random count 0 <= baseline 1
+✓ core/ai/cognitive_brain.mjs Date.now count 0 <= baseline 15
+✓ core/ai/hypothesis_generator.mjs Math.random count 0 <= baseline 5
+✓ core/ai/hypothesis_generator.mjs Date.now count 0 <= baseline 8
+✓ core/ai/learning_system.mjs Math.random count 0 <= baseline 6
+✓ core/ai/learning_system.mjs Date.now count 0 <= baseline 4
+✓ core/ai/master_orchestrator.mjs Math.random count 0 <= baseline 3
+✓ core/ai/master_orchestrator.mjs Date.now count 0 <= baseline 2
+✓ core/ai/meta_learning_engine.mjs Math.random count 0 <= baseline 0
+✓ core/ai/meta_learning_engine.mjs Date.now count 0 <= baseline 7
+✓ core/ai/metacognitive_controller.mjs Math.random count 0 <= baseline 1
+✓ core/ai/metacognitive_controller.mjs Date.now count 0 <= baseline 4
+✓ core/ai/self_reflection_system.mjs Math.random count 0 <= baseline 3
+✓ core/ai/self_reflection_system.mjs Date.now count 0 <= baseline 7
+✓ core/ai/strategy_generator.mjs Math.random count 0 <= baseline 18
+✓ core/ai/strategy_generator.mjs Date.now count 0 <= baseline 4
+✓ core/ai/superintelligent_agent.mjs Math.random count 0 <= baseline 1
+✓ core/ai/superintelligent_agent.mjs Date.now count 0 <= baseline 5
+✓ total Math.random count 0 <= baseline 38
+✓ total Date.now count 0 <= baseline 59
+✓ same seed yields identical RNG sequence
+✓ different seed yields different RNG sequence
+Current totals: { mathRandom: 0, dateNow: 0 }
+Baseline totals: { mathRandom: 38, dateNow: 59 }
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 25
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+find: ‘core/ai’: No such file or directory
+freeze PASS EPOCH-22
+pack:verify PASSED for EPOCH-23
+verify:epoch23 PASSED (fallback deterministic gate)
+freeze PASS EPOCH-23
+pack:verify PASSED for EPOCH-24
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-24 WALK-FORWARD + REALITY GAP CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ walk-forward has >=3 folds
+✓ fold reality gaps are finite/non-negative
+✓ max reality gap 0.00275 within drift budget 0.005
+✓ drift fingerprint is sha256
+✓ court_report.json exists (produced by baseline gates)
+✓ court report contains reality_gap_cliff evidence
+✓ reality_gap_cliff values bounded [0,1]
+WROTE: reports/walkforward_reality_gap_report.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 7
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-24
+pack:verify PASSED for EPOCH-25
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-25 TESTNET CAMPAIGN CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ campaign profile includes >=3 samples
+✓ offline campaign metrics within configured budget
+✓ profile fingerprint is sha256
+✓ profile summary metrics are non-negative
+ℹ Network campaign checks skipped by default (set ENABLE_NETWORK_TESTS=1 to enable).
+✓ network path obeys opt-in policy
+WROTE: reports/testnet_campaign_profile.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 5
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-25
+pack:verify PASSED for EPOCH-26
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-26 MICRO-LIVE GOVERNOR CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ default mode is DRY_RUN
+✓ transition to LIVE_TESTNET blocked without governance approval
+✓ approval artifact validates for required scope
+✓ transition to LIVE_TESTNET succeeds with prerequisites
+✓ kill switch blocks execution in micro-live drill
+✓ emergency rollback to DRY_RUN succeeds
+✓ LIVE_PRODUCTION blocked by FSM from DRY_RUN
+✓ allowed transition events emitted
+✓ blocked transition events emitted
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 9
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-26
+pack:verify PASSED for EPOCH-27
+verify:epoch27 PASSED (fallback deterministic gate)
+freeze PASS EPOCH-27
+pack:verify PASSED for EPOCH-28
+verify:epoch28 PASSED (fallback deterministic gate)
+freeze PASS EPOCH-28
+pack:verify PASSED for EPOCH-29
+[run_with_context] gate=epoch29 seed=12345 repeat=default
+[run_with_context] run_id=f6ac7cc209d5b8d9
+[run_with_context] run_dir=reports/runs/epoch29/12345/default/f6ac7cc209d5b8d9
+✓ walk-forward generated multiple folds
+✓ leakage sentinel: training window never uses future validation data
+WROTE: reports/runs/epoch29/12345/default/f6ac7cc209d5b8d9/epoch29_walkforward_manifest.json
+freeze PASS EPOCH-29
+pack:verify PASSED for EPOCH-30
+verify:epoch30 PASSED (fallback deterministic gate)
+freeze PASS EPOCH-30
+pack:verify PASSED for EPOCH-31
+PASS verify:edge run=run evidence=reports/evidence/EPOCH-FREEZE-31/verify_edge
+freeze PASS EPOCH-31
+pack:verify PASSED for EPOCH-32
+PASS verify:edge run=run evidence=reports/evidence/EPOCH-FREEZE-32/verify_edge
+freeze PASS EPOCH-32
+pack:verify PASSED for EPOCH-33
+PASS verify:edge run=run evidence=reports/evidence/EPOCH-FREEZE-33/verify_edge
+freeze PASS EPOCH-33
+pack:verify PASSED for EPOCH-34
+PASS verify:edge run=run evidence=reports/evidence/EPOCH-FREEZE-34/verify_edge
+freeze PASS EPOCH-34
+pack:verify PASSED for EPOCH-35
+PASS verify:edge run=run evidence=reports/evidence/EPOCH-FREEZE-35/verify_edge
+freeze PASS EPOCH-35
+pack:verify PASSED for EPOCH-36
+PASS verify:edge run=run evidence=reports/evidence/EPOCH-FREEZE-36/verify_edge
+freeze PASS EPOCH-36
+pack:verify PASSED for EPOCH-37
+PASS verify:edge run=run evidence=reports/evidence/EPOCH-FREEZE-37/verify_edge
+freeze PASS EPOCH-37
+pack:verify PASSED for EPOCH-38
+PASS verify:edge run=run evidence=reports/evidence/EPOCH-FREEZE-38/verify_edge
+freeze PASS EPOCH-38
+pack:verify PASSED for EPOCH-39
+PASS verify:edge run=run evidence=reports/evidence/EPOCH-FREEZE-39/verify_edge
+freeze PASS EPOCH-39
+pack:verify PASSED for EPOCH-40
+PASS verify:edge run=run evidence=reports/evidence/EPOCH-FREEZE-40/verify_edge
+freeze PASS EPOCH-40
+pack:verify PASSED for EPOCH-41
+PASS verify:epoch41 evidence=.tmp/epoch_freeze/EPOCH-FREEZE-41
+freeze PASS EPOCH-41
+pack:verify PASSED for EPOCH-42
+✓ fill loader returns explicit fallback marker
+✓ fallback reason is explicit when fill file missing
+✓ fill contract rejects non-finite numbers
+✓ calibration params deterministic for same inputs
+✓ calibration fingerprints deterministic for same inputs
+✓ bucket classified as HIGH
+✓ HIGH fill_ratio in [0,1]
+✓ HIGH notional conservation invariant
+✓ bucket classified as MID
+✓ MID fill_ratio in [0,1]
+✓ MID notional conservation invariant
+✓ bucket classified as LOW
+✓ LOW fill_ratio in [0,1]
+✓ LOW notional conservation invariant
+✓ bucket classified as MICRO
+✓ MICRO fill_ratio in [0,1]
+✓ MICRO notional conservation invariant
+✓ partial-fill severity monotonic by liquidity bucket
+✓ freshness action ALLOW for HFT
+✓ freshness action BLOCK for HFT
+✓ freshness action DOWNWEIGHT for SWING
+✓ stale HFT signal blocked in signal->intent path
+✓ swing stale signal downweighted
+✓ signal->intent freshness path deterministic
+PASS verify:epoch42 checks=24 fingerprint=ea5d7a4a427c61664d774e2a86e77c831468122154f6305e323b1e6b7d301ebf
+freeze PASS EPOCH-42
+pack:verify PASSED for EPOCH-43
+✓ input fingerprint stable x2
+✓ output fingerprint stable x2
+✓ split count equals k
+✓ all splits have non-empty train/test
+✓ train/test leakage absent by index
+✓ PBO in [0,1]
+✓ DSR finite
+PASS verify:epoch43 checks=7 fingerprint=9023606b3e2ce243294c6879ed0fbae7ecbb1ba34e1af6e6fb133d37c094ac8f
+freeze PASS EPOCH-43
+pack:verify PASSED for EPOCH-44
+✓ crisis deterministic x2
+✓ sizing degrades as drawdown worsens
+✓ hard stop cannot be bypassed
+✓ normal path keeps sizing > 0
+PASS verify:epoch44 checks=4 fp=fc341196baaa21e08ffd5b7159088bfd787d753ea375857329ecbd3857da9cc4
+freeze PASS EPOCH-44
+pack:verify PASSED for EPOCH-45
+✓ deterministic outputs x2
+✓ replay from event log matches output
+✓ all events carry seed
+✓ policy: no risk FSM bypass
+✓ policy: network remains disabled by default
+PASS verify:epoch45 checks=5 fp=8292ff98ee4c7e767be6d1d69aa87444b8fbf39402320555bb3dfac561b6ca25
+freeze PASS EPOCH-45
+pack:verify PASSED for EPOCH-46
+✓ deterministic replay x2
+✓ expected fixture row count
+✓ contract validation passes for all candles
+✓ no look-ahead ordering drift
+✓ dedup check passes
+PASS verify:epoch46 checks=5 fp=d66bf3c3874fad91c32b359cea32097a7e9a6a35998a3de0c3fd31e2d2c70f6f
+freeze PASS EPOCH-46
+pack:verify PASSED for EPOCH-47
+freeze SKIP EPOCH-47 (NO_VERIFIER and no mutable paths)
+pack:verify PASSED for EPOCH-48
+freeze SKIP EPOCH-48 (NO_VERIFIER and no mutable paths)
+pack:verify PASSED for EPOCH-49
+✓ manifest exists
+✓ raw chunk exists
+✓ normalized chunk exists
+✓ SHA256SUMS.DATA exists
+✓ manifest chunk list complete
+✓ SHA256SUMS.DATA contains normalized chunk hash
+✓ deterministic replay fingerprint stable
+✓ dedup detected in fixture
+✓ gap detected in fixture
+✓ out-of-order detected in fixture
+PASS verify:epoch49 checks=10
+freeze PASS EPOCH-49
+pack:verify PASSED for EPOCH-50
+✓ strict ingest succeeds for fixture with fill_id
+✓ fills dataset manifest exists
+✓ private quality report exists
+✓ fixture calibration runs in REAL mode
+✓ calibration deterministic fingerprint stable
+✓ strict calibration succeeds on valid fixture
+✓ strict-mode negative test fails when fill_id missing (expected fail)
+PASS verify:epoch50 checks=7
+freeze PASS EPOCH-50
+pack:verify PASSED for EPOCH-51
+✓ rechunk ingest variants succeed
+✓ rechunk dataset fingerprint invariant
+✓ rechunk calibration manifest invariant
+✓ paper session deterministic x2
+✓ risk fortress hard stop triggered in fixture session
+✓ paper fills produced
+✓ strict expected-fail on missing REAL fills dataset
+PASS verify:epoch51 checks=7
+freeze PASS EPOCH-51
+pack:verify PASSED for EPOCH-52
+✓ SHADOW mode produces state log
+✓ SHADOW mode has no submission plan
+✓ PAPER mode produces paper pnl metric
+✓ PAPER mode has no submission plan
+✓ GUARDED_LIVE mode produces submission plan
+✓ GUARDED_LIVE never submits actions
+✓ determinism x2 fingerprint invariant
+✓ auto-pause triggers on injected crisis scenario
+✓ strict mode expected-fail when overfit metrics missing
+PASS verify:epoch52 checks=9
+freeze PASS EPOCH-52
+pack:verify PASSED for EPOCH-53
+✓ reason codes taxonomy exists
+✓ pause events include reason codes + metrics
+✓ risk events include reason codes + transitions
+✓ thresholds_used is complete
+✓ determinism x2 identical fingerprints
+✓ fitness suite output generated
+PASS verify:epoch53 checks=6
+freeze PASS EPOCH-53
+pack:verify PASSED for EPOCH-54
+✓ rechunk fingerprint invariant under chunk boundaries
+✓ strict dedup removes duplicate trade_id rows
+✓ heuristic dedup flagged when trade_id absent
+✓ strict mode fails when heuristic dedup would be required
+PASS verify:epoch54 checks=4
+freeze PASS EPOCH-54
+pack:verify PASSED for EPOCH-55
+✓ frontier report generated with bounded grid and top-k
+✓ determinism x2 frontier fingerprint invariant
+✓ frontier entries include params + metrics
+PASS verify:epoch55 checks=3
+freeze PASS EPOCH-55
+pack:verify PASSED for EPOCH-56
+✓ fitness v2 non-constant across scenarios
+✓ fitness v2 emits required per-scenario metrics
+✓ vault policy strict expected-fail enforced for tuning sweep
+✓ pause-recover deterministic x2 fingerprint invariant
+✓ pause-recover transition trace generated
+✓ hard stop remains enforced during recovery
+✓ recovery flow does not submit any action
+PASS verify:epoch56 checks=7
+freeze PASS EPOCH-56
+pack:verify PASSED for EPOCH-57
+freeze SKIP EPOCH-57 (NO_VERIFIER and no mutable paths)
+pack:verify PASSED for EPOCH-58
+freeze SKIP EPOCH-58 (NO_VERIFIER and no mutable paths)
+pack:verify PASSED for EPOCH-59
+freeze WARN EPOCH-59 (NO_VERIFIER; mutable paths limited to gates/manual)
+pack:verify PASSED for EPOCH-60
+freeze WARN EPOCH-60 (NO_VERIFIER; mutable paths limited to gates/manual)
+pack:verify PASSED for EPOCH-61
+freeze WARN EPOCH-61 (NO_VERIFIER; mutable paths limited to gates/manual)
+pack:verify PASSED for EPOCH-62
+freeze WARN EPOCH-62 (NO_VERIFIER; mutable paths limited to gates/manual)
+verify:epochs:freeze PASSED (epochs=46)
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:edge
+> node scripts/verify/edge_all_epochs.mjs
+
+PASS verify:edge run=run evidence=reports/evidence/EPOCH-EDGE-LOCAL-MEGA/verify_edge
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:treasure
+> node scripts/profit/__tests__/treasure_engine.test.mjs && npm run verify:golden
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TREASURE ENGINE PROFIT SYSTEM TESTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+━━━ PROFIT/LOSS CALCULATION ━━━
+✓ LONG gross PnL correct
+✓ Fees/slippage reduce net PnL
+✓ LONG trade is profitable
+✓ SHORT gross PnL correct
+✓ SHORT trade is profitable
+✓ Losing trade identified
+
+━━━ BREAK-EVEN CALCULATION ━━━
+✓ Break-even price above entry
+✓ Break-even price reasonable
+
+━━━ TARGET EXIT CALCULATION ━━━
+✓ Target exit accounts for ROI + costs
+✓ Target exit reasonable
+
+━━━ POSITION SIZING ━━━
+✓ Risk amount is 1% of capital
+✓ Price distance to stop correct
+✓ Position size correct (100 / 2)
+
+━━━ RISK/REWARD RATIO ━━━
+✓ Reward distance correct
+✓ Risk distance correct
+✓ RR ratio correct (3:1)
+✓ RR ratio acceptable (>=2:1)
+
+━━━ FEE CONFIGURATION ━━━
+✓ Custom maker fee set
+✓ Custom taker fee set
+✓ Custom slippage set
+
+━━━ OPPORTUNITY DETECTOR INIT ━━━
+✓ Min score configured
+✓ Min profit configured
+✓ Price history starts empty
+
+━━━ PRICE HISTORY MANAGEMENT ━━━
+✓ History trimmed to max size
+✓ Oldest prices removed
+
+━━━ OPPORTUNITY SCORING ━━━
+✓ Excellent opportunity scores high
+✓ Poor opportunity scores low
+
+━━━ DETECTOR STATISTICS ━━━
+✓ Stats include total detected
+✓ Stats include recent count
+✓ Stats include history size
+
+━━━ OPPORTUNITY TYPES ━━━
+✓ PRICE_SPIKE type exists
+✓ VOLATILITY type exists
+✓ TREND_REVERSAL type exists
+✓ BREAKOUT type exists
+
+━━━ EDGE CASES ━━━
+✓ Throws on invalid side
+✓ Throws on invalid stop loss
+✓ No fees/slippage = gross equals net
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+RESULTS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 37
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✓ All treasure engine tests passed
+
+💰 TREASURE ENGINE CAPABILITIES VERIFIED:
+   ✓ Profit/loss calculations (with fees/slippage)
+   ✓ Risk/reward analysis
+   ✓ Position sizing
+   ✓ Break-even calculations
+   ✓ Opportunity detection
+   ✓ Opportunity scoring
+
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:golden
+> node scripts/verify/golden_vectors_check.mjs
+
+verify:golden PASSED
+{
+  "vectors": 3,
+  "mismatches": 0
+}
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:release
+> node scripts/verify/release_check.mjs
+
+verify:release PASSED
+npm warn Unknown env config "http-proxy". This will stop working in the next major version of npm.
+
+> treasure-engine@1.0.0 verify:release:chain
+> node scripts/verify/release_chain_check.mjs
+
+verify:release:chain PASSED

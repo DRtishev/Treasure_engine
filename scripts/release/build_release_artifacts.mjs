@@ -42,8 +42,10 @@ function listFiles(relPath) {
 }
 
 const ledger = JSON.parse(fs.readFileSync('specs/epochs/LEDGER.json', 'utf8'));
-const doneEvidenceRoots = Object.values(ledger.epochs ?? {})
-  .filter((row) => row.status === 'DONE' && typeof row.evidence_root === 'string')
+const doneRows = Object.values(ledger.epochs ?? {})
+  .filter((row) => row.stage === 'DONE' && typeof row.evidence_root === 'string');
+
+const doneEvidenceRoots = doneRows
   .map((row) => row.evidence_root.replace(/\\/g, '/'))
   .filter((rootRel) => !excludedEpochs.has(rootRel.replace(/^reports\/evidence\//, '').replace(/\/$/, '')));
 
@@ -64,8 +66,8 @@ if (fs.existsSync(zipPath)) fs.unlinkSync(zipPath);
 run('zip', ['-X', '-q', '-D', '-0', zipPath, '-@'], `${zipInputs.join('\n')}\n`);
 
 const allow = [];
-for (const row of Object.values(ledger.epochs ?? {})) {
-  if (row.status !== 'DONE' || !row.evidence_root) continue;
+for (const row of doneRows) {
+  if (!row.evidence_root) continue;
   if (excludedEpochs.has(String(row.evidence_id || '').trim()) || excludedEpochs.has(String(row.id || '').trim())) continue;
   const idx = path.join(row.evidence_root, 'pack_index.json');
   if (fs.existsSync(idx)) {

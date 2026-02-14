@@ -1,0 +1,21 @@
+npm ci # run1
+npm ci # run2
+CI=true npm run verify:repo # run1
+CI=true npm run verify:repo # run2
+CI=true npm run verify:specs # run1
+CI=true npm run verify:specs # run2
+LEDGER_PACK_VERIFY=1 CI=true npm run verify:ledger # run1
+LEDGER_PACK_VERIFY=1 CI=true npm run verify:ledger # run2
+CI=true npm run verify:edge # run1
+CI=true npm run verify:edge # run2
+CI=true npm run verify:treasure # run1
+CI=true npm run verify:treasure # run2
+CI=true npm run verify:phoenix # run1
+CI=true npm run verify:phoenix # run2
+npm run release:build
+RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release # run1
+RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release # run2
+RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release:chain # run1
+RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release:chain # run2
+node scripts/evidence/packager.mjs pack:epoch --id 63
+node scripts/evidence/packager.mjs pack:verify --id 63

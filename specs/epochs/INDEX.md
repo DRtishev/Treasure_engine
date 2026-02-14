@@ -61,6 +61,9 @@
 58. EPOCH-58
 59. EPOCH-59
 60. EPOCH-60
+61. EPOCH-61
+62. EPOCH-62
+63. EPOCH-63
 
 ## Dependency notes (EDGE)
 - EPOCH-31 depends on EPOCH-30 (EDGE starts from completed legacy runway).
@@ -234,3 +237,6 @@
 
 - EPOCH-62 depends on EPOCH-61 (gold seal verification hardening: anchors/reachability/properties/golden vectors).
 - `specs/epochs/EPOCH-62.md`
+
+- `specs/epochs/EPOCH-63.md`
+- EPOCH-63: `verify:release` + `verify:release:chain` (strict release truth).

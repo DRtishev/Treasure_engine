@@ -209,6 +209,35 @@ function verifyPack(epochId) {
   const shaMap = parseShaFile(path.join(epochDir, 'SHA256SUMS.EVIDENCE'));
   if (!shaMap.has('pack_index.json')) errors.push('SHA256SUMS.EVIDENCE must include pack_index.json');
 
+  const listedPaths = [...shaMap.keys()];
+  for (const rel of listedPaths) {
+    const full = path.join(epochDir, rel);
+    if (!fs.existsSync(full)) {
+      errors.push(`SHA256SUMS listed file missing: ${rel}`);
+      continue;
+    }
+    const actual = sha256File(full);
+    const expected = shaMap.get(rel);
+    if (actual !== expected) errors.push(`SHA256SUMS hash mismatch: ${rel}`);
+  }
+
+  const allFiles = [];
+  function walk(cur) {
+    const entries = fs.readdirSync(cur, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name));
+    for (const e of entries) {
+      const full = path.join(cur, e.name);
+      if (e.isDirectory()) walk(full);
+      else {
+        const rel = path.relative(epochDir, full).replaceAll('\\', '/');
+        if (rel !== 'SHA256SUMS.EVIDENCE') allFiles.push(rel);
+      }
+    }
+  }
+  walk(epochDir);
+  for (const rel of allFiles) {
+    if (!shaMap.has(rel)) errors.push(`extra file not covered by SHA256SUMS.EVIDENCE: ${rel}`);
+  }
+
   for (const run of index.gate_runs ?? []) {
     const rel = run.path;
     const full = path.join(epochDir, rel);
@@ -229,6 +258,7 @@ function verifyPack(epochId) {
     }
     const actual = sha256File(full);
     if (actual !== item.sha256) errors.push(`artifact hash mismatch: ${item.path}`);
+    if (shaMap.get(item.path) !== actual) errors.push(`SHA256SUMS mismatch for artifact ${item.path}`);
   }
 
   if (errors.length) {

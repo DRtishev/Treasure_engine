@@ -52,6 +52,9 @@ if (strict) {
       if (!fs.existsSync(p)) errors.push(`DONE epoch ${epoch} missing ${p}`);
     }
   }
+
+  const chain = spawnSync('npm', ['run', '-s', 'verify:release:chain'], { encoding: 'utf8', env: process.env });
+  if (chain.status !== 0) errors.push(`verify:release:chain failed: ${chain.stderr || chain.stdout}`);
 }
 
 function sha(file) {

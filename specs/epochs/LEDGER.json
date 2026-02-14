@@ -559,6 +559,15 @@
       "evidence_root": "reports/evidence/EPOCH-62/",
       "gate_owner": "docs",
       "notes": "Gold seal verification hardening: canonical anchors, reachability, properties, golden vectors."
+    },
+    "63": {
+      "id": "EPOCH-63",
+      "stage": "DONE",
+      "status": "PASS",
+      "commit_sha": "55eef8a1f14f8fd07295c375219fde3b5743347e",
+      "evidence_root": "reports/evidence/EPOCH-63/",
+      "gate_owner": "verify:release:chain",
+      "notes": "Release truth hardening: DONE(stage) release selection, strict chain verification, SHA256SUMS full coverage enforcement."
     }
   }
 }

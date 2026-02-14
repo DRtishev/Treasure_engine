@@ -1,0 +1,3 @@
+$ sha256sum -c reports/evidence/EPOCH-63/SHA256SUMS.EVIDENCE.txt
+reports/evidence/EPOCH-63/COMMANDS.log: OK
+reports/evidence/EPOCH-63/PREFLIGHT.log: OK

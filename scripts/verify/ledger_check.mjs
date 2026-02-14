@@ -1,8 +1,11 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 
 const ledgerPath = 'specs/epochs/LEDGER.json';
+
+const enforcePackVerify = process.env.LEDGER_PACK_VERIFY === '1';
 const requiredPackFiles = [
   'PREFLIGHT.log',
   'COMMANDS.log',
@@ -70,6 +73,22 @@ for (const [epoch, row] of Object.entries(ledger.epochs ?? {})) {
       const full = path.join(absRoot, rel);
       if (!fs.existsSync(full)) errors.push(`LEDGER epoch ${epoch} gate run missing: ${rel}`);
       if (!shaMap.has(rel)) errors.push(`LEDGER epoch ${epoch} SHA256SUMS.EVIDENCE missing gate log: ${rel}`);
+    }
+  }
+}
+
+if (enforcePackVerify) {
+  for (const [epoch, row] of Object.entries(ledger.epochs ?? {})) {
+    const epochNum = Number(epoch);
+    if (row.stage !== 'DONE' || Number.isNaN(epochNum) || epochNum < 17) continue;
+    const out = spawnSync('node', ['scripts/evidence/packager.mjs', 'pack:verify', '--id', String(epochNum)], {
+      encoding: 'utf8',
+      env: process.env
+    });
+    if (out.status !== 0) {
+      errors.push(`LEDGER epoch ${epoch} pack:verify failed`);
+      const detail = (out.stderr || out.stdout || '').trim();
+      if (detail) errors.push(`LEDGER epoch ${epoch} pack:verify detail: ${detail.split(/\r?\n/).slice(-3).join(' | ')}`);
     }
   }
 }
