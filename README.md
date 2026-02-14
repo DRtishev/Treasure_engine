@@ -16,6 +16,9 @@ RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release
 ```
 Строгий verify релиза также запускается два раза подряд.
 
+## Операторская доктрина
+- `docs/OPERATOR_DOCTRINE_RU.md` — 10 правил Foundation Seal + дисциплина миграций SSOT без дрейфа.
+
 ## Карта репозитория
 - `specs/` — спецификации, эпохи, контракты.
 - `core/edge/` — edge-ядро и epoch-гейты E31+.

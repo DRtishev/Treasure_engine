@@ -4,7 +4,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
 
-const outDir = path.resolve('artifacts/out');
+const outDir = path.resolve(process.env.RELEASE_OUT_DIR || 'artifacts/out');
 fs.mkdirSync(outDir, { recursive: true });
 
 const zipPath = path.join(outDir, 'FINAL_VALIDATED.zip');

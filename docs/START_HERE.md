@@ -17,6 +17,7 @@
 ## Основные документы
 - `docs/RUNBOOK_RU.md` — операционный runbook.
 - `docs/DOCTRINE.md` — политика determinism/evidence/offline/safety.
+- `docs/OPERATOR_DOCTRINE_RU.md` — 10 правил Foundation Seal и миграция SSOT без дрейфа.
 - `docs/WOW_CATALOG.md` — производная витрина состояния.
 - `docs/STAGE2_IMPLEMENTATION_MATRIX.md` — матрица реализации.
 - `kb/INDEX.md` — карта базы знаний.

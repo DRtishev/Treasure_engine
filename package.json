@@ -134,7 +134,7 @@
     "verify:manifest": "node scripts/verify/repo_manifest.mjs",
     "verify:determinism:strict": "node scripts/verify/determinism.mjs",
     "verify:epochs:sweep": "node scripts/verify/epoch_sweep_1_58.mjs",
-    "verify:phoenix": "CI=true npm run verify:specs && CI=true npm run verify:repo && CI=true npm run verify:manifest && CI=true npm run verify:determinism:strict && LEDGER_PACK_VERIFY=1 CI=true npm run verify:ledger && CI=true npm run verify:epochs:sweep && node -e \"const cp=require('child_process');if(require('fs').existsSync('scripts/verify/epoch_freeze_regression.mjs')){process.exit(cp.spawnSync('npm',['run','verify:epochs:freeze'],{stdio:'inherit',env:process.env}).status??1)}\" && CI=true npm run verify:edge && CI=true npm run verify:treasure && RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release && RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release:chain",
+    "verify:phoenix": "CI=true npm run verify:specs && CI=true npm run verify:repo && CI=true npm run verify:manifest && CI=true npm run verify:determinism:strict && LEDGER_PACK_VERIFY=1 CI=true npm run verify:ledger && CI=true npm run verify:epochs:sweep && node -e \"const cp=require('child_process');if(require('fs').existsSync('scripts/verify/epoch_freeze_regression.mjs')){process.exit(cp.spawnSync('npm',['run','verify:epochs:freeze'],{stdio:'inherit',env:process.env}).status??1)}\" && CI=true npm run verify:edge && CI=true npm run verify:treasure && RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release && RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release:chain && CI=true npm run verify:baseline",
     "verify:wow": "node scripts/verify/wow_specs_check.mjs",
     "truth:passports": "node scripts/truth/passport_builder.mjs",
     "verify:passports": "node scripts/verify/passports_check.mjs",
@@ -153,7 +153,10 @@
     "verify:docs:truth": "node scripts/verify/docs_truth_check.mjs",
     "labs:live": "node scripts/verify/live_adapter_smoke.mjs",
     "labs:adversarial": "node scripts/verify/adversarial_safety.mjs",
-    "labs:godtier": "node scripts/verify/godtier_integration.mjs"
+    "labs:godtier": "node scripts/verify/godtier_integration.mjs",
+    "truth:baseline": "node scripts/truth/baseline_builder.mjs",
+    "verify:baseline": "node scripts/verify/baseline_check.mjs",
+    "verify:release:repro": "node scripts/verify/release_repro_check.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

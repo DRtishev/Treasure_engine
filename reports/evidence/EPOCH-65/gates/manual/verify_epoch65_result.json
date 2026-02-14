@@ -1,0 +1,8 @@
+{
+  "epoch": "EPOCH-65",
+  "status": "BLOCKED",
+  "baseline": "PASS",
+  "release_repro": "PASS",
+  "run_scope_isolation": "PARTIAL",
+  "blocking_reason": "Required verify:phoenix x2 gate run did not complete in this cycle."
+}

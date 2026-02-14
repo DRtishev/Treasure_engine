@@ -1,0 +1,2 @@
+$ sha256sum -c reports/evidence/EPOCH-64/SHA256SUMS.EVIDENCE.txt
+reports/evidence/EPOCH-64/pack_index.json: OK

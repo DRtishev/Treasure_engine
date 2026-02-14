@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-02-14T12:35:28.474Z",
+  "run_dir": "../../tmp/treasure-run-Anr5W8/verify-release-repro/release-repro",
+  "statuses": {
+    "run1": 0,
+    "run2": 0
+  },
+  "missing": [],
+  "hashes": {
+    "run1": {
+      "FINAL_VALIDATED.zip": "a9934f7d361947d2e4e65f4ced5cdae5a941a5e67200b047d3286ee9df4e22b4",
+      "evidence_chain.tar.gz": "e8ecd688b7d57f86b982505d83b7920bd32963e6a63b2d920ca2e54b9c29c6b7"
+    },
+    "run2": {
+      "FINAL_VALIDATED.zip": "a9934f7d361947d2e4e65f4ced5cdae5a941a5e67200b047d3286ee9df4e22b4",
+      "evidence_chain.tar.gz": "e8ecd688b7d57f86b982505d83b7920bd32963e6a63b2d920ca2e54b9c29c6b7"
+    }
+  },
+  "pass": true
+}

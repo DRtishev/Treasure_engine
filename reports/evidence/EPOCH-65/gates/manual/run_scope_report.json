@@ -1,0 +1,11 @@
+{
+  "treasure_run_dir_supported": true,
+  "scopes": [
+    "verify-epochs-sweep",
+    "verify-epochs-freeze",
+    "verify-edge",
+    "verify-release-repro"
+  ],
+  "status": "PARTIAL",
+  "note": "Run-scoped outputs were emitted under temporary TREASURE_RUN_DIR paths; full phoenix x2 was interrupted before completion."
+}

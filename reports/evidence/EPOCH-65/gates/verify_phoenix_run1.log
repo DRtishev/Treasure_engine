@@ -1,0 +1,381 @@
+
+> treasure-engine@1.0.0 verify:phoenix
+> CI=true npm run verify:specs && CI=true npm run verify:repo && CI=true npm run verify:manifest && CI=true npm run verify:determinism:strict && LEDGER_PACK_VERIFY=1 CI=true npm run verify:ledger && CI=true npm run verify:epochs:sweep && node -e "const cp=require('child_process');if(require('fs').existsSync('scripts/verify/epoch_freeze_regression.mjs')){process.exit(cp.spawnSync('npm',['run','verify:epochs:freeze'],{stdio:'inherit',env:process.env}).status??1)}" && CI=true npm run verify:edge && CI=true npm run verify:treasure && RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release && RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release:chain && CI=true npm run verify:baseline
+
+
+> treasure-engine@1.0.0 verify:specs
+> npm run verify:ssot && node scripts/verify/specs_check.mjs && npm run verify:wow && npm run verify:kb && npm run verify:passports && npm run verify:derived && npm run verify:docs && npm run verify:reachability && npm run verify:properties && npm run verify:ledger && npm run verify:repo
+
+
+> treasure-engine@1.0.0 verify:ssot
+> node scripts/verify/ssot_check.mjs
+
+verify:ssot PASSED (epochs=1..64)
+verify:specs PASSED
+Validated 72 required files in /workspace/Treasure_engine
+
+> treasure-engine@1.0.0 verify:wow
+> node scripts/verify/wow_specs_check.mjs
+
+verify:wow PASSED
+{
+  "total": 38,
+  "counts": {
+    "SHIPPED": 10,
+    "PROPOSED": 25,
+    "STAGED": 3
+  }
+}
+
+> treasure-engine@1.0.0 verify:kb
+> node scripts/verify/kb_check.mjs
+
+verify:kb PASSED
+{
+  "files": 7
+}
+
+> treasure-engine@1.0.0 verify:passports
+> node scripts/verify/passports_check.mjs
+
+verify:passports PASSED (10 shipped WOW passports)
+
+> treasure-engine@1.0.0 verify:derived
+> node scripts/verify/derived_docs_check.mjs
+
+verify:derived PASSED
+{
+  "files": [
+    {
+      "file": "docs/WOW_CATALOG.md",
+      "sha256": "f0f584bfb17fe57775336422a823a28e74bda2f25b50c4a3bb33695a5bba243c"
+    },
+    {
+      "file": "docs/STAGE2_IMPLEMENTATION_MATRIX.md",
+      "sha256": "9ed3f9696e2caa0882f70fa78bf89986a236076ed8620edccb9cf255cfe6a924"
+    },
+    {
+      "file": "kb/INDEX.md",
+      "sha256": "6c9044373d2ba9cd798abb5ab6bf2f19990840ebcf0a6db7ec47b7b9bb70cd04"
+    }
+  ]
+}
+
+> treasure-engine@1.0.0 verify:docs
+> node scripts/verify/docs_links_check.mjs
+
+verify:docs PASSED
+{
+  "checked_files": 149,
+  "broken_links": 0
+}
+
+> treasure-engine@1.0.0 verify:reachability
+> node scripts/verify/reachability.mjs
+
+verify:reachability PASSED
+{
+  "active_unreachable_count": 0,
+  "reachable_modules": 220
+}
+
+> treasure-engine@1.0.0 verify:properties
+> node scripts/verify/properties.mjs
+
+verify:properties PASSED
+{
+  "total_properties": 35,
+  "fingerprint": "7c98a1bfd170802135a5b1343cdd7f2ac52eb2381c3137cb3105826bfdd852fa"
+}
+
+> treasure-engine@1.0.0 verify:ledger
+> npm run verify:ledger:schema && node scripts/verify/ledger_check.mjs
+
+
+> treasure-engine@1.0.0 verify:ledger:schema
+> node scripts/verify/ledger_schema_strict.mjs
+
+verify:ledger:schema PASSED
+verify:ledger PASSED
+
+> treasure-engine@1.0.0 verify:repo
+> node scripts/verify/repo_sanity_check.mjs && npm run verify:manifest && npm run verify:no_placeholders && npm run verify:docs:truth && npm run verify:determinism:strict
+
+verify:repo PASSED
+
+> treasure-engine@1.0.0 verify:manifest
+> node scripts/verify/repo_manifest.mjs
+
+verify:manifest PASSED
+
+> treasure-engine@1.0.0 verify:no_placeholders
+> node scripts/verify/no_placeholders_check.mjs
+
+verify:no_placeholders PASSED
+
+> treasure-engine@1.0.0 verify:docs:truth
+> node scripts/verify/docs_truth_check.mjs
+
+verify:docs:truth PASSED
+
+> treasure-engine@1.0.0 verify:determinism:strict
+> node scripts/verify/determinism.mjs
+
+verify:determinism:strict PASSED
+
+> treasure-engine@1.0.0 verify:repo
+> node scripts/verify/repo_sanity_check.mjs && npm run verify:manifest && npm run verify:no_placeholders && npm run verify:docs:truth && npm run verify:determinism:strict
+
+verify:repo PASSED
+
+> treasure-engine@1.0.0 verify:manifest
+> node scripts/verify/repo_manifest.mjs
+
+verify:manifest PASSED
+
+> treasure-engine@1.0.0 verify:no_placeholders
+> node scripts/verify/no_placeholders_check.mjs
+
+verify:no_placeholders PASSED
+
+> treasure-engine@1.0.0 verify:docs:truth
+> node scripts/verify/docs_truth_check.mjs
+
+verify:docs:truth PASSED
+
+> treasure-engine@1.0.0 verify:determinism:strict
+> node scripts/verify/determinism.mjs
+
+verify:determinism:strict PASSED
+
+> treasure-engine@1.0.0 verify:manifest
+> node scripts/verify/repo_manifest.mjs
+
+verify:manifest PASSED
+
+> treasure-engine@1.0.0 verify:determinism:strict
+> node scripts/verify/determinism.mjs
+
+verify:determinism:strict PASSED
+
+> treasure-engine@1.0.0 verify:ledger
+> npm run verify:ledger:schema && node scripts/verify/ledger_check.mjs
+
+
+> treasure-engine@1.0.0 verify:ledger:schema
+> node scripts/verify/ledger_schema_strict.mjs
+
+verify:ledger:schema PASSED
+verify:ledger PASSED
+
+> treasure-engine@1.0.0 verify:epochs:sweep
+> node scripts/verify/epoch_sweep_1_58.mjs
+
+verify:epochs:sweep PASSED report=../../tmp/treasure-e65-a87KmH/verify-epochs-sweep/gates/manual/epoch_sweep_report.json
+
+> treasure-engine@1.0.0 verify:epochs:freeze
+> node scripts/verify/epoch_freeze_regression.mjs
+
+pack:verify PASSED for EPOCH-17
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-17 SAFETY INTEGRATED EXECUTOR CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ invalid intent blocked by safety gate
+✓ blocked stage is safety
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ daily loss cap blocked by risk precheck
+✓ blocked stage is risk_precheck
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ valid intent executes successfully
+✓ execution returns order_id
+✓ route event logged
+✓ result event logged
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 8
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-17
+pack:verify PASSED for EPOCH-18
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-18 STRATEGY LAYER CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ same-seed ranking is stable
+✓ rankings are produced
+✓ intent_id deterministic format
+✓ signal side normalized to BUY/SELL
+✓ notional preserved before allocation
+✓ per-intent cap enforced
+✓ portfolio cap enforced
+✓ prepared intents count matches signals
+✓ allocation attached to every intent
+✓ default mode remains DRY_RUN for strategy layer
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 10
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-18
+pack:verify PASSED for EPOCH-19
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-19 GOVERNANCE CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ default mode is DRY_RUN
+✓ LIVE_TESTNET blocked without governance approval
+✓ LIVE_TESTNET blocked without non-empty reason
+✓ approval workflow validates scoped approval artifact
+✓ LIVE_TESTNET allowed with governance/risk/safety ready
+✓ mode updated to LIVE_TESTNET
+[LiveAdapterDryRun] Loaded 3 fixtures
+✓ execution blocked when kill switch active
+✓ mode-aware executor allows execution in LIVE_TESTNET when conditions met
+✓ live intent audit event emitted
+✓ transition blocked when from_mode does not match engine state
+✓ LIVE_PRODUCTION blocked without manual confirmation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 11
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-19
+pack:verify PASSED for EPOCH-20
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-20 MONITORING/PERF CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ monitoring report deterministic under frozen clock
+✓ monitoring safety score is finite
+✓ monitoring reject ratio bounded [0,1]
+✓ performance report deterministic under frozen clock
+✓ performance report has no NaN/Inf metrics
+✓ monitoring/performance report passes schema
+WROTE: reports/monitoring_report.json
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 6
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-20
+pack:verify PASSED for EPOCH-21
+verify:epoch21 PASSED (fallback deterministic gate)
+freeze PASS EPOCH-21
+pack:verify PASSED for EPOCH-22
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-22 AI VALIDATION HARNESS CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ baseline exists: specs/ai_determinism_baseline.json
+✓ core/ai/autonomous_agent.mjs Math.random count 0 <= baseline 0
+✓ core/ai/autonomous_agent.mjs Date.now count 0 <= baseline 3
+✓ core/ai/cognitive_brain.mjs Math.random count 0 <= baseline 1
+✓ core/ai/cognitive_brain.mjs Date.now count 0 <= baseline 15
+✓ core/ai/hypothesis_generator.mjs Math.random count 0 <= baseline 5
+✓ core/ai/hypothesis_generator.mjs Date.now count 0 <= baseline 8
+✓ core/ai/learning_system.mjs Math.random count 0 <= baseline 6
+✓ core/ai/learning_system.mjs Date.now count 0 <= baseline 4
+✓ core/ai/master_orchestrator.mjs Math.random count 0 <= baseline 3
+✓ core/ai/master_orchestrator.mjs Date.now count 0 <= baseline 2
+✓ core/ai/meta_learning_engine.mjs Math.random count 0 <= baseline 0
+✓ core/ai/meta_learning_engine.mjs Date.now count 0 <= baseline 7
+✓ core/ai/metacognitive_controller.mjs Math.random count 0 <= baseline 1
+✓ core/ai/metacognitive_controller.mjs Date.now count 0 <= baseline 4
+✓ core/ai/self_reflection_system.mjs Math.random count 0 <= baseline 3
+✓ core/ai/self_reflection_system.mjs Date.now count 0 <= baseline 7
+✓ core/ai/strategy_generator.mjs Math.random count 0 <= baseline 18
+✓ core/ai/strategy_generator.mjs Date.now count 0 <= baseline 4
+✓ core/ai/superintelligent_agent.mjs Math.random count 0 <= baseline 1
+✓ core/ai/superintelligent_agent.mjs Date.now count 0 <= baseline 5
+✓ total Math.random count 0 <= baseline 38
+✓ total Date.now count 0 <= baseline 59
+✓ same seed yields identical RNG sequence
+✓ different seed yields different RNG sequence
+Current totals: { mathRandom: 0, dateNow: 0 }
+Baseline totals: { mathRandom: 38, dateNow: 59 }
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 25
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-22
+pack:verify PASSED for EPOCH-23
+verify:epoch23 PASSED (fallback deterministic gate)
+freeze PASS EPOCH-23
+pack:verify PASSED for EPOCH-24
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-24 WALK-FORWARD + REALITY GAP CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ walk-forward has >=3 folds
+✓ fold reality gaps are finite/non-negative
+✓ max reality gap 0.00275 within drift budget 0.005
+✓ drift fingerprint is sha256
+✓ court_report.json exists (produced by baseline gates)
+✓ court report contains reality_gap_cliff evidence
+✓ reality_gap_cliff values bounded [0,1]
+WROTE: reports/walkforward_reality_gap_report.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 7
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-24
+pack:verify PASSED for EPOCH-25
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-25 TESTNET CAMPAIGN CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ campaign profile includes >=3 samples
+✓ offline campaign metrics within configured budget
+✓ profile fingerprint is sha256
+✓ profile summary metrics are non-negative
+ℹ Network campaign checks skipped by default (set ENABLE_NETWORK_TESTS=1 to enable).
+✓ network path obeys opt-in policy
+WROTE: reports/testnet_campaign_profile.json
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 5
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-25
+pack:verify PASSED for EPOCH-26
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+EPOCH-26 MICRO-LIVE GOVERNOR CHECK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ default mode is DRY_RUN
+✓ transition to LIVE_TESTNET blocked without governance approval
+✓ approval artifact validates for required scope
+✓ transition to LIVE_TESTNET succeeds with prerequisites
+✓ kill switch blocks execution in micro-live drill
+✓ emergency rollback to DRY_RUN succeeds
+✓ LIVE_PRODUCTION blocked by FSM from DRY_RUN
+✓ allowed transition events emitted
+✓ blocked transition events emitted
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✓ PASSED: 9
+✗ FAILED: 0
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+freeze PASS EPOCH-26
+pack:verify PASSED for EPOCH-27
+verify:epoch27 PASSED (fallback deterministic gate)
+freeze PASS EPOCH-27
+pack:verify PASSED for EPOCH-28
+verify:epoch28 PASSED (fallback deterministic gate)
+freeze PASS EPOCH-28
+pack:verify PASSED for EPOCH-29
+[run_with_context] gate=epoch29 seed=12345 repeat=default
+[run_with_context] run_id=f6ac7cc209d5b8d9
+[run_with_context] run_dir=reports/runs/epoch29/12345/default/f6ac7cc209d5b8d9
+✓ walk-forward generated multiple folds
+✓ leakage sentinel: training window never uses future validation data
+WROTE: reports/runs/epoch29/12345/default/f6ac7cc209d5b8d9/epoch29_walkforward_manifest.json
+freeze PASS EPOCH-29
+pack:verify PASSED for EPOCH-30
+verify:epoch30 PASSED (fallback deterministic gate)
+freeze PASS EPOCH-30
+pack:verify PASSED for EPOCH-31
+PASS verify:edge run=run evidence=../../tmp/treasure-e65-a87KmH/verify-edge/EPOCH-FREEZE-31/verify_edge
+freeze PASS EPOCH-31
+pack:verify PASSED for EPOCH-32
+PASS verify:edge run=run evidence=../../tmp/treasure-e65-a87KmH/verify-edge/EPOCH-FREEZE-32/verify_edge
+freeze PASS EPOCH-32
+pack:verify PASSED for EPOCH-33
+PASS verify:edge run=run evidence=../../tmp/treasure-e65-a87KmH/verify-edge/EPOCH-FREEZE-33/verify_edge
+freeze PASS EPOCH-33
+pack:verify PASSED for EPOCH-34
+PASS verify:edge run=run evidence=../../tmp/treasure-e65-a87KmH/verify-edge/EPOCH-FREEZE-34/verify_edge
+freeze PASS EPOCH-34
+pack:verify PASSED for EPOCH-35

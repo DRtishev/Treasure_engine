@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { spawnSync } from 'node:child_process';
+import { ensureRunDir } from '../../core/sys/run_dir.mjs';
 
 const LEDGER_PATH = path.resolve('specs/epochs/LEDGER.json');
 const STANDARD_FILES = new Set(['PREFLIGHT.log', 'COMMANDS.log', 'SNAPSHOT.md', 'SUMMARY.md', 'VERDICT.md', 'SHA256SUMS.EVIDENCE', 'pack_index.json']);
@@ -34,8 +35,10 @@ function mutableEvidencePath(rel) {
   return /\.(json|jsonl)$/i.test(rel);
 }
 
+const freezeRunDir = ensureRunDir('verify-epochs-freeze');
+
 function run(cmd, args, env = process.env) {
-  const out = spawnSync(cmd, args, { encoding: 'utf8', env });
+  const out = spawnSync(cmd, args, { encoding: 'utf8', env: { ...env, TREASURE_RUN_DIR: process.env.TREASURE_RUN_DIR, TMPDIR: freezeRunDir } });
   if (out.stdout) process.stdout.write(out.stdout);
   if (out.stderr) process.stderr.write(out.stderr);
   return out;
