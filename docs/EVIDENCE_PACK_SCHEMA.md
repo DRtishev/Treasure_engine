@@ -41,3 +41,12 @@ This document defines the canonical evidence pack contract for `reports/evidence
 ## Gate log provenance
 
 `pack_index.json.gate_runs[]` entries must reference existing files under `gates/` and include the sha256 hash of each referenced log.
+
+## SHA256SUMS.EVIDENCE integrity policy
+
+- `pack:verify` MUST parse every line in `SHA256SUMS.EVIDENCE` as `(relPath => sha256)` truth.
+- For EVERY listed entry:
+  - file MUST exist under the epoch evidence root.
+  - computed sha256(file) MUST equal the recorded sha.
+- Extra files under the epoch evidence root are forbidden unless they are also present in `SHA256SUMS.EVIDENCE`.
+- `SHA256SUMS.EVIDENCE` itself is excluded from self-hashing and is the only permitted uncovered file.

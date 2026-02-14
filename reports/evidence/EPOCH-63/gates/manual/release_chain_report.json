@@ -1,0 +1,15 @@
+{
+  "generated_at": "2026-02-14T10:50:08.744Z",
+  "strict": true,
+  "enforceBuild": true,
+  "done_epoch_count": 47,
+  "expected_root_count": 47,
+  "expected_allowlist_count": 94,
+  "allowlist_count": 141,
+  "tar_entry_count": 141,
+  "extracted_checks": 141,
+  "missing": [],
+  "mismatches": [],
+  "errors": [],
+  "status": "PASS"
+}

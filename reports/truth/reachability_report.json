@@ -105,6 +105,7 @@
     "scripts/verify/phase2_verify.mjs",
     "scripts/verify/properties.mjs",
     "scripts/verify/reachability.mjs",
+    "scripts/verify/release_chain_check.mjs",
     "scripts/verify/release_check.mjs",
     "scripts/verify/release_governor_check.mjs",
     "scripts/verify/repo_manifest.mjs",
@@ -124,9 +125,9 @@
     "scripts/verify/wow_specs_check.mjs",
     "ui/generate_panel.mjs"
   ],
-  "active_files": 512,
-  "module_files": 210,
-  "reachable_modules": 213,
+  "active_files": 525,
+  "module_files": 214,
+  "reachable_modules": 214,
   "active_unreachable_count": 0,
   "active_unreachable": [],
   "active_unreachable_allowlisted": [
