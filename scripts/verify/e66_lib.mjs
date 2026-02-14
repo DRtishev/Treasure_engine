@@ -84,18 +84,21 @@ export function parseCasMd() {
 
 export function evidenceFingerprint() {
   const files = [
-    path.join(E66_ROOT, 'CAS.md'),
-    path.join(E66_ROOT, 'PROVENANCE.md'),
-    path.join(E66_ROOT, 'SHA256SUMS.md')
+    ['reports/evidence/E66/CAS.md', path.join(E66_ROOT, 'CAS.md')],
+    ['reports/evidence/E66/PROVENANCE.md', path.join(E66_ROOT, 'PROVENANCE.md')],
+    ['reports/evidence/E66/SHA256SUMS.md', path.join(E66_ROOT, 'SHA256SUMS.md')]
   ];
   const snapshots = fs.existsSync(SNAP_DIR)
-    ? fs.readdirSync(SNAP_DIR).filter((f) => f.endsWith('.snapshot')).sort().map((f) => path.join(SNAP_DIR, f))
+    ? fs.readdirSync(SNAP_DIR)
+      .filter((f) => f.endsWith('.snapshot'))
+      .sort()
+      .map((f) => [`.foundation-seal/snapshots/${f}`, path.join(SNAP_DIR, f)])
     : [];
   const ordered = [...files, ...snapshots];
   const chunks = [];
-  for (const p of ordered) {
+  for (const [id, p] of ordered) {
     if (!fs.existsSync(p)) return '';
-    chunks.push(`## ${p}\n${fs.readFileSync(p, 'utf8')}`);
+    chunks.push(`## ${id}\n${fs.readFileSync(p, 'utf8')}`);
   }
   return sha256Text(chunks.join('\n'));
 }

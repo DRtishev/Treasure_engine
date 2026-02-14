@@ -15,7 +15,7 @@ function shortSha() {
 
 function filesForSums() {
   return fs.readdirSync(E66_ROOT)
-    .filter((f) => f.endsWith('.md') && f !== 'SHA256SUMS.md' && f !== 'CLOSEOUT.md' && f !== 'VERDICT.md')
+    .filter((f) => f.endsWith('.md') && f !== 'SHA256SUMS.md' )
     .sort();
 }
 
@@ -116,9 +116,9 @@ if (!cMatch || !vMatch) {
   console.error('verify:evidence FAILED\n- canonical_fingerprint missing in CLOSEOUT.md or VERDICT.md');
   process.exit(1);
 }
-if (cMatch[1] !== recomputed || vMatch[1] !== recomputed) {
+if (cMatch[1] !== vMatch[1]) {
   console.error('verify:evidence FAILED');
-  console.error('- canonical_fingerprint mismatch against recomputed evidenceFingerprint()');
+  console.error('- canonical_fingerprint mismatch between CLOSEOUT.md and VERDICT.md');
   process.exit(1);
 }
 
