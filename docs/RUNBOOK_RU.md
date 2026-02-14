@@ -2,53 +2,36 @@
 
 ## ONE COMMAND GOLD
 ```bash
-CI=true npm run verify:phoenix:x2
+CI=true npm run -s verify:phoenix:x2
 ```
-Операторский режим x2 теперь автоматизирован: создаются 2 изолированных `TREASURE_RUN_DIR`, выполняются два прогона и генерируется machine-report `reports/evidence/EPOCH-66/gates/manual/phoenix_x2_report.json`.
+Делает 2 независимых прогона `verify:e66`, сравнивает детерминированные fingerprint, в случае двух подряд критических FAIL ставит kill-lock `.foundation-seal/E66_KILL_LOCK.md`.
 
-## Обязательный baseline
+## E66 update ritual (только non-CI)
 ```bash
-npm ci
-CI=true npm run verify:repo
-CI=true npm run verify:specs
-CI=true npm run verify:docs
-CI=true npm run verify:ledger
-CI=true npm run verify:edge
-CI=true npm run verify:treasure
-CI=true npm run verify:phoenix
+CI=false UPDATE_CAS=1 UPDATE_PROVENANCE=1 UPDATE_E66_EVIDENCE=1 APPROVE_SNAPSHOTS=1 npm run -s verify:e66
 ```
-Каждый required gate — два запуска подряд.
+Режим обновления эталонов/доказательств. В `CI=true` любые update-флаги запрещены.
 
-## Cache mode (детерминированный, опциональный)
-- Включение: `PHOENIX_CACHE=1`.
-- Cache действует для heavy stages (`freeze/sweep/phoenix`), ключ включает stage + SSOT/script hashes + env subset + node/npm.
-- Cache хранит только machine summary, не canonical evidence.
-- Политика: `npm run verify:cache:policy`.
-
-## Provenance / attestation
-- Сборка: `npm run truth:provenance` (`truth/PROVENANCE.json`).
-- Проверка: `npm run verify:provenance`.
-- В x2-режиме выполняется нормализованное сравнение run1/run2.
-
-## Kill-criteria behavior
-- Критические gates: `verify:phoenix`, `verify:ledger`, `verify:release`, `verify:baseline`.
-- При 2 подряд FAIL в цикле цепочка останавливается.
-- Генерируется диагностический report + mini evidence pack `EPOCH-KILL-<stamp>/`.
-
-## Commit binding evidence
-- Финализация: `node scripts/evidence/finalize_commit_binding.mjs`.
-- Разрешить автофикс только с `FINALIZE_EVIDENCE=1`.
-- Проверка: `npm run verify:evidence:commit_binding`.
-- В `verify:phoenix` — warn-only, в `verify:release` при strict — blocking.
-
-## Релизный baseline
+## E66 strict verify (CI, read-only)
 ```bash
-npm run release:build
-RELEASE_BUILD=1 RELEASE_STRICT=1 CI=true npm run verify:release
+CI=true npm run -s verify:e66
+CI=true npm run -s verify:phoenix:x2
+CI=true npm run -s verify:evidence
 ```
-Строгую проверку релиза запускать дважды.
+Требование: эти команды не должны мутировать tracked-файлы.
 
-## Политика отказа
-- Любой FAIL = BLOCKED.
-- Нет evidence-файлов = BLOCKED.
-- Любая недетерминированность в ACTIVE runtime = BLOCKED.
+## Команды E66
+- `npm run -s verify:snapshots` — проверка снимков истины.
+- `APPROVE_SNAPSHOTS=1 npm run -s approve:snapshots` — update snapshot (только non-CI).
+- `npm run -s verify:cas` — проверка CAS-ссылок и blob-целостности.
+- `npm run -s truth:provenance` — update `reports/evidence/E66/PROVENANCE.md` (при `UPDATE_PROVENANCE=1`).
+- `npm run -s verify:provenance` — верификация хэшей материалов provenance.
+- `npm run -s verify:evidence` — self-check evidence pack (`SHA256SUMS.md`, checklist, целостность md).
+- `npm run -s verify:e66` — агрегатор E66.
+
+## Lock policy
+- Если lock существует, `verify:e66`/`verify:phoenix:x2` блокируются.
+- Очистка lock разрешена только вне CI:
+```bash
+CLEAR_LOCK=1 CI=false npm run -s verify:e66
+```

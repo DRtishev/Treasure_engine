@@ -5,10 +5,9 @@ import crypto from 'node:crypto';
 
 export const E66_ROOT = path.resolve('reports/evidence/E66');
 export const LOCK_DIR = path.resolve('.foundation-seal');
-export const LOCK_PATH = path.join(LOCK_DIR, 'PIPELINE.lock');
+export const LOCK_PATH = path.join(LOCK_DIR, 'E66_KILL_LOCK.md');
 export const CAS_DIR = path.join(LOCK_DIR, 'cas');
 export const SNAP_DIR = path.join(LOCK_DIR, 'snapshots');
-export const RUN_DIR = path.join(LOCK_DIR, 'runs');
 
 export function ensureDir(p) {
   fs.mkdirSync(p, { recursive: true });
@@ -33,10 +32,7 @@ export function stableJson(value) {
 
 export function normalizeFile(filePath) {
   const raw = fs.readFileSync(filePath, 'utf8');
-  if (filePath.endsWith('.json')) {
-    const parsed = JSON.parse(raw);
-    return `${stableJson(parsed)}\n`;
-  }
+  if (filePath.endsWith('.json')) return `${stableJson(JSON.parse(raw))}\n`;
   return raw.replace(/\r\n/g, '\n').replace(/\s+$/gm, '').trimEnd() + '\n';
 }
 
@@ -54,23 +50,52 @@ export function getTruthFiles() {
   ].filter((p) => fs.existsSync(p));
 }
 
-export function casPutFromText(text) {
-  ensureDir(CAS_DIR);
-  const hash = sha256Text(text);
-  const dest = path.join(CAS_DIR, `sha256-${hash}`);
-  if (!fs.existsSync(dest)) fs.writeFileSync(dest, text);
-  return { hash, uri: `cas://sha256:${hash}`, path: dest };
+export function ensureNoForbiddenUpdateInCI(updateFlag) {
+  if (process.env.CI === 'true' && process.env[updateFlag] === '1') {
+    throw new Error(`${updateFlag}=1 forbidden when CI=true`);
+  }
 }
 
-export function casVerify(hash) {
-  const dest = path.join(CAS_DIR, `sha256-${hash}`);
-  if (!fs.existsSync(dest)) return { ok: false, reason: 'missing' };
-  const got = sha256File(dest);
-  return { ok: got === hash, reason: got === hash ? 'ok' : `sha_mismatch:${got}` };
+export function ensureNonCIForUpdate(updateFlag) {
+  if (process.env[updateFlag] !== '1') return;
+  if (process.env.CI === 'true') throw new Error(`${updateFlag}=1 requires CI!=true`);
 }
 
-export function ensureNoLock() {
+export function requireNoLock() {
   if (!fs.existsSync(LOCK_PATH)) return;
-  const info = fs.readFileSync(LOCK_PATH, 'utf8');
-  throw new Error(`pipeline lock active: ${info.trim()}`);
+  if (process.env.CLEAR_LOCK === '1' && process.env.CI !== 'true') {
+    fs.rmSync(LOCK_PATH, { force: true });
+    return;
+  }
+  throw new Error(`kill-lock active: ${LOCK_PATH}`);
+}
+
+export function parseCasMd() {
+  const casMdPath = path.join(E66_ROOT, 'CAS.md');
+  if (!fs.existsSync(casMdPath)) return [];
+  const lines = fs.readFileSync(casMdPath, 'utf8').split(/\r?\n/);
+  const rows = [];
+  for (const line of lines) {
+    const m = line.match(/^-\s+(.+)\s+->\s+cas:\/\/sha256:([a-f0-9]{64})$/);
+    if (m) rows.push({ path: m[1], hash: m[2] });
+  }
+  return rows;
+}
+
+export function evidenceFingerprint() {
+  const files = [
+    path.join(E66_ROOT, 'CAS.md'),
+    path.join(E66_ROOT, 'PROVENANCE.md'),
+    path.join(E66_ROOT, 'SHA256SUMS.md')
+  ];
+  const snapshots = fs.existsSync(SNAP_DIR)
+    ? fs.readdirSync(SNAP_DIR).filter((f) => f.endsWith('.snapshot')).sort().map((f) => path.join(SNAP_DIR, f))
+    : [];
+  const ordered = [...files, ...snapshots];
+  const chunks = [];
+  for (const p of ordered) {
+    if (!fs.existsSync(p)) return '';
+    chunks.push(`## ${p}\n${fs.readFileSync(p, 'utf8')}`);
+  }
+  return sha256Text(chunks.join('\n'));
 }

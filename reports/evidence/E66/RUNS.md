@@ -1,6 +1,6 @@
 # E66 RUNS
-- run1_status: 0
-- run2_status: 0
-- run1_fingerprint: 20c0df86b2f01d5a2b43e5472f01d4b8b0c36b61ade44d5a40ec3940d574c06e
-- run2_fingerprint: 20c0df86b2f01d5a2b43e5472f01d4b8b0c36b61ade44d5a40ec3940d574c06e
-- deterministic_match: true
+- ci: false
+- fingerprint: 45b821f5c3cd9fd821189bb7758a71d6846096d79e372a41cee20bedef48b4e0
+- verify:snapshots: PASS
+- verify:cas: PASS
+- verify:provenance: PASS

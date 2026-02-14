@@ -5,6 +5,7 @@
 - [x] DIFFS.md
 - [x] PROVENANCE.md
 - [x] RUNS.md
+- [x] CAS.md
 - [x] CHECKLIST.md
 
 Status: COMPLETE

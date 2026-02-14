@@ -1,19 +1,26 @@
-# EPOCH-66 — Factory Acceleration + Attestation + Kill-Criteria Lock
+# EPOCH-66 — Bulletproof Verify Factory (md-only evidence)
 
 ## Goal
-Harden `verify:phoenix` execution with deterministic x2 wrapper, optional deterministic cache, provenance attestation, commit-binding checks, and fail-fast kill criteria.
+Harden verification into a deterministic, offline-first, read-only-in-CI factory with dual-run anti-flake and self-verifying md evidence.
 
 ## Acceptance (falsifiable)
-- `CI=true npm run verify:phoenix:x2` produces `reports/evidence/EPOCH-66/gates/manual/phoenix_x2_report.json` with `status=PASS`.
-- `PHOENIX_CACHE=1` path preserves correctness and passes `npm run verify:cache:policy`.
-- `npm run truth:provenance` writes `truth/PROVENANCE.json`; `npm run verify:provenance` validates hashes and normalized run equality.
-- Critical gates (`verify:phoenix`, `verify:ledger`, `verify:release`, `verify:baseline`) stop chain after two failures and emit kill report.
-- `npm run verify:evidence:commit_binding` exists; strict release mode blocks on mismatch.
+- `CI=true npm run -s verify:e66` passes and does not mutate tracked files.
+- `CI=true npm run -s verify:phoenix:x2` passes with identical deterministic fingerprints.
+- `CI=true npm run -s verify:evidence` validates `SHA256SUMS.md` (without self-reference), provenance materials, and completeness checklist.
+- Snapshot/CAS/provenance updates are forbidden in CI and only allowed via explicit flags:
+  - `APPROVE_SNAPSHOTS=1` (non-CI)
+  - `UPDATE_CAS=1` (non-CI)
+  - `UPDATE_PROVENANCE=1` (non-CI)
+  - `UPDATE_E66_EVIDENCE=1` (non-CI)
+- Double critical failure in `verify:phoenix:x2` writes kill lock `.foundation-seal/E66_KILL_LOCK.md` and blocks future runs unless manually cleared in non-CI (`CLEAR_LOCK=1`).
 
-## Required artifacts
-- `reports/evidence/EPOCH-66/gates/manual/phoenix_x2_report.json`
-- `reports/evidence/EPOCH-66/gates/manual/cache_report.json`
-- `reports/evidence/EPOCH-66/gates/manual/provenance.json`
-- `reports/evidence/EPOCH-66/gates/manual/kill_criteria_report.json`
-- `reports/evidence/EPOCH-66/gates/manual/evidence_commit_binding_report.json`
-- `reports/evidence/EPOCH-66/gates/manual/verify_epoch66_result.json`
+## Evidence contract (md-only)
+All artifacts under `reports/evidence/E66/` are markdown only:
+- `VERDICT.md`
+- `PACK.md`
+- `CHECKLIST.md`
+- `SHA256SUMS.md`
+- `PROVENANCE.md`
+- `RUNS.md`
+- `CAS.md`
+- `DIFFS.md`

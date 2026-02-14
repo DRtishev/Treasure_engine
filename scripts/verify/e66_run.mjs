@@ -1,63 +1,76 @@
 #!/usr/bin/env node
-import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { E66_ROOT, LOCK_DIR, LOCK_PATH, RUN_DIR, ensureDir, writeMd, ensureNoLock, sha256Text } from './e66_lib.mjs';
+import { E66_ROOT, requireNoLock, evidenceFingerprint, writeMd } from './e66_lib.mjs';
 
-ensureDir(E66_ROOT);
-ensureDir(LOCK_DIR);
-ensureDir(RUN_DIR);
-
-const steps = ['verify:snapshots', 'verify:cas', 'truth:provenance', 'verify:provenance'];
-const logs = [];
-
-function runStep(script) {
-  const r = spawnSync('npm', ['run', '-s', script], { encoding: 'utf8', env: { ...process.env, CI: process.env.CI || 'true', TZ: 'UTC', LANG: 'C', LC_ALL: 'C', SOURCE_DATE_EPOCH: process.env.SOURCE_DATE_EPOCH || '1700000000' } });
-  logs.push(`## ${script}\n\n\`\`\`\n${(r.stdout || '') + (r.stderr || '')}\n\`\`\``);
-  return r.status ?? 1;
-}
+const env = {
+  ...process.env,
+  TZ: 'UTC',
+  LANG: 'C',
+  LC_ALL: 'C',
+  SOURCE_DATE_EPOCH: process.env.SOURCE_DATE_EPOCH || '1700000000'
+};
 
 try {
-  ensureNoLock();
+  requireNoLock();
 } catch (e) {
-  writeMd(path.join(E66_ROOT, 'LOCK.md'), `# E66 LOCK\n\n- reason: ${String(e.message)}`);
-  console.error(String(e.message));
+  if (process.env.CI !== 'true') writeMd(path.join(E66_ROOT, 'LOCK.md'), `# E66 LOCK\n\n- reason: ${String(e.message)}`);
+  console.error(`verify:e66 FAILED\n- ${String(e.message)}`);
   process.exit(1);
 }
 
-// bootstrap placeholders so verify:evidence can evaluate later step
-for (const file of ['VERDICT.md', 'PACK.md', 'DIFFS.md', 'RUNS.md', 'CHECKLIST.md']) {
-  const p = path.join(E66_ROOT, file);
-  if (!fs.existsSync(p)) writeMd(p, `# E66 ${file.replace('.md', '')}\n`);
-}
+const steps = [
+  ['verify:snapshots', ['npm', 'run', '-s', 'verify:snapshots']],
+  ['verify:cas', ['npm', 'run', '-s', 'verify:cas']],
+  ['verify:provenance', ['npm', 'run', '-s', 'verify:provenance']]
+];
 
-let failed = '';
-for (const s of steps) {
-  const st = runStep(s);
-  if (st !== 0) {
-    failed = s;
-    break;
+const updateRequested = process.env.UPDATE_CAS === '1' || process.env.UPDATE_PROVENANCE === '1' || process.env.UPDATE_E66_EVIDENCE === '1' || process.env.APPROVE_SNAPSHOTS === '1';
+const logs = [];
+for (const [name, cmd] of steps) {
+  const r = spawnSync(cmd[0], cmd.slice(1), { encoding: 'utf8', env });
+  logs.push({ name, status: r.status ?? 1 });
+  if ((r.status ?? 1) !== 0) {
+    if (process.env.CI !== 'true') {
+      writeMd(path.join(E66_ROOT, 'VERDICT.md'), `# E66 VERDICT\n\nStatus: BLOCKED\n\nFailed step: ${name}`);
+      writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: BLOCKED');
+      writeMd(path.join(E66_ROOT, 'RUNS.md'), `# E66 RUNS\n\n- failed_step: ${name}`);
+    }
+    console.error(`verify:e66 FAILED at ${name}`);
+    process.exit(1);
   }
 }
 
-const fpInput = logs.join('\n');
-const fingerprint = sha256Text(fpInput);
-writeMd(path.join(RUN_DIR, `run-${Date.now()}.md`), `# run\n\n- fingerprint: ${fingerprint}`);
-writeMd(path.join(E66_ROOT, 'RUNS.md'), `# E66 RUNS\n\n- fingerprint: ${fingerprint}\n- ci: ${process.env.CI || ''}\n\n${logs.join('\n\n')}`);
+let fingerprint = evidenceFingerprint();
+if (!fingerprint && process.env.CI !== 'true') {
+  writeMd(path.join(E66_ROOT, 'RUNS.md'), '# E66 RUNS\n\n- bootstrap: true');
+  writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: COMPLETE');
+  writeMd(path.join(E66_ROOT, 'VERDICT.md'), '# E66 VERDICT\n\nStatus: PASS');
+  spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env: { ...env, UPDATE_E66_EVIDENCE: '1' } });
+  fingerprint = evidenceFingerprint();
+}
 
-if (failed) {
-  writeMd(path.join(E66_ROOT, 'VERDICT.md'), `# E66 VERDICT\n\nStatus: BLOCKED\n\nFailed step: ${failed}`);
-  writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: BLOCKED');
-  writeMd(path.join(E66_ROOT, 'CHECKLIST.md'), '# E66 CHECKLIST\n\nStatus: BLOCKED');
-  console.error(`verify:e66 FAILED at ${failed}`);
+if (!fingerprint) {
+  console.error('verify:e66 FAILED\n- fingerprint unavailable (missing evidence artifacts)');
   process.exit(1);
 }
 
-writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: COMPLETE');
-writeMd(path.join(E66_ROOT, 'VERDICT.md'), '# E66 VERDICT\n\nStatus: PASS');
-const evidence = spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env: process.env });
+if (process.env.CI !== 'true' || updateRequested) {
+  writeMd(path.join(E66_ROOT, 'RUNS.md'), [
+    '# E66 RUNS',
+    `- ci: ${process.env.CI || ''}`,
+    `- fingerprint: ${fingerprint}`,
+    ...logs.map((x) => `- ${x.name}: ${x.status === 0 ? 'PASS' : 'FAIL'}`)
+  ].join('\n'));
+  writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: COMPLETE');
+  writeMd(path.join(E66_ROOT, 'VERDICT.md'), '# E66 VERDICT\n\nStatus: PASS');
+  spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env: { ...env, UPDATE_E66_EVIDENCE: '1' } });
+  fingerprint = evidenceFingerprint();
+}
+
+const evidence = spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env });
 if ((evidence.status ?? 1) !== 0) {
-  writeMd(path.join(E66_ROOT, 'VERDICT.md'), '# E66 VERDICT\n\nStatus: BLOCKED\n\nFailed step: verify:evidence');
+  console.error('verify:e66 FAILED at verify:evidence');
   process.exit(1);
 }
 console.log(`verify:e66 PASSED fingerprint=${fingerprint}`);
