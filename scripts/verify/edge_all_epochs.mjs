@@ -1,11 +1,13 @@
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import path from 'node:path';
+import { ensureRunDir } from '../../core/sys/run_dir.mjs';
 
 const evidenceEpoch = process.env.EVIDENCE_EPOCH || 'EPOCH-EDGE-LOCAL-MEGA';
 const runLabel = process.env.EDGE_RUN_LABEL || 'run';
 const root = process.cwd();
-const base = path.join(root, 'reports/evidence', evidenceEpoch, 'verify_edge');
+const runBase = ensureRunDir('verify-edge');
+const base = path.join(runBase, evidenceEpoch, 'verify_edge');
 fs.mkdirSync(base, { recursive: true });
 const initialTrackedStatus = spawnSync('git', ['status', '--porcelain', '--untracked-files=no'], { encoding: 'utf8' }).stdout;
 
@@ -25,11 +27,11 @@ const requiredByEpoch = {
 const summary = [];
 
 for (const epoch of ['31', '32', '33', '34', '35', '36', '37', '38', '39', '40']) {
-  const epochGateDir = path.join(root, 'reports/evidence', evidenceEpoch, `epoch${epoch}`, 'gates');
+  const epochGateDir = path.join(base, `epoch${epoch}`, 'gates');
   fs.mkdirSync(epochGateDir, { recursive: true });
   const logPath = path.join(epochGateDir, `${runLabel}.log`);
 
-  const result = spawnSync('npm', ['run', `verify:epoch${epoch}`], { encoding: 'utf8', env: { ...process.env, EVIDENCE_EPOCH: evidenceEpoch } });
+  const result = spawnSync('npm', ['run', `verify:epoch${epoch}`], { encoding: 'utf8', env: { ...process.env, TREASURE_RUN_DIR: process.env.TREASURE_RUN_DIR, EVIDENCE_EPOCH: evidenceEpoch } });
   const logText = [
     `command=npm run verify:epoch${epoch}`,
     `exit_code=${result.status ?? 'null'}`,
@@ -51,7 +53,7 @@ for (const epoch of ['31', '32', '33', '34', '35', '36', '37', '38', '39', '40']
 
 const cleanCloneLog = path.join(base, `clean_clone_${runLabel}.log`);
 if (process.env.ENABLE_CLEAN_CLONE === '1') {
-  const cc = spawnSync('npm', ['run', 'verify:clean-clone'], { encoding: 'utf8', env: process.env });
+  const cc = spawnSync('npm', ['run', 'verify:clean-clone'], { encoding: 'utf8', env: { ...process.env, TREASURE_RUN_DIR: process.env.TREASURE_RUN_DIR } });
   fs.writeFileSync(cleanCloneLog, `${cc.stdout || ''}\n${cc.stderr || ''}`);
   summary.push({ epoch: 'clean-clone', status: cc.status === 0 ? 'PASS' : 'FAIL', log: path.relative(root, cleanCloneLog) });
 } else {

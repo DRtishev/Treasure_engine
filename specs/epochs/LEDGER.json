@@ -1,6 +1,6 @@
 {
   "schema_version": "2.0.0",
-  "updated_at": "2026-02-13T15:04:34.938Z",
+  "updated_at": "2026-02-14T13:31:44.416Z",
   "epochs": {
     "1": {
       "id": "EPOCH-01",
@@ -575,8 +575,17 @@
       "status": "PASS",
       "commit_sha": "0e81ebfd27d0ed7bfc4db48b94768a8d098053cc",
       "evidence_root": "reports/evidence/EPOCH-64/",
-      "gate_owner": "verify:phoenix",
+      "gate_owner": "docs",
       "notes": "Foundation seal complete: required gates passed x2 in CI=true with strict release verification."
+    },
+    "65": {
+      "id": "EPOCH-65",
+      "stage": "DONE",
+      "status": "PASS",
+      "commit_sha": "0e81ebfd27d0ed7bfc4db48b94768a8d098053cc",
+      "evidence_root": "reports/evidence/EPOCH-65/",
+      "gate_owner": "verify:phoenix",
+      "notes": "E65 closeout complete: verify:phoenix passed x2 with run-scoped dirs; release/baseline checks passed."
     }
   }
 }

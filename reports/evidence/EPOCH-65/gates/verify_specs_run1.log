@@ -1,0 +1,120 @@
+
+> treasure-engine@1.0.0 verify:specs
+> npm run verify:ssot && node scripts/verify/specs_check.mjs && npm run verify:wow && npm run verify:kb && npm run verify:passports && npm run verify:derived && npm run verify:docs && npm run verify:reachability && npm run verify:properties && npm run verify:ledger && npm run verify:repo
+
+
+> treasure-engine@1.0.0 verify:ssot
+> node scripts/verify/ssot_check.mjs
+
+verify:ssot PASSED (epochs=1..64)
+verify:specs PASSED
+Validated 72 required files in /workspace/Treasure_engine
+
+> treasure-engine@1.0.0 verify:wow
+> node scripts/verify/wow_specs_check.mjs
+
+verify:wow PASSED
+{
+  "total": 38,
+  "counts": {
+    "SHIPPED": 10,
+    "PROPOSED": 25,
+    "STAGED": 3
+  }
+}
+
+> treasure-engine@1.0.0 verify:kb
+> node scripts/verify/kb_check.mjs
+
+verify:kb PASSED
+{
+  "files": 7
+}
+
+> treasure-engine@1.0.0 verify:passports
+> node scripts/verify/passports_check.mjs
+
+verify:passports PASSED (10 shipped WOW passports)
+
+> treasure-engine@1.0.0 verify:derived
+> node scripts/verify/derived_docs_check.mjs
+
+verify:derived PASSED
+{
+  "files": [
+    {
+      "file": "docs/WOW_CATALOG.md",
+      "sha256": "f0f584bfb17fe57775336422a823a28e74bda2f25b50c4a3bb33695a5bba243c"
+    },
+    {
+      "file": "docs/STAGE2_IMPLEMENTATION_MATRIX.md",
+      "sha256": "9ed3f9696e2caa0882f70fa78bf89986a236076ed8620edccb9cf255cfe6a924"
+    },
+    {
+      "file": "kb/INDEX.md",
+      "sha256": "6c9044373d2ba9cd798abb5ab6bf2f19990840ebcf0a6db7ec47b7b9bb70cd04"
+    }
+  ]
+}
+
+> treasure-engine@1.0.0 verify:docs
+> node scripts/verify/docs_links_check.mjs
+
+verify:docs PASSED
+{
+  "checked_files": 149,
+  "broken_links": 0
+}
+
+> treasure-engine@1.0.0 verify:reachability
+> node scripts/verify/reachability.mjs
+
+verify:reachability PASSED
+{
+  "active_unreachable_count": 0,
+  "reachable_modules": 220
+}
+
+> treasure-engine@1.0.0 verify:properties
+> node scripts/verify/properties.mjs
+
+verify:properties PASSED
+{
+  "total_properties": 35,
+  "fingerprint": "7c98a1bfd170802135a5b1343cdd7f2ac52eb2381c3137cb3105826bfdd852fa"
+}
+
+> treasure-engine@1.0.0 verify:ledger
+> npm run verify:ledger:schema && node scripts/verify/ledger_check.mjs
+
+
+> treasure-engine@1.0.0 verify:ledger:schema
+> node scripts/verify/ledger_schema_strict.mjs
+
+verify:ledger:schema PASSED
+verify:ledger PASSED
+
+> treasure-engine@1.0.0 verify:repo
+> node scripts/verify/repo_sanity_check.mjs && npm run verify:manifest && npm run verify:no_placeholders && npm run verify:docs:truth && npm run verify:determinism:strict
+
+verify:repo PASSED
+
+> treasure-engine@1.0.0 verify:manifest
+> node scripts/verify/repo_manifest.mjs
+
+verify:manifest PASSED
+
+> treasure-engine@1.0.0 verify:no_placeholders
+> node scripts/verify/no_placeholders_check.mjs
+
+verify:no_placeholders PASSED
+
+> treasure-engine@1.0.0 verify:docs:truth
+> node scripts/verify/docs_truth_check.mjs
+
+verify:docs:truth PASSED
+
+> treasure-engine@1.0.0 verify:determinism:strict
+> node scripts/verify/determinism.mjs
+
+verify:determinism:strict PASSED

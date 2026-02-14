@@ -242,3 +242,8 @@
 
 - `specs/epochs/EPOCH-63.md`
 - EPOCH-63: `verify:release` + `verify:release:chain` (strict release truth).
+
+- `specs/epochs/EPOCH-65.md`
+- EPOCH-65: `verify:baseline` + `verify:release:repro` (optional) + run-scope isolation hardening.
+
+- EPOCH-65 closeout: `verify:phoenix` x2 PASS with run-scoped isolation; promoted to DONE/PASS.

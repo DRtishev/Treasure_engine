@@ -1,0 +1,10 @@
+{
+  "epoch": "EPOCH-65",
+  "status": "PASS",
+  "verify_phoenix_run1": "PASS",
+  "verify_phoenix_run2": "PASS",
+  "baseline": "PASS",
+  "release_repro": "PASS",
+  "run_scope_isolation": "PASS",
+  "evidence_root": "reports/evidence/EPOCH-65/"
+}

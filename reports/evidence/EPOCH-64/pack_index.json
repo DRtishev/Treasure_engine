@@ -1,28 +1,29 @@
 {
-  "epoch": "EPOCH-64",
-  "generated_at": "2026-02-14T11:32:41.226Z",
-  "files": [
-    "gates/logs/00_manifest_update.log",
-    "gates/logs/00_npm_ci.log",
-    "gates/logs/01_verify_repo_run1.log",
-    "gates/logs/02_verify_repo_run2.log",
-    "gates/logs/03_verify_specs_run1.log",
-    "gates/logs/04_verify_specs_run2.log",
-    "gates/logs/05_verify_docs_run1.log",
-    "gates/logs/06_verify_docs_run2.log",
-    "gates/logs/07_verify_ledger_run1.log",
-    "gates/logs/08_verify_ledger_run2.log",
-    "gates/logs/09_verify_edge_run1.log",
-    "gates/logs/10_verify_edge_run2.log",
-    "gates/logs/11_verify_treasure_run1.log",
-    "gates/logs/12_verify_treasure_run2.log",
-    "gates/logs/13_verify_phoenix_run1.log",
-    "gates/logs/14_verify_phoenix_run2.log",
-    "gates/logs/15_release_build.log",
-    "gates/logs/16_verify_release_run1.log",
-    "gates/logs/17_verify_release_run2.log",
-    "gates/manual/docs_truth_report.json",
-    "gates/manual/no_placeholders_report.json",
-    "gates/manual/verify_epoch64_result.json"
-  ]
+  "epoch_id": "EPOCH-64",
+  "sha": "0c27404333d33c0e4e540b62025553c1043a9846",
+  "node": "v20.19.6",
+  "npm": "11.4.2",
+  "date": "2026-02-14T12:31:13.825Z",
+  "gate_runs": [],
+  "artifacts": [
+    {
+      "path": "SHA256SUMS.EVIDENCE.txt",
+      "sha256": "cc9055f0b05eda8af0c362242425803a5fb79b4c7f601979af08d874cb044330"
+    },
+    {
+      "path": "SHA256SUMS.EXPORT.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "SHA256SUMS.SOURCE.txt",
+      "sha256": "4be11016c2db97f42ba1de26e8f80dea8117c7b215eb58df791909922b7c5a4d"
+    }
+  ],
+  "hashes": {
+    "PREFLIGHT.log": "c28f18bec614c787e48fabb0dcf7b5e33a1097a88bf9c67a34fb795080a182a4",
+    "COMMANDS.log": "9d77207a8ca853b23c5496efae97b293cca582f8a9cce30aa693c970c66ceb85",
+    "SNAPSHOT.md": "02fd55e2c091acf531c31753ab16bf87d01d00fc47e373207e697dcf04a160f1",
+    "SUMMARY.md": "c65368eb3f5c2bbb4e1ca7cb9693c91a46b4ab24123f345a826438963a973039",
+    "VERDICT.md": "05776af29b2876a70d374ef790b5e70178bab6e5f86d3fe15d537a49a51486e4"
+  }
 }

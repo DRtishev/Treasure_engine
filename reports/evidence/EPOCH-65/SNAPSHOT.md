@@ -1,0 +1,39 @@
+# EPOCH-65 SNAPSHOT
+- evidence_root: `reports/evidence/EPOCH-65/`
+- gate_logs: 33
+- failing_gate_logs: 0
+- unknown_gate_logs: 4
+- gate_runs:
+  - `gates/npm_ci.log` [UNKNOWN] `fce38ce057893af0195475e2ffdecc10223d758ab530b454847f09c879553b1e`
+  - `gates/npm_ci_closeout.log` [UNKNOWN] `fce38ce057893af0195475e2ffdecc10223d758ab530b454847f09c879553b1e`
+  - `gates/release_build.log` [UNKNOWN] `b30a6268f9b4ada2d5b1652abec707abb7f5487a4f0abdd8c86f6b0018929132`
+  - `gates/release_build_closeout.log` [UNKNOWN] `922b0f77b62e78a45ae50b3cd0b416b819c0983d16ee85d1f60add5065930507`
+  - `gates/verify_baseline_closeout.log` [PASS] `782c6edccfc51c9b9513845190d219bb401668782c73824e94830ada7d40755d`
+  - `gates/verify_baseline_closeout_update.log` [PASS] `5d71a5049fc77a49bfb9ac6f662649af4d157ae4a1e185d0336f1fd40a964f16`
+  - `gates/verify_baseline_run1.log` [PASS] `782c6edccfc51c9b9513845190d219bb401668782c73824e94830ada7d40755d`
+  - `gates/verify_baseline_run2.log` [PASS] `782c6edccfc51c9b9513845190d219bb401668782c73824e94830ada7d40755d`
+  - `gates/verify_baseline_update.log` [PASS] `5d71a5049fc77a49bfb9ac6f662649af4d157ae4a1e185d0336f1fd40a964f16`
+  - `gates/verify_baseline_update_closeout.log` [PASS] `5d71a5049fc77a49bfb9ac6f662649af4d157ae4a1e185d0336f1fd40a964f16`
+  - `gates/verify_docs_run1.log` [PASS] `5007b1d50c709bc504b95ccc2926a5a8b8905572119306b5d9e95f2eedcd381e`
+  - `gates/verify_docs_run2.log` [PASS] `5007b1d50c709bc504b95ccc2926a5a8b8905572119306b5d9e95f2eedcd381e`
+  - `gates/verify_edge_run1.log` [PASS] `b36bc502570d15a989c8ccf567f734e83102ae28a23bca1a9ec00b7336ff8fb4`
+  - `gates/verify_edge_run2.log` [PASS] `b36bc502570d15a989c8ccf567f734e83102ae28a23bca1a9ec00b7336ff8fb4`
+  - `gates/verify_ledger_closeout_run1.log` [PASS] `21a9ce58cbc3bacad0feaf468c89f87f01a3a9afca8762a3872b366833e855e9`
+  - `gates/verify_ledger_closeout_run2.log` [PASS] `21a9ce58cbc3bacad0feaf468c89f87f01a3a9afca8762a3872b366833e855e9`
+  - `gates/verify_ledger_run1.log` [PASS] `21a9ce58cbc3bacad0feaf468c89f87f01a3a9afca8762a3872b366833e855e9`
+  - `gates/verify_ledger_run2.log` [PASS] `21a9ce58cbc3bacad0feaf468c89f87f01a3a9afca8762a3872b366833e855e9`
+  - `gates/verify_phoenix_run1.log` [PASS] `eb91bf073bf3a010d1d54d00feac855f12e51f4d157bf6e42a8bb1686137909a`
+  - `gates/verify_phoenix_run2.log` [PASS] `c5be5d11f117cea84bbb55807c45981a39ab652a2f5c057dabc203ce33f8f3f2`
+  - `gates/verify_release_closeout_run1.log` [PASS] `13a6a31d4f435c5982615224b1e3985bc0ede4dbf9a1820628e2c4c5ac3a9f95`
+  - `gates/verify_release_closeout_run2.log` [PASS] `13a6a31d4f435c5982615224b1e3985bc0ede4dbf9a1820628e2c4c5ac3a9f95`
+  - `gates/verify_release_repro.log` [PASS] `75466bbeda999434f4a4766a15de414744cbb81aa247d36e22e644effc3ae299`
+  - `gates/verify_release_run1.log` [PASS] `13a6a31d4f435c5982615224b1e3985bc0ede4dbf9a1820628e2c4c5ac3a9f95`
+  - `gates/verify_release_run2.log` [PASS] `13a6a31d4f435c5982615224b1e3985bc0ede4dbf9a1820628e2c4c5ac3a9f95`
+  - `gates/verify_repo_closeout.log` [PASS] `8ebbb19fbc00a86fc0ba9956b4954bfac444a9e17194e2c0b60235f69f620378`
+  - `gates/verify_repo_run1.log` [PASS] `8ebbb19fbc00a86fc0ba9956b4954bfac444a9e17194e2c0b60235f69f620378`
+  - `gates/verify_repo_run2.log` [PASS] `8ebbb19fbc00a86fc0ba9956b4954bfac444a9e17194e2c0b60235f69f620378`
+  - `gates/verify_specs_closeout.log` [PASS] `8359569cd958d93eb43c7f3b23c7c04be86dbaacd3d355af4c60fb364c4278af`
+  - `gates/verify_specs_run1.log` [PASS] `f7151e4f23bb98cd3b5db89235ab8569e7a146c6bad841e36b59c58e43e83b9f`
+  - `gates/verify_specs_run2.log` [PASS] `f7151e4f23bb98cd3b5db89235ab8569e7a146c6bad841e36b59c58e43e83b9f`
+  - `gates/verify_treasure_run1.log` [PASS] `e286eb1b41a3423841d7fa47fd50607c2eeb37344c5e9072c60778ac2a6741bb`
+  - `gates/verify_treasure_run2.log` [PASS] `e286eb1b41a3423841d7fa47fd50607c2eeb37344c5e9072c60778ac2a6741bb`

@@ -1,0 +1,5 @@
+
+> treasure-engine@1.0.0 verify:release:repro
+> node scripts/verify/release_repro_check.mjs
+
+verify:release:repro PASSED

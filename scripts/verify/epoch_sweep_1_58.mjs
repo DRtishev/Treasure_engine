@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { ensureRunDir } from '../../core/sys/run_dir.mjs';
 
 const ledger = JSON.parse(fs.readFileSync('specs/epochs/LEDGER.json', 'utf8')).epochs;
 const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
@@ -39,7 +40,7 @@ for (let i = 1; i <= 58; i += 1) {
   report.done.push({ id, evidence_root: row.evidence_root, verifier: verifierExists ? scriptName : 'fallback' });
 }
 
-const outDir = path.resolve('reports/evidence/EPOCH-59/gates/manual');
+const outDir = path.join(ensureRunDir('verify-epochs-sweep'), 'gates', 'manual');
 fs.mkdirSync(outDir, { recursive: true });
 const outPath = path.join(outDir, 'epoch_sweep_report.json');
 fs.writeFileSync(outPath, `${JSON.stringify({ ok: errors.length === 0, errors, report }, null, 2)}\n`);
