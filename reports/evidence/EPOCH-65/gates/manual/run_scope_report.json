@@ -1,11 +1,13 @@
 {
   "treasure_run_dir_supported": true,
+  "phoenix_run1": "PASS",
+  "phoenix_run2": "PASS",
   "scopes": [
     "verify-epochs-sweep",
     "verify-epochs-freeze",
     "verify-edge",
     "verify-release-repro"
   ],
-  "status": "PARTIAL",
-  "note": "Run-scoped outputs were emitted under temporary TREASURE_RUN_DIR paths; full phoenix x2 was interrupted before completion."
+  "status": "PASS",
+  "note": "Both phoenix runs used fresh TREASURE_RUN_DIR and completed without canonical evidence mutation."
 }

@@ -1,8 +1,10 @@
 {
   "epoch": "EPOCH-65",
-  "status": "BLOCKED",
+  "status": "PASS",
+  "verify_phoenix_run1": "PASS",
+  "verify_phoenix_run2": "PASS",
   "baseline": "PASS",
   "release_repro": "PASS",
-  "run_scope_isolation": "PARTIAL",
-  "blocking_reason": "Required verify:phoenix x2 gate run did not complete in this cycle."
+  "run_scope_isolation": "PASS",
+  "evidence_root": "reports/evidence/EPOCH-65/"
 }

@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-02-14T12:36:14.958Z",
+  "generated_at": "2026-02-14T13:32:26.511Z",
   "files": [
     {
       "path": ".gitignore",
@@ -899,6 +899,13 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "core/sys/run_dir.mjs",
+      "sha256": "b8602ada5736b8b7ffb17ebf9d9b8ba03cf2eb0130d6951aee512a5ae2d52e0f",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "core/testing/chaos_engineer.mjs",
       "sha256": "936f2cae1a1adab26c9c3f863b1f93946422e97eb93a33ea6c5e7c837a782daa",
       "classification": "ACTIVE",
@@ -1272,6 +1279,13 @@
     {
       "path": "docs/NEXT_ACTIONS_ROADMAP.md",
       "sha256": "c6ff16486dc0a42d5e5ba267a940e0b4787b7f27543be3e770ec2c59aa1ba812",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "docs/OPERATOR_DOCTRINE_RU.md",
+      "sha256": "eb8ebc5333be241c1023b10668c0a6ed4b0b1cd9eae0a85d9a82f3c05d8624fb",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -12148,8 +12162,64 @@
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
+      "path": "reports/evidence/EPOCH-64/COMMANDS.log",
+      "sha256": "9d77207a8ca853b23c5496efae97b293cca582f8a9cce30aa693c970c66ceb85",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-64/PREFLIGHT.log",
+      "sha256": "c28f18bec614c787e48fabb0dcf7b5e33a1097a88bf9c67a34fb795080a182a4",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
       "path": "reports/evidence/EPOCH-64/SHA256SUMS.EVIDENCE",
       "sha256": "a635be9785fcb9df0f97eb373e68b34c920a788a46b22583fb97af3769cf520e",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-64/SHA256SUMS.EVIDENCE.txt",
+      "sha256": "cc9055f0b05eda8af0c362242425803a5fb79b4c7f601979af08d874cb044330",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-64/SHA256SUMS.EXPORT.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-64/SHA256SUMS.SOURCE.txt",
+      "sha256": "4be11016c2db97f42ba1de26e8f80dea8117c7b215eb58df791909922b7c5a4d",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-64/SNAPSHOT.md",
+      "sha256": "02fd55e2c091acf531c31753ab16bf87d01d00fc47e373207e697dcf04a160f1",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-64/SUMMARY.md",
+      "sha256": "c65368eb3f5c2bbb4e1ca7cb9693c91a46b4ab24123f345a826438963a973039",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-64/VERDICT.md",
+      "sha256": "05776af29b2876a70d374ef790b5e70178bab6e5f86d3fe15d537a49a51486e4",
       "classification": "GENERATED",
       "owner_epoch": "EPOCH-64",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -12309,10 +12379,262 @@
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
+      "path": "reports/evidence/EPOCH-64/manifests/check_evidence.log",
+      "sha256": "9069e7a9f4f13fa1a9779383cd04c14a69f7751c4f95382ea340ce023f009f44",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-64/manifests/check_export.log",
+      "sha256": "9ad741fa146ec34fb087fed06acb215f5e2351e7e8e05ad7cf7fc2ba520f1e5e",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-64/manifests/check_source.log",
+      "sha256": "5ce689fc25dd3d1a77e578ccdf43569131dc458647a3000c377e692846dd948b",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
       "path": "reports/evidence/EPOCH-64/pack_index.json",
       "sha256": "8ea888f3fea01407a00c1373b3035b506594e6cf5c8bda6bea93e3a264d9071c",
       "classification": "GENERATED",
       "owner_epoch": "EPOCH-64",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/COMMANDS.log",
+      "sha256": "9d77207a8ca853b23c5496efae97b293cca582f8a9cce30aa693c970c66ceb85",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/PREFLIGHT.log",
+      "sha256": "16bc37bd04fdc282c896fa5020949aaf397a2b7e1f60e01af859485c9f077860",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/SHA256SUMS.EVIDENCE",
+      "sha256": "8e529bc1226aced6ad8cef7c0f6e212e1175e6beeedba9d903cea270de263bff",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/SHA256SUMS.EVIDENCE.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/SNAPSHOT.md",
+      "sha256": "897c0d2314ecf8d1c5cbd1fa7228b3588cc3942b40a17250972645336b85ae21",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/SUMMARY.md",
+      "sha256": "f110b978e30873bcce6e4f086b54375905b4d86708788d6e284aeb15ce698303",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/VERDICT.md",
+      "sha256": "51a4d2f9d3dfd5a8819dc9d96e422c73040fe2cfffe99bb4a8f3f3e34879e551",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/manual/baseline.json",
+      "sha256": "3a4bbc67c66ea32178b104359698097492c3fa2ac3e4aa18a6abfc8831cbd1a5",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/manual/release_repro_report.json",
+      "sha256": "6b1b588f17ab94783f25cf702c40c9338c9f87aab8f8406789fbd4841cf05904",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/manual/run_scope_report.json",
+      "sha256": "e5edf695dd4e2e86cf3056e37cf2bad931a08cfb5a9faf120978f8af7bf5ca20",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/manual/verify_epoch65_result.json",
+      "sha256": "4c4a38796415494d930555f289e855a469e79bba34abb4a9d3c946c8496160a3",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/npm_ci.log",
+      "sha256": "fce38ce057893af0195475e2ffdecc10223d758ab530b454847f09c879553b1e",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/release_build.log",
+      "sha256": "b30a6268f9b4ada2d5b1652abec707abb7f5487a4f0abdd8c86f6b0018929132",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_baseline_run1.log",
+      "sha256": "782c6edccfc51c9b9513845190d219bb401668782c73824e94830ada7d40755d",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_baseline_run2.log",
+      "sha256": "782c6edccfc51c9b9513845190d219bb401668782c73824e94830ada7d40755d",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_baseline_update.log",
+      "sha256": "5d71a5049fc77a49bfb9ac6f662649af4d157ae4a1e185d0336f1fd40a964f16",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_docs_run1.log",
+      "sha256": "5007b1d50c709bc504b95ccc2926a5a8b8905572119306b5d9e95f2eedcd381e",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_docs_run2.log",
+      "sha256": "5007b1d50c709bc504b95ccc2926a5a8b8905572119306b5d9e95f2eedcd381e",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_edge_run1.log",
+      "sha256": "b36bc502570d15a989c8ccf567f734e83102ae28a23bca1a9ec00b7336ff8fb4",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_edge_run2.log",
+      "sha256": "b36bc502570d15a989c8ccf567f734e83102ae28a23bca1a9ec00b7336ff8fb4",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_ledger_run1.log",
+      "sha256": "21a9ce58cbc3bacad0feaf468c89f87f01a3a9afca8762a3872b366833e855e9",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_ledger_run2.log",
+      "sha256": "21a9ce58cbc3bacad0feaf468c89f87f01a3a9afca8762a3872b366833e855e9",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_phoenix_run1.log",
+      "sha256": "eb91bf073bf3a010d1d54d00feac855f12e51f4d157bf6e42a8bb1686137909a",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_release_repro.log",
+      "sha256": "75466bbeda999434f4a4766a15de414744cbb81aa247d36e22e644effc3ae299",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_release_run1.log",
+      "sha256": "13a6a31d4f435c5982615224b1e3985bc0ede4dbf9a1820628e2c4c5ac3a9f95",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_release_run2.log",
+      "sha256": "13a6a31d4f435c5982615224b1e3985bc0ede4dbf9a1820628e2c4c5ac3a9f95",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_repo_run1.log",
+      "sha256": "8ebbb19fbc00a86fc0ba9956b4954bfac444a9e17194e2c0b60235f69f620378",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_repo_run2.log",
+      "sha256": "8ebbb19fbc00a86fc0ba9956b4954bfac444a9e17194e2c0b60235f69f620378",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_specs_run1.log",
+      "sha256": "f7151e4f23bb98cd3b5db89235ab8569e7a146c6bad841e36b59c58e43e83b9f",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_specs_run2.log",
+      "sha256": "f7151e4f23bb98cd3b5db89235ab8569e7a146c6bad841e36b59c58e43e83b9f",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_treasure_run1.log",
+      "sha256": "e286eb1b41a3423841d7fa47fd50607c2eeb37344c5e9072c60778ac2a6741bb",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/gates/verify_treasure_run2.log",
+      "sha256": "e286eb1b41a3423841d7fa47fd50607c2eeb37344c5e9072c60778ac2a6741bb",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EPOCH-65/pack_index.json",
+      "sha256": "778ecdd4103edb478c8ee0089f412503b2ebcb3d27fcb69b875d55ceb39a785c",
+      "classification": "GENERATED",
+      "owner_epoch": "EPOCH-65",
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
@@ -22761,7 +23083,7 @@
     },
     {
       "path": "reports/truth/docs_truth_report.json",
-      "sha256": "e20f17e38d38c92589fd2dd9cd4e1ffe358f21826c243f50807cd656f07af781",
+      "sha256": "4f8f01616560d2e9662488ff64d17f8bccc2e5ca0f8853f4dc28ce538172fa22",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -22775,7 +23097,7 @@
     },
     {
       "path": "reports/truth/no_placeholders_report.json",
-      "sha256": "e09cdb8b33d80d6f98d7587a174e35197397985fdf09f5326228ef077a093b9c",
+      "sha256": "e5d8cd6117885b76943be705f635ec2b063795f81b81662911115822773fa9cb",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -22852,7 +23174,7 @@
     },
     {
       "path": "reports/truth/passports_manifest.json",
-      "sha256": "8da39611cd1f5ecc4747851d6eef0ba0475d1a481406284446d3535b44227439",
+      "sha256": "06a84d36a6cebae65d20bb3abfb302bfcddeab3d371c3331d200eb2f2ae6f814",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -22866,14 +23188,21 @@
     },
     {
       "path": "reports/truth/reachability_report.json",
-      "sha256": "b4662656a3adadf5bb87ffa5d478ada3030d743cc59beb199c91ec3ecda412fc",
+      "sha256": "47eff33096625559c47108e30321634ad0f7f86ef3b8704785de39017979eee6",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
       "path": "reports/truth/release_chain_report.json",
-      "sha256": "94437c9e1a32dedf3176b6bf839a50b0dd59552e9c0af4df069e5bd35d8e3faa",
+      "sha256": "9ee6c74aa356ac6786022ce2df3d565a54715a15e58e5c0b169cee46fa08187c",
+      "classification": "GENERATED",
+      "owner_epoch": "prehistory",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/truth/release_repro_report.json",
+      "sha256": "9fd0733d23d4222be28abc8cd1fb4c38717e9b987b54ba25e17f887e26a4e81e",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -23096,6 +23425,13 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "scripts/truth/baseline_builder.mjs",
+      "sha256": "643e25a0dc9f131aea0db830ec320e93735484d43a4d905bd8f4cb907a3b2b4d",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "scripts/truth/derived_views.mjs",
       "sha256": "779732d9e6e204b47890eb94eab2e7b6040781fc7d8b847b8943d59fe9bc1bef",
       "classification": "ACTIVE",
@@ -23154,6 +23490,13 @@
     {
       "path": "scripts/verify/agent_smoke.mjs",
       "sha256": "c1111e764ecb57b26689d2827ea7559825dd9b656727c10a794d85ff8cc8a712",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/verify/baseline_check.mjs",
+      "sha256": "7181db13d596c2413e5b9d4347025b4809b97ddefd3afef64f808ba2c9ca18c8",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -23728,6 +24071,13 @@
     {
       "path": "scripts/verify/release_governor_check.mjs",
       "sha256": "8dbce486f386f07990ac147ed589f113d63193b4156f8997533f0863b68cca9b",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/verify/release_repro_check.mjs",
+      "sha256": "cbbe3bce53b329db5313c461a4ac5e042993f4ce75b32036a6e8b0e719313093",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -24496,6 +24846,13 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "specs/epochs/EPOCH-65.md",
+      "sha256": "3e4e034535fffc65da689ee0cddb2da24cdffca021615ed66b8b9aea894a27d4",
+      "classification": "ACTIVE",
+      "owner_epoch": "EPOCH-65",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "specs/epochs/EPOCH_DEPENDENCY_GRAPH.md",
       "sha256": "8f70105531160d551a5067c5828ddbeabfd0f0d6f7bbd0a045de53b0cd8a48b1",
       "classification": "ACTIVE",
@@ -24504,14 +24861,14 @@
     },
     {
       "path": "specs/epochs/INDEX.md",
-      "sha256": "83f48ba74a316a025b613517b6f42fdb6c82f1583837426f5a7f7666a624ad28",
+      "sha256": "bb33a426e6fdd1d9134e201ce0c0af42121f0e0fb4437f8ff501ec916551d032",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
     },
     {
       "path": "specs/epochs/LEDGER.json",
-      "sha256": "3a08ccb1938b09c6ac69847b87f301f78a03766e7b88e8d0b2d88ed4967282d7",
+      "sha256": "be89c08758208a860a1b7f2b0fc3c9b30c6da20c387c1523174778ee810f420c",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -24778,6 +25135,13 @@
     {
       "path": "tests/vectors/overfit/epoch43_small_dataset.json",
       "sha256": "539f038c300ecf9bd31bdd895475fddd88269fc5584d2ee4270b796522d034aa",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "truth/BASELINE.json",
+      "sha256": "3a4bbc67c66ea32178b104359698097492c3fa2ac3e4aa18a6abfc8831cbd1a5",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."

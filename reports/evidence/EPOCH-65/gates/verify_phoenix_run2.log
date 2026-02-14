@@ -171,7 +171,7 @@ verify:ledger PASSED
 > treasure-engine@1.0.0 verify:epochs:sweep
 > node scripts/verify/epoch_sweep_1_58.mjs
 
-verify:epochs:sweep PASSED report=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-epochs-sweep/gates/manual/epoch_sweep_report.json
+verify:epochs:sweep PASSED report=../../tmp/treasure-phoenix-run2-oe2jz3/verify-epochs-sweep/gates/manual/epoch_sweep_report.json
 
 > treasure-engine@1.0.0 verify:epochs:freeze
 > node scripts/verify/epoch_freeze_regression.mjs
@@ -356,45 +356,45 @@ pack:verify PASSED for EPOCH-28
 verify:epoch28 PASSED (fallback deterministic gate)
 freeze PASS EPOCH-28
 pack:verify PASSED for EPOCH-29
-[run_with_context] gate=epoch29 seed=12345 repeat=default_3
+[run_with_context] gate=epoch29 seed=12345 repeat=default_4
 [run_with_context] run_id=f6ac7cc209d5b8d9
-[run_with_context] run_dir=reports/runs/epoch29/12345/default_3/f6ac7cc209d5b8d9
+[run_with_context] run_dir=reports/runs/epoch29/12345/default_4/f6ac7cc209d5b8d9
 ✓ walk-forward generated multiple folds
 ✓ leakage sentinel: training window never uses future validation data
-WROTE: reports/runs/epoch29/12345/default_3/f6ac7cc209d5b8d9/epoch29_walkforward_manifest.json
+WROTE: reports/runs/epoch29/12345/default_4/f6ac7cc209d5b8d9/epoch29_walkforward_manifest.json
 freeze PASS EPOCH-29
 pack:verify PASSED for EPOCH-30
 verify:epoch30 PASSED (fallback deterministic gate)
 freeze PASS EPOCH-30
 pack:verify PASSED for EPOCH-31
-PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-edge/EPOCH-FREEZE-31/verify_edge
+PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run2-oe2jz3/verify-edge/EPOCH-FREEZE-31/verify_edge
 freeze PASS EPOCH-31
 pack:verify PASSED for EPOCH-32
-PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-edge/EPOCH-FREEZE-32/verify_edge
+PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run2-oe2jz3/verify-edge/EPOCH-FREEZE-32/verify_edge
 freeze PASS EPOCH-32
 pack:verify PASSED for EPOCH-33
-PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-edge/EPOCH-FREEZE-33/verify_edge
+PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run2-oe2jz3/verify-edge/EPOCH-FREEZE-33/verify_edge
 freeze PASS EPOCH-33
 pack:verify PASSED for EPOCH-34
-PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-edge/EPOCH-FREEZE-34/verify_edge
+PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run2-oe2jz3/verify-edge/EPOCH-FREEZE-34/verify_edge
 freeze PASS EPOCH-34
 pack:verify PASSED for EPOCH-35
-PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-edge/EPOCH-FREEZE-35/verify_edge
+PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run2-oe2jz3/verify-edge/EPOCH-FREEZE-35/verify_edge
 freeze PASS EPOCH-35
 pack:verify PASSED for EPOCH-36
-PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-edge/EPOCH-FREEZE-36/verify_edge
+PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run2-oe2jz3/verify-edge/EPOCH-FREEZE-36/verify_edge
 freeze PASS EPOCH-36
 pack:verify PASSED for EPOCH-37
-PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-edge/EPOCH-FREEZE-37/verify_edge
+PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run2-oe2jz3/verify-edge/EPOCH-FREEZE-37/verify_edge
 freeze PASS EPOCH-37
 pack:verify PASSED for EPOCH-38
-PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-edge/EPOCH-FREEZE-38/verify_edge
+PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run2-oe2jz3/verify-edge/EPOCH-FREEZE-38/verify_edge
 freeze PASS EPOCH-38
 pack:verify PASSED for EPOCH-39
-PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-edge/EPOCH-FREEZE-39/verify_edge
+PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run2-oe2jz3/verify-edge/EPOCH-FREEZE-39/verify_edge
 freeze PASS EPOCH-39
 pack:verify PASSED for EPOCH-40
-PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-edge/EPOCH-FREEZE-40/verify_edge
+PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run2-oe2jz3/verify-edge/EPOCH-FREEZE-40/verify_edge
 freeze PASS EPOCH-40
 pack:verify PASSED for EPOCH-41
 PASS verify:epoch41 evidence=.tmp/epoch_freeze/EPOCH-FREEZE-41
@@ -562,7 +562,7 @@ verify:epochs:freeze PASSED (epochs=48)
 > treasure-engine@1.0.0 verify:edge
 > node scripts/verify/edge_all_epochs.mjs
 
-PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run1d-Ooz6Ne/verify-edge/EPOCH-EDGE-LOCAL-MEGA/verify_edge
+PASS verify:edge run=run evidence=../../tmp/treasure-phoenix-run2-oe2jz3/verify-edge/EPOCH-EDGE-LOCAL-MEGA/verify_edge
 
 > treasure-engine@1.0.0 verify:treasure
 > node scripts/profit/__tests__/treasure_engine.test.mjs && npm run verify:golden

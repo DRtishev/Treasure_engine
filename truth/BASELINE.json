@@ -2,12 +2,12 @@
   "node_version": "v20.19.6",
   "npm_version": "11.4.2",
   "release_hashes": {
-    "final_validated_zip_sha256": "48ca5e3f1314a4f1fe3858905686a7d83a74d54a357ff121c7299597104792d9",
-    "evidence_chain_tar_sha256": "e8ecd688b7d57f86b982505d83b7920bd32963e6a63b2d920ca2e54b9c29c6b7"
+    "final_validated_zip_sha256": "651e10a5ca50d6117746cb70da810783ff92fa0872ba8736dd2bdbb93bf6c60c",
+    "evidence_chain_tar_sha256": "e2c7d8d1fc87b613c04cb827800f9001fdb9fd461b9a76ae288e955a9270b04b"
   },
   "counts": {
-    "done_epochs": 48,
-    "allowlist_size": 144
+    "done_epochs": 49,
+    "allowlist_size": 147
   },
   "schema_versions": {
     "ledger": "2.0.0",
@@ -15,5 +15,5 @@
     "manifest": "1.0.0",
     "pack_index": null
   },
-  "pack_index_source": "reports/evidence/EPOCH-64/pack_index.json"
+  "pack_index_source": "reports/evidence/EPOCH-65/pack_index.json"
 }
