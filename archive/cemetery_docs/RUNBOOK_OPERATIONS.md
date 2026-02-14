@@ -1,3 +1,5 @@
+> ARCHIVED / NOT SSOT / kept for history. Do not follow.
+
 # TREASURE ENGINE — OPERATOR RUNBOOK
 **Version**: 1.0 (EPOCH-15)  
 **Last Updated**: 2026-02-10  

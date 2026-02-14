@@ -1,3 +1,5 @@
+> ARCHIVED / NOT SSOT / kept for history. Do not follow.
+
 # RUNBOOK (RU)
 
 ## 1) Канонический оффлайн wall

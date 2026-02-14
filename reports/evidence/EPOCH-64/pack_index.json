@@ -1,0 +1,28 @@
+{
+  "epoch": "EPOCH-64",
+  "generated_at": "2026-02-14T11:32:41.226Z",
+  "files": [
+    "gates/logs/00_manifest_update.log",
+    "gates/logs/00_npm_ci.log",
+    "gates/logs/01_verify_repo_run1.log",
+    "gates/logs/02_verify_repo_run2.log",
+    "gates/logs/03_verify_specs_run1.log",
+    "gates/logs/04_verify_specs_run2.log",
+    "gates/logs/05_verify_docs_run1.log",
+    "gates/logs/06_verify_docs_run2.log",
+    "gates/logs/07_verify_ledger_run1.log",
+    "gates/logs/08_verify_ledger_run2.log",
+    "gates/logs/09_verify_edge_run1.log",
+    "gates/logs/10_verify_edge_run2.log",
+    "gates/logs/11_verify_treasure_run1.log",
+    "gates/logs/12_verify_treasure_run2.log",
+    "gates/logs/13_verify_phoenix_run1.log",
+    "gates/logs/14_verify_phoenix_run2.log",
+    "gates/logs/15_release_build.log",
+    "gates/logs/16_verify_release_run1.log",
+    "gates/logs/17_verify_release_run2.log",
+    "gates/manual/docs_truth_report.json",
+    "gates/manual/no_placeholders_report.json",
+    "gates/manual/verify_epoch64_result.json"
+  ]
+}

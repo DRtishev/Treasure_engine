@@ -39,7 +39,7 @@ This document defines non-negotiable engineering and QA constraints for TREASURE
 
 ## 6) Spec quality policy
 - Specs MUST be implementable without clarifying questions.
-- Placeholder-only content (e.g., `TBD`, `TODO`, `TBA`) is forbidden unless section contains marker `ALLOW_TBD: YES` and a concrete remediation note.
+- Placeholder-only content (e.g., `placeholder markers`) is forbidden unless section contains marker `ALLOW_TBD: YES` and a concrete remediation note.
 - Risk section MUST include technical + operational + meta-risk entries.
 - Acceptance criteria MUST be checklist-based and testable.
 

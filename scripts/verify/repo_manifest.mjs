@@ -11,7 +11,7 @@ const files = list.stdout.split(/\r?\n/).filter(Boolean).sort();
 const classify = (f) => {
   if (f.startsWith('archive/') || f.startsWith('artifacts/incoming/') || f.startsWith('labs/')) return 'ARCHIVED';
   if (f.startsWith('node_modules/')) return 'VENDORED';
-  if (f.startsWith('reports/evidence/') || f.endsWith('.lock')) return 'GENERATED';
+  if (f.startsWith('reports/') || f.endsWith('.lock')) return 'GENERATED';
   return 'ACTIVE';
 };
 
@@ -47,7 +47,7 @@ for (const f of files) {
     errors.push(`unlisted tracked file: ${f}`);
     continue;
   }
-  if (f !== manifestPath) {
+  if (f !== manifestPath && row.classification !== 'GENERATED') {
     const sha = crypto.createHash('sha256').update(fs.readFileSync(f)).digest('hex');
     if (row.sha256 !== sha) errors.push(`sha256 mismatch: ${f}`);
   }

@@ -27,9 +27,6 @@
     "verify:agent": "node scripts/verify/agent_smoke.mjs",
     "verify:treasure": "node scripts/profit/__tests__/treasure_engine.test.mjs && npm run verify:golden",
     "verify:paper": "node scripts/verify/run_with_context.mjs --gate paper --seed ${SEED:-12345} --repeat default -- npm run verify:paper:raw",
-    "verify:live": "node scripts/verify/live_adapter_smoke.mjs",
-    "verify:adversarial": "node scripts/verify/adversarial_safety.mjs",
-    "verify:godtier": "node scripts/verify/godtier_integration.mjs",
     "verify:truth-layer": "node scripts/verify/truth_layer_check.mjs",
     "verify:epoch06": "npm run verify:e2 && npm run verify:truth-layer",
     "verify:epoch07": "node scripts/verify/epoch07_integration.mjs",
@@ -102,7 +99,7 @@
     "verify:goldens:update": "UPDATE_GOLDENS=1 npm run verify:edge",
     "package:final-validated": "npm run export:final-validated",
     "export:final-validated": "node scripts/export/final_validated.mjs",
-    "verify:repo": "node scripts/verify/repo_sanity_check.mjs && npm run verify:manifest && npm run verify:determinism:strict",
+    "verify:repo": "node scripts/verify/repo_sanity_check.mjs && npm run verify:manifest && npm run verify:no_placeholders && npm run verify:docs:truth && npm run verify:determinism:strict",
     "verify:e2_multi_seed": "node scripts/verify/e2_multi_seed.mjs",
     "verify:epoch41": "node scripts/verify/epoch41_bridge.mjs",
     "verify:epoch42": "node scripts/verify/epoch42_execution_realism.mjs",
@@ -151,7 +148,12 @@
     "verify:reachability": "node scripts/verify/reachability.mjs",
     "verify:properties": "node scripts/verify/properties.mjs",
     "verify:golden": "node scripts/verify/golden_vectors_check.mjs",
-    "verify:release:chain": "node scripts/verify/release_chain_check.mjs"
+    "verify:release:chain": "node scripts/verify/release_chain_check.mjs",
+    "verify:no_placeholders": "node scripts/verify/no_placeholders_check.mjs",
+    "verify:docs:truth": "node scripts/verify/docs_truth_check.mjs",
+    "labs:live": "node scripts/verify/live_adapter_smoke.mjs",
+    "labs:adversarial": "node scripts/verify/adversarial_safety.mjs",
+    "labs:godtier": "node scripts/verify/godtier_integration.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

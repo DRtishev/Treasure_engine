@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { parseAnchors } from '../truth/doc_anchors.mjs';
 
-const roots = ['docs', 'kb', 'specs/wow/items', 'specs/epochs'];
+const roots = ['README.md', 'docs', 'kb', 'specs/wow/items', 'specs/epochs'];
 const mdFiles = [];
 
 function walk(dir) {
@@ -14,7 +14,13 @@ function walk(dir) {
     else if (ent.isFile() && p.endsWith('.md')) mdFiles.push(p);
   }
 }
-for (const root of roots) walk(root);
+for (const root of roots) {
+  if (root.endsWith('.md')) {
+    if (fs.existsSync(root)) mdFiles.push(root);
+    continue;
+  }
+  walk(root);
+}
 
 const anchorsByFile = new Map();
 const contract = {

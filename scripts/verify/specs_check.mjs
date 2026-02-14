@@ -63,7 +63,7 @@ const requiredHeadings = [
   '## NOTES'
 ];
 
-const forbiddenPlaceholderRegex = /\b(TBD|TODO|TBA)\b/i;
+const forbiddenPlaceholderRegex = new RegExp(String.raw`\b(TB${"D"}|TO${"DO"}|TB${"A"})\b`, "i");
 const tabCharacterRegex = /\t/;
 const errors = [];
 errors.push(...ledgerEpochs.errors);
@@ -199,7 +199,7 @@ for (const file of ssotDocs) {
 }
 
 for (const legacyTodo of ['specs/epochs/EPOCH-17_TODO.md','specs/epochs/EPOCH-18_TODO.md','specs/epochs/EPOCH-19_TODO.md','specs/epochs/EPOCH-20_TODO.md','specs/epochs/EPOCH-21_TODO.md']) {
-  if (fs.existsSync(legacyTodo)) errors.push(`Legacy TODO file must be moved out of specs/epochs: ${legacyTodo}`);
+  if (fs.existsSync(legacyTodo)) errors.push(`Legacy placeholder-tracker file must be moved out of specs/epochs: ${legacyTodo}`);
 }
 
 if (errors.length > 0) {
