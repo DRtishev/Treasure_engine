@@ -3,15 +3,9 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import { spawnSync } from 'node:child_process';
-import { E66_ROOT, LOCK_DIR, LOCK_PATH, writeMd, ensureDir, evidenceFingerprint } from './e66_lib.mjs';
+import { E66_ROOT, LOCK_DIR, LOCK_PATH, writeMd, ensureDir } from './e66_lib.mjs';
 
 ensureDir(LOCK_DIR);
-
-
-function shortSha() {
-  const out = spawnSync('git', ['rev-parse', '--short', 'HEAD'], { encoding: 'utf8' });
-  return (out.stdout || '').trim() || 'UNKNOWN';
-}
 
 function scrubMutableFlags(src) {
   const clean = { ...src };
@@ -30,7 +24,8 @@ function runOnce(label) {
     TZ: 'UTC',
     LANG: 'C',
     LC_ALL: 'C',
-    SOURCE_DATE_EPOCH: process.env.SOURCE_DATE_EPOCH || '1700000000'
+    SOURCE_DATE_EPOCH: process.env.SOURCE_DATE_EPOCH || '1700000000',
+    E66_SKIP_EVIDENCE_VERIFY: process.env.UPDATE_E66_EVIDENCE === '1' ? '1' : ''
   };
   const r = spawnSync('npm', ['run', '-s', 'verify:e66'], { encoding: 'utf8', env });
   const out = `${r.stdout || ''}${r.stderr || ''}`;
@@ -63,26 +58,11 @@ if (updateRequested && process.env.CI !== 'true') {
     `- run2_fingerprint: ${run2.fingerprint || 'N/A'}`,
     `- deterministic_match: ${same}`
   ].join('\n'));
-  const fp = evidenceFingerprint() || 'N/A';
-  writeMd(path.join(E66_ROOT, 'CLOSEOUT.md'), [
-    '# E66 CLOSEOUT',
-    '',
-    `- commit: ${shortSha()}`,
-    `- utc: ${new Date().toISOString()}`,
-    '- mode: update ritual',
-    '- commands:',
-    '  - CI=false UPDATE_CAS=1 UPDATE_PROVENANCE=1 UPDATE_E66_EVIDENCE=1 APPROVE_SNAPSHOTS=1 npm run -s verify:e66',
-    '  - CI=false UPDATE_E66_EVIDENCE=1 npm run -s verify:phoenix:x2',
-    '',
-    `- evidence_fingerprint: ${fp}`,
-    '- links:',
-    '  - VERDICT.md',
-    '  - RUNS_VERIFY.md',
-    '  - RUNS_X2.md',
-    '  - SHA256SUMS.md',
-    '  - PROVENANCE.md',
-    '  - CAS.md'
-  ].join('\n'));
+  const fin = spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env: { ...process.env, UPDATE_E66_EVIDENCE: '1', CI: process.env.CI || 'false' } });
+  if ((fin.status ?? 1) !== 0) {
+    console.error('verify:phoenix:x2 FAILED at verify:evidence');
+    process.exit(1);
+  }
 }
 
 if (!pass) {

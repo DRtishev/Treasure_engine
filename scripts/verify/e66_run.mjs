@@ -17,15 +17,6 @@ function gitStatus() {
   return (out.stdout || '').trim();
 }
 
-function nowUtcIso() {
-  return new Date().toISOString();
-}
-
-function shortSha() {
-  const out = spawnSync('git', ['rev-parse', '--short', 'HEAD'], { encoding: 'utf8' });
-  return (out.stdout || '').trim() || 'UNKNOWN';
-}
-
 for (const k of Object.keys(process.env)) {
   if ((k.startsWith('UPDATE_') || k.startsWith('APPROVE_')) && process.env.CI === 'true' && process.env[k] === '1') {
     console.error(`verify:e66 FAILED\n- ${k}=1 forbidden when CI=true`);
@@ -56,15 +47,6 @@ for (const [name, cmd] of steps) {
   logs.push({ name, status: r.status ?? 1 });
   if ((r.status ?? 1) !== 0) {
     if (updateRequested && process.env.CI !== 'true') {
-      writeMd(path.join(E66_ROOT, 'VERDICT.md'), [
-        '# E66 VERDICT',
-        '',
-        'Status: BLOCKED',
-        `Failed step: ${name}`,
-        '',
-        '- verify details: RUNS_VERIFY.md',
-        '- x2 details: RUNS_X2.md'
-      ].join('\n'));
       writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: BLOCKED');
       writeMd(path.join(E66_ROOT, 'RUNS_VERIFY.md'), `# E66 RUNS VERIFY\n\n- failed_step: ${name}`);
     }
@@ -78,17 +60,8 @@ if (!fingerprint) {
   if (updateRequested && process.env.CI !== 'true') {
     writeMd(path.join(E66_ROOT, 'RUNS_VERIFY.md'), '# E66 RUNS VERIFY\n\n- bootstrap: true');
     writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: COMPLETE');
-    writeMd(path.join(E66_ROOT, 'VERDICT.md'), [
-      '# E66 VERDICT',
-      '',
-      'Status: PASS',
-      '',
-      '- verify details: RUNS_VERIFY.md',
-      '- x2 details: RUNS_X2.md'
-    ].join('\n'));
-    spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env: { ...env, UPDATE_E66_EVIDENCE: '1' } });
-    fingerprint = evidenceFingerprint();
   }
+  fingerprint = evidenceFingerprint();
 }
 
 if (!fingerprint) {
@@ -108,42 +81,14 @@ if (updateRequested && process.env.CI !== 'true') {
     writeMd(x2Path, '# E66 RUNS X2\n\n- status: PENDING (run CI=false UPDATE_E66_EVIDENCE=1 npm run -s verify:phoenix:x2)');
   }
   writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: COMPLETE');
-  writeMd(path.join(E66_ROOT, 'VERDICT.md'), [
-    '# E66 VERDICT',
-    '',
-    'Status: PASS',
-    '',
-    '- verify details: RUNS_VERIFY.md',
-    '- x2 details: RUNS_X2.md'
-  ].join('\n'));
-  const closeout = [
-    '# E66 CLOSEOUT',
-    '',
-    `- commit: ${shortSha()}`,
-    `- utc: ${nowUtcIso()}`,
-    '- mode: update ritual',
-    '- commands:',
-    '  - CI=false UPDATE_CAS=1 UPDATE_PROVENANCE=1 UPDATE_E66_EVIDENCE=1 APPROVE_SNAPSHOTS=1 npm run -s verify:e66',
-    '  - CI=false UPDATE_E66_EVIDENCE=1 npm run -s verify:phoenix:x2',
-    '',
-    `- evidence_fingerprint: ${fingerprint}`,
-    '- links:',
-    '  - VERDICT.md',
-    '  - RUNS_VERIFY.md',
-    '  - RUNS_X2.md',
-    '  - SHA256SUMS.md',
-    '  - PROVENANCE.md',
-    '  - CAS.md'
-  ].join('\n');
-  writeMd(path.join(E66_ROOT, 'CLOSEOUT.md'), closeout);
-  spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env: { ...env, UPDATE_E66_EVIDENCE: '1' } });
-  fingerprint = evidenceFingerprint();
 }
 
-const evidence = spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env });
-if ((evidence.status ?? 1) !== 0) {
-  console.error('verify:e66 FAILED at verify:evidence');
-  process.exit(1);
+if (process.env.E66_SKIP_EVIDENCE_VERIFY !== '1' && (!updateRequested || process.env.UPDATE_E66_EVIDENCE === '1')) {
+  const evidence = spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env });
+  if ((evidence.status ?? 1) !== 0) {
+    console.error('verify:e66 FAILED at verify:evidence');
+    process.exit(1);
+  }
 }
 
 const after = gitStatus();
