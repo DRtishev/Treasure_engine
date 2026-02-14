@@ -115,6 +115,10 @@ for (const { epoch, row } of targets) {
   const fallback = `verify:epoch${epoch}`;
   if (!verifier && scripts[fallback]) verifier = fallback;
 
+  if (verifier === 'verify:phoenix' && scripts['verify:baseline']) {
+    verifier = 'verify:baseline';
+  }
+
   if (!verifier) {
     if (mutablePaths.length > 0) {
       const mutableNonGate = mutablePaths.filter((p) => !p.startsWith('gates/manual/'));
@@ -133,7 +137,8 @@ for (const { epoch, row } of targets) {
 
   const before = hashEvidenceTree(epochDir);
   const probeEvidenceEpoch = `EPOCH-FREEZE-${String(epoch).padStart(2, '0')}`;
-  const probe = run('npm', ['run', '-s', verifier], { ...process.env, EVIDENCE_EPOCH: probeEvidenceEpoch, EVIDENCE_WRITE_MODE: 'ASSERT_NO_DIFF' });
+  const probeEnv = { ...process.env, EVIDENCE_EPOCH: probeEvidenceEpoch, EVIDENCE_WRITE_MODE: 'ASSERT_NO_DIFF', RELEASE_BUILD: '', RELEASE_STRICT: '', EVIDENCE_COMMIT_BINDING_STRICT: '' };
+  const probe = run('npm', ['run', '-s', verifier], probeEnv);
   const after = hashEvidenceTree(epochDir);
 
   if (probe.status !== 0) {

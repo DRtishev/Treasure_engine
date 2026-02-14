@@ -40,6 +40,14 @@
     {
       "path": "scripts/ops/build_final_validated.mjs",
       "reason": "Legacy ops helper retained for reproducibility but not invoked by current npm scripts."
+    },
+    {
+      "path": "scripts/evidence/finalize_commit_binding.mjs",
+      "reason": "Executed via child_process from verify:evidence:commit_binding gate wrapper."
+    },
+    {
+      "path": "scripts/truth/provenance_builder.mjs",
+      "reason": "Legacy provenance helper retained; E66 uses verify/e66_provenance.mjs."
     }
   ]
 }

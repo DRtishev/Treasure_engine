@@ -18,6 +18,22 @@ const check = (ok, msg) => {
   else { failed += 1; console.error(`✗ ${msg}`); }
 };
 
+
+const privateSumsPath = path.resolve('data/SHA256SUMS.PRIVATE_DATA');
+const privateSumsBefore = fs.existsSync(privateSumsPath) ? fs.readFileSync(privateSumsPath, 'utf8') : null;
+function cleanupRechunkFixtures() {
+  const targets = [
+    'data/manifests/epoch51_rechunk_a.fills.manifest.json',
+    'data/manifests/epoch51_rechunk_b.fills.manifest.json',
+    'data/private/raw/binance/epoch51_rechunk_a',
+    'data/private/raw/binance/epoch51_rechunk_b',
+    'data/private/normalized/binance/epoch51_rechunk_a',
+    'data/private/normalized/binance/epoch51_rechunk_b'
+  ];
+  for (const t of targets) fs.rmSync(path.resolve(t), { recursive: true, force: true });
+  if (privateSumsBefore !== null) fs.writeFileSync(privateSumsPath, privateSumsBefore);
+}
+
 const src = 'data/fixtures/private/epoch50_fixture/fills_fixture.csv';
 const ingestA = spawnSync('node', ['scripts/data/ingest_private_fills.mjs', '--source', src, '--provider', 'binance', '--dataset', 'epoch51_rechunk_a', '--strict', '--chunk-size', '1', '--account-label', 'acct-fixture'], { encoding: 'utf8' });
 const ingestB = spawnSync('node', ['scripts/data/ingest_private_fills.mjs', '--source', src, '--provider', 'binance', '--dataset', 'epoch51_rechunk_b', '--strict', '--chunk-size', '3', '--account-label', 'acct-fixture'], { encoding: 'utf8' });
@@ -64,5 +80,6 @@ const result = {
 };
 fs.writeFileSync(path.join(manualDir, 'verify_epoch51_result.json'), JSON.stringify(result, null, 2) + '\n');
 
+cleanupRechunkFixtures();
 if (failed > 0) process.exit(1);
 console.log(`PASS verify:epoch51 checks=${passed}`);

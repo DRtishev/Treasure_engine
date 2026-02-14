@@ -1,17 +1,14 @@
 # RUNBOOK RU
-
 ## ONE COMMAND GOLD
 ```bash
 CI=true npm run -s verify:phoenix:x2
 ```
 Делает 2 независимых прогона `verify:e66`, сравнивает детерминированные fingerprint, в случае двух подряд критических FAIL ставит kill-lock `.foundation-seal/E66_KILL_LOCK.md`.
-
 ## E66 update ritual (только non-CI)
 ```bash
 CI=false UPDATE_CAS=1 UPDATE_PROVENANCE=1 UPDATE_E66_EVIDENCE=1 APPROVE_SNAPSHOTS=1 npm run -s verify:e66
 ```
 Режим обновления эталонов/доказательств. В `CI=true` любые update-флаги запрещены.
-
 ## E66 strict verify (CI, read-only)
 ```bash
 CI=true npm run -s verify:e66
@@ -19,7 +16,6 @@ CI=true npm run -s verify:phoenix:x2
 CI=true npm run -s verify:evidence
 ```
 Требование: эти команды не должны мутировать tracked-файлы.
-
 ## Команды E66
 - `npm run -s verify:snapshots` — проверка снимков истины.
 - `APPROVE_SNAPSHOTS=1 npm run -s approve:snapshots` — update snapshot (только non-CI).
@@ -28,7 +24,6 @@ CI=true npm run -s verify:evidence
 - `npm run -s verify:provenance` — верификация хэшей материалов provenance.
 - `npm run -s verify:evidence` — self-check evidence pack (`SHA256SUMS.md`, checklist, целостность md).
 - `npm run -s verify:e66` — агрегатор E66.
-
 ## Lock policy
 - Если lock существует, `verify:e66`/`verify:phoenix:x2` блокируются.
 - Очистка lock разрешена только вне CI:
