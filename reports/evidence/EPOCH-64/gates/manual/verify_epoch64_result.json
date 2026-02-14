@@ -1,0 +1,6 @@
+{
+  "epoch": "EPOCH-64",
+  "status": "PASS",
+  "required_gates": "x2 complete",
+  "commands_log_dir": "reports/evidence/EPOCH-64/gates/logs"
+}

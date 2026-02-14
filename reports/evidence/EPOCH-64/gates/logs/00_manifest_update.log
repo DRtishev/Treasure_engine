@@ -1,0 +1,5 @@
+
+> treasure-engine@1.0.0 verify:manifest
+> node scripts/verify/repo_manifest.mjs
+
+verify:manifest UPDATED specs/repo/REPO_MANIFEST.json

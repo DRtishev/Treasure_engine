@@ -1,3 +1,5 @@
+> ARCHIVED / NOT SSOT / kept for history. Do not follow.
+
 # TREASURE ENGINE — SOFTWARE DESIGN DOCUMENT
 ## EPOCH-17 through EPOCH-21: Complete System Integration
 

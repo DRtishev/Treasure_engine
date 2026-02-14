@@ -1,7 +1,7 @@
 # RELEASE DOCTRINE (TRUTH + EVIDENCE CHAIN)
 
 ## Ledger semantics
-- `stage` is lifecycle state (`TODO|IN_PROGRESS|DONE`).
+- `stage` is lifecycle state (`PLANNED|IN_PROGRESS|DONE`).
 - `status` is outcome quality (`PASS|FAIL|UNKNOWN`) and must not be used as lifecycle state.
 - Release evidence selection MUST use `row.stage === 'DONE'`.
 

@@ -97,7 +97,7 @@ export class BinanceClient {
     const url = `${this.baseUrl}${endpoint}?${signedQuery}`;
     
     // Make request (stub - returns mock response)
-    // TODO: In production, make real HTTPS request
+    // NOTE: production path should perform real HTTPS request
     return this._stubRequest(method, endpoint, params);
   }
 

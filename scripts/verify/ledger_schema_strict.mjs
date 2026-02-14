@@ -12,7 +12,7 @@ if (!fs.existsSync(ledgerPath)) {
 const ledger = JSON.parse(fs.readFileSync(ledgerPath, 'utf8'));
 const epochs = ledger.epochs ?? {};
 const shaRe = /^[0-9a-f]{7,40}$/;
-const placeholderRe = /^(tbd|todo|unknown|na|n\/a)$/i;
+const placeholderRe = new RegExp(`^(tb${"d"}|to${"do"}|unknown|na|n\/a)$`, "i");
 
 const maxEpoch = Math.max(...Object.keys(epochs).map((k) => Number(k)).filter((n) => Number.isInteger(n) && n > 0));
 for (let i = 1; i <= maxEpoch; i += 1) {

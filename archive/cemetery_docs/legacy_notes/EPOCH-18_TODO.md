@@ -1,3 +1,5 @@
+> ARCHIVED / NOT SSOT / kept for history. Do not follow.
+
 # LEGACY / NOT SSOT
 
 This document is archived for historical traceability and is not authoritative.

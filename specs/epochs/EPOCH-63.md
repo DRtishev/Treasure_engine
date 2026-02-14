@@ -12,6 +12,18 @@
 - Add strict ledger option to run `pack:verify` for each DONE epoch.
 
 ## NON-GOALS
+- Keep legacy gate topology unchanged unless required for deterministic compliance.
+
+## CONSTRAINTS
+- Offline PASS path is mandatory.
+- Deterministic outputs only for required gates.
+- Minimal diff over ACTIVE runtime.
+
+## DESIGN / CONTRACTS
+- Gate outputs remain machine-readable JSON under `reports/truth/` and evidence folders.
+- Ledger/index updates must keep monotonic epoch ordering.
+
+## NON-GOALS
 - No strategy/live-trading behavior changes.
 - No network-dependent verification paths for default PASS.
 
@@ -25,8 +37,8 @@
 
 ## VERIFY
 - `npm ci` (run1/run2)
-- `CI=true npm run verify:repo` (run1/run2)
-- `CI=true npm run verify:specs` (run1/run2)
+- `npm run verify:repo` (run1/run2, with CI=true)
+- `npm run verify:specs` (run1/run2, with CI=true)
 - `LEDGER_PACK_VERIFY=1 CI=true npm run verify:ledger` (run1/run2)
 - `CI=true npm run verify:edge` (run1/run2)
 - `CI=true npm run verify:treasure` (run1/run2)
@@ -42,6 +54,15 @@
   - `pack_verify_audit.json`
   - `verify_epoch63_result.json`
 
+## STOP RULES
+- Stop if any critical gate fails twice without clear root cause.
+- Do not set DONE/PASS without x2 evidence.
+
+## RISK REGISTER
+- Risk: stale manifest hash drift after doc edits.
+- Risk: hidden legacy doc links break canonical path.
+- Risk: gate flake masked by single-run verification.
+
 ## ACCEPTANCE CRITERIA (FALSIFIABLE)
 - [ ] Release build derives both zip evidence roots and allowlist from `stage === DONE` epochs.
 - [ ] Strict release verification fails on allowlist/tar divergence or per-file SHA mismatches.
@@ -49,3 +70,7 @@
 - [ ] `pack:verify` checks every SHA256SUMS line and fails on uncovered extra files.
 - [ ] `LEDGER_PACK_VERIFY=1 verify:ledger` verifies all DONE epoch evidence packs.
 - [ ] E63 evidence pack includes required machine outputs and `pack:verify` passes.
+
+
+## NOTES
+- This epoch is evidence-driven; claims are valid only with logs and machine reports.

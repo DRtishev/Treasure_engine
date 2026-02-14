@@ -568,6 +568,15 @@
       "evidence_root": "reports/evidence/EPOCH-63/",
       "gate_owner": "verify:release:chain",
       "notes": "Release truth hardening: DONE(stage) release selection, strict chain verification, SHA256SUMS full coverage enforcement."
+    },
+    "64": {
+      "id": "EPOCH-64",
+      "stage": "DONE",
+      "status": "PASS",
+      "commit_sha": "0e81ebfd27d0ed7bfc4db48b94768a8d098053cc",
+      "evidence_root": "reports/evidence/EPOCH-64/",
+      "gate_owner": "verify:phoenix",
+      "notes": "Foundation seal complete: required gates passed x2 in CI=true with strict release verification."
     }
   }
 }

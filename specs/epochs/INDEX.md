@@ -64,6 +64,7 @@
 61. EPOCH-61
 62. EPOCH-62
 63. EPOCH-63
+64. EPOCH-64
 
 ## Dependency notes (EDGE)
 - EPOCH-31 depends on EPOCH-30 (EDGE starts from completed legacy runway).
@@ -146,6 +147,7 @@
 - `specs/epochs/EPOCH-38.md`
 - `specs/epochs/EPOCH-39.md`
 - `specs/epochs/EPOCH-40.md`
+- `specs/epochs/EPOCH-64.md`
 
 ## Gate map
 - EPOCH-01..EPOCH-16: legacy/doc mapping validated by `verify:specs`

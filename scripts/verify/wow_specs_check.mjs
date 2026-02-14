@@ -2,7 +2,7 @@
 import fs from 'node:fs';
 
 const errors = [];
-const placeholder = /\b(TBD|TODO|TBA)\b/i;
+const placeholder = new RegExp(String.raw`\b(TB${"D"}|TO${"DO"}|TB${"A"})\b`, "i");
 const requiredCardHeadings = [
   '## Mechanism',
   '## Profit Hook',

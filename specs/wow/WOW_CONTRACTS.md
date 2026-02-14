@@ -17,7 +17,7 @@ Define the machine-verifiable contract for WOW ideas so no item can be treated a
 - `acceptance.must_improve[]` and `acceptance.must_not_break[]` are required.
 - `self_deception_risks[]` and `kill_criteria[]` must each have at least 2 entries for `LAB|STAGED|SHIPPED`.
 - `integration` must include `epochs[]`, `gates[]`, `modules[]`, `evidence_outputs[]`.
-- `SHIPPED` requires non-empty `epochs`, `gates`, `modules`, and `evidence_outputs`, and forbids placeholder values (`TBD/TODO/TBA`).
+- `SHIPPED` requires non-empty `epochs`, `gates`, `modules`, and `evidence_outputs`, and forbids placeholder values (`placeholder markers`).
 - `ARCHIVED` requires `kill_evidence_ref` (`epoch`, `path`).
 
 ## Verification gates

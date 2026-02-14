@@ -1,3 +1,5 @@
+> ARCHIVED / NOT SSOT / kept for history. Do not follow.
+
 # TREASURE ENGINE — QUICK START GUIDE
 
 ## 🎯 WHAT YOU HAVE

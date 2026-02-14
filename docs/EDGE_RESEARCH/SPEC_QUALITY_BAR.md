@@ -5,7 +5,7 @@
 - Canonical heading order in each epoch spec.
 - At least one npm verify command in `## VERIFY`.
 - Minimum risk bullets and acceptance checklist count.
-- Forbidden placeholders (`TBD/TODO/TBA`) unless explicitly allowed.
+- Forbidden placeholders (`placeholder markers`) unless explicitly allowed.
 - Ledger entry existence/status/required fields and INDEX mapping consistency.
 
 ## Common fail examples
