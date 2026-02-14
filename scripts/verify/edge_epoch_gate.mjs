@@ -32,8 +32,10 @@ if (!epoch) throw new Error('epoch required');
 
 const seed = Number(process.env.SEED ?? 12345);
 const evidenceEpoch = process.env.EVIDENCE_EPOCH || 'EPOCH-EDGE-LOCAL';
-const gateDir = path.join(root, 'reports/evidence', evidenceEpoch, `epoch${epoch}`);
-const vectorsDir = path.join(root, 'reports/evidence', evidenceEpoch, 'vectors');
+const evidenceRootRaw = process.env.EVIDENCE_ROOT || path.join(root, 'reports/evidence');
+const evidenceRoot = path.isAbsolute(evidenceRootRaw) ? evidenceRootRaw : path.resolve(root, evidenceRootRaw);
+const gateDir = path.join(evidenceRoot, evidenceEpoch, `epoch${epoch}`);
+const vectorsDir = path.join(evidenceRoot, evidenceEpoch, 'vectors');
 fs.mkdirSync(gateDir, { recursive: true });
 fs.mkdirSync(vectorsDir, { recursive: true });
 const initialTrackedStatus = spawnSync('git', ['status', '--porcelain', '--untracked-files=no'], { cwd: root, encoding: 'utf8' }).stdout;
@@ -247,6 +249,7 @@ function runCleanCloneProof() {
   const env = {
     ...process.env,
     EVIDENCE_EPOCH: cloneEvidence,
+    EVIDENCE_ROOT: path.join(cloneRoot, 'reports/evidence'),
     EDGE_IN_CLEAN_CLONE: '1',
     ENABLE_CLEAN_CLONE: '0',
     UPDATE_GOLDENS: '0',
@@ -262,7 +265,7 @@ function runCleanCloneProof() {
     }
   }
 
-  const mainEvidenceRoot = path.join(root, 'reports/evidence', evidenceEpoch);
+  const mainEvidenceRoot = path.join(evidenceRoot, evidenceEpoch);
   const cloneEvidenceRoot = path.join(cloneRoot, 'reports/evidence', cloneEvidence);
   const mainAggregate = aggregateEpochFingerprintsFromEvidence(mainEvidenceRoot);
   const cloneAggregate = aggregateEpochFingerprintsFromEvidence(cloneEvidenceRoot);
@@ -344,6 +347,7 @@ if (epoch === '35') outputs.AllocationPlan = buildAllocationPlan(seed);
 if (epoch === '36') outputs.RiskDecision = buildRiskDecision(0.22);
 if (epoch === '37') {
   outputs.WFOReport = walkForwardLeakageSentinel(false);
+  outputs.WFOReport.deterministic_fingerprint = deterministicFingerprint('WFOReport', outputs.WFOReport);
   let injectedFailed = false;
   try { walkForwardLeakageSentinel(true); } catch { injectedFailed = true; }
   if (!injectedFailed) throw new Error('Injected leakage fixture did not fail');
