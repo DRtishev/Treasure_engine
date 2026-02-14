@@ -11,6 +11,18 @@ const env = {
   SOURCE_DATE_EPOCH: process.env.SOURCE_DATE_EPOCH || '1700000000'
 };
 
+function gitStatus() {
+  const out = spawnSync('git', ['status', '--porcelain'], { encoding: 'utf8' });
+  return (out.stdout || '').trim();
+}
+
+for (const k of Object.keys(process.env)) {
+  if ((k.startsWith('UPDATE_') || k.startsWith('APPROVE_')) && process.env.CI === 'true' && process.env[k] === '1') {
+    console.error(`verify:e66 FAILED\n- ${k}=1 forbidden when CI=true`);
+    process.exit(1);
+  }
+}
+
 try {
   requireNoLock();
 } catch (e) {
@@ -19,6 +31,7 @@ try {
   process.exit(1);
 }
 
+const before = gitStatus();
 const steps = [
   ['verify:snapshots', ['npm', 'run', '-s', 'verify:snapshots']],
   ['verify:cas', ['npm', 'run', '-s', 'verify:cas']],
@@ -64,6 +77,19 @@ if (process.env.CI !== 'true' || updateRequested) {
   ].join('\n'));
   writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: COMPLETE');
   writeMd(path.join(E66_ROOT, 'VERDICT.md'), '# E66 VERDICT\n\nStatus: PASS');
+  const closeout = [
+    '# E66 CLOSEOUT',
+    '',
+    '## Commands',
+    '- verify:snapshots',
+    '- verify:cas',
+    '- verify:provenance',
+    '- verify:evidence',
+    '',
+    `- fingerprint: ${fingerprint}`,
+    `- ci: ${process.env.CI || ''}`
+  ].join('\n');
+  writeMd(path.join(E66_ROOT, 'CLOSEOUT.md'), closeout);
   spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env: { ...env, UPDATE_E66_EVIDENCE: '1' } });
   fingerprint = evidenceFingerprint();
 }
@@ -71,6 +97,12 @@ if (process.env.CI !== 'true' || updateRequested) {
 const evidence = spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env });
 if ((evidence.status ?? 1) !== 0) {
   console.error('verify:e66 FAILED at verify:evidence');
+  process.exit(1);
+}
+
+const after = gitStatus();
+if (process.env.CI === 'true' && before !== after) {
+  console.error('verify:e66 FAILED\n- CI_READ_ONLY_VIOLATION');
   process.exit(1);
 }
 console.log(`verify:e66 PASSED fingerprint=${fingerprint}`);
