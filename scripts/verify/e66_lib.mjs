@@ -76,17 +76,31 @@ export function parseCasMd() {
   const lines = fs.readFileSync(casMdPath, 'utf8').split(/\r?\n/);
   const rows = [];
   for (const line of lines) {
-    const m = line.match(/^-\s+(.+)\s+->\s+cas:\/\/sha256:([a-f0-9]{64})$/);
+    const m = line.match(/^\-\s+(.+)\s+->\s+cas:\/\/sha256:([a-f0-9]{64})$/);
     if (m) rows.push({ path: m[1], hash: m[2] });
   }
   return rows;
+}
+
+export function readSumsCoreText() {
+  const sumsPath = path.join(E66_ROOT, 'SHA256SUMS.md');
+  if (!fs.existsSync(sumsPath)) return '';
+  const raw = fs.readFileSync(sumsPath, 'utf8').replace(/\r\n/g, '\n');
+  const lines = raw.split('\n').filter((line) => {
+    if (!/^[a-f0-9]{64}\s{2}/.test(line)) return true;
+    if (/\sreports\/evidence\/E66\/CLOSEOUT\.md$/.test(line)) return false;
+    if (/\sreports\/evidence\/E66\/VERDICT\.md$/.test(line)) return false;
+    if (/\sreports\/evidence\/E66\/SHA256SUMS\.md$/.test(line)) return false;
+    return true;
+  });
+  return `${lines.join('\n').replace(/\s+$/g, '')}\n`;
 }
 
 export function evidenceFingerprint() {
   const files = [
     ['reports/evidence/E66/CAS.md', path.join(E66_ROOT, 'CAS.md')],
     ['reports/evidence/E66/PROVENANCE.md', path.join(E66_ROOT, 'PROVENANCE.md')],
-    ['reports/evidence/E66/SHA256SUMS.md', path.join(E66_ROOT, 'SHA256SUMS.md')]
+    ['SUMS_CORE', path.join(E66_ROOT, 'SHA256SUMS.md')]
   ];
   const snapshots = fs.existsSync(SNAP_DIR)
     ? fs.readdirSync(SNAP_DIR)
@@ -98,7 +112,8 @@ export function evidenceFingerprint() {
   const chunks = [];
   for (const [id, p] of ordered) {
     if (!fs.existsSync(p)) return '';
-    chunks.push(`## ${id}\n${fs.readFileSync(p, 'utf8')}`);
+    const body = id === 'SUMS_CORE' ? readSumsCoreText() : fs.readFileSync(p, 'utf8');
+    chunks.push(`## ${id}\n${body}`);
   }
   return sha256Text(chunks.join('\n'));
 }

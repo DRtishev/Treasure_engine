@@ -21,7 +21,11 @@ function filesForSums() {
 
 function rewriteSums() {
   const list = filesForSums();
-  const lines = list.map((f) => `${sha256File(path.join(E66_ROOT, f))}  reports/evidence/E66/${f}`);
+  const lines = list.map((f) => {
+    const abs = path.join(E66_ROOT, f);
+    const rel = path.relative(process.cwd(), abs).split(path.sep).join('/');
+    return `${sha256File(abs)}  ${rel}`;
+  });
   writeMd(path.join(E66_ROOT, 'SHA256SUMS.md'), `# E66 SHA256SUMS\n\n${lines.join('\n')}`);
 }
 
@@ -121,6 +125,11 @@ if (cMatch[1] !== vMatch[1]) {
   console.error('- canonical_fingerprint mismatch between CLOSEOUT.md and VERDICT.md');
   process.exit(1);
 }
+if (cMatch[1] !== recomputed) {
+  console.error('verify:evidence FAILED');
+  console.error('- canonical_fingerprint mismatch against recomputed evidenceFingerprint()');
+  process.exit(1);
+}
 
 const sumLines = fs.readFileSync(sumsPath, 'utf8').split(/\r?\n/).filter((l) => /^[a-f0-9]{64}\s{2}/.test(l));
 const errs = [];
@@ -129,9 +138,10 @@ for (const l of sumLines) {
   if (!m) continue;
   const expected = m[1];
   const file = m[2];
+  const abs = path.resolve(file);
   if (file.endsWith('/SHA256SUMS.md')) errs.push('SHA256SUMS.md must not self-reference');
-  if (!fs.existsSync(file)) { errs.push(`missing ${file}`); continue; }
-  const got = sha256File(file);
+  if (!fs.existsSync(abs)) { errs.push(`missing ${file}`); continue; }
+  const got = sha256File(abs);
   if (got !== expected) errs.push(`sha mismatch ${file}`);
 }
 if (errs.length) {
