@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { E66_ROOT, requireNoLock, evidenceFingerprint, writeMd } from './e66_lib.mjs';
@@ -16,6 +17,15 @@ function gitStatus() {
   return (out.stdout || '').trim();
 }
 
+function nowUtcIso() {
+  return new Date().toISOString();
+}
+
+function shortSha() {
+  const out = spawnSync('git', ['rev-parse', '--short', 'HEAD'], { encoding: 'utf8' });
+  return (out.stdout || '').trim() || 'UNKNOWN';
+}
+
 for (const k of Object.keys(process.env)) {
   if ((k.startsWith('UPDATE_') || k.startsWith('APPROVE_')) && process.env.CI === 'true' && process.env[k] === '1') {
     console.error(`verify:e66 FAILED\n- ${k}=1 forbidden when CI=true`);
@@ -23,10 +33,12 @@ for (const k of Object.keys(process.env)) {
   }
 }
 
+const updateRequested = process.env.UPDATE_CAS === '1' || process.env.UPDATE_PROVENANCE === '1' || process.env.UPDATE_E66_EVIDENCE === '1' || process.env.APPROVE_SNAPSHOTS === '1';
+
 try {
   requireNoLock();
 } catch (e) {
-  if (process.env.CI !== 'true') writeMd(path.join(E66_ROOT, 'LOCK.md'), `# E66 LOCK\n\n- reason: ${String(e.message)}`);
+  if (updateRequested && process.env.CI !== 'true') writeMd(path.join(E66_ROOT, 'LOCK.md'), `# E66 LOCK\n\n- reason: ${String(e.message)}`);
   console.error(`verify:e66 FAILED\n- ${String(e.message)}`);
   process.exit(1);
 }
@@ -38,16 +50,23 @@ const steps = [
   ['verify:provenance', ['npm', 'run', '-s', 'verify:provenance']]
 ];
 
-const updateRequested = process.env.UPDATE_CAS === '1' || process.env.UPDATE_PROVENANCE === '1' || process.env.UPDATE_E66_EVIDENCE === '1' || process.env.APPROVE_SNAPSHOTS === '1';
 const logs = [];
 for (const [name, cmd] of steps) {
   const r = spawnSync(cmd[0], cmd.slice(1), { encoding: 'utf8', env });
   logs.push({ name, status: r.status ?? 1 });
   if ((r.status ?? 1) !== 0) {
-    if (process.env.CI !== 'true') {
-      writeMd(path.join(E66_ROOT, 'VERDICT.md'), `# E66 VERDICT\n\nStatus: BLOCKED\n\nFailed step: ${name}`);
+    if (updateRequested && process.env.CI !== 'true') {
+      writeMd(path.join(E66_ROOT, 'VERDICT.md'), [
+        '# E66 VERDICT',
+        '',
+        'Status: BLOCKED',
+        `Failed step: ${name}`,
+        '',
+        '- verify details: RUNS_VERIFY.md',
+        '- x2 details: RUNS_X2.md'
+      ].join('\n'));
       writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: BLOCKED');
-      writeMd(path.join(E66_ROOT, 'RUNS.md'), `# E66 RUNS\n\n- failed_step: ${name}`);
+      writeMd(path.join(E66_ROOT, 'RUNS_VERIFY.md'), `# E66 RUNS VERIFY\n\n- failed_step: ${name}`);
     }
     console.error(`verify:e66 FAILED at ${name}`);
     process.exit(1);
@@ -55,12 +74,21 @@ for (const [name, cmd] of steps) {
 }
 
 let fingerprint = evidenceFingerprint();
-if (!fingerprint && process.env.CI !== 'true') {
-  writeMd(path.join(E66_ROOT, 'RUNS.md'), '# E66 RUNS\n\n- bootstrap: true');
-  writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: COMPLETE');
-  writeMd(path.join(E66_ROOT, 'VERDICT.md'), '# E66 VERDICT\n\nStatus: PASS');
-  spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env: { ...env, UPDATE_E66_EVIDENCE: '1' } });
-  fingerprint = evidenceFingerprint();
+if (!fingerprint) {
+  if (updateRequested && process.env.CI !== 'true') {
+    writeMd(path.join(E66_ROOT, 'RUNS_VERIFY.md'), '# E66 RUNS VERIFY\n\n- bootstrap: true');
+    writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: COMPLETE');
+    writeMd(path.join(E66_ROOT, 'VERDICT.md'), [
+      '# E66 VERDICT',
+      '',
+      'Status: PASS',
+      '',
+      '- verify details: RUNS_VERIFY.md',
+      '- x2 details: RUNS_X2.md'
+    ].join('\n'));
+    spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env: { ...env, UPDATE_E66_EVIDENCE: '1' } });
+    fingerprint = evidenceFingerprint();
+  }
 }
 
 if (!fingerprint) {
@@ -68,26 +96,44 @@ if (!fingerprint) {
   process.exit(1);
 }
 
-if (process.env.CI !== 'true' || updateRequested) {
-  writeMd(path.join(E66_ROOT, 'RUNS.md'), [
-    '# E66 RUNS',
+if (updateRequested && process.env.CI !== 'true') {
+  writeMd(path.join(E66_ROOT, 'RUNS_VERIFY.md'), [
+    '# E66 RUNS VERIFY',
     `- ci: ${process.env.CI || ''}`,
     `- fingerprint: ${fingerprint}`,
     ...logs.map((x) => `- ${x.name}: ${x.status === 0 ? 'PASS' : 'FAIL'}`)
   ].join('\n'));
+  const x2Path = path.join(E66_ROOT, 'RUNS_X2.md');
+  if (!fs.existsSync(x2Path)) {
+    writeMd(x2Path, '# E66 RUNS X2\n\n- status: PENDING (run CI=false UPDATE_E66_EVIDENCE=1 npm run -s verify:phoenix:x2)');
+  }
   writeMd(path.join(E66_ROOT, 'PACK.md'), '# E66 PACK\n\nStatus: COMPLETE');
-  writeMd(path.join(E66_ROOT, 'VERDICT.md'), '# E66 VERDICT\n\nStatus: PASS');
+  writeMd(path.join(E66_ROOT, 'VERDICT.md'), [
+    '# E66 VERDICT',
+    '',
+    'Status: PASS',
+    '',
+    '- verify details: RUNS_VERIFY.md',
+    '- x2 details: RUNS_X2.md'
+  ].join('\n'));
   const closeout = [
     '# E66 CLOSEOUT',
     '',
-    '## Commands',
-    '- verify:snapshots',
-    '- verify:cas',
-    '- verify:provenance',
-    '- verify:evidence',
+    `- commit: ${shortSha()}`,
+    `- utc: ${nowUtcIso()}`,
+    '- mode: update ritual',
+    '- commands:',
+    '  - CI=false UPDATE_CAS=1 UPDATE_PROVENANCE=1 UPDATE_E66_EVIDENCE=1 APPROVE_SNAPSHOTS=1 npm run -s verify:e66',
+    '  - CI=false UPDATE_E66_EVIDENCE=1 npm run -s verify:phoenix:x2',
     '',
-    `- fingerprint: ${fingerprint}`,
-    `- ci: ${process.env.CI || ''}`
+    `- evidence_fingerprint: ${fingerprint}`,
+    '- links:',
+    '  - VERDICT.md',
+    '  - RUNS_VERIFY.md',
+    '  - RUNS_X2.md',
+    '  - SHA256SUMS.md',
+    '  - PROVENANCE.md',
+    '  - CAS.md'
   ].join('\n');
   writeMd(path.join(E66_ROOT, 'CLOSEOUT.md'), closeout);
   spawnSync('npm', ['run', '-s', 'verify:evidence'], { stdio: 'inherit', env: { ...env, UPDATE_E66_EVIDENCE: '1' } });
@@ -101,8 +147,8 @@ if ((evidence.status ?? 1) !== 0) {
 }
 
 const after = gitStatus();
-if (process.env.CI === 'true' && before !== after) {
-  console.error('verify:e66 FAILED\n- CI_READ_ONLY_VIOLATION');
+if (before !== after && (process.env.CI === 'true' || !updateRequested)) {
+  console.error(`verify:e66 FAILED\n- ${process.env.CI === 'true' ? 'CI_READ_ONLY_VIOLATION' : 'READ_ONLY_VIOLATION'}`);
   process.exit(1);
 }
 console.log(`verify:e66 PASSED fingerprint=${fingerprint}`);

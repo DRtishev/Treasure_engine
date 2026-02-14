@@ -1,6 +1,6 @@
 # E66 PROVENANCE
 - builder: local
-- commit: d4afa5625e1eea5ca2cf5e6307ef07fcb3feec0b
+- commit: b8a00cab6c5596d90231e61342cdbd2c5f16264f
 - ref: work
 - ci: false
 
