@@ -1,9 +1,9 @@
 {
   "epoch_id": "EPOCH-65",
-  "sha": "17e0b1765a188b6f83373ba109ab23c4761e2752",
+  "sha": "590906a2ffbc55f3d87d0f81de49f47be2c6a08b",
   "node": "v20.19.6",
   "npm": "11.4.2",
-  "date": "2026-02-14T13:32:23.054Z",
+  "date": "2026-02-14T14:56:11.210Z",
   "gate_runs": [
     {
       "path": "gates/npm_ci.log",
@@ -136,6 +136,11 @@
       "status": "PASS"
     },
     {
+      "path": "gates/verify_repo_post_closeout.log",
+      "sha256": "8ebbb19fbc00a86fc0ba9956b4954bfac444a9e17194e2c0b60235f69f620378",
+      "status": "PASS"
+    },
+    {
       "path": "gates/verify_repo_run1.log",
       "sha256": "8ebbb19fbc00a86fc0ba9956b4954bfac444a9e17194e2c0b60235f69f620378",
       "status": "PASS"
@@ -180,8 +185,8 @@
   "hashes": {
     "PREFLIGHT.log": "16bc37bd04fdc282c896fa5020949aaf397a2b7e1f60e01af859485c9f077860",
     "COMMANDS.log": "9d77207a8ca853b23c5496efae97b293cca582f8a9cce30aa693c970c66ceb85",
-    "SNAPSHOT.md": "897c0d2314ecf8d1c5cbd1fa7228b3588cc3942b40a17250972645336b85ae21",
-    "SUMMARY.md": "f110b978e30873bcce6e4f086b54375905b4d86708788d6e284aeb15ce698303",
+    "SNAPSHOT.md": "808721b9693e29bf916592ed25be7d8b43eee2611729ac30706a264bb64d307a",
+    "SUMMARY.md": "4845f8b72d5fff1f037c6ac9e63ecfd468a1f4e4ef091066af9d05be11279a36",
     "VERDICT.md": "51a4d2f9d3dfd5a8819dc9d96e422c73040fe2cfffe99bb4a8f3f3e34879e551"
   }
 }

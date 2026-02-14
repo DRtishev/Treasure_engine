@@ -1,6 +1,6 @@
 # EPOCH-65 SNAPSHOT
 - evidence_root: `reports/evidence/EPOCH-65/`
-- gate_logs: 33
+- gate_logs: 34
 - failing_gate_logs: 0
 - unknown_gate_logs: 4
 - gate_runs:
@@ -30,6 +30,7 @@
   - `gates/verify_release_run1.log` [PASS] `13a6a31d4f435c5982615224b1e3985bc0ede4dbf9a1820628e2c4c5ac3a9f95`
   - `gates/verify_release_run2.log` [PASS] `13a6a31d4f435c5982615224b1e3985bc0ede4dbf9a1820628e2c4c5ac3a9f95`
   - `gates/verify_repo_closeout.log` [PASS] `8ebbb19fbc00a86fc0ba9956b4954bfac444a9e17194e2c0b60235f69f620378`
+  - `gates/verify_repo_post_closeout.log` [PASS] `8ebbb19fbc00a86fc0ba9956b4954bfac444a9e17194e2c0b60235f69f620378`
   - `gates/verify_repo_run1.log` [PASS] `8ebbb19fbc00a86fc0ba9956b4954bfac444a9e17194e2c0b60235f69f620378`
   - `gates/verify_repo_run2.log` [PASS] `8ebbb19fbc00a86fc0ba9956b4954bfac444a9e17194e2c0b60235f69f620378`
   - `gates/verify_specs_closeout.log` [PASS] `8359569cd958d93eb43c7f3b23c7c04be86dbaacd3d355af4c60fb364c4278af`

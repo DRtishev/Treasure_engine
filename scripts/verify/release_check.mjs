@@ -55,6 +55,9 @@ if (strict) {
 
   const chain = spawnSync('npm', ['run', '-s', 'verify:release:chain'], { encoding: 'utf8', env: process.env });
   if (chain.status !== 0) errors.push(`verify:release:chain failed: ${chain.stderr || chain.stdout}`);
+
+  const binding = spawnSync('npm', ['run', '-s', 'verify:evidence:commit_binding'], { encoding: 'utf8', env: { ...process.env, EVIDENCE_COMMIT_BINDING_STRICT: '1' } });
+  if (binding.status !== 0) errors.push(`verify:evidence:commit_binding failed: ${binding.stderr || binding.stdout}`);
 }
 
 function sha(file) {
