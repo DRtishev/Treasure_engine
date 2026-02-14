@@ -13,6 +13,11 @@ const update = process.env.UPDATE_E67_EVIDENCE === '1';
 if (process.env.CI === 'true' && update) {
   throw new Error('UPDATE_E67_EVIDENCE=1 forbidden when CI=true');
 }
+for (const k of Object.keys(process.env)) {
+  if ((k.startsWith('UPDATE_') || k.startsWith('APPROVE_')) && process.env.CI === 'true' && String(process.env[k] || '').trim() !== '') {
+    throw new Error(`${k} forbidden when CI=true`);
+  }
+}
 
 function scrubMutableFlags(src) {
   const clean = { ...src };
@@ -39,8 +44,19 @@ function buildReconFingerprint(tempRoot, epochs) {
   const joined = {};
   for (const epoch of epochs) {
     const file = path.join(tempRoot, 'E67-EDGE-RECON', `epoch${epoch}`, 'CONTRACT_OUTPUTS.json');
-    const payload = JSON.parse(fs.readFileSync(file, 'utf8'));
-    joined[`epoch${epoch}`] = Object.fromEntries(Object.entries(payload).map(([k, v]) => [k, v?.deterministic_fingerprint || null]));
+    if (!fs.existsSync(file)) throw new Error(`E67_RECON_MISSING_FINGERPRINT missing_contract_outputs epoch=${epoch}`);
+    const raw = fs.readFileSync(file, 'utf8');
+    const fileSha = crypto.createHash('sha256').update(raw).digest('hex');
+    const payload = JSON.parse(raw);
+    const contractFingerprints = {};
+    for (const [k, v] of Object.entries(payload)) {
+      const fp = v?.deterministic_fingerprint;
+      if (typeof fp !== 'string' || fp.trim() === '') {
+        throw new Error(`E67_RECON_MISSING_FINGERPRINT epoch=${epoch} contract=${k}`);
+      }
+      contractFingerprints[k] = fp;
+    }
+    joined[`epoch${epoch}`] = { file_sha256: fileSha, contract_fingerprints: contractFingerprints };
   }
   const canonical = canonicalStringify(joined);
   return crypto.createHash('sha256').update(canonical).digest('hex');

@@ -7,8 +7,8 @@ if (process.env.CI === 'true' && update) {
   process.exit(1);
 }
 for (const k of Object.keys(process.env)) {
-  if ((k.startsWith('UPDATE_') || k.startsWith('APPROVE_')) && process.env.CI === 'true' && process.env[k] === '1') {
-    console.error(`verify:e67 FAILED\n- ${k}=1 forbidden when CI=true`);
+  if ((k.startsWith('UPDATE_') || k.startsWith('APPROVE_')) && process.env.CI === 'true' && String(process.env[k] || '').trim() !== '') {
+    console.error(`verify:e67 FAILED\n- ${k} forbidden when CI=true`);
     process.exit(1);
   }
 }
@@ -26,6 +26,30 @@ function scrubMutableFlags(src) {
 function gitStatusPorcelain() {
   const r = spawnSync('git', ['status', '--porcelain'], { encoding: 'utf8' });
   return (r.stdout || '').trim();
+}
+
+function parseStatusMap(text) {
+  const map = new Map();
+  for (const row of text.split('\n').map((x) => x.trim()).filter(Boolean)) {
+    const status = row.slice(0, 2);
+    const rel = row.slice(3).trim();
+    map.set(rel, status);
+  }
+  return map;
+}
+
+function driftOnlyUnderE67(before, after) {
+  const beforeMap = parseStatusMap(before);
+  const afterMap = parseStatusMap(after);
+  const changedPaths = [];
+  for (const [rel, status] of afterMap.entries()) {
+    if (!beforeMap.has(rel) || beforeMap.get(rel) !== status) changedPaths.push(rel);
+  }
+  for (const rel of beforeMap.keys()) {
+    if (!afterMap.has(rel)) changedPaths.push(rel);
+  }
+  if (changedPaths.length === 0) return true;
+  return changedPaths.every((rel) => rel.startsWith('reports/evidence/E67/'));
 }
 
 function runStep(name, cmd, env = process.env) {
@@ -53,8 +77,18 @@ runStep('verify:evidence', ['npm', 'run', '-s', 'verify:evidence'], ciEnv);
 runStep('verify:edge:recon:x2', ['npm', 'run', '-s', 'verify:edge:recon:x2'], normalizedEnv);
 runStep('verify:e67:evidence', ['node', 'scripts/verify/e67_evidence.mjs'], normalizedEnv);
 const after = gitStatusPorcelain();
-if (before !== after && (process.env.CI === 'true' || !update)) {
-  console.error(`verify:e67 FAILED\n- ${process.env.CI === 'true' ? 'CI_READ_ONLY_VIOLATION' : 'READ_ONLY_VIOLATION'}`);
-  process.exit(1);
+if (before !== after) {
+  if (process.env.CI === 'true') {
+    console.error('verify:e67 FAILED\n- CI_READ_ONLY_VIOLATION');
+    process.exit(1);
+  }
+  if (!update) {
+    console.error('verify:e67 FAILED\n- READ_ONLY_VIOLATION');
+    process.exit(1);
+  }
+  if (!driftOnlyUnderE67(before, after)) {
+    console.error('verify:e67 FAILED\n- UPDATE_SCOPE_VIOLATION');
+    process.exit(1);
+  }
 }
 console.log('verify:e67 PASSED');

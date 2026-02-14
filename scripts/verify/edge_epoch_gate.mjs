@@ -347,6 +347,7 @@ if (epoch === '35') outputs.AllocationPlan = buildAllocationPlan(seed);
 if (epoch === '36') outputs.RiskDecision = buildRiskDecision(0.22);
 if (epoch === '37') {
   outputs.WFOReport = walkForwardLeakageSentinel(false);
+  outputs.WFOReport.deterministic_fingerprint = deterministicFingerprint('WFOReport', outputs.WFOReport);
   let injectedFailed = false;
   try { walkForwardLeakageSentinel(true); } catch { injectedFailed = true; }
   if (!injectedFailed) throw new Error('Injected leakage fixture did not fail');

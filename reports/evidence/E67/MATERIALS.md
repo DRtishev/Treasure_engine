@@ -1,8 +1,8 @@
 # E67 MATERIALS
 - e66_canonical_fingerprint: a91dbeda87ea32b287f94053621ec09f5f399ab26f397d5f7f635668a8197232
 - package-lock.json: 3bf74b60e28f65ecb160713e7fdf97f4d763910d90509b058f07c28758df1111
-- scripts/verify/edge_epoch_gate.mjs: d223e0ca931eaebb537d4b6974065eb56a0dd38bb459073013f5fa2f08feafc9
+- scripts/verify/edge_epoch_gate.mjs: 2d82f583a3e843dd626d2a674fb974c80c894319c548ea995f80c5bff3bee70b
 - scripts/verify/e67_lib.mjs: 35a00531cdeed5c0dd8904b5d4079b38cd7780d8975bc72d85cba9aa94bc1120
-- scripts/verify/e67_recon_x2.mjs: 6deef5285df352df460e866923aebc3bad48466a95243a936fa9e21c6064eb05
-- scripts/verify/e67_evidence.mjs: d8a143777f52ff291a31ca9122095b1757cf792494602d595983b5fd3e6e285d
-- scripts/verify/e67_run.mjs: 39d5e4fd277d5df89c8f7092bc88cb29665dc1c72386d585d33add48d964e369
+- scripts/verify/e67_recon_x2.mjs: 80d0415d3bc4361b89e04ef30d82943f62232317a5bf3c19d0666edbb4d026bd
+- scripts/verify/e67_evidence.mjs: e78db1a00fdf9ebf57e3a5f98ad772eb06ba4e278339ff9a933c57e3719b9a21
+- scripts/verify/e67_run.mjs: 9cee5400e7a94f9d2b9ea4094302a131a4d8b6f4e0fe90df8299b3e8d1bb56e1

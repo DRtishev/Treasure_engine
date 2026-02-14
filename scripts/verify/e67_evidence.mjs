@@ -112,6 +112,12 @@ if (closeoutFp !== computed || verdictFp !== computed) {
   throw new Error(`canonical fingerprint mismatch closeout=${closeoutFp} verdict=${verdictFp} computed=${computed}`);
 }
 
+
+const sumsRaw = fs.readFileSync(path.join(E67_ROOT, 'SHA256SUMS.md'), 'utf8');
+if (!/\sreports\/evidence\/E67\/CLOSEOUT\.md$/m.test(sumsRaw) || !/\sreports\/evidence\/E67\/VERDICT\.md$/m.test(sumsRaw)) {
+  throw new Error('SHA256SUMS missing CLOSEOUT.md or VERDICT.md row');
+}
+
 const sumsCheck = spawnSync('bash', ['-lc', "grep -E '^[0-9a-f]{64} ' reports/evidence/E67/SHA256SUMS.md | sha256sum -c -"], { encoding: 'utf8' });
 if ((sumsCheck.status ?? 1) !== 0) throw new Error(`SHA check failed\n${sumsCheck.stdout}\n${sumsCheck.stderr}`);
 console.log(`verify:e67:evidence PASSED canonical_fingerprint=${computed}`);
