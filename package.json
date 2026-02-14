@@ -168,7 +168,11 @@
     "approve:snapshots": "APPROVE_SNAPSHOTS=1 node scripts/verify/e66_snapshots.mjs",
     "verify:cas": "node scripts/verify/e66_cas.mjs",
     "verify:evidence": "node scripts/verify/e66_evidence.mjs",
-    "verify:e66": "node scripts/verify/e66_run.mjs"
+    "verify:e66": "node scripts/verify/e66_run.mjs",
+    "verify:edge:recon:x2": "node scripts/verify/e67_recon_x2.mjs",
+    "verify:e67:evidence": "node scripts/verify/e67_evidence.mjs",
+    "verify:e67": "node scripts/verify/e67_run.mjs",
+    "verify:e67:update": "UPDATE_E67_EVIDENCE=1 npm run -s verify:e67"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
