@@ -41,7 +41,7 @@ function buildMaterials() {
 function buildEdgeRecon() {
   return [
     '# E67 EDGE RECON',
-    '- epochs_ran: 31, 40',
+    '- epochs_ran: 31, 32, 33, 34, 35, 36, 37, 38, 39, 40',
     '- evidence_root: temp dir via EVIDENCE_ROOT override',
     '- env_normalization:',
     '  - TZ=UTC',

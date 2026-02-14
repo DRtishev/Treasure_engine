@@ -59,20 +59,24 @@ function runOnce(label, epochsToRun, epochsForFingerprint) {
 }
 
 const epochsToRun = ['31','32','33','34','35','36','37','38','39','40'];
-const epochsForFingerprint = ['31','40'];
+const epochsForFingerprint = ['31','32','33','34','35','36','37','38','39','40'];
 const run1 = runOnce('run1', epochsToRun, epochsForFingerprint);
 const run2 = runOnce('run2', epochsToRun, epochsForFingerprint);
 const deterministicMatch = run1.status === 0 && run2.status === 0 && run1.reconFingerprint === run2.reconFingerprint;
 const pass = run1.status === 0 && run2.status === 0 && deterministicMatch;
 
-if (!pass && run1.status !== 0 && run2.status !== 0) {
+const doubleFailure = run1.status !== 0 && run2.status !== 0;
+const deterministicMismatch = run1.status === 0 && run2.status === 0 && run1.reconFingerprint !== run2.reconFingerprint;
+if (!pass && (doubleFailure || deterministicMismatch)) {
   ensureDir(path.dirname(E67_LOCK_PATH));
   fs.writeFileSync(E67_LOCK_PATH, [
     '# E67 KILL LOCK',
     '',
-    '- reason: verify:edge:recon:x2 failed twice',
+    `- reason: ${doubleFailure ? 'verify:edge:recon:x2 failed twice' : 'deterministic mismatch across run1/run2'}`,
     `- run1_status: ${run1.status}`,
     `- run2_status: ${run2.status}`,
+    `- run1_recon_fingerprint: ${run1.reconFingerprint || 'N/A'}`,
+    `- run2_recon_fingerprint: ${run2.reconFingerprint || 'N/A'}`,
     `- run1_temp: ${run1.tempRoot}`,
     `- run2_temp: ${run2.tempRoot}`
   ].join('\n') + '\n');
@@ -89,8 +93,8 @@ if (update && process.env.CI !== 'true') {
     `- run1_recon_fingerprint: ${run1.reconFingerprint || 'N/A'}`,
     `- run2_recon_fingerprint: ${run2.reconFingerprint || 'N/A'}`,
     `- deterministic_match: ${String(deterministicMatch)}`,
-    `- run1_temp_root: ${run1.tempRoot}`,
-    `- run2_temp_root: ${run2.tempRoot}`
+    '- run1_root: <tmp-run1>',
+    '- run2_root: <tmp-run2>'
   ].join('\n'));
 }
 
@@ -108,4 +112,5 @@ if (!pass) {
   process.exit(1);
 }
 
+console.log(`verify:edge:recon:x2 temp_roots run1=${run1.tempRoot} run2=${run2.tempRoot}`);
 console.log(`verify:edge:recon:x2 PASSED recon_fingerprint=${run1.reconFingerprint}`);

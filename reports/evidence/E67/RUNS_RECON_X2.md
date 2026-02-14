@@ -1,10 +1,10 @@
 # E67 RUNS RECON X2
 - epochs_ran: 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
-- epochs_fingerprint_set: 31, 40
+- epochs_fingerprint_set: 31, 32, 33, 34, 35, 36, 37, 38, 39, 40
 - run1_status: 0
 - run2_status: 0
-- run1_recon_fingerprint: 05d542e43eb0ceac68e8044a15659175d01c582e4666e46317dae11e520f4738
-- run2_recon_fingerprint: 05d542e43eb0ceac68e8044a15659175d01c582e4666e46317dae11e520f4738
+- run1_recon_fingerprint: dbd1f66916dd04d7c74a7e237b402349f510e08d081fb9aaac0a5cd89b37bc38
+- run2_recon_fingerprint: dbd1f66916dd04d7c74a7e237b402349f510e08d081fb9aaac0a5cd89b37bc38
 - deterministic_match: true
-- run1_temp_root: /tmp/e67-run1-nzPF8j
-- run2_temp_root: /tmp/e67-run2-ZBr6JI
+- run1_root: <tmp-run1>
+- run2_root: <tmp-run2>

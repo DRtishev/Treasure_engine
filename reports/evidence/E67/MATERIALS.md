@@ -3,6 +3,6 @@
 - package-lock.json: 3bf74b60e28f65ecb160713e7fdf97f4d763910d90509b058f07c28758df1111
 - scripts/verify/edge_epoch_gate.mjs: d223e0ca931eaebb537d4b6974065eb56a0dd38bb459073013f5fa2f08feafc9
 - scripts/verify/e67_lib.mjs: 35a00531cdeed5c0dd8904b5d4079b38cd7780d8975bc72d85cba9aa94bc1120
-- scripts/verify/e67_recon_x2.mjs: bf4bcd2fe5351c491c57404d53684d201dabbb21cb429df628718ebcfd1f0c38
-- scripts/verify/e67_evidence.mjs: 27e0478986cec2b1bfd5a4efba64b5a01f538dc7aef6a68ac1a853873cfa8460
-- scripts/verify/e67_run.mjs: 5fce2900d5bbb731bd1fe48a86569f6099187317dbfdb77f506283a0bd582b84
+- scripts/verify/e67_recon_x2.mjs: 6deef5285df352df460e866923aebc3bad48466a95243a936fa9e21c6064eb05
+- scripts/verify/e67_evidence.mjs: d8a143777f52ff291a31ca9122095b1757cf792494602d595983b5fd3e6e285d
+- scripts/verify/e67_run.mjs: 39d5e4fd277d5df89c8f7092bc88cb29665dc1c72386d585d33add48d964e369
