@@ -62,5 +62,7 @@ export function ingestE78Recon(csvPath) {
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {
-  console.log(JSON.stringify(ingestE78Recon(path.resolve(process.argv[2] || 'core/edge/fixtures/e77_recon_observed_multi.csv')), null, 2));
+  const recon=ingestE78Recon(path.resolve(process.argv[2] || 'core/edge/fixtures/e77_recon_observed_multi.csv'));
+  if(String(process.env.QUIET||'0')!=='1') console.log(JSON.stringify(recon, null, 2));
+  console.log(`recon_fingerprint=${recon.fingerprint}`);
 }

@@ -18,3 +18,7 @@
 | W-0014 | W-0014-recon-reality-binding | Governance | Active | E76 | docs/wow/tricks/W-0014-recon-reality-binding.md |
 | W-0015 | W-0015-canary-budget-doctrine | Risk | Active | E77 | docs/wow/tricks/W-0015-canary-budget-doctrine.md |
 | W-0016 | W-0016-calibration-court-no-silent-drift | Governance | Active | E77 | docs/wow/tricks/W-0016-calibration-court-no-silent-drift.md |
+| W-0017 | W-0017-quiet-mode-deterministic-signal-control | Governance | Active | E79 | docs/wow/tricks/W-0017-quiet-mode-deterministic-signal-control.md |
+| W-0018 | W-0018-auto-stage-tightening-no-human-drift | Risk | Active | E79 | docs/wow/tricks/W-0018-auto-stage-tightening-no-human-drift.md |
+| W-0019 | W-0019-strict-1-is-earned-not-assumed | Governance | Active | E80 | docs/wow/tricks/W-0019-strict-1-is-earned-not-assumed.md |
+| W-0020 | W-0020-microfill-recon-truth-comes-from-fills | Execution | Active | E80 | docs/wow/tricks/W-0020-microfill-recon-truth-comes-from-fills.md |

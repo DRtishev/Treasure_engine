@@ -1,0 +1,4 @@
+# E80 CLOSEOUT
+- status: PASS
+- commands_executed: npm ci; CI=false UPDATE_E80_EVIDENCE=1 UPDATE_E80_CALIBRATION=1 CANARY_STAGE=AUTO QUIET=1 npm run -s verify:e80; git status --porcelain > /tmp/e80_ci_before && CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e80 && git status --porcelain > /tmp/e80_ci_after && diff -u /tmp/e80_ci_before /tmp/e80_ci_after; grep -E canonical_fingerprint reports/evidence/E80/CLOSEOUT.md reports/evidence/E80/VERDICT.md; node -e "import('./scripts/verify/e80_lib.mjs').then(m=>console.log(m.evidenceFingerprintE80()))"; grep -E "^[0-9a-f]{64} " reports/evidence/E80/SHA256SUMS.md | sha256sum -c -; grep -E "deterministic_match|run1_fingerprint|run2_fingerprint|canary_stage|stage_decision|promotion" reports/evidence/E80/RUNS_EDGE_CANARY_X2.md
+- canonical_fingerprint: 3684d0adebdad9b7b528d6d284689219e8659d0cbe5c691681fca89310330a37
