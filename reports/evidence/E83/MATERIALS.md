@@ -1,0 +1,9 @@
+# E83 MATERIALS
+- e82_canonical_fingerprint: 84a190582fcf0c041489e72d358dee1df6f77aa42d1da5c26d0b24919da2d237
+- recon_fingerprint: e29c4e075a84841f28efda818053d5074e63d0d2ceb0062b41b95c90f42079fc
+- canary_run_fingerprint: 0d1df679174ec9eac80c828d9f1cf7e813442767ce01188200fa34a636a12580
+- threshold_hash: 81c7b1d4fbf16978141baee484c1f2090e55b7161851e8964c88b132255231f7
+- demo_daily_sentinel: DEMO_DAILY=ABSENT
+- stage_policy_hash: 26853eeef72fc326b7ceff5fe7b7f755d4d6e158e215e85c48342b594a228829
+- chain_mode_default_ci: FAST_PLUS
+- seed: 12345

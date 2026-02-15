@@ -1,0 +1,4 @@
+# E86 CLOSEOUT
+- status: PASS
+- commands_executed: npm ci; CI=false UPDATE_E86_EVIDENCE=1 UPDATE_E86_THRESHOLDS=1 ENABLE_DEMO_ADAPTER=1 ALLOW_MANUAL_RECON=1 CANARY_STAGE=AUTO QUIET=1 npm run -s verify:e86:update; git status --porcelain > /tmp/e86_before && CI=false QUIET=1 npm run -s verify:e86 && git status --porcelain > /tmp/e86_after && diff -u /tmp/e86_before /tmp/e86_after; git status --porcelain > /tmp/e86_ci_before && CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e86 && git status --porcelain > /tmp/e86_ci_after && diff -u /tmp/e86_ci_before /tmp/e86_ci_after; grep -E canonical_fingerprint reports/evidence/E86/CLOSEOUT.md reports/evidence/E86/VERDICT.md; node -e "import('./scripts/verify/e86_lib.mjs').then(m=>console.log(m.evidenceFingerprintE86()))"; grep -E "^[0-9a-f]{64} " reports/evidence/E86/SHA256SUMS.md | sha256sum -c -
+- canonical_fingerprint: 22ed654de36b747c694904cfc8dcf2720a3e97b0f7ccd6de099eeb0782e45573

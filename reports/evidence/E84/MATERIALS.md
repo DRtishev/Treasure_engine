@@ -1,0 +1,11 @@
+# E84 MATERIALS
+- e82_canonical_fingerprint: 84a190582fcf0c041489e72d358dee1df6f77aa42d1da5c26d0b24919da2d237
+- e83_canonical_fingerprint: fe133508e2749c078ab88befcba17dcbaeaed15534ae259e77655f7fa25e6bf5
+- recon_fingerprint: e29c4e075a84841f28efda818053d5074e63d0d2ceb0062b41b95c90f42079fc
+- canary_run_fingerprint: 1e7fec826377b2898b15cf8adfcc0fd04b6f3da5e8121bdd7fb7e3cf51d0e958
+- ledger_fingerprint: 44b51e97b97bfc213978ed6213788a4e40628c174370e59f05095901e14ce2b2
+- threshold_hash: 81c7b1d4fbf16978141baee484c1f2090e55b7161851e8964c88b132255231f7
+- demo_daily_sentinel: DEMO_DAILY=ABSENT
+- stage_policy_hash: e52f0f9afd7995a3be7edf50fe85829bb55b2d1f39f214d344086949666683f6
+- chain_mode_default_ci: FAST_PLUS
+- seed: 12345

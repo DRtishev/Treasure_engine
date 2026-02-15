@@ -1,0 +1,9 @@
+# E81 MATERIALS
+- e80_canonical_fingerprint: 3684d0adebdad9b7b528d6d284689219e8659d0cbe5c691681fca89310330a37
+- e80_calibration_hash: 47d96a2c38316252d2e3a3ef50dd1ccc66ff5c22883294a12a16da1d26112c31
+- recon_fingerprint: e29c4e075a84841f28efda818053d5074e63d0d2ceb0062b41b95c90f42079fc
+- canary_run_fingerprint: 9f652d9523376c28098ea4d9e240aafbb9b7dd76112987c2a33fbc2351dc1d0e
+- calibration_hash: 6de95c18baf1b48c54a341454edd1d1f86eb3e6979ecc2c42c0d4ddc14ee3c16
+- calibration_drift_rate: 0.01594905
+- stage_policy_hash: 0dad6fe3217dceecd33d1b11ba4ce30b1c62a8287f28a3283652eab501b4b480
+- chain_mode_default_ci: FAST_PLUS

@@ -1,0 +1,15 @@
+# E84 THRESHOLD COURT
+- status: PASS
+- continuity_previous_threshold_hash: 81c7b1d4fbf16978141baee484c1f2090e55b7161851e8964c88b132255231f7
+- previous_threshold_hash: e52f0f9afd7995a3be7edf50fe85829bb55b2d1f39f214d344086949666683f6
+- new_threshold_hash: 81c7b1d4fbf16978141baee484c1f2090e55b7161851e8964c88b132255231f7
+- reason_codes: MIN_WINDOWS_STRICT_UNCHANGED,MAX_INVALID_STRICT_MONOTONIC_TIGHTEN,MAX_SPREAD_P50_STRICT_UNCHANGED,MAX_FEE_AVG_STRICT_MONOTONIC_TIGHTEN
+- update_thresholds: true
+- threshold_court_fingerprint: 33144aa4be70b490dc4185f22e083108251faff33cceebd2e9efcf2192bf31f4
+
+| key | current | proposed |
+|---|---:|---:|
+| MAX_FEE_AVG_STRICT | 6 | 0.4935 |
+| MAX_INVALID_STRICT | 0.04 | 0 |
+| MAX_SPREAD_P50_STRICT | 0.095 | 0.095 |
+| MIN_WINDOWS_STRICT | 4 | 4 |
