@@ -14,3 +14,7 @@
 | W-0010 | W-0010-edge-pattern-10 | Data | Active | E71 | docs/wow/tricks/W-0010-edge-pattern-10.md |
 | W-0011 | W-0011-edge-pattern-11 | Governance | Active | E71 | docs/wow/tricks/W-0011-edge-pattern-11.md |
 | W-0012 | W-0012-edge-pattern-12 | Execution | Active | E71 | docs/wow/tricks/W-0012-edge-pattern-12.md |
+| W-0013 | W-0013-envelope-worst-case-first | Execution | Active | E76 | docs/wow/tricks/W-0013-envelope-worst-case-first.md |
+| W-0014 | W-0014-recon-reality-binding | Governance | Active | E76 | docs/wow/tricks/W-0014-recon-reality-binding.md |
+| W-0015 | W-0015-canary-budget-doctrine | Risk | Active | E77 | docs/wow/tricks/W-0015-canary-budget-doctrine.md |
+| W-0016 | W-0016-calibration-court-no-silent-drift | Governance | Active | E77 | docs/wow/tricks/W-0016-calibration-court-no-silent-drift.md |

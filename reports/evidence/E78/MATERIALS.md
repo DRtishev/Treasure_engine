@@ -1,0 +1,16 @@
+# E78 MATERIALS
+- e77_canonical_fingerprint: 5673c9838445c08640d1e110487f9d13c16e0e166c10f7a934821c70c8546f37
+- e77_calibration_hash: 560e6386c71569d7a7e00045db67df3bb1e2d6e5547ffcf2eeefcd2492185f56
+- chain_mode: FAST_PLUS
+- canary_stage: BASELINE
+- update_scope_whitelist_version: e78-v1
+- recon_fingerprint: 52876466c7a409e660aea8c22634b8c4bc4f60ae647ba3ce5c11bbb8d3400164
+- calibration_hash: 98180c31843fcf439d43fa5564ea2e52d0dabdc950d140f5088a7a8ec1ca646f
+- profit_search_fingerprint: 077d0dc3bbd238f46f2ed9846cd708716bccb9b8337e2b983a5f69c280d9e4f5
+- canary_fingerprint: 0f05a7e854984805a5dd67aac6c7ed10b8c76728e223b8a11efb02e99867d009
+- env_normalization:
+  - TZ=UTC
+  - LANG=C
+  - LC_ALL=C
+  - SOURCE_DATE_EPOCH=1700000000
+- WOW_USED: [W-0003, W-0015, W-0016]

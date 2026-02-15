@@ -1,0 +1,33 @@
+# E75 MATERIALS
+- e74_canonical_fingerprint: 0638c096c62936f74050952e2c128d018c971f1327597e30b4d6c5be9104ab16
+- node_version: v20.19.6
+- npm_version: 11.4.2
+- env_normalization:
+  - TZ=UTC
+  - LANG=C
+  - LC_ALL=C
+  - SOURCE_DATE_EPOCH=1700000000
+- realism_parameters:
+  - fees_taker_bps=8
+  - slippage_model=spread*1+impact_coeff*size
+  - impact_coeff=0.00002
+  - latency_model=fixed_ms+seeded_jitter
+  - fixed_latency_ms=35
+  - jitter_ms=5
+- WOW_USED: [W-0001, W-0003, W-0004]
+- Stop-Lying:
+  - EDGE_FOUND (trend_follow:fast)
+- source_recon_notes:
+  - Source A (Bybit fees/rules manual notes, checked 2026-02-15): demo follows maker/taker schedule + rounding by instrument precision.
+  - Source B (microstructure model notes, checked 2026-02-15): linear impact approximation (spread + k*size) acceptable for offline stress ranking.
+  - Source C (Bybit demo behavior manual notes, checked 2026-02-15): rate limits/order types/qty-step must be respected by adapter before sending.
+- core/edge/e75_execution_recon.mjs: bf2f1131283bc2096bfb0f02c5001b524abf1628ef953a8ece1c801b8b7a1cbb
+- core/edge/e75_profit_harness.mjs: 84f623dda283daeb7e90e9597ba706d16323e2b849e15a26c2ebd3c5208f4058
+- core/exec/adapters/demo_adapter_bybit.mjs: af474cb15ed4d70a94aee788b418ce2da53320811048d729aac1c67739ebd28f
+- package-lock.json: 3bf74b60e28f65ecb160713e7fdf97f4d763910d90509b058f07c28758df1111
+- package.json: 61ec04582aa0fab00e316b4804276d5118f5197602f69ba4d75432a0bee2226d
+- scripts/verify/e75_edge_profit_x2.mjs: b0d4477ef99cc62e5cfee054ed0d45de0b156137518edaf1b580d44d4d11345d
+- scripts/verify/e75_evidence.mjs: 90b7fd48e045ea2fe69197a15efd1e496246a8f98cb193ad53fa26176e9d89c4
+- scripts/verify/e75_lib.mjs: a3976fcd2fb84706d72c9cfd9e55e1a5f349f8f2e8e0b7cdbc19364b3c4d46c4
+- scripts/verify/e75_profit_harness_check.mjs: f27c29fabbeabcf8f8e9cf5585d48408eaf711d51d0a7e45dc17e8d6805cc117
+- scripts/verify/e75_run.mjs: 61cca53adb97dc6bdf05389bd1649960ef033f77c0e6ac854c8e2d5b9d66b759

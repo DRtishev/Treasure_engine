@@ -1,0 +1,11 @@
+# E76 RUNS EDGE PROFIT ENVELOPE X2
+- ci: false
+- run1_seed: 12345
+- run2_seed: 12345
+- run1_fingerprint: 420e9a0304e6390da320dd3e1f2bcffe5abff76a684d974fab787bc4d5dfa324
+- run2_fingerprint: 420e9a0304e6390da320dd3e1f2bcffe5abff76a684d974fab787bc4d5dfa324
+- run1_envelope_fingerprint: 382f3a943a128348b7ec3417a03d670b02ff43a5a4320c1b2155701d19952a90
+- run2_envelope_fingerprint: 382f3a943a128348b7ec3417a03d670b02ff43a5a4320c1b2155701d19952a90
+- deterministic_match: true
+- run1_root: <tmp-run1>
+- run2_root: <tmp-run2>

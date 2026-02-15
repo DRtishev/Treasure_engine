@@ -1,0 +1,18 @@
+# E76 MATERIALS
+- e75_canonical_fingerprint: 496820ac366754862228de84983c312986140709135ca6a74cb15abf9858aaf9
+- chain_mode: FAST_PLUS
+- node_version: v20.19.6
+- npm_version: 11.4.2
+- env_normalization:
+  - TZ=UTC
+  - LANG=C
+  - LC_ALL=C
+  - SOURCE_DATE_EPOCH=1700000000
+- envelope_model:
+  - version: e76-envelope-v1
+  - seed_policy: fixed_seed=12345
+  - envelope_fingerprint: 382f3a943a128348b7ec3417a03d670b02ff43a5a4320c1b2155701d19952a90
+- sources:
+  - official: Bybit API docs (instruments/fees/rate-limits), checked 2026-02-15T09:00:00Z
+  - alternate: exchange fee schedule mirror + microstructure reference, checked 2026-02-15T09:20:00Z
+- WOW_USED: [W-0003, W-0013, W-0014]

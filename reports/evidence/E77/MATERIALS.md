@@ -1,0 +1,15 @@
+# E77 MATERIALS
+- e76_canonical_fingerprint: af116f516d960eef70641ba027edbdb6cd1ab9fa103ca0b9cb3adbbcdfc7ab8b
+- chain_mode: FAST_PLUS
+- node_version: v20.19.6
+- npm_version: 11.4.2
+- env_normalization:
+  - TZ=UTC
+  - LANG=C
+  - LC_ALL=C
+  - SOURCE_DATE_EPOCH=1700000000
+- recon_source_sha256: 425e327472dd24cb40efc351be70fb1c64df4960ed2567c507e876190615bd0d
+- recon_fingerprint: 1ee34789a86a98a2403a58be2a126b543bb3417428658e6aaa65198026a7e503
+- calibration_hash: 560e6386c71569d7a7e00045db67df3bb1e2d6e5547ffcf2eeefcd2492185f56
+- canary_run_fingerprint: 0f05a7e854984805a5dd67aac6c7ed10b8c76728e223b8a11efb02e99867d009
+- WOW_USED: [W-0003, W-0015, W-0016]
