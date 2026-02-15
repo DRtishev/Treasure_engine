@@ -223,7 +223,19 @@
     "verify:e78:calibration:court": "node scripts/verify/e78_calibration_court.mjs",
     "verify:e78:evidence": "node scripts/verify/e78_evidence.mjs",
     "verify:e78": "node scripts/verify/e78_run.mjs",
-    "verify:e78:update": "CI=false UPDATE_E78_EVIDENCE=1 UPDATE_E78_CALIBRATION=1 npm run -s verify:e78"
+    "verify:e78:update": "CI=false UPDATE_E78_EVIDENCE=1 UPDATE_E78_CALIBRATION=1 npm run -s verify:e78",
+    "verify:edge:shortlist": "node scripts/verify/e79_edge_shortlist.mjs",
+    "verify:edge:canary:x2:e79": "node scripts/verify/e79_edge_canary_x2.mjs",
+    "verify:e79:evidence": "node scripts/verify/e79_evidence.mjs",
+    "verify:e79": "node scripts/verify/e79_run.mjs",
+    "verify:e79:update": "CI=false UPDATE_E79_EVIDENCE=1 CANARY_STAGE=AUTO QUIET=1 npm run -s verify:e79",
+    "verify:quiet:smoke": "node scripts/verify/e79_quiet_smoke.mjs",
+    "verify:edge:canary:x2:e80": "node scripts/verify/e80_edge_canary_x2.mjs",
+    "verify:e80:calibration:court": "node scripts/verify/e80_calibration_court.mjs",
+    "verify:exec:recon:microfill": "node scripts/verify/e80_exec_recon_microfill_manual.mjs",
+    "verify:e80:evidence": "node scripts/verify/e80_evidence.mjs",
+    "verify:e80": "node scripts/verify/e80_run.mjs",
+    "verify:e80:update": "CI=false UPDATE_E80_EVIDENCE=1 UPDATE_E80_CALIBRATION=1 CANARY_STAGE=AUTO QUIET=1 npm run -s verify:e80"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

@@ -1,0 +1,6 @@
+# E80 WOW USAGE
+- WOW_USED: [W-0003, W-0019, W-0020]
+## W-0019
+- trace: stage promotion proof in e80_edge_canary_x2.mjs
+## W-0020
+- trace: manual demo microfill in e80_exec_recon_microfill_manual.mjs

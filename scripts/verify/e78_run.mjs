@@ -2,6 +2,7 @@
 import { spawnSync } from 'node:child_process';
 
 const update=process.env.UPDATE_E78_EVIDENCE==='1';
+const quiet=String(process.env.QUIET||'0')==='1';
 const chainMode=String(process.env.CHAIN_MODE || (process.env.CI==='true'?'FAST_PLUS':'FAST_PLUS')).toUpperCase();
 if(!['FULL','FAST_PLUS','FAST'].includes(chainMode)) throw new Error('CHAIN_MODE must be FULL|FAST_PLUS|FAST');
 if(process.env.CI==='true'&&(update||process.env.UPDATE_E78_CALIBRATION==='1')) throw new Error('UPDATE_E78 flags forbidden in CI');
@@ -31,4 +32,4 @@ run('verify:e78:evidence',['node','scripts/verify/e78_evidence.mjs'],env);
 
 const after=gitStatus();
 if(before!==after){if(process.env.CI==='true') throw new Error('CI_READ_ONLY_VIOLATION'); if(!update) throw new Error('READ_ONLY_VIOLATION'); if(!scopeOk(before,after)) throw new Error('UPDATE_SCOPE_VIOLATION');}
-console.log(`verify:e78 PASSED chain_mode=${chainMode}`);
+if(!quiet) console.log(`verify:e78 PASSED chain_mode=${chainMode}`); else console.log(`verify:e78 PASSED`);

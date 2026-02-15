@@ -1,0 +1,5 @@
+# E79 CLOSEOUT
+- status: PASS
+- commit: 0d75b5a
+- commands_executed: pwd; git status -sb; git rev-parse --short HEAD; node -v; npm -v; npm ci; CI=false UPDATE_E79_EVIDENCE=1 CANARY_STAGE=AUTO QUIET=1 npm run -s verify:e79; git status --porcelain > /tmp/e79_before && CI=false QUIET=1 npm run -s verify:e79 && git status --porcelain > /tmp/e79_after && diff -u /tmp/e79_before /tmp/e79_after; git status --porcelain > /tmp/e79_ci_before && CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e79 && git status --porcelain > /tmp/e79_ci_after && diff -u /tmp/e79_ci_before /tmp/e79_ci_after; grep -E canonical_fingerprint reports/evidence/E79/CLOSEOUT.md reports/evidence/E79/VERDICT.md; node -e "import('./scripts/verify/e79_lib.mjs').then(m=>console.log(m.evidenceFingerprintE79()))"; grep -E "^[0-9a-f]{64} " reports/evidence/E79/SHA256SUMS.md | sha256sum -c -; grep -E "deterministic_match|run1_fingerprint|run2_fingerprint|canary_stage|stage_decision" reports/evidence/E79/RUNS_EDGE_CANARY_X2.md
+- canonical_fingerprint: eac4c9ae8d28385f7c5d69094be586450cd09590c80ea45660382e3baa4ea942
