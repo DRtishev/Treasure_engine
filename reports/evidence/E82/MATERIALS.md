@@ -1,0 +1,11 @@
+# E82 MATERIALS
+- e81_canonical_fingerprint: a1fe74648338e5de5309d6b3af1e93bbe0b3c3bcba5fe278b5acb66f3d5b3cfe
+- e81_calibration_hash: 6de95c18baf1b48c54a341454edd1d1f86eb3e6979ecc2c42c0d4ddc14ee3c16
+- recon_fingerprint: e29c4e075a84841f28efda818053d5074e63d0d2ceb0062b41b95c90f42079fc
+- canary_run_fingerprint: e0cb61014420a61db427dae03c7001485f27dba836a7c31a46afb2fba676afbf
+- calibration_hash: 16398907bd3ee2edef2c303b2dfd566cbca27447f6dea239f79e8759c4dc534f
+- calibration_drift_rate: 0.00275251
+- shortlist_hash: daf732b6ffaade933b1aa49cb0887e0f1008fd3388c6d37fe51402304bbab0d3
+- stage_policy_hash: 7400739de8c162e46e94e1064b03090904f23261b6bf198a0558fba3558b98de
+- chain_mode_default_ci: FAST_PLUS
+- seed: 12345

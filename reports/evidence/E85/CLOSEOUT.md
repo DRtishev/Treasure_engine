@@ -1,0 +1,4 @@
+# E85 CLOSEOUT
+- status: PASS
+- commands_executed: npm ci; CI=false UPDATE_E85_EVIDENCE=1 UPDATE_E85_THRESHOLDS=1 CANARY_STAGE=AUTO QUIET=1 npm run -s verify:e85:update; git status --porcelain > /tmp/e85_before && CI=false QUIET=1 npm run -s verify:e85 && git status --porcelain > /tmp/e85_after && diff -u /tmp/e85_before /tmp/e85_after; git status --porcelain > /tmp/e85_ci_before && CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e85 && git status --porcelain > /tmp/e85_ci_after && diff -u /tmp/e85_ci_before /tmp/e85_ci_after; grep -E canonical_fingerprint reports/evidence/E85/CLOSEOUT.md reports/evidence/E85/VERDICT.md; node -e "import('./scripts/verify/e85_lib.mjs').then(m=>console.log(m.evidenceFingerprintE85()))"; grep -E "^[0-9a-f]{64} " reports/evidence/E85/SHA256SUMS.md | sha256sum -c -
+- canonical_fingerprint: cac3dc6709e715f6701dd0f30d3f19067baed5ad469acfd54bbe7ab2ab55fb1e
