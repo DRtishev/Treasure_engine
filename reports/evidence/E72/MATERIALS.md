@@ -1,0 +1,25 @@
+# E72 MATERIALS
+- chain_mode: FAST_PLUS
+- strict_laws: 1
+- e71_canonical_fingerprint: 7664ca30be345aa9a063c6fd0d2cee924466d9d5f8508eb09e9394cfdd2c92ab
+- chain_bundle_fingerprint: 74dda04fab6e42bc0fe396aa3f35cfa8a7c0ec9358f485662ec11042a7080612
+- contract_text_hash: f9a751b116bcdcf0731f96815274f9da6d10af31fcf7544b694f2061b70cbd7d
+- wow_fingerprint: 08031a689101166acd02adafbc75a1e39376c2582b5ee910b3ed8c9d40d4287e
+- wow_usage_fingerprint: 3c9c1245bdbc759835f49fc41627aa5c885e35afb3f174d2f91f8141acb9fd1e
+- edge_meta_fingerprint: b90f97ddb71100478bd7240668fdea1daaff4ec012ec22bbc48f675959814b32
+- node_version: v20.19.6
+- npm_version: 11.4.2
+- env_normalization:
+  - TZ=UTC
+  - LANG=C
+  - LC_ALL=C
+  - SOURCE_DATE_EPOCH=1700000000
+- core/edge/alpha/edge_magic_meta_suite_v1.mjs: e8a143477af0ca6dbeef58f67b11584f9a03a640bfa45fa6bab48cec8f2d9bc9
+- docs/edge/EDGE_META_CONTRACT.md: f9a751b116bcdcf0731f96815274f9da6d10af31fcf7544b694f2061b70cbd7d
+- docs/wow/WOW_LEDGER.md: ebfd263ae566cfbe9e96027f159b6893ab0276bdbdb413ae439b401253d20d4b
+- package-lock.json: 3bf74b60e28f65ecb160713e7fdf97f4d763910d90509b058f07c28758df1111
+- scripts/verify/e72_edge_contract_x2.mjs: 33a3094ec3bd07480a336d1fd9029b7b4b1ce699ea387361cdb04b523dffcb56
+- scripts/verify/e72_evidence.mjs: 7d0c9cba12cb28d5cf757f40cc363d092435728e559cefe5bb6ec6fc23d19ef1
+- scripts/verify/e72_lib.mjs: 4f4161411b1df1eafdd78c608145b27ffc9c786a61c37c9c4981c4f873b96923
+- scripts/verify/e72_run.mjs: 9cbbc2f0204e505f7eb5cf072f8ef40f020efc9a31eaa593d9062a5bed2825f0
+- scripts/verify/e72_wow_usage_verify.mjs: f8c362fa8fe2927b4e0508b796bc26d6c2b17ba764cb8570c8f92664981a3a33

@@ -1,0 +1,11 @@
+# W-0009 Edge Pattern 09
+
+W-ID: W-0009
+Category: Risk
+Problem: Deterministic edge degradation case 9.
+Solution: Apply bounded deterministic mitigation 9.
+Contract (PASS commands): npm run -s verify:wow
+Minimal diff: Update only targeted verify/evidence modules.
+Risks: Overfitting, false confidence, stale fixtures.
+Rollback: Revert card and dependent references.
+Where used: E71 WOW library v0.

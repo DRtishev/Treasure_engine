@@ -1,0 +1,7 @@
+# E70 SHA256SUMS
+
+7db7d40c2c7acac78c3d1e6e05ff847c1c9fa581b07a997770c3ed4e2a6fd62a  reports/evidence/E70/CLOSEOUT.md
+6159928843bc9e5de303849d54fada621cef2bb4368b14b265d395d7381f9a92  reports/evidence/E70/EDGE_STRESS.md
+a63809a9bcb21aba1bfd550ad1a2ae22e49b0122e4d85bc917b7e33e9f36b1ad  reports/evidence/E70/MATERIALS.md
+aeeb1bb6f7ce85db7abdc900f6e44485b8f3f203442bd3ba0c310b3e74e5034a  reports/evidence/E70/RUNS_EDGE_STRESS_X2.md
+1145d63bb98e9fdd92d8415f4ad2123d8b9ace1c9d7f2873cf854b6a79436bad  reports/evidence/E70/VERDICT.md

@@ -1,0 +1,12 @@
+# E72 WOW USAGE
+- wow_fingerprint: 08031a689101166acd02adafbc75a1e39376c2582b5ee910b3ed8c9d40d4287e
+- wow_usage_fingerprint: 3c9c1245bdbc759835f49fc41627aa5c885e35afb3f174d2f91f8141acb9fd1e
+- WOW_USED: [W-0001, W-0004, W-0008]
+- rationale:
+  - W-0001 used for deterministic edge contract discipline.
+  - W-0004 used for governance/read-only gate design.
+  - W-0008 used for anti-flake x2 verification doctrine.
+- usage_trace:
+  - scripts/verify/e72_edge_contract_x2.mjs (law contract enforcement)
+  - scripts/verify/e72_run.mjs (governance orchestration)
+  - scripts/verify/e72_evidence.mjs (finalizer doctrine)

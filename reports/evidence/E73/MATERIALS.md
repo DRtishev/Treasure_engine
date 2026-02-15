@@ -1,0 +1,27 @@
+# E73 MATERIALS
+- chain_mode: FAST_PLUS
+- strict_laws: 1
+- e72_canonical_fingerprint: 601aba2e29652a4ced82d7583731cd4d3450f0ea6b69e53d194b7b2294ba30e1
+- chain_bundle_fingerprint: 74dda04fab6e42bc0fe396aa3f35cfa8a7c0ec9358f485662ec11042a7080612
+- contract_text_hash: 141496c55441024892aa4b4184378c881b18039681232f7a639d0d5568c7ba70
+- registry_hash: 1c4ef9625c508ff80230a76808e6094273dc0d83513d38b846e2a006703c12ca
+- budget_hash: 472eceb7375c9df8a800682334c0226e713dfbc69addd36882cf560e6ef0766b
+- wow_fingerprint: 08031a689101166acd02adafbc75a1e39376c2582b5ee910b3ed8c9d40d4287e
+- wow_usage_fingerprint: 3c9c1245bdbc759835f49fc41627aa5c885e35afb3f174d2f91f8141acb9fd1e
+- edge_meta_fingerprint: b90f97ddb71100478bd7240668fdea1daaff4ec012ec22bbc48f675959814b32
+- node_version: v20.19.6
+- npm_version: 11.4.2
+- env_normalization:
+  - TZ=UTC
+  - LANG=C
+  - LC_ALL=C
+  - SOURCE_DATE_EPOCH=1700000000
+- docs/edge/EDGE_META_CONTRACT.md: 141496c55441024892aa4b4184378c881b18039681232f7a639d0d5568c7ba70
+- docs/edge/EDGE_REASON_CODES.md: 1c4ef9625c508ff80230a76808e6094273dc0d83513d38b846e2a006703c12ca
+- package-lock.json: 3bf74b60e28f65ecb160713e7fdf97f4d763910d90509b058f07c28758df1111
+- scripts/verify/e72_wow_usage_verify.mjs: f8c362fa8fe2927b4e0508b796bc26d6c2b17ba764cb8570c8f92664981a3a33
+- scripts/verify/e73_contract_court.mjs: 006d7a376b7bf311e04cd9dca7bf5a95f3e5b34e87437b2669e250e9fad005cb
+- scripts/verify/e73_edge_contract_x2.mjs: 2fd4e4dd0f564769c50d4ba22b29fc8758cfe61f8be9f6867f5d1c19908bb545
+- scripts/verify/e73_evidence.mjs: 387e80318ad002beb611bb557a12b3b0c1ae62333e7b2fa6a3a53f101cce8ce9
+- scripts/verify/e73_lib.mjs: 9e1d52d93fc95fba1b70a18e64ecb359f24519b09ad96b853e9f7e301c7987f2
+- scripts/verify/e73_run.mjs: 8d2260354eb29b16052617546d98a5ef5bd0aa81f7f0439a3572caf66cade3af
