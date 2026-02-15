@@ -1,0 +1,11 @@
+# E73 RUNS EDGE CONTRACT X2
+- strict_laws: 1
+- run1_status: 0
+- run2_status: 0
+- run1_seed: 12345
+- run2_seed: 12345
+- run1_fingerprint: 452dba6779338da4200c63334b588dd8248384920fac88621cfcbc804d2e6f48
+- run2_fingerprint: 452dba6779338da4200c63334b588dd8248384920fac88621cfcbc804d2e6f48
+- deterministic_match: true
+- run1_root: <tmp-run1>
+- run2_root: <tmp-run2>

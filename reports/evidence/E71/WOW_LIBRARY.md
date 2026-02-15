@@ -1,0 +1,4 @@
+# E71 WOW LIBRARY
+- wow_fingerprint: 08031a689101166acd02adafbc75a1e39376c2582b5ee910b3ed8c9d40d4287e
+- cards_count: 12
+- ids: W-0001, W-0002, W-0003, W-0004, W-0005, W-0006, W-0007, W-0008, W-0009, W-0010, W-0011, W-0012

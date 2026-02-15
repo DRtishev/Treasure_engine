@@ -1,0 +1,6 @@
+# E70 VERDICT
+
+Status: PASS
+- chain_mode: FAST_PLUS
+- chain_bundle_fingerprint: 74dda04fab6e42bc0fe396aa3f35cfa8a7c0ec9358f485662ec11042a7080612
+- canonical_fingerprint: f440985455ab7b60d399b1315f4ad6e9e7a00d829133f879281717760ba6f698

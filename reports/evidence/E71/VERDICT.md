@@ -1,0 +1,6 @@
+# E71 VERDICT
+
+Status: PASS
+- chain_mode: FAST_PLUS
+- chain_bundle_fingerprint: 74dda04fab6e42bc0fe396aa3f35cfa8a7c0ec9358f485662ec11042a7080612
+- canonical_fingerprint: 7664ca30be345aa9a063c6fd0d2cee924466d9d5f8508eb09e9394cfdd2c92ab

@@ -1,0 +1,3 @@
+# E74 CLOSEOUT
+- status: PASS
+- canonical_fingerprint: 0638c096c62936f74050952e2c128d018c971f1327597e30b4d6c5be9104ab16

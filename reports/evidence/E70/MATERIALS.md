@@ -1,0 +1,29 @@
+# E70 MATERIALS
+- chain_mode: FAST_PLUS
+- chain_bundle_fingerprint: 74dda04fab6e42bc0fe396aa3f35cfa8a7c0ec9358f485662ec11042a7080612
+- e66_canonical_fingerprint: a91dbeda87ea32b287f94053621ec09f5f399ab26f397d5f7f635668a8197232
+- e67_canonical_fingerprint: df35e6b9c485e0369cbeebadc1eca3491c0a8e493fe2036489f7ed9bcb87a1b8
+- e68_canonical_fingerprint: 9c43e21baa77095f1ecd857258a1069c76a33778053f08720a25829538495379
+- e69_canonical_fingerprint: 88dbaf0ec2dbd884b37fb9f0632facf99d0f3280710b96e0e4a3509c45978c8b
+- chain_bundle_entries:
+  - E66: canonical=a91dbeda87ea32b287f94053621ec09f5f399ab26f397d5f7f635668a8197232 sums_core=9abe071d759d9306267f08ddfdea5926e0c7223b3ffef798f58b20d46701c307
+  - E67: canonical=df35e6b9c485e0369cbeebadc1eca3491c0a8e493fe2036489f7ed9bcb87a1b8 sums_core=fcfec5ad8dab28e80dc78b21820d6b664165578028e5c8844d2af10f1fee0d5f
+  - E68: canonical=9c43e21baa77095f1ecd857258a1069c76a33778053f08720a25829538495379 sums_core=261a21325673fccc1500f013780e11d97d6dd5ea015a1bdaca042779cf4616be
+  - E69: canonical=88dbaf0ec2dbd884b37fb9f0632facf99d0f3280710b96e0e4a3509c45978c8b sums_core=16110f9dbcdb8cfd7c0f11431dd16a1337c5e4c2e129f7a8c1450ff2564e0158
+- node_version: v20.19.6
+- npm_version: 11.4.2
+- env_normalization:
+  - TZ=UTC
+  - LANG=C
+  - LC_ALL=C
+  - SOURCE_DATE_EPOCH=1700000000
+- core/edge/alpha/edge_magic_stress_suite_v1.mjs: 3e11ff720985f2014c8f8d3b45aa57552b61597f970f78a6bc034b6513b26778
+- core/edge/fixtures/edge_magic_stress_chop.csv: 1e83335314a2edd4bfda4fcb2bec2780a2f3e05dec6ef161e620da1acb850d4b
+- core/edge/fixtures/edge_magic_stress_flashcrash.csv: b41cba736e4c27226d935e29980045fe3450604b8222b84459df1d701d772526
+- core/edge/fixtures/edge_magic_stress_spread.csv: b8338c2fb9355ca24621f9f2e3dd9dd1dd78ce415780f0c17d418a5248d0c5c0
+- package-lock.json: 3bf74b60e28f65ecb160713e7fdf97f4d763910d90509b058f07c28758df1111
+- scripts/verify/e70_chain_bundle.mjs: 91f235bdc5e0dfef5cabd142c87aad6d340931b4954c06d9de743e06dbbcab92
+- scripts/verify/e70_edge_stress_x2.mjs: 5d0febcdc58cdb6ca402c990ccdc9d1e717c4b0fd90f9a0421d8dc1f137eacfe
+- scripts/verify/e70_evidence.mjs: b2970045e4c7e149898db9a5b909ecfc791fc355826caeb59cdd23cc71eac42f
+- scripts/verify/e70_lib.mjs: 5384c574daa9f1447fc6226ffd40883b16ca56967d1688b2fb4ac69f6822b7d0
+- scripts/verify/e70_run.mjs: 0efeae3615ef501ab9980f2e7ae812e70fbc5a7309c8420f612e4bfbbf45915f

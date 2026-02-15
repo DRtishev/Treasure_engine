@@ -1,0 +1,9 @@
+# E68 MATERIALS
+- e67_canonical_fingerprint: df35e6b9c485e0369cbeebadc1eca3491c0a8e493fe2036489f7ed9bcb87a1b8
+- core/edge/alpha/edge_magic_v1.mjs: cd635603578ad1503e624854e22cc8cc501584fd86885808df5bb69d8dbc31b3
+- core/edge/fixtures/edge_magic_v1.csv: 04c9445cfc3ee74157e0cb3e8ab26dd784d916319d4ac1096007b7f3f06b5ed1
+- package-lock.json: 3bf74b60e28f65ecb160713e7fdf97f4d763910d90509b058f07c28758df1111
+- scripts/verify/e68_edge_magic_x2.mjs: 5448bc4638cb119a4f75a2d28d0251a5893f8eafee829633ddeb48cc2fb51805
+- scripts/verify/e68_evidence.mjs: 399eb66f2477c4e5e6eed97d3dca704616b8bdcff1d49ae0d3c92da3ac66206d
+- scripts/verify/e68_lib.mjs: 3519eb39855c0c1a532c2dfac64e49b45eb0c496bcc3b927a40c854930658376
+- scripts/verify/e68_run.mjs: 3d7b2c03bb268ef16ecb1c32d998440b5c2ab0ff8a1c5146f8e740daa0e9c8d6

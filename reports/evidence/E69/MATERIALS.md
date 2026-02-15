@@ -1,0 +1,19 @@
+# E69 MATERIALS
+- chain_mode: FULL
+- e66_canonical_fingerprint: a91dbeda87ea32b287f94053621ec09f5f399ab26f397d5f7f635668a8197232
+- e67_canonical_fingerprint: df35e6b9c485e0369cbeebadc1eca3491c0a8e493fe2036489f7ed9bcb87a1b8
+- e68_canonical_fingerprint: 9c43e21baa77095f1ecd857258a1069c76a33778053f08720a25829538495379
+- node_version: v20.19.6
+- npm_version: 11.4.2
+- env_normalization:
+  - TZ=UTC
+  - LANG=C
+  - LC_ALL=C
+  - SOURCE_DATE_EPOCH=1700000000
+- core/edge/alpha/edge_magic_suite_v2.mjs: 6bffc4d2dbb181796949d8f148f7e153bb366e27a8292077a8d9312ab62bfb9c
+- core/edge/fixtures/edge_magic_v2.csv: b02eabdedb36fc10d720ceef1a96facd2351294132739e961e49298b56544d34
+- package-lock.json: 3bf74b60e28f65ecb160713e7fdf97f4d763910d90509b058f07c28758df1111
+- scripts/verify/e69_edge_magic_suite_x2.mjs: 870d8fbcb0e07d0a8257f41ae6f63e75a2107cf69c56b16b7a0572c8ab83fced
+- scripts/verify/e69_evidence.mjs: 7b2e201e00ff8075edbabdcd5bbe9f749cc6a767eeca4a4a973d5fb1ae8d1a60
+- scripts/verify/e69_lib.mjs: d74941872741f17c6db4ac5d540722b4e8feeb061a69aef2af7bd5d46de11024
+- scripts/verify/e69_run.mjs: 8a37b98d7ca766adc1334e8647a94e09ae331b835f124c9a2450049ed975a69e

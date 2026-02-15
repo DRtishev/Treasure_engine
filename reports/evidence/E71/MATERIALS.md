@@ -1,0 +1,38 @@
+# E71 MATERIALS
+- chain_mode: FAST_PLUS
+- e70_canonical_fingerprint: f440985455ab7b60d399b1315f4ad6e9e7a00d829133f879281717760ba6f698
+- chain_bundle_fingerprint: 74dda04fab6e42bc0fe396aa3f35cfa8a7c0ec9358f485662ec11042a7080612
+- wow_fingerprint: 08031a689101166acd02adafbc75a1e39376c2582b5ee910b3ed8c9d40d4287e
+- edge_meta_fingerprint: b90f97ddb71100478bd7240668fdea1daaff4ec012ec22bbc48f675959814b32
+- chain_bundle_entries:
+  - E66: canonical=a91dbeda87ea32b287f94053621ec09f5f399ab26f397d5f7f635668a8197232 sums_core=9abe071d759d9306267f08ddfdea5926e0c7223b3ffef798f58b20d46701c307
+  - E67: canonical=df35e6b9c485e0369cbeebadc1eca3491c0a8e493fe2036489f7ed9bcb87a1b8 sums_core=fcfec5ad8dab28e80dc78b21820d6b664165578028e5c8844d2af10f1fee0d5f
+  - E68: canonical=9c43e21baa77095f1ecd857258a1069c76a33778053f08720a25829538495379 sums_core=261a21325673fccc1500f013780e11d97d6dd5ea015a1bdaca042779cf4616be
+  - E69: canonical=88dbaf0ec2dbd884b37fb9f0632facf99d0f3280710b96e0e4a3509c45978c8b sums_core=16110f9dbcdb8cfd7c0f11431dd16a1337c5e4c2e129f7a8c1450ff2564e0158
+- node_version: v20.19.6
+- npm_version: 11.4.2
+- env_normalization:
+  - TZ=UTC
+  - LANG=C
+  - LC_ALL=C
+  - SOURCE_DATE_EPOCH=1700000000
+- core/edge/alpha/edge_magic_meta_suite_v1.mjs: e8a143477af0ca6dbeef58f67b11584f9a03a640bfa45fa6bab48cec8f2d9bc9
+- docs/wow/tricks/W-0001-edge-pattern-01.md: 4de232707b02b8d53235946618051ab3863c07fa5af4bd91ba036dada5ce562a
+- docs/wow/tricks/W-0002-edge-pattern-02.md: 216ef85aa932c1ca034edca5ed17f3f1795c2b22888dc87ad88c8e36d9df3aa6
+- docs/wow/tricks/W-0003-edge-pattern-03.md: b1d26441e93fe44591eb2f72dfd608b664f137ad35fc125735793debcfed421c
+- docs/wow/tricks/W-0004-edge-pattern-04.md: c64e5e126db8adb68c13a1fb5d8242e164b69ab1a5cca94d76d7ec6a30c90877
+- docs/wow/tricks/W-0005-edge-pattern-05.md: 31e8988d3fbf6b4167a075ee7154b80bc93dfa1a0128d4b4a488afbd53082842
+- docs/wow/tricks/W-0006-edge-pattern-06.md: c599d51648f45bed04537e794a597d4d674947181a9cd1401b53d0db40575c0a
+- docs/wow/tricks/W-0007-edge-pattern-07.md: 865a99d07b7bcbf8aed2c831786fd47df555226b2c112ad1213dff981418eba1
+- docs/wow/tricks/W-0008-edge-pattern-08.md: b916161ab6557f84d2a1a27e44dbdf389bd015d353fdedc5b8a932c285b42743
+- docs/wow/tricks/W-0009-edge-pattern-09.md: c8fd694b94fc9a90ea58a53044b9301f94d13f2f2d3575bcc54f0e36e3051029
+- docs/wow/tricks/W-0010-edge-pattern-10.md: 604241b1e1392b4cbce45359ce7543f60b52afe5d2a7ab863edc2590f27bd581
+- docs/wow/tricks/W-0011-edge-pattern-11.md: 8c8529fbbdc5c74a3b1e2376165662176c7ea7fd64c1dd302a2e38fa12cc8b84
+- docs/wow/tricks/W-0012-edge-pattern-12.md: 4ca46406e6de4816656bc0e8b83c69f208f606953f4270dba16d8bb2a1be5eb0
+- docs/wow/WOW_LEDGER.md: ebfd263ae566cfbe9e96027f159b6893ab0276bdbdb413ae439b401253d20d4b
+- package-lock.json: 3bf74b60e28f65ecb160713e7fdf97f4d763910d90509b058f07c28758df1111
+- scripts/verify/e71_edge_metamorphic_x2.mjs: e426c656af3651c97d675e0860630d1d822957826599ce0891a68f08492145f1
+- scripts/verify/e71_evidence.mjs: 1a91dccffb3c2dec9ddec9077eef900223e12f9b008afaaaac854dbd50cacaa8
+- scripts/verify/e71_lib.mjs: 9d5684bdb3da32d91c668eda3fb02b7e88299b28516459804215abd395276902
+- scripts/verify/e71_run.mjs: 4f51185c21410f90d0570ec3417653cd778753c9af5d686515136b8deb02ac18
+- scripts/verify/e71_wow_verify.mjs: b9c8562dc340a08927d4227f41451f19ebce6e67368d02d14737d4982d461a59
