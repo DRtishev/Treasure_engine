@@ -204,7 +204,26 @@
     "verify:edge:contract:x2:e74": "node scripts/verify/e74_edge_contract_x2.mjs",
     "verify:e74:evidence": "node scripts/verify/e74_evidence.mjs",
     "verify:e74": "node scripts/verify/e74_run.mjs",
-    "verify:e74:update": "CI=false UPDATE_E74_EVIDENCE=1 node scripts/verify/e74_run.mjs"
+    "verify:e74:update": "CI=false UPDATE_E74_EVIDENCE=1 node scripts/verify/e74_run.mjs",
+    "verify:edge:profit:x2": "node scripts/verify/e75_edge_profit_x2.mjs",
+    "verify:e75:evidence": "node scripts/verify/e75_evidence.mjs",
+    "verify:e75": "node scripts/verify/e75_run.mjs",
+    "verify:e75:update": "CI=false UPDATE_E75_EVIDENCE=1 npm run -s verify:e75",
+    "verify:edge:profit:envelope:x2": "node scripts/verify/e76_edge_profit_envelope_x2.mjs",
+    "verify:e76:evidence": "node scripts/verify/e76_evidence.mjs",
+    "verify:e76": "node scripts/verify/e76_run.mjs",
+    "verify:e76:update": "CI=false UPDATE_E76_EVIDENCE=1 npm run -s verify:e76",
+    "verify:edge:canary:x2": "node scripts/verify/e77_edge_canary_x2.mjs",
+    "verify:e77:calibration:court": "node scripts/verify/e77_calibration_court.mjs",
+    "verify:e77:evidence": "node scripts/verify/e77_evidence.mjs",
+    "verify:e77": "node scripts/verify/e77_run.mjs",
+    "verify:e77:update": "CI=false UPDATE_E77_EVIDENCE=1 UPDATE_E77_CALIBRATION=1 npm run -s verify:e77",
+    "verify:edge:canary:x2:e78": "node scripts/verify/e78_edge_canary_x2.mjs",
+    "verify:edge:profit:search:x2": "node scripts/verify/e78_edge_profit_search_x2.mjs",
+    "verify:e78:calibration:court": "node scripts/verify/e78_calibration_court.mjs",
+    "verify:e78:evidence": "node scripts/verify/e78_evidence.mjs",
+    "verify:e78": "node scripts/verify/e78_run.mjs",
+    "verify:e78:update": "CI=false UPDATE_E78_EVIDENCE=1 UPDATE_E78_CALIBRATION=1 npm run -s verify:e78"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
