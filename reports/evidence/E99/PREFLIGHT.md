@@ -1,5 +1,5 @@
-# E97 PREFLIGHT
-- pwd: /home/user/Treasure_engine
+# E99 PREFLIGHT
+- pwd: <REPO_ROOT>
 - branch: claude/e98-portability-apply-NVaWJ
 - head: 609209f6a99650a24236b0673b7504a861590529
 - node: v22.22.0
@@ -28,3 +28,4 @@
 ?? scripts/verify/e99_stage_contract.mjs
 ```
 - env_CI: false
+- git_present: true
