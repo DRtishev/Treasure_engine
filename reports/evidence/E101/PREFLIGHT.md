@@ -1,18 +1,15 @@
-# E97 PREFLIGHT
+# E101 PREFLIGHT
 - pwd: <REPO_ROOT>
 - branch: claude/e98-portability-apply-NVaWJ
 - head: 988f2da9d1ca7c1ae38a2f8554451375d3010556
 - node: v22.22.0
 - npm: 10.9.4
+- git_present: true
+- bootstrap_no_git: false
 - git_status_sb:
 ```
 ## claude/e98-portability-apply-NVaWJ...origin/claude/e98-portability-apply-NVaWJ
  M package.json
- M reports/evidence/E97/CLOSEOUT.md
- M reports/evidence/E97/PREFLIGHT.md
- M reports/evidence/E97/SHA256SUMS.md
- M reports/evidence/E97/VERDICT.md
-?? reports/evidence/E101/
 ?? scripts/verify/e101_apply_txn.mjs
 ?? scripts/verify/e101_case_collision_contract.mjs
 ?? scripts/verify/e101_eol_contract.mjs
