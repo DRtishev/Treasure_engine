@@ -4,4 +4,4 @@
 - track1_foundation: COMPLETE
 - track2_transactions: COMPLETE
 - track3_contracts: COMPLETE
-- canonical_fingerprint: 1d8526a12f6512a87707bf7a0093779d47fbc7df83d0675974ba5e2b9a91cf2a
+- canonical_fingerprint: 1435f417836ffc1b45b635be2d40465e99870f79c135189f9626c7e41f8c6880

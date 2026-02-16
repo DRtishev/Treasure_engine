@@ -7,5 +7,5 @@
 - e97_overlay_hash: 90adac21512f78837d64174b303866fb0295b9fba4bccae41faf7ca6fcd323cc
 - profit_ledger_state_hash: c686ea159b4a2ff9ff1ef203a077118feace4f58c1f946ce31a7bbd1e39845c9
 - reason_history_state_hash: 70036a12f038d8884881672771a52fc982f3e5ed536b1a6054c42ba49dfebdb2
-- canonical_fingerprint: aa3552fcd90dfdad3219e3d453f6ed59c4b821d4e036bc155f1ee5f87d7645a2
+- canonical_fingerprint: f952017dba98004fbb9cf296f787eff6fd748dec3f7124d639e8c9a992bc8ead
 - exact_commands: npm ci; CI=false CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e96; CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e96; CI=false UPDATE_E97_EVIDENCE=1 UPDATE_E97_STATE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e97:update; CI=false CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e97; CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e97

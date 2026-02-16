@@ -1,4 +1,4 @@
-# E101 PREFLIGHT
+# E103 PREFLIGHT
 - pwd: <REPO_ROOT>
 - branch: claude/e98-portability-apply-NVaWJ
 - head: 80fbef00fc47c628deb2a65db93eb9795caa0985

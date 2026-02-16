@@ -354,7 +354,10 @@
     "verify:e101:contracts": "node scripts/verify/e101_case_collision_contract.mjs && node scripts/verify/e101_path_invariance_contract.mjs && node scripts/verify/e101_eol_contract.mjs && node scripts/verify/e101_node_truth_contract.mjs && node scripts/verify/e101_no_secrets_scan.mjs",
     "verify:e102": "node scripts/verify/e102_run.mjs",
     "verify:e102:update": "CI=false UPDATE_E102_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e102",
-    "verify:e102:operator_playbook": "CI=false UPDATE_E102_EVIDENCE=1 node scripts/verify/e102_operator_playbook.mjs"
+    "verify:e102:operator_playbook": "CI=false UPDATE_E102_EVIDENCE=1 node scripts/verify/e102_operator_playbook.mjs",
+    "verify:e103": "node scripts/verify/e103_run.mjs",
+    "verify:e103:update": "CI=false UPDATE_E103_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e103",
+    "verify:e103:evidence": "node scripts/verify/e103_evidence.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
