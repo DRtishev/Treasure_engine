@@ -1,4 +1,4 @@
-# E97 PREFLIGHT
+# E100 PREFLIGHT
 - pwd: <REPO_ROOT>
 - branch: claude/e98-portability-apply-NVaWJ
 - head: 731ea98d33d8c4853d1b7e520bcd458e5421928c
@@ -26,3 +26,4 @@
 ?? scripts/verify/e100_stage_contract.mjs
 ```
 - env_CI: false
+- git_present: true

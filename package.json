@@ -340,7 +340,13 @@
     "verify:e99:apply_rehearsal": "CI=false UPDATE_E99_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e99:apply_rehearsal:raw",
     "verify:e99:apply_rehearsal:raw": "node scripts/verify/e99_apply_rehearsal.mjs",
     "verify:e99:post_apply:court": "node scripts/verify/e99_post_apply_stability_court.mjs",
-    "verify:e99:contracts": "node scripts/verify/e99_case_collision_contract.mjs && node scripts/verify/e99_path_invariance_contract.mjs && node scripts/verify/e99_no_secrets_scan.mjs"
+    "verify:e99:contracts": "node scripts/verify/e99_case_collision_contract.mjs && node scripts/verify/e99_path_invariance_contract.mjs && node scripts/verify/e99_no_secrets_scan.mjs",
+    "verify:e100": "node scripts/verify/e100_run.mjs",
+    "verify:e100:update": "CI=false UPDATE_E100_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e100",
+    "verify:e100:apply_txn": "CI=false UPDATE_E100_EVIDENCE=1 UPDATE_E100_APPLY=1 APPLY_MODE=APPLY CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e100_apply_txn.mjs",
+    "verify:e100:rollback": "CI=false UPDATE_E100_EVIDENCE=1 ROLLBACK_E100=1 ROLLBACK_MODE=ROLLBACK CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e100_rollback_txn.mjs",
+    "verify:e100:bundle_hash": "node scripts/verify/e100_bundle_hash.mjs",
+    "verify:e100:contracts": "node scripts/verify/e100_path_invariance_contract.mjs && node scripts/verify/e100_no_secrets_scan.mjs && node scripts/verify/e100_bundle_hash.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
