@@ -1,0 +1,4 @@
+# E88 RUNS APPLY X2
+- run1_fingerprint: 37b81cb509c0c1bd72b434c9108f4af74e61a1a8211ac3a533206c7402cd0dfa
+- run2_fingerprint: 37b81cb509c0c1bd72b434c9108f4af74e61a1a8211ac3a533206c7402cd0dfa
+- deterministic_match: true

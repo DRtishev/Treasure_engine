@@ -17,6 +17,7 @@ if(chainMode==='FULL') run('verify:e85',['npm','run','-s','verify:e85'],{...env,
 else run('verify:e85:pack',['bash','-lc',"grep -E 'canonical_fingerprint' reports/evidence/E85/CLOSEOUT.md reports/evidence/E85/VERDICT.md >/dev/null && grep -E '^[0-9a-f]{64} ' reports/evidence/E85/SHA256SUMS.md | sha256sum -c - >/dev/null"],{...env,CI:'true'});
 if(update&&process.env.ENABLE_DEMO_ADAPTER==='1'&&process.env.ALLOW_MANUAL_RECON==='1') run('demo-cadence',['node','scripts/verify/e86_demo_daily_cadence.mjs'],env);
 run('tightening-court',['node','scripts/verify/e86_tightening_court.mjs'],env);
+run('ordering-contract',['node','scripts/verify/e86_ordering_contract.mjs'],env);
 if(update&&updThr) run('threshold-apply',['node','scripts/verify/e86_threshold_apply.mjs'],env);
 run('threshold-apply-x2',['node','scripts/verify/e86_threshold_apply_x2.mjs'],env);
 run('canary-x2',['node','scripts/verify/e86_edge_canary_x2.mjs'],env);

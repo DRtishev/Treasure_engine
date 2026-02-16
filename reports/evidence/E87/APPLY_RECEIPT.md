@@ -1,0 +1,8 @@
+# E87 APPLY RECEIPT
+- status: PASS
+- mode: APPLY
+- mitigation_fingerprint: 84903f6dc454c506a2d709a3a0886965a4a7c691b8c2a54193c43d8c129dbf7f
+- disablelist_fingerprint: b275719ac50902dd8daa467c161ef0e28d4969f3ff6a6ed1d2060ab8784f0f63
+- mitigation_policy_hash: f3daed1d3cb5f20aa9e1e343e8ce4496a9e6ca646b9203c39a313032c627a816
+- disablelist_policy_hash: ff9a35265208cfdf343c8ae6debcd4b77e66edadc160d2d2def81770757141b4
+- apply_fingerprint: 1d3a65988e56efea64842c1287495dc3ed2ae1d24fa7c3fe1a5ee44eb926c363
