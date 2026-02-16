@@ -1,0 +1,4 @@
+# E97 Court Determinism x2
+- run1_fingerprint: 7ad1383283868f4ee360269b3e36e6a1c2c6a16a1ea77bf6904d037f0bd36ca5
+- run2_fingerprint: 7ad1383283868f4ee360269b3e36e6a1c2c6a16a1ea77bf6904d037f0bd36ca5
+- deterministic_match: true

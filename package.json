@@ -323,7 +323,12 @@
     "verify:e96:fuzz": "node scripts/verify/e96_invariant_fuzz.mjs",
     "verify:e96:real": "node scripts/verify/e96_real_state_tiered_promotion.mjs",
     "verify:e96": "node scripts/verify/e96_run.mjs",
-    "verify:e96:update": "CI=false UPDATE_E96_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e96"
+    "verify:e96:update": "CI=false UPDATE_E96_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e96",
+    "verify:e97:update": "CI=false UPDATE_E97_EVIDENCE=1 UPDATE_E97_STATE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e97",
+    "verify:e97:court": "node scripts/verify/e97_envelope_tuning_court.mjs",
+    "verify:e97:adverse": "node scripts/verify/e97_adverse_fixture_suite.mjs",
+    "verify:e97:apply": "CI=false UPDATE_E97_EVIDENCE=1 UPDATE_E97_APPLY=1 APPLY_MODE=APPLY CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e97",
+    "verify:e97": "node scripts/verify/e97_run.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
