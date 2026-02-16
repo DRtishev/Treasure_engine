@@ -1,0 +1,11 @@
+# E94 CLOSEOUT
+- status: PASS
+- cadence_ledger_fingerprint: 992d2a2692f09472f7bb0369d15ecd57cff4e8df42e12d60308dd80459c815e9
+- canary_policy_hash: 7520718ad2bdd020d4d45a7a11f46beaa70b5f1dbabfcad59aca40b657f8231f
+- demo_sentinel: SHA256:7d50e2690e9b34dd4110ec734d5475bbbf7fefc4df4b1e356db41e096b432c81
+- disablelist_policy_hash: ff9a35265208cfdf343c8ae6debcd4b77e66edadc160d2d2def81770757141b4
+- e93_canonical_fingerprint: 2043167e95ad4790f202dbcd1fee52016cbaa5ab3b664e6a988f595c6c77514f
+- reason_history_fingerprint: 70036a12f038d8884881672771a52fc982f3e5ed536b1a6054c42ba49dfebdb2
+- threshold_policy_hash: e251c6a7a9f96073ff17395a2db1921d56b6c40fed04695c191a0879909b1903
+- canonical_fingerprint: 167c119a46c84615654ddf5cdbdf29f3e9a41686c70dfee681f80d8dd14bbbf9
+- exact_commands: npm ci; CI=false CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e93; CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e93; CI=false UPDATE_E94_EVIDENCE=1 UPDATE_E94_STATE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e94:update; CI=false CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e94; CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e94

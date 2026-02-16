@@ -1,0 +1,4 @@
+# E96 RUNS FUZZ X2
+- run1_fingerprint: ddd41f69cad95906e486a647a6f3fae3a294b0167f0714168351280b1d65087e
+- run2_fingerprint: ddd41f69cad95906e486a647a6f3fae3a294b0167f0714168351280b1d65087e
+- deterministic_match: true

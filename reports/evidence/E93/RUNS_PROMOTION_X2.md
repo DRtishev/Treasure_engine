@@ -1,0 +1,4 @@
+# E93 RUNS PROMOTION X2
+- run1_fingerprint: 101291c92c28e55d5d8ed14060fe3e281acaf483f5c53372ffa22f588523b93c
+- run2_fingerprint: 101291c92c28e55d5d8ed14060fe3e281acaf483f5c53372ffa22f588523b93c
+- deterministic_match: true
