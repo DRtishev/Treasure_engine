@@ -328,7 +328,13 @@
     "verify:e97:court": "node scripts/verify/e97_envelope_tuning_court.mjs",
     "verify:e97:adverse": "node scripts/verify/e97_adverse_fixture_suite.mjs",
     "verify:e97:apply": "CI=false UPDATE_E97_EVIDENCE=1 UPDATE_E97_APPLY=1 APPLY_MODE=APPLY CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e97",
-    "verify:e97": "node scripts/verify/e97_run.mjs"
+    "verify:e97": "node scripts/verify/e97_run.mjs",
+    "verify:e98": "node scripts/verify/e98_run.mjs",
+    "verify:e98:update": "CI=false UPDATE_E98_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e98",
+    "verify:e98:apply_rehearsal": "CI=false CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e98:apply_rehearsal:raw",
+    "verify:e98:apply_rehearsal:raw": "node scripts/verify/e98_apply_rehearsal.mjs",
+    "verify:e98:case_collision_contract": "node scripts/verify/e98_case_collision_scan.mjs",
+    "verify:e98:evidence": "node scripts/verify/e98_evidence.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

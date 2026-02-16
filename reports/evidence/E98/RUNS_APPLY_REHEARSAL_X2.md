@@ -1,0 +1,7 @@
+# E98 RUNS APPLY REHEARSAL X2
+
+## Status: DEFERRED
+
+See APPLY_REHEARSAL.md for rationale.
+
+## Match: DEFERRED

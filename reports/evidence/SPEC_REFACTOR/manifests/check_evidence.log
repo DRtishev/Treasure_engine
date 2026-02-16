@@ -1,0 +1,3 @@
+$ sha256sum -c reports/evidence/SPEC_REFACTOR/SHA256SUMS.EVIDENCE.txt
+reports/evidence/SPEC_REFACTOR/DIFF.patch: OK
+reports/evidence/SPEC_REFACTOR/SUMMARY.md: OK
