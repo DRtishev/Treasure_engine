@@ -1,0 +1,4 @@
+# E89 RUNS FIXTURE COURT X2
+- run1_fingerprint: 403c8a5d5c74f6e7245cff673509de9dc7d6b6c73283eef59e4ab5a4fadb1744
+- run2_fingerprint: 403c8a5d5c74f6e7245cff673509de9dc7d6b6c73283eef59e4ab5a4fadb1744
+- deterministic_match: true
