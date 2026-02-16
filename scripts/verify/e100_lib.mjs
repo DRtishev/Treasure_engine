@@ -47,14 +47,15 @@ export function readSumsCoreTextE100(){
     if(!/^[a-f0-9]{64}\s{2}/.test(line)) return true;
     return !line.endsWith(' reports/evidence/E100/CLOSEOUT.md')&&
            !line.endsWith(' reports/evidence/E100/VERDICT.md')&&
-           !line.endsWith(' reports/evidence/E100/SHA256SUMS.md');
+           !line.endsWith(' reports/evidence/E100/SHA256SUMS.md')&&
+           !line.endsWith(' reports/evidence/E100/BUNDLE_HASH.md');
   });
   return `${lines.join('\n').replace(/\s+$/g,'')}\n`;
 }
 
 export function rewriteSumsE100(){
   const lines=fs.readdirSync(E100_ROOT)
-    .filter((f)=>f.endsWith('.md')&&f!=='SHA256SUMS.md')
+    .filter((f)=>f.endsWith('.md')&&f!=='SHA256SUMS.md'&&f!=='BUNDLE_HASH.md')
     .sort()
     .map((f)=>`${sha256File(path.join(E100_ROOT,f))}  reports/evidence/E100/${f}`);
   writeMd(path.join(E100_ROOT,'SHA256SUMS.md'),`# E100 SHA256SUMS\n\n${lines.join('\n')}`);
@@ -63,9 +64,10 @@ export function rewriteSumsE100(){
 export function verifySumsE100(){
   const raw=fs.readFileSync(path.join(E100_ROOT,'SHA256SUMS.md'),'utf8');
   if(/\sreports\/evidence\/E100\/SHA256SUMS\.md$/m.test(raw)) throw new Error('sha self-row forbidden');
+  if(/\sreports\/evidence\/E100\/BUNDLE_HASH\.md$/m.test(raw)) throw new Error('bundle_hash row forbidden');
   const rows=raw.split(/\r?\n/).filter((x)=>/^[a-f0-9]{64}\s{2}/.test(x));
   const mdFiles=fs.readdirSync(E100_ROOT)
-    .filter((f)=>f.endsWith('.md')&&f!=='SHA256SUMS.md')
+    .filter((f)=>f.endsWith('.md')&&f!=='SHA256SUMS.md'&&f!=='BUNDLE_HASH.md')
     .map((f)=>`reports/evidence/E100/${f}`);
   for(const rel of mdFiles)
     if(!rows.find((r)=>r.endsWith(`  ${rel}`)))
@@ -78,10 +80,9 @@ export function verifySumsE100(){
 }
 
 export function evidenceFingerprintE100(){
-  // Core files always required
+  // Core files always required (BUNDLE_HASH.md excluded to avoid circular dependency)
   const coreReq=[
     'PREFLIGHT.md',
-    'BUNDLE_HASH.md',
     'CONTRACTS_SUMMARY.md',
     'PERF_NOTES.md'
   ];

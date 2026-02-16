@@ -47,8 +47,11 @@ function gitStatus(){
 
 function parseMap(text){
   const m=new Map();
-  for(const row of text.split('\n').map((x)=>x.trim()).filter(Boolean))
-    m.set(row.slice(3).trim(),row.slice(0,2));
+  for(const row of text.split('\n').filter(Boolean)){
+    if(row.length<3) continue;
+    // git status --porcelain format: "XY path" (no trim to preserve format)
+    m.set(row.slice(3),row.slice(0,2));
+  }
   return m;
 }
 

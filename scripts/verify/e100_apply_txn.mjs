@@ -114,7 +114,7 @@ const journal={
 
 fs.mkdirSync(path.dirname(E100_JOURNAL_PATH),{recursive:true});
 fs.writeFileSync(E100_JOURNAL_PATH,JSON.stringify(journal,null,2),'utf8');
-report.push(`- journal_saved: ${E100_JOURNAL_PATH}`);
+report.push(`- journal_saved: <REPO_ROOT>/.foundation-seal/E100_APPLY_JOURNAL.json`);
 report.push(`- journal_sha256: ${sha256File(E100_JOURNAL_PATH)}`);
 report.push('');
 

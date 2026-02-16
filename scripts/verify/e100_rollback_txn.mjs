@@ -27,7 +27,7 @@ const report=[];
 report.push('# E100 ROLLBACK TXN');
 report.push('');
 report.push('## Phase 1: Read Journal');
-report.push(`- journal_path: ${E100_JOURNAL_PATH}`);
+report.push(`- journal_path: <REPO_ROOT>/.foundation-seal/E100_APPLY_JOURNAL.json`);
 report.push(`- journal_sha256: ${sha256File(E100_JOURNAL_PATH)}`);
 report.push(`- overlay_before: ${before.overlay.sha256}`);
 report.push(`- ledger_before: ${before.ledger.sha256}`);
