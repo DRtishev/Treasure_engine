@@ -1,0 +1,4 @@
+# E92 RUNS APPLY X2
+- run1_fingerprint: 767d2738ab2155f2188ce0436252d013fd661e7ae4fc7b6233ad7bcbfed8eaaf
+- run2_fingerprint: 767d2738ab2155f2188ce0436252d013fd661e7ae4fc7b6233ad7bcbfed8eaaf
+- deterministic_match: true

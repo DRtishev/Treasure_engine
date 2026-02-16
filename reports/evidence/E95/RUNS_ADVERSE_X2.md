@@ -1,0 +1,4 @@
+# E95 RUNS ADVERSE X2
+- run1_fingerprint: 3d27012a5dc65f524944465e0d166cd96c561257ec5315c5a10997636a9719ae
+- run2_fingerprint: 3d27012a5dc65f524944465e0d166cd96c561257ec5315c5a10997636a9719ae
+- deterministic_match: true

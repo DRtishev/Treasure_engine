@@ -1,0 +1,4 @@
+# E93 RUNS ROLLBACK X2
+- run1_fingerprint: ae538d2091ddfdf2024988f83f852dc163182027fdcbf6f14acd94b9a8b568b9
+- run2_fingerprint: ae538d2091ddfdf2024988f83f852dc163182027fdcbf6f14acd94b9a8b568b9
+- deterministic_match: true

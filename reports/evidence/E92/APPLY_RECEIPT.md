@@ -1,0 +1,6 @@
+# E92 APPLY RECEIPT
+- status: PASS
+- mode: APPLY
+- proposal_fingerprint: b303a64811894536943a8e143488e89df13c2ad52150063b71e2dae49f5b7d6a
+- applied_policy_hash: d2b1a812526299e338e66ccdaf32e1af5cec54f04126e23684dfdf5aebafcf57
+- apply_fingerprint: 767d2738ab2155f2188ce0436252d013fd661e7ae4fc7b6233ad7bcbfed8eaaf

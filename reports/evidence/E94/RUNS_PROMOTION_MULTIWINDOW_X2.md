@@ -1,0 +1,4 @@
+# E94 RUNS PROMOTION MULTIWINDOW X2
+- run1_fingerprint: d8739048f4bbf77bfb287bb43374c96a25e454be28a2fa93dbeab26c9adc0b10
+- run2_fingerprint: d8739048f4bbf77bfb287bb43374c96a25e454be28a2fa93dbeab26c9adc0b10
+- deterministic_match: true

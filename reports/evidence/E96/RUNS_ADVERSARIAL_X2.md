@@ -1,0 +1,4 @@
+# E96 RUNS ADVERSARIAL X2
+- run1_fingerprint: 34ffe847047d6d9d753d9f84565b3f9b1aae760aab34fec75d7b91fcea26dc0a
+- run2_fingerprint: 34ffe847047d6d9d753d9f84565b3f9b1aae760aab34fec75d7b91fcea26dc0a
+- deterministic_match: true

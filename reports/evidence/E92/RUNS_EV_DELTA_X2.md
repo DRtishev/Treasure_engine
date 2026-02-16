@@ -1,0 +1,4 @@
+# E92 RUNS EV DELTA X2
+- run1_fingerprint: ed3d86da8c0e7268787d26422757c2df51ea9f4e2d13473f902e0cf4e9a87b63
+- run2_fingerprint: ed3d86da8c0e7268787d26422757c2df51ea9f4e2d13473f902e0cf4e9a87b63
+- deterministic_match: true
