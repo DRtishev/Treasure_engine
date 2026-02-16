@@ -351,7 +351,10 @@
     "verify:e101:update": "CI=false UPDATE_E101_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e101",
     "verify:e101:apply_txn": "CI=false UPDATE_E101_EVIDENCE=1 UPDATE_E101_APPLY_TXN=1 APPLY_MODE=APPLY CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e101_apply_txn.mjs",
     "verify:e101:rollback": "CI=false UPDATE_E101_EVIDENCE=1 ROLLBACK_E101=1 ROLLBACK_MODE=ROLLBACK CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e101_rollback_txn.mjs",
-    "verify:e101:contracts": "node scripts/verify/e101_case_collision_contract.mjs && node scripts/verify/e101_path_invariance_contract.mjs && node scripts/verify/e101_eol_contract.mjs && node scripts/verify/e101_node_truth_contract.mjs && node scripts/verify/e101_no_secrets_scan.mjs"
+    "verify:e101:contracts": "node scripts/verify/e101_case_collision_contract.mjs && node scripts/verify/e101_path_invariance_contract.mjs && node scripts/verify/e101_eol_contract.mjs && node scripts/verify/e101_node_truth_contract.mjs && node scripts/verify/e101_no_secrets_scan.mjs",
+    "verify:e102": "node scripts/verify/e102_run.mjs",
+    "verify:e102:update": "CI=false UPDATE_E102_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e102",
+    "verify:e102:operator_playbook": "CI=false UPDATE_E102_EVIDENCE=1 node scripts/verify/e102_operator_playbook.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
