@@ -1,0 +1,4 @@
+# E97 Apply Determinism x2
+- run1_fingerprint: 66cafc0fecd3313560fe1aee8faaf84b56abf402d079a01829008a5bc206f498
+- run2_fingerprint: 66cafc0fecd3313560fe1aee8faaf84b56abf402d079a01829008a5bc206f498
+- deterministic_match: true

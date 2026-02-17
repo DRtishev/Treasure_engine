@@ -1,0 +1,19 @@
+# E105 BASELINE FINGERPRINTS
+
+Captured before foundation adoption (Track A).
+
+## E97
+- closeout_fingerprint: abcbe1140c3df621db3bd90b679d1492d5f39eed128557eae3826ddabb545b9e
+- verdict_fingerprint: abcbe1140c3df621db3bd90b679d1492d5f39eed128557eae3826ddabb545b9e
+
+## E100
+- closeout_fingerprint: 3ee630f1e353a1ea3707ea4347ba932c4452b110e8e9ec4584d3ec04ff7916a0
+- verdict_fingerprint: 3ee630f1e353a1ea3707ea4347ba932c4452b110e8e9ec4584d3ec04ff7916a0
+
+## E101
+- closeout_fingerprint: b5434ba9c0505d05a895001b0917dbd3fb27f68431c70aaea6ea645748a910fd
+- verdict_fingerprint: b5434ba9c0505d05a895001b0917dbd3fb27f68431c70aaea6ea645748a910fd
+
+## E103
+- closeout_fingerprint: a76bfd658afaf5c2ad5371bc6d6c150947bbea236b0c53818dda94797e8c7003
+- verdict_fingerprint: a76bfd658afaf5c2ad5371bc6d6c150947bbea236b0c53818dda94797e8c7003

@@ -1,0 +1,2 @@
+# PRE APPLY E97 SNAPSHOT
+- canonical_fingerprint: 2043167e95ad4790f202dbcd1fee52016cbaa5ab3b664e6a988f595c6c77514f

@@ -1,25 +1,33 @@
 # E97 PREFLIGHT
-- pwd: /workspace/Treasure_engine
-- branch: work
-- head: 1154e34e01821b59229bcd1a518003337d81c6d8
-- node: v20.19.6
-- npm: 11.4.2
+- pwd: <REPO_ROOT>
+- branch: claude/e98-portability-apply-NVaWJ
+- head: 6b9161320bd53d1c6c02a2a1a26a0f37696efe00
+- node: v22.22.0
+- npm: 10.9.4
 - git_status_sb:
 ```
-## work
+## claude/e98-portability-apply-NVaWJ...origin/claude/e98-portability-apply-NVaWJ
  M package.json
-?? AGENTS.md
-?? core/edge/state/fixtures/e97_profit_ledger_adverse_fixture.md
-?? core/edge/state/profit_ledger_state.md
-?? reports/evidence/E97/
-?? scripts/verify/e97_adverse_fixture_suite.mjs
-?? scripts/verify/e97_apply_overlay.mjs
-?? scripts/verify/e97_envelope_tuning_court.mjs
-?? scripts/verify/e97_evidence.mjs
-?? scripts/verify/e97_lib.mjs
-?? scripts/verify/e97_no_secrets_scan.mjs
-?? scripts/verify/e97_perf_notes.mjs
-?? scripts/verify/e97_profit_ledger_update.mjs
-?? scripts/verify/e97_run.mjs
+ M reports/evidence/E101/CLOSEOUT.md
+ M reports/evidence/E101/PREFLIGHT.md
+ M reports/evidence/E101/SHA256SUMS.md
+ M reports/evidence/E101/VERDICT.md
+ M reports/evidence/E103/GOAL_1_FAST_APPLY.md
+ M reports/evidence/E103/PREFLIGHT.md
+ M reports/evidence/E97/CLOSEOUT.md
+ M reports/evidence/E97/PREFLIGHT.md
+ M reports/evidence/E97/SHA256SUMS.md
+ M reports/evidence/E97/VERDICT.md
+ M scripts/verify/foundation_git.mjs
+?? .foundation-seal/E104_KILL_LOCK.md
+?? reports/evidence/E104/
+?? scripts/verify/e104_bundle_hash_v2.mjs
+?? scripts/verify/e104_dep_cycle_contract.mjs
+?? scripts/verify/e104_evidence.mjs
+?? scripts/verify/e104_lib.mjs
+?? scripts/verify/e104_porcelain_contract.mjs
+?? scripts/verify/e104_run.mjs
+?? scripts/verify/e104_speed_budget_contract.mjs
+?? scripts/verify/foundation_git_vectors.mjs
 ```
 - env_CI: false

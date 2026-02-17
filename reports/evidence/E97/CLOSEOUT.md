@@ -4,8 +4,8 @@
 - cadence_ledger_state_hash: 992d2a2692f09472f7bb0369d15ecd57cff4e8df42e12d60308dd80459c815e9
 - e96_canonical_fingerprint: 2043167e95ad4790f202dbcd1fee52016cbaa5ab3b664e6a988f595c6c77514f
 - e96_risk_envelopes_hash: e2ff9ea5160687d60b6043a4be14efe0c6141e3a4fef3317347558a389167903
-- e97_overlay_hash: ABSENT
+- e97_overlay_hash: 90adac21512f78837d64174b303866fb0295b9fba4bccae41faf7ca6fcd323cc
 - profit_ledger_state_hash: c686ea159b4a2ff9ff1ef203a077118feace4f58c1f946ce31a7bbd1e39845c9
 - reason_history_state_hash: 70036a12f038d8884881672771a52fc982f3e5ed536b1a6054c42ba49dfebdb2
-- canonical_fingerprint: 6027e8f062baadbbdb650569f80da20bcd94527e140242ff12b7ef154206c334
+- canonical_fingerprint: abcbe1140c3df621db3bd90b679d1492d5f39eed128557eae3826ddabb545b9e
 - exact_commands: npm ci; CI=false CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e96; CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e96; CI=false UPDATE_E97_EVIDENCE=1 UPDATE_E97_STATE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e97:update; CI=false CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e97; CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e97

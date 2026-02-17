@@ -1,4 +1,4 @@
 # E97 VERDICT
 - status: PASS
 - gates: PASS
-- canonical_fingerprint: 6027e8f062baadbbdb650569f80da20bcd94527e140242ff12b7ef154206c334
+- canonical_fingerprint: abcbe1140c3df621db3bd90b679d1492d5f39eed128557eae3826ddabb545b9e

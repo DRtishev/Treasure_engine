@@ -4,10 +4,16 @@ import path from 'node:path';
 import { sha256Text, writeMd } from './e66_lib.mjs';
 import { E97_OVERLAY, E97_ROOT, ensureDir } from './e97_lib.mjs';
 
+// E100-1: CI truthiness hardening
+function isCIMode(){
+  const ci=String(process.env.CI||'');
+  return ci==='true'||ci==='1';
+}
+
 const updateApply=process.env.UPDATE_E97_APPLY==='1';
 const applyMode=String(process.env.APPLY_MODE||'PROPOSE').toUpperCase();
-if(process.env.CI==='true'&&updateApply) throw new Error('UPDATE_E97_APPLY forbidden in CI');
-if(!(process.env.CI!=='true'&&updateApply&&applyMode==='APPLY')){console.log('verify:e97:apply SKIPPED');process.exit(0);} 
+if(isCIMode()&&updateApply) throw new Error('UPDATE_E97_APPLY forbidden in CI');
+if(!(!isCIMode()&&updateApply&&applyMode==='APPLY')){console.log('verify:e97:apply SKIPPED');process.exit(0);} 
 
 const diff=fs.readFileSync(path.join(E97_ROOT,'TUNING_DIFF.md'),'utf8');
 const rows=[...diff.matchAll(/^\|\s([^|]+)\s\|\s([^|]+)\s\|\s([^|]+)\s\|\s([^|]+)\s\|\s([^|]+)\s\|\s([^|]+)\s\|$/gm)]
