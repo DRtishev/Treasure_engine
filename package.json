@@ -362,7 +362,12 @@
     "verify:e104:update": "CI=false UPDATE_E104_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e104",
     "verify:e104:contracts": "node scripts/verify/e104_porcelain_contract.mjs && node scripts/verify/e104_dep_cycle_contract.mjs",
     "verify:e104:bundle_hash_v2": "node scripts/verify/e104_bundle_hash_v2.mjs --write",
-    "verify:e104:bundle_hash_v2:verify": "node scripts/verify/e104_bundle_hash_v2.mjs --verify"
+    "verify:e104:bundle_hash_v2:verify": "node scripts/verify/e104_bundle_hash_v2.mjs --verify",
+    "verify:e105": "node scripts/verify/e105_run.mjs",
+    "verify:e105:update": "CI=false UPDATE_E105_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e105",
+    "verify:e105:perf:baseline": "CI=false UPDATE_E105_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e105_perf_baseline.mjs",
+    "verify:e105:contracts": "node scripts/verify/e105_speed_budget_contract.mjs && node scripts/verify/e104_porcelain_contract.mjs && node scripts/verify/e104_dep_cycle_contract.mjs",
+    "verify:e105:evidence": "node scripts/verify/e105_evidence.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
