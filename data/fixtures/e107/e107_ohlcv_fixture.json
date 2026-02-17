@@ -1,0 +1,31 @@
+{
+  "meta": {
+    "symbol": "BTCUSDT",
+    "timeframe": "5m",
+    "rows": 20,
+    "source": "FIXTURE",
+    "purpose": "E107 deterministic testing"
+  },
+  "candles": [
+    {"ts_open": 1704067200000, "open": 42000.00, "high": 42150.00, "low": 41950.00, "close": 42100.00, "volume": 100.5, "ts_close": 1704067499999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704067500000, "open": 42100.00, "high": 42200.00, "low": 42050.00, "close": 42180.00, "volume": 95.2, "ts_close": 1704067799999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704067800000, "open": 42180.00, "high": 42300.00, "low": 42100.00, "close": 42250.00, "volume": 110.8, "ts_close": 1704068099999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704068100000, "open": 42250.00, "high": 42280.00, "low": 42050.00, "close": 42080.00, "volume": 88.3, "ts_close": 1704068399999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704068400000, "open": 42080.00, "high": 42120.00, "low": 41900.00, "close": 41950.00, "volume": 120.1, "ts_close": 1704068699999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704068700000, "open": 41950.00, "high": 42050.00, "low": 41850.00, "close": 42000.00, "volume": 75.6, "ts_close": 1704068999999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704069000000, "open": 42000.00, "high": 42200.00, "low": 41980.00, "close": 42150.00, "volume": 105.4, "ts_close": 1704069299999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704069300000, "open": 42150.00, "high": 42350.00, "low": 42100.00, "close": 42300.00, "volume": 130.2, "ts_close": 1704069599999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704069600000, "open": 42300.00, "high": 42400.00, "low": 42200.00, "close": 42380.00, "volume": 98.7, "ts_close": 1704069899999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704069900000, "open": 42380.00, "high": 42420.00, "low": 42250.00, "close": 42280.00, "volume": 85.1, "ts_close": 1704070199999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704070200000, "open": 42280.00, "high": 42350.00, "low": 42200.00, "close": 42320.00, "volume": 92.3, "ts_close": 1704070499999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704070500000, "open": 42320.00, "high": 42500.00, "low": 42300.00, "close": 42480.00, "volume": 145.6, "ts_close": 1704070799999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704070800000, "open": 42480.00, "high": 42550.00, "low": 42400.00, "close": 42520.00, "volume": 112.9, "ts_close": 1704071099999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704071100000, "open": 42520.00, "high": 42600.00, "low": 42450.00, "close": 42570.00, "volume": 88.4, "ts_close": 1704071399999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704071400000, "open": 42570.00, "high": 42580.00, "low": 42350.00, "close": 42400.00, "volume": 135.2, "ts_close": 1704071699999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704071700000, "open": 42400.00, "high": 42450.00, "low": 42200.00, "close": 42250.00, "volume": 108.7, "ts_close": 1704071999999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704072000000, "open": 42250.00, "high": 42350.00, "low": 42150.00, "close": 42300.00, "volume": 95.1, "ts_close": 1704072299999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704072300000, "open": 42300.00, "high": 42450.00, "low": 42280.00, "close": 42420.00, "volume": 118.3, "ts_close": 1704072599999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704072600000, "open": 42420.00, "high": 42500.00, "low": 42350.00, "close": 42480.00, "volume": 102.6, "ts_close": 1704072899999, "symbol": "BTCUSDT", "interval": "5m"},
+    {"ts_open": 1704072900000, "open": 42480.00, "high": 42550.00, "low": 42400.00, "close": 42500.00, "volume": 90.8, "ts_close": 1704073199999, "symbol": "BTCUSDT", "interval": "5m"}
+  ]
+}
