@@ -2,6 +2,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { sha256File, sha256Text, writeMd } from './e66_lib.mjs';
+import { isCIMode as foundationIsCIMode } from './foundation_ci.mjs';
+import { rewriteSums, verifySums, readSumsCoreText } from './foundation_sums.mjs';
 
 export const E100_ROOT = path.resolve('reports/evidence/E100');
 export const E100_LOCK_PATH = path.resolve('.foundation-seal/E100_KILL_LOCK.md');
@@ -11,10 +13,9 @@ export function ensureDir(p){fs.mkdirSync(p,{recursive:true});}
 export function isQuiet(){return String(process.env.QUIET||'0')==='1';}
 export function minimalLog(msg){console.log(msg);}
 
-// E100-1: CI truthiness hardening - treat both "true" and "1" as truthy
+// E100-1: CI truthiness hardening - uses foundation_ci
 export function isCIMode(){
-  const ci=String(process.env.CI||'');
-  return ci==='true'||ci==='1';
+  return foundationIsCIMode();
 }
 
 export function readCanonicalFingerprintFromMd(filePath){
@@ -40,43 +41,23 @@ export function anchorsE100(){
 }
 
 export function readSumsCoreTextE100(){
-  const p=path.join(E100_ROOT,'SHA256SUMS.md');
-  if(!fs.existsSync(p)) return '';
-  const raw=fs.readFileSync(p,'utf8').replace(/\r\n/g,'\n');
-  const lines=raw.split('\n').filter((line)=>{
-    if(!/^[a-f0-9]{64}\s{2}/.test(line)) return true;
-    return !line.endsWith(' reports/evidence/E100/CLOSEOUT.md')&&
-           !line.endsWith(' reports/evidence/E100/VERDICT.md')&&
-           !line.endsWith(' reports/evidence/E100/SHA256SUMS.md')&&
-           !line.endsWith(' reports/evidence/E100/BUNDLE_HASH.md');
-  });
-  return `${lines.join('\n').replace(/\s+$/g,'')}\n`;
+  return readSumsCoreText(path.join(E100_ROOT,'SHA256SUMS.md'), [
+    ' reports/evidence/E100/CLOSEOUT.md',
+    ' reports/evidence/E100/VERDICT.md',
+    ' reports/evidence/E100/SHA256SUMS.md',
+    ' reports/evidence/E100/BUNDLE_HASH.md'
+  ]);
 }
 
 export function rewriteSumsE100(){
-  const lines=fs.readdirSync(E100_ROOT)
-    .filter((f)=>f.endsWith('.md')&&f!=='SHA256SUMS.md'&&f!=='BUNDLE_HASH.md')
-    .sort()
-    .map((f)=>`${sha256File(path.join(E100_ROOT,f))}  reports/evidence/E100/${f}`);
-  writeMd(path.join(E100_ROOT,'SHA256SUMS.md'),`# E100 SHA256SUMS\n\n${lines.join('\n')}`);
+  rewriteSums(E100_ROOT, ['SHA256SUMS.md', 'BUNDLE_HASH.md'], 'reports/evidence');
 }
 
 export function verifySumsE100(){
-  const raw=fs.readFileSync(path.join(E100_ROOT,'SHA256SUMS.md'),'utf8');
-  if(/\sreports\/evidence\/E100\/SHA256SUMS\.md$/m.test(raw)) throw new Error('sha self-row forbidden');
-  if(/\sreports\/evidence\/E100\/BUNDLE_HASH\.md$/m.test(raw)) throw new Error('bundle_hash row forbidden');
-  const rows=raw.split(/\r?\n/).filter((x)=>/^[a-f0-9]{64}\s{2}/.test(x));
-  const mdFiles=fs.readdirSync(E100_ROOT)
-    .filter((f)=>f.endsWith('.md')&&f!=='SHA256SUMS.md'&&f!=='BUNDLE_HASH.md')
-    .map((f)=>`reports/evidence/E100/${f}`);
-  for(const rel of mdFiles)
-    if(!rows.find((r)=>r.endsWith(`  ${rel}`)))
-      throw new Error(`missing sha row ${rel}`);
-  for(const line of rows){
-    const [h,rel]=line.split(/\s{2}/);
-    if(sha256File(path.resolve(rel))!==h)
-      throw new Error(`sha mismatch ${rel}`);
-  }
+  verifySums(path.join(E100_ROOT,'SHA256SUMS.md'), [
+    'reports/evidence/E100/SHA256SUMS.md',
+    'reports/evidence/E100/BUNDLE_HASH.md'
+  ]);
 }
 
 export function evidenceFingerprintE100(){

@@ -35,7 +35,7 @@
 - foundation_paths_hash: 0aa84b13e59dbadd709c46cfe2aa138aab786578a1e509e9e9b2b37e8c651062
 - foundation_render_hash: ac39e47e0a6a5ed0de7f4a310a8a31c6330c59bf09a1ced0ae469f210251e490
 - foundation_sums_hash: f38567a3a554c26306165e8e3767fa97d0b015a4cd671a7ecdceb26b8cf2500e
-- canonical_fingerprint: 97573a2a45fbecedd78ef8623431172dda4d379e0507d8f0faac934c801accb0
+- canonical_fingerprint: 6562c6fbe94ec0376eb4acf1fc1c951843ba8031471dda70836462232b569682
 
 ## Council of 7 (Pre)
 **Architect**: Track A migration needs controlled rollout. Token budget insufficient for safe delivery.

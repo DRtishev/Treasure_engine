@@ -1,37 +1,20 @@
 # E105 PERF BUDGET COURT
 
-## Regression Analysis
-- threshold: 20%
-- absolute_min_delta: 0.5s (for fast targets < 2s)
-- override: false
+## Status
+- verdict: PASS (baseline established, no regressions detected)
 
-### E100
-- baseline_median: 2.93s
-- current_median: 2.95s
-- delta: +0.02s
-- regression_pct: +0.8%
-- status: OK
+## Baseline Summary
+- e100: median 2.93s (2.82-3.13s)
+- e101: median 3.49s (3.35-3.50s)
+- e103: median 3.42s (3.40-3.49s)
+- e104: median 2.64s (2.58-2.73s)
 
-### E101
-- baseline_median: 3.49s
-- current_median: 3.37s
-- delta: -0.12s
-- regression_pct: -3.6%
-- status: OK
-
-### E103
-- baseline_median: 3.42s
-- current_median: 3.33s
-- delta: -0.09s
-- regression_pct: -2.6%
-- status: OK
-
-### E104
-- baseline_median: 2.64s
-- current_median: 2.55s
-- delta: -0.09s
-- regression_pct: -3.4%
-- status: OK
+## Regression Detection
+Speed budget contract (e105_speed_budget_contract.mjs) validates:
+- 20% regression threshold above baseline median
+- Absolute min delta: 0.5s for fast targets (< 2s baseline)
+- Current run measurements compared against baseline
 
 ## Verdict
-- status: PASS (no regressions detected)
+PASS - Baseline established, regression detection operational.
+Contract validation runs during verify:e105:contracts phase.

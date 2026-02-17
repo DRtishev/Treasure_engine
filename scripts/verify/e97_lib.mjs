@@ -2,6 +2,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { sha256File, sha256Text, writeMd } from './e66_lib.mjs';
+import { rewriteSums, verifySums, readSumsCoreText } from './foundation_sums.mjs';
 
 export const E97_ROOT = path.resolve('reports/evidence/E97');
 export const E97_LOCK_PATH = path.resolve('.foundation-seal/E97_KILL_LOCK.md');
@@ -53,28 +54,21 @@ export function anchorsE97(){
 }
 
 export function readSumsCoreTextE97(){
-  const p=path.join(E97_ROOT,'SHA256SUMS.md');
-  if(!fs.existsSync(p)) return '';
-  const raw=fs.readFileSync(p,'utf8').replace(/\r\n/g,'\n');
-  const lines=raw.split('\n').filter((line)=>{
-    if(!/^[a-f0-9]{64}\s{2}/.test(line)) return true;
-    return !line.endsWith(' reports/evidence/E97/CLOSEOUT.md')&&!line.endsWith(' reports/evidence/E97/VERDICT.md')&&!line.endsWith(' reports/evidence/E97/SHA256SUMS.md');
-  });
-  return `${lines.join('\n').replace(/\s+$/g,'')}\n`;
+  return readSumsCoreText(path.join(E97_ROOT,'SHA256SUMS.md'), [
+    ' reports/evidence/E97/CLOSEOUT.md',
+    ' reports/evidence/E97/VERDICT.md',
+    ' reports/evidence/E97/SHA256SUMS.md'
+  ]);
 }
 
 export function rewriteSumsE97(){
-  const lines=fs.readdirSync(E97_ROOT).filter((f)=>f.endsWith('.md')&&f!=='SHA256SUMS.md').sort().map((f)=>`${sha256File(path.join(E97_ROOT,f))}  reports/evidence/E97/${f}`);
-  writeMd(path.join(E97_ROOT,'SHA256SUMS.md'),`# E97 SHA256SUMS\n\n${lines.join('\n')}`);
+  rewriteSums(E97_ROOT, ['SHA256SUMS.md'], 'reports/evidence');
 }
 
 export function verifySumsE97(){
-  const raw=fs.readFileSync(path.join(E97_ROOT,'SHA256SUMS.md'),'utf8');
-  if(/\sreports\/evidence\/E97\/SHA256SUMS\.md$/m.test(raw)) throw new Error('sha self-row forbidden');
-  const rows=raw.split(/\r?\n/).filter((x)=>/^[a-f0-9]{64}\s{2}/.test(x));
-  const mdFiles=fs.readdirSync(E97_ROOT).filter((f)=>f.endsWith('.md')&&f!=='SHA256SUMS.md').map((f)=>`reports/evidence/E97/${f}`);
-  for(const rel of mdFiles) if(!rows.find((r)=>r.endsWith(`  ${rel}`))) throw new Error(`missing sha row ${rel}`);
-  for(const line of rows){const [h,rel]=line.split(/\s{2}/);if(sha256File(path.resolve(rel))!==h) throw new Error(`sha mismatch ${rel}`);} 
+  verifySums(path.join(E97_ROOT,'SHA256SUMS.md'), [
+    'reports/evidence/E97/SHA256SUMS.md'
+  ]);
 }
 
 export function evidenceFingerprintE97(){
