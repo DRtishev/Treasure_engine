@@ -380,7 +380,15 @@
     "verify:e108": "node scripts/verify/e108_run.mjs",
     "verify:e108:update": "CI=false UPDATE_E108_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e108",
     "verify:e108:contracts": "node scripts/verify/e108_no_lookahead_contract.mjs && node scripts/verify/e108_backtest_determinism_x2_contract.mjs && CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e107",
-    "verify:e108:seal_x2": "CI=false UPDATE_E108_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e108_seal_x2.mjs"
+    "verify:e108:seal_x2": "CI=false UPDATE_E108_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e108_seal_x2.mjs",
+    "verify:e109": "node scripts/verify/e109_run.mjs",
+    "verify:e109:update": "CI=false UPDATE_E109_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e109",
+    "verify:e109:contracts": "node scripts/verify/e109_data_quorum_contract.mjs && node scripts/verify/e109_live_safety_contract.mjs",
+    "verify:e109:seal_x2": "CI=false UPDATE_E109_EVIDENCE=1 node scripts/verify/e109_seal_x2.mjs",
+    "e109:capsule:build": "node scripts/data/e109_capsule_build.mjs",
+    "e109:harvest": "node scripts/edge/e109_harvest_candidates.mjs",
+    "e109:pilot:fixture": "node scripts/live/e109_micro_live_pilot_fixture.mjs",
+    "e109:pilot:live": "node scripts/live/e109_micro_live_pilot_live.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
