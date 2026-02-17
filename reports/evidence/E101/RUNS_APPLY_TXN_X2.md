@@ -12,6 +12,6 @@
 - idempotent: YES
 
 ## Performance
-- run1: 3.22s
-- run2: 3.29s
-- delta: 0.07s
+- run1: 3.20s
+- run2: 3.32s
+- delta: 0.12s

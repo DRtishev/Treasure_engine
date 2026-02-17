@@ -1,9 +1,11 @@
-# E97 PREFLIGHT
+# E104 PREFLIGHT
 - pwd: <REPO_ROOT>
 - branch: claude/e98-portability-apply-NVaWJ
 - head: 6b9161320bd53d1c6c02a2a1a26a0f37696efe00
 - node: v22.22.0
 - npm: 10.9.4
+- os: Linux runsc 4.4.0 #1 SMP Sun Jan 10 15:06:54 PST 2016 x86_64 x86_64 x86_64 GNU/Linux
+- git_present: true
 - git_status_sb:
 ```
 ## claude/e98-portability-apply-NVaWJ...origin/claude/e98-portability-apply-NVaWJ
@@ -12,14 +14,7 @@
  M reports/evidence/E101/PREFLIGHT.md
  M reports/evidence/E101/SHA256SUMS.md
  M reports/evidence/E101/VERDICT.md
- M reports/evidence/E103/GOAL_1_FAST_APPLY.md
- M reports/evidence/E103/PREFLIGHT.md
- M reports/evidence/E97/CLOSEOUT.md
- M reports/evidence/E97/PREFLIGHT.md
- M reports/evidence/E97/SHA256SUMS.md
- M reports/evidence/E97/VERDICT.md
  M scripts/verify/foundation_git.mjs
-?? .foundation-seal/E104_KILL_LOCK.md
 ?? reports/evidence/E104/
 ?? scripts/verify/e104_bundle_hash_v2.mjs
 ?? scripts/verify/e104_dep_cycle_contract.mjs

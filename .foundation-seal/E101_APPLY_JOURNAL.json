@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "applied_epoch": "E97",
-  "timestamp": "2026-02-16T23:41:50.216Z",
+  "timestamp": "2026-02-17T06:39:20.189Z",
   "before": {
     "overlay_sha256": "90adac21512f78837d64174b303866fb0295b9fba4bccae41faf7ca6fcd323cc",
     "ledger_sha256": "c686ea159b4a2ff9ff1ef203a077118feace4f58c1f946ce31a7bbd1e39845c9",
@@ -17,12 +17,12 @@
   "run1": {
     "overlay_sha256": "90adac21512f78837d64174b303866fb0295b9fba4bccae41faf7ca6fcd323cc",
     "ledger_sha256": "c686ea159b4a2ff9ff1ef203a077118feace4f58c1f946ce31a7bbd1e39845c9",
-    "duration_seconds": 3.22
+    "duration_seconds": 3.2
   },
   "run2": {
     "overlay_sha256": "90adac21512f78837d64174b303866fb0295b9fba4bccae41faf7ca6fcd323cc",
     "ledger_sha256": "c686ea159b4a2ff9ff1ef203a077118feace4f58c1f946ce31a7bbd1e39845c9",
-    "duration_seconds": 3.29
+    "duration_seconds": 3.32
   },
   "journal_path_portable": "<REPO_ROOT>/.foundation-seal/E101_APPLY_JOURNAL.json",
   "integrity_sha256": "884ed70185020776fc542d176e5980665fa8050e7209e2bb86f215bf73ce94a6"

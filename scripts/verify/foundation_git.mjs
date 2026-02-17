@@ -25,14 +25,26 @@ export function gitStatusPorcelain() {
 }
 
 /**
+ * Unquote git porcelain path if quoted
+ * E104-B1: Handle quoted paths (spaces, special chars)
+ */
+function unquotePath(p) {
+  if (p.startsWith('"') && p.endsWith('"')) {
+    return p.slice(1, -1);
+  }
+  return p;
+}
+
+/**
  * Parse git status --porcelain output into Map<path, status>
  * E101-1C: Fix for E100 parseMap bug - NO trim() before slice
+ * E104-B1: Enhanced to handle renames, copies, quoted paths
  *
- * Format: "XY path" where:
+ * Format: "XY path" or "XY oldpath -> newpath" (for R/C)
  * - X = index status (position 0)
  * - Y = worktree status (position 1)
  * - position 2 = space separator
- * - position 3+ = file path
+ * - position 3+ = file path (may be quoted if contains spaces)
  *
  * CRITICAL: Do NOT trim rows before slicing, as leading space is part of status format
  *
@@ -43,9 +55,25 @@ export function parsePorcelainMap(text) {
   const m = new Map();
   for (const row of text.split('\n').filter(Boolean)) {
     if (row.length < 3) continue;
-    // CRITICAL: slice(3) on original text (no trim) to preserve format
-    // E101-3: Regression test confirmed this fix
-    m.set(row.slice(3), row.slice(0, 2));
+    const xy = row.slice(0, 2);
+    let pathPart = row.slice(3);
+
+    // Handle renames and copies (R/C) with "oldpath -> newpath" format
+    if ((xy[0] === 'R' || xy[0] === 'C') && pathPart.includes(' -> ')) {
+      const parts = pathPart.split(' -> ');
+      if (parts.length === 2) {
+        const oldPath = unquotePath(parts[0]);
+        const newPath = unquotePath(parts[1]);
+        // Track both old and new paths for scope enforcement
+        m.set(oldPath, xy);
+        m.set(newPath, xy);
+        continue;
+      }
+    }
+
+    // Handle quoted paths (spaces, special chars)
+    const cleanPath = unquotePath(pathPart);
+    m.set(cleanPath, xy);
   }
   return m;
 }

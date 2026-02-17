@@ -1,0 +1,27 @@
+# E104 BASELINE FINGERPRINTS
+
+Captured before foundation adoption refactoring.
+
+## E97
+- closeout_fingerprint: f952017dba98004fbb9cf296f787eff6fd748dec3f7124d639e8c9a992bc8ead
+- verdict_fingerprint: f952017dba98004fbb9cf296f787eff6fd748dec3f7124d639e8c9a992bc8ead
+
+## E99
+- closeout_fingerprint: 6c2281616a12a181f16199b178a709265288e16b53fbdc618b75bcd1072d44fd
+- verdict_fingerprint: 6c2281616a12a181f16199b178a709265288e16b53fbdc618b75bcd1072d44fd
+
+## E100
+- closeout_fingerprint: 3ee630f1e353a1ea3707ea4347ba932c4452b110e8e9ec4584d3ec04ff7916a0
+- verdict_fingerprint: 3ee630f1e353a1ea3707ea4347ba932c4452b110e8e9ec4584d3ec04ff7916a0
+
+## E101
+- closeout_fingerprint: 1435f417836ffc1b45b635be2d40465e99870f79c135189f9626c7e41f8c6880
+- verdict_fingerprint: 1435f417836ffc1b45b635be2d40465e99870f79c135189f9626c7e41f8c6880
+
+## E103
+- closeout_fingerprint: 61b18c4d0cb51a5b2fdb379917449638795310debe01e7215aa47db87e138f1f
+- verdict_fingerprint: 61b18c4d0cb51a5b2fdb379917449638795310debe01e7215aa47db87e138f1f
+
+## E102
+- closeout_fingerprint: c4de604c473431b2337f6d9273f09ef40e8a4086e2b9e1ba63e7d16ddf116500
+- verdict_fingerprint: c4de604c473431b2337f6d9273f09ef40e8a4086e2b9e1ba63e7d16ddf116500

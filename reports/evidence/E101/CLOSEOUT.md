@@ -11,10 +11,10 @@
 - e98_canonical_fingerprint: 2043167e95ad4790f202dbcd1fee52016cbaa5ab3b664e6a988f595c6c77514f
 - e99_canonical_fingerprint: 2043167e95ad4790f202dbcd1fee52016cbaa5ab3b664e6a988f595c6c77514f
 - foundation_ci_hash: 3bd2245be05e3183fa774fd63713bb3f6ee14de5e4218b467badaea85d7733ef
-- foundation_git_hash: 720eb65d17f0d03a953db23083de7dd623c0143d8da256111b24cc38c4102cfd
+- foundation_git_hash: e31868a20be4b64ad3d8382e88149f94d6746980a28ef86c4a9ba6c15c8e2a43
 - foundation_lock_hash: 55a6331ca9e51f2f8d9dccdecb6f1cd82b2ebfdc2b263a5aaef439f7652b89a8
 - foundation_paths_hash: 0aa84b13e59dbadd709c46cfe2aa138aab786578a1e509e9e9b2b37e8c651062
 - foundation_render_hash: ac39e47e0a6a5ed0de7f4a310a8a31c6330c59bf09a1ced0ae469f210251e490
 - foundation_sums_hash: f38567a3a554c26306165e8e3767fa97d0b015a4cd671a7ecdceb26b8cf2500e
-- canonical_fingerprint: 1435f417836ffc1b45b635be2d40465e99870f79c135189f9626c7e41f8c6880
+- canonical_fingerprint: b5434ba9c0505d05a895001b0917dbd3fb27f68431c70aaea6ea645748a910fd
 - exact_commands: npm ci; CI=false CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e100; CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e100; CI=false UPDATE_E101_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e101:update; CI=false CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e101; CI=true CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e101; CI=true UPDATE_E101_EVIDENCE=1 npm run -s verify:e101; CI=1 UPDATE_E101_EVIDENCE=1 npm run -s verify:e101; CI=false UPDATE_E101_APPLY_TXN=1 APPLY_MODE=APPLY CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e101:apply_txn; CI=false ROLLBACK_E101=1 ROLLBACK_MODE=ROLLBACK CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e101:rollback
