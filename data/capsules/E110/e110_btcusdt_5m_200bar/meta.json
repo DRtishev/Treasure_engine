@@ -1,0 +1,13 @@
+{
+  "capsule_id": "e110_btcusdt_5m_200bar",
+  "symbol": "BTCUSDT",
+  "interval": "5m",
+  "source": "E109_CAPSULE",
+  "total_bars": 200,
+  "chunks": 1,
+  "chunk_size": 500,
+  "first_ts": 1704067200000,
+  "last_ts": 1704126900000,
+  "first_date": "2024-01-01T00:00:00.000Z",
+  "last_date": "2024-01-01T16:35:00.000Z"
+}
