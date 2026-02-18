@@ -503,7 +503,12 @@
     "verify:e130:seal_x2": "CI=false UPDATE_E130_EVIDENCE=1 node scripts/verify/e130_seal_x2.mjs",
     "verify:e130:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e130_replay_x2.mjs",
     "verify:e130:diag": "node scripts/verify/e130_diag.mjs",
-    "verify:e130:diag:deep": "CI=false ENABLE_NET=1 I_UNDERSTAND_LIVE_RISK=1 ONLINE_OPTIONAL=1 FORCE_IPV4=1 node scripts/verify/e130_diag.mjs"
+    "verify:e130:diag:deep": "CI=false ENABLE_NET=1 I_UNDERSTAND_LIVE_RISK=1 ONLINE_OPTIONAL=1 FORCE_IPV4=1 node scripts/verify/e130_diag.mjs",
+    "verify:e131": "node scripts/verify/e131_run.mjs",
+    "verify:e131:update": "CI=false UPDATE_E131_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e131_run.mjs",
+    "verify:e131:contracts": "node scripts/verify/e131_contracts_pack.mjs",
+    "verify:e131:seal_x2": "CI=false UPDATE_E131_EVIDENCE=1 node scripts/verify/e131_seal_x2.mjs",
+    "verify:e131:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e131_replay_x2.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
