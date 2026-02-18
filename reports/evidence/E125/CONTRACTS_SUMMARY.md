@@ -1,0 +1,11 @@
+# E125 CONTRACTS SUMMARY
+- anchor_sanity: enforced
+- redaction_scan: enforced
+- anti_fake_full_v6: enforced
+- quorum_policy: enforced
+- egress_diag_completeness: enforced
+- fill_ledger_match: enforced
+- packaging: enforced
+- zero_writes: enforced
+- replay_match: enforced
+- seal_3of3: enforced

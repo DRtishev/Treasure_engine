@@ -59,3 +59,21 @@ temp/
 
 # E120 run-scoped runtime artifacts
 .run/treasure/
+
+# E121 input binding runtime state
+.foundation-seal/E121_INPUT_BINDING.json
+
+# E122 input binding runtime state
+.foundation-seal/E122_INPUT_BINDING.json
+
+# E123 input binding runtime state
+.foundation-seal/E123_INPUT_BINDING.json
+
+# E124 input binding runtime state
+.foundation-seal/E124_INPUT_BINDING.json
+
+# E125 input binding runtime state
+.foundation-seal/E125_INPUT_BINDING.json
+
+# E126 input binding runtime state
+.foundation-seal/E126_INPUT_BINDING.json

@@ -1,0 +1,4 @@
+# E124 REPLAY X2
+- run1: 2ced68b1a7792b66dacf8c27c26dfa9db9c4522c087bb4d159b42f710b58d181
+- run2: 2ced68b1a7792b66dacf8c27c26dfa9db9c4522c087bb4d159b42f710b58d181
+- verdict: MATCH

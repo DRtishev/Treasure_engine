@@ -1,0 +1,14 @@
+# E121 EXECUTION ADAPTER
+- mode: ONLINE_OPTIONAL
+- venue: BYBIT_TESTNET
+- dry_run: true
+- live_allowed: false
+- reason_code: DRY_RUN_DEFAULT
+- status: SKIP
+- symbol: BTCUSDT
+- side: BUY
+- qty: 0.001
+- price: 0
+- order_type: LIMIT
+- ts_bucket: 2026-01-01T00:00:00.000Z
+- reason_codes: E121_DRY_RUN
