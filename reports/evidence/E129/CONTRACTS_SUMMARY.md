@@ -1,0 +1,11 @@
+# E129 CONTRACTS SUMMARY
+- ci_boundary: enforced
+- evidence_completeness: enforced
+- diag_v8_columns: enforced
+- redaction_scan: enforced
+- anti_fake_full_v6: enforced
+- zero_writes_on_fail: enforced
+- seal_x2_3of3: enforced
+- replay_x2_match: enforced
+- fill_ledger_contract: enforced
+- packaging_hashes: enforced

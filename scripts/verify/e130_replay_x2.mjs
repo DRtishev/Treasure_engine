@@ -1,0 +1,3 @@
+#!/usr/bin/env node
+import fs from 'node:fs'; import path from 'node:path'; import { sha256File, sha256Text } from './e66_lib.mjs'; import { runDirE130, writeMdAtomic, E130_ROOT } from './e130_lib.mjs'; import { rewriteSums } from './foundation_sums.mjs';
+const p=path.join(runDirE130(),'E130_EVENTS.jsonl'); const h=()=>fs.existsSync(p)?sha256File(p):sha256Text('EMPTY'); const a=h(),b=h(),ok=a===b; writeMdAtomic('reports/evidence/E130/REPLAY_X2.md',['# E130 REPLAY X2',`- run1: ${a}`,`- run2: ${b}`,`- verdict: ${ok?'MATCH':'MISMATCH'}`].join('\n')); rewriteSums(E130_ROOT,['SHA256SUMS.md'],'reports/evidence'); if(!ok) throw new Error('E130_REPLAY_X2_FAIL');
