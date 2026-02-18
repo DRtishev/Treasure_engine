@@ -29,3 +29,9 @@ export async function fetchOHLCV({ provider, symbol, tf = '5m', from, to, limit 
     throw err;
   }
 }
+
+
+export function validateMonotonicBars(bars = []) {
+  for (let i = 1; i < bars.length; i += 1) { if (Number(bars[i - 1].ts) >= Number(bars[i].ts)) return false; }
+  return true;
+}

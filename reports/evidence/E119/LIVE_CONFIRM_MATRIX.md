@@ -1,0 +1,19 @@
+# E119 LIVE CONFIRM MATRIX
+- binance|WS|65ea0da6113bde31434f7c4043bc955de09cd9e116f1e92a9a52f2869bb7cd58|status=FAIL|reason=E_WS_NO_EVENT|rtt_ms=64|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- binance|REST|65ea0da6113bde31434f7c4043bc955de09cd9e116f1e92a9a52f2869bb7cd58|status=FAIL|reason=E_TIMEOUT|rtt_ms=178|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- bybit|WS|65ea0da6113bde31434f7c4043bc955de09cd9e116f1e92a9a52f2869bb7cd58|status=FAIL|reason=E_WS_NO_EVENT|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- bybit|REST|65ea0da6113bde31434f7c4043bc955de09cd9e116f1e92a9a52f2869bb7cd58|status=FAIL|reason=E_WINDOW_MISMATCH|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- kraken|WS|65ea0da6113bde31434f7c4043bc955de09cd9e116f1e92a9a52f2869bb7cd58|status=FAIL|reason=E_WS_NO_EVENT|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- kraken|REST|65ea0da6113bde31434f7c4043bc955de09cd9e116f1e92a9a52f2869bb7cd58|status=FAIL|reason=E_WINDOW_MISMATCH|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- binance|WS|549f8f86f34370f5d7cf0c85e3e7938461b7b6469d398885001f4d6dc19008b1|status=FAIL|reason=E_WS_NO_EVENT|rtt_ms=176|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- binance|REST|549f8f86f34370f5d7cf0c85e3e7938461b7b6469d398885001f4d6dc19008b1|status=FAIL|reason=E_TIMEOUT|rtt_ms=118|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- bybit|WS|549f8f86f34370f5d7cf0c85e3e7938461b7b6469d398885001f4d6dc19008b1|status=FAIL|reason=E_WS_NO_EVENT|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- bybit|REST|549f8f86f34370f5d7cf0c85e3e7938461b7b6469d398885001f4d6dc19008b1|status=FAIL|reason=E_WINDOW_MISMATCH|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- kraken|WS|549f8f86f34370f5d7cf0c85e3e7938461b7b6469d398885001f4d6dc19008b1|status=FAIL|reason=E_WS_NO_EVENT|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- kraken|REST|549f8f86f34370f5d7cf0c85e3e7938461b7b6469d398885001f4d6dc19008b1|status=FAIL|reason=E_WINDOW_MISMATCH|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- binance|WS|b8b9d4c41d98ea3e8f6adf0cbc8e93d2b5538629117e99900402a36a5704c6ee|status=FAIL|reason=E_WS_NO_EVENT|rtt_ms=22|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- binance|REST|b8b9d4c41d98ea3e8f6adf0cbc8e93d2b5538629117e99900402a36a5704c6ee|status=FAIL|reason=E_TIMEOUT|rtt_ms=23|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- bybit|WS|b8b9d4c41d98ea3e8f6adf0cbc8e93d2b5538629117e99900402a36a5704c6ee|status=FAIL|reason=E_WS_NO_EVENT|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- bybit|REST|b8b9d4c41d98ea3e8f6adf0cbc8e93d2b5538629117e99900402a36a5704c6ee|status=FAIL|reason=E_WINDOW_MISMATCH|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- kraken|WS|b8b9d4c41d98ea3e8f6adf0cbc8e93d2b5538629117e99900402a36a5704c6ee|status=FAIL|reason=E_WS_NO_EVENT|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
+- kraken|REST|b8b9d4c41d98ea3e8f6adf0cbc8e93d2b5538629117e99900402a36a5704c6ee|status=FAIL|reason=E_WINDOW_MISMATCH|rtt_ms=0|first_event_ts=NA|last_event_ts=NA|candle_count=0|schema_ok=false|non_empty=false
