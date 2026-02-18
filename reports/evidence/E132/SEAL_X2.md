@@ -1,0 +1,6 @@
+# E132 SEAL X2
+- CLOSEOUT: MATCH
+- VERDICT: MATCH
+- SHA256SUMS: MATCH
+- parity_3of3: PASS
+- canonical_fingerprint: d4b792f318e4b308b83f56ee180b478cfa8ac411c8010adb4dfc657fb30a40f5
