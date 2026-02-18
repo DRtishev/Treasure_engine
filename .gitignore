@@ -30,3 +30,17 @@ temp/
 
 # keep evidence logs trackable
 !reports/evidence/**/*.log
+
+# E112 pinned capsule snapshots (non-committed)
+.foundation-seal/capsules/
+!.foundation-seal/capsules/.gitkeep
+
+# E113 run-scoped transients
+.foundation-seal/runs/
+!.foundation-seal/runs/.gitkeep
+
+# E115 input binding runtime state
+.foundation-seal/E115_INPUT_BINDING.json
+
+# E116 input binding runtime state
+.foundation-seal/E116_INPUT_BINDING.json

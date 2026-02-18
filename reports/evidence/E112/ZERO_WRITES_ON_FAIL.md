@@ -1,0 +1,4 @@
+# E112 ZERO WRITES ON FAIL
+- protected_state_before: fd77077c82496f83d349ad20ba170788d636ecbae2abccfce0f81ba165ad4a61
+- protected_state_after: fd77077c82496f83d349ad20ba170788d636ecbae2abccfce0f81ba165ad4a61
+- status: PASS

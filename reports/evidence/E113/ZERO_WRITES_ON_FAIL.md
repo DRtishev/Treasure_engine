@@ -1,0 +1,4 @@
+# E113 ZERO WRITES ON FAIL
+- protected_state_before: 93727acd6c431891b0107e3f511b8a44d24acd6a659a753945fdf36384d90574
+- protected_state_after: 93727acd6c431891b0107e3f511b8a44d24acd6a659a753945fdf36384d90574
+- status: PASS

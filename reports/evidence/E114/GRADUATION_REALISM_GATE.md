@@ -1,0 +1,6 @@
+# E114 GRADUATION REALISM GATE
+- mode: ONLINE_OPTIONAL
+- live_reachable: no
+- status: PASS
+## Reasons
+- OFFLINE_ONLY_PAPER_LIVE_ONLY

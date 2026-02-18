@@ -1,0 +1,4 @@
+# E114 ZERO WRITES ON FAIL
+- protected_state_before: 41fe338f5e24d32372f1032c8396b38cf2f71762f5a1f06bb9a2bc9b03491abf
+- protected_state_after: 41fe338f5e24d32372f1032c8396b38cf2f71762f5a1f06bb9a2bc9b03491abf
+- status: PASS

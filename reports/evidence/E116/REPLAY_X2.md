@@ -1,0 +1,6 @@
+# E116 REPLAY X2
+- run1_canonical: ca98312261e50a3306c55717667a5fb1b08403f80873c437ec0895afbfba7fcf
+- run2_canonical: ca98312261e50a3306c55717667a5fb1b08403f80873c437ec0895afbfba7fcf
+- run1_bundle: 4908c8abcc5085028ca15ab4bbb5862d5673a4cc5bcd3e52e61e8e6bffff3261
+- run2_bundle: 4908c8abcc5085028ca15ab4bbb5862d5673a4cc5bcd3e52e61e8e6bffff3261
+- verdict: MATCH

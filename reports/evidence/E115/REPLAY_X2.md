@@ -1,0 +1,6 @@
+# E115 REPLAY X2
+- run1_norm: beb24a45abec5bd4fd6c6a2a191bc76a56ea4dd2f4548f5a5f0adf0d108d2f5b
+- run2_norm: beb24a45abec5bd4fd6c6a2a191bc76a56ea4dd2f4548f5a5f0adf0d108d2f5b
+- run1_bundle: 088d4846dcf7587698758e87cdd9f9db85dcb4c81eca8da60b187b73687ea01b
+- run2_bundle: 088d4846dcf7587698758e87cdd9f9db85dcb4c81eca8da60b187b73687ea01b
+- verdict: MATCH
