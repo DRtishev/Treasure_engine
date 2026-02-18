@@ -1,0 +1,10 @@
+# E124 ATTEMPT
+- index: 1
+- attempt_id: bfa6561d5d17821b
+- planned_ts_utc: 2026-01-01T00:01:00Z
+- precheck: PASS
+- quorum_snapshot: false
+- safety_kernel: PASS
+- execution_terminal: SKIP
+- reason_code: E_NO_QUORUM
+- attempt_hash: 4699e9c452d60ca073cfa61f5b7a509615bc18e72df223f1464c0135b2028008

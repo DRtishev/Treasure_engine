@@ -1,0 +1,13 @@
+# E122 EXECUTION FLOW
+- mode: ONLINE_OPTIONAL
+- live_attempted: false
+- terminal_status: SKIP
+- reason_code: E_DRY_RUN
+- sanitized_order_ref: NONE
+- sanitized_client_ref: NONE
+- transition_count: 0
+- transitions: NONE
+- fill_qty: 0
+- fill_price: 0
+- fill_fee: 0
+- fill_ref: NONE

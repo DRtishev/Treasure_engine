@@ -1,0 +1,11 @@
+# E123 EXECUTION FLOW V2
+- terminal_status: SKIP
+- reason_code: E_NO_QUORUM
+- live_attempted: false
+- request_shape: {symbol,side,order_type,qty,price}
+- response_shape: {status,order_hash,fill_qty,fill_price,fill_fee}
+- order_hash: da33b0ceccfad54f3363
+- fill_qty: 0
+- fill_price: 0
+- fill_fee: 0
+- transitions: NONE
