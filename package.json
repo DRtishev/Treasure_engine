@@ -508,7 +508,16 @@
     "verify:e131:update": "CI=false UPDATE_E131_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e131_run.mjs",
     "verify:e131:contracts": "node scripts/verify/e131_contracts_pack.mjs",
     "verify:e131:seal_x2": "CI=false UPDATE_E131_EVIDENCE=1 node scripts/verify/e131_seal_x2.mjs",
-    "verify:e131:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e131_replay_x2.mjs"
+    "verify:e131:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e131_replay_x2.mjs",
+    "verify:e131:diag": "node scripts/verify/e131_diag.mjs",
+    "verify:e131:diag:deep": "FORCE_IPV4=1 node scripts/verify/e131_diag.mjs",
+    "verify:e132": "node scripts/verify/e132_run.mjs",
+    "verify:e132:update": "CI=false UPDATE_E132_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e132_run.mjs",
+    "verify:e132:contracts": "node scripts/verify/e132_contracts_pack.mjs",
+    "verify:e132:seal_x2": "CI=false UPDATE_E132_EVIDENCE=1 node scripts/verify/e132_seal_x2.mjs",
+    "verify:e132:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e132_replay_x2.mjs",
+    "verify:e132:diag": "node scripts/verify/e132_diag.mjs",
+    "verify:e132:diag:deep": "FORCE_IPV4=1 node scripts/verify/e132_diag_deep.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
