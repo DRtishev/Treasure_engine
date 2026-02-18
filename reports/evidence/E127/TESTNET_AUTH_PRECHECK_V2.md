@@ -1,0 +1,5 @@
+# E127 TESTNET AUTH PRECHECK V2
+- verdict: E_NO_KEYS
+- key_hash: NONE
+- secret_hash: NONE
+- reason_codes: E_NO_KEYS,E_BAD_KEYS,E_ENV_BLOCKED,E_CLOCK_SKEW,E_NET_DOWN,E_OK

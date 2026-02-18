@@ -77,3 +77,15 @@ temp/
 
 # E126 input binding runtime state
 .foundation-seal/E126_INPUT_BINDING.json
+
+# E127 input binding runtime state
+.foundation-seal/E127_INPUT_BINDING.json
+
+# E128 input binding runtime state
+.foundation-seal/E128_INPUT_BINDING.json
+
+# E129 input binding runtime state
+.foundation-seal/E129_INPUT_BINDING.json
+
+# E130 input binding runtime state
+.foundation-seal/E130_INPUT_BINDING.json

@@ -1,0 +1,11 @@
+# E130 CONTRACTS SUMMARY
+- ci_boundary: enforced
+- evidence_completeness: enforced
+- diag_columns: enforced
+- remediation_coverage: enforced
+- anti_fake_full_v7: enforced
+- zero_writes_on_fail: enforced
+- seal_x2_3of3: enforced
+- replay_x2_match: enforced
+- fill_ledger_match_contract: enforced
+- packaging_hashes: enforced
