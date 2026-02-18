@@ -1,0 +1,5 @@
+# E119 PARITY COURT V4
+- live_inputs: false
+- 549f8f86f34370f5d7cf0c85e3e7938461b7b6469d398885001f4d6dc19008b1|verdict=PASS|reason=PARITY_OK|max_close_diff_bps=0|max_time_drift_sec=0
+- 65ea0da6113bde31434f7c4043bc955de09cd9e116f1e92a9a52f2869bb7cd58|verdict=PASS|reason=PARITY_OK|max_close_diff_bps=0|max_time_drift_sec=0
+- b8b9d4c41d98ea3e8f6adf0cbc8e93d2b5538629117e99900402a36a5704c6ee|verdict=PASS|reason=PARITY_OK|max_close_diff_bps=0|max_time_drift_sec=0

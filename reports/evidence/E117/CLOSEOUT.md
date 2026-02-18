@@ -1,0 +1,7 @@
+# E117 CLOSEOUT
+## Anchors
+- e116_canonical_fingerprint: aa1b29f5f618490bf3326dc97d47b2035f0a5bc67d02bf70a2c7226d671d9bb2
+- e117_run_hash: 8a64c2916f6671a4ad6830d3c5989f388832ff417487771febea52765049283f
+- mode: ONLINE_OPTIONAL
+- verdict: PASS
+- canonical_fingerprint: aa1b29f5f618490bf3326dc97d47b2035f0a5bc67d02bf70a2c7226d671d9bb2

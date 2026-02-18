@@ -423,7 +423,27 @@
     "verify:e116:update": "CI=false UPDATE_E116_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 npm run -s verify:e116",
     "verify:e116:contracts": "node scripts/verify/e116_contracts_pack.mjs",
     "verify:e116:seal_x2": "CI=false UPDATE_E116_EVIDENCE=1 node scripts/verify/e116_seal_x2.mjs",
-    "verify:e116:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e116_replay_x2.mjs"
+    "verify:e116:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e116_replay_x2.mjs",
+    "verify:e117": "node scripts/verify/e117_run.mjs",
+    "verify:e117:update": "CI=false UPDATE_E117_EVIDENCE=1 node scripts/verify/e117_run.mjs",
+    "verify:e117:contracts": "node scripts/verify/e117_contracts_pack.mjs",
+    "verify:e117:seal_x2": "node scripts/verify/e117_seal_x2.mjs",
+    "verify:e117:replay_x2": "node scripts/verify/e117_replay_x2.mjs",
+    "verify:e118": "node scripts/verify/e118_run.mjs",
+    "verify:e118:update": "CI=false UPDATE_E118_EVIDENCE=1 node scripts/verify/e118_run.mjs",
+    "verify:e118:contracts": "node scripts/verify/e118_contracts_pack.mjs",
+    "verify:e118:seal_x2": "node scripts/verify/e118_seal_x2.mjs",
+    "verify:e118:replay_x2": "node scripts/verify/e118_replay_x2.mjs",
+    "verify:e119": "node scripts/verify/e119_run.mjs",
+    "verify:e119:update": "CI=false UPDATE_E119_EVIDENCE=1 node scripts/verify/e119_run.mjs",
+    "verify:e119:contracts": "node scripts/verify/e119_contracts_pack.mjs",
+    "verify:e119:seal_x2": "node scripts/verify/e119_seal_x2.mjs",
+    "verify:e119:replay_x2": "node scripts/verify/e119_replay_x2.mjs",
+    "verify:e120": "node scripts/verify/e120_run.mjs",
+    "verify:e120:update": "CI=false UPDATE_E120_EVIDENCE=1 node scripts/verify/e120_run.mjs",
+    "verify:e120:contracts": "node scripts/verify/e120_contracts_pack.mjs",
+    "verify:e120:seal_x2": "node scripts/verify/e120_seal_x2.mjs",
+    "verify:e120:replay_x2": "node scripts/verify/e120_replay_x2.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

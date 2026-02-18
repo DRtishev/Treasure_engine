@@ -1,0 +1,7 @@
+# E120 CLOSEOUT
+## Anchors
+- e119_canonical_fingerprint: 37022ecb3f75f1148622966c7d8eebe7381d77228067460586921dec42858250
+- e120_run_hash: f4ce3760b2fa4cf472c69e57bc7c4aedd1211a3f965be83c959eb2649f1d1269
+- mode: ONLINE_OPTIONAL
+- verdict: WARN
+- canonical_fingerprint: 37022ecb3f75f1148622966c7d8eebe7381d77228067460586921dec42858250

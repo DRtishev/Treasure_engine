@@ -1,0 +1,6 @@
+# E118 SEAL X2
+- CLOSEOUT: MATCH
+- VERDICT: MATCH
+- SHA256SUMS: MATCH
+- parity_3of3: PASS
+- canonical_fingerprint: 4aed763876af8a8e10f74388b94e5ca797cfa7c60718bd4f9888a07c3f40f542

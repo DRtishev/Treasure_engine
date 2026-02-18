@@ -1,0 +1,4 @@
+# E120 VERDICT
+- mode: ONLINE_OPTIONAL
+- status: WARN
+- canonical_fingerprint: 37022ecb3f75f1148622966c7d8eebe7381d77228067460586921dec42858250
