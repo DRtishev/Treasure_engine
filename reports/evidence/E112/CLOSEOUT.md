@@ -1,0 +1,10 @@
+# E112 CLOSEOUT
+## Anchors
+- e111_canonical_fingerprint: fd78b9fec0503b44d18bdb014e27b9c2f146c48255bcf07538b4ddcd90e9ce14
+- e112_lib_hash: ebb97beacf3bbdaee9edc9d9413404f65b1dc17af1c46cd882d64d4d96464f08
+- e112_run_hash: 8237105454c1f8a455b85040c8dac9b272950ca9f25c1b45956847da78c40ba8
+- e112_evidence_hash: 1de924e2e2dbec204c8d834024597718eec69dd30f413b1f87b8b1f6a9af0520
+- e112_contracts_pack_hash: 49335bfe163da26310525accd2314c20c3f29c494510405c2db43f943b808913
+- mode: ONLINE_OPTIONAL
+- verdict: WARN
+- canonical_fingerprint: fd78b9fec0503b44d18bdb014e27b9c2f146c48255bcf07538b4ddcd90e9ce14

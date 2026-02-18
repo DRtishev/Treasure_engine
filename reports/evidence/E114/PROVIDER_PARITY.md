@@ -1,0 +1,6 @@
+# E114 PROVIDER PARITY
+- mode: ONLINE_OPTIONAL
+- bybit: WARN (E_FETCH_FAIL)
+- binance: WARN (E_FETCH_FAIL)
+- kraken: WARN (E_FETCH_FAIL)
+- coingecko: WARN (E_FETCH_FAIL)

@@ -1,0 +1,12 @@
+# E113 REALITY FUEL
+- mode: ONLINE_OPTIONAL
+- provider_chosen: pinned:E113_1700000000
+- fallback_used: yes
+- verdict: WARN
+- freshness_window_ms: 86400000
+## Symbols
+- BTCUSDT: bars=5000, start=1700000000000, end=1701499700000, monotonic=yes, freshness_delta_ms=69902782521, sha256=0d38b55000a49fe851d7716a85a67772c92b6c00ee706f8ad82365c00559db17
+- ETHUSDT: bars=5000, start=1700000000000, end=1701499700000, monotonic=yes, freshness_delta_ms=69902782521, sha256=cad794badf0ec03208267d5f9272874c47bcaf7729db9d9eb4a17b2bae114456
+## Reasons
+- BTCUSDT:PINNED_FALLBACK_NO_PROVIDER
+- ETHUSDT:PINNED_FALLBACK_NO_PROVIDER

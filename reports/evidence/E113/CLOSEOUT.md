@@ -1,0 +1,8 @@
+# E113 CLOSEOUT
+## Anchors
+- e112_canonical_fingerprint: 681d1ec26ee93ae8bf0d9b526c51576ddd152b918b0c2c1833066985fa9cca8e
+- e113_run_hash: 942310c6a2ae6a2be0da6d1e0bc878d8d42349c08f9a70dc40efba62eab71a5e
+- e113_evidence_hash: cda7c73a348360f100dda6fc20896e77cf9efe12e1391b108365c8aa9fa44cc0
+- mode: ONLINE_OPTIONAL
+- verdict: WARN
+- canonical_fingerprint: 681d1ec26ee93ae8bf0d9b526c51576ddd152b918b0c2c1833066985fa9cca8e

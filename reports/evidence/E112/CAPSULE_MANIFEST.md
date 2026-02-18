@@ -1,0 +1,9 @@
+# E112 CAPSULE MANIFEST
+- mode: ONLINE_OPTIONAL
+- snapshot_stamp: E112_1700000000
+- snapshot_path: <REPO_ROOT>/.foundation-seal/capsules/E112_1700000000
+- net_proof_sha256: ff3caaa9372f65a2d1a5d12bffcbc5220520ea1718515f4f94acff1cf493fc29
+## Symbols
+- BTCUSDT: bars=5000, raw_sha256=22dddef17a28e1b172e7fddd3c12ad06f5927c85fe59ffc73b011d10172d9133, norm_sha256=0d38b55000a49fe851d7716a85a67772c92b6c00ee706f8ad82365c00559db17
+- ETHUSDT: bars=5000, raw_sha256=4156c520d7c4272309bc9a34974a1235d7aaedb7b916a4e075a2eeb340072e45, norm_sha256=cad794badf0ec03208267d5f9272874c47bcaf7729db9d9eb4a17b2bae114456
+- SOLUSDT: bars=5000, raw_sha256=2e8faca43dbf8accd7c5fbe91490cd70fff42ceadab43bbb88c109761bbe9288, norm_sha256=c96f2654f525c6190f911e9d63174ca71e56418f2271ba6dbd5d8aedfb1b294b

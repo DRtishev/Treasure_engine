@@ -1,0 +1,8 @@
+# E113 REPLAY X2
+- run1_normalized_hash: beb24a45abec5bd4fd6c6a2a191bc76a56ea4dd2f4548f5a5f0adf0d108d2f5b
+- run2_normalized_hash: beb24a45abec5bd4fd6c6a2a191bc76a56ea4dd2f4548f5a5f0adf0d108d2f5b
+- run1_manifest_hash: d7b26537200000e49357cf46b9a80be8ec04b78dd0ccf3c258ee6b361a0bd29b
+- run2_manifest_hash: d7b26537200000e49357cf46b9a80be8ec04b78dd0ccf3c258ee6b361a0bd29b
+- run1_bundle_hash: 91372d2e9099abc331eba7dc4e91e50c368f1c452f7f4f5aad9fd2fc543e02c7
+- run2_bundle_hash: 91372d2e9099abc331eba7dc4e91e50c368f1c452f7f4f5aad9fd2fc543e02c7
+- verdict: MATCH

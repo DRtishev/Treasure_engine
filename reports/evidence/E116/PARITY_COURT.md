@@ -1,0 +1,4 @@
+# E116 PARITY COURT
+- mode: ONLINE_OPTIONAL
+- required_ok_count: 0
+- BTCUSDT|5m: WARN (WS_EMPTY)
