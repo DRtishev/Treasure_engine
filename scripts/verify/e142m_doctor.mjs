@@ -43,11 +43,25 @@ export function doctorState() {
       authoritative = false;
       reasonCode = REASONS.CACHE_STALE;
     } else if (cache.data.authoritative === 'true') {
-      mode = 'AUTHORITATIVE_PASS';
-      why = REASONS.AUTHORITATIVE_PASS;
-      next = 'npm run -s verify:mega:export';
-      authoritative = true;
-      reasonCode = REASONS.OK;
+      // P0 FIX: cross-validate TRUTH_CACHE claims against live filesystem.
+      // A stale cache may claim authoritative=true after capsule/node cleanup.
+      // If the required artifacts are gone, the cached authority is invalid.
+      const cacheSaidCapsule = cache.data.capsule_present === 'true';
+      const cacheSaidBoot = cache.data.bootstrapped_node_present === 'true';
+      const filesystemMismatch = (cacheSaidCapsule && !hasCapsule) || (cacheSaidBoot && !hasBoot);
+      if (filesystemMismatch) {
+        mode = 'BLOCKED';
+        why = REASONS.CACHE_STALE_FILESYSTEM;
+        next = 'CI=true npm run -s verify:mega';
+        authoritative = false;
+        reasonCode = REASONS.CACHE_STALE_FILESYSTEM;
+      } else {
+        mode = 'AUTHORITATIVE_PASS';
+        why = REASONS.AUTHORITATIVE_PASS;
+        next = 'npm run -s verify:mega:export';
+        authoritative = true;
+        reasonCode = REASONS.OK;
+      }
     } else {
       mode = 'BLOCKED';
       why = cache.data.reason_code || REASONS.FAIL_NODE_POLICY;

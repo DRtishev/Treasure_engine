@@ -1,7 +1,7 @@
 # FINAL_MEGA PINNED NODE HEALTH
-- status: PASS
-- reason_code: OK
+- status: FAIL
+- reason_code: FAIL_NODE_POLICY
 ## RAW
-- node_bin: /workspace/Treasure_engine/tools/node/v24.12.0/linux-x64/bin/node
-- exec_ec: 0
-- node_v: v24.12.0
+- node_bin: NA
+- exec_ec: 1
+- node_v: ABSENT

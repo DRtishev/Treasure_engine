@@ -1,8 +1,8 @@
 # FINAL_MEGA VERDICT
-- status: PASS
-- authoritative: true
-- reason_code: OK
-- sha_rows_verified: 16
+- status: BLOCKED
+- authoritative: false
+- reason_code: NEED_NODE_TARBALL
+- sha_rows_verified: 19
 ## RAW
-- contracts_ec: 0
+- contracts_ec: 1
 - seal_ec: 0

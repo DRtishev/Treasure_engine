@@ -1,5 +1,5 @@
 # E141 NODE ACQUIRE
 - status: SKIPPED
-- reason_code: ACQUIRE_OK
+- reason_code: SKIP_ONLINE_FLAGS_NOT_SET
 ## RAW
-- detail: capsule already present
+- required_flags: ENABLE_NET=1 I_UNDERSTAND_LIVE_RISK=1 ONLINE_OPTIONAL=1|ONLINE_REQUIRED=1
