@@ -1,4 +1,4 @@
 # E131 VERDICT
 - mode: ONLINE_OPTIONAL
 - status: WARN
-- canonical_fingerprint: 6023a1ea2591efb4ca539727ece4611f1679acbfa0dee8e2625f3d4031d22065
+- canonical_fingerprint: 9bc66e0f8afe3ac7536d19303686e715aa5afa51b254e86f0a86aee285715e2a

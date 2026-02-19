@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "better-sqlite3": "^12.6.2",
+    "undici": "^6.23.0",
     "ws": "^8.18.0"
   },
   "scripts": {
@@ -504,22 +505,40 @@
     "verify:e130:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e130_replay_x2.mjs",
     "verify:e130:diag": "node scripts/verify/e130_diag.mjs",
     "verify:e130:diag:deep": "CI=false ENABLE_NET=1 I_UNDERSTAND_LIVE_RISK=1 ONLINE_OPTIONAL=1 FORCE_IPV4=1 node scripts/verify/e130_diag.mjs",
-    "verify:e131": "node scripts/verify/e131_run.mjs",
-    "verify:e131:update": "CI=false UPDATE_E131_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e131_run.mjs",
+    "verify:e131": "npm run -s verify:node && node scripts/verify/e131_run.mjs",
+    "verify:e131:update": "npm run -s verify:node && CI=false UPDATE_E131_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e131_run.mjs",
     "verify:e131:contracts": "node scripts/verify/e131_contracts_pack.mjs",
     "verify:e131:seal_x2": "CI=false UPDATE_E131_EVIDENCE=1 node scripts/verify/e131_seal_x2.mjs",
     "verify:e131:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e131_replay_x2.mjs",
     "verify:e131:diag": "node scripts/verify/e131_diag.mjs",
     "verify:e131:diag:deep": "FORCE_IPV4=1 node scripts/verify/e131_diag.mjs",
-    "verify:e132": "node scripts/verify/e132_run.mjs",
-    "verify:e132:update": "CI=false UPDATE_E132_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e132_run.mjs",
+    "verify:e132": "npm run -s verify:node && node scripts/verify/e132_run.mjs",
+    "verify:e132:update": "npm run -s verify:node && CI=false UPDATE_E132_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e132_run.mjs",
     "verify:e132:contracts": "node scripts/verify/e132_contracts_pack.mjs",
     "verify:e132:seal_x2": "CI=false UPDATE_E132_EVIDENCE=1 node scripts/verify/e132_seal_x2.mjs",
     "verify:e132:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e132_replay_x2.mjs",
     "verify:e132:diag": "node scripts/verify/e132_diag.mjs",
-    "verify:e132:diag:deep": "FORCE_IPV4=1 node scripts/verify/e132_diag_deep.mjs"
+    "verify:e132:diag:deep": "FORCE_IPV4=1 node scripts/verify/e132_diag_deep.mjs",
+    "verify:e133": "npm run -s verify:node && node scripts/verify/e133_run.mjs",
+    "verify:e133:update": "npm run -s verify:node && CI=false UPDATE_E133_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e133_run.mjs",
+    "verify:e133:contracts": "node scripts/verify/e133_contracts_pack.mjs",
+    "verify:e133:seal_x2": "CI=false UPDATE_E133_EVIDENCE=1 node scripts/verify/e133_seal_x2.mjs",
+    "verify:e133:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e133_replay_x2.mjs",
+    "verify:e133:diag": "node scripts/verify/e133_diag.mjs",
+    "verify:e133:diag:deep": "FORCE_IPV4=1 node scripts/verify/e133_diag_deep.mjs",
+    "verify:node": "node -e \"const v=process.versions.node.split('.').map(Number);console.log('node',process.version);if(v[0]<22)process.exit(1)\"",
+    "verify:e134": "npm run -s verify:node && node scripts/verify/e134_run.mjs",
+    "verify:e134:update": "npm run -s verify:node && CI=false UPDATE_E134_EVIDENCE=1 CHAIN_MODE=FAST_PLUS QUIET=1 node scripts/verify/e134_run.mjs",
+    "verify:e134:diag": "node scripts/verify/e134_diag.mjs",
+    "verify:e134:diag:deep": "node scripts/verify/e134_diag_deep.mjs",
+    "verify:e134:contracts": "node scripts/verify/e134_contracts_pack.mjs",
+    "verify:e134:seal_x2": "CI=false UPDATE_E134_EVIDENCE=1 node scripts/verify/e134_seal_x2.mjs",
+    "verify:e134:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e134_replay_x2.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
+  },
+  "engines": {
+    "node": ">=22 <25"
   }
 }

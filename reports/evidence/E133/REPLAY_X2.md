@@ -1,0 +1,4 @@
+# E133 REPLAY X2
+- run1: cc1d2f838445db7aec431df9ee8a871f40e7aa5e064fc056633ef8c60fab7b06
+- run2: cc1d2f838445db7aec431df9ee8a871f40e7aa5e064fc056633ef8c60fab7b06
+- verdict: MATCH
