@@ -1,0 +1,9 @@
+# E133 PREFLIGHT
+- node: v20.19.6
+- npm: 11.4.2
+- branch: work
+- head: 2ad3d7a5ff22bd645f6d9cc886e7459e5d5fec9e
+- mode: ONLINE_OPTIONAL
+- ENABLE_NET: 1
+- I_UNDERSTAND_LIVE_RISK: 1
+- TREASURE_RUN_DIR: /workspace/Treasure_engine/.run/treasure/E133_1700000000

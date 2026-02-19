@@ -1,0 +1,4 @@
+# E134 VERDICT
+- mode: ONLINE_OPTIONAL
+- status: WARN
+- canonical_fingerprint: c90bd3d5412e80dc0d237f93028535147389293c1e014096da5dee5298971c8c

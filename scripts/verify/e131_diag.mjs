@@ -41,13 +41,13 @@ const remediation = ['# E131 OPERATOR REMEDIATION V3', ...reasons.map((r) => `- 
 const matrix = [
   '# E131 TRANSPORT MATRIX V3',
   `- proxy_scheme: ${cfg.proxy_scheme}`,
-  `- proxy_shape: ${redactShape(process.env.HTTPS_PROXY || process.env.HTTP_PROXY || process.env.ALL_PROXY || '')}`,
   `- proxy_shape_hash: ${cfg.proxy_shape_hash}`,
   `- ca_present: ${cfg.ca_present}`,
   `- ip_family: ${cfg.ip_family}`,
-  '| target_id | provider | channel | endpoint | url_hash | dns_ok | tcp_ok | tls_ok | http_ok | ws_handshake_ok | ws_event_ok | rtt_ms | bytes | reason_code | proxy_shape_hash | ip_family |',
-  '|---|---|---|---|---|---|---|---|---|---|---|---:|---:|---|---|---|',
-  ...rows.map((r) => `| ${r.target_id} | ${r.provider} | ${r.channel} | ${r.endpoint} | ${r.url_hash} | ${r.dns_ok} | ${r.tcp_ok} | ${r.tls_ok} | ${r.http_ok} | ${r.ws_handshake_ok} | ${r.ws_event_ok} | ${r.rtt_ms} | ${r.bytes} | ${r.reason_code} | ${cfg.proxy_shape_hash} | ${cfg.ip_family} |`),
+  `- dispatcher_mode: ${cfg.proxy_present ? 'env_proxy' : 'direct'}`,
+  '| target_id | provider | channel | url_hash | dns_ok | tcp_ok | tls_ok | http_ok | ws_handshake_ok | ws_event_ok | tcp_to_proxy_ok | connect_tunnel_ok | tls_over_tunnel_ok | http_over_tunnel_ok | ws_over_tunnel_ok | rtt_ms | bytes | reason_code | proxy_shape_hash | ip_family |',
+  '|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---:|---:|---|---|---|',
+  ...rows.map((r) => `| ${r.target_id} | ${r.provider} | ${r.channel} | ${r.url_hash} | ${r.dns_ok} | ${r.tcp_ok} | ${r.tls_ok} | ${r.http_ok} | ${r.ws_handshake_ok} | ${r.ws_event_ok} | ${r.tcp_to_proxy_ok} | ${r.connect_tunnel_ok} | ${r.tls_over_tunnel_ok} | ${r.http_over_tunnel_ok} | ${r.ws_over_tunnel_ok} | ${r.rtt_ms} | ${r.bytes} | ${r.reason_code} | ${cfg.proxy_shape_hash} | ${cfg.ip_family} |`),
   `- rest_success: ${restOk}`,
   `- ws_handshake_success: ${wsHandshakeOk}`,
   `- ws_success: ${wsEventOk}`,
@@ -77,7 +77,7 @@ const diag = [
   '- stage_codes: E_DNS_FAIL, E_TCP_FAIL, E_TLS_FAIL, E_HTTP_FAIL, E_WS_HANDSHAKE_FAIL, E_WS_HANDSHAKE_OK_BUT_NO_EVENT, E_OK'
 ].join('\n');
 
-if (process.env.E131_DIAG_WRITE === '1' || process.env.UPDATE_E131_EVIDENCE === '1') {
+if ((process.env.E131_DIAG_CANONICAL_WRITE === '1' || process.env.UPDATE_E131_EVIDENCE === '1') && mode !== 'ONLINE_REQUIRED') {
   writeMdAtomic(`${E131_ROOT}/EGRESS_DIAG_V9.md`, diag);
   writeMdAtomic(`${E131_ROOT}/TRANSPORT_MATRIX_V3.md`, matrix);
   writeMdAtomic(`${E131_ROOT}/TIME_SYNC_V4.md`, timeSync);

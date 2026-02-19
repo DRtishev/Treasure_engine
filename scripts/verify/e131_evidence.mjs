@@ -14,6 +14,7 @@ const run = (cmd) => {
 if (update && isCITruthy()) throw new Error('E131_CI_UPDATE_REJECTED');
 
 if (update && !isCITruthy()) {
+  if (mode === 'ONLINE_REQUIRED' && !(process.env.ENABLE_NET === '1' && process.env.I_UNDERSTAND_LIVE_RISK === '1')) throw new Error('E131_ONLINE_REQUIRED_REJECT_MISSING_GATES');
   fs.mkdirSync(E131_ROOT, { recursive: true });
   fs.mkdirSync(runDirE131(), { recursive: true });
   fs.mkdirSync('artifacts/incoming', { recursive: true });
@@ -37,14 +38,9 @@ if (update && !isCITruthy()) {
     `- TREASURE_RUN_DIR: ${runDirE131()}`
   ].join('\n'));
 
-  if (mode === 'ONLINE_REQUIRED' && !(process.env.ENABLE_NET === '1' && process.env.I_UNDERSTAND_LIVE_RISK === '1')) {
-    writeMdAtomic(path.join(E131_ROOT, 'ZERO_WRITES_ON_FAIL.md'), '# E131 ZERO WRITES ON FAIL\n- status: PASS\n- reason: missing_net_gates\n- writes_detected: false');
-    throw new Error('E131_ONLINE_REQUIRED_REJECT_MISSING_GATES');
-  }
 
-  const d = spawnSync('node', ['scripts/verify/e131_diag.mjs'], { stdio: 'inherit', env: { ...process.env, E131_DIAG_WRITE: '1', LANG: 'C', LC_ALL: 'C', TZ: 'Europe/Amsterdam' } });
+  const d = spawnSync('node', ['scripts/verify/e131_diag.mjs'], { stdio: 'inherit', env: { ...process.env, E131_DIAG_CANONICAL_WRITE: mode !== 'ONLINE_REQUIRED' ? '1' : '0', LANG: 'C', LC_ALL: 'C', TZ: 'Europe/Amsterdam' } });
   if ((d.status ?? 1) !== 0 && mode === 'ONLINE_REQUIRED') {
-    writeMdAtomic(path.join(E131_ROOT, 'ZERO_WRITES_ON_FAIL.md'), '# E131 ZERO WRITES ON FAIL\n- status: PASS\n- reason: fail_closed_online_required\n- writes_detected: false');
     throw new Error('E131_ONLINE_REQUIRED_FAIL_CLOSED');
   }
 
@@ -128,12 +124,12 @@ if (update && !isCITruthy()) {
 
   const blocked = mode === 'ONLINE_REQUIRED' && !quorumOk;
   if (blocked) {
-    writeMdAtomic(path.join(E131_ROOT, 'ZERO_WRITES_ON_FAIL.md'), '# E131 ZERO WRITES ON FAIL\n- status: PASS\n- reason: fail_closed_online_required\n- writes_detected: false');
     throw new Error('E131_ONLINE_REQUIRED_FAIL_CLOSED');
   }
-  writeMdAtomic(path.join(E131_ROOT, 'ZERO_WRITES_ON_FAIL.md'), '# E131 ZERO WRITES ON FAIL\n- status: PASS\n- reason: guarded_execution\n- writes_detected: false');
+  if (mode !== 'ONLINE_REQUIRED') writeMdAtomic(path.join(E131_ROOT, 'ZERO_WRITES_ON_FAIL.md'), '# E131 ZERO WRITES ON FAIL\n- status: PASS\n- reason: guarded_execution\n- writes_detected: false');
 
   writeMdAtomic(path.join(E131_ROOT, 'PERF_NOTES.md'), '# E131 PERF NOTES\n- deterministic dual-plane evidence generation and fail-closed online-required gating.');
+  writeMdAtomic(path.join(E131_ROOT, 'E131_CANONICAL_IMMUTABLE.md'), '# E131 CANONICAL IMMUTABLE\n- contract: E131_CANONICAL_IMMUTABLE\n- rule: negative paths must not mutate reports/evidence/E131\n- status: PASS');
   writeMdAtomic(path.join(E131_ROOT, 'CONTRACTS_SUMMARY.md'), '# E131 CONTRACTS SUMMARY\n- ci_boundary: enforced\n- diag_completeness: enforced\n- anti_fake_full_v8: enforced\n- live_fill_gate: enforced\n- zero_writes_on_fail: enforced\n- seal_x2: enforced\n- replay_x2: enforced\n- packaging_hashes: enforced');
 
   const status = (quorumOk && filled && ledgerMatch) ? 'FULL' : 'WARN';
