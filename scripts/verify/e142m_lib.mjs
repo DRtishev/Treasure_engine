@@ -6,13 +6,28 @@ import { createHash } from 'node:crypto';
 import { sha256File, sha256Text } from './e66_lib.mjs';
 
 export const ROOT = path.resolve('reports/evidence/E142_MEGA');
+export const FINAL_ROOT = path.resolve('reports/evidence/FINAL_MEGA');
+export const TRUTH_CACHE = path.join(ROOT, 'TRUTH_CACHE.md');
+export const CACHE_MAX_AGE_HOURS = 24;
+
 export const REASONS = {
   OK: 'OK',
   FAIL_NODE_POLICY: 'FAIL_NODE_POLICY',
   NEED_NODE_TARBALL: 'NEED_NODE_TARBALL',
+  NEED_BOOTSTRAP: 'NEED_BOOTSTRAP',
   PROBE_ONLY_NON_AUTHORITATIVE: 'PROBE_ONLY_NON_AUTHORITATIVE',
-  AUTHORITATIVE_READY: 'AUTHORITATIVE_READY',
   SKIP_ONLINE_FLAGS_NOT_SET: 'SKIP_ONLINE_FLAGS_NOT_SET',
+  E_PROXY_BLOCK: 'E_PROXY_BLOCK',
+  E_TLS_INTERCEPT: 'E_TLS_INTERCEPT',
+  E_WS_BLOCKED: 'E_WS_BLOCKED',
+  E_DNS_FILTERED: 'E_DNS_FILTERED',
+  E_NET_OK: 'E_NET_OK',
+  FAIL_CAPSULE_INTEGRITY: 'FAIL_CAPSULE_INTEGRITY',
+  FAIL_DOCTOR_SCHEMA: 'FAIL_DOCTOR_SCHEMA',
+  CACHE_MISSING: 'CACHE_MISSING',
+  CACHE_INVALID: 'CACHE_INVALID',
+  CACHE_STALE: 'CACHE_STALE',
+  AUTHORITATIVE_PASS: 'AUTHORITATIVE_PASS',
 };
 
 export function writeMd(file, content) {
@@ -37,9 +52,9 @@ export function proxyRedacted() {
   }
 }
 
-export function fpE142() {
-  const files = fs.existsSync(ROOT)
-    ? fs.readdirSync(ROOT).filter((f) => f.endsWith('.md') && !['SHA256SUMS.md', 'SEAL_X2.md'].includes(f)).sort()
+export function fpDir(root) {
+  const files = fs.existsSync(root)
+    ? fs.readdirSync(root).filter((f) => f.endsWith('.md') && !['SHA256SUMS.md', 'SEAL_X2.md'].includes(f)).sort()
     : [];
-  return sha256Text(files.map((f) => `${f}:${sha256File(path.join(ROOT, f))}`).join('\n'));
+  return sha256Text(files.map((f) => `${f}:${sha256File(path.join(root, f))}`).join('\n'));
 }
