@@ -1,0 +1,11 @@
+# E138 PROBE REPORT
+- status: PROBE_ONLY_NON_AUTHORITATIVE
+- reason_code: FAIL_NODE_POLICY
+- node_policy_ok: false
+- verify_e135_ec: 0
+- contracts_ec: 0
+- export_ok: true
+- import_status: PASS
+- sha_rows_verified: 7
+- claim: non-authoritative diagnostics only; not an epoch PASS.
+- authoritative_requirement: node>=22 and npm run -s verify:e137 must pass.

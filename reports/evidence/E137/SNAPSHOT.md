@@ -1,0 +1,12 @@
+# E137 SNAPSHOT
+- date_utc: 2026-02-19T11:34:33.066Z
+- pwd: /workspace/Treasure_engine
+- branch: work
+- head: 1d3f4b8
+- dirty: YES
+- node: v20.19.6
+- npm: 11.4.2
+- enable_net: 0
+- online_optional: 0
+- online_required: 0
+- live_risk_unlock: 0

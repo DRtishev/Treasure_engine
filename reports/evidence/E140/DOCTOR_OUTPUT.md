@@ -1,0 +1,14 @@
+# E140 DOCTOR OUTPUT
+
+## RAW
+
+```
+E140_DOCTOR
+MODE: PROBE_ONLY_NON_AUTHORITATIVE
+WHY: PROBE_ONLY_NON_AUTHORITATIVE
+NODE: v20.19.6
+LOCAL_NODE_TARBALL_PRESENT: false
+FLAGS: CI= ENABLE_NET=0 ONLINE_OPTIONAL=0 ONLINE_REQUIRED=0 FORCE_IPV4=0 FORCE_IPV6=0
+PROXY: present=true scheme=http shape_hash=0fd7ca19c3f0dce3
+NEXT_ACTION: provide pinned node tarball in artifacts/incoming/node and run npm run -s verify:e140
+```

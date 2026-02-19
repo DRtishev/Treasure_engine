@@ -1,0 +1,6 @@
+# E141 SEAL X2
+- fp1: fb7004c9b1489193b62c606af49fff541c8faba66597a8544e6d28043da33759
+- fp2: fb7004c9b1489193b62c606af49fff541c8faba66597a8544e6d28043da33759
+- status: PASS
+## RAW
+- parity: true
