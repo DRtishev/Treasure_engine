@@ -97,3 +97,7 @@ temp/
 artifacts/outgoing/*.tar.gz
 artifacts/outgoing/*.zip
 artifacts/outgoing/*.gz
+
+tools/node/
+
+artifacts/incoming/node/

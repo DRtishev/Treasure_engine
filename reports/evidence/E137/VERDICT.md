@@ -1,0 +1,10 @@
+# E137 VERDICT
+- status: PASS
+- reason_code: OK
+- offline_ec: 0
+- online_ec: 0
+- export_ec: 0
+- import_ec: 0
+- contracts_ec: 0
+- seal_x2_ec: 0
+- sha_rows_verified: 10

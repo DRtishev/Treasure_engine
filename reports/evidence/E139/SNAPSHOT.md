@@ -1,0 +1,15 @@
+# E139 SNAPSHOT
+- date_utc: 2026-02-19T11:49:28.096Z
+- pwd: /workspace/Treasure_engine
+- branch: work
+- head: 621e915
+- dirty: YES
+- node: v20.19.6
+- npm: 11.4.2
+- probe_mode: true
+- CI: 
+- ENABLE_NET: 
+- ONLINE_OPTIONAL: 
+- ONLINE_REQUIRED: 
+- FORCE_IPV4: 
+- FORCE_IPV6:
