@@ -17,9 +17,10 @@ export function runExport() {
     `- archive_path: ${ok ? archive : 'NOT_CREATED'}`,
     `- archive_sha256: ${sha}`,
     `- status: ${ok ? 'PASS' : 'FAIL'}`,
+    `- files_count: ${files.length}`,
+    `- files_listed_sorted: ${files.join('|')}`,
     '## RAW',
     `- tar_ec: ${tar.ec}`,
-    `- files_count: ${files.length}`,
   ].join('\n'));
   return { ec: ok ? 0 : 1, archive, sha };
 }

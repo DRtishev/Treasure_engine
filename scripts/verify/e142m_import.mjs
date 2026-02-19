@@ -35,6 +35,7 @@ export function runImport() {
     `- archive_sha256_expected: ${expected}`,
     `- archive_sha256_actual: ${actual}`,
     `- md_only_unpack: ${mdOnly}`,
+    `- extract_dir: ${tmp}`,
     '## RAW',
     `- untar_ec: ${untar.ec}`,
   ].join('\n'));
@@ -42,8 +43,10 @@ export function runImport() {
     '# FINAL_MEGA ACCEPTED',
     `- status: ${ok ? 'ACCEPTED' : 'REJECTED'}`,
     `- archive_sha256: ${actual}`,
+    `- import_status: ${ok ? 'true' : 'false'}`,
     '## RAW',
-    `- import_status: ${ok}`,
+    `- sha_match: ${expected === actual}`,
+    `- md_only_unpack: ${mdOnly}`,
   ].join('\n'));
   return { ec: ok ? 0 : 1 };
 }
