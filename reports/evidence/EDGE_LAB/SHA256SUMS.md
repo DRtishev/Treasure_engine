@@ -1,0 +1,5 @@
+# SHA256
+
+```
+f0afc21d7bd3e23bf5803b020856d2ff5bd504bc91981a60fd6f5d86eaea280d  VERDICT.md
+```
