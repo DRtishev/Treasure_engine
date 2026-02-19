@@ -3,6 +3,6 @@
 - authoritative: false
 - next_action: CI=true npm run -s verify:mega
 - status: PROBE
-- net_class: ONLINE_SKIPPED_FLAGS
+- net_class: PROXY_ONLY
 ## RAW
 - export_ec: 0 import_ec: 0 contracts_ec: 0 seal_ec: 0

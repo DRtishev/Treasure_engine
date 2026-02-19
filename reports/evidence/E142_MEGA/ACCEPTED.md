@@ -1,7 +1,7 @@
 # E142_MEGA ACCEPTED
 - status: ACCEPTED
-- archive_sha256: b8d6f573da4eb70c2e7b6a6f38761ec8350720291a514943f94c1ddbbd9523b7
-- mode: LOCAL
-- accepted_at: 2026-02-19T12:58:10.164Z
+- archive_sha256: bf840713c9c288484e30bb66c8507e9b1ae4821494383258d7dbcba65c690b61
+- mode: CI
+- accepted_at: 2026-02-19T13:41:59.604Z
 ## RAW
 - import_status: true
