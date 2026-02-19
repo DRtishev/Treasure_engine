@@ -65,6 +65,8 @@
     "verify:epoch19": "npm run verify:governance",
     "verify:monitoring": "node scripts/verify/monitoring_perf_check.mjs",
     "verify:epoch20": "npm run verify:monitoring",
+    "verify:edge-lab": "node scripts/verify/edge_lab_validation.mjs",
+    "verify:edge-lab:x2": "npm run verify:edge-lab && npm run verify:edge-lab",
     "verify:release-governor": "node scripts/verify/release_governor_check.mjs",
     "verify:epoch21": "node scripts/verify/epoch_fallback_gate.mjs 21",
     "verify:specs": "npm run verify:ssot && node scripts/verify/specs_check.mjs && npm run verify:wow && npm run verify:kb && npm run verify:passports && npm run verify:derived && npm run verify:docs && npm run verify:reachability && npm run verify:properties && npm run verify:ledger && npm run verify:repo",
