@@ -92,3 +92,8 @@ temp/
 
 # E134 input binding runtime state
 .foundation-seal/E134_INPUT_BINDING.json
+
+# E135 outgoing export archives (md-only policy; archives must not be committed)
+artifacts/outgoing/*.tar.gz
+artifacts/outgoing/*.zip
+artifacts/outgoing/*.gz

@@ -533,7 +533,11 @@
     "verify:e134:diag:deep": "node scripts/verify/e134_diag_deep.mjs",
     "verify:e134:contracts": "node scripts/verify/e134_contracts_pack.mjs",
     "verify:e134:seal_x2": "CI=false UPDATE_E134_EVIDENCE=1 node scripts/verify/e134_seal_x2.mjs",
-    "verify:e134:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e134_replay_x2.mjs"
+    "verify:e134:replay_x2": "CI=false OFFLINE_ONLY=1 node scripts/verify/e134_replay_x2.mjs",
+    "verify:e135": "npm run -s verify:node && node scripts/verify/e135_run.mjs",
+    "verify:e135:contracts": "node scripts/verify/e135_contracts.mjs",
+    "verify:e135:export": "node scripts/verify/e135_export.mjs",
+    "verify:e135:update": "npm run -s verify:node && CI=false node scripts/verify/e135_run.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
