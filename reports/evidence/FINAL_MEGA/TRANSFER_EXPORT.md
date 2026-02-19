@@ -1,7 +1,7 @@
 # FINAL_MEGA TRANSFER EXPORT
 - archive_path: /home/user/Treasure_engine/artifacts/outgoing/EVIDENCE.tar.gz
-- archive_sha256: 175eb960f288df862ac123f9808240a1111386cc61e744ee40e0c13d16ea7e21
+- archive_sha256: df031e21573b7b67ecc7fdcd8726ff026168399b3a8cfd13e62c17f101058212
 - status: PASS
 ## RAW
 - tar_ec: 0
-- files_count: 18
+- files_count: 13

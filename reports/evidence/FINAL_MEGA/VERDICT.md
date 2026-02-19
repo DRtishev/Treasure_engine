@@ -1,7 +1,7 @@
 # FINAL_MEGA VERDICT
-- status: BLOCKED
+- status: PROBE
 - authoritative: false
-- reason_code: NEED_NODE_TARBALL
+- reason_code: PROBE_ONLY_NON_AUTHORITATIVE
 - sha_rows_verified: 19
 ## RAW
 - contracts_ec: 1

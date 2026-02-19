@@ -16,7 +16,7 @@
 - network tests require ENABLE_NET=1 AND I_UNDERSTAND_LIVE_RISK=1
 ## RAW
 - authoritative: false
-- reason_code: NEED_NODE_TARBALL
+- reason_code: PROBE_ONLY_NON_AUTHORITATIVE
 - bridge_ec: 1
 - rep_gate_ec: 1
 - capsule_sha256_ok: false

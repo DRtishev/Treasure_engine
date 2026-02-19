@@ -1,6 +1,6 @@
 # FINAL_MEGA CAPSULE INTEGRITY
 - status: FAIL
-- reason_code: FAIL_CAPSULE_INTEGRITY
+- reason_code: NEED_NODE_TARBALL
 ## RAW
 - capsule_present: false
 - capsule_filename_ok: true

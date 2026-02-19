@@ -571,7 +571,8 @@
     "verify:mega:export": "node scripts/verify/e142m_export.mjs",
     "verify:mega:import": "node scripts/verify/e142m_import.mjs",
     "verify:mega:contracts": "node scripts/verify/e142m_contracts.mjs",
-    "verify:mega:seal_x2": "node scripts/verify/e142m_seal_x2.mjs"
+    "verify:mega:seal_x2": "node scripts/verify/e142m_seal_x2.mjs",
+    "verify:mega:regression": "node scripts/verify/e142m_regression.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
