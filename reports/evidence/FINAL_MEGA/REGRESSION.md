@@ -1,0 +1,32 @@
+# FINAL_MEGA REGRESSION
+- status: PASS
+- passed: 27/27
+- failed: 0
+## RAW
+- [PASS] P0-A-CONTRACTS.md: REQUIRED must not include post-phase file CONTRACTS.md (post-phase file found in REQUIRED)
+- [PASS] P0-A-SEAL_X2.md: REQUIRED must not include post-phase file SEAL_X2.md (post-phase file found in REQUIRED)
+- [PASS] P0-A-VERDICT.md: REQUIRED must not include post-phase file VERDICT.md (post-phase file found in REQUIRED)
+- [PASS] P0-A-SHA256SUMS.md: REQUIRED must not include post-phase file SHA256SUMS.md (post-phase file found in REQUIRED)
+- [PASS] P0-B-no-self-ref: CONTRACTS.md not in REQUIRED
+- [PASS] P0-C-OK: WHY_TEXT key REASONS.OK exists in REASONS
+- [PASS] P0-C-AUTHORITATIVE_PASS: WHY_TEXT key REASONS.AUTHORITATIVE_PASS exists in REASONS
+- [PASS] P0-C-CACHE_MISSING: WHY_TEXT key REASONS.CACHE_MISSING exists in REASONS
+- [PASS] P0-C-CACHE_INVALID: WHY_TEXT key REASONS.CACHE_INVALID exists in REASONS
+- [PASS] P0-C-CACHE_STALE: WHY_TEXT key REASONS.CACHE_STALE exists in REASONS
+- [PASS] P0-C-CACHE_STALE_FILESYSTEM: WHY_TEXT key REASONS.CACHE_STALE_FILESYSTEM exists in REASONS
+- [PASS] P0-C-NEED_NODE_TARBALL: WHY_TEXT key REASONS.NEED_NODE_TARBALL exists in REASONS
+- [PASS] P0-C-FAIL_CAPSULE_INTEGRITY: WHY_TEXT key REASONS.FAIL_CAPSULE_INTEGRITY exists in REASONS
+- [PASS] P0-C-NEED_BOOTSTRAP: WHY_TEXT key REASONS.NEED_BOOTSTRAP exists in REASONS
+- [PASS] P0-C-FAIL_PINNED_NODE_HEALTH: WHY_TEXT key REASONS.FAIL_PINNED_NODE_HEALTH exists in REASONS
+- [PASS] P0-C-FAIL_NODE_POLICY: WHY_TEXT key REASONS.FAIL_NODE_POLICY exists in REASONS
+- [PASS] P0-C-PROBE_ONLY_NON_AUTHORITATIVE: WHY_TEXT key REASONS.PROBE_ONLY_NON_AUTHORITATIVE exists in REASONS
+- [PASS] P0-C-FAIL_CONTRACTS: WHY_TEXT key REASONS.FAIL_CONTRACTS exists in REASONS
+- [PASS] P0-D-head_full: SNAPSHOT.md has head_full
+- [PASS] P0-D-tree_state: SNAPSHOT.md has tree_state
+- [PASS] P0-D-no-HEAD_UNAVAILABLE-authoritative: SNAPSHOT.md HEAD_UNAVAILABLE must not coexist with authoritative run
+- [PASS] P0-E-NEED_NODE_TARBALL: run.mjs handles NEED_NODE_TARBALL
+- [PASS] P0-E-FAIL_CAPSULE: run.mjs handles FAIL_CAPSULE_INTEGRITY
+- [PASS] P0-E-FAIL_PINNED_HEALTH: run.mjs handles FAIL_PINNED_NODE_HEALTH
+- [PASS] P0-E-NEED_BOOTSTRAP: run.mjs handles NEED_BOOTSTRAP
+- [PASS] P0-F-schema-count-match: doctor field count (13) matches contracts DOCTOR_FIELDS (13) (doctor=13 contracts=13)
+- [PASS] P0-B-doctor-no-spawn: e142m_doctor.mjs does not spawn heavy processes (no runAcquire/runBootstrap)
