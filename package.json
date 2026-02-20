@@ -585,7 +585,9 @@
     "edge:redteam": "node scripts/edge/edge_lab/edge_redteam.mjs",
     "edge:sre": "node scripts/edge/edge_lab/edge_sre.mjs",
     "edge:verdict": "node scripts/edge/edge_lab/edge_verdict.mjs",
-    "edge:all": "node scripts/edge/edge_lab/edge_all.mjs"
+    "edge:all": "node scripts/edge/edge_lab/edge_all.mjs",
+    "edge:next-epoch": "node scripts/edge/edge_lab/edge_next_epoch.mjs",
+    "edge:all:x2": "node scripts/edge/edge_lab/edge_all_x2.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
