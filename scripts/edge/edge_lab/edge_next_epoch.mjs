@@ -20,8 +20,8 @@ const COURT_STATUS_FILES = [
   'EXECUTION_SENSITIVITY_GRID.md', 'RISK_COURT.md', 'OVERFIT_COURT.md', 'REDTEAM_COURT.md', 'SRE_COURT.md'
 ];
 const REQUIRED_MACHINE_FILES = [
-  'contract_manifest_result.json', 'verdict_stratification.json', 'determinism_x2.json', 'proxy_guard.json',
-  'paper_court.json', 'sli_baseline.json', 'meta_audit.json', 'final_verdict.json'
+  'contract_manifest_result.json', 'verdict_stratification.json', 'raw_stability.json', 'determinism_x2.json', 'proxy_guard.json',
+  'paper_court.json', 'sli_baseline.json', 'meta_audit.json', 'ledger_check.json', 'final_verdict.json'
 ];
 
 const FAIL = (reason_code, message, extra = {}) => ({ status: 'BLOCKED', reason_code, message, ...extra });
@@ -115,6 +115,23 @@ function seededRandom(seed) {
   };
 }
 
+// 0) RAW_STABILITY
+let rawStabilityResult;
+let rawStabilityReportContent = "";
+try {
+  execSync('node scripts/edge/edge_lab/edge_raw_x2.mjs', { cwd: ROOT, stdio: 'pipe' });
+  const rawReport = fs.readFileSync(path.join(EVIDENCE_DIR, 'RAW_STABILITY_REPORT.md'), 'utf8');
+  rawStabilityReportContent = rawReport;
+  rawStabilityResult = /^STATUS:\s*PASS/m.test(rawReport)
+    ? PASS('Raw evidence stability x2 passed')
+    : FAIL('RAW_NONDETERMINISM', 'Raw evidence stability report is not PASS');
+} catch (e) {
+  const rawPath = path.join(EVIDENCE_DIR, 'RAW_STABILITY_REPORT.md');
+  if (fs.existsSync(rawPath)) rawStabilityReportContent = fs.readFileSync(rawPath, 'utf8');
+  rawStabilityResult = FAIL('RAW_NONDETERMINISM', 'edge:raw:x2 failed');
+}
+writeManual('raw_stability.json', rawStabilityResult);
+
 // 1) DETERMINISM_X2 first
 let detResult;
 let run1;
@@ -141,6 +158,8 @@ try {
   detResult = FAIL('NONDETERMINISM', 'edge:all execution failed during x2 run', { error: String(error.message || error) });
 }
 writeManual('determinism_x2.json', detResult);
+writeManual('raw_stability.json', rawStabilityResult);
+if (rawStabilityReportContent) writeMarkdown('RAW_STABILITY_REPORT.md', rawStabilityReportContent);
 writeMarkdown('ANTI_FLAKE_X2.md', `# ANTI_FLAKE_X2\n\nSTATUS: ${detResult.status}\nAUTHORITATIVE: ${detResult.status === 'PASS' ? 'YES' : 'NO'}\nREASON_CODE: ${detResult.reason_code}\nCONFIDENCE: HIGH\nNEXT_ACTION: ${detResult.status === 'PASS' ? 'Proceed to next gate.' : 'Inspect NONDETERMINISM_REPORT.md and patch drift source.'}\nEVIDENCE_PATHS:\n- reports/evidence/EDGE_LAB/gates/manual/determinism_x2.json\n- reports/evidence/EDGE_LAB/NONDETERMINISM_REPORT.md\n\nFINGERPRINT_RUN1: ${detResult.fingerprint_run1 || 'N/A'}\nFINGERPRINT_RUN2: ${detResult.fingerprint_run2 || 'N/A'}\n`);
 writeMarkdown('NONDETERMINISM_REPORT.md', `# NONDETERMINISM_REPORT\n\nSTATUS: ${detResult.status === 'PASS' ? 'PASS' : 'FAIL'}\nREASON_CODE: ${detResult.status === 'PASS' ? 'NONE' : 'NONDETERMINISM'}\nRUN1_ID: ${RUN_ID}-run1\nRUN2_ID: ${RUN_ID}-run2\n\n## FILE_HASH_MATRIX\n${nondeterminismRows.map((r) => `- ${r.file} | sha256_run1=${r.sha256_run1} | sha256_run2=${r.sha256_run2}`).join('\n')}\n\n## DIFF_HINTS\n${diffHints.length ? diffHints.join('\n') : '- NONE'}\n`);
 
@@ -150,7 +169,7 @@ const rootFiles = fs.existsSync(EVIDENCE_DIR)
   : [];
 const allowedExtra = new Set([
   'MEGA_CLOSEOUT_NEXT_EPOCH.md', 'MANIFEST_CHECK.md', 'MANIFEST_CHECK_RESULT.md',
-  'ANTI_FLAKE_X2.md', 'PAPER_COURT.md', 'EXECUTION_DRIFT.md', 'SLI_BASELINE.md', 'META_AUDIT.md', 'NONDETERMINISM_REPORT.md'
+  'ANTI_FLAKE_X2.md', 'PAPER_COURT.md', 'EXECUTION_DRIFT.md', 'SLI_BASELINE.md', 'META_AUDIT.md', 'NONDETERMINISM_REPORT.md', 'RAW_STABILITY_REPORT.md', 'SHA256SUMS.md', 'SHA256CHECK.md'
 ]);
 const missingRoot = REQUIRED_ROOT_FILES.filter((f) => !rootFiles.includes(f));
 const extraRoot = rootFiles.filter((f) => !REQUIRED_ROOT_FILES.includes(f) && !allowedExtra.has(f));
@@ -265,7 +284,7 @@ writeMarkdown('SLI_BASELINE.md', `# SLI_BASELINE\n\nSTATUS: ${sliResult.status}\
 // 7) META_AUDIT
 const metaChecks = {
   no_silent_assumptions: manifestResult.status === 'PASS' && stratResult.status === 'PASS',
-  no_pass_without_evidence: ['contract_manifest_result.json', 'verdict_stratification.json', 'determinism_x2.json', 'proxy_guard.json', 'paper_court.json', 'sli_baseline.json'].every((f) => fs.existsSync(path.join(MANUAL_DIR, f))),
+  no_pass_without_evidence: ['contract_manifest_result.json', 'verdict_stratification.json', 'raw_stability.json', 'determinism_x2.json', 'proxy_guard.json', 'paper_court.json', 'sli_baseline.json'].every((f) => fs.existsSync(path.join(MANUAL_DIR, f))),
   no_contract_drift: manifestResult.status === 'PASS',
   no_threshold_loosening: true
 };
@@ -276,14 +295,27 @@ const metaResult = metaOk
 writeManual('meta_audit.json', metaResult);
 writeMarkdown('META_AUDIT.md', `# META_AUDIT\n\nSTATUS: ${metaResult.status}\nAUTHORITATIVE: ${metaResult.status === 'PASS' ? 'YES' : 'NO'}\nREASON_CODE: ${metaResult.reason_code}\nCONFIDENCE: HIGH\nNEXT_ACTION: ${metaResult.status === 'PASS' ? 'Proceed to closeout.' : 'Fix integrity gaps and rerun.'}\nEVIDENCE_PATHS:\n- reports/evidence/EDGE_LAB/gates/manual/meta_audit.json\n`);
 
-// 8) CLOSEOUT
-const allResults = [manifestResult, stratResult, detResult, proxyResult, paperResult, sliResult, metaResult];
+// 8) LEDGER_CHECK
+let ledgerResult;
+try {
+  execSync('node scripts/edge/edge_lab/edge_ledger.mjs', { cwd: ROOT, stdio: 'pipe' });
+  const check = fs.readFileSync(path.join(EVIDENCE_DIR, 'SHA256CHECK.md'), 'utf8');
+  ledgerResult = /^STATUS:\s*PASS/m.test(check)
+    ? PASS('Ledger verification passed')
+    : FAIL('LEDGER_MISMATCH', 'SHA256CHECK is not PASS');
+} catch (e) {
+  ledgerResult = FAIL('MISSING_LEDGER', 'Ledger generation/verification failed');
+}
+writeManual('ledger_check.json', ledgerResult);
+
+// 9) CLOSEOUT
+const allResults = [manifestResult, stratResult, rawStabilityResult, detResult, proxyResult, paperResult, sliResult, metaResult, ledgerResult];
 const final = allResults.some((r) => r.status !== 'PASS')
   ? FAIL('EDGE_LAB_TRUTH_BLOCKED', 'One or more gates are BLOCKED for this epoch')
   : PASS('All gates PASS for this epoch');
 writeManual('final_verdict.json', { ...final, evidence_paths: REQUIRED_MACHINE_FILES.map((f) => `reports/evidence/EDGE_LAB/gates/manual/${f}`) });
 
-writeMarkdown('MEGA_CLOSEOUT_NEXT_EPOCH.md', `# MEGA_CLOSEOUT_NEXT_EPOCH\n\nSTATUS: ${final.status}\nAUTHORITATIVE: ${final.status === 'PASS' ? 'YES' : 'NO'}\nREASON_CODE: ${final.reason_code}\nCONFIDENCE: ${final.status === 'PASS' ? 'HIGH' : 'MEDIUM'}\nNEXT_ACTION: ${final.status === 'PASS' ? 'Promote to paper-eligibility review.' : 'Remediate blocked gates and rerun edge:next-epoch.'}\nEVIDENCE_PATHS:\n${REQUIRED_MACHINE_FILES.map((f) => `- reports/evidence/EDGE_LAB/gates/manual/${f}`).join('\n')}\n\n## Gate outcomes\n- CONTRACT_MANIFEST: ${manifestResult.status} (${manifestResult.reason_code})\n- VERDICT_STRATIFICATION: ${stratResult.status} (${stratResult.reason_code})\n- DETERMINISM_X2: ${detResult.status} (${detResult.reason_code})\n- PROXY_GUARD: ${proxyResult.status} (${proxyResult.reason_code})\n- PAPER_COURT: ${paperResult.status} (${paperResult.reason_code})\n- SLI_BASELINE: ${sliResult.status} (${sliResult.reason_code})\n- META_AUDIT: ${metaResult.status} (${metaResult.reason_code})\n`);
+writeMarkdown('MEGA_CLOSEOUT_NEXT_EPOCH.md', `# MEGA_CLOSEOUT_NEXT_EPOCH\n\nSTATUS: ${final.status}\nAUTHORITATIVE: ${final.status === 'PASS' ? 'YES' : 'NO'}\nREASON_CODE: ${final.reason_code}\nCONFIDENCE: ${final.status === 'PASS' ? 'HIGH' : 'MEDIUM'}\nNEXT_ACTION: ${final.status === 'PASS' ? 'Promote to paper-eligibility review.' : 'Remediate blocked gates and rerun edge:next-epoch.'}\nEVIDENCE_PATHS:\n${REQUIRED_MACHINE_FILES.map((f) => `- reports/evidence/EDGE_LAB/gates/manual/${f}`).join('\n')}\n\n## Gate outcomes\n- CONTRACT_MANIFEST: ${manifestResult.status} (${manifestResult.reason_code})\n- VERDICT_STRATIFICATION: ${stratResult.status} (${stratResult.reason_code})\n- RAW_STABILITY: ${rawStabilityResult.status} (${rawStabilityResult.reason_code})\n- DETERMINISM_X2: ${detResult.status} (${detResult.reason_code})\n- PROXY_GUARD: ${proxyResult.status} (${proxyResult.reason_code})\n- PAPER_COURT: ${paperResult.status} (${paperResult.reason_code})\n- SLI_BASELINE: ${sliResult.status} (${sliResult.reason_code})\n- META_AUDIT: ${metaResult.status} (${metaResult.reason_code})\n- LEDGER_CHECK: ${ledgerResult.status} (${ledgerResult.reason_code})\n\nZIP_POLICY: NOT_REQUIRED\n`);
 writeMarkdown('MANIFEST_CHECK.md', `STATUS: ${manifestResult.status}\nREASON_CODE: ${manifestResult.reason_code}`);
 
 if (final.status !== 'PASS') {
