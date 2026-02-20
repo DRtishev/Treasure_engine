@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 
 const ROOT = path.resolve(process.cwd());
 const EVIDENCE_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_LAB');
@@ -11,6 +12,11 @@ const FINAL_VERDICT_FILE = path.join(EDGE_LAB_DIR, 'FINAL_VERDICT.md');
 const EVIDENCE_INDEX_FILE = path.join(EDGE_LAB_DIR, 'EVIDENCE_INDEX.md');
 const EVIDENCE_INDEX_REPORTS_FILE = path.join(EVIDENCE_DIR, 'EVIDENCE_INDEX.md');
 const MEGA_CLOSEOUT_FILE = path.join(EVIDENCE_DIR, 'MEGA_CLOSEOUT_EDGE_LAB.md');
+const GOVERNANCE_FINGERPRINT_FILE = path.join(EVIDENCE_DIR, 'GOVERNANCE_FINGERPRINT.md');
+
+function sha256hex(content) {
+  return crypto.createHash('sha256').update(content, 'utf8').digest('hex');
+}
 
 // Ensure directories exist
 fs.mkdirSync(EVIDENCE_DIR, { recursive: true });
@@ -19,13 +25,16 @@ fs.mkdirSync(EVIDENCE_DIR, { recursive: true });
 const courtFiles = [
   { file: 'SOURCES_AUDIT.md', name: 'Sources Court', script: 'edge:sources' },
   { file: 'REGISTRY_COURT.md', name: 'Registry Court', script: 'edge:registry' },
+  { file: 'PROFIT_CANDIDATES_COURT.md', name: 'Profit Candidates Court', script: 'edge:profit:candidates' },
   { file: 'DATASET_COURT.md', name: 'Dataset Court', script: 'edge:dataset' },
   { file: 'EXECUTION_COURT.md', name: 'Execution Court', script: 'edge:execution' },
   { file: 'EXECUTION_SENSITIVITY_GRID.md', name: 'Execution Grid Court', script: 'edge:execution:grid' },
+  { file: 'EXECUTION_REALITY_COURT.md', name: 'Execution Reality Court', script: 'edge:execution:reality' },
   { file: 'RISK_COURT.md', name: 'Risk Court', script: 'edge:risk' },
   { file: 'OVERFIT_COURT.md', name: 'Overfit Court', script: 'edge:overfit' },
   { file: 'REDTEAM_COURT.md', name: 'Red Team Court', script: 'edge:redteam' },
   { file: 'SRE_COURT.md', name: 'SRE Court', script: 'edge:sre' },
+  { file: 'MICRO_LIVE_READINESS.md', name: 'Micro-Live Readiness Court', script: 'edge:micro:live:readiness' },
 ];
 
 // Additional evidence files produced
@@ -209,9 +218,11 @@ const allFiles = [
     generatedBy: af.script,
     status: additionalResults.find(r => r.file === af.file)?.exists ? 'PRESENT' : 'MISSING'
   })),
+  { file: 'EXECUTION_BREAKPOINTS.md', location: 'reports/evidence/EDGE_LAB/', generatedBy: 'edge:execution:reality', status: 'PRESENT' },
   { file: 'VERDICT.md', location: 'reports/evidence/EDGE_LAB/', generatedBy: 'edge:verdict', status: 'PRESENT' },
   { file: 'EVIDENCE_INDEX.md', location: 'reports/evidence/EDGE_LAB/', generatedBy: 'edge:verdict', status: 'PRESENT' },
   { file: 'MEGA_CLOSEOUT_EDGE_LAB.md', location: 'reports/evidence/EDGE_LAB/', generatedBy: 'edge:verdict', status: 'PRESENT' },
+  { file: 'GOVERNANCE_FINGERPRINT.md', location: 'reports/evidence/EDGE_LAB/', generatedBy: 'edge:verdict', status: 'PRESENT' },
 ];
 
 const evidenceIndexContent = `# EVIDENCE_INDEX.md — EDGE_LAB Evidence Index
@@ -230,6 +241,9 @@ ${allFiles.map(f => `| ${f.file} | ${f.location} | ${f.generatedBy} | ${f.status
 |------|----------|---------|
 | HACK_SCHEMA.md | EDGE_LAB/ | Schema for all hack passports |
 | HACK_REGISTRY.md | EDGE_LAB/ | Registry of all 20 hypotheses |
+| PROFIT_CANDIDATES_V1.md | EDGE_LAB/ | Profit Candidate Set v1 (formalized) |
+| EXECUTION_REALITY_POLICY.md | EDGE_LAB/ | Execution reality stress-test policy |
+| PAPER_TO_MICRO_LIVE_PROTOCOL.md | EDGE_LAB/ | Paper-to-micro-live executable protocol |
 | REGISTRY_CHANGELOG.md | EDGE_LAB/ | Registry change history |
 | TRIALS_LEDGER.md | EDGE_LAB/ | Optimization trials tracking |
 | SOURCES_POLICY.md | EDGE_LAB/ | Data source policy |
@@ -356,6 +370,69 @@ a comprehensive summary of all findings.
 `;
 
 fs.writeFileSync(MEGA_CLOSEOUT_FILE, megaCloseoutContent);
+
+// === Write GOVERNANCE_FINGERPRINT.md ===
+// Computes SHA256 hashes of key contract files: EDGE_LAB/*.md + scripts/edge/edge_lab/*.mjs
+// Scope-limited: only files in these two directories. Tamper-evident at closeout.
+// Excludes pipeline-generated artifacts in EDGE_LAB/ that contain run-specific timestamps
+// (FINAL_VERDICT.md, EVIDENCE_INDEX.md) — these change every run and are outputs, not contracts.
+const GOVERNANCE_EDGE_LAB_EXCLUDE = new Set(['FINAL_VERDICT.md', 'EVIDENCE_INDEX.md']);
+
+function collectGovernanceFiles() {
+  const files = [];
+  const edgeLabDir = path.join(ROOT, 'EDGE_LAB');
+  const scriptsDir = path.join(ROOT, 'scripts', 'edge', 'edge_lab');
+  if (fs.existsSync(edgeLabDir)) {
+    for (const f of fs.readdirSync(edgeLabDir).sort()) {
+      if (f.endsWith('.md') && !GOVERNANCE_EDGE_LAB_EXCLUDE.has(f)) {
+        files.push({ rel: `EDGE_LAB/${f}`, abs: path.join(edgeLabDir, f) });
+      }
+    }
+  }
+  if (fs.existsSync(scriptsDir)) {
+    for (const f of fs.readdirSync(scriptsDir).sort()) {
+      if (f.endsWith('.mjs')) files.push({ rel: `scripts/edge/edge_lab/${f}`, abs: path.join(scriptsDir, f) });
+    }
+  }
+  return files;
+}
+
+const govFiles = collectGovernanceFiles();
+const govRows = govFiles.map(f => {
+  const content = fs.existsSync(f.abs) ? fs.readFileSync(f.abs, 'utf8') : '';
+  const hash = sha256hex(content);
+  return { rel: f.rel, hash };
+});
+const govOverallHash = sha256hex(govRows.map(r => `${r.rel}:${r.hash}`).join('\n'));
+
+const govTable = govRows.map(r => `| ${r.rel} | ${r.hash} |`).join('\n');
+const govContent = `# GOVERNANCE_FINGERPRINT.md — Contract Integrity Snapshot
+generated_at: ${now}
+script: edge_verdict.mjs
+
+## Purpose
+SHA256 fingerprint of EDGE_LAB source contract files and edge_lab scripts at closeout.
+Scope: EDGE_LAB/*.md (excluding generated artifacts) + scripts/edge/edge_lab/*.mjs
+Excluded: FINAL_VERDICT.md, EVIDENCE_INDEX.md (pipeline-generated, contain run timestamps).
+Tamper-evident: any post-closeout modification to contract files produces a different fingerprint.
+
+## Overall Fingerprint
+\`\`\`
+OVERALL_SHA256: ${govOverallHash}
+\`\`\`
+
+## File Fingerprints
+| File | SHA256 |
+|------|--------|
+${govTable}
+
+## Verification
+To verify: recompute SHA256 of each file and compare to this table.
+Any mismatch indicates post-closeout contract modification.
+NEXT_ACTION: Include in SHA256SUMS via edge:ledger (automatic — this file is in evidence root).
+`;
+
+fs.writeFileSync(GOVERNANCE_FINGERPRINT_FILE, govContent);
 
 console.log(`[PASS] edge:verdict — Final verdict: ${finalVerdict} (${passCount}/${courtResults.length} courts PASS) — evidence files written`);
 if (finalVerdict === 'NOT_ELIGIBLE' || finalVerdict === 'BLOCKED') process.exit(1);

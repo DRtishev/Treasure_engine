@@ -1,5 +1,5 @@
 # EXECUTION_COURT.md — Execution Model Validation Report
-generated_at: 2026-02-19T19:57:12.906Z
+generated_at: RUN_ID
 script: edge_execution.mjs
 
 ## STATUS: PASS

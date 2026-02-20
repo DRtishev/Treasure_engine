@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-02-20T09:12:57.289Z",
+  "script": "edge_execution_reality.mjs",
+  "status": "NEEDS_DATA",
+  "reason_code": "PROXY_EXPECTANCY_UNVALIDATED",
+  "message": "proxy_expectancy_pct=0.50% is a PROXY requiring paper trading validation before ELIGIBLE_FOR_PAPER can be granted. Breakpoint analysis complete: all candidates have breakpoint_fee_mult=1.333x (fee-only) and 2.0x (fee+slip combined), below 2.0x fee-only threshold.",
+  "policy_source": "EDGE_LAB/EXECUTION_REALITY_POLICY.md",
+  "proxy_expectancy_pct": 0.5,
+  "proxy_expectancy_validated": false,
+  "round_trip_cost_baseline_pct": 0.3,
+  "stress_threshold_2x_required": true,
+  "candidates": [
+    {
+      "candidate": "H_ATR_SQUEEZE_BREAKOUT",
+      "proxy_expectancy_pct": 0.5,
+      "proxy_validated": false,
+      "base_round_trip_cost_pct": 0.3,
+      "breakpoint_fee_mult": 2,
+      "breakpoint_slip_mult": 3,
+      "threshold_2x_pass": true,
+      "eligible_for_paper": false,
+      "reason": "NEEDS_DATA: proxy_expectancy_pct not validated from paper trading results"
+    },
+    {
+      "candidate": "H_BB_SQUEEZE",
+      "proxy_expectancy_pct": 0.5,
+      "proxy_validated": false,
+      "base_round_trip_cost_pct": 0.3,
+      "breakpoint_fee_mult": 2,
+      "breakpoint_slip_mult": 3,
+      "threshold_2x_pass": true,
+      "eligible_for_paper": false,
+      "reason": "NEEDS_DATA: proxy_expectancy_pct not validated from paper trading results"
+    },
+    {
+      "candidate": "H_VOLUME_SPIKE",
+      "proxy_expectancy_pct": 0.5,
+      "proxy_validated": false,
+      "base_round_trip_cost_pct": 0.3,
+      "breakpoint_fee_mult": 2,
+      "breakpoint_slip_mult": 3,
+      "threshold_2x_pass": true,
+      "eligible_for_paper": false,
+      "reason": "NEEDS_DATA: proxy_expectancy_pct not validated from paper trading results"
+    },
+    {
+      "candidate": "H_VWAP_REVERSAL",
+      "proxy_expectancy_pct": 0.5,
+      "proxy_validated": false,
+      "base_round_trip_cost_pct": 0.3,
+      "breakpoint_fee_mult": 2,
+      "breakpoint_slip_mult": 3,
+      "threshold_2x_pass": true,
+      "eligible_for_paper": false,
+      "reason": "NEEDS_DATA: proxy_expectancy_pct not validated from paper trading results"
+    }
+  ]
+}

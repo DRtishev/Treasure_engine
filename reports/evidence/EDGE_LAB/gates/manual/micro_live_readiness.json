@@ -1,0 +1,81 @@
+{
+  "generated_at": "2026-02-20T09:12:57.680Z",
+  "script": "edge_micro_live_readiness.mjs",
+  "status": "NEEDS_DATA",
+  "reason_code": "MICRO_LIVE_PREREQUISITES_NOT_MET",
+  "message": "MICRO_LIVE_ELIGIBLE=false. 4 prerequisite(s) not met. NEXT_ACTION: Pass gates: EXECUTION_REALITY_COURT, SLI_BASELINE, PROXY_GUARD, PAPER_COURT.",
+  "LIVE_ELIGIBLE": false,
+  "MICRO_LIVE_ELIGIBLE": false,
+  "ELIGIBLE_FOR_PAPER": true,
+  "protocol_checks": {
+    "file_exists": true,
+    "has_stop_rules": true,
+    "required_fields": [
+      {
+        "field": "minimum capital",
+        "found": true
+      },
+      {
+        "field": "risk limit",
+        "found": true
+      },
+      {
+        "field": "stop",
+        "found": true
+      },
+      {
+        "field": "SLI",
+        "found": true
+      }
+    ],
+    "all_fields_found": true
+  },
+  "gate_checks": [
+    {
+      "gate": "PROFIT_CANDIDATES_COURT",
+      "file": "profit_candidates_court.json",
+      "required_status": "PASS",
+      "actual_status": "PASS",
+      "reason_code": "NONE",
+      "passes": true
+    },
+    {
+      "gate": "EXECUTION_REALITY_COURT",
+      "file": "execution_reality_court.json",
+      "required_status": "PASS",
+      "actual_status": "NEEDS_DATA",
+      "reason_code": "PROXY_EXPECTANCY_UNVALIDATED",
+      "passes": false
+    },
+    {
+      "gate": "SLI_BASELINE",
+      "file": "sli_baseline.json",
+      "required_status": "PASS",
+      "actual_status": "MISSING",
+      "reason_code": "FILE_NOT_FOUND",
+      "passes": false
+    },
+    {
+      "gate": "PROXY_GUARD",
+      "file": "proxy_guard.json",
+      "required_status": "PASS",
+      "actual_status": "MISSING",
+      "reason_code": "FILE_NOT_FOUND",
+      "passes": false
+    },
+    {
+      "gate": "PAPER_COURT",
+      "file": "paper_court.json",
+      "required_status": "PASS",
+      "actual_status": "MISSING",
+      "reason_code": "FILE_NOT_FOUND",
+      "passes": false
+    }
+  ],
+  "blocked_reasons": [
+    "Gate EXECUTION_REALITY_COURT: expected PASS, got NEEDS_DATA (PROXY_EXPECTANCY_UNVALIDATED)",
+    "Gate SLI_BASELINE: expected PASS, got MISSING (FILE_NOT_FOUND)",
+    "Gate PROXY_GUARD: expected PASS, got MISSING (FILE_NOT_FOUND)",
+    "Gate PAPER_COURT: expected PASS, got MISSING (FILE_NOT_FOUND)"
+  ]
+}

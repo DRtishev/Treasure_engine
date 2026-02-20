@@ -10,13 +10,16 @@ const EVIDENCE_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_LAB');
 const steps = [
   { name: 'sources', script: 'scripts/edge/edge_lab/edge_sources.mjs', npm: 'edge:sources' },
   { name: 'registry', script: 'scripts/edge/edge_lab/edge_registry.mjs', npm: 'edge:registry' },
+  { name: 'profit:candidates', script: 'scripts/edge/edge_lab/edge_profit_candidates.mjs', npm: 'edge:profit:candidates' },
   { name: 'dataset', script: 'scripts/edge/edge_lab/edge_dataset.mjs', npm: 'edge:dataset' },
   { name: 'execution', script: 'scripts/edge/edge_lab/edge_execution.mjs', npm: 'edge:execution' },
   { name: 'execution:grid', script: 'scripts/edge/edge_lab/edge_execution_grid.mjs', npm: 'edge:execution:grid' },
+  { name: 'execution:reality', script: 'scripts/edge/edge_lab/edge_execution_reality.mjs', npm: 'edge:execution:reality' },
   { name: 'risk', script: 'scripts/edge/edge_lab/edge_risk.mjs', npm: 'edge:risk' },
   { name: 'overfit', script: 'scripts/edge/edge_lab/edge_overfit.mjs', npm: 'edge:overfit' },
   { name: 'redteam', script: 'scripts/edge/edge_lab/edge_redteam.mjs', npm: 'edge:redteam' },
   { name: 'sre', script: 'scripts/edge/edge_lab/edge_sre.mjs', npm: 'edge:sre' },
+  { name: 'micro:live:readiness', script: 'scripts/edge/edge_lab/edge_micro_live_readiness.mjs', npm: 'edge:micro:live:readiness' },
   { name: 'verdict', script: 'scripts/edge/edge_lab/edge_verdict.mjs', npm: 'edge:verdict' },
 ];
 

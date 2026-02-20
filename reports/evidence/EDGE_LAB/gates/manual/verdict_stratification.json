@@ -1,0 +1,19 @@
+{
+  "run_id": "64be6886331a",
+  "status": "PASS",
+  "reason_code": "NONE",
+  "message": "Core readiness states are explicit and unambiguous",
+  "states": {
+    "PIPELINE_ELIGIBLE": true,
+    "TESTING_SET_ELIGIBLE": true,
+    "PAPER_ELIGIBLE": true,
+    "ELIGIBLE_FOR_PAPER": false,
+    "ELIGIBLE_FOR_MICRO_LIVE": false,
+    "ELIGIBLE_FOR_LIVE": false
+  },
+  "profit_track": {
+    "profitCandidatesStatus": "PASS",
+    "executionRealityStatus": "NEEDS_DATA",
+    "microLiveStatus": "NEEDS_DATA"
+  }
+}

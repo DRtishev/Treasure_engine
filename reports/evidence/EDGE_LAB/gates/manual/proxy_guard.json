@@ -1,0 +1,13 @@
+{
+  "run_id": "64be6886331a",
+  "status": "PASS",
+  "reason_code": "NONE",
+  "message": "Proxy guard passed",
+  "flagged": [
+    "approx",
+    "proxy"
+  ],
+  "has_proxy_validation": true,
+  "validation_pass": true,
+  "covered_all_triggers": true
+}

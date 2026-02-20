@@ -11,17 +11,24 @@ const RUN_ID = process.env.TREASURE_RUN_ID
   || execSync('git rev-parse --short=12 HEAD', { cwd: ROOT, encoding: 'utf8' }).trim();
 
 const REQUIRED_ROOT_FILES = [
-  'SOURCES_AUDIT.md', 'REGISTRY_COURT.md', 'DATASET_COURT.md', 'EXECUTION_COURT.md',
-  'EXECUTION_SENSITIVITY_GRID.md', 'RISK_COURT.md', 'OVERFIT_COURT.md', 'REDTEAM_COURT.md', 'SRE_COURT.md', 'VERDICT.md',
-  'SNAPSHOT.md', 'MCL_NOTES.md', 'EVIDENCE_INDEX.md', 'MEGA_CLOSEOUT_EDGE_LAB.md'
+  'SOURCES_AUDIT.md', 'REGISTRY_COURT.md', 'PROFIT_CANDIDATES_COURT.md', 'DATASET_COURT.md', 'EXECUTION_COURT.md',
+  'EXECUTION_SENSITIVITY_GRID.md', 'EXECUTION_REALITY_COURT.md', 'EXECUTION_BREAKPOINTS.md',
+  'RISK_COURT.md', 'OVERFIT_COURT.md', 'REDTEAM_COURT.md', 'SRE_COURT.md', 'MICRO_LIVE_READINESS.md', 'VERDICT.md',
+  'SNAPSHOT.md', 'MCL_NOTES.md', 'EVIDENCE_INDEX.md', 'MEGA_CLOSEOUT_EDGE_LAB.md', 'GOVERNANCE_FINGERPRINT.md'
 ];
+// Core courts (original 9) — must all be PASS for PIPELINE_ELIGIBLE
 const COURT_STATUS_FILES = [
   'SOURCES_AUDIT.md', 'REGISTRY_COURT.md', 'DATASET_COURT.md', 'EXECUTION_COURT.md',
   'EXECUTION_SENSITIVITY_GRID.md', 'RISK_COURT.md', 'OVERFIT_COURT.md', 'REDTEAM_COURT.md', 'SRE_COURT.md'
 ];
+// New profit-track courts — contribute to ELIGIBLE_FOR_* states (may be NEEDS_DATA)
+const PROFIT_COURT_STATUS_FILES = [
+  'PROFIT_CANDIDATES_COURT.md', 'EXECUTION_REALITY_COURT.md', 'MICRO_LIVE_READINESS.md'
+];
 const REQUIRED_MACHINE_FILES = [
   'contract_manifest_result.json', 'verdict_stratification.json', 'raw_stability.json', 'determinism_x2.json', 'proxy_guard.json',
-  'paper_court.json', 'sli_baseline.json', 'meta_audit.json', 'ledger_check.json', 'final_verdict.json'
+  'paper_court.json', 'sli_baseline.json', 'meta_audit.json', 'ledger_check.json', 'final_verdict.json',
+  'profit_candidates_court.json', 'execution_reality_court.json', 'micro_live_readiness.json'
 ];
 
 const FAIL = (reason_code, message, extra = {}) => ({ status: 'BLOCKED', reason_code, message, ...extra });
@@ -184,15 +191,30 @@ writeMarkdown('MANIFEST_CHECK_RESULT.md', `# MANIFEST_CHECK_RESULT\n\nSTATUS: ${
 // 3) VERDICT_STRATIFICATION
 const statuses = COURT_STATUS_FILES.map((f) => readStatus(f));
 const allPass = statuses.every((s) => s === 'PASS');
+// New profit-track court statuses (may be NEEDS_DATA — not a core gate failure)
+const profitCandidatesStatus = readStatus('PROFIT_CANDIDATES_COURT.md');
+const executionRealityStatus = readStatus('EXECUTION_REALITY_COURT.md');
+const microLiveStatus = readStatus('MICRO_LIVE_READINESS.md');
+const profitCandidatesPass = profitCandidatesStatus === 'PASS';
+const executionRealityPass = executionRealityStatus === 'PASS';
+const microLivePass = microLiveStatus === 'PASS';
 const verdictStates = {
   PIPELINE_ELIGIBLE: allPass,
   TESTING_SET_ELIGIBLE: allPass,
   PAPER_ELIGIBLE: allPass,
-  LIVE_ELIGIBLE: false
+  ELIGIBLE_FOR_PAPER: allPass && profitCandidatesPass && executionRealityPass,
+  ELIGIBLE_FOR_MICRO_LIVE: allPass && profitCandidatesPass && executionRealityPass && microLivePass,
+  ELIGIBLE_FOR_LIVE: false
 };
 const stratResult = allPass
-  ? PASS('Readiness states are explicit and unambiguous', { states: verdictStates })
-  : FAIL('AMBIGUOUS_VERDICT', 'At least one court did not return PASS; readiness downgraded', { states: verdictStates, statuses });
+  ? PASS('Core readiness states are explicit and unambiguous', {
+      states: verdictStates,
+      profit_track: { profitCandidatesStatus, executionRealityStatus, microLiveStatus }
+    })
+  : FAIL('AMBIGUOUS_VERDICT', 'At least one core court did not return PASS; readiness downgraded', {
+      states: verdictStates, statuses,
+      profit_track: { profitCandidatesStatus, executionRealityStatus, microLiveStatus }
+    });
 writeManual('verdict_stratification.json', stratResult);
 
 // 4) PROXY_GUARD
@@ -284,7 +306,11 @@ writeMarkdown('SLI_BASELINE.md', `# SLI_BASELINE\n\nSTATUS: ${sliResult.status}\
 // 7) META_AUDIT
 const metaChecks = {
   no_silent_assumptions: manifestResult.status === 'PASS' && stratResult.status === 'PASS',
-  no_pass_without_evidence: ['contract_manifest_result.json', 'verdict_stratification.json', 'raw_stability.json', 'determinism_x2.json', 'proxy_guard.json', 'paper_court.json', 'sli_baseline.json'].every((f) => fs.existsSync(path.join(MANUAL_DIR, f))),
+  no_pass_without_evidence: [
+    'contract_manifest_result.json', 'verdict_stratification.json', 'raw_stability.json',
+    'determinism_x2.json', 'proxy_guard.json', 'paper_court.json', 'sli_baseline.json',
+    'profit_candidates_court.json', 'execution_reality_court.json', 'micro_live_readiness.json'
+  ].every((f) => fs.existsSync(path.join(MANUAL_DIR, f))),
   no_contract_drift: manifestResult.status === 'PASS',
   no_threshold_loosening: true
 };
@@ -308,14 +334,42 @@ try {
 }
 writeManual('ledger_check.json', ledgerResult);
 
+// Helper: read gate JSON status
+function readGateStatus(filename) {
+  const p = path.join(MANUAL_DIR, filename);
+  if (!fs.existsSync(p)) return { status: 'MISSING', reason_code: 'FILE_NOT_FOUND' };
+  try {
+    const data = JSON.parse(fs.readFileSync(p, 'utf8'));
+    return { status: data.status || 'UNKNOWN', reason_code: data.reason_code || 'UNKNOWN' };
+  } catch (e) {
+    return { status: 'PARSE_ERROR', reason_code: 'JSON_PARSE_FAILED' };
+  }
+}
+
+// Read new gate results
+const profitCandidatesGate = readGateStatus('profit_candidates_court.json');
+const executionRealityGate = readGateStatus('execution_reality_court.json');
+const microLiveGate = readGateStatus('micro_live_readiness.json');
+
+// Convert NEEDS_DATA to BLOCKED for final gate evaluation (fail-closed)
+function toGateResult(gateJson, name) {
+  if (gateJson.status === 'PASS') return PASS(`${name} gate PASS`);
+  return FAIL(gateJson.reason_code || 'NEEDS_DATA', `${name}: ${gateJson.status} — ${gateJson.reason_code || 'not yet validated'}`);
+}
+
+const profitCandidatesResult = toGateResult(profitCandidatesGate, 'PROFIT_CANDIDATES_COURT');
+const executionRealityResult = toGateResult(executionRealityGate, 'EXECUTION_REALITY_COURT');
+const microLiveResult = toGateResult(microLiveGate, 'MICRO_LIVE_READINESS');
+
 // 9) CLOSEOUT
-const allResults = [manifestResult, stratResult, rawStabilityResult, detResult, proxyResult, paperResult, sliResult, metaResult, ledgerResult];
+const allResults = [manifestResult, stratResult, rawStabilityResult, detResult, proxyResult, paperResult, sliResult, metaResult, ledgerResult,
+  profitCandidatesResult, executionRealityResult, microLiveResult];
 const final = allResults.some((r) => r.status !== 'PASS')
   ? FAIL('EDGE_LAB_TRUTH_BLOCKED', 'One or more gates are BLOCKED for this epoch')
   : PASS('All gates PASS for this epoch');
 writeManual('final_verdict.json', { ...final, evidence_paths: REQUIRED_MACHINE_FILES.map((f) => `reports/evidence/EDGE_LAB/gates/manual/${f}`) });
 
-writeMarkdown('MEGA_CLOSEOUT_NEXT_EPOCH.md', `# MEGA_CLOSEOUT_NEXT_EPOCH\n\nSTATUS: ${final.status}\nAUTHORITATIVE: ${final.status === 'PASS' ? 'YES' : 'NO'}\nREASON_CODE: ${final.reason_code}\nCONFIDENCE: ${final.status === 'PASS' ? 'HIGH' : 'MEDIUM'}\nNEXT_ACTION: ${final.status === 'PASS' ? 'Promote to paper-eligibility review.' : 'Remediate blocked gates and rerun edge:next-epoch.'}\nEVIDENCE_PATHS:\n${REQUIRED_MACHINE_FILES.map((f) => `- reports/evidence/EDGE_LAB/gates/manual/${f}`).join('\n')}\n\n## Gate outcomes\n- CONTRACT_MANIFEST: ${manifestResult.status} (${manifestResult.reason_code})\n- VERDICT_STRATIFICATION: ${stratResult.status} (${stratResult.reason_code})\n- RAW_STABILITY: ${rawStabilityResult.status} (${rawStabilityResult.reason_code})\n- DETERMINISM_X2: ${detResult.status} (${detResult.reason_code})\n- PROXY_GUARD: ${proxyResult.status} (${proxyResult.reason_code})\n- PAPER_COURT: ${paperResult.status} (${paperResult.reason_code})\n- SLI_BASELINE: ${sliResult.status} (${sliResult.reason_code})\n- META_AUDIT: ${metaResult.status} (${metaResult.reason_code})\n- LEDGER_CHECK: ${ledgerResult.status} (${ledgerResult.reason_code})\n\nZIP_POLICY: NOT_REQUIRED\n`);
+writeMarkdown('MEGA_CLOSEOUT_NEXT_EPOCH.md', `# MEGA_CLOSEOUT_NEXT_EPOCH\n\nSTATUS: ${final.status}\nAUTHORITATIVE: ${final.status === 'PASS' ? 'YES' : 'NO'}\nREASON_CODE: ${final.reason_code}\nCONFIDENCE: ${final.status === 'PASS' ? 'HIGH' : 'MEDIUM'}\nNEXT_ACTION: ${final.status === 'PASS' ? 'Promote to paper-eligibility review.' : 'Remediate blocked gates and rerun edge:next-epoch.'}\nEVIDENCE_PATHS:\n${REQUIRED_MACHINE_FILES.map((f) => `- reports/evidence/EDGE_LAB/gates/manual/${f}`).join('\n')}\n\n## Gate outcomes\n- CONTRACT_MANIFEST: ${manifestResult.status} (${manifestResult.reason_code})\n- VERDICT_STRATIFICATION: ${stratResult.status} (${stratResult.reason_code})\n- RAW_STABILITY: ${rawStabilityResult.status} (${rawStabilityResult.reason_code})\n- DETERMINISM_X2: ${detResult.status} (${detResult.reason_code})\n- PROXY_GUARD: ${proxyResult.status} (${proxyResult.reason_code})\n- PAPER_COURT: ${paperResult.status} (${paperResult.reason_code})\n- SLI_BASELINE: ${sliResult.status} (${sliResult.reason_code})\n- META_AUDIT: ${metaResult.status} (${metaResult.reason_code})\n- LEDGER_CHECK: ${ledgerResult.status} (${ledgerResult.reason_code})\n- PROFIT_CANDIDATES_COURT: ${profitCandidatesGate.status} (${profitCandidatesGate.reason_code})\n- EXECUTION_REALITY_COURT: ${executionRealityGate.status} (${executionRealityGate.reason_code})\n- MICRO_LIVE_READINESS: ${microLiveGate.status} (${microLiveGate.reason_code})\n\nELIGIBLE_FOR_PAPER: ${verdictStates.ELIGIBLE_FOR_PAPER}\nELIGIBLE_FOR_MICRO_LIVE: ${verdictStates.ELIGIBLE_FOR_MICRO_LIVE}\nELIGIBLE_FOR_LIVE: ${verdictStates.ELIGIBLE_FOR_LIVE}\n\nZIP_POLICY: NOT_REQUIRED\n`);
 writeMarkdown('MANIFEST_CHECK.md', `STATUS: ${manifestResult.status}\nREASON_CODE: ${manifestResult.reason_code}`);
 
 if (final.status !== 'PASS') {

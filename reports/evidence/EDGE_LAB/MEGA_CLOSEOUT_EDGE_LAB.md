@@ -1,8 +1,8 @@
 # MEGA_CLOSEOUT_EDGE_LAB.md — EDGE_LAB Mega Closeout Report
-generated_at: 2026-02-19T19:57:13.361Z
+generated_at: RUN_ID
 script: edge_verdict.mjs
 
-## FINAL VERDICT: ELIGIBLE
+## FINAL VERDICT: NEEDS_DATA
 
 ## Executive Summary
 
@@ -92,7 +92,7 @@ a comprehensive summary of all findings.
 - Schema version: 1.0.0
 - Registry hacks: 20
 - Court pipeline: 9 courts + verdict
-- Generated: 2026-02-19T19:57:13.361Z
+- Generated: RUN_ID
 
 ---
 

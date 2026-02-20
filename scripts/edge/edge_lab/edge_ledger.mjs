@@ -8,15 +8,33 @@ const MANUAL = path.join(EVIDENCE_DIR, 'gates', 'manual');
 
 function collect() {
   const out = [];
+  // Evidence root .md files (includes GOVERNANCE_FINGERPRINT.md)
   if (fs.existsSync(EVIDENCE_DIR)) {
     for (const f of fs.readdirSync(EVIDENCE_DIR).sort()) {
       const p = path.join(EVIDENCE_DIR, f);
       if (fs.statSync(p).isFile() && f.endsWith('.md')) out.push(`reports/evidence/EDGE_LAB/${f}`);
     }
   }
+  // Gate JSON files
   if (fs.existsSync(MANUAL)) {
     for (const f of fs.readdirSync(MANUAL).sort()) {
       if (f.endsWith('.json')) out.push(`reports/evidence/EDGE_LAB/gates/manual/${f}`);
+    }
+  }
+  // Governance scope: EDGE_LAB/*.md contract files (tamper-evident source contracts)
+  const edgeLabDir = path.join(ROOT, 'EDGE_LAB');
+  if (fs.existsSync(edgeLabDir)) {
+    for (const f of fs.readdirSync(edgeLabDir).sort()) {
+      const p = path.join(edgeLabDir, f);
+      if (fs.statSync(p).isFile() && f.endsWith('.md')) out.push(`EDGE_LAB/${f}`);
+    }
+  }
+  // Governance scope: scripts/edge/edge_lab/*.mjs pipeline scripts
+  const scriptsDir = path.join(ROOT, 'scripts', 'edge', 'edge_lab');
+  if (fs.existsSync(scriptsDir)) {
+    for (const f of fs.readdirSync(scriptsDir).sort()) {
+      const p = path.join(scriptsDir, f);
+      if (fs.statSync(p).isFile() && f.endsWith('.mjs')) out.push(`scripts/edge/edge_lab/${f}`);
     }
   }
   return out.sort();
