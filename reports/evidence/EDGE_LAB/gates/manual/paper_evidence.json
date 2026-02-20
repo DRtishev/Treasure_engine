@@ -1,0 +1,5 @@
+{
+  "status": "NEEDS_DATA",
+  "reason_code": "NO_PAPER_EVIDENCE",
+  "message": "artifacts/incoming/paper_evidence.json not found. Run paper trading epoch first."
+}

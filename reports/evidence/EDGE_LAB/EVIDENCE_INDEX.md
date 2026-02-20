@@ -10,6 +10,7 @@ script: edge_verdict.mjs
 | SOURCES_AUDIT.md | reports/evidence/EDGE_LAB/ | edge:sources | PASS |
 | REGISTRY_COURT.md | reports/evidence/EDGE_LAB/ | edge:registry | PASS |
 | PROFIT_CANDIDATES_COURT.md | reports/evidence/EDGE_LAB/ | edge:profit:candidates | PASS |
+| PAPER_EVIDENCE.md | reports/evidence/EDGE_LAB/ | edge:paper:ingest | NEEDS_DATA |
 | DATASET_COURT.md | reports/evidence/EDGE_LAB/ | edge:dataset | PASS |
 | EXECUTION_COURT.md | reports/evidence/EDGE_LAB/ | edge:execution | PASS |
 | EXECUTION_SENSITIVITY_GRID.md | reports/evidence/EDGE_LAB/ | edge:execution:grid | PASS |
@@ -21,11 +22,15 @@ script: edge_verdict.mjs
 | MICRO_LIVE_READINESS.md | reports/evidence/EDGE_LAB/ | edge:micro:live:readiness | NEEDS_DATA |
 | SNAPSHOT.md | reports/evidence/EDGE_LAB/ | edge:sources | PRESENT |
 | MCL_NOTES.md | reports/evidence/EDGE_LAB/ | edge:sre | PRESENT |
+| ANTI_FLAKE_INDEPENDENCE.md | reports/evidence/EDGE_LAB/ | edge:next-epoch | MISSING |
+| LEDGER_ACYCLICITY.md | reports/evidence/EDGE_LAB/ | edge:ledger | MISSING |
 | EXECUTION_BREAKPOINTS.md | reports/evidence/EDGE_LAB/ | edge:execution:reality | PRESENT |
 | VERDICT.md | reports/evidence/EDGE_LAB/ | edge:verdict | PRESENT |
 | EVIDENCE_INDEX.md | reports/evidence/EDGE_LAB/ | edge:verdict | PRESENT |
 | MEGA_CLOSEOUT_EDGE_LAB.md | reports/evidence/EDGE_LAB/ | edge:verdict | PRESENT |
 | GOVERNANCE_FINGERPRINT.md | reports/evidence/EDGE_LAB/ | edge:verdict | PRESENT |
+| ANTI_FLAKE_INDEPENDENCE.md | reports/evidence/EDGE_LAB/ | edge:next-epoch / edge:all:x2 | PENDING |
+| LEDGER_ACYCLICITY.md | reports/evidence/EDGE_LAB/ | edge:ledger | PENDING |
 
 ## EDGE_LAB Document Registry
 | File | Location | Purpose |
@@ -33,6 +38,7 @@ script: edge_verdict.mjs
 | HACK_SCHEMA.md | EDGE_LAB/ | Schema for all hack passports |
 | HACK_REGISTRY.md | EDGE_LAB/ | Registry of all 20 hypotheses |
 | PROFIT_CANDIDATES_V1.md | EDGE_LAB/ | Profit Candidate Set v1 (formalized) |
+| PAPER_EVIDENCE_SPEC.md | EDGE_LAB/ | Paper trading evidence schema (AJV) |
 | EXECUTION_REALITY_POLICY.md | EDGE_LAB/ | Execution reality stress-test policy |
 | PAPER_TO_MICRO_LIVE_PROTOCOL.md | EDGE_LAB/ | Paper-to-micro-live executable protocol |
 | REGISTRY_CHANGELOG.md | EDGE_LAB/ | Registry change history |

@@ -1,5 +1,5 @@
 {
-  "run_id": "64be6886331a",
+  "run_id": "489d15cd3198",
   "status": "PASS",
   "reason_code": "NONE",
   "message": "Manifest matches required contract",
@@ -24,9 +24,12 @@
     "MCL_NOTES.md",
     "EVIDENCE_INDEX.md",
     "MEGA_CLOSEOUT_EDGE_LAB.md",
-    "GOVERNANCE_FINGERPRINT.md"
+    "GOVERNANCE_FINGERPRINT.md",
+    "ANTI_FLAKE_INDEPENDENCE.md",
+    "PAPER_EVIDENCE.md"
   ],
   "present_root_files": [
+    "ANTI_FLAKE_INDEPENDENCE.md",
     "ANTI_FLAKE_X2.md",
     "DATASET_COURT.md",
     "EVIDENCE_INDEX.md",
@@ -40,6 +43,7 @@
     "MICRO_LIVE_READINESS.md",
     "NONDETERMINISM_REPORT.md",
     "OVERFIT_COURT.md",
+    "PAPER_EVIDENCE.md",
     "PROFIT_CANDIDATES_COURT.md",
     "RAW_STABILITY_REPORT.md",
     "REDTEAM_COURT.md",

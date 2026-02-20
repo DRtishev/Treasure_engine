@@ -11,10 +11,10 @@ These are computed from proxy_expectancy (PROXY — not validated) and EXECUTION
 
 | Candidate | breakpoint_fee_mult | breakpoint_slip_mult | 2x Fee Threshold | Status |
 |-----------|--------------------|--------------------|-----------------|--------|
-| H_ATR_SQUEEZE_BREAKOUT | 2x | 3x | PASS | NEEDS_DATA: proxy_expectancy_pct not validated from paper trading results |
-| H_BB_SQUEEZE | 2x | 3x | PASS | NEEDS_DATA: proxy_expectancy_pct not validated from paper trading results |
-| H_VOLUME_SPIKE | 2x | 3x | PASS | NEEDS_DATA: proxy_expectancy_pct not validated from paper trading results |
-| H_VWAP_REVERSAL | 2x | 3x | PASS | NEEDS_DATA: proxy_expectancy_pct not validated from paper trading results |
+| H_ATR_SQUEEZE_BREAKOUT | 2x | 3x | PASS | NEEDS_DATA: expectancy is PROXY — not validated from paper trading results |
+| H_BB_SQUEEZE | 2x | 3x | PASS | NEEDS_DATA: expectancy is PROXY — not validated from paper trading results |
+| H_VOLUME_SPIKE | 2x | 3x | PASS | NEEDS_DATA: expectancy is PROXY — not validated from paper trading results |
+| H_VWAP_REVERSAL | 2x | 3x | PASS | NEEDS_DATA: expectancy is PROXY — not validated from paper trading results |
 
 ## Interpretation
 

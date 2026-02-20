@@ -1,5 +1,5 @@
 {
-  "run_id": "64be6886331a",
+  "run_id": "489d15cd3198",
   "status": "PASS",
   "reason_code": "NONE",
   "message": "Core readiness states are explicit and unambiguous",
@@ -14,6 +14,7 @@
   "profit_track": {
     "profitCandidatesStatus": "PASS",
     "executionRealityStatus": "NEEDS_DATA",
-    "microLiveStatus": "NEEDS_DATA"
+    "microLiveStatus": "NEEDS_DATA",
+    "paperEvidenceStatus": "NEEDS_DATA"
   }
 }

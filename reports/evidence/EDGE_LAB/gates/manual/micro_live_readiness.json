@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-02-20T09:12:57.680Z",
+  "generated_at": "2026-02-20T13:14:54.683Z",
   "script": "edge_micro_live_readiness.mjs",
   "status": "NEEDS_DATA",
   "reason_code": "MICRO_LIVE_PREREQUISITES_NOT_MET",
