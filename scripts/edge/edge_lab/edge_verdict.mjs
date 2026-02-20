@@ -26,6 +26,7 @@ const courtFiles = [
   { file: 'SOURCES_AUDIT.md', name: 'Sources Court', script: 'edge:sources' },
   { file: 'REGISTRY_COURT.md', name: 'Registry Court', script: 'edge:registry' },
   { file: 'PROFIT_CANDIDATES_COURT.md', name: 'Profit Candidates Court', script: 'edge:profit:candidates' },
+  { file: 'PAPER_EVIDENCE.md', name: 'Paper Evidence Court', script: 'edge:paper:ingest' },
   { file: 'DATASET_COURT.md', name: 'Dataset Court', script: 'edge:dataset' },
   { file: 'EXECUTION_COURT.md', name: 'Execution Court', script: 'edge:execution' },
   { file: 'EXECUTION_SENSITIVITY_GRID.md', name: 'Execution Grid Court', script: 'edge:execution:grid' },
@@ -41,6 +42,8 @@ const courtFiles = [
 const additionalFiles = [
   { file: 'SNAPSHOT.md', name: 'Repository Snapshot', script: 'edge:sources' },
   { file: 'MCL_NOTES.md', name: 'Mega Closeout Notes', script: 'edge:sre' },
+  { file: 'ANTI_FLAKE_INDEPENDENCE.md', name: 'Anti-Flake Independence', script: 'edge:next-epoch' },
+  { file: 'LEDGER_ACYCLICITY.md', name: 'Ledger Acyclicity Proof', script: 'edge:ledger' },
 ];
 
 const now = new Date().toISOString();
@@ -223,6 +226,9 @@ const allFiles = [
   { file: 'EVIDENCE_INDEX.md', location: 'reports/evidence/EDGE_LAB/', generatedBy: 'edge:verdict', status: 'PRESENT' },
   { file: 'MEGA_CLOSEOUT_EDGE_LAB.md', location: 'reports/evidence/EDGE_LAB/', generatedBy: 'edge:verdict', status: 'PRESENT' },
   { file: 'GOVERNANCE_FINGERPRINT.md', location: 'reports/evidence/EDGE_LAB/', generatedBy: 'edge:verdict', status: 'PRESENT' },
+  // Proof suite files (produced by edge:next-epoch and edge:ledger, available after those run)
+  { file: 'ANTI_FLAKE_INDEPENDENCE.md', location: 'reports/evidence/EDGE_LAB/', generatedBy: 'edge:next-epoch / edge:all:x2', status: fs.existsSync(path.join(EVIDENCE_DIR, 'ANTI_FLAKE_INDEPENDENCE.md')) ? 'PRESENT' : 'PENDING' },
+  { file: 'LEDGER_ACYCLICITY.md', location: 'reports/evidence/EDGE_LAB/', generatedBy: 'edge:ledger', status: fs.existsSync(path.join(EVIDENCE_DIR, 'LEDGER_ACYCLICITY.md')) ? 'PRESENT' : 'PENDING' },
 ];
 
 const evidenceIndexContent = `# EVIDENCE_INDEX.md — EDGE_LAB Evidence Index
@@ -242,6 +248,7 @@ ${allFiles.map(f => `| ${f.file} | ${f.location} | ${f.generatedBy} | ${f.status
 | HACK_SCHEMA.md | EDGE_LAB/ | Schema for all hack passports |
 | HACK_REGISTRY.md | EDGE_LAB/ | Registry of all 20 hypotheses |
 | PROFIT_CANDIDATES_V1.md | EDGE_LAB/ | Profit Candidate Set v1 (formalized) |
+| PAPER_EVIDENCE_SPEC.md | EDGE_LAB/ | Paper trading evidence schema (AJV) |
 | EXECUTION_REALITY_POLICY.md | EDGE_LAB/ | Execution reality stress-test policy |
 | PAPER_TO_MICRO_LIVE_PROTOCOL.md | EDGE_LAB/ | Paper-to-micro-live executable protocol |
 | REGISTRY_CHANGELOG.md | EDGE_LAB/ | Registry change history |

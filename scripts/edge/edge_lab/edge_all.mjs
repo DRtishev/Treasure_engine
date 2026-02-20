@@ -11,6 +11,7 @@ const steps = [
   { name: 'sources', script: 'scripts/edge/edge_lab/edge_sources.mjs', npm: 'edge:sources' },
   { name: 'registry', script: 'scripts/edge/edge_lab/edge_registry.mjs', npm: 'edge:registry' },
   { name: 'profit:candidates', script: 'scripts/edge/edge_lab/edge_profit_candidates.mjs', npm: 'edge:profit:candidates' },
+  { name: 'paper:ingest', script: 'scripts/edge/edge_lab/edge_paper_ingest.mjs', npm: 'edge:paper:ingest' },
   { name: 'dataset', script: 'scripts/edge/edge_lab/edge_dataset.mjs', npm: 'edge:dataset' },
   { name: 'execution', script: 'scripts/edge/edge_lab/edge_execution.mjs', npm: 'edge:execution' },
   { name: 'execution:grid', script: 'scripts/edge/edge_lab/edge_execution_grid.mjs', npm: 'edge:execution:grid' },

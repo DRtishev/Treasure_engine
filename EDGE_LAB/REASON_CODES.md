@@ -1,5 +1,5 @@
 # REASON_CODES.md — Reason Codes Reference
-version: 1.0.0 | last_updated: 2026-02-19
+version: 2.0.0 | last_updated: 2026-02-20
 
 ## Purpose
 
@@ -81,6 +81,64 @@ Canonical list of reason codes used when a hack is blocked, failed, or needs att
 | REASON_REGULATORY | Regulatory Constraint | Strategy prohibited by applicable regulations |
 | REASON_DEPRECATED | Deprecated | Strategy superseded by improved version; archived |
 | REASON_MARKET_STRUCTURE | Market Structure Change | Edge eliminated by permanent market structure change |
+
+### Court Pipeline Reason Codes (v5.0)
+
+These codes appear in court JSON gates and .md files in `reports/evidence/EDGE_LAB/`.
+
+#### Integrity Gate Codes
+
+| Code | Gate | Meaning |
+|------|------|---------|
+| `NONE` | Any | Gate passed with no issues |
+| `NONDETERMINISM` | DETERMINISM_X2, ANTI_FLAKE_INDEPENDENCE | Evidence files differ between two consecutive edge:all runs |
+| `RAW_NONDETERMINISM` | RAW_STABILITY | Raw evidence (before normalization) is not stable |
+| `CONTRACT_DRIFT` | CONTRACT_MANIFEST | Required evidence file missing from EVIDENCE_DIR |
+| `EXTRA_EVIDENCE` | CONTRACT_MANIFEST | Unexpected file in EVIDENCE_DIR root scope |
+| `LEDGER_MISMATCH` | LEDGER_CHECK, SHA256CHECK | SHA256 hash of evidence file doesn't match recorded value |
+
+#### Data/Proof Gate Codes
+
+| Code | Gate | Meaning |
+|------|------|---------|
+| `NO_PAPER_EVIDENCE` | PAPER_EVIDENCE | artifacts/incoming/paper_evidence.json not found |
+| `JSON_PARSE_ERROR` | PAPER_EVIDENCE | paper_evidence.json is malformed JSON |
+| `AJV_UNAVAILABLE` | PAPER_EVIDENCE | AJV library not installed (run npm install) |
+| `SCHEMA_VALIDATION_FAILED` | PAPER_EVIDENCE | paper_evidence.json doesn't match PAPER_EVIDENCE_SPEC.md schema |
+| `DATE_ORDER_INVALID` | PAPER_EVIDENCE | start_date > end_date |
+| `UNKNOWN_CANDIDATE_NAMES` | PAPER_EVIDENCE | Candidate names not in PROFIT_CANDIDATES_V1.md |
+| `INSUFFICIENT_TRADE_COUNT` | PAPER_EVIDENCE | trade_count < 30 for one or more candidates |
+
+#### Execution Reality Codes
+
+| Code | Gate | Meaning |
+|------|------|---------|
+| `PROXY_EXPECTANCY_UNVALIDATED` | EXECUTION_REALITY | Expectancy is PROXY; paper evidence required |
+| `BREAKPOINT_THRESHOLD_NOT_MET` | EXECUTION_REALITY | MEASURED expectancy fails 2x fee stress threshold |
+| `MISSING_POLICY` | EXECUTION_REALITY | EXECUTION_REALITY_POLICY.md not found |
+| `POLICY_INCOMPLETE` | EXECUTION_REALITY | Policy missing required sections |
+
+#### Promotion Gate Codes
+
+| Code | Gate | Meaning |
+|------|------|---------|
+| `AMBIGUOUS_VERDICT` | VERDICT_STRATIFICATION | Core court did not return PASS |
+| `UNVERIFIED_PROXY_ASSUMPTION` | PROXY_GUARD | Proxy language without PROXY_VALIDATION.md |
+| `PROXY_VALIDATION_INCOMPLETE` | PROXY_GUARD | Proxy validation exists but is incomplete |
+| `EXECUTION_DRIFT` | PAPER_COURT | Execution simulation exceeded drift thresholds |
+| `SLI_BASELINE_MISSING` | SLI_BASELINE | SLI metrics out of range |
+| `META_INTEGRITY_FAIL` | META_AUDIT | Meta-audit integrity check failed |
+| `EDGE_LAB_TRUTH_BLOCKED` | FINAL_VERDICT | One or more gates blocked epoch promotion |
+
+#### Profit Candidate Codes
+
+| Code | Gate | Meaning |
+|------|------|---------|
+| `MISSING_CANDIDATES` | PROFIT_CANDIDATES_COURT | No candidates found in PROFIT_CANDIDATES_V1.md |
+| `WRONG_FIELD_ORDER` | PROFIT_CANDIDATES_COURT | Candidate fields not in required order |
+| `MISSING_REQUIRED_FIELD` | PROFIT_CANDIDATES_COURT | Required candidate field is absent |
+| `NOT_SORTED_ALPHABETICALLY` | PROFIT_CANDIDATES_COURT | Candidates not sorted A→Z by NAME |
+| `PROXY_VALIDATION_MISSING` | PROFIT_CANDIDATES_COURT | PROXY: field without PROXY_VALIDATION.md |
 
 ---
 

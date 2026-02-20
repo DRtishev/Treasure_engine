@@ -37,9 +37,27 @@ function extractPolicyValue(pattern, text) {
 }
 
 const roundTripBaseline = 0.0030;     // 0.30% — from policy section 3
-const proxyExpectancy = 0.0050;        // 0.50% PROXY — from policy section 6
-const proxyExpectancyValidated = false; // PROXY status: not yet validated from paper trading
-const breakpointFeeMultiplier = proxyExpectancy / roundTripBaseline; // 1.667x
+const defaultProxyExpectancy = 0.0050; // 0.50% PROXY — from policy section 6
+
+// --- Read paper_evidence.json gate to determine if MEASURED mode is active ---
+let paperEvidenceGate = null;
+const PAPER_EVIDENCE_GATE = path.join(MANUAL_DIR, 'paper_evidence.json');
+if (fs.existsSync(PAPER_EVIDENCE_GATE)) {
+  try {
+    paperEvidenceGate = JSON.parse(fs.readFileSync(PAPER_EVIDENCE_GATE, 'utf8'));
+  } catch (e) { /* ignore parse error — treat as unavailable */ }
+}
+const measuredMode = paperEvidenceGate && paperEvidenceGate.status === 'PASS' && Array.isArray(paperEvidenceGate.candidates);
+
+// Build per-candidate expectancy map (MEASURED values from paper evidence, or proxy fallback)
+const measuredExpectancyMap = {};
+if (measuredMode) {
+  for (const c of paperEvidenceGate.candidates) {
+    if (c.name && typeof c.expectancy_pct === 'number') {
+      measuredExpectancyMap[c.name] = c.expectancy_pct / 100; // convert pct to decimal
+    }
+  }
+}
 
 // Validate policy contains required sections
 const requiredSections = [
@@ -84,23 +102,33 @@ const partialFillRates = [1.00, 0.90, 0.75];
 const baseFeeSide = 0.0010;   // 0.10% per side
 const baseSlipSide = 0.0005;  // 0.05% per side
 
+// Get per-candidate expectancy (MEASURED if available, else proxy)
+function getCandidateExpectancy(candidateName) {
+  if (measuredMode && measuredExpectancyMap[candidateName] !== undefined) {
+    return { value: measuredExpectancyMap[candidateName], source: 'MEASURED' };
+  }
+  return { value: defaultProxyExpectancy, source: 'PROXY' };
+}
+
 // --- Compute stress grid per candidate ---
 function computeStressGrid(candidateName) {
+  const { value: expectancy, source } = getCandidateExpectancy(candidateName);
   const rows = [];
   for (const fm of feeMultipliers) {
     for (const sm of slippageMultipliers) {
       const effectiveFee = 2 * baseFeeSide * fm;       // round-trip fee
       const effectiveSlip = 2 * baseSlipSide * sm;    // round-trip slippage
       const totalCost = effectiveFee + effectiveSlip;
-      const netEdge = proxyExpectancy - totalCost;
-      const eligible = proxyExpectancyValidated && netEdge > 0;
+      const netEdge = expectancy - totalCost;
+      const eligible = source === 'MEASURED' && netEdge > 0;
       rows.push({
         fee_mult: fm,
         slip_mult: sm,
         effective_fee_rt_pct: Number((effectiveFee * 100).toFixed(4)),
         effective_slip_rt_pct: Number((effectiveSlip * 100).toFixed(4)),
         total_cost_rt_pct: Number((totalCost * 100).toFixed(4)),
-        net_edge_proxy_pct: Number((netEdge * 100).toFixed(4)),
+        net_edge_pct: Number((netEdge * 100).toFixed(4)),
+        expectancy_source: source,
         eligible_for_paper: eligible
       });
     }
@@ -108,29 +136,35 @@ function computeStressGrid(candidateName) {
   return rows;
 }
 
-// Breakpoint per candidate (same for all since proxy_expectancy is uniform)
+// Breakpoint per candidate (uses MEASURED if available, else proxy)
 function computeBreakpoint(candidateName) {
-  // fee_mult at which net_edge_proxy <= 0 (ignoring slippage mult = 1x)
-  // proxyExpectancy - 2*baseFeeSide*fm - 2*baseSlipSide = 0
-  // fm = (proxyExpectancy - 2*baseSlipSide) / (2*baseFeeSide)
-  const breakpointFm = (proxyExpectancy - 2 * baseSlipSide) / (2 * baseFeeSide);
-  // slippage_mult at which net_edge_proxy <= 0 (fee_mult = 1x)
-  const breakpointSm = (proxyExpectancy - 2 * baseFeeSide) / (2 * baseSlipSide);
-  const eligibleForPaper = proxyExpectancyValidated && breakpointFm >= 2.0;
+  const { value: expectancy, source } = getCandidateExpectancy(candidateName);
+  // fee_mult at which net_edge <= 0 (ignoring slippage mult = 1x)
+  // expectancy - 2*baseFeeSide*fm - 2*baseSlipSide = 0
+  // fm = (expectancy - 2*baseSlipSide) / (2*baseFeeSide)
+  const breakpointFm = (expectancy - 2 * baseSlipSide) / (2 * baseFeeSide);
+  // slippage_mult at which net_edge <= 0 (fee_mult = 1x)
+  const breakpointSm = (expectancy - 2 * baseFeeSide) / (2 * baseSlipSide);
+  const thresholdPass = breakpointFm >= 2.0;
+  const eligibleForPaper = source === 'MEASURED' && thresholdPass;
+  let reason;
+  if (source === 'PROXY') {
+    reason = 'NEEDS_DATA: expectancy is PROXY — not validated from paper trading results';
+  } else if (thresholdPass) {
+    reason = `ELIGIBLE: measured expectancy=${(expectancy * 100).toFixed(3)}% survives 2x fee stress (breakpoint_fee_mult=${breakpointFm.toFixed(4)})`;
+  } else {
+    reason = `NOT_ELIGIBLE: breakpoint_fee_mult=${breakpointFm.toFixed(4)} < 2.0 at measured expectancy=${(expectancy * 100).toFixed(3)}%`;
+  }
   return {
     candidate: candidateName,
-    proxy_expectancy_pct: Number((proxyExpectancy * 100).toFixed(4)),
-    proxy_validated: proxyExpectancyValidated,
+    expectancy_pct: Number((expectancy * 100).toFixed(4)),
+    expectancy_source: source,
     base_round_trip_cost_pct: Number((roundTripBaseline * 100).toFixed(4)),
     breakpoint_fee_mult: Number(breakpointFm.toFixed(4)),
     breakpoint_slip_mult: Number(breakpointSm.toFixed(4)),
-    threshold_2x_pass: breakpointFm >= 2.0,
+    threshold_2x_pass: thresholdPass,
     eligible_for_paper: eligibleForPaper,
-    reason: !proxyExpectancyValidated
-      ? 'NEEDS_DATA: proxy_expectancy_pct not validated from paper trading results'
-      : breakpointFm >= 2.0
-        ? 'Candidate survives 2x fee stress under proxy expectancy'
-        : `NOT_ELIGIBLE_FOR_PAPER: breakpoint_fee_mult=${breakpointFm.toFixed(4)} < 2.0`
+    reason,
   };
 }
 
@@ -139,10 +173,24 @@ const candidateBreakpoints = candidates.map(computeBreakpoint);
 const allEligible = candidateBreakpoints.every(b => b.eligible_for_paper);
 
 // Determine court status
-// NEEDS_DATA because proxy_expectancy not validated — honest fail-closed
-const courtStatus = 'NEEDS_DATA';
-const courtReasonCode = 'PROXY_EXPECTANCY_UNVALIDATED';
-const courtMessage = 'proxy_expectancy_pct=0.50% is a PROXY requiring paper trading validation before ELIGIBLE_FOR_PAPER can be granted. Breakpoint analysis complete: all candidates have breakpoint_fee_mult=1.333x (fee-only) and 2.0x (fee+slip combined), below 2.0x fee-only threshold.';
+// MEASURED mode: if all candidates pass 2x threshold → PASS; any fail → BLOCKED
+// PROXY mode: NEEDS_DATA (honest — not validated yet)
+let courtStatus, courtReasonCode, courtMessage;
+if (!measuredMode) {
+  courtStatus = 'NEEDS_DATA';
+  courtReasonCode = 'PROXY_EXPECTANCY_UNVALIDATED';
+  courtMessage = `proxy_expectancy_pct=${(defaultProxyExpectancy * 100).toFixed(2)}% is a PROXY requiring paper trading validation. Provide artifacts/incoming/paper_evidence.json to transition to MEASURED mode.`;
+} else if (allEligible) {
+  courtStatus = 'PASS';
+  courtReasonCode = 'NONE';
+  const passCount = candidateBreakpoints.filter(b => b.eligible_for_paper).length;
+  courtMessage = `MEASURED expectancy validated for all ${passCount} candidate(s). All breakpoint_fee_mult >= 2.0. ELIGIBLE_FOR_PAPER granted. Paper epoch: ${paperEvidenceGate.epoch_id}.`;
+} else {
+  courtStatus = 'BLOCKED';
+  courtReasonCode = 'BREAKPOINT_THRESHOLD_NOT_MET';
+  const failedCandidates = candidateBreakpoints.filter(b => !b.eligible_for_paper).map(b => `${b.candidate}(${b.breakpoint_fee_mult}x)`);
+  courtMessage = `MEASURED expectancy available but breakpoint_fee_mult < 2.0 for: ${failedCandidates.join(', ')}. Insufficient edge to survive 2x cost stress.`;
+}
 
 // --- Write JSON gate ---
 const gateResult = {
@@ -152,8 +200,9 @@ const gateResult = {
   reason_code: courtReasonCode,
   message: courtMessage,
   policy_source: 'EDGE_LAB/EXECUTION_REALITY_POLICY.md',
-  proxy_expectancy_pct: Number((proxyExpectancy * 100).toFixed(4)),
-  proxy_expectancy_validated: proxyExpectancyValidated,
+  expectancy_mode: measuredMode ? 'MEASURED' : 'PROXY',
+  paper_epoch_id: measuredMode ? (paperEvidenceGate.epoch_id || null) : null,
+  default_proxy_expectancy_pct: Number((defaultProxyExpectancy * 100).toFixed(4)),
   round_trip_cost_baseline_pct: Number((roundTripBaseline * 100).toFixed(4)),
   stress_threshold_2x_required: true,
   candidates: candidateBreakpoints
@@ -162,8 +211,13 @@ fs.writeFileSync(OUTPUT_JSON, `${JSON.stringify(gateResult, null, 2)}\n`);
 
 // --- Write EXECUTION_REALITY_COURT.md ---
 const breakpointRows = candidateBreakpoints.map(b =>
-  `| ${b.candidate} | ${b.proxy_expectancy_pct}% | ${b.base_round_trip_cost_pct}% | ${b.breakpoint_fee_mult}x | ${b.threshold_2x_pass ? 'YES' : 'NO'} | ${b.eligible_for_paper ? 'YES' : 'NO'} |`
+  `| ${b.candidate} | ${b.expectancy_pct}% (${b.expectancy_source}) | ${b.base_round_trip_cost_pct}% | ${b.breakpoint_fee_mult}x | ${b.threshold_2x_pass ? 'YES' : 'NO'} | ${b.eligible_for_paper ? 'YES' : 'NO'} |`
 ).join('\n');
+
+// For stress grid, use first candidate's expectancy as representative
+const representativeExpectancy = measuredMode && candidateBreakpoints.length > 0
+  ? (measuredExpectancyMap[candidateBreakpoints[0].candidate] ?? defaultProxyExpectancy)
+  : defaultProxyExpectancy;
 
 const courtMd = `# EXECUTION_REALITY_COURT.md — Execution Reality Court
 generated_at: ${now}
@@ -177,39 +231,41 @@ ${courtMessage}
 ## Policy Source
 EDGE_LAB/EXECUTION_REALITY_POLICY.md — version 1.0.0
 
-## Proxy Declarations
+## Expectancy Mode
 | Parameter | Value | Source | Validated |
 |-----------|-------|--------|-----------|
-| proxy_expectancy_pct | ${(proxyExpectancy * 100).toFixed(2)}% | PROXY (conservative structural estimate for OHLCV WFO-positive strategies) | NO — requires paper trading epoch |
-| round_trip_cost_baseline | ${(roundTripBaseline * 100).toFixed(2)}% | SOURCE: measured (EXECUTION_MODEL.md) | YES |
+| expectancy_mode | ${measuredMode ? 'MEASURED' : 'PROXY'} | ${measuredMode ? `paper_evidence.json (epoch: ${paperEvidenceGate?.epoch_id || 'N/A'})` : 'PROXY_VALIDATION.md'} | ${measuredMode ? 'YES — paper evidence validated' : 'NO — requires paper trading epoch'} |
+| round_trip_cost_baseline | ${(roundTripBaseline * 100).toFixed(2)}% | EXECUTION_MODEL.md | YES |
 
 ## Breakpoint Analysis
-| Candidate | Proxy Expectancy | Base RT Cost | Breakpoint Fee Mult | Passes 2x Threshold | Eligible For Paper |
-|-----------|-----------------|-------------|--------------------|--------------------|-------------------|
+| Candidate | Expectancy (Source) | Base RT Cost | Breakpoint Fee Mult | Passes 2x Threshold | Eligible For Paper |
+|-----------|--------------------|--------------|--------------------|--------------------|--------------------|
 ${breakpointRows}
 
-## Stress Grid Summary (fee_mult × slip_mult)
-| fee_mult | slip_mult | Effective RT Cost | Net Edge (proxy) | Eligible |
-|----------|-----------|------------------|-----------------|---------|
+## Stress Grid Summary (fee_mult × slip_mult, representative expectancy=${(representativeExpectancy * 100).toFixed(3)}%)
+| fee_mult | slip_mult | Effective RT Cost | Net Edge | Eligible |
+|----------|-----------|------------------|---------|---------|
 ${feeMultipliers.slice(0, 4).flatMap(fm =>
   slippageMultipliers.slice(0, 3).map(sm => {
     const cost = 2 * baseFeeSide * fm + 2 * baseSlipSide * sm;
-    const net = proxyExpectancy - cost;
-    return `| ${fm}x | ${sm}x | ${(cost * 100).toFixed(3)}% | ${(net * 100).toFixed(3)}% | ${proxyExpectancyValidated && net > 0 ? 'YES' : 'NO'} |`;
+    const net = representativeExpectancy - cost;
+    return `| ${fm}x | ${sm}x | ${(cost * 100).toFixed(3)}% | ${(net * 100).toFixed(3)}% | ${measuredMode && net > 0 ? 'YES' : 'NO'} |`;
   })
 ).join('\n')}
 
 ## Verdict
 STATUS=${courtStatus}: ${courtReasonCode}
 
-This court cannot declare ELIGIBLE_FOR_PAPER because proxy_expectancy_pct is not validated.
-NEXT_ACTION: Complete paper trading epoch → measure actual expectancy → rerun this court.
-ELIGIBLE_FOR_PAPER requires: proxy_expectancy validated AND breakpoint_fee_mult >= 2.0.
+${courtStatus === 'NEEDS_DATA'
+  ? 'NEXT_ACTION: Provide artifacts/incoming/paper_evidence.json → run edge:paper:ingest → rerun this court.'
+  : courtStatus === 'PASS'
+    ? 'ELIGIBLE_FOR_PAPER: GRANTED. All candidates pass 2x fee stress under measured expectancy.'
+    : `NEXT_ACTION: Expectancy measured but insufficient to survive 2x cost stress. Improve strategy or reduce execution costs.`}
 
 ## Anti-Overfit Protections
-- Minimum trade count threshold: NEEDS_DATA (not yet enforced — no paper trading data)
+- Minimum trade count threshold: ${measuredMode ? `ENFORCED (>= 30 trades per candidate, enforced by edge:paper:ingest)` : 'NEEDS_DATA (not yet enforced — no paper trading data)'}
 - Sensitivity breakpoint: documented above per candidate
-- Out-of-sample protocol: NEEDS_DATA (pending first paper trading epoch)
+- Out-of-sample protocol: ${measuredMode ? `MEASURED epoch: ${paperEvidenceGate?.epoch_id || 'N/A'} (${paperEvidenceGate?.start_date || '?'} to ${paperEvidenceGate?.end_date || '?'})` : 'NEEDS_DATA (pending first paper trading epoch)'}
 `;
 
 fs.writeFileSync(OUTPUT_COURT, courtMd);
@@ -269,6 +325,10 @@ Individual breakpoints will diverge once per-candidate expectancy is measured fr
 
 fs.writeFileSync(OUTPUT_BREAKPOINTS, breakpointsMd);
 
-// Note: STATUS=NEEDS_DATA is not a pipeline failure, but we exit 0 so edge:all continues
-console.log(`[NEEDS_DATA] edge:execution:reality — STATUS=${courtStatus} REASON=${courtReasonCode} — proxy_expectancy requires paper trading validation`);
+if (courtStatus === 'BLOCKED') {
+  console.error(`[BLOCKED] edge:execution:reality — ${courtReasonCode}: ${courtMessage}`);
+  process.exit(1);
+}
+// PASS and NEEDS_DATA both exit 0 — honest status, not a pipeline failure
+console.log(`[${courtStatus}] edge:execution:reality — ${courtReasonCode} — mode: ${measuredMode ? 'MEASURED' : 'PROXY'}`);
 process.exit(0);

@@ -1,5 +1,5 @@
 # RUNBOOK_EDGE.md — Operational Runbook
-version: 1.0.0 | last_updated: 2026-02-19
+version: 2.0.0 | last_updated: 2026-02-20
 
 ## Purpose
 
@@ -11,16 +11,23 @@ Step-by-step operational procedures for the EDGE_LAB system. This runbook covers
 
 | Task | Command | Notes |
 |------|---------|-------|
-| Run all courts | `npm run edge:all` | Full pipeline |
+| **DIAGNOSIS** | `npm run edge:doctor` | Show all gate statuses without running pipeline |
+| Run all courts | `npm run edge:all` | Full 14-step pipeline |
+| Run epoch gate | `npm run edge:next-epoch` | Full epoch promotion gate |
+| Anti-flake check | `npm run edge:all:x2` | Run edge:all twice, check determinism |
+| Ledger verify | `npm run edge:ledger` | SHA256 tamper-check (acyclic) |
 | Validate registry | `npm run edge:registry` | Registry court only |
 | Check sources | `npm run edge:sources` | Sources audit |
 | Check dataset | `npm run edge:dataset` | Dataset contract compliance |
 | Check execution | `npm run edge:execution` | Execution model validation |
 | Run sensitivity grid | `npm run edge:execution:grid` | Sensitivity analysis |
+| Ingest paper evidence | `npm run edge:paper:ingest` | Reads artifacts/incoming/paper_evidence.json |
+| Check execution reality | `npm run edge:execution:reality` | Uses MEASURED if paper evidence available |
 | Check risk FSM | `npm run edge:risk` | Risk FSM validation |
 | Check overfit | `npm run edge:overfit` | Overfit court |
 | Run red team | `npm run edge:redteam` | Red team assessment |
 | Check SRE | `npm run edge:sre` | SLO/SLI and error budget |
+| Micro-live readiness | `npm run edge:micro:live:readiness` | Prerequisite gate check |
 | Generate verdict | `npm run edge:verdict` | Final verdict |
 
 ---
@@ -208,3 +215,85 @@ echo "Exit code: $?"
 ```
 Expected output: `[PASS] EDGE_LAB verdict: ELIGIBLE` (or appropriate status)
 CI should fail if exit code != 0.
+
+---
+
+### MP-04: Submitting Paper Trading Evidence
+
+After completing a paper trading epoch, submit evidence:
+
+1. Generate `artifacts/incoming/paper_evidence.json` following the schema in `EDGE_LAB/PAPER_EVIDENCE_SPEC.md`
+2. Required: `schema_version: "1.0.0"`, minimum 30 trades per candidate
+3. Run `npm run edge:paper:ingest` to validate and ingest
+4. If PASS: run `npm run edge:all` to regenerate courts with MEASURED mode
+5. Check that EXECUTION_REALITY_COURT.md shows `expectancy_mode: MEASURED`
+6. Run `npm run edge:doctor` to verify PAPER_EVIDENCE gate is PASS
+7. Run `npm run edge:next-epoch` to re-evaluate promotion eligibility
+
+**Common trap:** Schema validation fails → fix all fields per `PAPER_EVIDENCE_SPEC.md`, especially:
+- `schema_version` must be exactly `"1.0.0"` (string)
+- `avg_loser_pct` must be <= 0 (negative or zero — it's a loss)
+- `generated_at` must be ISO 8601 timestamp format
+
+---
+
+### MP-05: Diagnosing BLOCKED Epoch Gate
+
+When `npm run edge:next-epoch` returns BLOCKED:
+
+1. Run `npm run edge:doctor` — shows all gate statuses at a glance
+2. Check `MEGA_CLOSEOUT_NEXT_EPOCH.md` for which gate is BLOCKED
+3. For NEEDS_DATA gates (PAPER_EVIDENCE, EXECUTION_REALITY): see MP-04
+4. For core court FAIL: check individual court .md file for REASON_CODE
+5. For NONDETERMINISM: run `npm run edge:all:x2` to isolate which file is drifting
+6. For LEDGER_MISMATCH: ensure edge:all ran before edge:ledger (ledger reads current EVIDENCE_DIR)
+
+---
+
+### MP-06: Verifying Anti-Flake Independence
+
+To verify that the producer pipeline is deterministic (independent of next-epoch readiness):
+
+```bash
+npm run edge:all:x2
+```
+
+Expected: `[PASS] edge:all:x2` — both runs produce identical SHA256 fingerprints.
+
+**If FAIL:** The drift files are listed in `ANTI_FLAKE_INDEPENDENCE.md`.
+Common causes:
+- A script writes the current timestamp without using `stableEvidenceNormalize()`
+- A script includes system-specific paths or environment variables
+- Non-deterministic sorting (e.g., using `Object.keys()` on unordered maps)
+
+Fix: apply `stableEvidenceNormalize()` to all generated .md file content.
+
+---
+
+### MP-07: Verifying Ledger Acyclicity
+
+The ledger (SHA256SUMS.md) excludes its own outputs from scope to prevent circular hashing.
+This is enforced by `edge:ledger` and proven by `LEDGER_ACYCLICITY.md`.
+
+To verify acyclicity after a clean run:
+```bash
+npm run edge:ledger
+cat reports/evidence/EDGE_LAB/LEDGER_ACYCLICITY.md
+```
+Expected: `STATUS: PASS`
+
+**If BLOCKED (LEDGER_MISMATCH):** This means evidence files changed between ledger scope calculation and verification. Re-run `npm run edge:all` first to rebuild a clean evidence state, then re-run `npm run edge:ledger`.
+
+---
+
+## Common Traps
+
+| Trap | Symptom | Fix |
+|------|---------|-----|
+| Running edge:next-epoch before edge:all | CONTRACT_DRIFT: missing files | Run `npm run edge:all` first |
+| Paper evidence submitted after pipeline | PAPER_EVIDENCE status stale | Re-run `npm run edge:all` after ingest |
+| Ledger run after next-epoch (old bug, now fixed) | Was: LEDGER_MISMATCH | Fixed: SHA256SUMS.md excluded from scope |
+| edge:all:x2 shows NONDETERMINISM | Drift in .md files | Apply stableEvidenceNormalize() to the source |
+| ANTI_FLAKE_X2 PASS but edge:all:x2 FAIL | Different normalization paths | Both use stableEvidenceNormalize — check for new timestamp fields |
+| Paper evidence trade_count < 30 | NEEDS_DATA (insufficient) | Complete more paper trades before submitting |
+| Schema version mismatch | BLOCKED: SCHEMA_VALIDATION_FAILED | Use schema_version: "1.0.0" exactly |

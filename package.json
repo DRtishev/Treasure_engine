@@ -578,6 +578,7 @@
     "edge:sources": "node scripts/edge/edge_lab/edge_sources.mjs",
     "edge:registry": "node scripts/edge/edge_lab/edge_registry.mjs",
     "edge:profit:candidates": "node scripts/edge/edge_lab/edge_profit_candidates.mjs",
+    "edge:paper:ingest": "node scripts/edge/edge_lab/edge_paper_ingest.mjs",
     "edge:dataset": "node scripts/edge/edge_lab/edge_dataset.mjs",
     "edge:execution": "node scripts/edge/edge_lab/edge_execution.mjs",
     "edge:execution:grid": "node scripts/edge/edge_lab/edge_execution_grid.mjs",
@@ -592,7 +593,8 @@
     "edge:next-epoch": "node scripts/edge/edge_lab/edge_next_epoch.mjs",
     "edge:all:x2": "node scripts/edge/edge_lab/edge_all_x2.mjs",
     "edge:raw:x2": "node scripts/edge/edge_lab/edge_raw_x2.mjs",
-    "edge:ledger": "node scripts/edge/edge_lab/edge_ledger.mjs"
+    "edge:ledger": "node scripts/edge/edge_lab/edge_ledger.mjs",
+    "edge:doctor": "node scripts/edge/edge_lab/edge_doctor.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
