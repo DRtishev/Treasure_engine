@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
+import { stableEvidenceNormalize } from './canon.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EVIDENCE_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_LAB');
@@ -40,6 +41,17 @@ try {
   process.exit(1);
 }
 
+
+function canonicalizeEvidenceRoot() {
+  if (!fs.existsSync(EVIDENCE_DIR)) return;
+  const files = fs.readdirSync(EVIDENCE_DIR).filter((f) => fs.statSync(path.join(EVIDENCE_DIR, f)).isFile());
+  for (const f of files) {
+    const p = path.join(EVIDENCE_DIR, f);
+    const raw = fs.readFileSync(p, 'utf8');
+    const normalized = stableEvidenceNormalize(raw);
+    if (raw !== normalized) fs.writeFileSync(p, normalized);
+  }
+}
 // Track results
 const results = [];
 let pipelineFailed = false;
@@ -70,6 +82,7 @@ for (const step of steps) {
     console.log(output.trim());
     console.log(`[OK]  edge:${step.name} completed in ${elapsed}ms`);
     results.push({ name: step.name, status: 'PASS', exit_code: 0, elapsed_ms: elapsed });
+    canonicalizeEvidenceRoot();
   } catch (err) {
     const elapsed = Date.now() - startTime;
     const stdout = err.stdout ? err.stdout.toString().trim() : '';
@@ -106,8 +119,8 @@ ${results.map(r => `| ${r.name} | ${r.status} |`).join('\n')}
   try {
     // Ensure dir still exists (may have been lost in a catastrophic failure)
     fs.mkdirSync(EVIDENCE_DIR, { recursive: true });
-    fs.writeFileSync(path.join(EVIDENCE_DIR, 'VERDICT.md'), blockedVerdictContent);
-    fs.writeFileSync(path.join(ROOT, 'EDGE_LAB', 'FINAL_VERDICT.md'), blockedVerdictContent);
+    fs.writeFileSync(path.join(EVIDENCE_DIR, 'VERDICT.md'), stableEvidenceNormalize(blockedVerdictContent));
+    fs.writeFileSync(path.join(ROOT, 'EDGE_LAB', 'FINAL_VERDICT.md'), stableEvidenceNormalize(blockedVerdictContent));
   } catch (writeErr) {
     console.error('[WARN] Could not write BLOCKED verdict:', writeErr.message);
   }
