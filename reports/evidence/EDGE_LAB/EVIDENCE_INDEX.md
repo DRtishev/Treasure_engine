@@ -1,5 +1,5 @@
 # EVIDENCE_INDEX.md — EDGE_LAB Evidence Index
-generated_at: 779042cd2846
+generated_at: 413510c72bed
 script: edge_verdict.mjs
 
 ## Final Verdict: ELIGIBLE

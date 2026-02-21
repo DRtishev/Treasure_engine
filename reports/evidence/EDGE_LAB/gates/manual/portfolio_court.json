@@ -1,0 +1,112 @@
+{
+  "status": "PASS",
+  "reason_code": "NONE",
+  "message": "Portfolio PASS. 4 candidates, max_corr=0.0378 (<0.7), portfolio_sharpe=1.1849 (>=1), min_half_kelly=0.1961, regimes=3.",
+  "kelly_results": [
+    {
+      "name": "H_ATR_SQUEEZE_BREAKOUT",
+      "n": 35,
+      "win_rate": 0.5714,
+      "avg_winner_pct": 1.5455,
+      "avg_loser_pct": -0.6133,
+      "payout_ratio": 2.52,
+      "full_kelly": 0.4013,
+      "half_kelly": 0.2007,
+      "passes": true
+    },
+    {
+      "name": "H_BB_SQUEEZE",
+      "n": 35,
+      "win_rate": 0.5714,
+      "avg_winner_pct": 1.526,
+      "avg_loser_pct": -0.6173,
+      "payout_ratio": 2.4721,
+      "full_kelly": 0.398,
+      "half_kelly": 0.199,
+      "passes": true
+    },
+    {
+      "name": "H_VOLUME_SPIKE",
+      "n": 35,
+      "win_rate": 0.5714,
+      "avg_winner_pct": 1.4415,
+      "avg_loser_pct": -0.6027,
+      "payout_ratio": 2.3917,
+      "full_kelly": 0.3922,
+      "half_kelly": 0.1961,
+      "passes": true
+    },
+    {
+      "name": "H_VWAP_REVERSAL",
+      "n": 35,
+      "win_rate": 0.5714,
+      "avg_winner_pct": 1.307,
+      "avg_loser_pct": -0.464,
+      "payout_ratio": 2.8168,
+      "full_kelly": 0.4192,
+      "half_kelly": 0.2096,
+      "passes": true
+    }
+  ],
+  "corr_matrix": [
+    {
+      "pair": "H_ATR_SQUEEZE_BREAKOUT ↔ H_BB_SQUEEZE",
+      "corr": 0.0217,
+      "base_corr": 0.35,
+      "passes": true
+    },
+    {
+      "pair": "H_ATR_SQUEEZE_BREAKOUT ↔ H_VOLUME_SPIKE",
+      "corr": 0.0378,
+      "base_corr": 0.1,
+      "passes": true
+    },
+    {
+      "pair": "H_ATR_SQUEEZE_BREAKOUT ↔ H_VWAP_REVERSAL",
+      "corr": -0.0437,
+      "base_corr": 0.35,
+      "passes": true
+    },
+    {
+      "pair": "H_BB_SQUEEZE ↔ H_VOLUME_SPIKE",
+      "corr": -0.0443,
+      "base_corr": 0.1,
+      "passes": true
+    },
+    {
+      "pair": "H_BB_SQUEEZE ↔ H_VWAP_REVERSAL",
+      "corr": -0.0564,
+      "base_corr": 0.35,
+      "passes": true
+    },
+    {
+      "pair": "H_VOLUME_SPIKE ↔ H_VWAP_REVERSAL",
+      "corr": -0.0023,
+      "base_corr": 0.1,
+      "passes": true
+    }
+  ],
+  "portfolio_metrics": {
+    "portfolio_expected_return_pct": 0.5852,
+    "portfolio_vol_pct": 0.4939,
+    "portfolio_sharpe": 1.1849,
+    "diversification_ratio": 2.0334,
+    "max_pairwise_correlation": 0.0378,
+    "worst_corr_pair": "H_ATR_SQUEEZE_BREAKOUT ↔ H_VOLUME_SPIKE",
+    "max_half_kelly": 0.2096,
+    "min_half_kelly": 0.1961,
+    "optimal_regimes_covered": [
+      "TRENDING",
+      "RANGE_BOUND",
+      "VOLATILE"
+    ],
+    "optimal_regimes_count": 3,
+    "n_candidates": 4,
+    "equal_weight": 0.25
+  },
+  "thresholds": {
+    "max_correlation": 0.7,
+    "min_portfolio_sharpe": 1,
+    "min_optimal_regimes": 2
+  }
+}

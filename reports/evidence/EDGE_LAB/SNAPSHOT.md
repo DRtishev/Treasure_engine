@@ -1,21 +1,21 @@
 # SNAPSHOT.md — Repository Snapshot
-generated_at: 779042cd2846
+generated_at: 413510c72bed
 script: edge_sources.mjs
 
 ## Git State
 | Field | Value |
 |-------|-------|
 | Branch | claude/paper-evidence-foundation-UlQSG |
-| Commit | 779042cd284622b45208976f6efb6b02ab9f42eb |
+| Commit | 413510c72beda7ff17c851e8defce4d13de8c608 |
 | Status | DIRTY |
 
 ## Recent Commits
 ```
+413510c feat(P4): MULTI_HYPOTHESIS_COURT — Bonferroni correction on OOS tests
 779042c feat(P3): MICRO_LIVE_SRE_COURT — unlock MICRO_LIVE_ELIGIBLE
 295c8a8 feat(P1+P2): EXPECTANCY_CI_COURT + EXECUTION_REALITY_CALIBRATION
 3444ae7 chore(evidence): update court evidence files from final edge:all:x2 run
 b186afe feat(P0): EPOCH P0 PAPER_EVIDENCE FOUNDATION — 26-invariant validator + anti-tamper receipts
-53c0662 Merge pull request #57 from DRtishev/claude/profit-candidates-execution-courts-sxMmX
 ```
 
 ## Working Tree Status
@@ -37,6 +37,7 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/MEGA_CLOSEOUT_EDGE_LAB.md
  D reports/evidence/EDGE_LAB/MICRO_LIVE_READINESS.md
  D reports/evidence/EDGE_LAB/MICRO_LIVE_SRE.md
+ D reports/evidence/EDGE_LAB/MULTI_HYPOTHESIS_COURT.md
  D reports/evidence/EDGE_LAB/OVERFIT_COURT.md
  D reports/evidence/EDGE_LAB/PAPER_COURT.md
  D reports/evidence/EDGE_LAB/PAPER_EVIDENCE.md
@@ -55,6 +56,7 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/gates/manual/expectancy_ci.json
  D reports/evidence/EDGE_LAB/gates/manual/micro_live_readiness.json
  D reports/evidence/EDGE_LAB/gates/manual/micro_live_sre.json
+ D reports/evidence/EDGE_LAB/gates/manual/multi_hypothesis_court.json
  D reports/evidence/EDGE_LAB/gates/manual/paper_court.json
  D reports/evidence/EDGE_LAB/gates/manual/paper_evidence.json
  D reports/evidence/EDGE_LAB/gates/manual/paper_evidence_court.json
@@ -63,8 +65,9 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/gates/manual/sli_baseline.json
  M scripts/edge/edge_lab/edge_all.mjs
  M scripts/edge/edge_lab/edge_next_epoch.mjs
-?? EDGE_LAB/ATTEMPT_LEDGER_POLICY.md
-?? scripts/edge/edge_lab/edge_multi_hypothesis_mvp.mjs
+?? EDGE_LAB/PORTFOLIO_POLICY.md
+?? EDGE_LAB/REGIME_MATRIX.md
+?? scripts/edge/edge_lab/edge_portfolio_court.mjs
 ```
 
 ## EDGE_LAB Files Present
@@ -92,12 +95,14 @@ PAPER_EVIDENCE_SCHEMA_V1.md
 PAPER_EVIDENCE_SPEC.md
 PAPER_TO_MICRO_LIVE_PROTOCOL.md
 POML_V6_FINAL_REPORT.md
+PORTFOLIO_POLICY.md
 POSTMORTEM_TEMPLATE.md
 PROFIT_CANDIDATES_V1.md
 PROXY_GUARD_POLICY.md
 PROXY_VALIDATION.md
 REASON_CODES.md
 RED_TEAM_PLAYBOOK.md
+REGIME_MATRIX.md
 REGISTRY_CHANGELOG.md
 RESEARCH_INTAKE.md
 RISK_FSM.md

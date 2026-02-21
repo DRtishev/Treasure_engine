@@ -1,5 +1,5 @@
 # GOVERNANCE_FINGERPRINT.md — Contract Integrity Snapshot
-generated_at: 779042cd2846
+generated_at: 413510c72bed
 script: edge_verdict.mjs
 
 ## Purpose
@@ -10,7 +10,7 @@ Tamper-evident: any post-closeout modification to contract files produces a diff
 
 ## Overall Fingerprint
 ```
-OVERALL_SHA256: 1fb4c80dc34ea6d849f43191689973aa48d97d955f54c3953ca607c169069bb2
+OVERALL_SHA256: c8a4daa4fcdca84f8289741689e485fc83883687a256b0d60e0ac66f8c018b6f
 ```
 
 ## File Fingerprints
@@ -37,12 +37,14 @@ OVERALL_SHA256: 1fb4c80dc34ea6d849f43191689973aa48d97d955f54c3953ca607c169069bb2
 | EDGE_LAB/PAPER_EVIDENCE_SPEC.md | 108b569795570af67bca3dd4e3cbcba3e163609bc2fb64434f3bafd51c75a3e3 |
 | EDGE_LAB/PAPER_TO_MICRO_LIVE_PROTOCOL.md | 7e658133010c0fdbcd2fddb2b40d19fb39306c06dad0ff1e15a0511931b1e182 |
 | EDGE_LAB/POML_V6_FINAL_REPORT.md | 0697ca09284253581bd5bb4ae607a1317e2d6e0934808a29d4836a196efdf57b |
+| EDGE_LAB/PORTFOLIO_POLICY.md | 51f6c2cbe13e2fd8cb0e8ec849f306aac7bc2b01fb096aaf54f2acda5e39a25c |
 | EDGE_LAB/POSTMORTEM_TEMPLATE.md | 389b045f4b0a2f01d476fe436ec8e1f6761e68261aeaa600ee54285b5f28c8d4 |
 | EDGE_LAB/PROFIT_CANDIDATES_V1.md | 7b1952479e713c4f1809b1537389ca2da5d2564ba78a1e7019696a06cb05cb28 |
 | EDGE_LAB/PROXY_GUARD_POLICY.md | da87f607a9e0298a8debe0e251df9e3970ef8576e6eeac79cc496c74ffdaf4bc |
 | EDGE_LAB/PROXY_VALIDATION.md | e378da66df71168a631aa9e666316e21a0b658e547428f67fb2b2ece8f140a59 |
 | EDGE_LAB/REASON_CODES.md | f4d62746b660dfd5b468e5a74744cf0d5daf417dc5a256bbc1b0b4c5c895695b |
 | EDGE_LAB/RED_TEAM_PLAYBOOK.md | 8ec882dd68f5e62fd30c34b8aa901a400bdd5f5afea788da4b0ea46a20fcefe9 |
+| EDGE_LAB/REGIME_MATRIX.md | 1934c1dfa8bfe0e637217dda1dc2c0410d637e4318ae273cecccaa50fbf25907 |
 | EDGE_LAB/REGISTRY_CHANGELOG.md | e71fdea0815703b60b72b2ab71409fb3c6c7cac92f040f4e325454fb7290ea21 |
 | EDGE_LAB/RESEARCH_INTAKE.md | 9fc1ae9f8b3c58df03a12b6fd97bc3a16736e11149ea3cae0432c0e7f2d0ad8c |
 | EDGE_LAB/RISK_FSM.md | d169e038871b8708035875b691735cae989c8f7e4e7776765b1cfb11e43a5fd6 |
@@ -53,7 +55,7 @@ OVERALL_SHA256: 1fb4c80dc34ea6d849f43191689973aa48d97d955f54c3953ca607c169069bb2
 | EDGE_LAB/VERDICT_SEMANTICS.md | fc6d6d3bf66d6e867d2ff3611e861b1b2277813fd74b73634bf315b50e139439 |
 | EDGE_LAB/WALK_FORWARD_PROTOCOL.md | 0cbb83e53e415b157294b92ac140a6b9593c1a7eb78069352f80dccbcd962b98 |
 | scripts/edge/edge_lab/canon.mjs | cfea85cfe563c388e5df1856eddd3b78e0e5e3945bf6d6bcc753d1e0d550792b |
-| scripts/edge/edge_lab/edge_all.mjs | 9dd7ffe4b5539d1cba6e87de8ca81d4d6e7c519f34aea7bf62de54ec4ae400d2 |
+| scripts/edge/edge_lab/edge_all.mjs | ec41693cb4d65006a9f2008a5b9eb31cd2f2425a31d0c950b39f47324887a846 |
 | scripts/edge/edge_lab/edge_all_x2.mjs | 4f4639684eceb0bc172d770a25f2fa0a2b67aaff165b7b9474af6d110b5864c0 |
 | scripts/edge/edge_lab/edge_dataset.mjs | 35949338a13f91304801c4b5b5e78eea6330b6ac5ee609e5e48ca84e66733293 |
 | scripts/edge/edge_lab/edge_doctor.mjs | 6b30795d79f1652b4bcc380aaa2142c4b9c51ecccae15c53cd1e451c64fa96e1 |
@@ -65,10 +67,11 @@ OVERALL_SHA256: 1fb4c80dc34ea6d849f43191689973aa48d97d955f54c3953ca607c169069bb2
 | scripts/edge/edge_lab/edge_micro_live_readiness.mjs | 1ce3caab6f602de213aad21b0662d1ceb3929bf60825c3fa8c3f539de1975660 |
 | scripts/edge/edge_lab/edge_micro_live_sre.mjs | be6b8c8ed23884ea7ecd95d353ffd8d4197111bb678bf07db49cf6de17a3417c |
 | scripts/edge/edge_lab/edge_multi_hypothesis_mvp.mjs | b3f72b35362521a9c26ed34274afcb63b34a56d062ba31f948409c0f9c34a12f |
-| scripts/edge/edge_lab/edge_next_epoch.mjs | 104cf00493055bd2f6c7e609decb87e4f93882d94c1665350b6cb36ee00bdc0b |
+| scripts/edge/edge_lab/edge_next_epoch.mjs | 36023298fd97f1e9080f9d96c6d77b6ac15991f343bdf33aea8f5c576cc63892 |
 | scripts/edge/edge_lab/edge_overfit.mjs | 739134e7eadcbfbe9d5a7fbb0a08757d99aa187ed7b657c172d8d9891814853b |
 | scripts/edge/edge_lab/edge_paper_evidence.mjs | 33c2a31e682567753c9e74066a0dfdc61a0f9f3f05189c59c81b8b4f2ec9027c |
 | scripts/edge/edge_lab/edge_paper_ingest.mjs | bca8ea1591271dae49d752b251654fac35cac24b7bd4c563e698a0171de88b4c |
+| scripts/edge/edge_lab/edge_portfolio_court.mjs | 39388001ca211a7e61f9f4becce61b743f296d3a0b793327d9207e8accff84c4 |
 | scripts/edge/edge_lab/edge_profit_candidates.mjs | 6243223ac863e97ca687e03bead7b49a1f21ba59bf44828427a0f0d7ee6b3307 |
 | scripts/edge/edge_lab/edge_raw_x2.mjs | 7b7df6836d96cb4de68497783582afb58658fec62aba11945cdd6e6897bcaef9 |
 | scripts/edge/edge_lab/edge_redteam.mjs | 9722a85c364d3fcea8059956158430b39eca70bc4c5b7ed664b916a0446d27be |

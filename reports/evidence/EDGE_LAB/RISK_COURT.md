@@ -1,5 +1,5 @@
 # RISK_COURT.md — Risk FSM Validation Report
-generated_at: 779042cd2846
+generated_at: 413510c72bed
 script: edge_risk.mjs
 
 ## STATUS: PASS

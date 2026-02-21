@@ -15,6 +15,7 @@ const steps = [
   { name: 'paper:evidence', script: 'scripts/edge/edge_lab/edge_paper_evidence.mjs', npm: 'edge:paper:evidence' },
   { name: 'expectancy:ci', script: 'scripts/edge/edge_lab/edge_expectancy_ci.mjs', npm: 'edge:expectancy:ci' },
   { name: 'multi:hypothesis', script: 'scripts/edge/edge_lab/edge_multi_hypothesis_mvp.mjs', npm: 'edge:multi:hypothesis' },
+  { name: 'portfolio', script: 'scripts/edge/edge_lab/edge_portfolio_court.mjs', npm: 'edge:portfolio' },
   { name: 'dataset', script: 'scripts/edge/edge_lab/edge_dataset.mjs', npm: 'edge:dataset' },
   { name: 'execution', script: 'scripts/edge/edge_lab/edge_execution.mjs', npm: 'edge:execution' },
   { name: 'execution:grid', script: 'scripts/edge/edge_lab/edge_execution_grid.mjs', npm: 'edge:execution:grid' },
