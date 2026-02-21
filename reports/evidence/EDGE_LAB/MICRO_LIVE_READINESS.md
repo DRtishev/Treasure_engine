@@ -1,5 +1,5 @@
 # MICRO_LIVE_READINESS.md — Micro-Live Readiness Assessment
-generated_at: 88fd2c328fa8
+generated_at: 53c0662f592b
 script: edge_micro_live_readiness.mjs
 
 ## STATUS: NEEDS_DATA

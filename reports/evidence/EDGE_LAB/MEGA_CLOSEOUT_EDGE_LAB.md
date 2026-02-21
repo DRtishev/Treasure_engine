@@ -1,5 +1,5 @@
 # MEGA_CLOSEOUT_EDGE_LAB.md — EDGE_LAB Mega Closeout Report
-generated_at: 88fd2c328fa8
+generated_at: 53c0662f592b
 script: edge_verdict.mjs
 
 ## FINAL VERDICT: NEEDS_DATA
@@ -103,7 +103,7 @@ a comprehensive summary of all findings.
 - Schema version: 2.0.0 (POML v5.0)
 - Registry hacks: 20
 - Court pipeline: 14 steps (9 core courts + 4 profit track courts + verdict)
-- Generated: 88fd2c328fa8
+- Generated: 53c0662f592b
 
 ---
 

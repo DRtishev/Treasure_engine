@@ -1,5 +1,5 @@
 # GOVERNANCE_FINGERPRINT.md — Contract Integrity Snapshot
-generated_at: 88fd2c328fa8
+generated_at: 53c0662f592b
 script: edge_verdict.mjs
 
 ## Purpose
@@ -10,7 +10,7 @@ Tamper-evident: any post-closeout modification to contract files produces a diff
 
 ## Overall Fingerprint
 ```
-OVERALL_SHA256: cf89a5e37c39bb8117f39e6aba65f4ed39db15958405b0555575d8cde168311c
+OVERALL_SHA256: 2134333cc1ff72f32ebf6e2ff0d2d230128a7db1bc46d3e9fbf92927e993f90b
 ```
 
 ## File Fingerprints
@@ -26,9 +26,13 @@ OVERALL_SHA256: cf89a5e37c39bb8117f39e6aba65f4ed39db15958405b0555575d8cde168311c
 | EDGE_LAB/HACK_SCHEMA.md | 93ebb1445493c3cb68fb17dbaa78d665b11f7bbe4100c13a6a9ed0c02e7cff35 |
 | EDGE_LAB/MANIFEST_CHECK.md | 5d56586c6036727e47075727edf4cabf137be73bc38adbf279259c7f041dbb35 |
 | EDGE_LAB/OVERFIT_COURT_RULES.md | b77fef0aefdea029444a5e2d1f1da0efd53d8ca5399fc7d2da92a0f07d6788ba |
+| EDGE_LAB/PAPER_EVIDENCE_FIXTURES_REPORT.md | 548dcd469f77cfb59aaa31cb6acf8217db0c2283a1e03c83a0dc176e8fbb8574 |
 | EDGE_LAB/PAPER_EVIDENCE_IMPORT.md | 4cba942954f36a5b04d757e68a1e460301997c8d3bcd202c6f091ebc12f2aa2d |
+| EDGE_LAB/PAPER_EVIDENCE_RECEIPTS.md | d5ac318ea709b7fd8796c08a5b418037dd79ea6ee23f301b9166ab08fd0cb1f0 |
+| EDGE_LAB/PAPER_EVIDENCE_SCHEMA_V1.md | 25323f7ed407b1b4102083db12877c40463faf344a5dbc04693c377dfb727d89 |
 | EDGE_LAB/PAPER_EVIDENCE_SPEC.md | 108b569795570af67bca3dd4e3cbcba3e163609bc2fb64434f3bafd51c75a3e3 |
 | EDGE_LAB/PAPER_TO_MICRO_LIVE_PROTOCOL.md | 7e658133010c0fdbcd2fddb2b40d19fb39306c06dad0ff1e15a0511931b1e182 |
+| EDGE_LAB/POML_V6_FINAL_REPORT.md | 0697ca09284253581bd5bb4ae607a1317e2d6e0934808a29d4836a196efdf57b |
 | EDGE_LAB/POSTMORTEM_TEMPLATE.md | 389b045f4b0a2f01d476fe436ec8e1f6761e68261aeaa600ee54285b5f28c8d4 |
 | EDGE_LAB/PROFIT_CANDIDATES_V1.md | 7b1952479e713c4f1809b1537389ca2da5d2564ba78a1e7019696a06cb05cb28 |
 | EDGE_LAB/PROXY_GUARD_POLICY.md | da87f607a9e0298a8debe0e251df9e3970ef8576e6eeac79cc496c74ffdaf4bc |
@@ -45,7 +49,7 @@ OVERALL_SHA256: cf89a5e37c39bb8117f39e6aba65f4ed39db15958405b0555575d8cde168311c
 | EDGE_LAB/VERDICT_SEMANTICS.md | fc6d6d3bf66d6e867d2ff3611e861b1b2277813fd74b73634bf315b50e139439 |
 | EDGE_LAB/WALK_FORWARD_PROTOCOL.md | 0cbb83e53e415b157294b92ac140a6b9593c1a7eb78069352f80dccbcd962b98 |
 | scripts/edge/edge_lab/canon.mjs | cfea85cfe563c388e5df1856eddd3b78e0e5e3945bf6d6bcc753d1e0d550792b |
-| scripts/edge/edge_lab/edge_all.mjs | 70ce681651039425dc803e4129650ea615f9be49bbaeae8055266f6d9a381c0f |
+| scripts/edge/edge_lab/edge_all.mjs | 93bb3d0ccbe7d331fae1ffbfbf246fb8ed5e6824dc4cf2542ab05f8fbe2fe5cc |
 | scripts/edge/edge_lab/edge_all_x2.mjs | 4f4639684eceb0bc172d770a25f2fa0a2b67aaff165b7b9474af6d110b5864c0 |
 | scripts/edge/edge_lab/edge_dataset.mjs | 35949338a13f91304801c4b5b5e78eea6330b6ac5ee609e5e48ca84e66733293 |
 | scripts/edge/edge_lab/edge_doctor.mjs | 6b30795d79f1652b4bcc380aaa2142c4b9c51ecccae15c53cd1e451c64fa96e1 |
@@ -54,8 +58,9 @@ OVERALL_SHA256: cf89a5e37c39bb8117f39e6aba65f4ed39db15958405b0555575d8cde168311c
 | scripts/edge/edge_lab/edge_execution_reality.mjs | 2b0a877f6886755d4e56016a303d42cc52d0a6f4f04e1e7addd91bf5d8eba8ef |
 | scripts/edge/edge_lab/edge_ledger.mjs | eec56f645cea66e8e760c0f53c0f3e40f9fe275f5519c9f2985a861117552dc8 |
 | scripts/edge/edge_lab/edge_micro_live_readiness.mjs | 1ce3caab6f602de213aad21b0662d1ceb3929bf60825c3fa8c3f539de1975660 |
-| scripts/edge/edge_lab/edge_next_epoch.mjs | 462abe19d7a0b086d48616dfaf9517d1ba0caa3cfffc272c6915f0f4f188dcb3 |
+| scripts/edge/edge_lab/edge_next_epoch.mjs | f4fe69583d4ebb341630d6305ec1457547a126aef56bf9782f02520e096012b4 |
 | scripts/edge/edge_lab/edge_overfit.mjs | 739134e7eadcbfbe9d5a7fbb0a08757d99aa187ed7b657c172d8d9891814853b |
+| scripts/edge/edge_lab/edge_paper_evidence.mjs | 33c2a31e682567753c9e74066a0dfdc61a0f9f3f05189c59c81b8b4f2ec9027c |
 | scripts/edge/edge_lab/edge_paper_ingest.mjs | bca8ea1591271dae49d752b251654fac35cac24b7bd4c563e698a0171de88b4c |
 | scripts/edge/edge_lab/edge_profit_candidates.mjs | 6243223ac863e97ca687e03bead7b49a1f21ba59bf44828427a0f0d7ee6b3307 |
 | scripts/edge/edge_lab/edge_raw_x2.mjs | 7b7df6836d96cb4de68497783582afb58658fec62aba11945cdd6e6897bcaef9 |
