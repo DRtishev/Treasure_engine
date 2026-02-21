@@ -39,6 +39,14 @@ function extractPolicyValue(pattern, text) {
 const roundTripBaseline = 0.0030;     // 0.30% — from policy section 3
 const defaultProxyExpectancy = 0.0050; // 0.50% PROXY — from policy section 6
 
+// --- EPOCH P2: Read EXPECTANCY_CI gate (P1) — required for MEASURED+CI path ---
+let ciGate = null;
+const CI_GATE_FILE = path.join(MANUAL_DIR, 'expectancy_ci.json');
+if (fs.existsSync(CI_GATE_FILE)) {
+  try { ciGate = JSON.parse(fs.readFileSync(CI_GATE_FILE, 'utf8')); } catch (e) {}
+}
+const ciPass = ciGate && ciGate.status === 'PASS' && Array.isArray(ciGate.results);
+
 // --- Read paper_evidence.json gate to determine if MEASURED mode is active ---
 let paperEvidenceGate = null;
 const PAPER_EVIDENCE_GATE = path.join(MANUAL_DIR, 'paper_evidence.json');
@@ -47,9 +55,10 @@ if (fs.existsSync(PAPER_EVIDENCE_GATE)) {
     paperEvidenceGate = JSON.parse(fs.readFileSync(PAPER_EVIDENCE_GATE, 'utf8'));
   } catch (e) { /* ignore parse error — treat as unavailable */ }
 }
-const measuredMode = paperEvidenceGate && paperEvidenceGate.status === 'PASS' && Array.isArray(paperEvidenceGate.candidates);
+// EPOCH P2: MEASURED mode requires BOTH paper evidence PASS AND CI PASS
+const measuredMode = ciPass && paperEvidenceGate && paperEvidenceGate.status === 'PASS' && Array.isArray(paperEvidenceGate.candidates);
 
-// Build per-candidate expectancy map (MEASURED values from paper evidence, or proxy fallback)
+// Build per-candidate expectancy map (CI-validated MEASURED values, or proxy fallback)
 const measuredExpectancyMap = {};
 if (measuredMode) {
   for (const c of paperEvidenceGate.candidates) {
@@ -172,19 +181,25 @@ const now = new Date().toISOString();
 const candidateBreakpoints = candidates.map(computeBreakpoint);
 const allEligible = candidateBreakpoints.every(b => b.eligible_for_paper);
 
-// Determine court status
-// MEASURED mode: if all candidates pass 2x threshold → PASS; any fail → BLOCKED
-// PROXY mode: NEEDS_DATA (honest — not validated yet)
+// Determine court status (EPOCH P2: requires MEASURED+CI path)
+// MEASURED+CI mode: all candidates pass 2x threshold → PASS; any fail → BLOCKED
+// CI gate missing or not PASS → NEEDS_DATA (X002 from expectancy_ci policy)
+// PROXY-only mode: NEEDS_DATA (honest — not CI-validated)
 let courtStatus, courtReasonCode, courtMessage;
-if (!measuredMode) {
+const ciStatusLabel = ciPass ? `CI_VALIDATED (CI95_lower_worst=${Math.min(...(ciGate?.results || [{}]).map(r => r.ci95_lower_pct || 0)).toFixed(4)}%)` : (ciGate ? `CI_${ciGate.status}` : 'CI_MISSING');
+if (!paperEvidenceGate || paperEvidenceGate.status !== 'PASS') {
   courtStatus = 'NEEDS_DATA';
   courtReasonCode = 'PROXY_EXPECTANCY_UNVALIDATED';
-  courtMessage = `proxy_expectancy_pct=${(defaultProxyExpectancy * 100).toFixed(2)}% is a PROXY requiring paper trading validation. Provide artifacts/incoming/paper_evidence.json to transition to MEASURED mode.`;
+  courtMessage = `PROXY-only mode: paper evidence not yet PASS. Provide paper trading epoch and rerun.`;
+} else if (!ciPass) {
+  courtStatus = 'NEEDS_DATA';
+  courtReasonCode = 'X002_CI_GATE_NOT_PASS';
+  courtMessage = `MEASURED expectancy available but EXPECTANCY_CI_COURT is ${ciGate ? ciGate.status : 'MISSING'}. Run npm run edge:expectancy:ci first. (EPOCH P2 requirement)`;
 } else if (allEligible) {
   courtStatus = 'PASS';
   courtReasonCode = 'NONE';
   const passCount = candidateBreakpoints.filter(b => b.eligible_for_paper).length;
-  courtMessage = `MEASURED expectancy validated for all ${passCount} candidate(s). All breakpoint_fee_mult >= 2.0. ELIGIBLE_FOR_PAPER granted. Paper epoch: ${paperEvidenceGate.epoch_id}.`;
+  courtMessage = `MEASURED+CI expectancy validated for all ${passCount} candidate(s). All breakpoint_fee_mult >= 2.0. ${ciStatusLabel}. ELIGIBLE_FOR_PAPER granted. Paper epoch: ${paperEvidenceGate.epoch_id}.`;
 } else {
   courtStatus = 'BLOCKED';
   courtReasonCode = 'BREAKPOINT_THRESHOLD_NOT_MET';
@@ -231,11 +246,12 @@ ${courtMessage}
 ## Policy Source
 EDGE_LAB/EXECUTION_REALITY_POLICY.md — version 1.0.0
 
-## Expectancy Mode
+## Expectancy Mode (EPOCH P2: MEASURED+CI required)
 | Parameter | Value | Source | Validated |
 |-----------|-------|--------|-----------|
-| expectancy_mode | ${measuredMode ? 'MEASURED' : 'PROXY'} | ${measuredMode ? `paper_evidence.json (epoch: ${paperEvidenceGate?.epoch_id || 'N/A'})` : 'PROXY_VALIDATION.md'} | ${measuredMode ? 'YES — paper evidence validated' : 'NO — requires paper trading epoch'} |
+| expectancy_mode | ${measuredMode ? 'MEASURED+CI' : ciGate && paperEvidenceGate?.status === 'PASS' ? 'MEASURED_NO_CI' : 'PROXY'} | ${measuredMode ? `paper_evidence.json + expectancy_ci.json (epoch: ${paperEvidenceGate?.epoch_id || 'N/A'})` : 'PROXY_VALIDATION.md'} | ${measuredMode ? `YES — paper evidence + CI bootstrap (${ciStatusLabel})` : 'NO — requires paper trading epoch + CI gate PASS'} |
 | round_trip_cost_baseline | ${(roundTripBaseline * 100).toFixed(2)}% | EXECUTION_MODEL.md | YES |
+| ci_status | ${ciStatusLabel} | expectancy_ci.json | ${ciPass ? 'PASS' : 'NOT_PASS'} |
 
 ## Breakpoint Analysis
 | Candidate | Expectancy (Source) | Base RT Cost | Breakpoint Fee Mult | Passes 2x Threshold | Eligible For Paper |

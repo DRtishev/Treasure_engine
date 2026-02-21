@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "reason_code": "NONE",
+  "message": "All SRE gates PASS. proxy_guard=PASS paper_court=PASS sli_baseline=PASS. fill=0.995 reject=0.005 p95=354ms",
+  "sub_gates": {
+    "proxy_guard": "PASS",
+    "paper_court": "PASS",
+    "sli_baseline": "PASS"
+  },
+  "paper_metrics": {
+    "SLIPPAGE_MODEL_ERROR": 0.165,
+    "FILL_RATE": 0.995,
+    "REJECT_RATE": 0.005,
+    "LATENCY_P95": 354,
+    "REALITY_LEVEL": "PROVISIONAL"
+  }
+}

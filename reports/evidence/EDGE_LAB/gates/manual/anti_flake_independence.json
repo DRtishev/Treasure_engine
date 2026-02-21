@@ -1,10 +1,10 @@
 {
-  "run_id": "88fd2c328fa8",
+  "run_id": "b4de92324329",
   "status": "PASS",
   "reason_code": "NONE",
   "message": "edge:all is deterministic across two consecutive runs. Anti-flake independence verified.",
-  "fingerprint_run1": "90c608572750939e299b2db0f503fc141887c9ec994689a27ddea3e49594a62e",
-  "fingerprint_run2": "90c608572750939e299b2db0f503fc141887c9ec994689a27ddea3e49594a62e",
+  "fingerprint_run1": "0fab53eda0deb3bdc3519efc6dab7f9f40017a078c8f50bd833e94a83cd427c4",
+  "fingerprint_run2": "0fab53eda0deb3bdc3519efc6dab7f9f40017a078c8f50bd833e94a83cd427c4",
   "drift_files": [],
-  "file_count": 20
+  "file_count": 28
 }

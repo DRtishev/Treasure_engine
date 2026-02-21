@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0.0",
+  "epoch_id": "PAPER_EPOCH_FAIL_E001",
+  "start_date": "2026-01-02",
+  "end_date": "2026-01-31",
+  "instrument": "BTCUSDT",
+  "venue": "BINANCE_TESTNET",
+  "evidence_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "rounding_policy": {
+    "max_fill_qty_drift_pct": 0.0001,
+    "description": "Fill qty sum must match requested_qty within 0.0001%"
+  },
+  "venue_fee_policy": {
+    "min_fee_rate": 0.0001,
+    "fee_currencies": ["USDT"],
+    "description": "Minimum fee 0.01% of notional"
+  },
+  "trades": [
+    {
+      "trade_id": "T_FAIL_001",
+      "candidate": "H_ATR_SQUEEZE_BREAKOUT",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-02T09:00:00.000Z",
+      "order_submit_ts": "2026-01-02T09:00:00.047Z",
+      "ack_ts": "2026-01-02T09:00:00.118Z",
+      "fills": [
+        { "fill_ts": "2026-01-02T09:00:00.134Z", "qty": 0.001, "price": 97500.12, "fee_amount": 0.0975, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97497.50,
+      "ask_at_signal": 97503.00,
+      "context_volatility": "MEDIUM",
+      "result": "WIN"
+    }
+  ],
+  "total_trades": 1,
+  "generated_at": "2026-01-31T00:00:00.000Z",
+  "notes": "FAIL_E001 fixture: missing required field 'side' in trade T_FAIL_001. Triggers E001 SCHEMA_VALIDATION_FAILED."
+}

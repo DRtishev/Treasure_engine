@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-02-21T08:25:56.296Z",
+  "generated_at": "2026-02-21T13:16:20.121Z",
   "script": "edge_execution_reality.mjs",
   "status": "PASS",
   "reason_code": "NONE",
-  "message": "MEASURED expectancy validated for all 4 candidate(s). All breakpoint_fee_mult >= 2.0. ELIGIBLE_FOR_PAPER granted. Paper epoch: PAPER_EPOCH_20260102_20260131.",
+  "message": "MEASURED+CI expectancy validated for all 4 candidate(s). All breakpoint_fee_mult >= 2.0. CI_VALIDATED (CI95_lower_worst=0.2150%). ELIGIBLE_FOR_PAPER granted. Paper epoch: PAPER_EPOCH_20260102_20260131.",
   "policy_source": "EDGE_LAB/EXECUTION_REALITY_POLICY.md",
   "expectancy_mode": "MEASURED",
   "paper_epoch_id": "PAPER_EPOCH_20260102_20260131",

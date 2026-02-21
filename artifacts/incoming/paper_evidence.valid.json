@@ -1,0 +1,568 @@
+{
+  "schema_version": "1.0.0",
+  "epoch_id": "PAPER_EPOCH_20260102_20260131_V1",
+  "start_date": "2026-01-02",
+  "end_date": "2026-01-31",
+  "instrument": "BTCUSDT",
+  "venue": "BINANCE_TESTNET",
+  "evidence_hash": "eba2a8bbe949a5cd735ba7774ea691f9cee9ee9fb41af2ec5c0b17e6738d0e45",
+  "rounding_policy": {
+    "max_fill_qty_drift_pct": 0.0001,
+    "description": "Fill qty sum must match requested_qty within 0.0001% (1e-7 BTC tolerance for BTCUSDT)"
+  },
+  "venue_fee_policy": {
+    "min_fee_rate": 0.0001,
+    "fee_currencies": ["USDT", "BNB"],
+    "description": "Minimum fee 0.01% of notional (qty * price). Standard Binance testnet taker fee."
+  },
+  "trades": [
+    {
+      "trade_id": "T_ATRSQ_001",
+      "candidate": "H_ATR_SQUEEZE_BREAKOUT",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-02T09:00:00.000Z",
+      "order_submit_ts": "2026-01-02T09:00:00.047Z",
+      "ack_ts": "2026-01-02T09:00:00.118Z",
+      "fills": [
+        { "fill_ts": "2026-01-02T09:00:00.134Z", "qty": 0.001, "price": 97500.12, "fee_amount": 0.0975, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97497.50,
+      "ask_at_signal": 97503.00,
+      "context_volatility": "MEDIUM",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_ATRSQ_002",
+      "candidate": "H_ATR_SQUEEZE_BREAKOUT",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-05T10:30:00.000Z",
+      "order_submit_ts": "2026-01-05T10:30:00.052Z",
+      "ack_ts": "2026-01-05T10:30:00.135Z",
+      "fills": [
+        { "fill_ts": "2026-01-05T10:30:00.154Z", "qty": 0.001, "price": 98012.50, "fee_amount": 0.098013, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 98009.00,
+      "ask_at_signal": 98016.00,
+      "context_volatility": "LOW",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_ATRSQ_003",
+      "candidate": "H_ATR_SQUEEZE_BREAKOUT",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-08T11:15:00.000Z",
+      "order_submit_ts": "2026-01-08T11:15:00.044Z",
+      "ack_ts": "2026-01-08T11:15:00.112Z",
+      "fills": [
+        { "fill_ts": "2026-01-08T11:15:00.134Z", "qty": 0.001, "price": 97184.75, "fee_amount": 0.097185, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97181.00,
+      "ask_at_signal": 97189.00,
+      "context_volatility": "MEDIUM",
+      "result": "LOSS"
+    },
+    {
+      "trade_id": "T_ATRSQ_004",
+      "candidate": "H_ATR_SQUEEZE_BREAKOUT",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-11T09:30:00.000Z",
+      "order_submit_ts": "2026-01-11T09:30:00.061Z",
+      "ack_ts": "2026-01-11T09:30:00.155Z",
+      "fills": [
+        { "fill_ts": "2026-01-11T09:30:00.173Z", "qty": 0.0006, "price": 98521.00, "fee_amount": 0.059113, "fee_currency": "USDT" },
+        { "fill_ts": "2026-01-11T09:30:00.198Z", "qty": 0.0004, "price": 98519.75, "fee_amount": 0.039408, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 98517.50,
+      "ask_at_signal": 98525.00,
+      "context_volatility": "HIGH",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_ATRSQ_005",
+      "candidate": "H_ATR_SQUEEZE_BREAKOUT",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-14T14:00:00.000Z",
+      "order_submit_ts": "2026-01-14T14:00:00.048Z",
+      "ack_ts": "2026-01-14T14:00:00.124Z",
+      "fills": [
+        { "fill_ts": "2026-01-14T14:00:00.145Z", "qty": 0.001, "price": 97812.33, "fee_amount": 0.097812, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97808.00,
+      "ask_at_signal": 97817.00,
+      "context_volatility": "MEDIUM",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_ATRSQ_006",
+      "candidate": "H_ATR_SQUEEZE_BREAKOUT",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-17T10:00:00.000Z",
+      "order_submit_ts": "2026-01-17T10:00:00.039Z",
+      "ack_ts": "2026-01-17T10:00:00.101Z",
+      "fills": [
+        { "fill_ts": "2026-01-17T10:00:00.118Z", "qty": 0.001, "price": 99034.82, "fee_amount": 0.099035, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 99030.00,
+      "ask_at_signal": 99040.00,
+      "context_volatility": "LOW",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_ATRSQ_007",
+      "candidate": "H_ATR_SQUEEZE_BREAKOUT",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-20T15:30:00.000Z",
+      "order_submit_ts": "2026-01-20T15:30:00.055Z",
+      "ack_ts": "2026-01-20T15:30:00.142Z",
+      "fills": [
+        { "fill_ts": "2026-01-20T15:30:00.166Z", "qty": 0.001, "price": 96523.44, "fee_amount": 0.096523, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 96519.00,
+      "ask_at_signal": 96528.00,
+      "context_volatility": "MEDIUM",
+      "result": "LOSS"
+    },
+    {
+      "trade_id": "T_ATRSQ_008",
+      "candidate": "H_ATR_SQUEEZE_BREAKOUT",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-23T09:00:00.000Z",
+      "order_submit_ts": "2026-01-23T09:00:00.043Z",
+      "ack_ts": "2026-01-23T09:00:00.112Z",
+      "fills": [
+        { "fill_ts": "2026-01-23T09:00:00.130Z", "qty": 0.001, "price": 97342.18, "fee_amount": 0.097342, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97338.00,
+      "ask_at_signal": 97347.00,
+      "context_volatility": "LOW",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_BBSQ_001",
+      "candidate": "H_BB_SQUEEZE",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-02T11:00:00.000Z",
+      "order_submit_ts": "2026-01-02T11:00:00.053Z",
+      "ack_ts": "2026-01-02T11:00:00.127Z",
+      "fills": [
+        { "fill_ts": "2026-01-02T11:00:00.148Z", "qty": 0.001, "price": 97612.44, "fee_amount": 0.097612, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97608.00,
+      "ask_at_signal": 97617.00,
+      "context_volatility": "MEDIUM",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_BBSQ_002",
+      "candidate": "H_BB_SQUEEZE",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-05T13:00:00.000Z",
+      "order_submit_ts": "2026-01-05T13:00:00.046Z",
+      "ack_ts": "2026-01-05T13:00:00.119Z",
+      "fills": [
+        { "fill_ts": "2026-01-05T13:00:00.137Z", "qty": 0.001, "price": 98145.67, "fee_amount": 0.098146, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 98141.00,
+      "ask_at_signal": 98150.00,
+      "context_volatility": "LOW",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_BBSQ_003",
+      "candidate": "H_BB_SQUEEZE",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-08T13:30:00.000Z",
+      "order_submit_ts": "2026-01-08T13:30:00.058Z",
+      "ack_ts": "2026-01-08T13:30:00.139Z",
+      "fills": [
+        { "fill_ts": "2026-01-08T13:30:00.161Z", "qty": 0.001, "price": 97056.88, "fee_amount": 0.097057, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97052.00,
+      "ask_at_signal": 97062.00,
+      "context_volatility": "MEDIUM",
+      "result": "LOSS"
+    },
+    {
+      "trade_id": "T_BBSQ_004",
+      "candidate": "H_BB_SQUEEZE",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-11T11:00:00.000Z",
+      "order_submit_ts": "2026-01-11T11:00:00.049Z",
+      "ack_ts": "2026-01-11T11:00:00.125Z",
+      "fills": [
+        { "fill_ts": "2026-01-11T11:00:00.143Z", "qty": 0.001, "price": 98388.21, "fee_amount": 0.098388, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 98383.00,
+      "ask_at_signal": 98394.00,
+      "context_volatility": "LOW",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_BBSQ_005",
+      "candidate": "H_BB_SQUEEZE",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-14T16:30:00.000Z",
+      "order_submit_ts": "2026-01-14T16:30:00.062Z",
+      "ack_ts": "2026-01-14T16:30:00.148Z",
+      "fills": [
+        { "fill_ts": "2026-01-14T16:30:00.169Z", "qty": 0.001, "price": 97723.55, "fee_amount": 0.097724, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97719.00,
+      "ask_at_signal": 97728.00,
+      "context_volatility": "MEDIUM",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_BBSQ_006",
+      "candidate": "H_BB_SQUEEZE",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-17T14:00:00.000Z",
+      "order_submit_ts": "2026-01-17T14:00:00.041Z",
+      "ack_ts": "2026-01-17T14:00:00.107Z",
+      "fills": [
+        { "fill_ts": "2026-01-17T14:00:00.125Z", "qty": 0.001, "price": 98967.33, "fee_amount": 0.098967, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 98963.00,
+      "ask_at_signal": 98972.00,
+      "context_volatility": "LOW",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_BBSQ_007",
+      "candidate": "H_BB_SQUEEZE",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-20T09:30:00.000Z",
+      "order_submit_ts": "2026-01-20T09:30:00.057Z",
+      "ack_ts": "2026-01-20T09:30:00.138Z",
+      "fills": [
+        { "fill_ts": "2026-01-20T09:30:00.162Z", "qty": 0.001, "price": 96388.77, "fee_amount": 0.096389, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 96384.00,
+      "ask_at_signal": 96394.00,
+      "context_volatility": "HIGH",
+      "result": "LOSS"
+    },
+    {
+      "trade_id": "T_BBSQ_008",
+      "candidate": "H_BB_SQUEEZE",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-23T14:00:00.000Z",
+      "order_submit_ts": "2026-01-23T14:00:00.044Z",
+      "ack_ts": "2026-01-23T14:00:00.116Z",
+      "fills": [
+        { "fill_ts": "2026-01-23T14:00:00.134Z", "qty": 0.001, "price": 97489.62, "fee_amount": 0.09749, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97485.00,
+      "ask_at_signal": 97494.00,
+      "context_volatility": "MEDIUM",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VOLSP_001",
+      "candidate": "H_VOLUME_SPIKE",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-03T10:00:00.000Z",
+      "order_submit_ts": "2026-01-03T10:00:00.051Z",
+      "ack_ts": "2026-01-03T10:00:00.129Z",
+      "fills": [
+        { "fill_ts": "2026-01-03T10:00:00.148Z", "qty": 0.001, "price": 97688.90, "fee_amount": 0.097689, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97684.00,
+      "ask_at_signal": 97694.00,
+      "context_volatility": "HIGH",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VOLSP_002",
+      "candidate": "H_VOLUME_SPIKE",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-06T11:30:00.000Z",
+      "order_submit_ts": "2026-01-06T11:30:00.045Z",
+      "ack_ts": "2026-01-06T11:30:00.117Z",
+      "fills": [
+        { "fill_ts": "2026-01-06T11:30:00.136Z", "qty": 0.001, "price": 98234.15, "fee_amount": 0.098234, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 98229.00,
+      "ask_at_signal": 98239.00,
+      "context_volatility": "MEDIUM",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VOLSP_003",
+      "candidate": "H_VOLUME_SPIKE",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-09T09:00:00.000Z",
+      "order_submit_ts": "2026-01-09T09:00:00.059Z",
+      "ack_ts": "2026-01-09T09:00:00.143Z",
+      "fills": [
+        { "fill_ts": "2026-01-09T09:00:00.163Z", "qty": 0.001, "price": 96812.44, "fee_amount": 0.096812, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 96808.00,
+      "ask_at_signal": 96817.00,
+      "context_volatility": "MEDIUM",
+      "result": "LOSS"
+    },
+    {
+      "trade_id": "T_VOLSP_004",
+      "candidate": "H_VOLUME_SPIKE",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-12T14:00:00.000Z",
+      "order_submit_ts": "2026-01-12T14:00:00.048Z",
+      "ack_ts": "2026-01-12T14:00:00.122Z",
+      "fills": [
+        { "fill_ts": "2026-01-12T14:00:00.141Z", "qty": 0.001, "price": 98712.88, "fee_amount": 0.098713, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 98708.00,
+      "ask_at_signal": 98718.00,
+      "context_volatility": "LOW",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VOLSP_005",
+      "candidate": "H_VOLUME_SPIKE",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-15T10:30:00.000Z",
+      "order_submit_ts": "2026-01-15T10:30:00.053Z",
+      "ack_ts": "2026-01-15T10:30:00.131Z",
+      "fills": [
+        { "fill_ts": "2026-01-15T10:30:00.152Z", "qty": 0.001, "price": 97544.22, "fee_amount": 0.097544, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97540.00,
+      "ask_at_signal": 97549.00,
+      "context_volatility": "MEDIUM",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VOLSP_006",
+      "candidate": "H_VOLUME_SPIKE",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-18T11:00:00.000Z",
+      "order_submit_ts": "2026-01-18T11:00:00.040Z",
+      "ack_ts": "2026-01-18T11:00:00.103Z",
+      "fills": [
+        { "fill_ts": "2026-01-18T11:00:00.121Z", "qty": 0.001, "price": 99156.77, "fee_amount": 0.099157, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 99152.00,
+      "ask_at_signal": 99162.00,
+      "context_volatility": "LOW",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VOLSP_007",
+      "candidate": "H_VOLUME_SPIKE",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-21T09:00:00.000Z",
+      "order_submit_ts": "2026-01-21T09:00:00.056Z",
+      "ack_ts": "2026-01-21T09:00:00.139Z",
+      "fills": [
+        { "fill_ts": "2026-01-21T09:00:00.160Z", "qty": 0.001, "price": 96244.33, "fee_amount": 0.096244, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 96240.00,
+      "ask_at_signal": 96249.00,
+      "context_volatility": "HIGH",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VOLSP_008",
+      "candidate": "H_VOLUME_SPIKE",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-24T13:00:00.000Z",
+      "order_submit_ts": "2026-01-24T13:00:00.047Z",
+      "ack_ts": "2026-01-24T13:00:00.120Z",
+      "fills": [
+        { "fill_ts": "2026-01-24T13:00:00.139Z", "qty": 0.001, "price": 97788.55, "fee_amount": 0.097789, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97784.00,
+      "ask_at_signal": 97793.00,
+      "context_volatility": "MEDIUM",
+      "result": "LOSS"
+    },
+    {
+      "trade_id": "T_VWAP_001",
+      "candidate": "H_VWAP_REVERSAL",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-03T13:30:00.000Z",
+      "order_submit_ts": "2026-01-03T13:30:00.050Z",
+      "ack_ts": "2026-01-03T13:30:00.126Z",
+      "fills": [
+        { "fill_ts": "2026-01-03T13:30:00.144Z", "qty": 0.001, "price": 97744.88, "fee_amount": 0.097745, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97740.00,
+      "ask_at_signal": 97750.00,
+      "context_volatility": "MEDIUM",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VWAP_002",
+      "candidate": "H_VWAP_REVERSAL",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-06T14:30:00.000Z",
+      "order_submit_ts": "2026-01-06T14:30:00.054Z",
+      "ack_ts": "2026-01-06T14:30:00.133Z",
+      "fills": [
+        { "fill_ts": "2026-01-06T14:30:00.152Z", "qty": 0.001, "price": 98055.12, "fee_amount": 0.098055, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 98051.00,
+      "ask_at_signal": 98060.00,
+      "context_volatility": "LOW",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VWAP_003",
+      "candidate": "H_VWAP_REVERSAL",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-09T11:30:00.000Z",
+      "order_submit_ts": "2026-01-09T11:30:00.048Z",
+      "ack_ts": "2026-01-09T11:30:00.122Z",
+      "fills": [
+        { "fill_ts": "2026-01-09T11:30:00.140Z", "qty": 0.001, "price": 96934.56, "fee_amount": 0.096935, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 96930.00,
+      "ask_at_signal": 96939.00,
+      "context_volatility": "MEDIUM",
+      "result": "LOSS"
+    },
+    {
+      "trade_id": "T_VWAP_004",
+      "candidate": "H_VWAP_REVERSAL",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-12T10:30:00.000Z",
+      "order_submit_ts": "2026-01-12T10:30:00.063Z",
+      "ack_ts": "2026-01-12T10:30:00.152Z",
+      "fills": [
+        { "fill_ts": "2026-01-12T10:30:00.172Z", "qty": 0.001, "price": 98567.34, "fee_amount": 0.098567, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 98563.00,
+      "ask_at_signal": 98572.00,
+      "context_volatility": "HIGH",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VWAP_005",
+      "candidate": "H_VWAP_REVERSAL",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-15T13:00:00.000Z",
+      "order_submit_ts": "2026-01-15T13:00:00.046Z",
+      "ack_ts": "2026-01-15T13:00:00.118Z",
+      "fills": [
+        { "fill_ts": "2026-01-15T13:00:00.136Z", "qty": 0.001, "price": 97634.78, "fee_amount": 0.097635, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97630.00,
+      "ask_at_signal": 97639.00,
+      "context_volatility": "LOW",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VWAP_006",
+      "candidate": "H_VWAP_REVERSAL",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-18T09:30:00.000Z",
+      "order_submit_ts": "2026-01-18T09:30:00.055Z",
+      "ack_ts": "2026-01-18T09:30:00.137Z",
+      "fills": [
+        { "fill_ts": "2026-01-18T09:30:00.157Z", "qty": 0.001, "price": 99088.23, "fee_amount": 0.099088, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 99084.00,
+      "ask_at_signal": 99093.00,
+      "context_volatility": "MEDIUM",
+      "result": "WIN"
+    },
+    {
+      "trade_id": "T_VWAP_007",
+      "candidate": "H_VWAP_REVERSAL",
+      "side": "SELL",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-21T11:00:00.000Z",
+      "order_submit_ts": "2026-01-21T11:00:00.042Z",
+      "ack_ts": "2026-01-21T11:00:00.109Z",
+      "fills": [
+        { "fill_ts": "2026-01-21T11:00:00.128Z", "qty": 0.001, "price": 96412.67, "fee_amount": 0.096413, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 96408.00,
+      "ask_at_signal": 96417.00,
+      "context_volatility": "HIGH",
+      "result": "LOSS"
+    },
+    {
+      "trade_id": "T_VWAP_008",
+      "candidate": "H_VWAP_REVERSAL",
+      "side": "BUY",
+      "requested_qty": 0.001,
+      "instrument": "BTCUSDT",
+      "signal_ts": "2026-01-24T09:00:00.000Z",
+      "order_submit_ts": "2026-01-24T09:00:00.051Z",
+      "ack_ts": "2026-01-24T09:00:00.128Z",
+      "fills": [
+        { "fill_ts": "2026-01-24T09:00:00.147Z", "qty": 0.001, "price": 97833.44, "fee_amount": 0.097833, "fee_currency": "USDT" }
+      ],
+      "bid_at_signal": 97829.00,
+      "ask_at_signal": 97838.00,
+      "context_volatility": "MEDIUM",
+      "result": "WIN"
+    }
+  ],
+  "total_trades": 32,
+  "generated_at": "2026-01-31T00:00:00.000Z",
+  "notes": "EPOCH P0 valid fixture. 4 candidates x 8 trades. All 26 invariants satisfied. Generated for PAPER_EVIDENCE_COURT gate."
+}

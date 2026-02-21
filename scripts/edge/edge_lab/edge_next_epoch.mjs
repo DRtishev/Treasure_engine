@@ -196,7 +196,8 @@ const rootFiles = fs.existsSync(EVIDENCE_DIR)
 const allowedExtra = new Set([
   'MEGA_CLOSEOUT_NEXT_EPOCH.md', 'MANIFEST_CHECK.md', 'MANIFEST_CHECK_RESULT.md',
   'ANTI_FLAKE_X2.md', 'PAPER_COURT.md', 'EXECUTION_DRIFT.md', 'SLI_BASELINE.md', 'META_AUDIT.md', 'NONDETERMINISM_REPORT.md', 'RAW_STABILITY_REPORT.md', 'SHA256SUMS.md', 'SHA256CHECK.md',
-  'LEDGER_ACYCLICITY.md'
+  'LEDGER_ACYCLICITY.md', 'PAPER_EVIDENCE_COURT.md', 'EXPECTANCY_CI.md', 'MICRO_LIVE_SRE.md',
+  'MULTI_HYPOTHESIS_COURT.md', 'PORTFOLIO_COURT.md', 'DOCTOR.md'
 ]);
 const missingRoot = REQUIRED_ROOT_FILES.filter((f) => !rootFiles.includes(f));
 const extraRoot = rootFiles.filter((f) => !REQUIRED_ROOT_FILES.includes(f) && !allowedExtra.has(f));

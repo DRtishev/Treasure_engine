@@ -12,6 +12,10 @@ const steps = [
   { name: 'registry', script: 'scripts/edge/edge_lab/edge_registry.mjs', npm: 'edge:registry' },
   { name: 'profit:candidates', script: 'scripts/edge/edge_lab/edge_profit_candidates.mjs', npm: 'edge:profit:candidates' },
   { name: 'paper:ingest', script: 'scripts/edge/edge_lab/edge_paper_ingest.mjs', npm: 'edge:paper:ingest' },
+  { name: 'paper:evidence', script: 'scripts/edge/edge_lab/edge_paper_evidence.mjs', npm: 'edge:paper:evidence' },
+  { name: 'expectancy:ci', script: 'scripts/edge/edge_lab/edge_expectancy_ci.mjs', npm: 'edge:expectancy:ci' },
+  { name: 'multi:hypothesis', script: 'scripts/edge/edge_lab/edge_multi_hypothesis_mvp.mjs', npm: 'edge:multi:hypothesis' },
+  { name: 'portfolio', script: 'scripts/edge/edge_lab/edge_portfolio_court.mjs', npm: 'edge:portfolio' },
   { name: 'dataset', script: 'scripts/edge/edge_lab/edge_dataset.mjs', npm: 'edge:dataset' },
   { name: 'execution', script: 'scripts/edge/edge_lab/edge_execution.mjs', npm: 'edge:execution' },
   { name: 'execution:grid', script: 'scripts/edge/edge_lab/edge_execution_grid.mjs', npm: 'edge:execution:grid' },
@@ -20,6 +24,7 @@ const steps = [
   { name: 'overfit', script: 'scripts/edge/edge_lab/edge_overfit.mjs', npm: 'edge:overfit' },
   { name: 'redteam', script: 'scripts/edge/edge_lab/edge_redteam.mjs', npm: 'edge:redteam' },
   { name: 'sre', script: 'scripts/edge/edge_lab/edge_sre.mjs', npm: 'edge:sre' },
+  { name: 'micro:live:sre', script: 'scripts/edge/edge_lab/edge_micro_live_sre.mjs', npm: 'edge:micro:live:sre' },
   { name: 'micro:live:readiness', script: 'scripts/edge/edge_lab/edge_micro_live_readiness.mjs', npm: 'edge:micro:live:readiness' },
   { name: 'verdict', script: 'scripts/edge/edge_lab/edge_verdict.mjs', npm: 'edge:verdict' },
 ];
