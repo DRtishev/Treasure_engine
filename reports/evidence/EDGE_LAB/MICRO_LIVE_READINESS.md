@@ -1,5 +1,5 @@
 # MICRO_LIVE_READINESS.md — Micro-Live Readiness Assessment
-generated_at: 295c8a87115b
+generated_at: 779042cd2846
 script: edge_micro_live_readiness.mjs
 
 ## STATUS: PASS

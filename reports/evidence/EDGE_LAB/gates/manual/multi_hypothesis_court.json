@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "reason_code": "NONE",
+  "message": "All 4 candidates: corrected_CI_lower > 0 after Bonferroni(n_tests=8, alpha_corrected=0.006250). Worst: 0.0563%.",
+  "correction": {
+    "n_candidates": 4,
+    "n_oos_periods": 2,
+    "n_tests": 8,
+    "alpha_corrected": 0.00625,
+    "ci_level_corrected_pct": 99.375,
+    "seed_hex": "eba2a8bb"
+  },
+  "results": [
+    {
+      "name": "H_ATR_SQUEEZE_BREAKOUT",
+      "n": 35,
+      "mean_return_pct": 0.6203,
+      "ci95_lower_pct": 0.2502,
+      "corrected_lower_pct": 0.1269,
+      "passes_corrected": true
+    },
+    {
+      "name": "H_BB_SQUEEZE",
+      "n": 35,
+      "mean_return_pct": 0.6074,
+      "ci95_lower_pct": 0.24,
+      "corrected_lower_pct": 0.0563,
+      "passes_corrected": true
+    },
+    {
+      "name": "H_VOLUME_SPIKE",
+      "n": 35,
+      "mean_return_pct": 0.5654,
+      "ci95_lower_pct": 0.215,
+      "corrected_lower_pct": 0.0982,
+      "passes_corrected": true
+    },
+    {
+      "name": "H_VWAP_REVERSAL",
+      "n": 35,
+      "mean_return_pct": 0.548,
+      "ci95_lower_pct": 0.2444,
+      "corrected_lower_pct": 0.1432,
+      "passes_corrected": true
+    }
+  ],
+  "n_bootstrap": 10000
+}

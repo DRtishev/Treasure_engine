@@ -581,6 +581,7 @@
     "edge:paper:ingest": "node scripts/edge/edge_lab/edge_paper_ingest.mjs",
     "edge:paper:evidence": "node scripts/edge/edge_lab/edge_paper_evidence.mjs",
     "edge:expectancy:ci": "node scripts/edge/edge_lab/edge_expectancy_ci.mjs",
+    "edge:multi:hypothesis": "node scripts/edge/edge_lab/edge_multi_hypothesis_mvp.mjs",
     "edge:paper:runner": "node scripts/edge/edge_lab/paper_epoch_runner.mjs",
     "edge:dataset": "node scripts/edge/edge_lab/edge_dataset.mjs",
     "edge:execution": "node scripts/edge/edge_lab/edge_execution.mjs",

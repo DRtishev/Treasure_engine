@@ -1,5 +1,5 @@
 # EXECUTION_REALITY_COURT.md — Execution Reality Court
-generated_at: 295c8a87115b
+generated_at: 779042cd2846
 script: edge_execution_reality.mjs
 
 ## STATUS: PASS

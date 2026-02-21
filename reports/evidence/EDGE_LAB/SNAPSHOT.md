@@ -1,21 +1,21 @@
 # SNAPSHOT.md — Repository Snapshot
-generated_at: 295c8a87115b
+generated_at: 779042cd2846
 script: edge_sources.mjs
 
 ## Git State
 | Field | Value |
 |-------|-------|
 | Branch | claude/paper-evidence-foundation-UlQSG |
-| Commit | 295c8a87115b8352c9e78f8130be007bdf36b344 |
+| Commit | 779042cd284622b45208976f6efb6b02ab9f42eb |
 | Status | DIRTY |
 
 ## Recent Commits
 ```
+779042c feat(P3): MICRO_LIVE_SRE_COURT — unlock MICRO_LIVE_ELIGIBLE
 295c8a8 feat(P1+P2): EXPECTANCY_CI_COURT + EXECUTION_REALITY_CALIBRATION
 3444ae7 chore(evidence): update court evidence files from final edge:all:x2 run
 b186afe feat(P0): EPOCH P0 PAPER_EVIDENCE FOUNDATION — 26-invariant validator + anti-tamper receipts
 53c0662 Merge pull request #57 from DRtishev/claude/profit-candidates-execution-courts-sxMmX
-9b703f3 docs(edge-lab): POML v6.0 Final Report — Epoch Firmware complete
 ```
 
 ## Working Tree Status
@@ -28,6 +28,7 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/EXECUTION_BREAKPOINTS.md
  D reports/evidence/EDGE_LAB/EXECUTION_COURT.md
+ D reports/evidence/EDGE_LAB/EXECUTION_DRIFT.md
  D reports/evidence/EDGE_LAB/EXECUTION_REALITY_COURT.md
  D reports/evidence/EDGE_LAB/EXECUTION_SENSITIVITY_GRID.md
  D reports/evidence/EDGE_LAB/EXPECTANCY_CI.md
@@ -35,13 +36,16 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/MCL_NOTES.md
  D reports/evidence/EDGE_LAB/MEGA_CLOSEOUT_EDGE_LAB.md
  D reports/evidence/EDGE_LAB/MICRO_LIVE_READINESS.md
+ D reports/evidence/EDGE_LAB/MICRO_LIVE_SRE.md
  D reports/evidence/EDGE_LAB/OVERFIT_COURT.md
+ D reports/evidence/EDGE_LAB/PAPER_COURT.md
  D reports/evidence/EDGE_LAB/PAPER_EVIDENCE.md
  D reports/evidence/EDGE_LAB/PAPER_EVIDENCE_COURT.md
  D reports/evidence/EDGE_LAB/PROFIT_CANDIDATES_COURT.md
  D reports/evidence/EDGE_LAB/REDTEAM_COURT.md
  D reports/evidence/EDGE_LAB/REGISTRY_COURT.md
  D reports/evidence/EDGE_LAB/RISK_COURT.md
+ D reports/evidence/EDGE_LAB/SLI_BASELINE.md
  D reports/evidence/EDGE_LAB/SNAPSHOT.md
  M reports/evidence/EDGE_LAB/SOURCES_AUDIT.md
  D reports/evidence/EDGE_LAB/SRE_COURT.md
@@ -50,18 +54,22 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/gates/manual/execution_reality_court.json
  D reports/evidence/EDGE_LAB/gates/manual/expectancy_ci.json
  D reports/evidence/EDGE_LAB/gates/manual/micro_live_readiness.json
+ D reports/evidence/EDGE_LAB/gates/manual/micro_live_sre.json
+ D reports/evidence/EDGE_LAB/gates/manual/paper_court.json
  D reports/evidence/EDGE_LAB/gates/manual/paper_evidence.json
  D reports/evidence/EDGE_LAB/gates/manual/paper_evidence_court.json
  D reports/evidence/EDGE_LAB/gates/manual/profit_candidates_court.json
+ D reports/evidence/EDGE_LAB/gates/manual/proxy_guard.json
+ D reports/evidence/EDGE_LAB/gates/manual/sli_baseline.json
  M scripts/edge/edge_lab/edge_all.mjs
  M scripts/edge/edge_lab/edge_next_epoch.mjs
-?? EDGE_LAB/INCIDENT_PLAYBOOK.md
-?? EDGE_LAB/MICRO_LIVE_SRE_POLICY.md
-?? scripts/edge/edge_lab/edge_micro_live_sre.mjs
+?? EDGE_LAB/ATTEMPT_LEDGER_POLICY.md
+?? scripts/edge/edge_lab/edge_multi_hypothesis_mvp.mjs
 ```
 
 ## EDGE_LAB Files Present
 ```
+ATTEMPT_LEDGER_POLICY.md
 COURT_MANIFEST.md
 DATASET_CONTRACT.md
 ERROR_BUDGET_POLICY.md
