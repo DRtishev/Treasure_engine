@@ -60,6 +60,22 @@ const GATES = [
     json: 'reports/evidence/INFRA_P0/gates/manual/format_policy_gate.json',
     blocker: true,
   },
+  {
+    // FG01: Fixture guard — REAL_ONLY default, ALLOW_FIXTURES=1 opt-in
+    id: 'FIXTURE_GUARD',
+    script: 'scripts/verify/fixture_guard_gate.mjs',
+    evidence: 'reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md',
+    json: 'reports/evidence/INFRA_P0/gates/manual/fixture_guard_gate.json',
+    blocker: true,
+  },
+  {
+    // ZW01: Zero-war kill switch must-fail proof
+    id: 'ZERO_WAR_PROBE',
+    script: 'scripts/verify/zero_war_probe.mjs',
+    evidence: 'reports/evidence/SAFETY/ZERO_WAR_PROBE.md',
+    json: 'reports/evidence/SAFETY/gates/manual/zero_war_probe.json',
+    blocker: true,
+  },
 ];
 
 // DEP codes that propagate as ineligibility (R12/R13)
@@ -133,11 +149,23 @@ const depGate = gateStatuses.find((g) => g.gate === 'DEPS_OFFLINE');
 const depReasonCode = depGate?.reason_code || 'NONE';
 const hasDepBlock = DEP_BLOCKING_CODES.includes(depReasonCode);
 
-const eligible_for_micro_live = !hasDepBlock;
-const eligible_for_execution = !hasDepBlock;
+// FG01: Fixture guard blocks eligibility
+const fgGate = gateStatuses.find((g) => g.gate === 'FIXTURE_GUARD');
+const hasFg01Block = fgGate?.reason_code === 'FG01' || fgGate?.status === 'BLOCKED';
+
+// ZW01: Zero-war probe failure blocks eligibility
+const zw01Gate = gateStatuses.find((g) => g.gate === 'ZERO_WAR_PROBE');
+const hasZw01Fail = zw01Gate?.status === 'FAIL' || zw01Gate?.reason_code === 'ZW01';
+
+const eligible_for_micro_live = !hasDepBlock && !hasFg01Block && !hasZw01Fail;
+const eligible_for_execution = !hasDepBlock && !hasFg01Block && !hasZw01Fail;
 const eligibility_reason = hasDepBlock
   ? `${depReasonCode}: ${depGate?.message || 'DEP gate failure detected'}`
-  : 'No DEP blocking codes detected';
+  : hasFg01Block
+    ? `FG01: Fixture guard violation — evidence sources not verified as real`
+    : hasZw01Fail
+      ? `ZW01: Zero-war kill switch probe failed — trading path not blocked`
+      : 'No blocking codes detected (DEP/FG01/ZW01 all clear)';
 
 // Compute evidence hashes
 const evidenceHashes = gateStatuses.map((g) => {
@@ -159,7 +187,7 @@ const overallReason = overallStatus === 'PASS' ? 'NONE'
   : gateStatuses.find((g) => g.blocker && g.status !== 'PASS')?.reason_code || 'UNKNOWN';
 
 const message = overallStatus === 'PASS'
-  ? `INFRA P0 PASS — NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY all PASS. DEPS_OFFLINE reported honestly (${depReasonCode}). ELIGIBLE_FOR_MICRO_LIVE=${eligible_for_micro_live}.`
+  ? `INFRA P0 PASS — NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY, FIXTURE_GUARD (FG01), ZERO_WAR_PROBE (ZW01) all PASS. DEPS_OFFLINE reported honestly (${depReasonCode}). ELIGIBLE_FOR_MICRO_LIVE=${eligible_for_micro_live}.`
   : `INFRA P0 ${overallStatus} — ${overallReason}: ${gateStatuses.find((g) => g.blocker && g.status !== 'PASS')?.message || ''}`;
 
 const nextAction = overallStatus === 'PASS'
