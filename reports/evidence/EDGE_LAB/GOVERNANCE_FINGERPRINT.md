@@ -1,5 +1,5 @@
 # GOVERNANCE_FINGERPRINT.md — Contract Integrity Snapshot
-generated_at: 53c0662f592b
+generated_at: 3444ae7de207
 script: edge_verdict.mjs
 
 ## Purpose
@@ -10,7 +10,7 @@ Tamper-evident: any post-closeout modification to contract files produces a diff
 
 ## Overall Fingerprint
 ```
-OVERALL_SHA256: 2134333cc1ff72f32ebf6e2ff0d2d230128a7db1bc46d3e9fbf92927e993f90b
+OVERALL_SHA256: 590455b640940d785c60620b3b2a954aee1116c237fe4b3409794f5a48ae2c40
 ```
 
 ## File Fingerprints
@@ -20,8 +20,9 @@ OVERALL_SHA256: 2134333cc1ff72f32ebf6e2ff0d2d230128a7db1bc46d3e9fbf92927e993f90b
 | EDGE_LAB/DATASET_CONTRACT.md | d58e82f882583db6c098e6fc63e2a813c74585e8506d69ad5995a00ebf2b938b |
 | EDGE_LAB/ERROR_BUDGET_POLICY.md | fbd5cc865ac70276692369d206399754d863f38c11cadf5064212744b36c38fc |
 | EDGE_LAB/EXECUTION_MODEL.md | 6072ee361588d9ea048acf2ec978c7ee69a189d67477a5b22cbdc93edf2a0ada |
-| EDGE_LAB/EXECUTION_REALITY_POLICY.md | f253a39d8d7d3f6bf7c8fb8ba3b1c730a664a6d8e70b3118fb31c9a55f04dc7a |
+| EDGE_LAB/EXECUTION_REALITY_POLICY.md | 79c313a9e3578c25d2b81eb18d3a8888a800dc8d7c535dcc65f644f64a610c57 |
 | EDGE_LAB/EXECUTION_SENSITIVITY_SPEC.md | 2ef6481e548f8cead408f2697cc496a3243685756e2f81a27116c2825fc407f6 |
+| EDGE_LAB/EXPECTANCY_CI_POLICY.md | 7cff212a4ce580c4ab3ef66bb9342eb5a1e154af7046ff7944798dc2a7d526c6 |
 | EDGE_LAB/HACK_REGISTRY.md | 9e40f7916cb116cba1ee2476eab229f6f60a13fae7992341bf559b97c5b767d3 |
 | EDGE_LAB/HACK_SCHEMA.md | 93ebb1445493c3cb68fb17dbaa78d665b11f7bbe4100c13a6a9ed0c02e7cff35 |
 | EDGE_LAB/MANIFEST_CHECK.md | 5d56586c6036727e47075727edf4cabf137be73bc38adbf279259c7f041dbb35 |
@@ -49,16 +50,17 @@ OVERALL_SHA256: 2134333cc1ff72f32ebf6e2ff0d2d230128a7db1bc46d3e9fbf92927e993f90b
 | EDGE_LAB/VERDICT_SEMANTICS.md | fc6d6d3bf66d6e867d2ff3611e861b1b2277813fd74b73634bf315b50e139439 |
 | EDGE_LAB/WALK_FORWARD_PROTOCOL.md | 0cbb83e53e415b157294b92ac140a6b9593c1a7eb78069352f80dccbcd962b98 |
 | scripts/edge/edge_lab/canon.mjs | cfea85cfe563c388e5df1856eddd3b78e0e5e3945bf6d6bcc753d1e0d550792b |
-| scripts/edge/edge_lab/edge_all.mjs | 93bb3d0ccbe7d331fae1ffbfbf246fb8ed5e6824dc4cf2542ab05f8fbe2fe5cc |
+| scripts/edge/edge_lab/edge_all.mjs | a834e4ee1c9f82ad0d85a52459983531feb3bff4f9b18b89c133cd1cce831a9c |
 | scripts/edge/edge_lab/edge_all_x2.mjs | 4f4639684eceb0bc172d770a25f2fa0a2b67aaff165b7b9474af6d110b5864c0 |
 | scripts/edge/edge_lab/edge_dataset.mjs | 35949338a13f91304801c4b5b5e78eea6330b6ac5ee609e5e48ca84e66733293 |
 | scripts/edge/edge_lab/edge_doctor.mjs | 6b30795d79f1652b4bcc380aaa2142c4b9c51ecccae15c53cd1e451c64fa96e1 |
 | scripts/edge/edge_lab/edge_execution.mjs | 192177a72fd0ce6b88e72dea70dfb98182dc3471c956ac3fe8e2a8277b636bad |
 | scripts/edge/edge_lab/edge_execution_grid.mjs | 9acf26aae9b4091b4a46eed4aaddf93f40f0a212bc4947a5d2596525eaccea19 |
-| scripts/edge/edge_lab/edge_execution_reality.mjs | 2b0a877f6886755d4e56016a303d42cc52d0a6f4f04e1e7addd91bf5d8eba8ef |
+| scripts/edge/edge_lab/edge_execution_reality.mjs | 500e6352e2efba90dc3491c011d9169d34d09b8dcaa0e5cebf9fb430639e9b33 |
+| scripts/edge/edge_lab/edge_expectancy_ci.mjs | 4af8778eaeaf1dfd0e1f3a5d1618c4bea31c138aeaa9f57996bb27090ea69c3d |
 | scripts/edge/edge_lab/edge_ledger.mjs | eec56f645cea66e8e760c0f53c0f3e40f9fe275f5519c9f2985a861117552dc8 |
 | scripts/edge/edge_lab/edge_micro_live_readiness.mjs | 1ce3caab6f602de213aad21b0662d1ceb3929bf60825c3fa8c3f539de1975660 |
-| scripts/edge/edge_lab/edge_next_epoch.mjs | f4fe69583d4ebb341630d6305ec1457547a126aef56bf9782f02520e096012b4 |
+| scripts/edge/edge_lab/edge_next_epoch.mjs | 4e57f85df331ac7689d38972136beef688bbd0f20ebdf52c55a034d7d0abc002 |
 | scripts/edge/edge_lab/edge_overfit.mjs | 739134e7eadcbfbe9d5a7fbb0a08757d99aa187ed7b657c172d8d9891814853b |
 | scripts/edge/edge_lab/edge_paper_evidence.mjs | 33c2a31e682567753c9e74066a0dfdc61a0f9f3f05189c59c81b8b4f2ec9027c |
 | scripts/edge/edge_lab/edge_paper_ingest.mjs | bca8ea1591271dae49d752b251654fac35cac24b7bd4c563e698a0171de88b4c |

@@ -1,20 +1,21 @@
 # EXECUTION_REALITY_COURT.md — Execution Reality Court
-generated_at: 53c0662f592b
+generated_at: 3444ae7de207
 script: edge_execution_reality.mjs
 
 ## STATUS: PASS
 
 ## Reason
-MEASURED expectancy validated for all 4 candidate(s). All breakpoint_fee_mult >= 2.0. ELIGIBLE_FOR_PAPER granted. Paper epoch: PAPER_EPOCH_20260102_20260131.
+MEASURED+CI expectancy validated for all 4 candidate(s). All breakpoint_fee_mult >= 2.0. CI_VALIDATED (CI95_lower_worst=0.2150%). ELIGIBLE_FOR_PAPER granted. Paper epoch: PAPER_EPOCH_20260102_20260131.
 
 ## Policy Source
 EDGE_LAB/EXECUTION_REALITY_POLICY.md — version 1.0.0
 
-## Expectancy Mode
+## Expectancy Mode (EPOCH P2: MEASURED+CI required)
 | Parameter | Value | Source | Validated |
 |-----------|-------|--------|-----------|
-| expectancy_mode | MEASURED | paper_evidence.json (epoch: PAPER_EPOCH_20260102_20260131) | YES — paper evidence validated |
+| expectancy_mode | MEASURED+CI | paper_evidence.json + expectancy_ci.json (epoch: PAPER_EPOCH_20260102_20260131) | YES — paper evidence + CI bootstrap (CI_VALIDATED (CI95_lower_worst=0.2150%)) |
 | round_trip_cost_baseline | 0.30% | EXECUTION_MODEL.md | YES |
+| ci_status | CI_VALIDATED (CI95_lower_worst=0.2150%) | expectancy_ci.json | PASS |
 
 ## Breakpoint Analysis
 | Candidate | Expectancy (Source) | Base RT Cost | Breakpoint Fee Mult | Passes 2x Threshold | Eligible For Paper |

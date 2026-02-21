@@ -1,5 +1,5 @@
 # EVIDENCE_INDEX.md — EDGE_LAB Evidence Index
-generated_at: 53c0662f592b
+generated_at: 3444ae7de207
 script: edge_verdict.mjs
 
 ## Final Verdict: NEEDS_DATA

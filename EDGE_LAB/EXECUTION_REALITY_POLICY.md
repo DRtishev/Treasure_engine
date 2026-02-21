@@ -158,11 +158,30 @@ This is a strict gate: no optimism allowed without measured evidence.
 
 ---
 
-## 10. MCL Notes
+## 10. Measured Expectancy (CI-Validated) — EPOCH P2
 
-FRAME: Does the candidate survive execution reality under stress? Court answers with proxy, not fantasy.
-RISKS: Proxy expectancy too optimistic — mitigation: conservative 0.50% chosen, must be validated.
-CONTRACT: edge_execution_reality.mjs reads this file, applies grid, writes EXECUTION_REALITY_COURT.md + EXECUTION_BREAKPOINTS.md + execution_reality_court.json.
-MIN-DIFF: Reuses EXECUTION_MODEL.md numbers. Only new element is proxy_expectancy_pct.
-RED-TEAM: Inflating proxy_expectancy to make breakpoint_fee_mult >= 2.0 → PROXY_VALIDATION gate blocks.
-PROOF: Run npm run edge:execution:reality; expect STATUS=NEEDS_DATA (honest: proxy not validated).
+SOURCE: paper_evidence + EXPECTANCY_CI_COURT (bootstrap CI, P1).
+
+When EXPECTANCY_CI_COURT is PASS, measured_expectancy_pct replaces proxy_expectancy_pct
+as the primary input to the stress grid. The proxy is retained as a PROXY-only fallback
+when CI gate is not yet PASS.
+
+| Field | Source | Sample Window | Filters |
+|-------|--------|--------------|---------|
+| measured_expectancy_pct | paper_evidence.json candidates[].expectancy_pct | PAPER_EPOCH_20260102_20260131 (Jan 2-31 2026) | trade_count >= 30, CI95_lower > 0 |
+| ci_validated | expectancy_ci.json CI95_lower > 0 | same window | all candidates must PASS |
+| proxy_expectancy_pct | PROXY_VALIDATION.md | structural estimate | PROXY-only fallback |
+
+**Dependency**: EXECUTION_REALITY_COURT requires EXPECTANCY_CI_COURT = PASS.
+If CI gate missing or not PASS → EXECUTION_REALITY_COURT = NEEDS_DATA.
+
+---
+
+## 11. MCL Notes
+
+FRAME: Does the candidate survive execution reality under stress? Court answers with MEASURED evidence, not proxy.
+RISKS: Proxy expectancy too optimistic — mitigation: conservative 0.50% chosen, superseded by measured values.
+CONTRACT: edge_execution_reality.mjs reads this file + expectancy_ci.json, applies grid, writes court files.
+MIN-DIFF: Proxy retained as fallback; CI-validated path is primary.
+RED-TEAM: Submit paper evidence with inflated win-rate → CI bootstrap catches it (wide CI → lower bound may be ≤ 0).
+PROOF: Run npm run edge:execution:reality; expect STATUS=PASS (CI-validated measured expectancy path).

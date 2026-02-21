@@ -1,26 +1,27 @@
 # SNAPSHOT.md — Repository Snapshot
-generated_at: 53c0662f592b
+generated_at: 3444ae7de207
 script: edge_sources.mjs
 
 ## Git State
 | Field | Value |
 |-------|-------|
 | Branch | claude/paper-evidence-foundation-UlQSG |
-| Commit | 53c0662f592b03ae9d1973dd0a8ffd2229927982 |
+| Commit | 3444ae7de20767de9747ce082edbf0744272641d |
 | Status | DIRTY |
 
 ## Recent Commits
 ```
+3444ae7 chore(evidence): update court evidence files from final edge:all:x2 run
+b186afe feat(P0): EPOCH P0 PAPER_EVIDENCE FOUNDATION — 26-invariant validator + anti-tamper receipts
 53c0662 Merge pull request #57 from DRtishev/claude/profit-candidates-execution-courts-sxMmX
 9b703f3 docs(edge-lab): POML v6.0 Final Report — Epoch Firmware complete
 1ffb032 feat(edge-lab): POML v6.0 — Paper Epoch Runner + MEASURED Truth Unlock
-88fd2c3 fix(edge-lab): POML v5.0 follow-up — update MEGA_CLOSEOUT to 14-step pipeline
-489d15c feat(edge-lab): POML v5.0 — Anti-Flake Independence, Acyclic Ledger, Paper Evidence Ingest
 ```
 
 ## Working Tree Status
 ```
 M EDGE_LAB/EVIDENCE_INDEX.md
+ M EDGE_LAB/EXECUTION_REALITY_POLICY.md
  M EDGE_LAB/FINAL_VERDICT.md
  M package.json
  D reports/evidence/EDGE_LAB/ANTI_FLAKE_INDEPENDENCE.md
@@ -36,6 +37,7 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/MICRO_LIVE_READINESS.md
  D reports/evidence/EDGE_LAB/OVERFIT_COURT.md
  D reports/evidence/EDGE_LAB/PAPER_EVIDENCE.md
+ D reports/evidence/EDGE_LAB/PAPER_EVIDENCE_COURT.md
  D reports/evidence/EDGE_LAB/PROFIT_CANDIDATES_COURT.md
  D reports/evidence/EDGE_LAB/REDTEAM_COURT.md
  D reports/evidence/EDGE_LAB/REGISTRY_COURT.md
@@ -48,17 +50,13 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/gates/manual/execution_reality_court.json
  D reports/evidence/EDGE_LAB/gates/manual/micro_live_readiness.json
  D reports/evidence/EDGE_LAB/gates/manual/paper_evidence.json
+ D reports/evidence/EDGE_LAB/gates/manual/paper_evidence_court.json
  D reports/evidence/EDGE_LAB/gates/manual/profit_candidates_court.json
  M scripts/edge/edge_lab/edge_all.mjs
+ M scripts/edge/edge_lab/edge_execution_reality.mjs
  M scripts/edge/edge_lab/edge_next_epoch.mjs
-?? EDGE_LAB/PAPER_EVIDENCE_FIXTURES_REPORT.md
-?? EDGE_LAB/PAPER_EVIDENCE_RECEIPTS.md
-?? EDGE_LAB/PAPER_EVIDENCE_SCHEMA_V1.md
-?? artifacts/incoming/paper_evidence.fail_E001.json
-?? artifacts/incoming/paper_evidence.tamper_E006.json
-?? artifacts/incoming/paper_evidence.valid.json
-?? scripts/edge/edge_lab/edge_paper_evidence.mjs
-?? scripts/edge/edge_lab/paper_evidence_schema_v1.json
+?? EDGE_LAB/EXPECTANCY_CI_POLICY.md
+?? scripts/edge/edge_lab/edge_expectancy_ci.mjs
 ```
 
 ## EDGE_LAB Files Present
@@ -70,6 +68,7 @@ EVIDENCE_INDEX.md
 EXECUTION_MODEL.md
 EXECUTION_REALITY_POLICY.md
 EXECUTION_SENSITIVITY_SPEC.md
+EXPECTANCY_CI_POLICY.md
 FINAL_VERDICT.md
 HACK_REGISTRY.md
 HACK_SCHEMA.md
