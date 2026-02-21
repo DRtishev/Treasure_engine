@@ -1,5 +1,5 @@
 # EVIDENCE_INDEX.md — EDGE_LAB Evidence Index
-generated_at: 2026-02-21T13:16:20.737Z
+generated_at: 2026-02-21T18:28:47.567Z
 script: edge_verdict.mjs
 
 ## Final Verdict: ELIGIBLE
@@ -19,7 +19,7 @@ script: edge_verdict.mjs
 | OVERFIT_COURT.md | reports/evidence/EDGE_LAB/ | edge:overfit | PASS |
 | REDTEAM_COURT.md | reports/evidence/EDGE_LAB/ | edge:redteam | PASS |
 | SRE_COURT.md | reports/evidence/EDGE_LAB/ | edge:sre | PASS |
-| MICRO_LIVE_READINESS.md | reports/evidence/EDGE_LAB/ | edge:micro:live:readiness | PASS |
+| P1/MICRO_LIVE_READINESS.md | reports/evidence/EDGE_LAB/ | edge:micro:live:readiness | PASS |
 | SNAPSHOT.md | reports/evidence/EDGE_LAB/ | edge:sources | PRESENT |
 | MCL_NOTES.md | reports/evidence/EDGE_LAB/ | edge:sre | PRESENT |
 | ANTI_FLAKE_INDEPENDENCE.md | reports/evidence/EDGE_LAB/ | edge:next-epoch | MISSING |

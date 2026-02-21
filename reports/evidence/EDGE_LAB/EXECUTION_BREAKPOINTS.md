@@ -1,5 +1,5 @@
 # EXECUTION_BREAKPOINTS.md — Execution Cost Breakpoints
-generated_at: b4de92324329
+generated_at: 3d37e68311e2
 script: edge_execution_reality.mjs
 
 ## Summary

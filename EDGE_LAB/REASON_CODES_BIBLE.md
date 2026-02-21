@@ -1,7 +1,7 @@
 # REASON_CODES_BIBLE.md — Master Reason Code Glossary
 
-epoch: DOCTOR_UX_POLISH_V1
-version: 1.0.0
+epoch: CALM_INFRA_P0_HARDENING_V1
+version: 2.0.0
 last_updated: 2026-02-21
 
 This is the authoritative reference for all reason codes across all EDGE_LAB courts.
@@ -120,6 +120,94 @@ Each code has exactly one definition. Used by all court scripts and operators.
 | BLOCKED | 1 | Abort + report BLOCKED | Fix invariant violation |
 | FAIL | 1 | Abort + report FAIL | Fix invariant violation |
 | WARN | 0 | Continue (advisory) | Review; no immediate action required |
+
+---
+
+---
+
+## VERIFY_MODE Codes (Infra P0)
+
+| Code | Action | Description |
+|------|--------|-------------|
+| VM01 | BLOCKED | BUNDLE mode but manifest missing required fingerprint field |
+| VM02 | FAIL | BUNDLE checksums mismatch |
+| VM03 | BLOCKED | GIT mode but .git missing |
+| VM04 | FAIL | Bundle fingerprint malformed (bad BUNDLE_COMMIT_SHA_SHORT / SOURCE_FINGERPRINT) |
+
+---
+
+## DETERMINISM Codes (Infra P0)
+
+| Code | Action | Description |
+|------|--------|-------------|
+| D001 | BLOCKED | RUN_ID cannot be resolved deterministically |
+| D002 | FAIL | sha256_norm mismatch across x2 (nondeterminism) |
+| D003 | BLOCKED | Canon rules changed without apply receipt |
+| D005 | FAIL | Canon touched forbidden semantic line (NON-volatile) |
+
+---
+
+## EVIDENCE_AND_SCOPE Codes (Infra P0)
+
+| Code | Action | Description |
+|------|--------|-------------|
+| E001 | FAIL | Receipt chain break / tamper detected |
+| E003 | FAIL | Ledger recursion OR scope mutation OR order drift without apply receipt |
+| E004 | BLOCKED | UPDATE_SCOPE_POLICY missing or not hashed |
+
+---
+
+## INFRA_DEPS_OFFLINE Codes (Infra P0)
+
+| Code | Action | Description |
+|------|--------|-------------|
+| DEP01 | BLOCKED | Offline install attempted registry/network access; capsule required |
+| DEP02 | FAIL | Native build attempted outside allowed capsule/toolchain policy |
+| DEP03 | FAIL | Install nondeterminism under same capsule (x2 drift) |
+
+---
+
+## NODE_TRUTH Codes (Infra P0)
+
+| Code | Action | Description |
+|------|--------|-------------|
+| NT01 | BLOCKED | NODE_TRUTH.md missing |
+| NT02 | FAIL | Node mismatch vs SSOT (family/minor/engines/.nvmrc/.node-version/pinned) |
+
+---
+
+## GOLDENS_GOV Codes (Infra P0)
+
+| Code | Action | Description |
+|------|--------|-------------|
+| G001 | BLOCKED | Golden update attempted without APPLY protocol + UPDATE_GOLDENS=1 |
+| G002 | FAIL | Golden mismatch under authoritative Node truth (regression) |
+
+---
+
+## FORMAT_POLICY Codes (Infra P0)
+
+| Code | Action | Description |
+|------|--------|-------------|
+| FP01 | FAIL | Forbidden evidence format OR nondeterministic machine JSON (no schema_version / timestamps / unstable order) |
+
+---
+
+## TRADING_OFF Codes (P0)
+
+| Code | Action | Description |
+|------|--------|-------------|
+| T000 | FAIL | Any trading/order submission attempted in P0 |
+
+---
+
+## DATA_COURT Codes (Calm P0)
+
+| Code | Action | Description |
+|------|--------|-------------|
+| DC90 | NEEDS_DATA | Data outlier detected — multiple sources conflict. Manual confirmation required. |
+| DC91 | BLOCKED | No authoritative data source confirmed. Cannot proceed. |
+| DC92 | FAIL | Data source mismatch vs confirmed SSOT. |
 
 ---
 

@@ -1,13 +1,56 @@
 {
-  "generated_at": "2026-02-21T13:16:20.644Z",
-  "script": "edge_micro_live_readiness.mjs",
-  "status": "PASS",
-  "reason_code": "NONE",
-  "message": "All prerequisites met. MICRO_LIVE_ELIGIBLE=true. LIVE_ELIGIBLE remains false by policy.",
+  "ELIGIBLE_FOR_PAPER": true,
   "LIVE_ELIGIBLE": false,
   "MICRO_LIVE_ELIGIBLE": true,
-  "ELIGIBLE_FOR_PAPER": true,
+  "blocked_by_infra": null,
+  "gate_checks": [
+    {
+      "actual_status": "PASS",
+      "file": "profit_candidates_court.json",
+      "gate": "PROFIT_CANDIDATES_COURT",
+      "passes": true,
+      "reason_code": "NONE",
+      "required_status": "PASS"
+    },
+    {
+      "actual_status": "PASS",
+      "file": "execution_reality_court.json",
+      "gate": "EXECUTION_REALITY_COURT",
+      "passes": true,
+      "reason_code": "NONE",
+      "required_status": "PASS"
+    },
+    {
+      "actual_status": "PASS",
+      "file": "sli_baseline.json",
+      "gate": "SLI_BASELINE",
+      "passes": true,
+      "reason_code": "NONE",
+      "required_status": "PASS"
+    },
+    {
+      "actual_status": "PASS",
+      "file": "proxy_guard.json",
+      "gate": "PROXY_GUARD",
+      "passes": true,
+      "reason_code": "NONE",
+      "required_status": "PASS"
+    },
+    {
+      "actual_status": "PASS",
+      "file": "paper_court.json",
+      "gate": "PAPER_COURT",
+      "passes": true,
+      "reason_code": "NONE",
+      "required_status": "PASS"
+    }
+  ],
+  "infra_closeout_eligible": true,
+  "infra_closeout_reason": null,
+  "message": "All prerequisites met. MICRO_LIVE_ELIGIBLE=true. LIVE_ELIGIBLE remains false by policy.",
+  "next_action": "Operator reviews PAPER_TO_MICRO_LIVE_PROTOCOL.md and approves micro-live pilot.",
   "protocol_checks": {
+    "all_fields_found": true,
     "file_exists": true,
     "has_stop_rules": true,
     "required_fields": [
@@ -27,50 +70,10 @@
         "field": "SLI",
         "found": true
       }
-    ],
-    "all_fields_found": true
+    ]
   },
-  "gate_checks": [
-    {
-      "gate": "PROFIT_CANDIDATES_COURT",
-      "file": "profit_candidates_court.json",
-      "required_status": "PASS",
-      "actual_status": "PASS",
-      "reason_code": "NONE",
-      "passes": true
-    },
-    {
-      "gate": "EXECUTION_REALITY_COURT",
-      "file": "execution_reality_court.json",
-      "required_status": "PASS",
-      "actual_status": "PASS",
-      "reason_code": "NONE",
-      "passes": true
-    },
-    {
-      "gate": "SLI_BASELINE",
-      "file": "sli_baseline.json",
-      "required_status": "PASS",
-      "actual_status": "PASS",
-      "reason_code": "NONE",
-      "passes": true
-    },
-    {
-      "gate": "PROXY_GUARD",
-      "file": "proxy_guard.json",
-      "required_status": "PASS",
-      "actual_status": "PASS",
-      "reason_code": "NONE",
-      "passes": true
-    },
-    {
-      "gate": "PAPER_COURT",
-      "file": "paper_court.json",
-      "required_status": "PASS",
-      "actual_status": "PASS",
-      "reason_code": "NONE",
-      "passes": true
-    }
-  ],
-  "blocked_reasons": []
+  "reason_code": "NONE",
+  "run_id": "3d37e68311e2",
+  "schema_version": "1.0.0",
+  "status": "PASS"
 }

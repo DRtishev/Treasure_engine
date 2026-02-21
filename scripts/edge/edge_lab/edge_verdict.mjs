@@ -35,7 +35,7 @@ const courtFiles = [
   { file: 'OVERFIT_COURT.md', name: 'Overfit Court', script: 'edge:overfit' },
   { file: 'REDTEAM_COURT.md', name: 'Red Team Court', script: 'edge:redteam' },
   { file: 'SRE_COURT.md', name: 'SRE Court', script: 'edge:sre' },
-  { file: 'MICRO_LIVE_READINESS.md', name: 'Micro-Live Readiness Court', script: 'edge:micro:live:readiness' },
+  { file: 'P1/MICRO_LIVE_READINESS.md', name: 'Micro-Live Readiness Court', script: 'edge:micro:live:readiness' },
 ];
 
 // Additional evidence files produced

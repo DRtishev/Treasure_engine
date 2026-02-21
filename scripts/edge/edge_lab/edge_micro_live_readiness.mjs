@@ -1,20 +1,75 @@
+/**
+ * edge_micro_live_readiness.mjs — Micro-live readiness gate
+ *
+ * R12 fail-closed: reads infra_p0_closeout.json; if missing → BLOCKED D003.
+ * DEP01/DEP02/DEP03 in infra closeout → BLOCKED with same reason code.
+ *
+ * Output:
+ * - reports/evidence/EDGE_LAB/P1/MICRO_LIVE_READINESS.md
+ * - reports/evidence/EDGE_LAB/gates/manual/micro_live_readiness.json
+ */
+
 import fs from 'node:fs';
 import path from 'node:path';
+import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
+import { RUN_ID } from './canon.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EVIDENCE_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_LAB');
+// P1 subdir per EVIDENCE_NAMING_SSOT v1.5.3
+const P1_DIR = path.join(EVIDENCE_DIR, 'P1');
 const MANUAL_DIR = path.join(EVIDENCE_DIR, 'gates', 'manual');
 const PROTOCOL_FILE = path.join(ROOT, 'EDGE_LAB', 'PAPER_TO_MICRO_LIVE_PROTOCOL.md');
-const OUTPUT_MD = path.join(EVIDENCE_DIR, 'MICRO_LIVE_READINESS.md');
-const OUTPUT_JSON = path.join(MANUAL_DIR, 'micro_live_readiness.json');
 
-fs.mkdirSync(EVIDENCE_DIR, { recursive: true });
+// EVIDENCE_NAMING_SSOT: INFRA closeout JSON path
+const INFRA_CLOSEOUT_JSON = path.join(
+  ROOT, 'reports', 'evidence', 'INFRA_P0', 'gates', 'manual', 'infra_p0_closeout.json'
+);
+
+const OUTPUT_MD = path.join(P1_DIR, 'MICRO_LIVE_READINESS.md');
+
+fs.mkdirSync(P1_DIR, { recursive: true });
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
 // LIVE eligibility is always false by policy
 const LIVE_ELIGIBLE = false;
 
-// --- Required gate files and their pass conditions ---
+// DEP codes that propagate as BLOCKED (R12)
+const DEP_BLOCKING_CODES = ['DEP01', 'DEP02', 'DEP03'];
+
+// ---------------------------------------------------------------------------
+// R12: Read infra closeout JSON — fail-closed
+// ---------------------------------------------------------------------------
+let infraCloseout = null;
+let infraBlockReason = null;
+let infraBlockCode = null;
+
+if (!fs.existsSync(INFRA_CLOSEOUT_JSON)) {
+  infraBlockCode = 'D003';
+  infraBlockReason = `INFRA closeout JSON missing at ${INFRA_CLOSEOUT_JSON}. Run: npm run p0:all`;
+} else {
+  try {
+    infraCloseout = JSON.parse(fs.readFileSync(INFRA_CLOSEOUT_JSON, 'utf8'));
+
+    // R12: check eligibility flags first (R13 contract)
+    if (infraCloseout.eligible_for_micro_live === false) {
+      // Extract reason code from gate_matrix
+      const depEntry = (infraCloseout.gate_matrix || []).find(
+        (g) => g.gate === 'DEPS_OFFLINE' && DEP_BLOCKING_CODES.includes(g.reason_code)
+      );
+      infraBlockCode = depEntry?.reason_code || 'DEP_UNKNOWN';
+      infraBlockReason = infraCloseout.eligibility_reason
+        || `eligible_for_micro_live=false in infra closeout (${infraBlockCode})`;
+    }
+  } catch (e) {
+    infraBlockCode = 'D003';
+    infraBlockReason = `INFRA closeout JSON parse error: ${e.message}`;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Edge gate prerequisites
+// ---------------------------------------------------------------------------
 const REQUIRED_GATES = [
   { file: 'profit_candidates_court.json', name: 'PROFIT_CANDIDATES_COURT', required_status: 'PASS' },
   { file: 'execution_reality_court.json', name: 'EXECUTION_REALITY_COURT', required_status: 'PASS' },
@@ -23,7 +78,6 @@ const REQUIRED_GATES = [
   { file: 'paper_court.json', name: 'PAPER_COURT', required_status: 'PASS' },
 ];
 
-// --- Required protocol sections for MICRO_LIVE_ELIGIBLE ---
 const REQUIRED_PROTOCOL_SECTIONS = [
   'stop-rules', 'stop_rules', 'STOP_RULES', 'STOP RULES', 'hard stop', 'Hard stops', 'Hard stop'
 ];
@@ -34,21 +88,19 @@ const REQUIRED_PROTOCOL_FIELDS = [
   { term: 'SLI', alts: ['SLO', 'SLI_BASELINE', 'sli_baseline', 'service level'] },
 ];
 
-const now = new Date().toISOString();
-
-// --- Read and check protocol file ---
+// Read and check protocol file
 const protocolExists = fs.existsSync(PROTOCOL_FILE);
 const protocolContent = protocolExists ? fs.readFileSync(PROTOCOL_FILE, 'utf8') : '';
 const protocolContentLower = protocolContent.toLowerCase();
 
-const hasStopRules = REQUIRED_PROTOCOL_SECTIONS.some(s => protocolContent.includes(s));
-const protocolChecks = REQUIRED_PROTOCOL_FIELDS.map(f => {
-  const found = [f.term, ...f.alts].some(t => protocolContentLower.includes(t.toLowerCase()));
+const hasStopRules = REQUIRED_PROTOCOL_SECTIONS.some((s) => protocolContent.includes(s));
+const protocolChecks = REQUIRED_PROTOCOL_FIELDS.map((f) => {
+  const found = [f.term, ...f.alts].some((t) => protocolContentLower.includes(t.toLowerCase()));
   return { field: f.term, found };
 });
-const allProtocolFieldsFound = protocolChecks.every(c => c.found);
+const allProtocolFieldsFound = protocolChecks.every((c) => c.found);
 
-// --- Read and check gate JSON files ---
+// Read and check gate JSON files
 function readGate(filename) {
   const p = path.join(MANUAL_DIR, filename);
   if (!fs.existsSync(p)) return { exists: false, status: 'MISSING', reason_code: 'FILE_NOT_FOUND' };
@@ -60,7 +112,7 @@ function readGate(filename) {
   }
 }
 
-const gateChecks = REQUIRED_GATES.map(g => {
+const gateChecks = REQUIRED_GATES.map((g) => {
   const result = readGate(g.file);
   const passes = result.exists && result.status === g.required_status;
   return {
@@ -69,115 +121,150 @@ const gateChecks = REQUIRED_GATES.map(g => {
     required_status: g.required_status,
     actual_status: result.status,
     reason_code: result.reason_code,
-    passes
+    passes,
   };
 });
 
-const failedGates = gateChecks.filter(g => !g.passes);
+const failedGates = gateChecks.filter((g) => !g.passes);
 const allGatesPass = failedGates.length === 0;
 
-// --- Determine eligibility ---
-// MICRO_LIVE_ELIGIBLE = true ONLY if:
-// 1. All required gates PASS
-// 2. Protocol has stop rules documented
-// 3. Protocol has all required fields
-// Default is false; must be explicitly proven.
-const MICRO_LIVE_ELIGIBLE = allGatesPass && hasStopRules && allProtocolFieldsFound;
+// ---------------------------------------------------------------------------
+// Determine overall status
+// ---------------------------------------------------------------------------
 
-// --- Build blocked reasons ---
-const blockedReasons = [];
-if (!protocolExists) blockedReasons.push('PAPER_TO_MICRO_LIVE_PROTOCOL.md not found');
-if (!hasStopRules) blockedReasons.push('Protocol missing stop-rules section');
-if (!allProtocolFieldsFound) {
-  const missing = protocolChecks.filter(c => !c.found).map(c => c.field);
-  blockedReasons.push(`Protocol missing required fields: ${missing.join(', ')}`);
+// R12: infra block is unconditional — overrides all other signals
+let overallStatus, reason_code, message, nextAction;
+
+if (infraBlockCode) {
+  // R12 fail-closed: BLOCKED with same DEP reason code (or D003 for missing JSON)
+  overallStatus = 'BLOCKED';
+  reason_code = infraBlockCode;
+  message = `BLOCKED ${infraBlockCode}: ${infraBlockReason}. MICRO_LIVE_ELIGIBLE=false by R12 fail-closed policy.`;
+  nextAction = infraBlockCode === 'D003'
+    ? 'npm run p0:all'
+    : `Resolve ${infraBlockCode} per EDGE_LAB/DEP_POLICY.md, then: npm run p0:all && npm run edge:micro:live:readiness`;
+} else {
+  // Infra is eligible; check edge prerequisites
+  const MICRO_LIVE_ELIGIBLE = allGatesPass && hasStopRules && allProtocolFieldsFound;
+
+  const blockedReasons = [];
+  if (!protocolExists) blockedReasons.push('PAPER_TO_MICRO_LIVE_PROTOCOL.md not found');
+  if (!hasStopRules) blockedReasons.push('Protocol missing stop-rules section');
+  if (!allProtocolFieldsFound) {
+    const missing = protocolChecks.filter((c) => !c.found).map((c) => c.field);
+    blockedReasons.push(`Protocol missing required fields: ${missing.join(', ')}`);
+  }
+  for (const g of failedGates) {
+    blockedReasons.push(`Gate ${g.gate}: expected ${g.required_status}, got ${g.actual_status} (${g.reason_code})`);
+  }
+
+  overallStatus = MICRO_LIVE_ELIGIBLE ? 'PASS' : 'NEEDS_DATA';
+  reason_code = MICRO_LIVE_ELIGIBLE ? 'NONE' : 'MICRO_LIVE_PREREQUISITES_NOT_MET';
+  message = MICRO_LIVE_ELIGIBLE
+    ? 'All prerequisites met. MICRO_LIVE_ELIGIBLE=true. LIVE_ELIGIBLE remains false by policy.'
+    : `MICRO_LIVE_ELIGIBLE=false. ${blockedReasons.length} prerequisite(s) not met.`;
+  nextAction = MICRO_LIVE_ELIGIBLE
+    ? 'Operator reviews PAPER_TO_MICRO_LIVE_PROTOCOL.md and approves micro-live pilot.'
+    : (failedGates.length > 0
+        ? `Pass gates: ${failedGates.map((g) => g.gate).join(', ')}. Then rerun edge:all.`
+        : 'Complete protocol documentation and rerun edge:micro:live:readiness.');
 }
-for (const g of failedGates) {
-  blockedReasons.push(`Gate ${g.gate}: expected ${g.required_status}, got ${g.actual_status} (${g.reason_code})`);
-}
 
-const overallStatus = MICRO_LIVE_ELIGIBLE ? 'PASS' : 'NEEDS_DATA';
-const reason_code = MICRO_LIVE_ELIGIBLE ? 'NONE' : 'MICRO_LIVE_PREREQUISITES_NOT_MET';
-const message = MICRO_LIVE_ELIGIBLE
-  ? 'All prerequisites met. MICRO_LIVE_ELIGIBLE=true. LIVE_ELIGIBLE remains false by policy.'
-  : `MICRO_LIVE_ELIGIBLE=false. ${blockedReasons.length} prerequisite(s) not met. NEXT_ACTION: ${failedGates.length > 0 ? `Pass gates: ${failedGates.map(g => g.gate).join(', ')}` : 'Complete protocol documentation'}.`;
+const MICRO_LIVE_ELIGIBLE = !infraBlockCode && allGatesPass && hasStopRules && allProtocolFieldsFound;
+const ELIGIBLE_FOR_PAPER = gateChecks.find((g) => g.gate === 'PROFIT_CANDIDATES_COURT')?.passes || false;
 
-// --- Write JSON gate ---
+// ---------------------------------------------------------------------------
+// Write JSON gate (via deterministic writer — no timestamps)
+// ---------------------------------------------------------------------------
 const gateOutput = {
-  generated_at: now,
-  script: 'edge_micro_live_readiness.mjs',
-  status: overallStatus,
-  reason_code,
-  message,
+  schema_version: '1.0.0',
+  ELIGIBLE_FOR_PAPER,
   LIVE_ELIGIBLE,
   MICRO_LIVE_ELIGIBLE,
-  ELIGIBLE_FOR_PAPER: gateChecks.find(g => g.gate === 'PROFIT_CANDIDATES_COURT')?.passes || false,
+  blocked_by_infra: infraBlockCode || null,
+  gate_checks: gateChecks,
+  infra_closeout_eligible: infraBlockCode ? false : true,
+  infra_closeout_reason: infraBlockReason || null,
+  message,
+  next_action: nextAction,
   protocol_checks: {
+    all_fields_found: allProtocolFieldsFound,
     file_exists: protocolExists,
     has_stop_rules: hasStopRules,
     required_fields: protocolChecks,
-    all_fields_found: allProtocolFieldsFound
   },
-  gate_checks: gateChecks,
-  blocked_reasons: blockedReasons
+  reason_code,
+  run_id: RUN_ID,
+  status: overallStatus,
 };
-fs.writeFileSync(OUTPUT_JSON, `${JSON.stringify(gateOutput, null, 2)}\n`);
 
-// --- Write markdown report ---
-const gateTable = gateChecks.map(g =>
+writeJsonDeterministic(path.join(MANUAL_DIR, 'micro_live_readiness.json'), gateOutput);
+
+// ---------------------------------------------------------------------------
+// Write markdown report to P1 subdir
+// ---------------------------------------------------------------------------
+const gateTable = gateChecks.map((g) =>
   `| ${g.gate} | ${g.required_status} | ${g.actual_status} | ${g.passes ? 'PASS' : 'BLOCKED'} | ${g.reason_code} |`
 ).join('\n');
 
-const protocolTable = protocolChecks.map(c =>
+const protocolTable = protocolChecks.map((c) =>
   `| ${c.field} | ${c.found ? 'FOUND' : 'MISSING'} |`
 ).join('\n');
 
-const blockedBlock = blockedReasons.length > 0
-  ? blockedReasons.map(r => `- ${r}`).join('\n')
-  : '- NONE';
+const infraBlock = infraBlockCode
+  ? `**BLOCKED by INFRA (R12):** ${infraBlockCode} — ${infraBlockReason}`
+  : '**INFRA eligible:** No DEP blocking codes in infra closeout.';
 
 const mdContent = `# MICRO_LIVE_READINESS.md — Micro-Live Readiness Assessment
-generated_at: ${now}
-script: edge_micro_live_readiness.mjs
 
-## STATUS: ${overallStatus}
+STATUS: ${overallStatus}
+REASON_CODE: ${reason_code}
+RUN_ID: ${RUN_ID}
+NEXT_ACTION: ${nextAction}
+
+## Infra Eligibility Check (R12 Fail-Closed)
+
+${infraBlock}
 
 ## Eligibility Matrix
+
 | State | Value |
 |-------|-------|
-| ELIGIBLE_FOR_PAPER | ${gateOutput.ELIGIBLE_FOR_PAPER} |
+| ELIGIBLE_FOR_PAPER | ${ELIGIBLE_FOR_PAPER} |
 | ELIGIBLE_FOR_MICRO_LIVE | ${MICRO_LIVE_ELIGIBLE} |
 | ELIGIBLE_FOR_LIVE | ${LIVE_ELIGIBLE} |
 
 ## Gate Prerequisite Checks
+
 | Gate | Required | Actual | Result | Reason |
 |------|---------|--------|--------|--------|
 ${gateTable}
 
 ## Protocol Checks (PAPER_TO_MICRO_LIVE_PROTOCOL.md)
+
 | Required Field | Found |
 |---------------|-------|
 | stop_rules_section | ${hasStopRules ? 'FOUND' : 'MISSING'} |
 ${protocolTable}
 
-## Blocked Reasons
-${blockedBlock}
-
 ## Verdict
+
 MICRO_LIVE_ELIGIBLE: **${MICRO_LIVE_ELIGIBLE}**
 LIVE_ELIGIBLE: **${LIVE_ELIGIBLE}** (permanent false — requires explicit policy upgrade)
 
-${overallStatus === 'PASS'
-    ? `All prerequisites met. Micro-live pilot may proceed under protocol constraints.\nNEXT_ACTION: Operator reviews PAPER_TO_MICRO_LIVE_PROTOCOL.md and approves micro-live pilot.`
-    : `NEXT_ACTION: ${failedGates.length > 0
-      ? `Pass gates: ${failedGates.map(g => g.gate).join(', ')}. Then rerun edge:all.`
-      : 'Complete protocol documentation and rerun edge:micro:live:readiness.'
-    }`
-  }
+${overallStatus === 'BLOCKED'
+  ? `R12 fail-closed: readiness BLOCKED by infra DEP code ${infraBlockCode}.\nNEXT_ACTION: ${nextAction}`
+  : overallStatus === 'PASS'
+    ? `All prerequisites met. Micro-live pilot may proceed under protocol constraints.\nNEXT_ACTION: ${nextAction}`
+    : `NEXT_ACTION: ${nextAction}`
+}
 `;
 
 fs.writeFileSync(OUTPUT_MD, mdContent);
 
-// NEEDS_DATA is not a pipeline error; exit 0 to allow edge:all to continue
 console.log(`[${overallStatus}] edge:micro:live:readiness — MICRO_LIVE_ELIGIBLE=${MICRO_LIVE_ELIGIBLE} LIVE_ELIGIBLE=${LIVE_ELIGIBLE} REASON=${reason_code}`);
-process.exit(0);
+if (infraBlockCode) {
+  console.error(`  R12 BLOCKED by infra: ${infraBlockCode} — ${infraBlockReason}`);
+}
+// NEEDS_DATA exits 0 (non-blocking for pipeline); BLOCKED exits 1
+process.exit(overallStatus === 'BLOCKED' ? 1 : 0);

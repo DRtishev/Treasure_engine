@@ -1,5 +1,5 @@
 # VERDICT.md — EDGE_LAB Final Verdict
-generated_at: b4de92324329
+generated_at: 3d37e68311e2
 script: edge_verdict.mjs
 
 ## FINAL VERDICT: ELIGIBLE
@@ -10,19 +10,19 @@ All courts passed. Edge hypothesis portfolio is ready for deployment considerati
 ## Court Summary
 | Court | File | Script | Status | Generated | Size |
 |-------|------|--------|--------|-----------|------|
-| Sources Court | SOURCES_AUDIT.md | edge:sources | PASS | b4de92324329 | 3KB |
-| Registry Court | REGISTRY_COURT.md | edge:registry | PASS | b4de92324329 | 3KB |
-| Profit Candidates Court | PROFIT_CANDIDATES_COURT.md | edge:profit:candidates | PASS | b4de92324329 | 1KB |
-| Paper Evidence Court | PAPER_EVIDENCE.md | edge:paper:ingest | PASS | b4de92324329 | 1KB |
-| Dataset Court | DATASET_COURT.md | edge:dataset | PASS | b4de92324329 | 4KB |
-| Execution Court | EXECUTION_COURT.md | edge:execution | PASS | b4de92324329 | 2KB |
-| Execution Grid Court | EXECUTION_SENSITIVITY_GRID.md | edge:execution:grid | PASS | b4de92324329 | 3KB |
-| Execution Reality Court | EXECUTION_REALITY_COURT.md | edge:execution:reality | PASS | b4de92324329 | 2KB |
-| Risk Court | RISK_COURT.md | edge:risk | PASS | b4de92324329 | 3KB |
-| Overfit Court | OVERFIT_COURT.md | edge:overfit | PASS | b4de92324329 | 4KB |
-| Red Team Court | REDTEAM_COURT.md | edge:redteam | PASS | b4de92324329 | 4KB |
-| SRE Court | SRE_COURT.md | edge:sre | PASS | b4de92324329 | 3KB |
-| Micro-Live Readiness Court | MICRO_LIVE_READINESS.md | edge:micro:live:readiness | PASS | b4de92324329 | 1KB |
+| Sources Court | SOURCES_AUDIT.md | edge:sources | PASS | 3d37e68311e2 | 3KB |
+| Registry Court | REGISTRY_COURT.md | edge:registry | PASS | 3d37e68311e2 | 3KB |
+| Profit Candidates Court | PROFIT_CANDIDATES_COURT.md | edge:profit:candidates | PASS | 3d37e68311e2 | 1KB |
+| Paper Evidence Court | PAPER_EVIDENCE.md | edge:paper:ingest | PASS | 3d37e68311e2 | 1KB |
+| Dataset Court | DATASET_COURT.md | edge:dataset | PASS | 3d37e68311e2 | 4KB |
+| Execution Court | EXECUTION_COURT.md | edge:execution | PASS | 3d37e68311e2 | 2KB |
+| Execution Grid Court | EXECUTION_SENSITIVITY_GRID.md | edge:execution:grid | PASS | 3d37e68311e2 | 3KB |
+| Execution Reality Court | EXECUTION_REALITY_COURT.md | edge:execution:reality | PASS | 3d37e68311e2 | 2KB |
+| Risk Court | RISK_COURT.md | edge:risk | PASS | 3d37e68311e2 | 3KB |
+| Overfit Court | OVERFIT_COURT.md | edge:overfit | PASS | 3d37e68311e2 | 4KB |
+| Red Team Court | REDTEAM_COURT.md | edge:redteam | PASS | 3d37e68311e2 | 4KB |
+| SRE Court | SRE_COURT.md | edge:sre | PASS | 3d37e68311e2 | 3KB |
+| Micro-Live Readiness Court | P1/MICRO_LIVE_READINESS.md | edge:micro:live:readiness | PASS | unknown | 1KB |
 
 ## Additional Evidence Files
 | File | Script | Present | Size |

@@ -1,5 +1,5 @@
 # REDTEAM_COURT.md — Red Team Assessment Report
-generated_at: b4de92324329
+generated_at: 3d37e68311e2
 script: edge_redteam.mjs
 
 ## STATUS: PASS

@@ -65,5 +65,61 @@ Canonical evidence contract for `reports/evidence/EDGE_LAB/`.
 - ANTI_FLAKE_INDEPENDENCE.md must be PASS (anti-flake contract for edge:all producer pipeline).
 - LEDGER_ACYCLICITY.md must be PASS (confirms SHA256SUMS.md and SHA256CHECK.md are excluded from ledger scope).
 
+## Calm P0 + Infra P0 Artifacts (CALM_INFRA_P0_HARDENING_V1)
+
+### Calm P0 Evidence (reports/evidence/EDGE_LAB/P0/)
+- `P0/CANON_SELFTEST.md`
+- `P0/CHECKSUMS.md` (includes SCOPE_MANIFEST_SHA; sha256_raw+sha256_norm; norm_rules_sha)
+- `P0/RECEIPTS_CHAIN.md`
+- `P0/DATA_COURT.md`
+- `P0/CALM_MODE_P0_CLOSEOUT.md`
+
+### Calm P0 Machine Outputs (reports/evidence/EDGE_LAB/gates/manual/)
+- `gates/manual/canon_selftest.json`
+- `gates/manual/calm_p0_final.json`
+
+### Infra P0 Evidence (reports/evidence/INFRA_P0/)
+- `INFRA_P0/DEPS_OFFLINE_INSTALL.md`
+- `INFRA_P0/NODE_TRUTH_GATE.md`
+- `INFRA_P0/VERIFY_MODE_GATE.md`
+- `INFRA_P0/GOLDENS_APPLY_GATE.md`
+- `INFRA_P0/FORMAT_POLICY_GATE.md`
+- `INFRA_P0/INFRA_P0_CLOSEOUT.md`
+
+### Infra P0 Machine Outputs (reports/evidence/INFRA_P0/gates/manual/)
+- `INFRA_P0/gates/manual/node_truth_gate.json`
+- `INFRA_P0/gates/manual/verify_mode_gate.json`
+- `INFRA_P0/gates/manual/deps_offline_install.json`
+- `INFRA_P0/gates/manual/goldens_apply_gate.json`
+- `INFRA_P0/gates/manual/format_policy_gate.json`
+- `INFRA_P0/gates/manual/infra_p0_final.json`
+
+### SSOT Files (repository root)
+- `NODE_TRUTH.md`
+- `VERIFY_MODE.md`
+- `BUNDLE_CONTRACT.md`
+- `GOLDENS_APPLY_PROTOCOL.md`
+- `FORMAT_POLICY.md`
+
+### SSOT Files (EDGE_LAB/)
+- `EDGE_LAB/EVIDENCE_CANON_RULES.md`
+- `EDGE_LAB/UPDATE_SCOPE_POLICY.md`
+- `EDGE_LAB/DATA_CONFIRM_POLICY.md`
+- `EDGE_LAB/DELTA_CALC_SPEC.md`
+- `EDGE_LAB/tests/CANON_TEST_VECTORS.md`
+
+### Calm P0 PASS Criteria
+- CANON_SELFTEST: PASS (all 7 vectors including D005 catch)
+- CHECKSUMS: PASS (SCOPE_MANIFEST_SHA present, all files hashed)
+- RECEIPTS_CHAIN: PASS (chain anchored on sha256_norm)
+- DATA_COURT: PASS or NEEDS_DATA (non-blocking)
+
+### Infra P0 PASS Criteria
+- NODE_TRUTH_GATE: PASS (Node family matches NODE_TRUTH.md)
+- VERIFY_MODE_GATE: PASS (VERIFY_MODE valid, VM04 format check clean)
+- DEPS_OFFLINE: PASS or BLOCKED DEP01 (honest capsule requirement)
+- GOLDENS_APPLY: PASS (protocol file present)
+- FORMAT_POLICY: PASS (no FP01 violations)
+
 ## ZIP policy
 - `FINAL_VALIDATED.zip` is `NOT_REQUIRED` for PASS in this epoch.

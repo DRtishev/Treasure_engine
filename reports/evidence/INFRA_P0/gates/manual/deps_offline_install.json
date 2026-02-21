@@ -1,0 +1,15 @@
+{
+  "has_native_build": false,
+  "message": "All dependencies satisfiable offline (no registry/network required). x2 runs consistent. Exit codes: [0, 0].",
+  "native_patterns_found": [],
+  "next_action": "No action required. Dependencies are fully offline-satisfiable.",
+  "reason_code": "NONE",
+  "registry_patterns_run1": [],
+  "registry_patterns_run2": [],
+  "run1_exit_code": 0,
+  "run2_exit_code": 0,
+  "run_id": "3d37e68311e2",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "x2_drift": false
+}

@@ -1,0 +1,82 @@
+{
+  "dual_hash_demo": {
+    "hashes_differ": true,
+    "input": "generated_at: 2026-02-21T12:00:00.000Z\nthreshold: 0.015",
+    "sha256_norm": "bd8161374f423a36098c58775c6f3817453819ad0012507f66e722616375ba79",
+    "sha256_raw": "ed8d2a7d707b4678989ed10c4010439be1f690d4b5e0808124bd7a8267701826"
+  },
+  "fail_count": 0,
+  "message": "All 7 canon test vectors passed. D005 structural guard verified. Dual-hash doctrine demonstrated.",
+  "next_action": "No action required. Canon selftest is GREEN.",
+  "pass_count": 7,
+  "reason_code": "NONE",
+  "run_id": "3d37e68311e2",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "total_vectors": 7,
+  "vectors": [
+    {
+      "description": "Volatile generated_at timestamp",
+      "detail": "Correctly transformed: \"generated_at: 2026-02-21T12:00:00.000Z\" → \"generated_at: 3d37e68311e2\"",
+      "id": 1,
+      "input": "generated_at: 2026-02-21T12:00:00.000Z",
+      "output": "generated_at: 3d37e68311e2",
+      "passed": true,
+      "type": "VOLATILE"
+    },
+    {
+      "description": "Volatile Started timestamp",
+      "detail": "Correctly transformed: \"Started: 2026-01-15T08:30:00.500Z\" → \"Started: 3d37e68311e2\"",
+      "id": 2,
+      "input": "Started: 2026-01-15T08:30:00.500Z",
+      "output": "Started: 3d37e68311e2",
+      "passed": true,
+      "type": "VOLATILE"
+    },
+    {
+      "description": "Semantic threshold line — must be unchanged",
+      "detail": "Correctly unchanged: \"threshold: 0.015\"",
+      "id": 3,
+      "input": "threshold: 0.015",
+      "output": "threshold: 0.015",
+      "passed": true,
+      "type": "SEMANTIC"
+    },
+    {
+      "description": "Semantic drawdown line — must be unchanged",
+      "detail": "Correctly unchanged: \"max_drawdown: -12.5%\"",
+      "id": 4,
+      "input": "max_drawdown: -12.5%",
+      "output": "max_drawdown: -12.5%",
+      "passed": true,
+      "type": "SEMANTIC"
+    },
+    {
+      "description": "Boundary non-volatile line without forbidden token",
+      "detail": "Correctly unchanged: \"strategy: ATR_SQUEEZE_BREAKOUT\"",
+      "id": 5,
+      "input": "strategy: ATR_SQUEEZE_BREAKOUT",
+      "output": "strategy: ATR_SQUEEZE_BREAKOUT",
+      "passed": true,
+      "type": "BOUNDARY"
+    },
+    {
+      "description": "Volatile Completed with timestamp and ms timing",
+      "detail": "Correctly transformed: \"Completed: 2026-02-21T09:00:00.123Z (took 1234ms)\" → \"Completed: 3d37e68311e2 (took 1234ms)\"",
+      "id": 6,
+      "input": "Completed: 2026-02-21T09:00:00.123Z (took 1234ms)",
+      "output": "Completed: 3d37e68311e2 (took 1234ms)",
+      "passed": true,
+      "type": "VOLATILE"
+    },
+    {
+      "description": "D005 structural proof: semantic line unchanged when non-volatile",
+      "detail": "D005 catch: semantic threshold line unchanged after normalization",
+      "id": 7,
+      "input": "threshold: 0.015 (multi-line with volatile)",
+      "output": "D005 catch: semantic threshold line unchanged after normalization",
+      "passed": true,
+      "type": "D005_CATCH"
+    }
+  ]
+}

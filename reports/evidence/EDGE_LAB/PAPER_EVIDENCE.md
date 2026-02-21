@@ -1,5 +1,5 @@
 # PAPER_EVIDENCE.md — Paper Trading Evidence Court
-generated_at: b4de92324329
+generated_at: 3d37e68311e2
 script: edge_paper_ingest.mjs
 
 ## STATUS: PASS

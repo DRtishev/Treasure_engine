@@ -1,0 +1,22 @@
+{
+  "checks": [
+    {
+      "check": "GOLDENS_APPLY_PROTOCOL.md",
+      "result": "PRESENT"
+    },
+    {
+      "check": "golden_files",
+      "count": 14,
+      "result": "VERIFIED"
+    }
+  ],
+  "golden_file_count": 14,
+  "message": "14 golden file(s) present and readable. Protocol file present. G001/G002 governance satisfied.",
+  "next_action": "No action required. Use UPDATE_GOLDENS=1 to update goldens via APPLY protocol.",
+  "protocol_present": true,
+  "reason_code": "NONE",
+  "run_id": "3d37e68311e2",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "update_goldens_mode": false
+}

@@ -1,0 +1,57 @@
+{
+  "gate_matrix": [
+    {
+      "blocker": true,
+      "gate": "CANON_SELFTEST",
+      "status": "PASS"
+    },
+    {
+      "blocker": false,
+      "gate": "DATA_COURT",
+      "status": "PASS"
+    },
+    {
+      "blocker": true,
+      "gate": "CHECKSUMS",
+      "status": "PASS"
+    },
+    {
+      "blocker": true,
+      "gate": "RECEIPTS_CHAIN",
+      "status": "PASS"
+    }
+  ],
+  "message": "CALM MODE P0 PASS — all hardening gates satisfied. Canon selftest GREEN. Evidence hashed with dual-hash doctrine. Receipt chain anchored.",
+  "next_action": "Run npm run edge:calm:p0:x2 to verify x2 determinism. Then proceed to INFRA_P0 closeout.",
+  "pipeline_steps": [
+    {
+      "exit_code": 0,
+      "id": "CANON_SELFTEST",
+      "message": "[PASS] canon_selftest",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "id": "DATA_COURT",
+      "message": "[PASS] edge_data_court — NONE: Data court PASS: single source (no conflict detected). 1 evidence file(s) verified. SINGLE_SOURCE_MODE=true.",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "id": "EVIDENCE_HASHES",
+      "message": "[PASS] edge_evidence_hashes — 93 files hashed, SCOPE_MANIFEST_SHA=b9b2c3f00e4f369e...",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "id": "RECEIPTS_CHAIN",
+      "message": "[PASS] edge_receipts_chain — 93 entries chained, final=74102da058d4ac1e...",
+      "status": "PASS"
+    }
+  ],
+  "reason_code": "NONE",
+  "run_id": "3d37e68311e2",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "trading_off": true
+}

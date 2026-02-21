@@ -1,72 +1,69 @@
 # SNAPSHOT.md — Repository Snapshot
-generated_at: b4de92324329
+generated_at: 3d37e68311e2
 script: edge_sources.mjs
 
 ## Git State
 | Field | Value |
 |-------|-------|
-| Branch | claude/paper-evidence-foundation-UlQSG |
-| Commit | b4de92324329fc4542e4e891e3ed3b5e68cbb07e |
+| Branch | claude/calm-infra-p0-hardening-UM0c4 |
+| Commit | 3d37e68311e23554a1ef1996642b4583e46e341d |
 | Status | DIRTY |
 
 ## Recent Commits
 ```
-b4de923 feat(P5): PORTFOLIO_COURT — Kelly fractions + diversification + regime matrix
-413510c feat(P4): MULTI_HYPOTHESIS_COURT — Bonferroni correction on OOS tests
-779042c feat(P3): MICRO_LIVE_SRE_COURT — unlock MICRO_LIVE_ELIGIBLE
-295c8a8 feat(P1+P2): EXPECTANCY_CI_COURT + EXECUTION_REALITY_CALIBRATION
-3444ae7 chore(evidence): update court evidence files from final edge:all:x2 run
+3d37e68 chore: remove stale EDGE_LAB evidence wiped by edge:all partial run
+d39b37c feat: CALM+INFRA P0 hardening — canon D005, dual-hash, SSOT, gate suite
+f545a66 Merge pull request #58 from DRtishev/claude/paper-evidence-foundation-UlQSG
+9e744be chore(evidence): ledger acyclicity + SHA256 evidence files from final runs
+c6ee3ba feat(P6): DOCTOR_UX_POLISH — epoch courts display + DOCTOR.md + reason codes bible
 ```
 
 ## Working Tree Status
 ```
 M EDGE_LAB/EVIDENCE_INDEX.md
  M EDGE_LAB/FINAL_VERDICT.md
- D reports/evidence/EDGE_LAB/ANTI_FLAKE_INDEPENDENCE.md
- D reports/evidence/EDGE_LAB/DATASET_COURT.md
- D reports/evidence/EDGE_LAB/EVIDENCE_INDEX.md
- D reports/evidence/EDGE_LAB/EXECUTION_BREAKPOINTS.md
- D reports/evidence/EDGE_LAB/EXECUTION_COURT.md
- D reports/evidence/EDGE_LAB/EXECUTION_DRIFT.md
- D reports/evidence/EDGE_LAB/EXECUTION_REALITY_COURT.md
- D reports/evidence/EDGE_LAB/EXECUTION_SENSITIVITY_GRID.md
- D reports/evidence/EDGE_LAB/EXPECTANCY_CI.md
- D reports/evidence/EDGE_LAB/GOVERNANCE_FINGERPRINT.md
- D reports/evidence/EDGE_LAB/MCL_NOTES.md
- D reports/evidence/EDGE_LAB/MEGA_CLOSEOUT_EDGE_LAB.md
- D reports/evidence/EDGE_LAB/MICRO_LIVE_READINESS.md
- D reports/evidence/EDGE_LAB/MICRO_LIVE_SRE.md
- D reports/evidence/EDGE_LAB/MULTI_HYPOTHESIS_COURT.md
- D reports/evidence/EDGE_LAB/OVERFIT_COURT.md
- D reports/evidence/EDGE_LAB/PAPER_COURT.md
+ M package.json
+ D reports/evidence/EDGE_LAB/DOCTOR.md
+ D reports/evidence/EDGE_LAB/LEDGER_ACYCLICITY.md
+ D reports/evidence/EDGE_LAB/P0/CALM_MODE_P0_CLOSEOUT.md
+ D reports/evidence/EDGE_LAB/P0/CANON_SELFTEST.md
+ D reports/evidence/EDGE_LAB/P0/CHECKSUMS.md
+ D reports/evidence/EDGE_LAB/P0/DATA_COURT.md
+ D reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md
  D reports/evidence/EDGE_LAB/PAPER_EVIDENCE.md
- D reports/evidence/EDGE_LAB/PAPER_EVIDENCE_COURT.md
- D reports/evidence/EDGE_LAB/PORTFOLIO_COURT.md
  D reports/evidence/EDGE_LAB/PROFIT_CANDIDATES_COURT.md
- D reports/evidence/EDGE_LAB/REDTEAM_COURT.md
  D reports/evidence/EDGE_LAB/REGISTRY_COURT.md
- D reports/evidence/EDGE_LAB/RISK_COURT.md
- D reports/evidence/EDGE_LAB/SLI_BASELINE.md
+ D reports/evidence/EDGE_LAB/SHA256CHECK.md
+ D reports/evidence/EDGE_LAB/SHA256SUMS.md
  D reports/evidence/EDGE_LAB/SNAPSHOT.md
  M reports/evidence/EDGE_LAB/SOURCES_AUDIT.md
- D reports/evidence/EDGE_LAB/SRE_COURT.md
  D reports/evidence/EDGE_LAB/VERDICT.md
- D reports/evidence/EDGE_LAB/gates/manual/anti_flake_independence.json
- D reports/evidence/EDGE_LAB/gates/manual/execution_reality_court.json
- D reports/evidence/EDGE_LAB/gates/manual/expectancy_ci.json
- D reports/evidence/EDGE_LAB/gates/manual/micro_live_readiness.json
- D reports/evidence/EDGE_LAB/gates/manual/micro_live_sre.json
- D reports/evidence/EDGE_LAB/gates/manual/multi_hypothesis_court.json
- D reports/evidence/EDGE_LAB/gates/manual/paper_court.json
+ D reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json
+ D reports/evidence/EDGE_LAB/gates/manual/canon_selftest.json
+ D reports/evidence/EDGE_LAB/gates/manual/ledger_acyclicity.json
  D reports/evidence/EDGE_LAB/gates/manual/paper_evidence.json
- D reports/evidence/EDGE_LAB/gates/manual/paper_evidence_court.json
- D reports/evidence/EDGE_LAB/gates/manual/portfolio_court.json
  D reports/evidence/EDGE_LAB/gates/manual/profit_candidates_court.json
- D reports/evidence/EDGE_LAB/gates/manual/proxy_guard.json
- D reports/evidence/EDGE_LAB/gates/manual/sli_baseline.json
- M scripts/edge/edge_lab/edge_doctor.mjs
- M scripts/edge/edge_lab/edge_next_epoch.mjs
-?? EDGE_LAB/REASON_CODES_BIBLE.md
+ M reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md
+ M reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md
+ M reports/evidence/INFRA_P0/INFRA_P0_CLOSEOUT.md
+ M reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md
+ M reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md
+ M reports/evidence/INFRA_P0/gates/manual/deps_offline_install.json
+ M reports/evidence/INFRA_P0/gates/manual/format_policy_gate.json
+ M reports/evidence/INFRA_P0/gates/manual/goldens_apply_gate.json
+ M reports/evidence/INFRA_P0/gates/manual/node_truth_gate.json
+ M reports/evidence/INFRA_P0/gates/manual/verify_mode_gate.json
+ M scripts/edge/edge_lab/edge_micro_live_readiness.mjs
+ M scripts/edge/edge_lab/edge_verdict.mjs
+ M scripts/verify/deps_offline_install_contract.mjs
+ M scripts/verify/infra_p0_closeout.mjs
+?? EDGE_LAB/DEP_POLICY.md
+?? reports/evidence/EXECUTOR/
+?? reports/evidence/INFRA_P0/DEP02_FAILCLOSED_READINESS.md
+?? reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md
+?? reports/evidence/INFRA_P0/gates/manual/dep02_failclosed_readiness.json
+?? reports/evidence/INFRA_P0/gates/manual/infra_p0_closeout.json
+?? scripts/verify/dep02_failclosed_readiness_gate.mjs
 ```
 
 ## EDGE_LAB Files Present
@@ -74,7 +71,11 @@ M EDGE_LAB/EVIDENCE_INDEX.md
 ATTEMPT_LEDGER_POLICY.md
 COURT_MANIFEST.md
 DATASET_CONTRACT.md
+DATA_CONFIRM_POLICY.md
+DELTA_CALC_SPEC.md
+DEP_POLICY.md
 ERROR_BUDGET_POLICY.md
+EVIDENCE_CANON_RULES.md
 EVIDENCE_INDEX.md
 EXECUTION_MODEL.md
 EXECUTION_REALITY_POLICY.md
@@ -110,6 +111,8 @@ RUNBOOK_EDGE.md
 SLO_SLI.md
 SOURCES_POLICY.md
 TRIALS_LEDGER.md
+UPDATE_SCOPE_POLICY.md
 VERDICT_SEMANTICS.md
 WALK_FORWARD_PROTOCOL.md
+tests
 ```

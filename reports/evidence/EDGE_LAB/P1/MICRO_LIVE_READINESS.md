@@ -1,10 +1,16 @@
 # MICRO_LIVE_READINESS.md — Micro-Live Readiness Assessment
-generated_at: b4de92324329
-script: edge_micro_live_readiness.mjs
 
-## STATUS: PASS
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: 3d37e68311e2
+NEXT_ACTION: Operator reviews PAPER_TO_MICRO_LIVE_PROTOCOL.md and approves micro-live pilot.
+
+## Infra Eligibility Check (R12 Fail-Closed)
+
+**INFRA eligible:** No DEP blocking codes in infra closeout.
 
 ## Eligibility Matrix
+
 | State | Value |
 |-------|-------|
 | ELIGIBLE_FOR_PAPER | true |
@@ -12,6 +18,7 @@ script: edge_micro_live_readiness.mjs
 | ELIGIBLE_FOR_LIVE | false |
 
 ## Gate Prerequisite Checks
+
 | Gate | Required | Actual | Result | Reason |
 |------|---------|--------|--------|--------|
 | PROFIT_CANDIDATES_COURT | PASS | PASS | PASS | NONE |
@@ -21,6 +28,7 @@ script: edge_micro_live_readiness.mjs
 | PAPER_COURT | PASS | PASS | PASS | NONE |
 
 ## Protocol Checks (PAPER_TO_MICRO_LIVE_PROTOCOL.md)
+
 | Required Field | Found |
 |---------------|-------|
 | stop_rules_section | FOUND |
@@ -29,10 +37,8 @@ script: edge_micro_live_readiness.mjs
 | stop | FOUND |
 | SLI | FOUND |
 
-## Blocked Reasons
-- NONE
-
 ## Verdict
+
 MICRO_LIVE_ELIGIBLE: **true**
 LIVE_ELIGIBLE: **false** (permanent false — requires explicit policy upgrade)
 
