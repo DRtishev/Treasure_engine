@@ -2,7 +2,7 @@
   "dual_hash_demo": {
     "hashes_differ": true,
     "input": "generated_at: 2026-02-21T12:00:00.000Z\nthreshold: 0.015",
-    "sha256_norm": "587c514425861fa82329a4e36e4bc9eba2a981ce86e556d628435e1fa6895c80",
+    "sha256_norm": "bd8161374f423a36098c58775c6f3817453819ad0012507f66e722616375ba79",
     "sha256_raw": "ed8d2a7d707b4678989ed10c4010439be1f690d4b5e0808124bd7a8267701826"
   },
   "fail_count": 0,
@@ -10,26 +10,26 @@
   "next_action": "No action required. Canon selftest is GREEN.",
   "pass_count": 7,
   "reason_code": "NONE",
-  "run_id": "f545a66795e5",
+  "run_id": "3d37e68311e2",
   "schema_version": "1.0.0",
   "status": "PASS",
   "total_vectors": 7,
   "vectors": [
     {
       "description": "Volatile generated_at timestamp",
-      "detail": "Correctly transformed: \"generated_at: 2026-02-21T12:00:00.000Z\" → \"generated_at: f545a66795e5\"",
+      "detail": "Correctly transformed: \"generated_at: 2026-02-21T12:00:00.000Z\" → \"generated_at: 3d37e68311e2\"",
       "id": 1,
       "input": "generated_at: 2026-02-21T12:00:00.000Z",
-      "output": "generated_at: f545a66795e5",
+      "output": "generated_at: 3d37e68311e2",
       "passed": true,
       "type": "VOLATILE"
     },
     {
       "description": "Volatile Started timestamp",
-      "detail": "Correctly transformed: \"Started: 2026-01-15T08:30:00.500Z\" → \"Started: f545a66795e5\"",
+      "detail": "Correctly transformed: \"Started: 2026-01-15T08:30:00.500Z\" → \"Started: 3d37e68311e2\"",
       "id": 2,
       "input": "Started: 2026-01-15T08:30:00.500Z",
-      "output": "Started: f545a66795e5",
+      "output": "Started: 3d37e68311e2",
       "passed": true,
       "type": "VOLATILE"
     },
@@ -62,10 +62,10 @@
     },
     {
       "description": "Volatile Completed with timestamp and ms timing",
-      "detail": "Correctly transformed: \"Completed: 2026-02-21T09:00:00.123Z (took 1234ms)\" → \"Completed: f545a66795e5 (took 1234ms)\"",
+      "detail": "Correctly transformed: \"Completed: 2026-02-21T09:00:00.123Z (took 1234ms)\" → \"Completed: 3d37e68311e2 (took 1234ms)\"",
       "id": 6,
       "input": "Completed: 2026-02-21T09:00:00.123Z (took 1234ms)",
-      "output": "Completed: f545a66795e5 (took 1234ms)",
+      "output": "Completed: 3d37e68311e2 (took 1234ms)",
       "passed": true,
       "type": "VOLATILE"
     },

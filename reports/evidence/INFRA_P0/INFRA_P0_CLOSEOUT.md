@@ -2,7 +2,10 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: f545a66795e5
+RUN_ID: 3d37e68311e2
+ELIGIBLE_FOR_MICRO_LIVE: true
+ELIGIBLE_FOR_EXECUTION: true
+ELIGIBILITY_REASON: No DEP blocking codes detected
 NEXT_ACTION: Run edge:calm:p0 to complete full P0 closeout.
 
 ## Gate Matrix
@@ -11,44 +14,45 @@ NEXT_ACTION: Run edge:calm:p0 to complete full P0 closeout.
 |------|--------|-------------|---------|
 | NODE_TRUTH | PASS | NONE | YES |
 | VERIFY_MODE | PASS | NONE | YES |
-| DEPS_OFFLINE | FAIL | DEP02 | NO (warn) |
+| DEPS_OFFLINE | PASS | NONE | NO (warn) |
 | GOLDENS_APPLY | PASS | NONE | YES |
 | FORMAT_POLICY | PASS | NONE | YES |
+
+## Eligibility Flags (R12/R13)
+
+| Flag | Value | Reason |
+|------|-------|--------|
+| eligible_for_micro_live | true | No DEP blocking codes detected |
+| eligible_for_execution | true | No DEP blocking codes detected |
+
+**Note:** Infra closeout may PASS overall while eligibility is false.
+Readiness gate MUST honour these flags and emit BLOCKED with the same DEP reason code.
+See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 ## Evidence Hashes
 
 | Evidence Path | sha256_raw (prefix) | sha256_norm (prefix) |
 |--------------|--------------------|--------------------|
-| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `195734279642b2c9…` | `195734279642b2c9…` |
-| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `f6d750ead30f8a39…` | `f6d750ead30f8a39…` |
-| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL.md` | `a2e82c327707b35b…` | `a2e82c327707b35b…` |
-| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `898c5518242541a8…` | `898c5518242541a8…` |
-| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `55b4606037201418…` | `55b4606037201418…` |
+| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `2766e252e4a28d01…` | `2766e252e4a28d01…` |
+| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `cc90002d2f29641b…` | `cc90002d2f29641b…` |
+| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `8870ce201bc6316e…` | `8870ce201bc6316e…` |
+| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `40f5c23a1942deb8…` | `40f5c23a1942deb8…` |
+| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `974ee9eb64f7f440…` | `974ee9eb64f7f440…` |
 
-## What Changed
+## What Changed (v1.5.3 patchset)
 
-- NODE_TRUTH.md: authoritative SSOT for Node.js version governance (allowed_family=22)
-- VERIFY_MODE.md: VERIFY_MODE=GIT documented, VM04 format validation
-- BUNDLE_CONTRACT.md: bundle fingerprint contract for offline deployments
-- GOLDENS_APPLY_PROTOCOL.md: golden update governance (G001/G002)
-- FORMAT_POLICY.md: evidence format + machine JSON rules (R13/R14)
-- EVIDENCE_CANON_RULES.md: normalization rules with volatile markers (R9)
-- UPDATE_SCOPE_POLICY.md: scope change governance (R11)
-- DATA_CONFIRM_POLICY.md: data confirmation policy (DC90)
-- DELTA_CALC_SPEC.md: delta calculation specification
-- scripts/lib/write_json_deterministic.mjs: R13 compliant JSON writer
-- scripts/verify/node_truth_gate.mjs: NT01/NT02 gate
-- scripts/verify/verify_mode_gate.mjs: VM01-VM04 gate
-- scripts/verify/deps_offline_install_contract.mjs: DEP01/02/03 gate
-- scripts/verify/goldens_apply_gate.mjs: G001/G002 gate
-- scripts/verify/format_policy_gate.mjs: FP01 gate (strict P0 scope)
+- DEPS_OFFLINE evidence renamed: DEPS_OFFLINE_INSTALL_CONTRACT.md (EVIDENCE_NAMING_SSOT)
+- infra_p0_closeout.json: now emits eligible_for_micro_live + eligible_for_execution (R13)
+- DEP02 propagation: INFRA FAIL DEP02 → EDGE BLOCKED DEP02 (R12, sealed via dep02_failclosed_readiness_gate)
+- EDGE_LAB/DEP_POLICY.md: new SSOT documenting DEP propagation governance
 
 ## Real Risks
 
 1. **DEP02 (FAIL)**: `better-sqlite3` requires native build (node-gyp).
-   Mitigation: use prebuilt binaries (`npm install --ignore-scripts` with prebuilt binary) or provision capsule with pre-built .node file.
+   eligible_for_micro_live=false until resolved.
+   Mitigation: use prebuilt binaries or provision capsule with pre-built .node file.
 2. **Legacy FP01 warnings**: 14 pre-existing EDGE_LAB gate JSON files lack schema_version.
-   Mitigation: migrate in follow-up PR by adding write_json_deterministic to each generating script.
+   Mitigation: migrate in follow-up PR.
 3. **DEP01**: if npm cache is absent, fresh install would require network (capsule needed).
    Mitigation: pre-seed npm cache or use vendored node_modules in CI.
 

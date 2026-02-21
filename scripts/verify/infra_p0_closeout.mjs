@@ -3,7 +3,11 @@
  *
  * Runs all INFRA P0 gates and generates:
  * - reports/evidence/INFRA_P0/INFRA_P0_CLOSEOUT.md
- * - reports/evidence/INFRA_P0/gates/manual/infra_p0_final.json
+ * - reports/evidence/INFRA_P0/gates/manual/infra_p0_closeout.json
+ *
+ * R12/R13: emits explicit eligibility flags (eligible_for_micro_live,
+ * eligible_for_execution) — false when DEP01/DEP02/DEP03 present.
+ * Overall status may PASS while eligibility is false.
  */
 
 import fs from 'node:fs';
@@ -36,9 +40,11 @@ const GATES = [
   {
     id: 'DEPS_OFFLINE',
     script: 'scripts/verify/deps_offline_install_contract.mjs',
-    evidence: 'reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL.md',
+    // R12: renamed per EVIDENCE_NAMING_SSOT v1.5.3
+    evidence: 'reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md',
     json: 'reports/evidence/INFRA_P0/gates/manual/deps_offline_install.json',
-    blocker: false,  // DEP01/DEP02 are honest outcomes, not pipeline stoppers
+    // R13: not a pipeline blocker by itself; eligibility flags carry the signal
+    blocker: false,
   },
   {
     id: 'GOLDENS_APPLY',
@@ -55,6 +61,9 @@ const GATES = [
     blocker: true,
   },
 ];
+
+// DEP codes that propagate as ineligibility (R12/R13)
+const DEP_BLOCKING_CODES = ['DEP01', 'DEP02', 'DEP03'];
 
 function readGateStatus(jsonPath) {
   const abs = path.join(ROOT, jsonPath);
@@ -110,7 +119,7 @@ const gateStatuses = GATES.map((gate) => {
   };
 });
 
-// Determine overall status
+// Determine overall pipeline status (blocker gates only)
 let overallStatus = 'PASS';
 for (const g of gateStatuses) {
   if (g.blocker && g.status !== 'PASS') {
@@ -119,9 +128,16 @@ for (const g of gateStatuses) {
   }
 }
 
-// Non-blocker gates get reported as-is
-const nonBlockerStatuses = gateStatuses.filter((g) => !g.blocker);
-const blockerStatuses = gateStatuses.filter((g) => g.blocker);
+// R12/R13: Compute eligibility from DEP gate outcomes (independent of overall status)
+const depGate = gateStatuses.find((g) => g.gate === 'DEPS_OFFLINE');
+const depReasonCode = depGate?.reason_code || 'NONE';
+const hasDepBlock = DEP_BLOCKING_CODES.includes(depReasonCode);
+
+const eligible_for_micro_live = !hasDepBlock;
+const eligible_for_execution = !hasDepBlock;
+const eligibility_reason = hasDepBlock
+  ? `${depReasonCode}: ${depGate?.message || 'DEP gate failure detected'}`
+  : 'No DEP blocking codes detected';
 
 // Compute evidence hashes
 const evidenceHashes = gateStatuses.map((g) => {
@@ -143,19 +159,24 @@ const overallReason = overallStatus === 'PASS' ? 'NONE'
   : gateStatuses.find((g) => g.blocker && g.status !== 'PASS')?.reason_code || 'UNKNOWN';
 
 const message = overallStatus === 'PASS'
-  ? 'INFRA P0 PASS — NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY all PASS. DEPS_OFFLINE reported honestly (may be DEP01/DEP02 if native build).'
+  ? `INFRA P0 PASS — NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY all PASS. DEPS_OFFLINE reported honestly (${depReasonCode}). ELIGIBLE_FOR_MICRO_LIVE=${eligible_for_micro_live}.`
   : `INFRA P0 ${overallStatus} — ${overallReason}: ${gateStatuses.find((g) => g.blocker && g.status !== 'PASS')?.message || ''}`;
 
 const nextAction = overallStatus === 'PASS'
-  ? 'Run edge:calm:p0 to complete full P0 closeout.'
+  ? (eligible_for_micro_live
+      ? 'Run edge:calm:p0 to complete full P0 closeout.'
+      : `Resolve ${depReasonCode} before proceeding to readiness. See EDGE_LAB/DEP_POLICY.md for mitigation paths.`)
   : `Fix ${gateStatuses.find((g) => g.blocker && g.status !== 'PASS')?.gate} before proceeding.`;
 
-// Write closeout
+// Write closeout markdown
 const closeoutMd = `# INFRA_P0_CLOSEOUT.md — Infrastructure P0 Hardening Closeout
 
 STATUS: ${overallStatus}
 REASON_CODE: ${overallReason}
 RUN_ID: ${RUN_ID}
+ELIGIBLE_FOR_MICRO_LIVE: ${eligible_for_micro_live}
+ELIGIBLE_FOR_EXECUTION: ${eligible_for_execution}
+ELIGIBILITY_REASON: ${eligibility_reason}
 NEXT_ACTION: ${nextAction}
 
 ## Gate Matrix
@@ -164,36 +185,37 @@ NEXT_ACTION: ${nextAction}
 |------|--------|-------------|---------|
 ${gateMatrixTable}
 
+## Eligibility Flags (R12/R13)
+
+| Flag | Value | Reason |
+|------|-------|--------|
+| eligible_for_micro_live | ${eligible_for_micro_live} | ${eligibility_reason} |
+| eligible_for_execution | ${eligible_for_execution} | ${eligibility_reason} |
+
+**Note:** Infra closeout may PASS overall while eligibility is false.
+Readiness gate MUST honour these flags and emit BLOCKED with the same DEP reason code.
+See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
+
 ## Evidence Hashes
 
 | Evidence Path | sha256_raw (prefix) | sha256_norm (prefix) |
 |--------------|--------------------|--------------------|
 ${hashesTable}
 
-## What Changed
+## What Changed (v1.5.3 patchset)
 
-- NODE_TRUTH.md: authoritative SSOT for Node.js version governance (allowed_family=22)
-- VERIFY_MODE.md: VERIFY_MODE=GIT documented, VM04 format validation
-- BUNDLE_CONTRACT.md: bundle fingerprint contract for offline deployments
-- GOLDENS_APPLY_PROTOCOL.md: golden update governance (G001/G002)
-- FORMAT_POLICY.md: evidence format + machine JSON rules (R13/R14)
-- EVIDENCE_CANON_RULES.md: normalization rules with volatile markers (R9)
-- UPDATE_SCOPE_POLICY.md: scope change governance (R11)
-- DATA_CONFIRM_POLICY.md: data confirmation policy (DC90)
-- DELTA_CALC_SPEC.md: delta calculation specification
-- scripts/lib/write_json_deterministic.mjs: R13 compliant JSON writer
-- scripts/verify/node_truth_gate.mjs: NT01/NT02 gate
-- scripts/verify/verify_mode_gate.mjs: VM01-VM04 gate
-- scripts/verify/deps_offline_install_contract.mjs: DEP01/02/03 gate
-- scripts/verify/goldens_apply_gate.mjs: G001/G002 gate
-- scripts/verify/format_policy_gate.mjs: FP01 gate (strict P0 scope)
+- DEPS_OFFLINE evidence renamed: DEPS_OFFLINE_INSTALL_CONTRACT.md (EVIDENCE_NAMING_SSOT)
+- infra_p0_closeout.json: now emits eligible_for_micro_live + eligible_for_execution (R13)
+- DEP02 propagation: INFRA FAIL DEP02 → EDGE BLOCKED DEP02 (R12, sealed via dep02_failclosed_readiness_gate)
+- EDGE_LAB/DEP_POLICY.md: new SSOT documenting DEP propagation governance
 
 ## Real Risks
 
 1. **DEP02 (FAIL)**: \`better-sqlite3\` requires native build (node-gyp).
-   Mitigation: use prebuilt binaries (\`npm install --ignore-scripts\` with prebuilt binary) or provision capsule with pre-built .node file.
+   eligible_for_micro_live=false until resolved.
+   Mitigation: use prebuilt binaries or provision capsule with pre-built .node file.
 2. **Legacy FP01 warnings**: 14 pre-existing EDGE_LAB gate JSON files lack schema_version.
-   Mitigation: migrate in follow-up PR by adding write_json_deterministic to each generating script.
+   Mitigation: migrate in follow-up PR.
 3. **DEP01**: if npm cache is absent, fresh install would require network (capsule needed).
    Mitigation: pre-seed npm cache or use vendored node_modules in CI.
 
@@ -204,9 +226,12 @@ ${nextAction}
 
 fs.writeFileSync(path.join(INFRA_DIR, 'INFRA_P0_CLOSEOUT.md'), closeoutMd);
 
-// Write infra_p0_final.json
-const finalGate = {
+// Write infra_p0_closeout.json (renamed from infra_p0_final.json per EVIDENCE_NAMING_SSOT)
+const closeoutGate = {
   schema_version: '1.0.0',
+  eligible_for_execution,
+  eligible_for_micro_live,
+  eligibility_reason,
   gate_matrix: gateStatuses.map((g) => ({
     gate: g.gate,
     status: g.status,
@@ -220,7 +245,7 @@ const finalGate = {
   status: overallStatus,
 };
 
-writeJsonDeterministic(path.join(MANUAL_DIR, 'infra_p0_final.json'), finalGate);
+writeJsonDeterministic(path.join(MANUAL_DIR, 'infra_p0_closeout.json'), closeoutGate);
 
 console.log('\n' + '='.repeat(60));
 console.log('INFRA P0 GATE MATRIX');
@@ -230,6 +255,11 @@ for (const g of gateStatuses) {
   console.log(`  [${icon}] ${g.gate} (blocker=${g.blocker})`);
 }
 console.log(`\nFINAL: ${overallStatus}`);
+console.log(`ELIGIBLE_FOR_MICRO_LIVE: ${eligible_for_micro_live}`);
+console.log(`ELIGIBLE_FOR_EXECUTION: ${eligible_for_execution}`);
+if (!eligible_for_micro_live) {
+  console.log(`ELIGIBILITY_REASON: ${eligibility_reason}`);
+}
 console.log('='.repeat(60));
 
 process.exit(overallStatus === 'PASS' || overallStatus === 'NEEDS_DATA' ? 0 : 1);

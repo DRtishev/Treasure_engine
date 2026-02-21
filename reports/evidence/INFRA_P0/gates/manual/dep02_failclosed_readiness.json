@@ -1,0 +1,24 @@
+{
+  "assertions": [
+    {
+      "assertion": "Sanity: infra eligible=true ⇒ readiness not DEP-blocked",
+      "failure_detail": null,
+      "infra_eligible": true,
+      "readiness_reason_code": "NONE",
+      "readiness_status": "PASS",
+      "result": "PASS"
+    }
+  ],
+  "infra_dep_codes": [],
+  "infra_eligible": true,
+  "infra_status": "PASS",
+  "message": "No DEP blocking codes in infra closeout. R12 assertion vacuously true (no DEP present).",
+  "next_action": "No action required.",
+  "no_dep_codes_to_assert": true,
+  "readiness_reason_code": "NONE",
+  "readiness_status": "PASS",
+  "reason_code": "NONE",
+  "run_id": "3d37e68311e2",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

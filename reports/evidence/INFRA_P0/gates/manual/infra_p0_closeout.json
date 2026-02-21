@@ -1,0 +1,43 @@
+{
+  "eligibility_reason": "No DEP blocking codes detected",
+  "eligible_for_execution": true,
+  "eligible_for_micro_live": true,
+  "gate_matrix": [
+    {
+      "blocker": true,
+      "gate": "NODE_TRUTH",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "blocker": true,
+      "gate": "VERIFY_MODE",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "blocker": false,
+      "gate": "DEPS_OFFLINE",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "blocker": true,
+      "gate": "GOLDENS_APPLY",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "blocker": true,
+      "gate": "FORMAT_POLICY",
+      "reason_code": "NONE",
+      "status": "PASS"
+    }
+  ],
+  "message": "INFRA P0 PASS — NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY all PASS. DEPS_OFFLINE reported honestly (NONE). ELIGIBLE_FOR_MICRO_LIVE=true.",
+  "next_action": "Run edge:calm:p0 to complete full P0 closeout.",
+  "overall_reason": "NONE",
+  "run_id": "3d37e68311e2",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

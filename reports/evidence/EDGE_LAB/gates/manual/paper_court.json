@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "reason_code": "NONE",
+  "message": "Paper court execution drift within thresholds (slippage=0.165, fill=0.995, reject=0.005, p95=354ms)",
+  "metrics": {
+    "SLIPPAGE_MODEL_ERROR": 0.165,
+    "FILL_RATE": 0.995,
+    "REJECT_RATE": 0.005,
+    "LATENCY_P95": 354,
+    "REALITY_LEVEL": "PROVISIONAL"
+  },
+  "thresholds": {
+    "slippage_error": 0.3,
+    "fill_rate_min": 0.99,
+    "reject_rate_max": 0.005,
+    "lat_p95_max_ms": 500
+  }
+}

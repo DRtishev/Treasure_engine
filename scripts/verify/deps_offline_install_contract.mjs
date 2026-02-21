@@ -161,7 +161,7 @@ const gateResult = {
 writeJsonDeterministic(path.join(MANUAL_DIR, 'deps_offline_install.json'), gateResult);
 
 // Write markdown evidence
-const md = `# DEPS_OFFLINE_INSTALL.md
+const md = `# DEPS_OFFLINE_INSTALL_CONTRACT.md
 
 STATUS: ${status}
 REASON_CODE: ${reason_code}
@@ -193,10 +193,10 @@ ${message}
 ## Evidence Paths
 
 - reports/evidence/INFRA_P0/gates/manual/deps_offline_install.json
-- reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL.md
+- reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md
 `;
 
-fs.writeFileSync(path.join(EVIDENCE_DIR, 'DEPS_OFFLINE_INSTALL.md'), md);
+fs.writeFileSync(path.join(EVIDENCE_DIR, 'DEPS_OFFLINE_INSTALL_CONTRACT.md'), md);
 
 if (status === 'PASS') {
   console.log(`[PASS] deps_offline_install_contract — ${message}`);

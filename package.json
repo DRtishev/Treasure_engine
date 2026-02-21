@@ -612,7 +612,9 @@
     "verify:goldens:apply": "node scripts/verify/goldens_apply_gate.mjs",
     "verify:format:policy": "node scripts/verify/format_policy_gate.mjs",
     "infra:p0": "node scripts/verify/infra_p0_closeout.mjs",
-    "p0:all": "npm run edge:calm:p0 && npm run infra:p0"
+    "verify:dep02:failclosed": "node scripts/verify/dep02_failclosed_readiness_gate.mjs",
+    "p0:all": "npm run edge:calm:p0 && npm run infra:p0",
+    "p0:full": "npm run p0:all && npm run edge:micro:live:readiness && npm run verify:dep02:failclosed"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

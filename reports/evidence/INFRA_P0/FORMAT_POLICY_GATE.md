@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: f545a66795e5
+RUN_ID: 3d37e68311e2
 NEXT_ACTION: Migrate 3 legacy EDGE_LAB gate JSON files to schema_version in a follow-up PR.
 
 ## Gate Results

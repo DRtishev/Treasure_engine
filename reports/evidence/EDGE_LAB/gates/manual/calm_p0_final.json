@@ -39,18 +39,18 @@
     {
       "exit_code": 0,
       "id": "EVIDENCE_HASHES",
-      "message": "[PASS] edge_evidence_hashes — 86 files hashed, SCOPE_MANIFEST_SHA=4c6a90dd7364fff5...",
+      "message": "[PASS] edge_evidence_hashes — 93 files hashed, SCOPE_MANIFEST_SHA=b9b2c3f00e4f369e...",
       "status": "PASS"
     },
     {
       "exit_code": 0,
       "id": "RECEIPTS_CHAIN",
-      "message": "[PASS] edge_receipts_chain — 86 entries chained, final=fc3d2f8fdc5e9d36...",
+      "message": "[PASS] edge_receipts_chain — 93 entries chained, final=74102da058d4ac1e...",
       "status": "PASS"
     }
   ],
   "reason_code": "NONE",
-  "run_id": "f545a66795e5",
+  "run_id": "3d37e68311e2",
   "schema_version": "1.0.0",
   "status": "PASS",
   "trading_off": true
