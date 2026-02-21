@@ -590,6 +590,7 @@
     "edge:overfit": "node scripts/edge/edge_lab/edge_overfit.mjs",
     "edge:redteam": "node scripts/edge/edge_lab/edge_redteam.mjs",
     "edge:sre": "node scripts/edge/edge_lab/edge_sre.mjs",
+    "edge:micro:live:sre": "node scripts/edge/edge_lab/edge_micro_live_sre.mjs",
     "edge:micro:live:readiness": "node scripts/edge/edge_lab/edge_micro_live_readiness.mjs",
     "edge:verdict": "node scripts/edge/edge_lab/edge_verdict.mjs",
     "edge:all": "node scripts/edge/edge_lab/edge_all.mjs",

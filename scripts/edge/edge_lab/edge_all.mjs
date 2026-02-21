@@ -22,6 +22,7 @@ const steps = [
   { name: 'overfit', script: 'scripts/edge/edge_lab/edge_overfit.mjs', npm: 'edge:overfit' },
   { name: 'redteam', script: 'scripts/edge/edge_lab/edge_redteam.mjs', npm: 'edge:redteam' },
   { name: 'sre', script: 'scripts/edge/edge_lab/edge_sre.mjs', npm: 'edge:sre' },
+  { name: 'micro:live:sre', script: 'scripts/edge/edge_lab/edge_micro_live_sre.mjs', npm: 'edge:micro:live:sre' },
   { name: 'micro:live:readiness', script: 'scripts/edge/edge_lab/edge_micro_live_readiness.mjs', npm: 'edge:micro:live:readiness' },
   { name: 'verdict', script: 'scripts/edge/edge_lab/edge_verdict.mjs', npm: 'edge:verdict' },
 ];
