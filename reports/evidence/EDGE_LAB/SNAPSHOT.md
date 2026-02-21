@@ -1,27 +1,28 @@
 # SNAPSHOT.md — Repository Snapshot
-generated_at: b4de92324329
+generated_at: f545a66795e5
 script: edge_sources.mjs
 
 ## Git State
 | Field | Value |
 |-------|-------|
-| Branch | claude/paper-evidence-foundation-UlQSG |
-| Commit | b4de92324329fc4542e4e891e3ed3b5e68cbb07e |
+| Branch | claude/calm-infra-p0-hardening-UM0c4 |
+| Commit | f545a66795e53cddbec717b6bdeb44d59394f67d |
 | Status | DIRTY |
 
 ## Recent Commits
 ```
+f545a66 Merge pull request #58 from DRtishev/claude/paper-evidence-foundation-UlQSG
+9e744be chore(evidence): ledger acyclicity + SHA256 evidence files from final runs
+c6ee3ba feat(P6): DOCTOR_UX_POLISH — epoch courts display + DOCTOR.md + reason codes bible
 b4de923 feat(P5): PORTFOLIO_COURT — Kelly fractions + diversification + regime matrix
 413510c feat(P4): MULTI_HYPOTHESIS_COURT — Bonferroni correction on OOS tests
-779042c feat(P3): MICRO_LIVE_SRE_COURT — unlock MICRO_LIVE_ELIGIBLE
-295c8a8 feat(P1+P2): EXPECTANCY_CI_COURT + EXECUTION_REALITY_CALIBRATION
-3444ae7 chore(evidence): update court evidence files from final edge:all:x2 run
 ```
 
 ## Working Tree Status
 ```
-M EDGE_LAB/EVIDENCE_INDEX.md
- M EDGE_LAB/FINAL_VERDICT.md
+M EDGE_LAB/COURT_MANIFEST.md
+ M EDGE_LAB/REASON_CODES_BIBLE.md
+ M package.json
  D reports/evidence/EDGE_LAB/ANTI_FLAKE_INDEPENDENCE.md
  D reports/evidence/EDGE_LAB/DATASET_COURT.md
  D reports/evidence/EDGE_LAB/EVIDENCE_INDEX.md
@@ -32,6 +33,7 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/EXECUTION_SENSITIVITY_GRID.md
  D reports/evidence/EDGE_LAB/EXPECTANCY_CI.md
  D reports/evidence/EDGE_LAB/GOVERNANCE_FINGERPRINT.md
+ D reports/evidence/EDGE_LAB/LEDGER_ACYCLICITY.md
  D reports/evidence/EDGE_LAB/MCL_NOTES.md
  D reports/evidence/EDGE_LAB/MEGA_CLOSEOUT_EDGE_LAB.md
  D reports/evidence/EDGE_LAB/MICRO_LIVE_READINESS.md
@@ -46,6 +48,8 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/REDTEAM_COURT.md
  D reports/evidence/EDGE_LAB/REGISTRY_COURT.md
  D reports/evidence/EDGE_LAB/RISK_COURT.md
+ D reports/evidence/EDGE_LAB/SHA256CHECK.md
+ D reports/evidence/EDGE_LAB/SHA256SUMS.md
  D reports/evidence/EDGE_LAB/SLI_BASELINE.md
  D reports/evidence/EDGE_LAB/SNAPSHOT.md
  M reports/evidence/EDGE_LAB/SOURCES_AUDIT.md
@@ -54,6 +58,7 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/gates/manual/anti_flake_independence.json
  D reports/evidence/EDGE_LAB/gates/manual/execution_reality_court.json
  D reports/evidence/EDGE_LAB/gates/manual/expectancy_ci.json
+ D reports/evidence/EDGE_LAB/gates/manual/ledger_acyclicity.json
  D reports/evidence/EDGE_LAB/gates/manual/micro_live_readiness.json
  D reports/evidence/EDGE_LAB/gates/manual/micro_live_sre.json
  D reports/evidence/EDGE_LAB/gates/manual/multi_hypothesis_court.json
@@ -64,9 +69,30 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/gates/manual/profit_candidates_court.json
  D reports/evidence/EDGE_LAB/gates/manual/proxy_guard.json
  D reports/evidence/EDGE_LAB/gates/manual/sli_baseline.json
- M scripts/edge/edge_lab/edge_doctor.mjs
- M scripts/edge/edge_lab/edge_next_epoch.mjs
-?? EDGE_LAB/REASON_CODES_BIBLE.md
+ M scripts/edge/edge_lab/canon.mjs
+?? BUNDLE_CONTRACT.md
+?? EDGE_LAB/DATA_CONFIRM_POLICY.md
+?? EDGE_LAB/DELTA_CALC_SPEC.md
+?? EDGE_LAB/EVIDENCE_CANON_RULES.md
+?? EDGE_LAB/UPDATE_SCOPE_POLICY.md
+?? EDGE_LAB/tests/
+?? FORMAT_POLICY.md
+?? GOLDENS_APPLY_PROTOCOL.md
+?? NODE_TRUTH.md
+?? VERIFY_MODE.md
+?? reports/evidence/INFRA_P0/
+?? scripts/edge/edge_lab/canon_selftest.mjs
+?? scripts/edge/edge_lab/edge_calm_mode_p0.mjs
+?? scripts/edge/edge_lab/edge_data_court.mjs
+?? scripts/edge/edge_lab/edge_evidence_hashes.mjs
+?? scripts/edge/edge_lab/edge_receipts_chain.mjs
+?? scripts/lib/
+?? scripts/verify/deps_offline_install_contract.mjs
+?? scripts/verify/format_policy_gate.mjs
+?? scripts/verify/goldens_apply_gate.mjs
+?? scripts/verify/infra_p0_closeout.mjs
+?? scripts/verify/node_truth_gate.mjs
+?? scripts/verify/verify_mode_gate.mjs
 ```
 
 ## EDGE_LAB Files Present
@@ -74,7 +100,10 @@ M EDGE_LAB/EVIDENCE_INDEX.md
 ATTEMPT_LEDGER_POLICY.md
 COURT_MANIFEST.md
 DATASET_CONTRACT.md
+DATA_CONFIRM_POLICY.md
+DELTA_CALC_SPEC.md
 ERROR_BUDGET_POLICY.md
+EVIDENCE_CANON_RULES.md
 EVIDENCE_INDEX.md
 EXECUTION_MODEL.md
 EXECUTION_REALITY_POLICY.md
@@ -110,6 +139,8 @@ RUNBOOK_EDGE.md
 SLO_SLI.md
 SOURCES_POLICY.md
 TRIALS_LEDGER.md
+UPDATE_SCOPE_POLICY.md
 VERDICT_SEMANTICS.md
 WALK_FORWARD_PROTOCOL.md
+tests
 ```

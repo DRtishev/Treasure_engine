@@ -1,5 +1,5 @@
 {
-  "run_id": "c6ee3ba26d43",
+  "run_id": "f545a66795e5",
   "status": "PASS",
   "reason_code": "NONE",
   "message": "Ledger scope excludes SHA256SUMS.md and SHA256CHECK.md. Acyclic contract verified.",
@@ -7,5 +7,5 @@
     "SHA256SUMS.md",
     "SHA256CHECK.md"
   ],
-  "files_in_scope": 110
+  "files_in_scope": 85
 }

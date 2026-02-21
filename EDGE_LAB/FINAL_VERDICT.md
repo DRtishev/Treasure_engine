@@ -1,13 +1,18 @@
-# FINAL_VERDICT.md — Final Verdict (Mirror)
-generated_at: 2026-02-21T13:16:20.737Z
-script: edge_verdict.mjs
+# VERDICT.md — EDGE_LAB Final Verdict
+generated_at: f545a66795e5
+script: edge_all.mjs
 
-## FINAL VERDICT: ELIGIBLE
+## FINAL VERDICT: BLOCKED
 
-All courts passed. Edge hypothesis portfolio is ready for deployment consideration.
+## Verdict Reason
+Pipeline failed at step: paper:ingest. All subsequent courts were not evaluated.
 
-| Courts PASS | Courts FAIL | Registry |
-|------------|------------|---------|
-| 13 / 13 | 0 | 20 hacks registered |
+## Pipeline Results
+| sources | PASS |
+| registry | PASS |
+| profit:candidates | PASS |
+| paper:ingest | FAIL |
 
-*Canonical verdict: reports/evidence/EDGE_LAB/VERDICT.md*
+## Next Steps
+1. Fix the failing script: edge:paper:ingest
+2. Rerun: npm run edge:all

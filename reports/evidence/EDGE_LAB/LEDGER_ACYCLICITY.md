@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: c6ee3ba26d43
+RUN_ID: f545a66795e5
 NEXT_ACTION: Acyclic contract satisfied. Ledger is idempotent across run order.
 
 ## Contract
@@ -19,7 +19,7 @@ Including SHA256SUMS.md or SHA256CHECK.md in their own hash calculation would:
 
 ## Files In Scope
 
-110 files hashed in this run.
+85 files hashed in this run.
 
 ## Gate
 

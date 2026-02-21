@@ -1,0 +1,17 @@
+{
+  "has_native_build": true,
+  "message": "Native build (node-gyp or equivalent) detected during offline install check. Native builds require capsule/toolchain policy approval.",
+  "native_patterns_found": [
+    "prebuild-install"
+  ],
+  "next_action": "Review native dependency. Either pre-build in capsule, use prebuilt binaries, or add to approved native build list.",
+  "reason_code": "DEP02",
+  "registry_patterns_run1": [],
+  "registry_patterns_run2": [],
+  "run1_exit_code": 0,
+  "run2_exit_code": 0,
+  "run_id": "f545a66795e5",
+  "schema_version": "1.0.0",
+  "status": "FAIL",
+  "x2_drift": false
+}

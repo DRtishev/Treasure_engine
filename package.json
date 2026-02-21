@@ -600,7 +600,19 @@
     "edge:all:x2": "node scripts/edge/edge_lab/edge_all_x2.mjs",
     "edge:raw:x2": "node scripts/edge/edge_lab/edge_raw_x2.mjs",
     "edge:ledger": "node scripts/edge/edge_lab/edge_ledger.mjs",
-    "edge:doctor": "node scripts/edge/edge_lab/edge_doctor.mjs"
+    "edge:doctor": "node scripts/edge/edge_lab/edge_doctor.mjs",
+    "edge:calm:p0": "node scripts/edge/edge_lab/edge_calm_mode_p0.mjs",
+    "edge:calm:canon:selftest": "node scripts/edge/edge_lab/canon_selftest.mjs",
+    "edge:calm:hashes": "node scripts/edge/edge_lab/edge_evidence_hashes.mjs",
+    "edge:calm:receipts": "node scripts/edge/edge_lab/edge_receipts_chain.mjs",
+    "edge:calm:data:court": "node scripts/edge/edge_lab/edge_data_court.mjs",
+    "verify:node:truth": "node scripts/verify/node_truth_gate.mjs",
+    "verify:verify:mode": "node scripts/verify/verify_mode_gate.mjs",
+    "verify:deps:offline": "node scripts/verify/deps_offline_install_contract.mjs",
+    "verify:goldens:apply": "node scripts/verify/goldens_apply_gate.mjs",
+    "verify:format:policy": "node scripts/verify/format_policy_gate.mjs",
+    "infra:p0": "node scripts/verify/infra_p0_closeout.mjs",
+    "p0:all": "npm run edge:calm:p0 && npm run infra:p0"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

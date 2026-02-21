@@ -1,0 +1,55 @@
+{
+  "checks": [
+    {
+      "check": "FORMAT_POLICY.md",
+      "result": "PRESENT"
+    },
+    {
+      "check": "EDGE_LAB_evidence_root",
+      "result": "CHECKED"
+    },
+    {
+      "check": "INFRA_P0_evidence_root",
+      "result": "CHECKED"
+    },
+    {
+      "check": "machine_json_schema_version",
+      "legacy_count": 5,
+      "result": "CHECKED",
+      "strict_count": 6
+    }
+  ],
+  "legacy_warnings": [
+    {
+      "detail": "missing schema_version",
+      "migration": "SCHEDULED",
+      "path": "reports/evidence/EDGE_LAB/gates/manual/ledger_acyclicity.json",
+      "scope": "LEGACY",
+      "type": "FP01_WARN"
+    },
+    {
+      "detail": "missing schema_version",
+      "migration": "SCHEDULED",
+      "path": "reports/evidence/EDGE_LAB/gates/manual/paper_evidence.json",
+      "scope": "LEGACY",
+      "type": "FP01_WARN"
+    },
+    {
+      "detail": "missing schema_version; forbidden timestamp field(s)",
+      "migration": "SCHEDULED",
+      "path": "reports/evidence/EDGE_LAB/gates/manual/profit_candidates_court.json",
+      "scope": "LEGACY",
+      "type": "FP01_WARN"
+    }
+  ],
+  "legacy_warnings_count": 3,
+  "message": "Format policy satisfied (strict scope). 6 new JSON file(s) verified. 3 legacy file(s) queued for schema_version migration.",
+  "next_action": "Migrate 3 legacy EDGE_LAB gate JSON files to schema_version in a follow-up PR.",
+  "policy_present": true,
+  "reason_code": "NONE",
+  "run_id": "f545a66795e5",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "strict_json_checked": 6,
+  "violations": []
+}

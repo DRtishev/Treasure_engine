@@ -1,0 +1,40 @@
+{
+  "gate_matrix": [
+    {
+      "blocker": true,
+      "gate": "NODE_TRUTH",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "blocker": true,
+      "gate": "VERIFY_MODE",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "blocker": false,
+      "gate": "DEPS_OFFLINE",
+      "reason_code": "DEP02",
+      "status": "FAIL"
+    },
+    {
+      "blocker": true,
+      "gate": "GOLDENS_APPLY",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "blocker": true,
+      "gate": "FORMAT_POLICY",
+      "reason_code": "NONE",
+      "status": "PASS"
+    }
+  ],
+  "message": "INFRA P0 PASS — NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY all PASS. DEPS_OFFLINE reported honestly (may be DEP01/DEP02 if native build).",
+  "next_action": "Run edge:calm:p0 to complete full P0 closeout.",
+  "overall_reason": "NONE",
+  "run_id": "f545a66795e5",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
