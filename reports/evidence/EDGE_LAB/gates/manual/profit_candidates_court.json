@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-02-21T08:25:55.584Z",
+  "script": "edge_profit_candidates.mjs",
+  "status": "PASS",
+  "reason_code": "NONE",
+  "message": "All 4 profit candidates validated. Schema compliant: 4/4.",
+  "candidate_count": 4,
+  "candidates": [
+    {
+      "name": "H_ATR_SQUEEZE_BREAKOUT",
+      "status": "NEEDS_DATA",
+      "compliant": true
+    },
+    {
+      "name": "H_BB_SQUEEZE",
+      "status": "NEEDS_DATA",
+      "compliant": true
+    },
+    {
+      "name": "H_VOLUME_SPIKE",
+      "status": "NEEDS_DATA",
+      "compliant": true
+    },
+    {
+      "name": "H_VWAP_REVERSAL",
+      "status": "NEEDS_DATA",
+      "compliant": true
+    }
+  ]
+}

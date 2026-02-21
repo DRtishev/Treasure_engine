@@ -1,43 +1,106 @@
 # SNAPSHOT.md — Repository Snapshot
-generated_at: 2026-02-19T19:57:12.139Z
+generated_at: 88fd2c328fa8
 script: edge_sources.mjs
 
 ## Git State
 | Field | Value |
 |-------|-------|
-| Branch | claude/edge-lab-implementation-jzhog |
-| Commit | 0e21d49265b20024da6f0980da94d10248c5576a |
+| Branch | claude/profit-candidates-execution-courts-sxMmX |
+| Commit | 88fd2c328fa8e3fc8c36b2cbc73d1d46484e5c31 |
 | Status | DIRTY |
 
 ## Recent Commits
 ```
-0e21d49 Merge pull request #53 from DRtishev/claude/treasure-absolute-reliability-GoJS4
-7f498ea [P2] MASTERPIECE: transfer receipts polish + closeout + final archive seal
-d0247ee [P0][P1] MASTERPIECE: clean-room + contracts self-fix + reason codes + doctor flight deck
-9acbce4 feat(absolute-reliability): ship ABSOLUTE RELIABILITY meta-epoch hardening
-b841035 Merge pull request #52 from DRtishev/codex/fix-authority-model-for-node20-support
+88fd2c3 fix(edge-lab): POML v5.0 follow-up — update MEGA_CLOSEOUT to 14-step pipeline
+489d15c feat(edge-lab): POML v5.0 — Anti-Flake Independence, Acyclic Ledger, Paper Evidence Ingest
+4a5145b chore(evidence): update generated EDGE_LAB mirror artifacts from pipeline run
+5bfbf06 feat(edge-lab): Profit Candidate Set v1 + Execution Reality Court + Micro-Live Readiness + Governance Fingerprint
+64be688 Merge pull request #56 from DRtishev/codex/implement-edge-lab-execution-reality-tasks
 ```
 
 ## Working Tree Status
 ```
-M package.json
-?? EDGE_LAB/
-?? reports/evidence/EDGE_LAB/
-?? scripts/edge/edge_lab/
+M EDGE_LAB/EVIDENCE_INDEX.md
+ M EDGE_LAB/FINAL_VERDICT.md
+ M EDGE_LAB/RUNBOOK_EDGE.md
+ M package.json
+ D reports/evidence/EDGE_LAB/ANTI_FLAKE_INDEPENDENCE.md
+ D reports/evidence/EDGE_LAB/ANTI_FLAKE_X2.md
+ D reports/evidence/EDGE_LAB/DATASET_COURT.md
+ D reports/evidence/EDGE_LAB/EVIDENCE_INDEX.md
+ D reports/evidence/EDGE_LAB/EXECUTION_BREAKPOINTS.md
+ D reports/evidence/EDGE_LAB/EXECUTION_COURT.md
+ D reports/evidence/EDGE_LAB/EXECUTION_DRIFT.md
+ D reports/evidence/EDGE_LAB/EXECUTION_REALITY_COURT.md
+ D reports/evidence/EDGE_LAB/EXECUTION_SENSITIVITY_GRID.md
+ D reports/evidence/EDGE_LAB/GOVERNANCE_FINGERPRINT.md
+ D reports/evidence/EDGE_LAB/LEDGER_ACYCLICITY.md
+ D reports/evidence/EDGE_LAB/MANIFEST_CHECK.md
+ D reports/evidence/EDGE_LAB/MANIFEST_CHECK_RESULT.md
+ D reports/evidence/EDGE_LAB/MCL_NOTES.md
+ D reports/evidence/EDGE_LAB/MEGA_CLOSEOUT_EDGE_LAB.md
+ D reports/evidence/EDGE_LAB/MEGA_CLOSEOUT_NEXT_EPOCH.md
+ D reports/evidence/EDGE_LAB/META_AUDIT.md
+ D reports/evidence/EDGE_LAB/MICRO_LIVE_READINESS.md
+ D reports/evidence/EDGE_LAB/NONDETERMINISM_REPORT.md
+ D reports/evidence/EDGE_LAB/OVERFIT_COURT.md
+ D reports/evidence/EDGE_LAB/PAPER_COURT.md
+ D reports/evidence/EDGE_LAB/PAPER_EVIDENCE.md
+ D reports/evidence/EDGE_LAB/PROFIT_CANDIDATES_COURT.md
+ D reports/evidence/EDGE_LAB/RAW_STABILITY_REPORT.md
+ D reports/evidence/EDGE_LAB/REDTEAM_COURT.md
+ D reports/evidence/EDGE_LAB/REGISTRY_COURT.md
+ D reports/evidence/EDGE_LAB/RISK_COURT.md
+ D reports/evidence/EDGE_LAB/SHA256CHECK.md
+ D reports/evidence/EDGE_LAB/SHA256SUMS.md
+ D reports/evidence/EDGE_LAB/SLI_BASELINE.md
+ D reports/evidence/EDGE_LAB/SNAPSHOT.md
+ M reports/evidence/EDGE_LAB/SOURCES_AUDIT.md
+ D reports/evidence/EDGE_LAB/SRE_COURT.md
+ D reports/evidence/EDGE_LAB/VERDICT.md
+ D reports/evidence/EDGE_LAB/gates/manual/anti_flake_independence.json
+ D reports/evidence/EDGE_LAB/gates/manual/contract_manifest_result.json
+ D reports/evidence/EDGE_LAB/gates/manual/determinism_x2.json
+ D reports/evidence/EDGE_LAB/gates/manual/execution_reality_court.json
+ D reports/evidence/EDGE_LAB/gates/manual/final_verdict.json
+ D reports/evidence/EDGE_LAB/gates/manual/ledger_acyclicity.json
+ D reports/evidence/EDGE_LAB/gates/manual/ledger_check.json
+ D reports/evidence/EDGE_LAB/gates/manual/meta_audit.json
+ D reports/evidence/EDGE_LAB/gates/manual/micro_live_readiness.json
+ D reports/evidence/EDGE_LAB/gates/manual/paper_court.json
+ D reports/evidence/EDGE_LAB/gates/manual/paper_evidence.json
+ D reports/evidence/EDGE_LAB/gates/manual/profit_candidates_court.json
+ D reports/evidence/EDGE_LAB/gates/manual/proxy_guard.json
+ D reports/evidence/EDGE_LAB/gates/manual/raw_stability.json
+ D reports/evidence/EDGE_LAB/gates/manual/sli_baseline.json
+ D reports/evidence/EDGE_LAB/gates/manual/verdict_stratification.json
+?? EDGE_LAB/PAPER_EVIDENCE_IMPORT.md
+?? artifacts/incoming/paper_evidence.json
+?? artifacts/incoming/raw_paper_trades.csv
+?? scripts/edge/edge_lab/paper_epoch_runner.mjs
 ```
 
 ## EDGE_LAB Files Present
 ```
+COURT_MANIFEST.md
 DATASET_CONTRACT.md
 ERROR_BUDGET_POLICY.md
 EVIDENCE_INDEX.md
 EXECUTION_MODEL.md
+EXECUTION_REALITY_POLICY.md
 EXECUTION_SENSITIVITY_SPEC.md
 FINAL_VERDICT.md
 HACK_REGISTRY.md
 HACK_SCHEMA.md
+MANIFEST_CHECK.md
 OVERFIT_COURT_RULES.md
+PAPER_EVIDENCE_IMPORT.md
+PAPER_EVIDENCE_SPEC.md
+PAPER_TO_MICRO_LIVE_PROTOCOL.md
 POSTMORTEM_TEMPLATE.md
+PROFIT_CANDIDATES_V1.md
+PROXY_GUARD_POLICY.md
+PROXY_VALIDATION.md
 REASON_CODES.md
 RED_TEAM_PLAYBOOK.md
 REGISTRY_CHANGELOG.md
@@ -47,5 +110,6 @@ RUNBOOK_EDGE.md
 SLO_SLI.md
 SOURCES_POLICY.md
 TRIALS_LEDGER.md
+VERDICT_SEMANTICS.md
 WALK_FORWARD_PROTOCOL.md
 ```

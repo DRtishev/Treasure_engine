@@ -1,5 +1,5 @@
 # RUNBOOK_EDGE.md — Operational Runbook
-version: 1.0.0 | last_updated: 2026-02-19
+version: 2.0.0 | last_updated: 2026-02-20
 
 ## Purpose
 
@@ -11,16 +11,23 @@ Step-by-step operational procedures for the EDGE_LAB system. This runbook covers
 
 | Task | Command | Notes |
 |------|---------|-------|
-| Run all courts | `npm run edge:all` | Full pipeline |
+| **DIAGNOSIS** | `npm run edge:doctor` | Show all gate statuses without running pipeline |
+| Run all courts | `npm run edge:all` | Full 14-step pipeline |
+| Run epoch gate | `npm run edge:next-epoch` | Full epoch promotion gate |
+| Anti-flake check | `npm run edge:all:x2` | Run edge:all twice, check determinism |
+| Ledger verify | `npm run edge:ledger` | SHA256 tamper-check (acyclic) |
 | Validate registry | `npm run edge:registry` | Registry court only |
 | Check sources | `npm run edge:sources` | Sources audit |
 | Check dataset | `npm run edge:dataset` | Dataset contract compliance |
 | Check execution | `npm run edge:execution` | Execution model validation |
 | Run sensitivity grid | `npm run edge:execution:grid` | Sensitivity analysis |
+| Ingest paper evidence | `npm run edge:paper:ingest` | Reads artifacts/incoming/paper_evidence.json |
+| Check execution reality | `npm run edge:execution:reality` | Uses MEASURED if paper evidence available |
 | Check risk FSM | `npm run edge:risk` | Risk FSM validation |
 | Check overfit | `npm run edge:overfit` | Overfit court |
 | Run red team | `npm run edge:redteam` | Red team assessment |
 | Check SRE | `npm run edge:sre` | SLO/SLI and error budget |
+| Micro-live readiness | `npm run edge:micro:live:readiness` | Prerequisite gate check |
 | Generate verdict | `npm run edge:verdict` | Final verdict |
 
 ---
@@ -208,3 +215,206 @@ echo "Exit code: $?"
 ```
 Expected output: `[PASS] EDGE_LAB verdict: ELIGIBLE` (or appropriate status)
 CI should fail if exit code != 0.
+
+---
+
+### MP-04: Paper Evidence — Full Operator Workflow
+
+**Goal:** Unlock MEASURED execution reality by ingesting a completed paper trading epoch.
+
+#### Step 1 — Export raw trades from your paper trading platform
+
+Export a CSV file with one row per completed trade. Save to:
+```
+artifacts/incoming/raw_paper_trades.csv
+```
+
+Required columns (header row, case-insensitive, comma-separated):
+| Column | Description |
+|--------|-------------|
+| `trade_id` | Unique string ID per trade |
+| `candidate` | One of: `H_ATR_SQUEEZE_BREAKOUT`, `H_BB_SQUEEZE`, `H_VOLUME_SPIKE`, `H_VWAP_REVERSAL` |
+| `instrument` | `BTCUSDT`, `ETHUSDT`, or `SOLUSDT` |
+| `entry_time` | ISO 8601 UTC: `2026-01-02T09:00:00Z` |
+| `exit_time` | ISO 8601 UTC, must be after entry_time |
+| `side` | `LONG` or `SHORT` |
+| `pnl_pct` | P&L as **percent of capital** (e.g. `1.15` = +1.15%, `-0.68` = -0.68%) |
+
+**Minimum:** 30 completed trades per candidate for PASS status.
+
+**Example CSV rows:**
+```csv
+trade_id,candidate,instrument,entry_time,exit_time,side,pnl_pct,notes
+T001,H_ATR_SQUEEZE_BREAKOUT,BTCUSDT,2026-01-02T09:00:00Z,2026-01-02T13:00:00Z,LONG,1.15,
+T002,H_ATR_SQUEEZE_BREAKOUT,BTCUSDT,2026-01-03T09:00:00Z,2026-01-03T13:00:00Z,LONG,-0.68,false breakout
+T003,H_BB_SQUEEZE,ETHUSDT,2026-01-02T10:00:00Z,2026-01-02T14:00:00Z,LONG,0.98,
+T004,H_VWAP_REVERSAL,BTCUSDT,2026-01-02T09:30:00Z,2026-01-02T11:30:00Z,SHORT,0.72,
+```
+
+See `EDGE_LAB/PAPER_EVIDENCE_IMPORT.md` for full format specification.
+
+#### Step 2 — Run the Paper Epoch Runner
+
+```bash
+node scripts/edge/edge_lab/paper_epoch_runner.mjs
+# or:
+npm run edge:paper:runner
+```
+
+The runner:
+- Parses and validates all rows
+- Deduplicates by `trade_id` (first occurrence wins)
+- Computes per-candidate stats (expectancy, win_rate, sharpe, max_drawdown)
+- Writes `artifacts/incoming/paper_evidence.json`
+- Writes `reports/evidence/EDGE_LAB/PAPER_EPOCH_RUNNER.md`
+
+**Expected output on PASS:**
+```
+[PASS] paper_epoch_runner — epoch: PAPER_EPOCH_20260102_20260131, candidates: 4, trades: 140
+  -> artifacts/incoming/paper_evidence.json
+  -> reports/evidence/EDGE_LAB/PAPER_EPOCH_RUNNER.md
+```
+
+**If NEEDS_DATA** (`INSUFFICIENT_TRADE_COUNT`): fewer than 30 trades per candidate.
+Continue paper trading and re-export with more trades.
+
+**If BLOCKED** (`VALIDATION_ERRORS`): fix the CSV errors listed in `PAPER_EPOCH_RUNNER.md`.
+
+#### Step 3 — Validate with edge:paper:ingest
+
+```bash
+npm run edge:paper:ingest
+```
+
+This re-validates `artifacts/incoming/paper_evidence.json` against the AJV schema.
+Expected: `[PASS] edge:paper:ingest — PAPER_EPOCH_...: 4 candidates, 140 trades`
+
+If BLOCKED: fix `paper_evidence.json` or re-run the runner from Step 2.
+
+#### Step 4 — Run the full producer pipeline
+
+```bash
+npm run edge:all
+```
+
+Expected: all 14 steps PASS. The pipeline now picks up paper_evidence.json and runs
+`edge:execution:reality` in MEASURED mode. Check output:
+```
+[PASS] edge:execution:reality — mode: MEASURED, ...
+```
+
+#### Step 5 — Verify promotion eligibility
+
+```bash
+npm run edge:doctor
+```
+
+Check that `PAPER_EVIDENCE` and `EXECUTION_REALITY_COURT` now show **PASS**.
+
+#### Step 6 — Run epoch gate
+
+```bash
+npm run edge:next-epoch
+```
+
+If `MICRO_LIVE_READINESS` also shows PASS, the epoch gate will PASS and
+`ELIGIBLE_FOR_PAPER=true`, `ELIGIBLE_FOR_MICRO_LIVE=true`.
+
+#### Sample paper_evidence.json (output from runner)
+
+```json
+{
+  "schema_version": "1.0.0",
+  "epoch_id": "PAPER_EPOCH_20260102_20260131",
+  "start_date": "2026-01-02",
+  "end_date": "2026-01-31",
+  "instrument": "BTCUSDT",
+  "candidates": [
+    {
+      "name": "H_ATR_SQUEEZE_BREAKOUT",
+      "trade_count": 35,
+      "expectancy_pct": 0.3023,
+      "win_rate": 0.5714,
+      "avg_winner_pct": 1.0485,
+      "avg_loser_pct": -0.6927,
+      "max_drawdown_pct": 1.3852,
+      "sharpe_ratio": 0.3431
+    }
+  ],
+  "total_trades": 140,
+  "generated_at": "2026-02-20T13:51:23.706Z"
+}
+```
+
+#### Common Traps
+
+| Trap | Symptom | Fix |
+|------|---------|-----|
+| Wrong pnl_pct units | All values < 0.05 (fractional, not percent) | Multiply all pnl_pct by 100 before exporting |
+| Timestamp missing UTC offset | BLOCKED VALIDATION_ERRORS on entry_time | Add `Z` suffix: `2026-01-02T09:00:00Z` |
+| Candidate name typo | BLOCKED VALIDATION_ERRORS unknown candidate | Must match exactly: `H_ATR_SQUEEZE_BREAKOUT` etc. |
+| < 30 trades/candidate | NEEDS_DATA INSUFFICIENT_TRADE_COUNT | Continue paper trading epoch |
+| runner not found | `Cannot find module` | Run from repo root: `npm run edge:paper:runner` |
+
+---
+
+### MP-05: Diagnosing BLOCKED Epoch Gate
+
+When `npm run edge:next-epoch` returns BLOCKED:
+
+1. Run `npm run edge:doctor` — shows all gate statuses at a glance
+2. Check `MEGA_CLOSEOUT_NEXT_EPOCH.md` for which gate is BLOCKED
+3. For NEEDS_DATA gates (PAPER_EVIDENCE, EXECUTION_REALITY): see MP-04
+4. For core court FAIL: check individual court .md file for REASON_CODE
+5. For NONDETERMINISM: run `npm run edge:all:x2` to isolate which file is drifting
+6. For LEDGER_MISMATCH: ensure edge:all ran before edge:ledger (ledger reads current EVIDENCE_DIR)
+
+---
+
+### MP-06: Verifying Anti-Flake Independence
+
+To verify that the producer pipeline is deterministic (independent of next-epoch readiness):
+
+```bash
+npm run edge:all:x2
+```
+
+Expected: `[PASS] edge:all:x2` — both runs produce identical SHA256 fingerprints.
+
+**If FAIL:** The drift files are listed in `ANTI_FLAKE_INDEPENDENCE.md`.
+Common causes:
+- A script writes the current timestamp without using `stableEvidenceNormalize()`
+- A script includes system-specific paths or environment variables
+- Non-deterministic sorting (e.g., using `Object.keys()` on unordered maps)
+
+Fix: apply `stableEvidenceNormalize()` to all generated .md file content.
+
+---
+
+### MP-07: Verifying Ledger Acyclicity
+
+The ledger (SHA256SUMS.md) excludes its own outputs from scope to prevent circular hashing.
+This is enforced by `edge:ledger` and proven by `LEDGER_ACYCLICITY.md`.
+
+To verify acyclicity after a clean run:
+```bash
+npm run edge:ledger
+cat reports/evidence/EDGE_LAB/LEDGER_ACYCLICITY.md
+```
+Expected: `STATUS: PASS`
+
+**If BLOCKED (LEDGER_MISMATCH):** This means evidence files changed between ledger scope calculation and verification. Re-run `npm run edge:all` first to rebuild a clean evidence state, then re-run `npm run edge:ledger`.
+
+---
+
+## Common Traps
+
+| Trap | Symptom | Fix |
+|------|---------|-----|
+| Running edge:next-epoch before edge:all | CONTRACT_DRIFT: missing files | Run `npm run edge:all` first |
+| Paper evidence submitted after pipeline | PAPER_EVIDENCE status stale | Re-run `npm run edge:all` after ingest |
+| Ledger run after next-epoch (old bug, now fixed) | Was: LEDGER_MISMATCH | Fixed: SHA256SUMS.md excluded from scope |
+| edge:all:x2 shows NONDETERMINISM | Drift in .md files | Apply stableEvidenceNormalize() to the source |
+| ANTI_FLAKE_X2 PASS but edge:all:x2 FAIL | Different normalization paths | Both use stableEvidenceNormalize — check for new timestamp fields |
+| Paper evidence trade_count < 30 | NEEDS_DATA (insufficient) | Complete more paper trades before submitting |
+| Schema version mismatch | BLOCKED: SCHEMA_VALIDATION_FAILED | Use schema_version: "1.0.0" exactly |

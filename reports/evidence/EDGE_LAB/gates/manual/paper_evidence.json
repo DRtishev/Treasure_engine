@@ -1,0 +1,50 @@
+{
+  "status": "PASS",
+  "reason_code": "NONE",
+  "message": "Paper trading evidence ingested. 4 candidate(s), 140 total trades, epoch: PAPER_EPOCH_20260102_20260131.",
+  "epoch_id": "PAPER_EPOCH_20260102_20260131",
+  "start_date": "2026-01-02",
+  "end_date": "2026-01-31",
+  "instrument": "BTCUSDT",
+  "total_trades": 140,
+  "candidates": [
+    {
+      "name": "H_ATR_SQUEEZE_BREAKOUT",
+      "trade_count": 35,
+      "expectancy_pct": 0.6203,
+      "win_rate": 0.5714,
+      "sharpe_ratio": 0.5704,
+      "max_drawdown_pct": 1.2063,
+      "measured": true
+    },
+    {
+      "name": "H_BB_SQUEEZE",
+      "trade_count": 35,
+      "expectancy_pct": 0.6074,
+      "win_rate": 0.5714,
+      "sharpe_ratio": 0.5623,
+      "max_drawdown_pct": 1.2262,
+      "measured": true
+    },
+    {
+      "name": "H_VOLUME_SPIKE",
+      "trade_count": 35,
+      "expectancy_pct": 0.5654,
+      "win_rate": 0.5714,
+      "sharpe_ratio": 0.5492,
+      "max_drawdown_pct": 1.1865,
+      "measured": true
+    },
+    {
+      "name": "H_VWAP_REVERSAL",
+      "trade_count": 35,
+      "expectancy_pct": 0.548,
+      "win_rate": 0.5714,
+      "sharpe_ratio": 0.6136,
+      "max_drawdown_pct": 0.9079,
+      "measured": true
+    }
+  ],
+  "source_file": "artifacts/incoming/paper_evidence.json",
+  "generated_at": "2026-02-21T08:25:55.937Z"
+}

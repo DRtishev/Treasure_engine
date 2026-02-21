@@ -1,5 +1,5 @@
 # SOURCES_AUDIT.md — Data Sources Quality Audit
-generated_at: 2026-02-19T19:57:12.139Z
+generated_at: 88fd2c328fa8
 script: edge_sources.mjs
 
 ## STATUS: PASS

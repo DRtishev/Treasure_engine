@@ -1,0 +1,10 @@
+{
+  "run_id": "88fd2c328fa8",
+  "status": "PASS",
+  "reason_code": "NONE",
+  "message": "edge:all is deterministic across two consecutive runs. Anti-flake independence verified.",
+  "fingerprint_run1": "90c608572750939e299b2db0f503fc141887c9ec994689a27ddea3e49594a62e",
+  "fingerprint_run2": "90c608572750939e299b2db0f503fc141887c9ec994689a27ddea3e49594a62e",
+  "drift_files": [],
+  "file_count": 20
+}
