@@ -1,5 +1,5 @@
 # MICRO_LIVE_SRE.md — EPOCH P3 Micro-Live SRE Court
-generated_at: 413510c72bed
+generated_at: b4de92324329
 script: edge_micro_live_sre.mjs
 seed: 65 (XorShift32, paper court simulation)
 

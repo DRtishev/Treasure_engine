@@ -1,28 +1,27 @@
 # SNAPSHOT.md — Repository Snapshot
-generated_at: 413510c72bed
+generated_at: b4de92324329
 script: edge_sources.mjs
 
 ## Git State
 | Field | Value |
 |-------|-------|
 | Branch | claude/paper-evidence-foundation-UlQSG |
-| Commit | 413510c72beda7ff17c851e8defce4d13de8c608 |
+| Commit | b4de92324329fc4542e4e891e3ed3b5e68cbb07e |
 | Status | DIRTY |
 
 ## Recent Commits
 ```
+b4de923 feat(P5): PORTFOLIO_COURT — Kelly fractions + diversification + regime matrix
 413510c feat(P4): MULTI_HYPOTHESIS_COURT — Bonferroni correction on OOS tests
 779042c feat(P3): MICRO_LIVE_SRE_COURT — unlock MICRO_LIVE_ELIGIBLE
 295c8a8 feat(P1+P2): EXPECTANCY_CI_COURT + EXECUTION_REALITY_CALIBRATION
 3444ae7 chore(evidence): update court evidence files from final edge:all:x2 run
-b186afe feat(P0): EPOCH P0 PAPER_EVIDENCE FOUNDATION — 26-invariant validator + anti-tamper receipts
 ```
 
 ## Working Tree Status
 ```
 M EDGE_LAB/EVIDENCE_INDEX.md
  M EDGE_LAB/FINAL_VERDICT.md
- M package.json
  D reports/evidence/EDGE_LAB/ANTI_FLAKE_INDEPENDENCE.md
  D reports/evidence/EDGE_LAB/DATASET_COURT.md
  D reports/evidence/EDGE_LAB/EVIDENCE_INDEX.md
@@ -42,6 +41,7 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/PAPER_COURT.md
  D reports/evidence/EDGE_LAB/PAPER_EVIDENCE.md
  D reports/evidence/EDGE_LAB/PAPER_EVIDENCE_COURT.md
+ D reports/evidence/EDGE_LAB/PORTFOLIO_COURT.md
  D reports/evidence/EDGE_LAB/PROFIT_CANDIDATES_COURT.md
  D reports/evidence/EDGE_LAB/REDTEAM_COURT.md
  D reports/evidence/EDGE_LAB/REGISTRY_COURT.md
@@ -60,14 +60,13 @@ M EDGE_LAB/EVIDENCE_INDEX.md
  D reports/evidence/EDGE_LAB/gates/manual/paper_court.json
  D reports/evidence/EDGE_LAB/gates/manual/paper_evidence.json
  D reports/evidence/EDGE_LAB/gates/manual/paper_evidence_court.json
+ D reports/evidence/EDGE_LAB/gates/manual/portfolio_court.json
  D reports/evidence/EDGE_LAB/gates/manual/profit_candidates_court.json
  D reports/evidence/EDGE_LAB/gates/manual/proxy_guard.json
  D reports/evidence/EDGE_LAB/gates/manual/sli_baseline.json
- M scripts/edge/edge_lab/edge_all.mjs
+ M scripts/edge/edge_lab/edge_doctor.mjs
  M scripts/edge/edge_lab/edge_next_epoch.mjs
-?? EDGE_LAB/PORTFOLIO_POLICY.md
-?? EDGE_LAB/REGIME_MATRIX.md
-?? scripts/edge/edge_lab/edge_portfolio_court.mjs
+?? EDGE_LAB/REASON_CODES_BIBLE.md
 ```
 
 ## EDGE_LAB Files Present
@@ -101,6 +100,7 @@ PROFIT_CANDIDATES_V1.md
 PROXY_GUARD_POLICY.md
 PROXY_VALIDATION.md
 REASON_CODES.md
+REASON_CODES_BIBLE.md
 RED_TEAM_PLAYBOOK.md
 REGIME_MATRIX.md
 REGISTRY_CHANGELOG.md

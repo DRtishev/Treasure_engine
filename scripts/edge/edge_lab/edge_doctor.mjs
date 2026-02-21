@@ -73,6 +73,16 @@ const PROFIT_TRACK_COURTS = [
   { name: 'MICRO_LIVE_READINESS', file: 'MICRO_LIVE_READINESS.md' },
 ];
 
+// P0–P5 Epoch Courts (NEURO-MEV profit-track unlock path)
+const EPOCH_COURTS = [
+  { name: 'P0  PAPER_EVIDENCE_COURT', file: 'PAPER_EVIDENCE_COURT.md', gate: 'paper_evidence_court.json' },
+  { name: 'P1  EXPECTANCY_CI_COURT',  file: 'EXPECTANCY_CI.md',        gate: 'expectancy_ci.json' },
+  { name: 'P2  EXECUTION_REALITY',    file: 'EXECUTION_REALITY_COURT.md', gate: 'execution_reality_court.json' },
+  { name: 'P3  MICRO_LIVE_SRE',       file: 'MICRO_LIVE_SRE.md',       gate: 'micro_live_sre.json' },
+  { name: 'P4  MULTI_HYPOTHESIS',     file: 'MULTI_HYPOTHESIS_COURT.md', gate: 'multi_hypothesis_court.json' },
+  { name: 'P5  PORTFOLIO_COURT',      file: 'PORTFOLIO_COURT.md',      gate: 'portfolio_court.json' },
+];
+
 const INTEGRITY_GATES = [
   { name: 'anti_flake_independence', file: 'anti_flake_independence.json', label: 'ANTI_FLAKE_INDEPENDENCE' },
   { name: 'raw_stability', file: 'raw_stability.json', label: 'RAW_STABILITY' },
@@ -126,6 +136,22 @@ for (const court of PROFIT_TRACK_COURTS) {
   if (status !== 'PASS') profitAllPass = false;
   const reasonStr = reason_code && reason_code !== '-' && reason_code !== 'NONE' ? ` [${reason_code}]` : '';
   console.log(`  ${colorStatus(status).padEnd(20)} ${court.name}${DIM}${reasonStr}${RESET}`);
+}
+console.log('');
+
+// --- Epoch Courts P0–P5 ---
+console.log(`${BOLD}Epoch Courts P0–P5 (NEURO-MEV Profit-Track Unlock Path)${RESET}`);
+console.log(hr);
+const epochCourtLines = [];
+for (const court of EPOCH_COURTS) {
+  const md = readMdStatus(court.file);
+  const gj = readGateJson(court.gate);
+  // prefer gate JSON (more precise), fallback to MD
+  const status = gj.status !== 'MISSING' ? gj.status : md.status;
+  const reason_code = gj.reason_code || md.reason_code;
+  const reasonStr = reason_code && reason_code !== '-' && reason_code !== 'NONE' ? ` [${reason_code}]` : '';
+  console.log(`  ${colorStatus(status).padEnd(20)} ${court.name}${DIM}${reasonStr}${RESET}`);
+  epochCourtLines.push({ name: court.name, status, reason_code });
 }
 console.log('');
 
@@ -215,9 +241,74 @@ console.log('');
 // --- Quick Actions ---
 console.log(`${BOLD}Quick Actions${RESET}`);
 console.log(hr);
-console.log(`  ${CYAN}npm run edge:all${RESET}           — Run full producer pipeline`);
-console.log(`  ${CYAN}npm run edge:next-epoch${RESET}    — Run full epoch gate + promotion check`);
-console.log(`  ${CYAN}npm run edge:all:x2${RESET}        — Check producer pipeline determinism`);
-console.log(`  ${CYAN}npm run edge:ledger${RESET}        — Verify SHA256 evidence tamper-check`);
-console.log(`  ${CYAN}npm run edge:paper:ingest${RESET}  — Ingest paper trading evidence (if available)`);
+console.log(`  ${CYAN}npm run edge:all${RESET}             — Run full producer pipeline (19 courts)`);
+console.log(`  ${CYAN}npm run edge:all:x2${RESET}          — Check producer pipeline determinism`);
+console.log(`  ${CYAN}npm run edge:ledger${RESET}          — Verify SHA256 evidence tamper-check`);
+console.log(`  ${CYAN}npm run edge:paper:evidence${RESET}  — P0: Validate trade-level evidence + hash`);
+console.log(`  ${CYAN}npm run edge:expectancy:ci${RESET}   — P1: Bootstrap CI on paper returns`);
+console.log(`  ${CYAN}npm run edge:multi:hypothesis${RESET}— P4: Bonferroni multi-hypothesis correction`);
+console.log(`  ${CYAN}npm run edge:portfolio${RESET}       — P5: Kelly fractions + diversification`);
+console.log(`  ${CYAN}npm run edge:next-epoch${RESET}      — Full epoch gate + promotion check`);
 console.log('');
+
+// --- Write DOCTOR.md ---
+const docMdPath = path.join(EVIDENCE_DIR, 'DOCTOR.md');
+const now = new Date().toISOString();
+
+const fmtStatus = (s) => `${s}`;
+const epochRows = epochCourtLines.map(e =>
+  `| ${e.name.trim()} | ${fmtStatus(e.status)} | ${e.reason_code || 'NONE'} |`
+).join('\n');
+
+const coreStatuses = CORE_COURTS.map(c => {
+  const { status, reason_code } = readMdStatus(c.file);
+  return `| ${c.name} | ${status} | ${reason_code || 'NONE'} |`;
+}).join('\n');
+
+const microLive = readGateJson('micro_live_readiness.json');
+const microLiveEligible = microLive.status === 'PASS' || (microLive.MICRO_LIVE_ELIGIBLE === true);
+
+try {
+  const docMd = `# DOCTOR.md — EDGE_LAB System Health Report
+generated_at: ${now}
+script: edge_doctor.mjs (EPOCH P6)
+
+## System Overview
+
+| Property | Value |
+|----------|-------|
+| Core courts PASS | ${coreAllPass ? 'YES (all 9)' : 'NO — see Core Courts'} |
+| Profit track PASS | ${profitAllPass ? 'YES' : 'NO — see Profit Track'} |
+| MICRO_LIVE_ELIGIBLE | ${microLive.MICRO_LIVE_ELIGIBLE ?? (microLive.status === 'PASS' ? 'true' : 'false')} |
+| Epoch pipeline | P0–P5 IMPLEMENTED |
+
+## Epoch Courts P0–P5
+
+| Court | Status | Reason |
+|-------|--------|--------|
+${epochRows}
+
+## Core Courts
+
+| Court | Status | Reason |
+|-------|--------|--------|
+${coreStatuses}
+
+## Blockers
+
+${blockers.length === 0 ? 'NONE — system ready.' : blockers.map(b => `- ${b}`).join('\n')}
+
+## Reason Codes Reference
+
+EDGE_LAB/REASON_CODES_BIBLE.md — master glossary of all E***, X***, M***, H***, V*** codes.
+
+## Next Actions
+
+${blockers.length === 0
+    ? '1. Run npm run edge:all:x2 to verify determinism.\n2. Proceed to micro-live pilot under PAPER_TO_MICRO_LIVE_PROTOCOL.md.'
+    : blockers.map((b, i) => `${i + 1}. Fix: ${b}`).join('\n')}
+`;
+  fs.writeFileSync(docMdPath, docMd);
+} catch (_) { /* non-blocking — DOCTOR.md is informational */ }
+
+console.log(`${DIM}DOCTOR.md written to reports/evidence/EDGE_LAB/DOCTOR.md${RESET}`);

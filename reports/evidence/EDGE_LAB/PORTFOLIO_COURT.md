@@ -1,5 +1,5 @@
 # PORTFOLIO_COURT.md — EPOCH P5 Portfolio Court
-generated_at: 413510c72bed
+generated_at: b4de92324329
 script: edge_portfolio_court.mjs
 
 ## STATUS: PASS
