@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 88fd2c328fa8
+RUN_ID: 53c0662f592b
 NEXT_ACTION: Proceed. edge:all is verified deterministic.
 
 ## Methodology
@@ -17,33 +17,34 @@ This check is INDEPENDENT of edge:next-epoch readiness gates.
 
 | Run | Fingerprint |
 |-----|-------------|
-| run1 | 90c608572750939e299b2db0f503fc141887c9ec994689a27ddea3e49594a62e |
-| run2 | 90c608572750939e299b2db0f503fc141887c9ec994689a27ddea3e49594a62e |
+| run1 | 6c7ea7087010d9cf891fac305cfa979414fc39d16accf152ed0724af794fc89c |
+| run2 | 6c7ea7087010d9cf891fac305cfa979414fc39d16accf152ed0724af794fc89c |
 
 ## File Hash Matrix
 
 | File | SHA256 run1 (prefix) | SHA256 run2 (prefix) | Status |
 |------|---------------------|---------------------|--------|
-| DATASET_COURT.md | 29afc9ba50cdf21a… | 29afc9ba50cdf21a… | MATCH |
-| EVIDENCE_INDEX.md | 9a2d9c24084fe520… | 9a2d9c24084fe520… | MATCH |
-| EXECUTION_BREAKPOINTS.md | ae967aaa384f9a8a… | ae967aaa384f9a8a… | MATCH |
-| EXECUTION_COURT.md | 724e5a05e172ca22… | 724e5a05e172ca22… | MATCH |
-| EXECUTION_REALITY_COURT.md | f1a3f3fad6bc575f… | f1a3f3fad6bc575f… | MATCH |
-| EXECUTION_SENSITIVITY_GRID.md | f8fb727639b3c20c… | f8fb727639b3c20c… | MATCH |
-| GOVERNANCE_FINGERPRINT.md | 37ed95eab5551d2a… | 37ed95eab5551d2a… | MATCH |
-| MCL_NOTES.md | acd982b7ae97f290… | acd982b7ae97f290… | MATCH |
-| MEGA_CLOSEOUT_EDGE_LAB.md | bfe6345913bf72bf… | bfe6345913bf72bf… | MATCH |
-| MICRO_LIVE_READINESS.md | e07703bb57128c21… | e07703bb57128c21… | MATCH |
-| OVERFIT_COURT.md | 562dea67b0a2781c… | 562dea67b0a2781c… | MATCH |
-| PAPER_EVIDENCE.md | 6d4ec7d7aaf6969c… | 6d4ec7d7aaf6969c… | MATCH |
-| PROFIT_CANDIDATES_COURT.md | 39fc21beb3e5d56f… | 39fc21beb3e5d56f… | MATCH |
-| REDTEAM_COURT.md | 0284b36d5cf5d2d5… | 0284b36d5cf5d2d5… | MATCH |
-| REGISTRY_COURT.md | a4d027aee0e727a7… | a4d027aee0e727a7… | MATCH |
-| RISK_COURT.md | 37757c0cf17ac7fd… | 37757c0cf17ac7fd… | MATCH |
-| SNAPSHOT.md | 4e96a6848967e79c… | 4e96a6848967e79c… | MATCH |
-| SOURCES_AUDIT.md | 6f2a070796bf5411… | 6f2a070796bf5411… | MATCH |
-| SRE_COURT.md | ea39ef7713b8fea5… | ea39ef7713b8fea5… | MATCH |
-| VERDICT.md | f45b4f0a78caa86b… | f45b4f0a78caa86b… | MATCH |
+| DATASET_COURT.md | 064ffad80af894b7… | 064ffad80af894b7… | MATCH |
+| EVIDENCE_INDEX.md | 653ae88cf00d6528… | 653ae88cf00d6528… | MATCH |
+| EXECUTION_BREAKPOINTS.md | a58f0a6be82dc62c… | a58f0a6be82dc62c… | MATCH |
+| EXECUTION_COURT.md | 347a0756dc5da002… | 347a0756dc5da002… | MATCH |
+| EXECUTION_REALITY_COURT.md | 34f7e1e8d863f720… | 34f7e1e8d863f720… | MATCH |
+| EXECUTION_SENSITIVITY_GRID.md | 659ebf9fa92971e0… | 659ebf9fa92971e0… | MATCH |
+| GOVERNANCE_FINGERPRINT.md | 20a55dacb6a1eca0… | 20a55dacb6a1eca0… | MATCH |
+| MCL_NOTES.md | 6f5ae52d28c8af00… | 6f5ae52d28c8af00… | MATCH |
+| MEGA_CLOSEOUT_EDGE_LAB.md | c9bc915d17de8773… | c9bc915d17de8773… | MATCH |
+| MICRO_LIVE_READINESS.md | 8f792c9c4188acf4… | 8f792c9c4188acf4… | MATCH |
+| OVERFIT_COURT.md | 59e9f46877d66158… | 59e9f46877d66158… | MATCH |
+| PAPER_EVIDENCE.md | 0cafa662d0e303b5… | 0cafa662d0e303b5… | MATCH |
+| PAPER_EVIDENCE_COURT.md | 752957865a3cdb1d… | 752957865a3cdb1d… | MATCH |
+| PROFIT_CANDIDATES_COURT.md | 218cc86727ed6609… | 218cc86727ed6609… | MATCH |
+| REDTEAM_COURT.md | 542a7c693b8a6d8c… | 542a7c693b8a6d8c… | MATCH |
+| REGISTRY_COURT.md | 9b9bf0df5e65fb0e… | 9b9bf0df5e65fb0e… | MATCH |
+| RISK_COURT.md | d5c5023bc3cef99a… | d5c5023bc3cef99a… | MATCH |
+| SNAPSHOT.md | 0c240d7d4ed3d52b… | 0c240d7d4ed3d52b… | MATCH |
+| SOURCES_AUDIT.md | f5b0083c7a5e03a6… | f5b0083c7a5e03a6… | MATCH |
+| SRE_COURT.md | 7301cc01c3c0239c… | 7301cc01c3c0239c… | MATCH |
+| VERDICT.md | bb061fdbaf038f73… | bb061fdbaf038f73… | MATCH |
 
 ## DRIFT_FILES
 
