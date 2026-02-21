@@ -2,18 +2,18 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 3d37e68311e2
-NEXT_ACTION: Migrate 3 legacy EDGE_LAB gate JSON files to schema_version in a follow-up PR.
+RUN_ID: cef301f25c52
+NEXT_ACTION: Migrate 11 legacy EDGE_LAB gate JSON files to schema_version in a follow-up PR.
 
 ## Gate Results
 
 | Check | Result |
 |-------|--------|
 | policy_file | PRESENT |
-| strict_json_checked | 6 (P0 + INFRA_P0) |
-| legacy_json_checked | 5 (pre-existing EDGE_LAB) |
+| strict_json_checked | 9 (P0 + INFRA_P0) |
+| legacy_json_checked | 14 (pre-existing EDGE_LAB) |
 | strict_violations | 0 |
-| legacy_warnings | 3 (WARN only, migration scheduled) |
+| legacy_warnings | 11 (WARN only, migration scheduled) |
 
 ## Strict-Scope Violations (FAIL if any)
 
@@ -21,9 +21,17 @@ NEXT_ACTION: Migrate 3 legacy EDGE_LAB gate JSON files to schema_version in a fo
 
 ## Legacy Warnings (WARN only — pre-existing, migration scheduled)
 
-- **WARN** `reports/evidence/EDGE_LAB/gates/manual/ledger_acyclicity.json`: missing schema_version [MIGRATION_SCHEDULED]
-- **WARN** `reports/evidence/EDGE_LAB/gates/manual/paper_evidence.json`: missing schema_version [MIGRATION_SCHEDULED]
+- **WARN** `reports/evidence/EDGE_LAB/gates/manual/execution_reality_court.json`: missing schema_version; forbidden timestamp field(s) [MIGRATION_SCHEDULED]
+- **WARN** `reports/evidence/EDGE_LAB/gates/manual/expectancy_ci.json`: missing schema_version [MIGRATION_SCHEDULED]
+- **WARN** `reports/evidence/EDGE_LAB/gates/manual/micro_live_sre.json`: missing schema_version [MIGRATION_SCHEDULED]
+- **WARN** `reports/evidence/EDGE_LAB/gates/manual/multi_hypothesis_court.json`: missing schema_version [MIGRATION_SCHEDULED]
+- **WARN** `reports/evidence/EDGE_LAB/gates/manual/paper_court.json`: missing schema_version [MIGRATION_SCHEDULED]
+- **WARN** `reports/evidence/EDGE_LAB/gates/manual/paper_evidence.json`: missing schema_version; forbidden timestamp field(s) [MIGRATION_SCHEDULED]
+- **WARN** `reports/evidence/EDGE_LAB/gates/manual/paper_evidence_court.json`: missing schema_version [MIGRATION_SCHEDULED]
+- **WARN** `reports/evidence/EDGE_LAB/gates/manual/portfolio_court.json`: missing schema_version [MIGRATION_SCHEDULED]
 - **WARN** `reports/evidence/EDGE_LAB/gates/manual/profit_candidates_court.json`: missing schema_version; forbidden timestamp field(s) [MIGRATION_SCHEDULED]
+- **WARN** `reports/evidence/EDGE_LAB/gates/manual/proxy_guard.json`: missing schema_version [MIGRATION_SCHEDULED]
+- ... and 1 more
 
 ## Scope Policy
 
@@ -32,7 +40,7 @@ NEXT_ACTION: Migrate 3 legacy EDGE_LAB gate JSON files to schema_version in a fo
 
 ## Message
 
-Format policy satisfied (strict scope). 6 new JSON file(s) verified. 3 legacy file(s) queued for schema_version migration.
+Format policy satisfied (strict scope). 9 new JSON file(s) verified. 11 legacy file(s) queued for schema_version migration.
 
 ## Evidence Paths
 

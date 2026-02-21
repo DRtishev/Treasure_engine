@@ -142,8 +142,16 @@ Each code has exactly one definition. Used by all court scripts and operators.
 |------|--------|-------------|
 | D001 | BLOCKED | RUN_ID cannot be resolved deterministically |
 | D002 | FAIL | sha256_norm mismatch across x2 (nondeterminism) |
-| D003 | BLOCKED | Canon rules changed without apply receipt |
+| D003 | BLOCKED | Canon rules changed without apply receipt (RESERVED — do NOT reuse for readiness input missing) |
 | D005 | FAIL | Canon touched forbidden semantic line (NON-volatile) |
+
+---
+
+## READINESS Codes (Infra P0 → Edge Readiness)
+
+| Code | Action | Description |
+|------|--------|-------------|
+| RD01 | BLOCKED | READINESS_INPUT_MISSING — required infra closeout JSON missing or unreadable. NEXT_ACTION: npm run infra:p0 |
 
 ---
 

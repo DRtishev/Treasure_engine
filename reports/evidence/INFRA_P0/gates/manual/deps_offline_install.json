@@ -1,15 +1,30 @@
 {
-  "has_native_build": false,
-  "message": "All dependencies satisfiable offline (no registry/network required). x2 runs consistent. Exit codes: [0, 0].",
-  "native_patterns_found": [],
-  "next_action": "No action required. Dependencies are fully offline-satisfiable.",
-  "reason_code": "NONE",
+  "has_native_build": true,
+  "has_native_build_lock": true,
+  "has_native_build_runtime": true,
+  "message": "Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.",
+  "native_candidates_lock": [
+    {
+      "package": "better-sqlite3",
+      "path": "node_modules/better-sqlite3",
+      "reasons": [
+        "hasInstallScript=true",
+        "dep:prebuild-install"
+      ],
+      "version": "12.6.2"
+    }
+  ],
+  "native_patterns_found": [
+    "prebuild-install"
+  ],
+  "next_action": "Review native dependency. Either pre-build in capsule, use prebuilt binaries, or add to approved native build list.",
+  "reason_code": "DEP02",
   "registry_patterns_run1": [],
   "registry_patterns_run2": [],
   "run1_exit_code": 0,
   "run2_exit_code": 0,
-  "run_id": "3d37e68311e2",
+  "run_id": "cef301f25c52",
   "schema_version": "1.0.0",
-  "status": "PASS",
+  "status": "FAIL",
   "x2_drift": false
 }

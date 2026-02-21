@@ -1,0 +1,41 @@
+{
+  "gate": "ZW01",
+  "kill_switch_broken_count": 0,
+  "message": "ZW01 PASS — Zero-war kill switch is ACTIVE. All 4 trading flag probes correctly blocked by T000 guard.",
+  "next_action": "ZW01 enforcement verified. Proceed with infra:p0 pipeline.",
+  "probe_results": [
+    {
+      "exit_code": 1,
+      "flag": "TRADING_ENABLED",
+      "status": "KILL_SWITCH_ACTIVE",
+      "t000_detected": true,
+      "value": "1"
+    },
+    {
+      "exit_code": 1,
+      "flag": "LIVE_TRADING",
+      "status": "KILL_SWITCH_ACTIVE",
+      "t000_detected": true,
+      "value": "1"
+    },
+    {
+      "exit_code": 1,
+      "flag": "ORDER_SUBMISSION_ENABLED",
+      "status": "KILL_SWITCH_ACTIVE",
+      "t000_detected": true,
+      "value": "1"
+    },
+    {
+      "exit_code": 1,
+      "flag": "SUBMIT_ORDERS",
+      "status": "KILL_SWITCH_ACTIVE",
+      "t000_detected": true,
+      "value": "1"
+    }
+  ],
+  "probes_total": 4,
+  "reason_code": "NONE",
+  "run_id": "cef301f25c52",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

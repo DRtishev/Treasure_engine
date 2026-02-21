@@ -1,20 +1,20 @@
 # MICRO_LIVE_READINESS.md — Micro-Live Readiness Assessment
 
-STATUS: PASS
-REASON_CODE: NONE
-RUN_ID: 3d37e68311e2
-NEXT_ACTION: Operator reviews PAPER_TO_MICRO_LIVE_PROTOCOL.md and approves micro-live pilot.
+STATUS: BLOCKED
+REASON_CODE: DEP02
+RUN_ID: cef301f25c52
+NEXT_ACTION: Resolve DEP02 per EDGE_LAB/DEP_POLICY.md, then: npm run p0:all && npm run edge:micro:live:readiness
 
 ## Infra Eligibility Check (R12 Fail-Closed)
 
-**INFRA eligible:** No DEP blocking codes in infra closeout.
+**BLOCKED by INFRA (R12):** DEP02 — DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.
 
 ## Eligibility Matrix
 
 | State | Value |
 |-------|-------|
 | ELIGIBLE_FOR_PAPER | true |
-| ELIGIBLE_FOR_MICRO_LIVE | true |
+| ELIGIBLE_FOR_MICRO_LIVE | false |
 | ELIGIBLE_FOR_LIVE | false |
 
 ## Gate Prerequisite Checks
@@ -39,8 +39,8 @@ NEXT_ACTION: Operator reviews PAPER_TO_MICRO_LIVE_PROTOCOL.md and approves micro
 
 ## Verdict
 
-MICRO_LIVE_ELIGIBLE: **true**
+MICRO_LIVE_ELIGIBLE: **false**
 LIVE_ELIGIBLE: **false** (permanent false — requires explicit policy upgrade)
 
-All prerequisites met. Micro-live pilot may proceed under protocol constraints.
-NEXT_ACTION: Operator reviews PAPER_TO_MICRO_LIVE_PROTOCOL.md and approves micro-live pilot.
+R12 fail-closed: readiness BLOCKED by infra DEP code DEP02.
+NEXT_ACTION: Resolve DEP02 per EDGE_LAB/DEP_POLICY.md, then: npm run p0:all && npm run edge:micro:live:readiness

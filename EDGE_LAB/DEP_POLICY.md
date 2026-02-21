@@ -33,7 +33,7 @@ INFRA P0 closeout outcome → EDGE readiness outcome mapping:
 | FAIL DEP03                | BLOCKED DEP03    |
 | BLOCKED DEP01             | BLOCKED DEP01    |
 | PASS                      | (readiness decides independently) |
-| JSON file missing          | BLOCKED D003     |
+| JSON file missing/unreadable | BLOCKED RD01  |
 
 **R12 is unconditional.** INFRA closeout may itself PASS (overall), but if
 `eligible_for_micro_live=false` is present in the closeout JSON, readiness

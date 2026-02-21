@@ -9,7 +9,7 @@
  * - Eligibility flags must remain false under any fixture violation
  *
  * Detection strategy:
- * - Scans gate JSON files in reports/evidence/**/gates/manual/ for fixture markers
+ * - Scans gate JSON files in reports/evidence/<any>/gates/manual/ for fixture markers
  * - Checks for "fixture" in file path (e.g., *_fixture.json, fixture_*) outside test dirs
  * - Checks for fixture_source, is_fixture, allow_fixtures fields in gate JSON
  * - Checks ALLOW_FIXTURES env var

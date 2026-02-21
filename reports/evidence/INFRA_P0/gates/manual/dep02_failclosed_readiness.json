@@ -1,24 +1,33 @@
 {
   "assertions": [
     {
-      "assertion": "Sanity: infra eligible=true ⇒ readiness not DEP-blocked",
+      "assertion": "R12: infra FAIL DEP02 ⇒ readiness BLOCKED DEP02",
       "failure_detail": null,
-      "infra_eligible": true,
-      "readiness_reason_code": "NONE",
-      "readiness_status": "PASS",
+      "infra_has_code": true,
+      "readiness_reason_code": "DEP02",
+      "readiness_status": "BLOCKED",
+      "result": "PASS"
+    },
+    {
+      "assertion": "R13: infra eligible_for_micro_live=false ⇒ readiness NOT PASS",
+      "failure_detail": null,
+      "infra_eligible": false,
+      "readiness_status": "BLOCKED",
       "result": "PASS"
     }
   ],
-  "infra_dep_codes": [],
-  "infra_eligible": true,
+  "infra_dep_codes": [
+    "DEP02"
+  ],
+  "infra_eligible": false,
   "infra_status": "PASS",
-  "message": "No DEP blocking codes in infra closeout. R12 assertion vacuously true (no DEP present).",
-  "next_action": "No action required.",
-  "no_dep_codes_to_assert": true,
-  "readiness_reason_code": "NONE",
-  "readiness_status": "PASS",
+  "message": "R12 fail-closed verified: infra DEP codes [DEP02] correctly propagated to readiness BLOCKED.",
+  "next_action": "Resolve DEP02 per EDGE_LAB/DEP_POLICY.md to unlock readiness.",
+  "no_dep_codes_to_assert": false,
+  "readiness_reason_code": "DEP02",
+  "readiness_status": "BLOCKED",
   "reason_code": "NONE",
-  "run_id": "3d37e68311e2",
+  "run_id": "cef301f25c52",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

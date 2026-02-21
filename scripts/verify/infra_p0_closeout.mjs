@@ -144,21 +144,23 @@ for (const g of gateStatuses) {
   }
 }
 
-// R12/R13: Compute eligibility from DEP gate outcomes (independent of overall status)
+// R12/R13: Compute eligibility from DEP gate outcomes
+// B2 seal: eligibility MUST be false whenever overallStatus != PASS
 const depGate = gateStatuses.find((g) => g.gate === 'DEPS_OFFLINE');
 const depReasonCode = depGate?.reason_code || 'NONE';
 const hasDepBlock = DEP_BLOCKING_CODES.includes(depReasonCode);
 
-// FG01: Fixture guard blocks eligibility
+// FG01: Fixture guard blocks eligibility (MISSING or BLOCKED both block)
 const fgGate = gateStatuses.find((g) => g.gate === 'FIXTURE_GUARD');
-const hasFg01Block = fgGate?.reason_code === 'FG01' || fgGate?.status === 'BLOCKED';
+const hasFg01Block = !fgGate || fgGate.status !== 'PASS';
 
 // ZW01: Zero-war probe failure blocks eligibility
 const zw01Gate = gateStatuses.find((g) => g.gate === 'ZERO_WAR_PROBE');
 const hasZw01Fail = zw01Gate?.status === 'FAIL' || zw01Gate?.reason_code === 'ZW01';
 
-const eligible_for_micro_live = !hasDepBlock && !hasFg01Block && !hasZw01Fail;
-const eligible_for_execution = !hasDepBlock && !hasFg01Block && !hasZw01Fail;
+// Eligibility requires PASS overall status AND no specific blocking codes
+const eligible_for_micro_live = overallStatus === 'PASS' && !hasDepBlock && !hasFg01Block && !hasZw01Fail;
+const eligible_for_execution = overallStatus === 'PASS' && !hasDepBlock && !hasFg01Block && !hasZw01Fail;
 const eligibility_reason = hasDepBlock
   ? `${depReasonCode}: ${depGate?.message || 'DEP gate failure detected'}`
   : hasFg01Block

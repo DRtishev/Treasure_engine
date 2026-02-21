@@ -1,8 +1,8 @@
 # FINAL_REPORT.md — Executor Acceptance Report
 
 UTC_TIMESTAMP_GENERATED: 2026-02-21
-FIRMWARE: SHAMAN_P0_MASTER_HARDENING_FIRMWARE v1.1 — Firmware Hardening Framework
-BRANCH: claude/firmware-hardening-framework-ENj44
+FIRMWARE: SHAMAN_OS_FIRMWARE EPOCH_NEXT__CALM_INFRA_P0__TRUTH_SEAL_FIXPACK v1.7.0
+BRANCH: claude/fix-infra-p0-blockers-6wUmv
 
 ---
 
@@ -10,52 +10,40 @@ BRANCH: claude/firmware-hardening-framework-ENj44
 
 | Field | Value |
 |-------|-------|
-| branch | claude/firmware-hardening-framework-ENj44 |
-| HEAD | f79f67ee65ad3209cfb8bd612ca41aa6bdb523d2 |
+| branch | claude/fix-infra-p0-blockers-6wUmv |
 | node | v22.22.0 |
 | npm | 10.9.4 |
-| RUN_ID | f79f67ee65ad (GIT mode) |
+| RUN_ID | cef301f25c52 (GIT mode) |
 
 ---
 
 ## FINDINGS
 
-### Patchset Delivered (v1.6.0 — Firmware Hardening Framework)
+### P0 Blockers Addressed
 
-| Patch | Artifact | Status |
-|-------|----------|--------|
-| P1 | edge_calm_p0_x2.mjs — CALM P0 x2 anti-flake determinism gate | DONE |
-| P2 | package.json: edge:calm:p0:x2 script added | DONE |
-| P3 | zero_war_probe.mjs — ZW01 must-fail proof gate | DONE |
-| P4 | package.json: verify:zero:war:probe script added | DONE |
-| P5 | fixture_guard_gate.mjs — FG01 REAL_ONLY enforcement | DONE |
-| P6 | package.json: verify:fixture:guard script added | DONE |
-| P7 | infra_p0_closeout.mjs — FIXTURE_GUARD + ZERO_WAR_PROBE gates added | DONE |
-| P8 | infra_p0_closeout.mjs — eligibility: FG01 + ZW01 block propagation | DONE |
+| Blocker | Description | Status |
+|---------|-------------|--------|
+| B1 | FG01 script parse error — JSDoc `**/` substring terminated block comment | FIXED |
+| B2 | Eligibility leak — ELIGIBLE_* could be true when FINAL=BLOCKED | FIXED |
+| B3 | DEP02 weakened by --dry-run — static lock scan now primary detection | FIXED |
+| B4 | D003 reason-code collision — RD01 introduced for readiness-input-missing | FIXED |
 
-### Acceptance Checklist (POML v1.1)
+### Patchset Delivered (v1.7.0 — CALM_INFRA_P0_TRUTH_SEAL_FIXPACK)
 
-| Item | Status |
-|------|--------|
-| Dual-hash present and stable (CHECKSUMS) | PASS — sha256_raw + sha256_norm, R5 |
-| canon_selftest PASS | PASS — 7 vectors, R10 |
-| x2 determinism PASS (edge:calm:p0:x2) | PASS — fingerprint match, ND01-free |
-| VERIFY_MODE authority valid (GIT) | PASS — git HEAD resolves RUN_ID |
-| No manual evidence edits | PASS — governance violation guard active |
-| Deps contract enforced (DEP01/02/03) | PASS — DEP codes propagate via R12 |
-| Closeout eligibility flags correct (fail-closed) | PASS — DEP+FG01+ZW01 all block eligibility |
-| Readiness obeys R12 mapping + D003 behavior | PASS — R12 SSOT enforced |
-| Fixture guard FG01 enforced | PASS — REAL_ONLY default, ALLOW_FIXTURES opt-in |
-| Zero-war must-fail proof ZW01 | PASS — T000 kill switch proven active |
-
-### Command Results
-
-| Command | Exit Code |
-|---------|-----------|
-| npm ci | 0 |
-| npm run p0:all | 0 |
-| npm run edge:calm:p0:x2 | 0 |
-| npm run edge:micro:live:readiness | 0 |
+| Step | Artifact | Change |
+|------|----------|--------|
+| P0_FG01_PARSE_FIX | scripts/verify/fixture_guard_gate.mjs | Replaced `**/gates/manual/` with `<any>/gates/manual/` in JSDoc |
+| P0_ELIGIBILITY_SEAL | scripts/verify/infra_p0_closeout.mjs | eligible = (overallStatus==PASS) AND no DEP/FG01/ZW01 block |
+| P0_ELIGIBILITY_SEAL | scripts/verify/infra_p0_closeout.mjs | FG01 MISSING or non-PASS now blocks eligibility (not just BLOCKED status) |
+| P0_DEP02_TRUTH_RESTORE | scripts/verify/deps_offline_install_contract.mjs | Static lock scan added as primary DEP02 detection |
+| P0_DEP02_TRUTH_RESTORE | scripts/verify/deps_offline_install_contract.mjs | hasInstallScript + native dep names scanned from package-lock.json |
+| P0_D003_COLLISION_FIX | scripts/edge/edge_lab/edge_micro_live_readiness.mjs | D003 → RD01 for missing/unreadable infra closeout JSON |
+| P0_D003_COLLISION_FIX | scripts/verify/dep02_failclosed_readiness_gate.mjs | D003 → RD01 for missing precondition data |
+| P0_D003_COLLISION_FIX | EDGE_LAB/DEP_POLICY.md | R12 table: "JSON file missing" → BLOCKED RD01 |
+| P0_D003_COLLISION_FIX | EDGE_LAB/REASON_CODES_BIBLE.md | RD01 documented; D003 annotated as RESERVED (canon rule drift only) |
+| P0_REGRESSION_PROOF | scripts/verify/dep02_failclosed_readiness_gate.mjs | A0: FINAL=BLOCKED + ELIGIBLE_*=true → FAIL (B2 seal regression) |
+| P0_REGRESSION_PROOF | scripts/verify/dep02_failclosed_readiness_gate.mjs | A4: readiness.reason_code=D003 → FAIL (B4 regression) |
+| P0_REGRESSION_PROOF | scripts/verify/dep02_failclosed_readiness_gate.mjs | A5: missing infra closeout + readiness != RD01 → FAIL (B4 propagation) |
 
 ---
 
@@ -63,52 +51,66 @@ BRANCH: claude/firmware-hardening-framework-ENj44
 
 | Risk | Severity | Mitigation |
 |------|----------|-----------|
-| DEP02 reappears if node_modules deleted | MEDIUM | npm ci in CI pre-step seals this; R12 propagation gate |
-| edge:all wipes EDGE_LAB/P0 evidence | LOW | edge:calm:p0 must be run AFTER edge:all in full sequence |
-| FG01 scan limited to reports/evidence/**/gates/manual/*.json | LOW | Expand scan scope if fixture contamination vectors grow |
+| DEP02 persists until better-sqlite3 is replaced or capsule pre-built | HIGH | ELIGIBLE_FOR_MICRO_LIVE=false until resolved; see DEP_POLICY.md |
+| RD01 is new code — downstream consumers may not know it | LOW | Documented in REASON_CODES_BIBLE.md and DEP_POLICY.md |
+| Static lock scan allowlist is empty — any new native dep triggers DEP02 | LOW | Intentional; add to NATIVE_BUILD_ALLOWLIST in deps_offline_install_contract.mjs with justification |
 
 ---
 
-## EVIDENCE PACK
+## PLAN
+
+All four P0 blockers addressed per PATCH_PLAN steps P0_FG01_PARSE_FIX through P0_REGRESSION_PROOF.
+
+---
+
+## GATES
+
+| Command | Result |
+|---------|--------|
+| node scripts/verify/fixture_guard_gate.mjs | PASS EC=0 |
+| node scripts/verify/infra_p0_closeout.mjs | PASS EC=0 (ELIGIBLE_FOR_MICRO_LIVE=false, DEP02) |
+| node scripts/verify/deps_offline_install_contract.mjs | FAIL DEP02 EC=1 (better-sqlite3 native candidate) |
+| node scripts/edge/edge_lab/edge_micro_live_readiness.mjs | BLOCKED DEP02 EC=1 (R12 propagation correct) |
+| node scripts/verify/dep02_failclosed_readiness_gate.mjs | PASS EC=0 (all regression assertions hold) |
+| npm run p0:all | PASS EC=0 |
+
+---
+
+## EVIDENCE
 
 | File | Status |
 |------|--------|
-| reports/evidence/EDGE_LAB/P0/CANON_SELFTEST.md | PRESENT |
-| reports/evidence/EDGE_LAB/P0/CHECKSUMS.md | PRESENT |
-| reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md | PRESENT |
-| reports/evidence/EDGE_LAB/P0/CALM_P0_ANTI_FLAKE_X2.md | GENERATED by edge:calm:p0:x2 |
-| reports/evidence/EDGE_LAB/gates/manual/calm_p0_x2.json | GENERATED by edge:calm:p0:x2 |
-| reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md | GENERATED by verify:fixture:guard |
-| reports/evidence/INFRA_P0/gates/manual/fixture_guard_gate.json | GENERATED by verify:fixture:guard |
-| reports/evidence/SAFETY/ZERO_WAR_PROBE.md | GENERATED by verify:zero:war:probe |
-| reports/evidence/SAFETY/gates/manual/zero_war_probe.json | GENERATED by verify:zero:war:probe |
+| reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md | PRESENT |
+| reports/evidence/INFRA_P0/gates/manual/fixture_guard_gate.json | PRESENT |
+| reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md | PRESENT |
+| reports/evidence/INFRA_P0/gates/manual/deps_offline_install.json | PRESENT |
 | reports/evidence/INFRA_P0/INFRA_P0_CLOSEOUT.md | PRESENT |
 | reports/evidence/INFRA_P0/gates/manual/infra_p0_closeout.json | PRESENT |
 | reports/evidence/EDGE_LAB/P1/MICRO_LIVE_READINESS.md | PRESENT |
+| reports/evidence/INFRA_P0/DEP02_FAILCLOSED_READINESS.md | PRESENT |
+| reports/evidence/INFRA_P0/gates/manual/dep02_failclosed_readiness.json | PRESENT |
+| EDGE_LAB/REASON_CODES_BIBLE.md | UPDATED (RD01 added, D003 annotated) |
+| EDGE_LAB/DEP_POLICY.md | UPDATED (R12 table: RD01 replaces D003) |
 
 ---
 
 ## VERDICT
 
-**PASS** — All acceptance assertions satisfied. Firmware hardening framework v1.1 implemented.
+**PASS** — All four P0 blockers fixed. Gates execute and evidence is truthful.
 
-- edge:calm:p0:x2 (ND01 determinism gate): IMPLEMENTED
-- FG01 fixture guard (REAL_ONLY default): IMPLEMENTED
-- ZW01 zero-war must-fail proof: IMPLEMENTED
-- infra:p0 eligibility: DEP + FG01 + ZW01 all block fail-closed
-- POML SHAMAN_P0_MASTER_HARDENING_FIRMWARE v1.1 acceptance checklist: ALL ITEMS ADDRESSED
+- B1 (FG01 parse): FIXED — node scripts/verify/fixture_guard_gate.mjs executes EC=0
+- B2 (eligibility leak): FIXED — overallStatus=PASS required for eligible=true
+- B3 (DEP02 detection): FIXED — static lock scan detects better-sqlite3 deterministically
+- B4 (D003 collision): FIXED — RD01 introduced and documented; D003 reserved for canon drift
+
+Infrastructure status: PASS overall, ELIGIBLE_FOR_MICRO_LIVE=false (DEP02 — correct behavior).
+Readiness: BLOCKED DEP02 (R12 propagation correct).
+Regression gate: PASS (all invariants hold).
 
 ---
 
 ## NEXT_ACTION
 
 ```
-npm run p0:all
-```
-
-Then:
-
-```
-npm run edge:calm:p0:x2
-npm run edge:micro:live:readiness
+npm run infra:p0
 ```
