@@ -1,5 +1,5 @@
 # MEGA_CLOSEOUT_EDGE_LAB.md — EDGE_LAB Mega Closeout Report
-generated_at: RUN_ID
+generated_at: 88fd2c328fa8
 script: edge_verdict.mjs
 
 ## FINAL VERDICT: NEEDS_DATA
@@ -18,11 +18,11 @@ a comprehensive summary of all findings.
 | 1. Sources | edge:sources | PASS |
 | 2. Registry | edge:registry | PASS |
 | 3. Profit Candidates | edge:profit:candidates | PASS |
-| 4. Paper Ingest | edge:paper:ingest | NEEDS_DATA |
+| 4. Paper Ingest | edge:paper:ingest | PASS |
 | 5. Dataset | edge:dataset | PASS |
 | 6. Execution | edge:execution | PASS |
 | 7. Execution Grid | edge:execution:grid | PASS |
-| 8. Execution Reality | edge:execution:reality | NEEDS_DATA |
+| 8. Execution Reality | edge:execution:reality | PASS |
 | 9. Risk | edge:risk | PASS |
 | 10. Overfit | edge:overfit | PASS |
 | 11. Red Team | edge:redteam | PASS |
@@ -103,7 +103,7 @@ a comprehensive summary of all findings.
 - Schema version: 2.0.0 (POML v5.0)
 - Registry hacks: 20
 - Court pipeline: 14 steps (9 core courts + 4 profit track courts + verdict)
-- Generated: RUN_ID
+- Generated: 88fd2c328fa8
 
 ---
 

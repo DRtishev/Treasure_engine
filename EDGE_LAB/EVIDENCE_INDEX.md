@@ -1,5 +1,5 @@
 # EVIDENCE_INDEX.md — EDGE_LAB Evidence Index
-generated_at: 2026-02-20T13:14:54.796Z
+generated_at: 2026-02-21T08:25:56.878Z
 script: edge_verdict.mjs
 
 ## Final Verdict: NEEDS_DATA
@@ -10,11 +10,11 @@ script: edge_verdict.mjs
 | SOURCES_AUDIT.md | reports/evidence/EDGE_LAB/ | edge:sources | PASS |
 | REGISTRY_COURT.md | reports/evidence/EDGE_LAB/ | edge:registry | PASS |
 | PROFIT_CANDIDATES_COURT.md | reports/evidence/EDGE_LAB/ | edge:profit:candidates | PASS |
-| PAPER_EVIDENCE.md | reports/evidence/EDGE_LAB/ | edge:paper:ingest | NEEDS_DATA |
+| PAPER_EVIDENCE.md | reports/evidence/EDGE_LAB/ | edge:paper:ingest | PASS |
 | DATASET_COURT.md | reports/evidence/EDGE_LAB/ | edge:dataset | PASS |
 | EXECUTION_COURT.md | reports/evidence/EDGE_LAB/ | edge:execution | PASS |
 | EXECUTION_SENSITIVITY_GRID.md | reports/evidence/EDGE_LAB/ | edge:execution:grid | PASS |
-| EXECUTION_REALITY_COURT.md | reports/evidence/EDGE_LAB/ | edge:execution:reality | NEEDS_DATA |
+| EXECUTION_REALITY_COURT.md | reports/evidence/EDGE_LAB/ | edge:execution:reality | PASS |
 | RISK_COURT.md | reports/evidence/EDGE_LAB/ | edge:risk | PASS |
 | OVERFIT_COURT.md | reports/evidence/EDGE_LAB/ | edge:overfit | PASS |
 | REDTEAM_COURT.md | reports/evidence/EDGE_LAB/ | edge:redteam | PASS |

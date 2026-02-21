@@ -1,9 +1,9 @@
 {
-  "generated_at": "2026-02-20T13:14:54.683Z",
+  "generated_at": "2026-02-21T08:25:56.774Z",
   "script": "edge_micro_live_readiness.mjs",
   "status": "NEEDS_DATA",
   "reason_code": "MICRO_LIVE_PREREQUISITES_NOT_MET",
-  "message": "MICRO_LIVE_ELIGIBLE=false. 4 prerequisite(s) not met. NEXT_ACTION: Pass gates: EXECUTION_REALITY_COURT, SLI_BASELINE, PROXY_GUARD, PAPER_COURT.",
+  "message": "MICRO_LIVE_ELIGIBLE=false. 3 prerequisite(s) not met. NEXT_ACTION: Pass gates: SLI_BASELINE, PROXY_GUARD, PAPER_COURT.",
   "LIVE_ELIGIBLE": false,
   "MICRO_LIVE_ELIGIBLE": false,
   "ELIGIBLE_FOR_PAPER": true,
@@ -43,9 +43,9 @@
       "gate": "EXECUTION_REALITY_COURT",
       "file": "execution_reality_court.json",
       "required_status": "PASS",
-      "actual_status": "NEEDS_DATA",
-      "reason_code": "PROXY_EXPECTANCY_UNVALIDATED",
-      "passes": false
+      "actual_status": "PASS",
+      "reason_code": "NONE",
+      "passes": true
     },
     {
       "gate": "SLI_BASELINE",
@@ -73,7 +73,6 @@
     }
   ],
   "blocked_reasons": [
-    "Gate EXECUTION_REALITY_COURT: expected PASS, got NEEDS_DATA (PROXY_EXPECTANCY_UNVALIDATED)",
     "Gate SLI_BASELINE: expected PASS, got MISSING (FILE_NOT_FOUND)",
     "Gate PROXY_GUARD: expected PASS, got MISSING (FILE_NOT_FOUND)",
     "Gate PAPER_COURT: expected PASS, got MISSING (FILE_NOT_FOUND)"

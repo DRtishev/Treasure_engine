@@ -1,5 +1,5 @@
 # MICRO_LIVE_READINESS.md — Micro-Live Readiness Assessment
-generated_at: RUN_ID
+generated_at: 88fd2c328fa8
 script: edge_micro_live_readiness.mjs
 
 ## STATUS: NEEDS_DATA
@@ -15,7 +15,7 @@ script: edge_micro_live_readiness.mjs
 | Gate | Required | Actual | Result | Reason |
 |------|---------|--------|--------|--------|
 | PROFIT_CANDIDATES_COURT | PASS | PASS | PASS | NONE |
-| EXECUTION_REALITY_COURT | PASS | NEEDS_DATA | BLOCKED | PROXY_EXPECTANCY_UNVALIDATED |
+| EXECUTION_REALITY_COURT | PASS | PASS | PASS | NONE |
 | SLI_BASELINE | PASS | MISSING | BLOCKED | FILE_NOT_FOUND |
 | PROXY_GUARD | PASS | MISSING | BLOCKED | FILE_NOT_FOUND |
 | PAPER_COURT | PASS | MISSING | BLOCKED | FILE_NOT_FOUND |
@@ -30,7 +30,6 @@ script: edge_micro_live_readiness.mjs
 | SLI | FOUND |
 
 ## Blocked Reasons
-- Gate EXECUTION_REALITY_COURT: expected PASS, got NEEDS_DATA (PROXY_EXPECTANCY_UNVALIDATED)
 - Gate SLI_BASELINE: expected PASS, got MISSING (FILE_NOT_FOUND)
 - Gate PROXY_GUARD: expected PASS, got MISSING (FILE_NOT_FOUND)
 - Gate PAPER_COURT: expected PASS, got MISSING (FILE_NOT_FOUND)
@@ -39,4 +38,4 @@ script: edge_micro_live_readiness.mjs
 MICRO_LIVE_ELIGIBLE: **false**
 LIVE_ELIGIBLE: **false** (permanent false — requires explicit policy upgrade)
 
-NEXT_ACTION: Pass gates: EXECUTION_REALITY_COURT, SLI_BASELINE, PROXY_GUARD, PAPER_COURT. Then rerun edge:all.
+NEXT_ACTION: Pass gates: SLI_BASELINE, PROXY_GUARD, PAPER_COURT. Then rerun edge:all.

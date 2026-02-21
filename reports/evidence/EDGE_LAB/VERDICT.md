@@ -1,5 +1,5 @@
 # VERDICT.md — EDGE_LAB Final Verdict
-generated_at: RUN_ID
+generated_at: 88fd2c328fa8
 script: edge_verdict.mjs
 
 ## FINAL VERDICT: NEEDS_DATA
@@ -8,21 +8,21 @@ script: edge_verdict.mjs
 One or more courts require additional data acquisition
 
 ## Court Summary
-| Court | File | Script | Status | Generated | RUN_ID |
+| Court | File | Script | Status | Generated | Size |
 |-------|------|--------|--------|-----------|------|
-| Sources Court | SOURCES_AUDIT.md | edge:sources | PASS | 489d15cd3198 | 3KB |
-| Registry Court | REGISTRY_COURT.md | edge:registry | PASS | 489d15cd3198 | 3KB |
-| Profit Candidates Court | PROFIT_CANDIDATES_COURT.md | edge:profit:candidates | PASS | 489d15cd3198 | 1KB |
-| Paper Evidence Court | PAPER_EVIDENCE.md | edge:paper:ingest | NEEDS_DATA | 489d15cd3198 | 0KB |
-| Dataset Court | DATASET_COURT.md | edge:dataset | PASS | 489d15cd3198 | 4KB |
-| Execution Court | EXECUTION_COURT.md | edge:execution | PASS | 489d15cd3198 | 2KB |
-| Execution Grid Court | EXECUTION_SENSITIVITY_GRID.md | edge:execution:grid | PASS | 489d15cd3198 | 3KB |
-| Execution Reality Court | EXECUTION_REALITY_COURT.md | edge:execution:reality | NEEDS_DATA | 489d15cd3198 | 2KB |
-| Risk Court | RISK_COURT.md | edge:risk | PASS | 489d15cd3198 | 3KB |
-| Overfit Court | OVERFIT_COURT.md | edge:overfit | PASS | 489d15cd3198 | 4KB |
-| Red Team Court | REDTEAM_COURT.md | edge:redteam | PASS | 489d15cd3198 | 4KB |
-| SRE Court | SRE_COURT.md | edge:sre | PASS | 489d15cd3198 | 3KB |
-| Micro-Live Readiness Court | MICRO_LIVE_READINESS.md | edge:micro:live:readiness | NEEDS_DATA | 489d15cd3198 | 1KB |
+| Sources Court | SOURCES_AUDIT.md | edge:sources | PASS | 88fd2c328fa8 | 3KB |
+| Registry Court | REGISTRY_COURT.md | edge:registry | PASS | 88fd2c328fa8 | 3KB |
+| Profit Candidates Court | PROFIT_CANDIDATES_COURT.md | edge:profit:candidates | PASS | 88fd2c328fa8 | 1KB |
+| Paper Evidence Court | PAPER_EVIDENCE.md | edge:paper:ingest | PASS | 88fd2c328fa8 | 1KB |
+| Dataset Court | DATASET_COURT.md | edge:dataset | PASS | 88fd2c328fa8 | 4KB |
+| Execution Court | EXECUTION_COURT.md | edge:execution | PASS | 88fd2c328fa8 | 2KB |
+| Execution Grid Court | EXECUTION_SENSITIVITY_GRID.md | edge:execution:grid | PASS | 88fd2c328fa8 | 3KB |
+| Execution Reality Court | EXECUTION_REALITY_COURT.md | edge:execution:reality | PASS | 88fd2c328fa8 | 2KB |
+| Risk Court | RISK_COURT.md | edge:risk | PASS | 88fd2c328fa8 | 3KB |
+| Overfit Court | OVERFIT_COURT.md | edge:overfit | PASS | 88fd2c328fa8 | 4KB |
+| Red Team Court | REDTEAM_COURT.md | edge:redteam | PASS | 88fd2c328fa8 | 4KB |
+| SRE Court | SRE_COURT.md | edge:sre | PASS | 88fd2c328fa8 | 3KB |
+| Micro-Live Readiness Court | MICRO_LIVE_READINESS.md | edge:micro:live:readiness | NEEDS_DATA | 88fd2c328fa8 | 1KB |
 
 ## Additional Evidence Files
 | File | Script | Present | Size |
@@ -35,7 +35,7 @@ One or more courts require additional data acquisition
 ## Score Summary
 | Metric | Value |
 |--------|-------|
-| Courts PASS | 10 / 13 |
+| Courts PASS | 12 / 13 |
 | Courts FAIL | 0 |
 | Courts MISSING | 0 |
 | Courts UNKNOWN | 0 |

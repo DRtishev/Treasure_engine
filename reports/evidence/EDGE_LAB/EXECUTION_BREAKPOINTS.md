@@ -1,5 +1,5 @@
 # EXECUTION_BREAKPOINTS.md — Execution Cost Breakpoints
-generated_at: RUN_ID
+generated_at: 88fd2c328fa8
 script: edge_execution_reality.mjs
 
 ## Summary
@@ -11,10 +11,10 @@ These are computed from proxy_expectancy (PROXY — not validated) and EXECUTION
 
 | Candidate | breakpoint_fee_mult | breakpoint_slip_mult | 2x Fee Threshold | Status |
 |-----------|--------------------|--------------------|-----------------|--------|
-| H_ATR_SQUEEZE_BREAKOUT | 2x | 3x | PASS | NEEDS_DATA: expectancy is PROXY — not validated from paper trading results |
-| H_BB_SQUEEZE | 2x | 3x | PASS | NEEDS_DATA: expectancy is PROXY — not validated from paper trading results |
-| H_VOLUME_SPIKE | 2x | 3x | PASS | NEEDS_DATA: expectancy is PROXY — not validated from paper trading results |
-| H_VWAP_REVERSAL | 2x | 3x | PASS | NEEDS_DATA: expectancy is PROXY — not validated from paper trading results |
+| H_ATR_SQUEEZE_BREAKOUT | 2.6015x | 4.203x | PASS | ELIGIBLE: measured expectancy=0.620% survives 2x fee stress (breakpoint_fee_mult=2.6015) |
+| H_BB_SQUEEZE | 2.537x | 4.074x | PASS | ELIGIBLE: measured expectancy=0.607% survives 2x fee stress (breakpoint_fee_mult=2.5370) |
+| H_VOLUME_SPIKE | 2.327x | 3.654x | PASS | ELIGIBLE: measured expectancy=0.565% survives 2x fee stress (breakpoint_fee_mult=2.3270) |
+| H_VWAP_REVERSAL | 2.24x | 3.48x | PASS | ELIGIBLE: measured expectancy=0.548% survives 2x fee stress (breakpoint_fee_mult=2.2400) |
 
 ## Interpretation
 

@@ -1,59 +1,59 @@
 {
-  "generated_at": "2026-02-20T13:14:54.164Z",
+  "generated_at": "2026-02-21T08:25:56.296Z",
   "script": "edge_execution_reality.mjs",
-  "status": "NEEDS_DATA",
-  "reason_code": "PROXY_EXPECTANCY_UNVALIDATED",
-  "message": "proxy_expectancy_pct=0.50% is a PROXY requiring paper trading validation. Provide artifacts/incoming/paper_evidence.json to transition to MEASURED mode.",
+  "status": "PASS",
+  "reason_code": "NONE",
+  "message": "MEASURED expectancy validated for all 4 candidate(s). All breakpoint_fee_mult >= 2.0. ELIGIBLE_FOR_PAPER granted. Paper epoch: PAPER_EPOCH_20260102_20260131.",
   "policy_source": "EDGE_LAB/EXECUTION_REALITY_POLICY.md",
-  "expectancy_mode": "PROXY",
-  "paper_epoch_id": null,
+  "expectancy_mode": "MEASURED",
+  "paper_epoch_id": "PAPER_EPOCH_20260102_20260131",
   "default_proxy_expectancy_pct": 0.5,
   "round_trip_cost_baseline_pct": 0.3,
   "stress_threshold_2x_required": true,
   "candidates": [
     {
       "candidate": "H_ATR_SQUEEZE_BREAKOUT",
-      "expectancy_pct": 0.5,
-      "expectancy_source": "PROXY",
+      "expectancy_pct": 0.6203,
+      "expectancy_source": "MEASURED",
       "base_round_trip_cost_pct": 0.3,
-      "breakpoint_fee_mult": 2,
-      "breakpoint_slip_mult": 3,
+      "breakpoint_fee_mult": 2.6015,
+      "breakpoint_slip_mult": 4.203,
       "threshold_2x_pass": true,
-      "eligible_for_paper": false,
-      "reason": "NEEDS_DATA: expectancy is PROXY — not validated from paper trading results"
+      "eligible_for_paper": true,
+      "reason": "ELIGIBLE: measured expectancy=0.620% survives 2x fee stress (breakpoint_fee_mult=2.6015)"
     },
     {
       "candidate": "H_BB_SQUEEZE",
-      "expectancy_pct": 0.5,
-      "expectancy_source": "PROXY",
+      "expectancy_pct": 0.6074,
+      "expectancy_source": "MEASURED",
       "base_round_trip_cost_pct": 0.3,
-      "breakpoint_fee_mult": 2,
-      "breakpoint_slip_mult": 3,
+      "breakpoint_fee_mult": 2.537,
+      "breakpoint_slip_mult": 4.074,
       "threshold_2x_pass": true,
-      "eligible_for_paper": false,
-      "reason": "NEEDS_DATA: expectancy is PROXY — not validated from paper trading results"
+      "eligible_for_paper": true,
+      "reason": "ELIGIBLE: measured expectancy=0.607% survives 2x fee stress (breakpoint_fee_mult=2.5370)"
     },
     {
       "candidate": "H_VOLUME_SPIKE",
-      "expectancy_pct": 0.5,
-      "expectancy_source": "PROXY",
+      "expectancy_pct": 0.5654,
+      "expectancy_source": "MEASURED",
       "base_round_trip_cost_pct": 0.3,
-      "breakpoint_fee_mult": 2,
-      "breakpoint_slip_mult": 3,
+      "breakpoint_fee_mult": 2.327,
+      "breakpoint_slip_mult": 3.654,
       "threshold_2x_pass": true,
-      "eligible_for_paper": false,
-      "reason": "NEEDS_DATA: expectancy is PROXY — not validated from paper trading results"
+      "eligible_for_paper": true,
+      "reason": "ELIGIBLE: measured expectancy=0.565% survives 2x fee stress (breakpoint_fee_mult=2.3270)"
     },
     {
       "candidate": "H_VWAP_REVERSAL",
-      "expectancy_pct": 0.5,
-      "expectancy_source": "PROXY",
+      "expectancy_pct": 0.548,
+      "expectancy_source": "MEASURED",
       "base_round_trip_cost_pct": 0.3,
-      "breakpoint_fee_mult": 2,
-      "breakpoint_slip_mult": 3,
+      "breakpoint_fee_mult": 2.24,
+      "breakpoint_slip_mult": 3.48,
       "threshold_2x_pass": true,
-      "eligible_for_paper": false,
-      "reason": "NEEDS_DATA: expectancy is PROXY — not validated from paper trading results"
+      "eligible_for_paper": true,
+      "reason": "ELIGIBLE: measured expectancy=0.548% survives 2x fee stress (breakpoint_fee_mult=2.2400)"
     }
   ]
 }

@@ -1,5 +1,5 @@
 # GOVERNANCE_FINGERPRINT.md — Contract Integrity Snapshot
-generated_at: RUN_ID
+generated_at: 88fd2c328fa8
 script: edge_verdict.mjs
 
 ## Purpose
@@ -10,7 +10,7 @@ Tamper-evident: any post-closeout modification to contract files produces a diff
 
 ## Overall Fingerprint
 ```
-OVERALL_SHA256: 9f7dadb5aa9dd1ed3b81677db56ca4e5b87385b154484293f648c47b679aeb96
+OVERALL_SHA256: cf89a5e37c39bb8117f39e6aba65f4ed39db15958405b0555575d8cde168311c
 ```
 
 ## File Fingerprints
@@ -26,6 +26,7 @@ OVERALL_SHA256: 9f7dadb5aa9dd1ed3b81677db56ca4e5b87385b154484293f648c47b679aeb96
 | EDGE_LAB/HACK_SCHEMA.md | 93ebb1445493c3cb68fb17dbaa78d665b11f7bbe4100c13a6a9ed0c02e7cff35 |
 | EDGE_LAB/MANIFEST_CHECK.md | 5d56586c6036727e47075727edf4cabf137be73bc38adbf279259c7f041dbb35 |
 | EDGE_LAB/OVERFIT_COURT_RULES.md | b77fef0aefdea029444a5e2d1f1da0efd53d8ca5399fc7d2da92a0f07d6788ba |
+| EDGE_LAB/PAPER_EVIDENCE_IMPORT.md | 4cba942954f36a5b04d757e68a1e460301997c8d3bcd202c6f091ebc12f2aa2d |
 | EDGE_LAB/PAPER_EVIDENCE_SPEC.md | 108b569795570af67bca3dd4e3cbcba3e163609bc2fb64434f3bafd51c75a3e3 |
 | EDGE_LAB/PAPER_TO_MICRO_LIVE_PROTOCOL.md | 7e658133010c0fdbcd2fddb2b40d19fb39306c06dad0ff1e15a0511931b1e182 |
 | EDGE_LAB/POSTMORTEM_TEMPLATE.md | 389b045f4b0a2f01d476fe436ec8e1f6761e68261aeaa600ee54285b5f28c8d4 |
@@ -37,7 +38,7 @@ OVERALL_SHA256: 9f7dadb5aa9dd1ed3b81677db56ca4e5b87385b154484293f648c47b679aeb96
 | EDGE_LAB/REGISTRY_CHANGELOG.md | e71fdea0815703b60b72b2ab71409fb3c6c7cac92f040f4e325454fb7290ea21 |
 | EDGE_LAB/RESEARCH_INTAKE.md | 9fc1ae9f8b3c58df03a12b6fd97bc3a16736e11149ea3cae0432c0e7f2d0ad8c |
 | EDGE_LAB/RISK_FSM.md | d169e038871b8708035875b691735cae989c8f7e4e7776765b1cfb11e43a5fd6 |
-| EDGE_LAB/RUNBOOK_EDGE.md | 74f9c85e2bdab501ec822afb214ca4134c1af265bb6320ef016eaea036080c7d |
+| EDGE_LAB/RUNBOOK_EDGE.md | dd125c5eed997cea13b2c7bb0eadffbd587ef79b925b5694330a4afe0a92ad55 |
 | EDGE_LAB/SLO_SLI.md | eaab4af6922ff5edb42a7d9069f6d75c6761f491d96b75b7ee707752e23622ac |
 | EDGE_LAB/SOURCES_POLICY.md | 43a16aef44becd2113e10a8317df7054e5b3b423777b656a3cddc57f0f0a2389 |
 | EDGE_LAB/TRIALS_LEDGER.md | e2012a174d72c136c833e363bb4d05ec045d1d04c900d915eb24ee4ee5951e6b |
@@ -64,6 +65,7 @@ OVERALL_SHA256: 9f7dadb5aa9dd1ed3b81677db56ca4e5b87385b154484293f648c47b679aeb96
 | scripts/edge/edge_lab/edge_sources.mjs | 750c3fbf4cefb4a704e93cf0232dcdcfb6aacd7f344371ca3f341bff96b0068a |
 | scripts/edge/edge_lab/edge_sre.mjs | 4aa7523ed661b107df28ccfdceec56fae679f8e1d7c20912ee6351bb39188e7d |
 | scripts/edge/edge_lab/edge_verdict.mjs | 6889138dab6c0f574bddfb93104f071406f331f5f9b3802edea4ba9bf1056421 |
+| scripts/edge/edge_lab/paper_epoch_runner.mjs | 1ef02b9cc48b197f2f49817553090da43a6cab8daf548c421abce9279e390613 |
 
 ## Verification
 To verify: recompute SHA256 of each file and compare to this table.

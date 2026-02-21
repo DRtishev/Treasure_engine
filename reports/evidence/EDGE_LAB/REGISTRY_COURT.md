@@ -1,5 +1,5 @@
 # REGISTRY_COURT.md — Registry Validation Report
-generated_at: RUN_ID
+generated_at: 88fd2c328fa8
 script: edge_registry.mjs
 
 ## STATUS: PASS

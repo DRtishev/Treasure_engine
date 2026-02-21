@@ -1,5 +1,5 @@
 # SRE_COURT.md — SRE Assessment Report
-generated_at: RUN_ID
+generated_at: 88fd2c328fa8
 script: edge_sre.mjs
 
 ## STATUS: PASS

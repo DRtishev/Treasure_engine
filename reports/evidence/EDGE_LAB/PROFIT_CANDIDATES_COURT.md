@@ -1,5 +1,5 @@
 # PROFIT_CANDIDATES_COURT.md — Profit Candidate Set v1 Validation
-generated_at: RUN_ID
+generated_at: 88fd2c328fa8
 script: edge_profit_candidates.mjs
 
 ## STATUS: PASS

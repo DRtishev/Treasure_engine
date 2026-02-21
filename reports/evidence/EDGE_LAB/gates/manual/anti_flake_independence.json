@@ -1,9 +1,10 @@
 {
-  "run_id": "489d15cd3198",
+  "run_id": "88fd2c328fa8",
   "status": "PASS",
   "reason_code": "NONE",
-  "message": "edge:all producer pipeline verified deterministic across two consecutive runs (via edge:next-epoch DETERMINISM_X2). Anti-flake independence confirmed.",
-  "fingerprint_run1": "3ff7307dfa9bbe12897382e14e5b440183feddf90916d454092ece68ee163ea1",
-  "fingerprint_run2": "3ff7307dfa9bbe12897382e14e5b440183feddf90916d454092ece68ee163ea1",
-  "source": "edge_next_epoch:DETERMINISM_X2"
+  "message": "edge:all is deterministic across two consecutive runs. Anti-flake independence verified.",
+  "fingerprint_run1": "90c608572750939e299b2db0f503fc141887c9ec994689a27ddea3e49594a62e",
+  "fingerprint_run2": "90c608572750939e299b2db0f503fc141887c9ec994689a27ddea3e49594a62e",
+  "drift_files": [],
+  "file_count": 20
 }
