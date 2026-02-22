@@ -1,0 +1,16 @@
+{
+  "drift_count": 6,
+  "fingerprint_run1": "8952900bf9dbe171d80140c88bb829556d92f5861bdac4bb0493e795dc40db88",
+  "fingerprint_run2": "2bcf4f7a85f8125dd11a62e146b7e584c76aae9591fdda36da9280a4fbfc16d8",
+  "fingerprints_match": false,
+  "message": "FAIL ND01: Nondeterminism detected in CALM P0 output. Fingerprint mismatch after two runs. 6 sha256_norm rows drifted.",
+  "next_action": "Investigate nondeterministic evidence outputs. Fix drift before proceeding. Rerun edge:calm:p0:x2 to verify.",
+  "norm_rows_run1": 98,
+  "norm_rows_run2": 98,
+  "reason_code": "ND01",
+  "run_id": "cad9c4ea3904",
+  "schema_version": "1.0.0",
+  "scope_manifest_sha_run1": "606837aeb57be66a817eac492b2bbba24c651e646e0590644f9114954a8ff992",
+  "scope_manifest_sha_run2": "606837aeb57be66a817eac492b2bbba24c651e646e0590644f9114954a8ff992",
+  "status": "FAIL"
+}

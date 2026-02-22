@@ -623,7 +623,8 @@
     "infra:p0": "node scripts/verify/infra_p0_closeout.mjs",
     "verify:dep02:failclosed": "node scripts/verify/dep02_failclosed_readiness_gate.mjs",
     "p0:all": "npm run edge:calm:p0 && npm run infra:p0",
-    "p0:full": "npm run p0:all && npm run edge:micro:live:readiness && npm run verify:dep02:failclosed"
+    "p0:full": "npm run p0:all && npm run edge:micro:live:readiness && npm run verify:dep02:failclosed",
+    "verify:op01": "node scripts/gov/op01_scripts_check.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

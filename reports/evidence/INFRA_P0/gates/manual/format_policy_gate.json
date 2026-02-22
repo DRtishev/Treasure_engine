@@ -14,7 +14,7 @@
     },
     {
       "check": "machine_json_schema_version",
-      "legacy_count": 14,
+      "legacy_count": 15,
       "result": "CHECKED",
       "strict_count": 10
     }
@@ -103,7 +103,7 @@
   "next_action": "Migrate 11 legacy EDGE_LAB gate JSON files to schema_version in a follow-up PR.",
   "policy_present": true,
   "reason_code": "NONE",
-  "run_id": "f615eb934eb0",
+  "run_id": "cad9c4ea3904",
   "schema_version": "1.0.0",
   "status": "PASS",
   "strict_json_checked": 10,

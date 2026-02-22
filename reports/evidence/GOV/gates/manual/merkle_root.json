@@ -1,12 +1,12 @@
 {
-  "files_hashed": 98,
-  "files_in_scope": 98,
+  "files_hashed": 100,
+  "files_in_scope": 100,
   "files_missing": 0,
-  "merkle_root": "73fb2471a506c9f45e6179b409094fca00228c2c9a3369a39de6ca77b83b02a4",
-  "message": "Merkle root computed from 98 files (8 levels). Root: 73fb2471a506c9f45e6179b409094fca00228c2c9a3369a39de6ca77b83b02a4",
-  "run_id": "f615eb934eb0",
+  "merkle_root": "bf3e2d7d491ecf1746243d7f9e1e9f6562e1ee0e11394c80e9345fa659036b19",
+  "message": "Merkle root computed from 100 files (8 levels). Root: bf3e2d7d491ecf1746243d7f9e1e9f6562e1ee0e11394c80e9345fa659036b19",
+  "run_id": "cad9c4ea3904",
   "schema_version": "1.0.0",
-  "scope_manifest_sha": "606837aeb57be66a817eac492b2bbba24c651e646e0590644f9114954a8ff992",
+  "scope_manifest_sha": "dc6b57d9f79fd1b0f662189c2ef79e868a30f3351ed2e738ea1a6efaf3d5a228",
   "status": "PASS",
   "tree_depth": 8
 }

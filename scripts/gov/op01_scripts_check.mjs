@@ -9,8 +9,8 @@
  * BLOCKED OP01 if any required script is missing.
  *
  * Writes:
- *   reports/evidence/GOV/OP01_SCRIPTS_CHECK.md
- *   reports/evidence/GOV/gates/manual/op01_scripts_check.json
+ *   reports/evidence/SAFETY/OP01_SCRIPTS_CHECK.md
+ *   reports/evidence/SAFETY/gates/manual/op01_scripts_check.json
  */
 
 import fs from 'node:fs';
@@ -19,10 +19,10 @@ import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const GOV_DIR = path.join(ROOT, 'reports', 'evidence', 'GOV');
-const MANUAL_DIR = path.join(GOV_DIR, 'gates', 'manual');
+const SAFETY_DIR = path.join(ROOT, 'reports', 'evidence', 'SAFETY');
+const MANUAL_DIR = path.join(SAFETY_DIR, 'gates', 'manual');
 
-fs.mkdirSync(GOV_DIR, { recursive: true });
+fs.mkdirSync(SAFETY_DIR, { recursive: true });
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
 // ---------------------------------------------------------------------------
@@ -126,11 +126,11 @@ ${allScriptsList}
 
 ## Evidence Paths
 
-- reports/evidence/GOV/OP01_SCRIPTS_CHECK.md
-- reports/evidence/GOV/gates/manual/op01_scripts_check.json
+- reports/evidence/SAFETY/OP01_SCRIPTS_CHECK.md
+- reports/evidence/SAFETY/gates/manual/op01_scripts_check.json
 `;
 
-writeMd(path.join(GOV_DIR, 'OP01_SCRIPTS_CHECK.md'), checkMd);
+writeMd(path.join(SAFETY_DIR, 'OP01_SCRIPTS_CHECK.md'), checkMd);
 
 // ---------------------------------------------------------------------------
 // Write op01_scripts_check.json

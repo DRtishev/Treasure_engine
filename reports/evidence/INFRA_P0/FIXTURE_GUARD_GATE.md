@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: f615eb934eb0
+RUN_ID: cad9c4ea3904
 ALLOW_FIXTURES: unset
 ELIGIBLE_FOR_MICRO_LIVE: true
 ELIGIBLE_FOR_EXECUTION: true
@@ -21,11 +21,12 @@ Eligibility flags remain false under any fixture violation.
 |------|-------|-------|--------|
 | (none) | — | — | CLEAN |
 
-## Scanned Files (sample, max 20 of 24)
+## Scanned Files (sample, max 20 of 25)
 
 | Path | Check | Result |
 |------|-------|--------|
 | `reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json` | FILENAME_OK | CLEAN |
+| `reports/evidence/EDGE_LAB/gates/manual/calm_p0_x2.json` | FILENAME_OK | CLEAN |
 | `reports/evidence/EDGE_LAB/gates/manual/canon_selftest.json` | FILENAME_OK | CLEAN |
 | `reports/evidence/EDGE_LAB/gates/manual/execution_reality_court.json` | FILENAME_OK | CLEAN |
 | `reports/evidence/EDGE_LAB/gates/manual/expectancy_ci.json` | FILENAME_OK | CLEAN |
@@ -44,13 +45,12 @@ Eligibility flags remain false under any fixture violation.
 | `reports/evidence/INFRA_P0/gates/manual/fixture_guard_gate.json` | FILENAME_FIXTURE_PATTERN | FLAGGED |
 | `reports/evidence/INFRA_P0/gates/manual/format_policy_gate.json` | FILENAME_OK | CLEAN |
 | `reports/evidence/INFRA_P0/gates/manual/goldens_apply_gate.json` | FILENAME_OK | CLEAN |
-| `reports/evidence/INFRA_P0/gates/manual/infra_p0_closeout.json` | FILENAME_OK | CLEAN |
 
 ## Summary
 
 | Metric | Value |
 |--------|-------|
-| Files scanned | 24 |
+| Files scanned | 25 |
 | Violations found | 0 |
 | ALLOW_FIXTURES | unset |
 | Gate status | PASS |

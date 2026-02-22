@@ -12,8 +12,8 @@
     {
       "blocker": true,
       "gate": "NODE_TRUTH",
-      "reason_code": "NONE",
-      "status": "PASS"
+      "reason_code": "NT02",
+      "status": "FAIL"
     },
     {
       "blocker": true,
@@ -52,10 +52,10 @@
       "status": "PASS"
     }
   ],
-  "message": "INFRA P0 PASS — NET_ISOLATION (NET01), NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY, FIXTURE_GUARD (FG01), ZERO_WAR_PROBE (ZW00/ZW01) all PASS. DEPS_OFFLINE reported honestly (DEP02). ELIGIBLE_FOR_MICRO_LIVE=false.",
-  "next_action": "Resolve DEP02 before proceeding to readiness. See EDGE_LAB/DEP_POLICY.md for mitigation paths.",
-  "overall_reason": "NONE",
-  "run_id": "f615eb934eb0",
+  "message": "INFRA P0 FAIL — NT02: Node mismatch: running v20.19.6 (family 20) vs NODE_TRUTH.md allowed_family=22. Align the running Node version or update NODE_TRUTH.md via APPLY protocol.",
+  "next_action": "Fix NODE_TRUTH before proceeding.",
+  "overall_reason": "NT02",
+  "run_id": "cad9c4ea3904",
   "schema_version": "1.0.0",
-  "status": "PASS"
+  "status": "FAIL"
 }

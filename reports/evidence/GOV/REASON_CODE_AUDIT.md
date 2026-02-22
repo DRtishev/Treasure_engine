@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: f615eb934eb0
+RUN_ID: cad9c4ea3904
 NEXT_ACTION: No reason code violations. Proceed with gov:integrity.
 
 ## Audit Policy
@@ -16,9 +16,10 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 
 | Path | Reason Code | Status | Violation |
 |------|-------------|--------|-----------|
-| (none) | — | — | CLEAN |
+| `reports/evidence/INFRA_P0/gates/manual/node_truth_gate.json` | NT02 | FAIL | UNKNOWN_CODE: reason_code="NT02" not in SSOT list |
+| `reports/evidence/GOV/gates/manual/edge_unlock.json` | BLOCKED | BLOCKED | UNKNOWN_CODE: reason_code="BLOCKED" not in SSOT list |
 
-## Scanned Files (first 30 of 30)
+## Scanned Files (first 30 of 32)
 
 | File | Reason Code | Status | Check |
 |------|-------------|--------|-------|
@@ -27,12 +28,13 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 | `fixture_guard_gate.json` | NONE | PASS | OK |
 | `format_policy_gate.json` | NONE | PASS | OK |
 | `goldens_apply_gate.json` | NONE | PASS | OK |
-| `infra_p0_closeout.json` | NONE | PASS | OK |
+| `infra_p0_closeout.json` | NONE | FAIL | OK |
 | `infra_p0_final.json` | NONE | PASS | OK |
 | `net_isolation.json` | NONE | PASS | OK |
-| `node_truth_gate.json` | NONE | PASS | OK |
+| `node_truth_gate.json` | NT02 | FAIL | VIOLATION |
 | `verify_mode_gate.json` | NONE | PASS | OK |
 | `calm_p0_final.json` | NONE | PASS | OK |
+| `calm_p0_x2.json` | ND01 | FAIL | OK |
 | `canon_selftest.json` | NONE | PASS | OK |
 | `execution_reality_court.json` | NONE | PASS | OK |
 | `expectancy_ci.json` | NONE | PASS | OK |
@@ -46,20 +48,19 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 | `profit_candidates_court.json` | NONE | PASS | OK |
 | `proxy_guard.json` | NONE | PASS | OK |
 | `sli_baseline.json` | NONE | PASS | OK |
+| `op01_scripts_check.json` | NONE | PASS | OK |
 | `zero_war_probe.json` | NONE | PASS | OK |
-| `edge_unlock.json` | NONE | PASS | OK |
+| `edge_unlock.json` | BLOCKED | BLOCKED | VIOLATION |
 | `gov01_evidence_integrity.json` | NONE | PASS | OK |
 | `merkle_root.json` | NONE | PASS | OK |
-| `op01_scripts_check.json` | NONE | PASS | OK |
-| `reason_code_audit.json` | NONE | PASS | OK |
 
 ## Summary
 
 | Metric | Value |
 |--------|-------|
-| Files scanned | 30 |
+| Files scanned | 32 |
 | Hard violations | 0 |
-| Unknown code warnings | 0 |
+| Unknown code warnings | 2 |
 | D003 violations | 0 |
 | NEEDS_DATA abuse | 0 |
 

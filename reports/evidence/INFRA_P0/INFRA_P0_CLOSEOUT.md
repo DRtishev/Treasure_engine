@@ -1,19 +1,19 @@
 # INFRA_P0_CLOSEOUT.md — Infrastructure P0 Hardening Closeout
 
-STATUS: PASS
-REASON_CODE: NONE
-RUN_ID: f615eb934eb0
+STATUS: FAIL
+REASON_CODE: NT02
+RUN_ID: cad9c4ea3904
 ELIGIBLE_FOR_MICRO_LIVE: false
 ELIGIBLE_FOR_EXECUTION: false
 ELIGIBILITY_REASON: DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.
-NEXT_ACTION: Resolve DEP02 before proceeding to readiness. See EDGE_LAB/DEP_POLICY.md for mitigation paths.
+NEXT_ACTION: Fix NODE_TRUTH before proceeding.
 
 ## Gate Matrix
 
 | Gate | Status | Reason Code | Blocker |
 |------|--------|-------------|---------|
 | NET_ISOLATION | PASS | NONE | YES |
-| NODE_TRUTH | PASS | NONE | YES |
+| NODE_TRUTH | FAIL | NT02 | YES |
 | VERIFY_MODE | PASS | NONE | YES |
 | DEPS_OFFLINE | FAIL | DEP02 | NO (warn) |
 | GOLDENS_APPLY | PASS | NONE | YES |
@@ -36,14 +36,14 @@ See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 | Evidence Path | sha256_raw (prefix) | sha256_norm (prefix) |
 |--------------|--------------------|--------------------|
-| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `d358c8bef8fb9221…` | `d358c8bef8fb9221…` |
-| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `1370a1f4f06b80b3…` | `1370a1f4f06b80b3…` |
-| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `911e74e6a77ef002…` | `911e74e6a77ef002…` |
-| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `5b0ebabc126456e4…` | `5b0ebabc126456e4…` |
-| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `9324e1023dd47033…` | `9324e1023dd47033…` |
-| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `db284fb7ba437652…` | `db284fb7ba437652…` |
-| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `7c569c18605aaedf…` | `7c569c18605aaedf…` |
-| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `99ff3ade02e712ae…` | `99ff3ade02e712ae…` |
+| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `3dbdca0efd1d19cd…` | `3dbdca0efd1d19cd…` |
+| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `283fe858d6a4fa50…` | `283fe858d6a4fa50…` |
+| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `3d179b55c1b3a962…` | `3d179b55c1b3a962…` |
+| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `b87b99891f9135e4…` | `b87b99891f9135e4…` |
+| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `3e2b9c59e1782ee7…` | `3e2b9c59e1782ee7…` |
+| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `53d2d83aa06f7b51…` | `53d2d83aa06f7b51…` |
+| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `b336206823b032dd…` | `b336206823b032dd…` |
+| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `bb3fc57639811a01…` | `bb3fc57639811a01…` |
 
 ## What Changed (v1.5.3 patchset)
 
@@ -64,4 +64,4 @@ See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 ## Next Action
 
-Resolve DEP02 before proceeding to readiness. See EDGE_LAB/DEP_POLICY.md for mitigation paths.
+Fix NODE_TRUTH before proceeding.
