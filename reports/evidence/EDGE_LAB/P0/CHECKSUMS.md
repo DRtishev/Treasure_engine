@@ -2,17 +2,17 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: cad9c4ea3904
+RUN_ID: 2c52a286482d
 NEXT_ACTION: Proceed to RECEIPTS_CHAIN.
 
 ## Metadata
 
 | Field | Value |
 |-------|-------|
-| scope_manifest_sha | `dc6b57d9f79fd1b0f662189c2ef79e868a30f3351ed2e738ea1a6efaf3d5a228` |
+| scope_manifest_sha | `0b75f6c15507133c7775dd85d627b7f87b8582d4093adf5ee20074fcbafcf213` |
 | norm_rules_sha | `021ba0511726a903c5d184a555e10a5137eae2eeed9e3df597b23eca255ac496` |
-| files_in_scope | 100 |
-| files_hashed | 100 |
+| files_in_scope | 96 |
+| files_hashed | 96 |
 | files_missing | 0 |
 
 ## Hash Ledger (sha256_raw + sha256_norm, ASCII sorted)
@@ -27,12 +27,12 @@ NEXT_ACTION: Proceed to RECEIPTS_CHAIN.
 | `EDGE_LAB/DEP_POLICY.md` | `ea4fc2238e4090f504e3b13591d010c000e602c28ceba8a6d17535f31ec5f55b` | `ea4fc2238e4090f504e3b13591d010c000e602c28ceba8a6d17535f31ec5f55b` |
 | `EDGE_LAB/ERROR_BUDGET_POLICY.md` | `fbd5cc865ac70276692369d206399754d863f38c11cadf5064212744b36c38fc` | `fbd5cc865ac70276692369d206399754d863f38c11cadf5064212744b36c38fc` |
 | `EDGE_LAB/EVIDENCE_CANON_RULES.md` | `021ba0511726a903c5d184a555e10a5137eae2eeed9e3df597b23eca255ac496` | `021ba0511726a903c5d184a555e10a5137eae2eeed9e3df597b23eca255ac496` |
-| `EDGE_LAB/EVIDENCE_INDEX.md` | `226fc507e3b82f5f9f2d317fb22ae94bb89c3ba9e62220add65a334425a0d94d` | `aefef31d8a512a64f8400165c6e8c11732b34cbbeb770c3370b736edc823b23d` |
+| `EDGE_LAB/EVIDENCE_INDEX.md` | `226fc507e3b82f5f9f2d317fb22ae94bb89c3ba9e62220add65a334425a0d94d` | `296ccc0cda79745374aa8ff96443c78b99110a221bc034f32716a2ff60002998` |
 | `EDGE_LAB/EXECUTION_MODEL.md` | `6072ee361588d9ea048acf2ec978c7ee69a189d67477a5b22cbdc93edf2a0ada` | `6072ee361588d9ea048acf2ec978c7ee69a189d67477a5b22cbdc93edf2a0ada` |
 | `EDGE_LAB/EXECUTION_REALITY_POLICY.md` | `79c313a9e3578c25d2b81eb18d3a8888a800dc8d7c535dcc65f644f64a610c57` | `79c313a9e3578c25d2b81eb18d3a8888a800dc8d7c535dcc65f644f64a610c57` |
 | `EDGE_LAB/EXECUTION_SENSITIVITY_SPEC.md` | `2ef6481e548f8cead408f2697cc496a3243685756e2f81a27116c2825fc407f6` | `2ef6481e548f8cead408f2697cc496a3243685756e2f81a27116c2825fc407f6` |
 | `EDGE_LAB/EXPECTANCY_CI_POLICY.md` | `7cff212a4ce580c4ab3ef66bb9342eb5a1e154af7046ff7944798dc2a7d526c6` | `7cff212a4ce580c4ab3ef66bb9342eb5a1e154af7046ff7944798dc2a7d526c6` |
-| `EDGE_LAB/FINAL_VERDICT.md` | `be14f17cae4a9f745ee8b1e1e8813ac396c72bac49ce31e59952a84b5ba06b40` | `a75e5b15038aeaa456676a93727b3cfcba65972ca25276e917028e52f02fb244` |
+| `EDGE_LAB/FINAL_VERDICT.md` | `be14f17cae4a9f745ee8b1e1e8813ac396c72bac49ce31e59952a84b5ba06b40` | `80d6eb1fc8148286e93d836153cd78a8b027d0efa859687d4d69b4b65e12fb6f` |
 | `EDGE_LAB/GATE_FSM_SPEC.md` | `381bf240e65dbe9211ddc4e1e090f99ea3a00d2ffa86a3b84cf191f9645121ae` | `381bf240e65dbe9211ddc4e1e090f99ea3a00d2ffa86a3b84cf191f9645121ae` |
 | `EDGE_LAB/HACK_REGISTRY.md` | `9e40f7916cb116cba1ee2476eab229f6f60a13fae7992341bf559b97c5b767d3` | `9e40f7916cb116cba1ee2476eab229f6f60a13fae7992341bf559b97c5b767d3` |
 | `EDGE_LAB/HACK_SCHEMA.md` | `93ebb1445493c3cb68fb17dbaa78d665b11f7bbe4100c13a6a9ed0c02e7cff35` | `93ebb1445493c3cb68fb17dbaa78d665b11f7bbe4100c13a6a9ed0c02e7cff35` |
@@ -66,14 +66,10 @@ NEXT_ACTION: Proceed to RECEIPTS_CHAIN.
 | `EDGE_LAB/UPDATE_SCOPE_POLICY.md` | `2fd5ec49ffa3376ef6d941bdb18fe7403427e69de1768fcea65ec294009d9aa5` | `2fd5ec49ffa3376ef6d941bdb18fe7403427e69de1768fcea65ec294009d9aa5` |
 | `EDGE_LAB/VERDICT_SEMANTICS.md` | `fc6d6d3bf66d6e867d2ff3611e861b1b2277813fd74b73634bf315b50e139439` | `fc6d6d3bf66d6e867d2ff3611e861b1b2277813fd74b73634bf315b50e139439` |
 | `EDGE_LAB/WALK_FORWARD_PROTOCOL.md` | `0cbb83e53e415b157294b92ac140a6b9593c1a7eb78069352f80dccbcd962b98` | `0cbb83e53e415b157294b92ac140a6b9593c1a7eb78069352f80dccbcd962b98` |
-| `reports/evidence/EDGE_LAB/P0/CALM_MODE_P0_CLOSEOUT.md` | `e3035df4cf81afd59515e39ee67989de439bb5e5a9db199a2bfe39fbb739d3fc` | `e3035df4cf81afd59515e39ee67989de439bb5e5a9db199a2bfe39fbb739d3fc` |
-| `reports/evidence/EDGE_LAB/P0/CALM_P0_ANTI_FLAKE_X2.md` | `6b54e8513c0e8e924863e707800b80ecd7a0dbf0e84387fd1ae0778098dd839c` | `6b54e8513c0e8e924863e707800b80ecd7a0dbf0e84387fd1ae0778098dd839c` |
-| `reports/evidence/EDGE_LAB/P0/CANON_SELFTEST.md` | `5ee1f8311d139bf600cdcab603b952466a406b25d7731e990603f34d721c6128` | `5ee1f8311d139bf600cdcab603b952466a406b25d7731e990603f34d721c6128` |
-| `reports/evidence/EDGE_LAB/P0/DATA_COURT.md` | `277195660d656642ee0aee3bcd787e324a17a31a8e4ab5e2221426dbee518d59` | `277195660d656642ee0aee3bcd787e324a17a31a8e4ab5e2221426dbee518d59` |
-| `reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md` | `05aa3088539a44dc9b12385582fba2d44720aa0932fcc26ca6250e514fb566f2` | `05aa3088539a44dc9b12385582fba2d44720aa0932fcc26ca6250e514fb566f2` |
-| `reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json` | `e42b7183632db5e8ebef8a9f2fb01d249a66058dae4888477ac642d48d0b0797` | `e42b7183632db5e8ebef8a9f2fb01d249a66058dae4888477ac642d48d0b0797` |
-| `reports/evidence/EDGE_LAB/gates/manual/calm_p0_x2.json` | `3e0c8afb9b17eabcfcb542a550c8132b456de3dff299a2c6d905206c4a78e971` | `3e0c8afb9b17eabcfcb542a550c8132b456de3dff299a2c6d905206c4a78e971` |
-| `reports/evidence/EDGE_LAB/gates/manual/canon_selftest.json` | `0f5bfdecbb78de62b8a07287d28c70a6a95dd7b47c28ba4634db9a4635be2f54` | `0f5bfdecbb78de62b8a07287d28c70a6a95dd7b47c28ba4634db9a4635be2f54` |
+| `reports/evidence/EDGE_LAB/P0/CALM_P0_ANTI_FLAKE_X2.md` | `c31c016e50ad4139c6264c5354c53d38d587e85fe5e64453982d7de4128a79da` | `c31c016e50ad4139c6264c5354c53d38d587e85fe5e64453982d7de4128a79da` |
+| `reports/evidence/EDGE_LAB/P0/CANON_SELFTEST.md` | `441d4a1a966e54daa5ea605fa20aa3f62e66d9ee5ec220c9fc64de0232b65b0d` | `441d4a1a966e54daa5ea605fa20aa3f62e66d9ee5ec220c9fc64de0232b65b0d` |
+| `reports/evidence/EDGE_LAB/P0/DATA_COURT.md` | `a9ca626febd10ead3b79681ad3f846eea09c7d4ae999d1498d44e5ce06583066` | `a9ca626febd10ead3b79681ad3f846eea09c7d4ae999d1498d44e5ce06583066` |
+| `reports/evidence/EDGE_LAB/gates/manual/canon_selftest.json` | `004df775532305867266c3a0b93435531027255add596d86af6a252ca8286b1f` | `004df775532305867266c3a0b93435531027255add596d86af6a252ca8286b1f` |
 | `reports/evidence/EDGE_LAB/gates/manual/execution_reality_court.json` | `aeda39d0f7f47706d1d191ed3c99ca5c9427744615d2a38df5260cb5ad572ed6` | `aeda39d0f7f47706d1d191ed3c99ca5c9427744615d2a38df5260cb5ad572ed6` |
 | `reports/evidence/EDGE_LAB/gates/manual/expectancy_ci.json` | `69cd40db926c2f2f25a7331ed0867bd2e5e7616d6cccbb03ac2347efa42fd1aa` | `69cd40db926c2f2f25a7331ed0867bd2e5e7616d6cccbb03ac2347efa42fd1aa` |
 | `reports/evidence/EDGE_LAB/gates/manual/micro_live_readiness.json` | `96ae517f3a497d6fc92d123d0a84068de89f6dbbc080fb3898b34c2a5dbe297e` | `96ae517f3a497d6fc92d123d0a84068de89f6dbbc080fb3898b34c2a5dbe297e` |
@@ -90,12 +86,12 @@ NEXT_ACTION: Proceed to RECEIPTS_CHAIN.
 | `scripts/edge/edge_lab/canon_selftest.mjs` | `ccede35e7a7395b435ea81fb68115e9ee2fe78cab995dd49aac16b306c928507` | `ccede35e7a7395b435ea81fb68115e9ee2fe78cab995dd49aac16b306c928507` |
 | `scripts/edge/edge_lab/edge_all.mjs` | `ec41693cb4d65006a9f2008a5b9eb31cd2f2425a31d0c950b39f47324887a846` | `ec41693cb4d65006a9f2008a5b9eb31cd2f2425a31d0c950b39f47324887a846` |
 | `scripts/edge/edge_lab/edge_all_x2.mjs` | `4f4639684eceb0bc172d770a25f2fa0a2b67aaff165b7b9474af6d110b5864c0` | `4f4639684eceb0bc172d770a25f2fa0a2b67aaff165b7b9474af6d110b5864c0` |
-| `scripts/edge/edge_lab/edge_calm_mode_p0.mjs` | `2b67130036c8128f135533ff5117e0fee645a63b2c53587e01a15e2b81ddbe89` | `2b67130036c8128f135533ff5117e0fee645a63b2c53587e01a15e2b81ddbe89` |
-| `scripts/edge/edge_lab/edge_calm_p0_x2.mjs` | `df7505cd446b93c0513f04888fe2cfd23d76ba6dfca4ec4060a187b23bbb616e` | `df7505cd446b93c0513f04888fe2cfd23d76ba6dfca4ec4060a187b23bbb616e` |
+| `scripts/edge/edge_lab/edge_calm_mode_p0.mjs` | `b5289d8ccf9710d905beba0fe66096f092ec75a5a3065712d41b15e7984c5cec` | `b5289d8ccf9710d905beba0fe66096f092ec75a5a3065712d41b15e7984c5cec` |
+| `scripts/edge/edge_lab/edge_calm_p0_x2.mjs` | `635df1d136509860e80835398f9569e47a1fcf9845d5746642eca2454a049405` | `635df1d136509860e80835398f9569e47a1fcf9845d5746642eca2454a049405` |
 | `scripts/edge/edge_lab/edge_data_court.mjs` | `e40ee8617ff97b41a5aee485d8640ddd9763fb15aaa848df996808d65d22a676` | `e40ee8617ff97b41a5aee485d8640ddd9763fb15aaa848df996808d65d22a676` |
 | `scripts/edge/edge_lab/edge_dataset.mjs` | `35949338a13f91304801c4b5b5e78eea6330b6ac5ee609e5e48ca84e66733293` | `35949338a13f91304801c4b5b5e78eea6330b6ac5ee609e5e48ca84e66733293` |
 | `scripts/edge/edge_lab/edge_doctor.mjs` | `5ab06e282835529f37833fe549bd12823c7d09ace97f5456ee257e62a8d103d1` | `5ab06e282835529f37833fe549bd12823c7d09ace97f5456ee257e62a8d103d1` |
-| `scripts/edge/edge_lab/edge_evidence_hashes.mjs` | `639c01c7cec03c6513f3a853bbfa714f91ee9d0cddd48fede2b570ad88a913a9` | `639c01c7cec03c6513f3a853bbfa714f91ee9d0cddd48fede2b570ad88a913a9` |
+| `scripts/edge/edge_lab/edge_evidence_hashes.mjs` | `9fc9f12b09b1ce6c2f86b9012522f49bf1a37bc681936cb079e374ae8eeb44ec` | `9fc9f12b09b1ce6c2f86b9012522f49bf1a37bc681936cb079e374ae8eeb44ec` |
 | `scripts/edge/edge_lab/edge_execution.mjs` | `192177a72fd0ce6b88e72dea70dfb98182dc3471c956ac3fe8e2a8277b636bad` | `192177a72fd0ce6b88e72dea70dfb98182dc3471c956ac3fe8e2a8277b636bad` |
 | `scripts/edge/edge_lab/edge_execution_grid.mjs` | `9acf26aae9b4091b4a46eed4aaddf93f40f0a212bc4947a5d2596525eaccea19` | `9acf26aae9b4091b4a46eed4aaddf93f40f0a212bc4947a5d2596525eaccea19` |
 | `scripts/edge/edge_lab/edge_execution_reality.mjs` | `500e6352e2efba90dc3491c011d9169d34d09b8dcaa0e5cebf9fb430639e9b33` | `500e6352e2efba90dc3491c011d9169d34d09b8dcaa0e5cebf9fb430639e9b33` |
@@ -170,13 +166,9 @@ EDGE_LAB/TRIALS_LEDGER.md
 EDGE_LAB/UPDATE_SCOPE_POLICY.md
 EDGE_LAB/VERDICT_SEMANTICS.md
 EDGE_LAB/WALK_FORWARD_PROTOCOL.md
-reports/evidence/EDGE_LAB/P0/CALM_MODE_P0_CLOSEOUT.md
 reports/evidence/EDGE_LAB/P0/CALM_P0_ANTI_FLAKE_X2.md
 reports/evidence/EDGE_LAB/P0/CANON_SELFTEST.md
 reports/evidence/EDGE_LAB/P0/DATA_COURT.md
-reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md
-reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json
-reports/evidence/EDGE_LAB/gates/manual/calm_p0_x2.json
 reports/evidence/EDGE_LAB/gates/manual/canon_selftest.json
 reports/evidence/EDGE_LAB/gates/manual/execution_reality_court.json
 reports/evidence/EDGE_LAB/gates/manual/expectancy_ci.json
@@ -228,6 +220,18 @@ scripts/edge/edge_lab/paper_epoch_runner.mjs
 ## Missing Files
 
 - NONE
+
+## SCOPE_POLICY
+
+Excluded derived artifacts to keep hashing acyclic and deterministic:
+- reports/evidence/EDGE_LAB/P0/CHECKSUMS.md
+- reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md
+- reports/evidence/EDGE_LAB/P0/CALM_MODE_P0_CLOSEOUT.md
+- reports/evidence/EDGE_LAB/gates/manual/evidence_hashes.json
+- reports/evidence/EDGE_LAB/gates/manual/receipts_chain.json
+- reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json
+- reports/evidence/EDGE_LAB/gates/manual/calm_p0_x2.json
+- reports/evidence/EDGE_LAB/gates/manual/*final*.json
 
 ## Policy References
 

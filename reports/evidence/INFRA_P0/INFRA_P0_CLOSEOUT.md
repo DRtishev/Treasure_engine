@@ -2,10 +2,10 @@
 
 STATUS: FAIL
 REASON_CODE: NT02
-RUN_ID: cad9c4ea3904
+RUN_ID: 2c52a286482d
 ELIGIBLE_FOR_MICRO_LIVE: false
 ELIGIBLE_FOR_EXECUTION: false
-ELIGIBILITY_REASON: DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.
+ELIGIBILITY_REASON: No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)
 NEXT_ACTION: Fix NODE_TRUTH before proceeding.
 
 ## Gate Matrix
@@ -15,7 +15,7 @@ NEXT_ACTION: Fix NODE_TRUTH before proceeding.
 | NET_ISOLATION | PASS | NONE | YES |
 | NODE_TRUTH | FAIL | NT02 | YES |
 | VERIFY_MODE | PASS | NONE | YES |
-| DEPS_OFFLINE | FAIL | DEP02 | NO (warn) |
+| DEPS_OFFLINE | PASS | NONE | NO (warn) |
 | GOLDENS_APPLY | PASS | NONE | YES |
 | FORMAT_POLICY | PASS | NONE | YES |
 | FIXTURE_GUARD | PASS | NONE | YES |
@@ -25,8 +25,8 @@ NEXT_ACTION: Fix NODE_TRUTH before proceeding.
 
 | Flag | Value | Reason |
 |------|-------|--------|
-| eligible_for_micro_live | false | DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable. |
-| eligible_for_execution | false | DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable. |
+| eligible_for_micro_live | false | No blocking codes detected (DEP/FG01/ZW01/NET01 all clear) |
+| eligible_for_execution | false | No blocking codes detected (DEP/FG01/ZW01/NET01 all clear) |
 
 **Note:** Infra closeout may PASS overall while eligibility is false.
 Readiness gate MUST honour these flags and emit BLOCKED with the same DEP reason code.
@@ -36,14 +36,14 @@ See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 | Evidence Path | sha256_raw (prefix) | sha256_norm (prefix) |
 |--------------|--------------------|--------------------|
-| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `3dbdca0efd1d19cd…` | `3dbdca0efd1d19cd…` |
-| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `283fe858d6a4fa50…` | `283fe858d6a4fa50…` |
-| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `3d179b55c1b3a962…` | `3d179b55c1b3a962…` |
-| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `b87b99891f9135e4…` | `b87b99891f9135e4…` |
-| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `3e2b9c59e1782ee7…` | `3e2b9c59e1782ee7…` |
-| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `53d2d83aa06f7b51…` | `53d2d83aa06f7b51…` |
-| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `b336206823b032dd…` | `b336206823b032dd…` |
-| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `bb3fc57639811a01…` | `bb3fc57639811a01…` |
+| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `c3a941793373b93a…` | `c3a941793373b93a…` |
+| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `241f965974378295…` | `241f965974378295…` |
+| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `beafcdcdf81e2d62…` | `beafcdcdf81e2d62…` |
+| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `841c8bcd8c1ef29c…` | `841c8bcd8c1ef29c…` |
+| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `308dfd46ac9f3342…` | `308dfd46ac9f3342…` |
+| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `275528e18f70e4db…` | `275528e18f70e4db…` |
+| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `4a49ddfa81247696…` | `4a49ddfa81247696…` |
+| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `8dec1573d99c6bda…` | `8dec1573d99c6bda…` |
 
 ## What Changed (v1.5.3 patchset)
 

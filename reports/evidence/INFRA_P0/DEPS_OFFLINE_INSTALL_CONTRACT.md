@@ -1,9 +1,9 @@
 # DEPS_OFFLINE_INSTALL_CONTRACT.md
 
-STATUS: FAIL
-REASON_CODE: DEP02
-RUN_ID: cad9c4ea3904
-NEXT_ACTION: Review native dependency. Either pre-build in capsule, use prebuilt binaries, or add to approved native build list.
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: 2c52a286482d
+NEXT_ACTION: No action required. Dependencies are fully offline-satisfiable.
 
 ## Methodology
 
@@ -26,16 +26,19 @@ Runs npm install --dry-run twice (x2 anti-flake) for DEP01/DEP03 detection.
 | Metric | Run 1 | Run 2 |
 |--------|-------|-------|
 | exit_code | 0 | 0 |
-| duration_ms | 520 | 532 |
+| duration_ms | 527 | 503 |
 | registry_patterns | 0 | 0 |
 | native_patterns (runtime) | 0 | 0 |
+| optional_native_allowed | true | - |
+| optional_native_installed | false | - |
+| ENABLE_SQLITE_PERSISTENCE | 0 | - |
 | x2_drift | false | - |
 
 ## Outcome
 
-**FAIL** — DEP02
+**PASS** — NONE
 
-Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.
+All dependencies satisfiable offline (no registry/network required). x2 runs consistent. Exit codes: [0, 0].
 
 ## Evidence Paths
 

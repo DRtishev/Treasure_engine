@@ -1,5 +1,5 @@
 {
-  "eligibility_reason": "DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.",
+  "eligibility_reason": "No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)",
   "eligible_for_execution": false,
   "eligible_for_micro_live": false,
   "gate_matrix": [
@@ -24,8 +24,8 @@
     {
       "blocker": false,
       "gate": "DEPS_OFFLINE",
-      "reason_code": "DEP02",
-      "status": "FAIL"
+      "reason_code": "NONE",
+      "status": "PASS"
     },
     {
       "blocker": true,
@@ -55,7 +55,7 @@
   "message": "INFRA P0 FAIL — NT02: Node mismatch: running v20.19.6 (family 20) vs NODE_TRUTH.md allowed_family=22. Align the running Node version or update NODE_TRUTH.md via APPLY protocol.",
   "next_action": "Fix NODE_TRUTH before proceeding.",
   "overall_reason": "NT02",
-  "run_id": "cad9c4ea3904",
+  "run_id": "2c52a286482d",
   "schema_version": "1.0.0",
   "status": "FAIL"
 }

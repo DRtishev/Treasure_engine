@@ -157,7 +157,7 @@ ${blockReasons.length ? blockReasons.map((r) => `- ${r}`).join('\n') : '- NONE'}
 
 writeMd(path.join(GOV_DIR, 'EDGE_UNLOCK.md'), unlockMd);
 
-writeJsonDeterministic(path.join(MANUAL_DIR, 'edge_unlock.json'), {
+const gatePayload = {
   schema_version: '1.0.0',
   status: overallStatus,
   reason_code: reasonCode,
@@ -178,7 +178,10 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'edge_unlock.json'), {
   calm_p0_x2_status: calmP0x2.status,
   infra_p0_eligible_for_micro_live: p0Closeout.eligible_for_micro_live,
   infra_p0_eligible_for_execution: p0Closeout.eligible_for_execution,
-});
+};
+
+writeJsonDeterministic(path.join(MANUAL_DIR, 'edge_unlock.json'), gatePayload);
+writeJsonDeterministic(path.join(MANUAL_DIR, 'gov_integrity.json'), gatePayload);
 
 console.log('\n' + '='.repeat(60));
 console.log('P1 GOVERNANCE INTEGRITY RESULT');

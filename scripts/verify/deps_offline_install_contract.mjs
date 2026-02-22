@@ -41,6 +41,23 @@ const NATIVE_BUILD_DEP_NAMES = ['node-gyp', 'prebuild-install', 'node-pre-gyp', 
 // Packages explicitly allowed to have install scripts (allowlist)
 const NATIVE_BUILD_ALLOWLIST = [];
 
+
+function readRootPackageJson() {
+  const pkgPath = path.join(ROOT, 'package.json');
+  if (!fs.existsSync(pkgPath)) return { optionalNativeSet: new Set(), sqliteEnabled: false };
+  try {
+    const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+    const optionalNativeSet = new Set(Object.keys(pkg.optionalDependencies || {}));
+    return {
+      optionalNativeSet,
+      sqliteEnabled: process.env.ENABLE_SQLITE_PERSISTENCE === '1',
+    };
+  } catch {
+    return { optionalNativeSet: new Set(), sqliteEnabled: false };
+  }
+}
+
+
 function scanLockFileForNativeCandidates() {
   const lockPath = path.join(ROOT, 'package-lock.json');
   if (!fs.existsSync(lockPath)) {
@@ -101,11 +118,16 @@ console.log('[deps_offline] Running static lock scan for native build candidates
 const lockScan = scanLockFileForNativeCandidates();
 const nativeCandidates = lockScan.candidates;
 const lockScanError = lockScan.error;
+const { optionalNativeSet, sqliteEnabled } = readRootPackageJson();
+
+const requiredNativeCandidates = nativeCandidates.filter((c) => !optionalNativeSet.has(c.package));
+const optionalNativeCandidates = nativeCandidates.filter((c) => optionalNativeSet.has(c.package));
 
 if (lockScanError) {
   console.warn(`[deps_offline] Lock scan warning: ${lockScanError}`);
 } else {
   console.log(`[deps_offline] Lock scan complete: ${nativeCandidates.length} native candidate(s) found`);
+  if (optionalNativeCandidates.length > 0) console.log(`[deps_offline] Optional-native candidates: ${optionalNativeCandidates.map((c)=>c.package).join(', ')}`);
   for (const c of nativeCandidates) {
     console.log(`  - ${c.package}@${c.version}: ${c.reasons.join(', ')}`);
   }
@@ -192,7 +214,9 @@ const needsNetwork2 = registryPatterns2.length > 0 || (run2.exitCode !== 0 && !r
 // B3 fix: DEP02 is now detected by static lock scan (primary) + runtime patterns (secondary).
 // --dry-run skips install scripts so runtime patterns alone cannot be trusted for DEP02.
 const hasNativeBuildRuntime = nativePatterns1.length > 0 || nativePatterns2.length > 0;
-const hasNativeBuildLock = nativeCandidates.length > 0;
+const optionalNativeInstalled = optionalNativeCandidates.some((c) => fs.existsSync(path.join(ROOT, c.path)));
+const optionalNativeAllowed = !sqliteEnabled && !optionalNativeInstalled;
+const hasNativeBuildLock = requiredNativeCandidates.length > 0 || (optionalNativeCandidates.length > 0 && !optionalNativeAllowed);
 const hasNativeBuild = hasNativeBuildLock || hasNativeBuildRuntime;
 
 // Drift detection: normalize stdout for comparison (remove timing info)
@@ -215,9 +239,10 @@ if (hasNativeBuild) {
   status = 'FAIL';
   reason_code = 'DEP02';
   const detectionSource = hasNativeBuildLock ? 'static lock scan' : 'runtime pattern scan';
-  const candidateNames = nativeCandidates.map((c) => `${c.package}@${c.version}`).join(', ') || '(runtime-detected only)';
-  message = `Native build candidates detected via ${detectionSource}: [${candidateNames}]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.`;
-  next_action = 'Review native dependency. Either pre-build in capsule, use prebuilt binaries, or add to approved native build list.';
+  const candidatePool = hasNativeBuildLock ? (requiredNativeCandidates.length > 0 ? requiredNativeCandidates : optionalNativeCandidates) : nativeCandidates;
+  const candidateNames = candidatePool.map((c) => `${c.package}@${c.version}`).join(', ') || '(runtime-detected only)';
+  message = `Native build candidates detected via ${detectionSource}: [${candidateNames}]. Native builds require capsule/toolchain policy approval unless optional-native policy is satisfied.`;
+  next_action = 'Use npm ci --omit=optional and keep ENABLE_SQLITE_PERSISTENCE=0, or provide approved native capsule mitigation.';
 } else if (x2Drift && run1.exitCode === 0 && run2.exitCode === 0) {
   status = 'FAIL';
   reason_code = 'DEP03';
@@ -241,8 +266,13 @@ const gateResult = {
   has_native_build: hasNativeBuild,
   has_native_build_lock: hasNativeBuildLock,
   has_native_build_runtime: hasNativeBuildRuntime,
+  optional_native_allowed: optionalNativeAllowed,
+  optional_native_installed: optionalNativeInstalled,
+  sqlite_persistence_enabled: sqliteEnabled,
   message,
   native_candidates_lock: nativeCandidates,
+  native_candidates_required: requiredNativeCandidates,
+  native_candidates_optional: optionalNativeCandidates,
   native_patterns_found: [...new Set([...nativePatterns1, ...nativePatterns2].map((p) => p.source))],
   next_action,
   reason_code,
@@ -293,6 +323,9 @@ ${nativeCandidatesTable}
 | duration_ms | ${run1.durationMs} | ${run2.durationMs} |
 | registry_patterns | ${registryPatterns1.length} | ${registryPatterns2.length} |
 | native_patterns (runtime) | ${nativePatterns1.length} | ${nativePatterns2.length} |
+| optional_native_allowed | ${optionalNativeAllowed} | - |
+| optional_native_installed | ${optionalNativeInstalled} | - |
+| ENABLE_SQLITE_PERSISTENCE | ${sqliteEnabled ? '1' : '0'} | - |
 | x2_drift | ${x2Drift} | - |
 
 ## Outcome

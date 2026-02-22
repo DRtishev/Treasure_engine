@@ -3,7 +3,7 @@
 STATUS: BLOCKED
 REASON_CODE: BLOCKED
 EDGE_UNLOCK: false
-RUN_ID: cad9c4ea3904
+RUN_ID: 2c52a286482d
 NEXT_ACTION: npm run -s p0:all
 
 ## Gate Matrix
@@ -12,7 +12,7 @@ NEXT_ACTION: npm run -s p0:all
 |------|--------|---------|
 | INFRA_P0 | FAIL | YES |
 | CALM_P0 | PASS | YES |
-| CALM_P0_X2 | FAIL | YES |
+| CALM_P0_X2 | PASS | YES |
 | OP01_SCRIPTS_CHECK | PASS | YES |
 | MERKLE_ROOT | PASS | YES |
 | GOV01_INTEGRITY | PASS | YES |
@@ -26,6 +26,5 @@ NEXT_ACTION: npm run -s p0:all
 ## Blocking Reasons
 
 - INFRA_P0 status=FAIL
-- CALM_P0_X2 status=FAIL
-- eligible_for_micro_live=false (DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.)
+- eligible_for_micro_live=false (No blocking codes detected (DEP/FG01/ZW01/NET01 all clear))
 - eligible_for_execution=false

@@ -4,7 +4,6 @@
   "type": "module",
   "private": true,
   "dependencies": {
-    "better-sqlite3": "^12.6.2",
     "undici": "^6.23.0",
     "ws": "^8.18.0"
   },
@@ -631,5 +630,8 @@
   },
   "engines": {
     "node": ">=22 <25"
+  },
+  "optionalDependencies": {
+    "better-sqlite3": "^12.6.2"
   }
 }

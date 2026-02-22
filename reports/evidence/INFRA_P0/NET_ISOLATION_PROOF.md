@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: cad9c4ea3904
+RUN_ID: 2c52a286482d
 NEXT_ACTION: Network isolation proven. Continue with infra:p0 pipeline.
 
 ## NET01 Policy and Scope Clarity

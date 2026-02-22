@@ -2,7 +2,7 @@
 
 STATUS: FAIL
 REASON_CODE: NT02
-RUN_ID: cad9c4ea3904
+RUN_ID: 2c52a286482d
 NEXT_ACTION: Install Node 22.x to match NODE_TRUTH.md, or update NODE_TRUTH.md via PROPOSE→APPLY→RECEIPT protocol.
 
 ## Gate Results

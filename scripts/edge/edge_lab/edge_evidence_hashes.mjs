@@ -35,8 +35,14 @@ fs.mkdirSync(MANUAL_DIR, { recursive: true });
 // ---------------------------------------------------------------------------
 // Collect scope (self-outputs excluded to prevent acyclic ledger violation)
 // ---------------------------------------------------------------------------
-const SELF_OUTPUTS = new Set([
+const EXCLUDED_DERIVED = new Set([
   'reports/evidence/EDGE_LAB/P0/CHECKSUMS.md',
+  'reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md',
+  'reports/evidence/EDGE_LAB/P0/CALM_MODE_P0_CLOSEOUT.md',
+  'reports/evidence/EDGE_LAB/gates/manual/evidence_hashes.json',
+  'reports/evidence/EDGE_LAB/gates/manual/receipts_chain.json',
+  'reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json',
+  'reports/evidence/EDGE_LAB/gates/manual/calm_p0_x2.json',
 ]);
 
 function collectScope() {
@@ -48,7 +54,7 @@ function collectScope() {
       const fp = path.join(P0_DIR, f);
       if (fs.statSync(fp).isFile() && f.endsWith('.md')) {
         const rel = `reports/evidence/EDGE_LAB/P0/${f}`;
-        if (!SELF_OUTPUTS.has(rel)) paths.push(rel);
+        if (!EXCLUDED_DERIVED.has(rel)) paths.push(rel);
       }
     }
   }
@@ -58,7 +64,8 @@ function collectScope() {
   if (fs.existsSync(manualDir)) {
     for (const f of fs.readdirSync(manualDir).sort()) {
       if (f.endsWith('.json')) {
-        paths.push(`reports/evidence/EDGE_LAB/gates/manual/${f}`);
+        const rel = `reports/evidence/EDGE_LAB/gates/manual/${f}`;
+        if (!EXCLUDED_DERIVED.has(rel) && !/final/i.test(f)) paths.push(rel);
       }
     }
   }
@@ -181,6 +188,18 @@ ${scopePaths.join('\n')}
 ## Missing Files
 
 ${missingSection}
+
+## SCOPE_POLICY
+
+Excluded derived artifacts to keep hashing acyclic and deterministic:
+- reports/evidence/EDGE_LAB/P0/CHECKSUMS.md
+- reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md
+- reports/evidence/EDGE_LAB/P0/CALM_MODE_P0_CLOSEOUT.md
+- reports/evidence/EDGE_LAB/gates/manual/evidence_hashes.json
+- reports/evidence/EDGE_LAB/gates/manual/receipts_chain.json
+- reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json
+- reports/evidence/EDGE_LAB/gates/manual/calm_p0_x2.json
+- reports/evidence/EDGE_LAB/gates/manual/*final*.json
 
 ## Policy References
 
