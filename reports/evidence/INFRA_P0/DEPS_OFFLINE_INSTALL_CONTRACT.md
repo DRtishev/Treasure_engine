@@ -2,7 +2,7 @@
 
 STATUS: FAIL
 REASON_CODE: DEP02
-RUN_ID: cef301f25c52
+RUN_ID: f615eb934eb0
 NEXT_ACTION: Review native dependency. Either pre-build in capsule, use prebuilt binaries, or add to approved native build list.
 
 ## Methodology
@@ -26,9 +26,9 @@ Runs npm install --dry-run twice (x2 anti-flake) for DEP01/DEP03 detection.
 | Metric | Run 1 | Run 2 |
 |--------|-------|-------|
 | exit_code | 0 | 0 |
-| duration_ms | 1735 | 1762 |
+| duration_ms | 2154 | 2156 |
 | registry_patterns | 0 | 0 |
-| native_patterns (runtime) | 1 | 1 |
+| native_patterns (runtime) | 0 | 0 |
 | x2_drift | false | - |
 
 ## Outcome

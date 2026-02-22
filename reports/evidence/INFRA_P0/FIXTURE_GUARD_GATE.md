@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: cef301f25c52
+RUN_ID: f615eb934eb0
 ALLOW_FIXTURES: unset
 ELIGIBLE_FOR_MICRO_LIVE: true
 ELIGIBLE_FOR_EXECUTION: true
@@ -21,7 +21,7 @@ Eligibility flags remain false under any fixture violation.
 |------|-------|-------|--------|
 | (none) | — | — | CLEAN |
 
-## Scanned Files (sample, max 20 of 23)
+## Scanned Files (sample, max 20 of 24)
 
 | Path | Check | Result |
 |------|-------|--------|
@@ -50,7 +50,7 @@ Eligibility flags remain false under any fixture violation.
 
 | Metric | Value |
 |--------|-------|
-| Files scanned | 23 |
+| Files scanned | 24 |
 | Violations found | 0 |
 | ALLOW_FIXTURES | unset |
 | Gate status | PASS |

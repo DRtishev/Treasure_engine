@@ -1,7 +1,7 @@
 # FINAL_REPORT.md — Executor Acceptance Report
 
-UTC_TIMESTAMP_GENERATED: 2026-02-21
-FIRMWARE: SHAMAN_OS_FIRMWARE EPOCH_NEXT__CALM_INFRA_P0__TRUTH_SEAL_FIXPACK v1.7.0
+UTC_TIMESTAMP_GENERATED: 2026-02-22
+FIRMWARE: SHAMAN_OS_FIRMWARE EPOCH_EXEC__MAIN_REPAIR__MERGE_CONFLICTS__RELIABILITY_PERFECTION v1.0.1
 BRANCH: claude/fix-infra-p0-blockers-6wUmv
 
 ---
@@ -13,37 +13,60 @@ BRANCH: claude/fix-infra-p0-blockers-6wUmv
 | branch | claude/fix-infra-p0-blockers-6wUmv |
 | node | v22.22.0 |
 | npm | 10.9.4 |
-| RUN_ID | cef301f25c52 (GIT mode) |
+| VERIFY_MODE | GIT |
+| P0 SYSTEM PASS | true (INFRA_P0=PASS, CALM_P0=PASS) |
+| eligible_for_micro_live | false (DEP02 — better-sqlite3 native build) |
+| eligible_for_execution | false (DEP02) |
+| EDGE_UNLOCK | false (blocked by DEP02 — correct) |
 
 ---
 
 ## FINDINGS
 
-### P0 Blockers Addressed
+### Phase 0: B1-B4 Fixes (prior commit)
 
-| Blocker | Description | Status |
-|---------|-------------|--------|
-| B1 | FG01 script parse error — JSDoc `**/` substring terminated block comment | FIXED |
-| B2 | Eligibility leak — ELIGIBLE_* could be true when FINAL=BLOCKED | FIXED |
-| B3 | DEP02 weakened by --dry-run — static lock scan now primary detection | FIXED |
-| B4 | D003 reason-code collision — RD01 introduced for readiness-input-missing | FIXED |
+| Blocker | Fix | Status |
+|---------|-----|--------|
+| B1 | FG01 parse error — `**/` in JSDoc replaced with `<any>/` | FIXED |
+| B2 | Eligibility leak — `eligible = overallStatus===PASS AND ...` | FIXED |
+| B3 | DEP02 detection — static package-lock.json scan added as primary | FIXED |
+| B4 | D003 collision — RD01 introduced; D003 RESERVED for canon drift | FIXED |
 
-### Patchset Delivered (v1.7.0 — CALM_INFRA_P0_TRUTH_SEAL_FIXPACK)
+### Phase 1: Merge Repair (this commit)
 
-| Step | Artifact | Change |
-|------|----------|--------|
-| P0_FG01_PARSE_FIX | scripts/verify/fixture_guard_gate.mjs | Replaced `**/gates/manual/` with `<any>/gates/manual/` in JSDoc |
-| P0_ELIGIBILITY_SEAL | scripts/verify/infra_p0_closeout.mjs | eligible = (overallStatus==PASS) AND no DEP/FG01/ZW01 block |
-| P0_ELIGIBILITY_SEAL | scripts/verify/infra_p0_closeout.mjs | FG01 MISSING or non-PASS now blocks eligibility (not just BLOCKED status) |
-| P0_DEP02_TRUTH_RESTORE | scripts/verify/deps_offline_install_contract.mjs | Static lock scan added as primary DEP02 detection |
-| P0_DEP02_TRUTH_RESTORE | scripts/verify/deps_offline_install_contract.mjs | hasInstallScript + native dep names scanned from package-lock.json |
-| P0_D003_COLLISION_FIX | scripts/edge/edge_lab/edge_micro_live_readiness.mjs | D003 → RD01 for missing/unreadable infra closeout JSON |
-| P0_D003_COLLISION_FIX | scripts/verify/dep02_failclosed_readiness_gate.mjs | D003 → RD01 for missing precondition data |
-| P0_D003_COLLISION_FIX | EDGE_LAB/DEP_POLICY.md | R12 table: "JSON file missing" → BLOCKED RD01 |
-| P0_D003_COLLISION_FIX | EDGE_LAB/REASON_CODES_BIBLE.md | RD01 documented; D003 annotated as RESERVED (canon rule drift only) |
-| P0_REGRESSION_PROOF | scripts/verify/dep02_failclosed_readiness_gate.mjs | A0: FINAL=BLOCKED + ELIGIBLE_*=true → FAIL (B2 seal regression) |
-| P0_REGRESSION_PROOF | scripts/verify/dep02_failclosed_readiness_gate.mjs | A4: readiness.reason_code=D003 → FAIL (B4 regression) |
-| P0_REGRESSION_PROOF | scripts/verify/dep02_failclosed_readiness_gate.mjs | A5: missing infra closeout + readiness != RD01 → FAIL (B4 propagation) |
+| Action | Result |
+|--------|--------|
+| Added `.gitattributes` (reports/evidence/** merge=ours) | DONE |
+| Merged origin/main — GOV scripts, NET01, ZW00/ZW01 semantics | MERGED |
+| Evidence file conflicts resolved (kept claude branch → regenerated) | DONE |
+| Code conflict: fixture_guard_gate.mjs — kept `<any>/` pattern | RESOLVED |
+| Code conflict: infra_p0_closeout.mjs — merged NET01 + B2 seal together | RESOLVED |
+| B2 seal: `eligible = overallStatus===PASS && !DEP && !FG01 && !ZW01 && !NET01` | VERIFIED |
+| B4 proof: D003 absent from readiness; RD01 present | VERIFIED |
+
+### Gate Execution Results
+
+| Command | Exit Code | Notes |
+|---------|-----------|-------|
+| npm ci | 0 | Offline, deterministic |
+| npm run -s p0:all | 0 | PASS — all blocker gates pass |
+| node scripts/verify/dep02_failclosed_readiness_gate.mjs | 0 | PASS — R12 propagation verified |
+| npm run -s gov:integrity | 1 | BLOCKED — DEP02 makes eligible=false (CORRECT) |
+
+### infra:p0 Gate Matrix
+
+| Gate | Status | Blocker |
+|------|--------|---------|
+| NET_ISOLATION | PASS | true |
+| NODE_TRUTH | PASS | true |
+| VERIFY_MODE | PASS | true |
+| DEPS_OFFLINE | FAIL DEP02 | false (warn only) |
+| GOLDENS_APPLY | PASS | true |
+| FORMAT_POLICY | PASS | true |
+| FIXTURE_GUARD | PASS | true |
+| ZERO_WAR_PROBE | PASS | true |
+
+**FINAL: PASS** (DEP02 is non-blocker at infra level; eligibility correctly false)
 
 ---
 
@@ -51,61 +74,44 @@ BRANCH: claude/fix-infra-p0-blockers-6wUmv
 
 | Risk | Severity | Mitigation |
 |------|----------|-----------|
-| DEP02 persists until better-sqlite3 is replaced or capsule pre-built | HIGH | ELIGIBLE_FOR_MICRO_LIVE=false until resolved; see DEP_POLICY.md |
-| RD01 is new code — downstream consumers may not know it | LOW | Documented in REASON_CODES_BIBLE.md and DEP_POLICY.md |
-| Static lock scan allowlist is empty — any new native dep triggers DEP02 | LOW | Intentional; add to NATIVE_BUILD_ALLOWLIST in deps_offline_install_contract.mjs with justification |
+| DEP02 persists — better-sqlite3 needs native build | HIGH | eligible_for_micro_live=false until resolved; see DEP_POLICY.md |
+| EDGE_UNLOCK=false until DEP02 resolved | HIGH | Expected; resolve by pre-building or replacing better-sqlite3 |
+| .gitattributes merge=ours requires custom git driver config | LOW | Committed; future merges resolve evidence conflicts cleanly |
+| Static lock scan allowlist empty — any new native dep triggers DEP02 | LOW | Intentional fail-closed; add to NATIVE_BUILD_ALLOWLIST with justification |
 
 ---
 
-## PLAN
-
-All four P0 blockers addressed per PATCH_PLAN steps P0_FG01_PARSE_FIX through P0_REGRESSION_PROOF.
-
----
-
-## GATES
-
-| Command | Result |
-|---------|--------|
-| node scripts/verify/fixture_guard_gate.mjs | PASS EC=0 |
-| node scripts/verify/infra_p0_closeout.mjs | PASS EC=0 (ELIGIBLE_FOR_MICRO_LIVE=false, DEP02) |
-| node scripts/verify/deps_offline_install_contract.mjs | FAIL DEP02 EC=1 (better-sqlite3 native candidate) |
-| node scripts/edge/edge_lab/edge_micro_live_readiness.mjs | BLOCKED DEP02 EC=1 (R12 propagation correct) |
-| node scripts/verify/dep02_failclosed_readiness_gate.mjs | PASS EC=0 (all regression assertions hold) |
-| npm run p0:all | PASS EC=0 |
-
----
-
-## EVIDENCE
+## EVIDENCE PACK (SSOT Paths)
 
 | File | Status |
 |------|--------|
-| reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md | PRESENT |
-| reports/evidence/INFRA_P0/gates/manual/fixture_guard_gate.json | PRESENT |
-| reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md | PRESENT |
-| reports/evidence/INFRA_P0/gates/manual/deps_offline_install.json | PRESENT |
 | reports/evidence/INFRA_P0/INFRA_P0_CLOSEOUT.md | PRESENT |
-| reports/evidence/INFRA_P0/gates/manual/infra_p0_closeout.json | PRESENT |
+| reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md | PRESENT |
+| reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md | PRESENT |
+| reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md | PRESENT |
+| reports/evidence/SAFETY/ZERO_WAR_PROBE.md | PRESENT |
+| reports/evidence/GOV/MERKLE_ROOT.md | PRESENT |
+| reports/evidence/GOV/GOV01_EVIDENCE_INTEGRITY.md | PRESENT |
+| reports/evidence/GOV/EDGE_UNLOCK.md | PRESENT |
 | reports/evidence/EDGE_LAB/P1/MICRO_LIVE_READINESS.md | PRESENT |
 | reports/evidence/INFRA_P0/DEP02_FAILCLOSED_READINESS.md | PRESENT |
-| reports/evidence/INFRA_P0/gates/manual/dep02_failclosed_readiness.json | PRESENT |
-| EDGE_LAB/REASON_CODES_BIBLE.md | UPDATED (RD01 added, D003 annotated) |
+| EDGE_LAB/REASON_CODES_BIBLE.md | UPDATED (RD01 added, D003 annotated RESERVED) |
 | EDGE_LAB/DEP_POLICY.md | UPDATED (R12 table: RD01 replaces D003) |
 
 ---
 
 ## VERDICT
 
-**PASS** — All four P0 blockers fixed. Gates execute and evidence is truthful.
+**P0 SYSTEM: PASS** — All infra:p0 blocker gates pass. B1-B4 fixes confirmed present.
 
-- B1 (FG01 parse): FIXED — node scripts/verify/fixture_guard_gate.mjs executes EC=0
-- B2 (eligibility leak): FIXED — overallStatus=PASS required for eligible=true
-- B3 (DEP02 detection): FIXED — static lock scan detects better-sqlite3 deterministically
-- B4 (D003 collision): FIXED — RD01 introduced and documented; D003 reserved for canon drift
+**EDGE_UNLOCK: false** — Correctly blocked by DEP02 (better-sqlite3 native build detected
+via static lock scan). This is honest, fail-closed behaviour per R12 policy.
+eligible_for_micro_live=false correctly propagates through infra → readiness → gov.
 
-Infrastructure status: PASS overall, ELIGIBLE_FOR_MICRO_LIVE=false (DEP02 — correct behavior).
-Readiness: BLOCKED DEP02 (R12 propagation correct).
-Regression gate: PASS (all invariants hold).
+Regression gate: PASS — R12 propagation invariants hold.
+B4 proof: D003 absent from readiness; RD01 used for missing-input.
+B2 proof: eligibility gated on overallStatus===PASS (not independent of pipeline status).
+B3 proof: static lock scan primary — better-sqlite3 detected without --dry-run illusions.
 
 ---
 

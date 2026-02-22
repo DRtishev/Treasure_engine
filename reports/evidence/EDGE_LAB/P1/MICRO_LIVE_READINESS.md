@@ -2,7 +2,7 @@
 
 STATUS: BLOCKED
 REASON_CODE: DEP02
-RUN_ID: cef301f25c52
+RUN_ID: f615eb934eb0
 NEXT_ACTION: Resolve DEP02 per EDGE_LAB/DEP_POLICY.md, then: npm run p0:all && npm run edge:micro:live:readiness
 
 ## Infra Eligibility Check (R12 Fail-Closed)

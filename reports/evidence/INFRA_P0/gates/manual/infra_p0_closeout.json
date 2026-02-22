@@ -5,6 +5,12 @@
   "gate_matrix": [
     {
       "blocker": true,
+      "gate": "NET_ISOLATION",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "blocker": true,
       "gate": "NODE_TRUTH",
       "reason_code": "NONE",
       "status": "PASS"
@@ -46,10 +52,10 @@
       "status": "PASS"
     }
   ],
-  "message": "INFRA P0 PASS — NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY, FIXTURE_GUARD (FG01), ZERO_WAR_PROBE (ZW01) all PASS. DEPS_OFFLINE reported honestly (DEP02). ELIGIBLE_FOR_MICRO_LIVE=false.",
+  "message": "INFRA P0 PASS — NET_ISOLATION (NET01), NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY, FIXTURE_GUARD (FG01), ZERO_WAR_PROBE (ZW00/ZW01) all PASS. DEPS_OFFLINE reported honestly (DEP02). ELIGIBLE_FOR_MICRO_LIVE=false.",
   "next_action": "Resolve DEP02 before proceeding to readiness. See EDGE_LAB/DEP_POLICY.md for mitigation paths.",
   "overall_reason": "NONE",
-  "run_id": "cef301f25c52",
+  "run_id": "f615eb934eb0",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

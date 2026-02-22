@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: cef301f25c52
+RUN_ID: f615eb934eb0
 ELIGIBLE_FOR_MICRO_LIVE: false
 ELIGIBLE_FOR_EXECUTION: false
 ELIGIBILITY_REASON: DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.
@@ -12,6 +12,7 @@ NEXT_ACTION: Resolve DEP02 before proceeding to readiness. See EDGE_LAB/DEP_POLI
 
 | Gate | Status | Reason Code | Blocker |
 |------|--------|-------------|---------|
+| NET_ISOLATION | PASS | NONE | YES |
 | NODE_TRUTH | PASS | NONE | YES |
 | VERIFY_MODE | PASS | NONE | YES |
 | DEPS_OFFLINE | FAIL | DEP02 | NO (warn) |
@@ -35,13 +36,14 @@ See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 | Evidence Path | sha256_raw (prefix) | sha256_norm (prefix) |
 |--------------|--------------------|--------------------|
-| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `63cad0231f25d807…` | `63cad0231f25d807…` |
-| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `dfcdda5e96e5eb20…` | `dfcdda5e96e5eb20…` |
-| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `458976dc234ff773…` | `458976dc234ff773…` |
-| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `4211dbd7d8bee908…` | `4211dbd7d8bee908…` |
-| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `ed0417ea809baca2…` | `ed0417ea809baca2…` |
-| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `4a2f824ab17c8089…` | `4a2f824ab17c8089…` |
-| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `e4b4204f230517e3…` | `e4b4204f230517e3…` |
+| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `d358c8bef8fb9221…` | `d358c8bef8fb9221…` |
+| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `1370a1f4f06b80b3…` | `1370a1f4f06b80b3…` |
+| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `911e74e6a77ef002…` | `911e74e6a77ef002…` |
+| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `5b0ebabc126456e4…` | `5b0ebabc126456e4…` |
+| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `9324e1023dd47033…` | `9324e1023dd47033…` |
+| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `db284fb7ba437652…` | `db284fb7ba437652…` |
+| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `7c569c18605aaedf…` | `7c569c18605aaedf…` |
+| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `99ff3ade02e712ae…` | `99ff3ade02e712ae…` |
 
 ## What Changed (v1.5.3 patchset)
 

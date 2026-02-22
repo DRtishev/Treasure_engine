@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 74a96076b41f
+RUN_ID: f615eb934eb0
 NEXT_ACTION: Evidence integrity proven. Proceed to EDGE_UNLOCK evaluation.
 
 ## GOV01 Policy
@@ -16,8 +16,8 @@ Any mismatch => BLOCKED GOV01.
 | Check | Anchored (prefix) | Computed (prefix) | Result | Note |
 |-------|-------------------|-------------------|--------|------|
 | C01_SCOPE_MANIFEST_SHA | 606837aeb57be66a… | 606837aeb57be66a… | MATCH | MATCH — no tampering detected |
-| C02_MERKLE_ROOT | 0a723d451c6d22c9… | 0a723d451c6d22c9… | MATCH | MATCH — no tampering detected |
-| C03_RECEIPTS_CHAIN_FINAL | 8be1280f4ee575ed… | 8be1280f4ee575ed… | MATCH | MATCH — no tampering detected |
+| C02_MERKLE_ROOT | 73fb2471a506c9f4… | 73fb2471a506c9f4… | MATCH | MATCH — no tampering detected |
+| C03_RECEIPTS_CHAIN_FINAL | 6d9fe808c7772743… | 6d9fe808c7772743… | MATCH | MATCH — no tampering detected |
 
 ## Diff Hints
 

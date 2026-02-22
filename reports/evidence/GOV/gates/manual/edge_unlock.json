@@ -1,17 +1,20 @@
 {
-  "block_reasons": [],
-  "edge_unlock": true,
+  "block_reasons": [
+    "eligible_for_micro_live=false (DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.)",
+    "eligible_for_execution=false"
+  ],
+  "edge_unlock": false,
   "gov01_status": "PASS",
-  "infra_p0_eligible_for_execution": true,
-  "infra_p0_eligible_for_micro_live": true,
+  "infra_p0_eligible_for_execution": false,
+  "infra_p0_eligible_for_micro_live": false,
   "infra_p0_status": "PASS",
   "merkle_root_status": "PASS",
-  "message": "EDGE UNLOCK GRANTED — P0 SYSTEM PASS and P1 SYSTEM PASS. All eligibility flags true. Evidence integrity verified.",
-  "next_action": "EDGE_UNLOCK=true. System ready for controlled micro-live operations (subject to ZW00 enforcement).",
-  "p0_system_pass": true,
+  "message": "EDGE UNLOCK BLOCKED — eligible_for_micro_live=false (DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.); eligible_for_execution=false. Fix all blockers before proceeding.",
+  "next_action": "Fix blockers: eligible_for_micro_live=false (DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.), eligible_for_execution=false — then rerun gov:integrity.",
+  "p0_system_pass": false,
   "p1_system_pass": true,
-  "reason_code": "NONE",
-  "run_id": "74a96076b41f",
+  "reason_code": "BLOCKED",
+  "run_id": "f615eb934eb0",
   "schema_version": "1.0.0",
-  "status": "PASS"
+  "status": "BLOCKED"
 }

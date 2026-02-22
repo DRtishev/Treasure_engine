@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: cef301f25c52
+RUN_ID: f615eb934eb0
 NEXT_ACTION: Migrate 11 legacy EDGE_LAB gate JSON files to schema_version in a follow-up PR.
 
 ## Gate Results
@@ -10,7 +10,7 @@ NEXT_ACTION: Migrate 11 legacy EDGE_LAB gate JSON files to schema_version in a f
 | Check | Result |
 |-------|--------|
 | policy_file | PRESENT |
-| strict_json_checked | 9 (P0 + INFRA_P0) |
+| strict_json_checked | 10 (P0 + INFRA_P0) |
 | legacy_json_checked | 14 (pre-existing EDGE_LAB) |
 | strict_violations | 0 |
 | legacy_warnings | 11 (WARN only, migration scheduled) |
@@ -40,7 +40,7 @@ NEXT_ACTION: Migrate 11 legacy EDGE_LAB gate JSON files to schema_version in a f
 
 ## Message
 
-Format policy satisfied (strict scope). 9 new JSON file(s) verified. 11 legacy file(s) queued for schema_version migration.
+Format policy satisfied (strict scope). 10 new JSON file(s) verified. 11 legacy file(s) queued for schema_version migration.
 
 ## Evidence Paths
 

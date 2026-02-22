@@ -1,7 +1,7 @@
 {
   "has_native_build": true,
   "has_native_build_lock": true,
-  "has_native_build_runtime": true,
+  "has_native_build_runtime": false,
   "message": "Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.",
   "native_candidates_lock": [
     {
@@ -14,16 +14,14 @@
       "version": "12.6.2"
     }
   ],
-  "native_patterns_found": [
-    "prebuild-install"
-  ],
+  "native_patterns_found": [],
   "next_action": "Review native dependency. Either pre-build in capsule, use prebuilt binaries, or add to approved native build list.",
   "reason_code": "DEP02",
   "registry_patterns_run1": [],
   "registry_patterns_run2": [],
   "run1_exit_code": 0,
   "run2_exit_code": 0,
-  "run_id": "cef301f25c52",
+  "run_id": "f615eb934eb0",
   "schema_version": "1.0.0",
   "status": "FAIL",
   "x2_drift": false

@@ -1,9 +1,9 @@
 # EDGE_UNLOCK.md — EDGE/PROFIT Unlock Decision
 
-STATUS: PASS
-EDGE_UNLOCK: true
-RUN_ID: 74a96076b41f
-NEXT_ACTION: EDGE_UNLOCK=true. System ready for controlled micro-live operations (subject to ZW00 enforcement).
+STATUS: BLOCKED
+EDGE_UNLOCK: false
+RUN_ID: f615eb934eb0
+NEXT_ACTION: Fix blockers: eligible_for_micro_live=false (DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.), eligible_for_execution=false — then rerun gov:integrity.
 
 ## Unlock Policy
 
@@ -15,18 +15,18 @@ EDGE/PROFIT unlock requires BOTH:
 
 | Gate | Status | eligible_for_micro_live | Blocker |
 |------|--------|------------------------|---------|
-| INFRA_P0 | PASS | true | YES |
+| INFRA_P0 | PASS | false | YES |
 | CALM_P0 | PASS | - | YES |
 | MERKLE_ROOT | PASS | - | YES |
 | GOV01_INTEGRITY | PASS | - | YES |
 
 ## P0 System Pass
 
-P0_SYSTEM_PASS: true
+P0_SYSTEM_PASS: false
 - INFRA_P0 status: PASS
 - CALM_P0 status: PASS
-- eligible_for_micro_live: true
-- eligible_for_execution: true
+- eligible_for_micro_live: false
+- eligible_for_execution: false
 
 ## P1 System Pass
 
@@ -36,7 +36,8 @@ P1_SYSTEM_PASS: true
 
 ## Blocking Reasons
 
-NONE — all gates pass
+- eligible_for_micro_live=false (DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.)
+- eligible_for_execution=false
 
 ## Non-Goals
 
