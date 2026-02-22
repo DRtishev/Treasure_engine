@@ -1,0 +1,92 @@
+{
+  "checks_failed": 0,
+  "checks_total": 13,
+  "message": "OP01 PASS — All 13 required npm scripts exist in package.json.",
+  "missing_scripts": [],
+  "next_action": "All NEXT_ACTION references are valid. No phantom commands.",
+  "reason_code": "NONE",
+  "results": [
+    {
+      "command": "node scripts/verify/infra_p0_closeout.mjs",
+      "exists": true,
+      "reason": "EXECUTION_ORDER C1",
+      "script": "infra:p0"
+    },
+    {
+      "command": "npm run edge:calm:p0 && npm run infra:p0",
+      "exists": true,
+      "reason": "EXECUTION_ORDER C2",
+      "script": "p0:all"
+    },
+    {
+      "command": "node scripts/edge/edge_lab/edge_calm_mode_p0.mjs",
+      "exists": true,
+      "reason": "EXECUTION_ORDER C3 + CALM pipeline",
+      "script": "edge:calm:p0"
+    },
+    {
+      "command": "node scripts/edge/edge_lab/edge_calm_p0_x2.mjs",
+      "exists": true,
+      "reason": "EXECUTION_ORDER C4 + ANTI_FLAKE",
+      "script": "edge:calm:p0:x2"
+    },
+    {
+      "command": "node scripts/gov/gov_integrity.mjs",
+      "exists": true,
+      "reason": "EXECUTION_ORDER C5 + P1 orchestrator",
+      "script": "gov:integrity"
+    },
+    {
+      "command": "node scripts/gov/merkle_root.mjs",
+      "exists": true,
+      "reason": "P1_MERKLE_ROOT gate",
+      "script": "gov:merkle"
+    },
+    {
+      "command": "node scripts/gov/gov01_evidence_integrity.mjs",
+      "exists": true,
+      "reason": "P1_GOV01_ENFORCEMENT gate",
+      "script": "gov:gov01"
+    },
+    {
+      "command": "node scripts/verify/net_isolation_proof.mjs",
+      "exists": true,
+      "reason": "P0_NET_OFF gate (NET01)",
+      "script": "verify:net:isolation"
+    },
+    {
+      "command": "node scripts/verify/zero_war_probe.mjs",
+      "exists": true,
+      "reason": "P0_ZERO_WAR_MUST_FAIL gate (ZW00/ZW01)",
+      "script": "verify:zero:war:probe"
+    },
+    {
+      "command": "node scripts/verify/fixture_guard_gate.mjs",
+      "exists": true,
+      "reason": "P0_FIXTURE_GUARD gate (FG01)",
+      "script": "verify:fixture:guard"
+    },
+    {
+      "command": "node scripts/edge/edge_lab/edge_micro_live_readiness.mjs",
+      "exists": true,
+      "reason": "EXECUTION_ORDER step 6 + readiness gate",
+      "script": "edge:micro:live:readiness"
+    },
+    {
+      "command": "node scripts/edge/edge_lab/canon_selftest.mjs",
+      "exists": true,
+      "reason": "NEXT_ACTION in canon/GOV01 failures",
+      "script": "edge:calm:canon:selftest"
+    },
+    {
+      "command": "node scripts/edge/edge_lab/edge_evidence_hashes.mjs",
+      "exists": true,
+      "reason": "NEXT_ACTION in CHECKSUMS failures",
+      "script": "edge:calm:hashes"
+    }
+  ],
+  "run_id": "74a96076b41f",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "total_scripts_in_package": 615
+}

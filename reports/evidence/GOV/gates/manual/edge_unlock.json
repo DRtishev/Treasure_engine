@@ -1,0 +1,17 @@
+{
+  "block_reasons": [],
+  "edge_unlock": true,
+  "gov01_status": "PASS",
+  "infra_p0_eligible_for_execution": true,
+  "infra_p0_eligible_for_micro_live": true,
+  "infra_p0_status": "PASS",
+  "merkle_root_status": "PASS",
+  "message": "EDGE UNLOCK GRANTED — P0 SYSTEM PASS and P1 SYSTEM PASS. All eligibility flags true. Evidence integrity verified.",
+  "next_action": "EDGE_UNLOCK=true. System ready for controlled micro-live operations (subject to ZW00 enforcement).",
+  "p0_system_pass": true,
+  "p1_system_pass": true,
+  "reason_code": "NONE",
+  "run_id": "74a96076b41f",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

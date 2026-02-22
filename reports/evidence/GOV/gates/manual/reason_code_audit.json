@@ -1,0 +1,12 @@
+{
+  "files_scanned": 29,
+  "hard_violations": 0,
+  "message": "REASON CODE AUDIT PASS — 29 gate JSON files scanned. No hard violations. 1 unknown code warning(s).",
+  "next_action": "No reason code violations. Proceed with gov:integrity.",
+  "reason_code": "NONE",
+  "run_id": "74a96076b41f",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "unknown_code_warnings": 1,
+  "violations": []
+}
