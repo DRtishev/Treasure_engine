@@ -1,7 +1,7 @@
 {
-  "eligibility_reason": "No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)",
-  "eligible_for_execution": true,
-  "eligible_for_micro_live": true,
+  "eligibility_reason": "DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.",
+  "eligible_for_execution": false,
+  "eligible_for_micro_live": false,
   "gate_matrix": [
     {
       "blocker": true,
@@ -24,8 +24,8 @@
     {
       "blocker": false,
       "gate": "DEPS_OFFLINE",
-      "reason_code": "NONE",
-      "status": "PASS"
+      "reason_code": "DEP02",
+      "status": "FAIL"
     },
     {
       "blocker": true,
@@ -52,10 +52,10 @@
       "status": "PASS"
     }
   ],
-  "message": "INFRA P0 PASS — NET_ISOLATION (NET01), NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY, FIXTURE_GUARD (FG01), ZERO_WAR_PROBE (ZW00/ZW01) all PASS. DEPS_OFFLINE reported honestly (NONE). ELIGIBLE_FOR_MICRO_LIVE=true.",
-  "next_action": "Run edge:calm:p0 to complete full P0 closeout.",
+  "message": "INFRA P0 PASS — NET_ISOLATION (NET01), NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY, FIXTURE_GUARD (FG01), ZERO_WAR_PROBE (ZW00/ZW01) all PASS. DEPS_OFFLINE reported honestly (DEP02). ELIGIBLE_FOR_MICRO_LIVE=false.",
+  "next_action": "Resolve DEP02 before proceeding to readiness. See EDGE_LAB/DEP_POLICY.md for mitigation paths.",
   "overall_reason": "NONE",
-  "run_id": "74a96076b41f",
+  "run_id": "f615eb934eb0",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

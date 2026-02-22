@@ -1,8 +1,8 @@
 {
   "ELIGIBLE_FOR_PAPER": true,
   "LIVE_ELIGIBLE": false,
-  "MICRO_LIVE_ELIGIBLE": true,
-  "blocked_by_infra": null,
+  "MICRO_LIVE_ELIGIBLE": false,
+  "blocked_by_infra": "DEP02",
   "gate_checks": [
     {
       "actual_status": "PASS",
@@ -45,10 +45,10 @@
       "required_status": "PASS"
     }
   ],
-  "infra_closeout_eligible": true,
-  "infra_closeout_reason": null,
-  "message": "All prerequisites met. MICRO_LIVE_ELIGIBLE=true. LIVE_ELIGIBLE remains false by policy.",
-  "next_action": "Operator reviews PAPER_TO_MICRO_LIVE_PROTOCOL.md and approves micro-live pilot.",
+  "infra_closeout_eligible": false,
+  "infra_closeout_reason": "DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.",
+  "message": "BLOCKED DEP02: DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.. MICRO_LIVE_ELIGIBLE=false by R12 fail-closed policy.",
+  "next_action": "Resolve DEP02 per EDGE_LAB/DEP_POLICY.md, then: npm run p0:all && npm run edge:micro:live:readiness",
   "protocol_checks": {
     "all_fields_found": true,
     "file_exists": true,
@@ -72,8 +72,8 @@
       }
     ]
   },
-  "reason_code": "NONE",
-  "run_id": "3d37e68311e2",
+  "reason_code": "DEP02",
+  "run_id": "f615eb934eb0",
   "schema_version": "1.0.0",
-  "status": "PASS"
+  "status": "BLOCKED"
 }

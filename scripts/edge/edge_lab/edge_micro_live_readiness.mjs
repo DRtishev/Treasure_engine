@@ -1,7 +1,7 @@
 /**
  * edge_micro_live_readiness.mjs — Micro-live readiness gate
  *
- * R12 fail-closed: reads infra_p0_closeout.json; if missing → BLOCKED D003.
+ * R12 fail-closed: reads infra_p0_closeout.json; if missing → BLOCKED RD01.
  * DEP01/DEP02/DEP03 in infra closeout → BLOCKED with same reason code.
  *
  * Output:
@@ -45,7 +45,7 @@ let infraBlockReason = null;
 let infraBlockCode = null;
 
 if (!fs.existsSync(INFRA_CLOSEOUT_JSON)) {
-  infraBlockCode = 'D003';
+  infraBlockCode = 'RD01';
   infraBlockReason = `INFRA closeout JSON missing at ${INFRA_CLOSEOUT_JSON}. Run: npm run p0:all`;
 } else {
   try {
@@ -62,7 +62,7 @@ if (!fs.existsSync(INFRA_CLOSEOUT_JSON)) {
         || `eligible_for_micro_live=false in infra closeout (${infraBlockCode})`;
     }
   } catch (e) {
-    infraBlockCode = 'D003';
+    infraBlockCode = 'RD01';
     infraBlockReason = `INFRA closeout JSON parse error: ${e.message}`;
   }
 }
@@ -136,12 +136,12 @@ const allGatesPass = failedGates.length === 0;
 let overallStatus, reason_code, message, nextAction;
 
 if (infraBlockCode) {
-  // R12 fail-closed: BLOCKED with same DEP reason code (or D003 for missing JSON)
+  // R12 fail-closed: BLOCKED with same DEP reason code (or RD01 for missing/unreadable JSON)
   overallStatus = 'BLOCKED';
   reason_code = infraBlockCode;
   message = `BLOCKED ${infraBlockCode}: ${infraBlockReason}. MICRO_LIVE_ELIGIBLE=false by R12 fail-closed policy.`;
-  nextAction = infraBlockCode === 'D003'
-    ? 'npm run p0:all'
+  nextAction = infraBlockCode === 'RD01'
+    ? 'npm run infra:p0'
     : `Resolve ${infraBlockCode} per EDGE_LAB/DEP_POLICY.md, then: npm run p0:all && npm run edge:micro:live:readiness`;
 } else {
   // Infra is eligible; check edge prerequisites

@@ -78,13 +78,37 @@ if (infraCloseout) {
 }
 
 // ---------------------------------------------------------------------------
-// Assertions: R12 fail-closed mapping
+// Assertions: R12 fail-closed mapping + regression invariants
 // ---------------------------------------------------------------------------
 const assertions = [];
 let allPass = true;
 
-// A1: if infra has DEP02, readiness must be BLOCKED DEP02
+// A0 (regression): infra FINAL=BLOCKED must not have eligible_for_micro_live=true
+// B2 seal regression check
+if (infraCloseout) {
+  const infraFinalStatus = infraCloseout.status;
+  const infraEligMicro = infraCloseout.eligible_for_micro_live;
+  const infraEligExec = infraCloseout.eligible_for_execution;
+
+  if (infraFinalStatus !== 'PASS' && infraFinalStatus !== undefined) {
+    const eligLeak = infraEligMicro === true || infraEligExec === true;
+    if (eligLeak) allPass = false;
+
+    assertions.push({
+      assertion: `B2-SEAL: FINAL=${infraFinalStatus} ⇒ ELIGIBLE_* must all be false`,
+      infra_status: infraFinalStatus,
+      eligible_for_micro_live: infraEligMicro,
+      eligible_for_execution: infraEligExec,
+      result: eligLeak ? 'FAIL' : 'PASS',
+      failure_detail: eligLeak
+        ? `ELIGIBLE_FOR_MICRO_LIVE=${infraEligMicro} ELIGIBLE_FOR_EXECUTION=${infraEligExec} while FINAL=${infraFinalStatus} — eligibility leak (B2)`
+        : null,
+    });
+  }
+}
+
 if (!infraReadError && !readinessReadError) {
+  // A1: if infra has DEP02, readiness must be BLOCKED DEP02
   for (const depCode of DEP_BLOCKING_CODES) {
     const infraHasCode = infraDepCodes.includes(depCode);
     if (infraHasCode) {
@@ -137,8 +161,37 @@ if (!infraReadError && !readinessReadError) {
         : null,
     });
   }
+
+  // A4 (regression): D003 must not appear as readiness reason code for missing-input scenario
+  // D003 is reserved for canon rule drift; readiness missing input must produce RD01
+  if (readiness?.reason_code === 'D003') {
+    allPass = false;
+    assertions.push({
+      assertion: 'RD01-SEAL: readiness reason_code must not be D003 (reserved for canon drift)',
+      readiness_reason_code: readiness.reason_code,
+      result: 'FAIL',
+      failure_detail: `readiness.reason_code=D003 found — D003 is reserved for canon rule drift. Missing infra input must produce RD01 (B4 regression).`,
+    });
+  }
 } else {
-  allPass = false;
+  // When infra closeout is missing: check that readiness (if present) produced RD01
+  // A5 (regression): missing infra closeout must produce RD01 in readiness
+  if (infraReadError && !readinessReadError && readiness) {
+    const readinessUsedRD01 = readiness.reason_code === 'RD01';
+    if (!readinessUsedRD01) allPass = false;
+
+    assertions.push({
+      assertion: 'RD01-PROPAGATION: missing infra closeout JSON ⇒ readiness BLOCKED RD01',
+      infra_read_error: infraReadError,
+      readiness_status: readiness?.status || 'UNKNOWN',
+      readiness_reason_code: readiness?.reason_code || 'NONE',
+      result: readinessUsedRD01 ? 'PASS' : 'FAIL',
+      failure_detail: readinessUsedRD01
+        ? null
+        : `Readiness reason_code=${readiness?.reason_code} — expected RD01 when infra closeout is missing (B4 regression)`,
+    });
+  }
+
   if (infraReadError) {
     assertions.push({
       assertion: 'Precondition: infra closeout JSON readable',
@@ -167,9 +220,9 @@ if (noDepCodesToAssert) {
   next_action = 'No action required.';
 } else if (infraReadError || readinessReadError) {
   status = 'BLOCKED';
-  reason_code = 'D003';
+  reason_code = 'RD01';
   message = `Precondition data missing: ${infraReadError || readinessReadError}`;
-  next_action = 'npm run p0:all && npm run edge:micro:live:readiness';
+  next_action = 'npm run infra:p0';
 } else if (allPass) {
   status = 'PASS';
   reason_code = 'NONE';

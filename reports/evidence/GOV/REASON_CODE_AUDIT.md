@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 74a96076b41f
+RUN_ID: f615eb934eb0
 NEXT_ACTION: No reason code violations. Proceed with gov:integrity.
 
 ## Audit Policy
@@ -16,14 +16,14 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 
 | Path | Reason Code | Status | Violation |
 |------|-------------|--------|-----------|
-| `reports/evidence/GOV/gates/manual/edge_unlock.json` | BLOCKED | BLOCKED | UNKNOWN_CODE: reason_code="BLOCKED" not in SSOT list |
+| (none) | — | — | CLEAN |
 
-## Scanned Files (first 30 of 29)
+## Scanned Files (first 30 of 30)
 
 | File | Reason Code | Status | Check |
 |------|-------------|--------|-------|
 | `dep02_failclosed_readiness.json` | NONE | PASS | OK |
-| `deps_offline_install.json` | NONE | PASS | OK |
+| `deps_offline_install.json` | DEP02 | FAIL | OK |
 | `fixture_guard_gate.json` | NONE | PASS | OK |
 | `format_policy_gate.json` | NONE | PASS | OK |
 | `goldens_apply_gate.json` | NONE | PASS | OK |
@@ -36,7 +36,7 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 | `canon_selftest.json` | NONE | PASS | OK |
 | `execution_reality_court.json` | NONE | PASS | OK |
 | `expectancy_ci.json` | NONE | PASS | OK |
-| `micro_live_readiness.json` | NONE | PASS | OK |
+| `micro_live_readiness.json` | DEP02 | BLOCKED | OK |
 | `micro_live_sre.json` | NONE | PASS | OK |
 | `multi_hypothesis_court.json` | NONE | PASS | OK |
 | `paper_court.json` | NONE | PASS | OK |
@@ -47,18 +47,19 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 | `proxy_guard.json` | NONE | PASS | OK |
 | `sli_baseline.json` | NONE | PASS | OK |
 | `zero_war_probe.json` | NONE | PASS | OK |
-| `edge_unlock.json` | BLOCKED | BLOCKED | VIOLATION |
+| `edge_unlock.json` | NONE | PASS | OK |
 | `gov01_evidence_integrity.json` | NONE | PASS | OK |
 | `merkle_root.json` | NONE | PASS | OK |
 | `op01_scripts_check.json` | NONE | PASS | OK |
+| `reason_code_audit.json` | NONE | PASS | OK |
 
 ## Summary
 
 | Metric | Value |
 |--------|-------|
-| Files scanned | 29 |
+| Files scanned | 30 |
 | Hard violations | 0 |
-| Unknown code warnings | 1 |
+| Unknown code warnings | 0 |
 | D003 violations | 0 |
 | NEEDS_DATA abuse | 0 |
 

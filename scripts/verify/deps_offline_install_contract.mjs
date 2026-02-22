@@ -1,13 +1,20 @@
 /**
  * deps_offline_install_contract.mjs — R12 offline deps detection
  *
- * Uses closed-port registry technique (npm_config_registry=http://127.0.0.1:9)
- * + prefer-offline to test if npm install requires network access.
+ * Uses two complementary strategies:
+ *
+ * 1. Static lock scan: parse package-lock.json for packages with hasInstallScript=true
+ *    or native-build dependencies (node-gyp, prebuild-install, node-pre-gyp).
+ *    This deterministically detects DEP02 without relying on --dry-run output.
+ *
+ * 2. Closed-port registry test (npm_config_registry=http://127.0.0.1:9)
+ *    + prefer-offline to test if npm install requires network access (DEP01).
+ *    Run x2 for DEP03 nondeterminism check.
  *
  * Outcomes (R12):
- * - PASS: install requires no registry/network (all deps satisfied offline)
+ * - PASS: install requires no registry/network AND no native build candidates found
  * - BLOCKED DEP01: registry/network access attempted (capsule required)
- * - FAIL DEP02: native build attempted outside allowed capsule/toolchain policy
+ * - FAIL DEP02: native build candidates found in lock (hasInstallScript or native deps)
  * - FAIL DEP03: x2 install nondeterminism under same capsule
  */
 
@@ -22,6 +29,87 @@ const EVIDENCE_DIR = path.join(ROOT, 'reports', 'evidence', 'INFRA_P0');
 const MANUAL_DIR = path.join(EVIDENCE_DIR, 'gates', 'manual');
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
+
+// ---------------------------------------------------------------------------
+// B3 fix: Static package-lock.json scan for native build candidates
+// This is the primary DEP02 detection method — deterministic, no dry-run required.
+// ---------------------------------------------------------------------------
+
+// Native build dependency names that indicate a native build requirement
+const NATIVE_BUILD_DEP_NAMES = ['node-gyp', 'prebuild-install', 'node-pre-gyp', 'node-pre-gyp-init'];
+
+// Packages explicitly allowed to have install scripts (allowlist)
+const NATIVE_BUILD_ALLOWLIST = [];
+
+function scanLockFileForNativeCandidates() {
+  const lockPath = path.join(ROOT, 'package-lock.json');
+  if (!fs.existsSync(lockPath)) {
+    return { error: 'package-lock.json not found', candidates: [] };
+  }
+
+  let lock;
+  try {
+    lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'));
+  } catch (e) {
+    return { error: `package-lock.json parse error: ${e.message}`, candidates: [] };
+  }
+
+  const packages = lock.packages || {};
+  const candidates = [];
+
+  for (const [pkgPath, pkgData] of Object.entries(packages)) {
+    if (!pkgPath || pkgPath === '') continue; // skip root package entry
+
+    // Extract package name from path (e.g. "node_modules/better-sqlite3" -> "better-sqlite3")
+    const pkgName = pkgPath.replace(/^.*node_modules\//, '');
+
+    if (NATIVE_BUILD_ALLOWLIST.includes(pkgName)) continue;
+
+    const reasons = [];
+
+    // Check hasInstallScript flag
+    if (pkgData.hasInstallScript === true) {
+      reasons.push('hasInstallScript=true');
+    }
+
+    // Check dependencies for native build tool names
+    const allDeps = {
+      ...pkgData.dependencies,
+      ...pkgData.devDependencies,
+      ...pkgData.optionalDependencies,
+    };
+    for (const depName of NATIVE_BUILD_DEP_NAMES) {
+      if (depName in allDeps) {
+        reasons.push(`dep:${depName}`);
+      }
+    }
+
+    if (reasons.length > 0) {
+      candidates.push({
+        package: pkgName,
+        version: pkgData.version || 'unknown',
+        reasons,
+        path: pkgPath,
+      });
+    }
+  }
+
+  return { error: null, candidates };
+}
+
+console.log('[deps_offline] Running static lock scan for native build candidates...');
+const lockScan = scanLockFileForNativeCandidates();
+const nativeCandidates = lockScan.candidates;
+const lockScanError = lockScan.error;
+
+if (lockScanError) {
+  console.warn(`[deps_offline] Lock scan warning: ${lockScanError}`);
+} else {
+  console.log(`[deps_offline] Lock scan complete: ${nativeCandidates.length} native candidate(s) found`);
+  for (const c of nativeCandidates) {
+    console.log(`  - ${c.package}@${c.version}: ${c.reasons.join(', ')}`);
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Deterministic stderr pattern scan
@@ -101,7 +189,11 @@ const nativePatterns2 = scanForPattern(run2.stderr + run2.stdout, NATIVE_BUILD_P
 const needsNetwork1 = registryPatterns1.length > 0 || (run1.exitCode !== 0 && !run1.stderr.includes('npm warn'));
 const needsNetwork2 = registryPatterns2.length > 0 || (run2.exitCode !== 0 && !run2.stderr.includes('npm warn'));
 
-const hasNativeBuild = nativePatterns1.length > 0 || nativePatterns2.length > 0;
+// B3 fix: DEP02 is now detected by static lock scan (primary) + runtime patterns (secondary).
+// --dry-run skips install scripts so runtime patterns alone cannot be trusted for DEP02.
+const hasNativeBuildRuntime = nativePatterns1.length > 0 || nativePatterns2.length > 0;
+const hasNativeBuildLock = nativeCandidates.length > 0;
+const hasNativeBuild = hasNativeBuildLock || hasNativeBuildRuntime;
 
 // Drift detection: normalize stdout for comparison (remove timing info)
 function normalizeInstallOutput(s) {
@@ -122,7 +214,9 @@ let status, reason_code, message, next_action;
 if (hasNativeBuild) {
   status = 'FAIL';
   reason_code = 'DEP02';
-  message = 'Native build (node-gyp or equivalent) detected during offline install check. Native builds require capsule/toolchain policy approval.';
+  const detectionSource = hasNativeBuildLock ? 'static lock scan' : 'runtime pattern scan';
+  const candidateNames = nativeCandidates.map((c) => `${c.package}@${c.version}`).join(', ') || '(runtime-detected only)';
+  message = `Native build candidates detected via ${detectionSource}: [${candidateNames}]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.`;
   next_action = 'Review native dependency. Either pre-build in capsule, use prebuilt binaries, or add to approved native build list.';
 } else if (x2Drift && run1.exitCode === 0 && run2.exitCode === 0) {
   status = 'FAIL';
@@ -145,7 +239,10 @@ if (hasNativeBuild) {
 const gateResult = {
   schema_version: '1.0.0',
   has_native_build: hasNativeBuild,
+  has_native_build_lock: hasNativeBuildLock,
+  has_native_build_runtime: hasNativeBuildRuntime,
   message,
+  native_candidates_lock: nativeCandidates,
   native_patterns_found: [...new Set([...nativePatterns1, ...nativePatterns2].map((p) => p.source))],
   next_action,
   reason_code,
@@ -161,6 +258,10 @@ const gateResult = {
 writeJsonDeterministic(path.join(MANUAL_DIR, 'deps_offline_install.json'), gateResult);
 
 // Write markdown evidence
+const nativeCandidatesTable = nativeCandidates.length > 0
+  ? nativeCandidates.map((c) => `| \`${c.package}\` | ${c.version} | ${c.reasons.join(', ')} |`).join('\n')
+  : '| (none found) | — | — |';
+
 const md = `# DEPS_OFFLINE_INSTALL_CONTRACT.md
 
 STATUS: ${status}
@@ -170,18 +271,28 @@ NEXT_ACTION: ${next_action}
 
 ## Methodology
 
-Uses closed-port registry (npm_config_registry=http://127.0.0.1:9) + prefer-offline.
-Runs npm install --dry-run twice (x2 anti-flake).
-Scans stderr + stdout for registry fetch / native build / drift patterns.
+**Primary (B3 fix): Static lock scan** — parses package-lock.json for:
+- Packages with \`hasInstallScript=true\`
+- Packages with dependencies on: ${NATIVE_BUILD_DEP_NAMES.join(', ')}
+This is deterministic and not affected by --dry-run illusions.
 
-## Results
+**Secondary: Closed-port registry test** — npm_config_registry=http://127.0.0.1:9 + prefer-offline.
+Runs npm install --dry-run twice (x2 anti-flake) for DEP01/DEP03 detection.
+
+## Native Candidates (Static Lock Scan)
+
+| Package | Version | Reasons |
+|---------|---------|---------|
+${nativeCandidatesTable}
+
+## Dry-Run Results
 
 | Metric | Run 1 | Run 2 |
 |--------|-------|-------|
 | exit_code | ${run1.exitCode} | ${run2.exitCode} |
 | duration_ms | ${run1.durationMs} | ${run2.durationMs} |
 | registry_patterns | ${registryPatterns1.length} | ${registryPatterns2.length} |
-| native_patterns | ${nativePatterns1.length} | ${nativePatterns2.length} |
+| native_patterns (runtime) | ${nativePatterns1.length} | ${nativePatterns2.length} |
 | x2_drift | ${x2Drift} | - |
 
 ## Outcome

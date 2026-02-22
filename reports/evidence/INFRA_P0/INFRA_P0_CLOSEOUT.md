@@ -2,11 +2,11 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 74a96076b41f
-ELIGIBLE_FOR_MICRO_LIVE: true
-ELIGIBLE_FOR_EXECUTION: true
-ELIGIBILITY_REASON: No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)
-NEXT_ACTION: Run edge:calm:p0 to complete full P0 closeout.
+RUN_ID: f615eb934eb0
+ELIGIBLE_FOR_MICRO_LIVE: false
+ELIGIBLE_FOR_EXECUTION: false
+ELIGIBILITY_REASON: DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.
+NEXT_ACTION: Resolve DEP02 before proceeding to readiness. See EDGE_LAB/DEP_POLICY.md for mitigation paths.
 
 ## Gate Matrix
 
@@ -15,7 +15,7 @@ NEXT_ACTION: Run edge:calm:p0 to complete full P0 closeout.
 | NET_ISOLATION | PASS | NONE | YES |
 | NODE_TRUTH | PASS | NONE | YES |
 | VERIFY_MODE | PASS | NONE | YES |
-| DEPS_OFFLINE | PASS | NONE | NO (warn) |
+| DEPS_OFFLINE | FAIL | DEP02 | NO (warn) |
 | GOLDENS_APPLY | PASS | NONE | YES |
 | FORMAT_POLICY | PASS | NONE | YES |
 | FIXTURE_GUARD | PASS | NONE | YES |
@@ -25,8 +25,8 @@ NEXT_ACTION: Run edge:calm:p0 to complete full P0 closeout.
 
 | Flag | Value | Reason |
 |------|-------|--------|
-| eligible_for_micro_live | true | No blocking codes detected (DEP/FG01/ZW01/NET01 all clear) |
-| eligible_for_execution | true | No blocking codes detected (DEP/FG01/ZW01/NET01 all clear) |
+| eligible_for_micro_live | false | DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable. |
+| eligible_for_execution | false | DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable. |
 
 **Note:** Infra closeout may PASS overall while eligibility is false.
 Readiness gate MUST honour these flags and emit BLOCKED with the same DEP reason code.
@@ -36,14 +36,14 @@ See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 | Evidence Path | sha256_raw (prefix) | sha256_norm (prefix) |
 |--------------|--------------------|--------------------|
-| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `906497cf8d9b47e8…` | `906497cf8d9b47e8…` |
-| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `bc38ed83b9df82aa…` | `bc38ed83b9df82aa…` |
-| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `dcee59b68aa6895b…` | `dcee59b68aa6895b…` |
-| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `a82d1873bfb7d2e9…` | `a82d1873bfb7d2e9…` |
-| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `83f3528c217443a4…` | `83f3528c217443a4…` |
-| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `dfc95ec0424882d4…` | `dfc95ec0424882d4…` |
-| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `406d2bf0be65caf7…` | `406d2bf0be65caf7…` |
-| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `8e18d26acb6dd384…` | `8e18d26acb6dd384…` |
+| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `d358c8bef8fb9221…` | `d358c8bef8fb9221…` |
+| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `1370a1f4f06b80b3…` | `1370a1f4f06b80b3…` |
+| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `911e74e6a77ef002…` | `911e74e6a77ef002…` |
+| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `5b0ebabc126456e4…` | `5b0ebabc126456e4…` |
+| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `9324e1023dd47033…` | `9324e1023dd47033…` |
+| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `db284fb7ba437652…` | `db284fb7ba437652…` |
+| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `7c569c18605aaedf…` | `7c569c18605aaedf…` |
+| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `99ff3ade02e712ae…` | `99ff3ade02e712ae…` |
 
 ## What Changed (v1.5.3 patchset)
 
@@ -64,4 +64,4 @@ See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 ## Next Action
 
-Run edge:calm:p0 to complete full P0 closeout.
+Resolve DEP02 before proceeding to readiness. See EDGE_LAB/DEP_POLICY.md for mitigation paths.
