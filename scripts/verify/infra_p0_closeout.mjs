@@ -24,6 +24,14 @@ fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
 const GATES = [
   {
+    // NET01: Network isolation proof — pre-flight check
+    id: 'NET_ISOLATION',
+    script: 'scripts/verify/net_isolation_proof.mjs',
+    evidence: 'reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md',
+    json: 'reports/evidence/INFRA_P0/gates/manual/net_isolation.json',
+    blocker: true,
+  },
+  {
     id: 'NODE_TRUTH',
     script: 'scripts/verify/node_truth_gate.mjs',
     evidence: 'reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md',
@@ -157,15 +165,21 @@ const hasFg01Block = fgGate?.reason_code === 'FG01' || fgGate?.status === 'BLOCK
 const zw01Gate = gateStatuses.find((g) => g.gate === 'ZERO_WAR_PROBE');
 const hasZw01Fail = zw01Gate?.status === 'FAIL' || zw01Gate?.reason_code === 'ZW01';
 
-const eligible_for_micro_live = !hasDepBlock && !hasFg01Block && !hasZw01Fail;
-const eligible_for_execution = !hasDepBlock && !hasFg01Block && !hasZw01Fail;
+// NET01: Network isolation failure blocks eligibility
+const net01Gate = gateStatuses.find((g) => g.gate === 'NET_ISOLATION');
+const hasNet01Block = net01Gate?.reason_code === 'NET01' || net01Gate?.status === 'BLOCKED';
+
+const eligible_for_micro_live = !hasDepBlock && !hasFg01Block && !hasZw01Fail && !hasNet01Block;
+const eligible_for_execution = !hasDepBlock && !hasFg01Block && !hasZw01Fail && !hasNet01Block;
 const eligibility_reason = hasDepBlock
   ? `${depReasonCode}: ${depGate?.message || 'DEP gate failure detected'}`
   : hasFg01Block
     ? `FG01: Fixture guard violation — evidence sources not verified as real`
     : hasZw01Fail
       ? `ZW01: Zero-war kill switch probe failed — trading path not blocked`
-      : 'No blocking codes detected (DEP/FG01/ZW01 all clear)';
+      : hasNet01Block
+        ? `NET01: Network isolation not proven — network required for PASS`
+        : 'No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)';
 
 // Compute evidence hashes
 const evidenceHashes = gateStatuses.map((g) => {
@@ -187,7 +201,7 @@ const overallReason = overallStatus === 'PASS' ? 'NONE'
   : gateStatuses.find((g) => g.blocker && g.status !== 'PASS')?.reason_code || 'UNKNOWN';
 
 const message = overallStatus === 'PASS'
-  ? `INFRA P0 PASS — NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY, FIXTURE_GUARD (FG01), ZERO_WAR_PROBE (ZW01) all PASS. DEPS_OFFLINE reported honestly (${depReasonCode}). ELIGIBLE_FOR_MICRO_LIVE=${eligible_for_micro_live}.`
+  ? `INFRA P0 PASS — NET_ISOLATION (NET01), NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY, FIXTURE_GUARD (FG01), ZERO_WAR_PROBE (ZW00/ZW01) all PASS. DEPS_OFFLINE reported honestly (${depReasonCode}). ELIGIBLE_FOR_MICRO_LIVE=${eligible_for_micro_live}.`
   : `INFRA P0 ${overallStatus} — ${overallReason}: ${gateStatuses.find((g) => g.blocker && g.status !== 'PASS')?.message || ''}`;
 
 const nextAction = overallStatus === 'PASS'
