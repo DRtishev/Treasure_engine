@@ -1,0 +1,47 @@
+{
+  "comparisons": [
+    {
+      "anchor_file": "reports/evidence/EDGE_LAB/P0/CHECKSUMS.md",
+      "anchor_found": true,
+      "anchored": "606837aeb57be66a817eac492b2bbba24c651e646e0590644f9114954a8ff992",
+      "computed": "606837aeb57be66a817eac492b2bbba24c651e646e0590644f9114954a8ff992",
+      "diff_hint": "NONE",
+      "id": "C01_SCOPE_MANIFEST_SHA",
+      "label": "SCOPE_MANIFEST_SHA",
+      "match": true,
+      "note": "MATCH — no tampering detected"
+    },
+    {
+      "anchor_file": "reports/evidence/GOV/MERKLE_ROOT.md",
+      "anchor_found": true,
+      "anchored": "0a723d451c6d22c9d96ed0da30edc5b09822061347b7c5a71d08033769f4e310",
+      "computed": "0a723d451c6d22c9d96ed0da30edc5b09822061347b7c5a71d08033769f4e310",
+      "diff_hint": "NONE",
+      "id": "C02_MERKLE_ROOT",
+      "label": "MERKLE_ROOT",
+      "match": true,
+      "note": "MATCH — no tampering detected"
+    },
+    {
+      "anchor_file": "reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md",
+      "anchor_found": true,
+      "anchored": "8be1280f4ee575edcb553d217f95004017fc24f86d5c8105c5859f6e0ca58fb4",
+      "computed": "8be1280f4ee575edcb553d217f95004017fc24f86d5c8105c5859f6e0ca58fb4",
+      "diff_hint": "NONE",
+      "id": "C03_RECEIPTS_CHAIN_FINAL",
+      "label": "RECEIPTS_CHAIN_FINAL",
+      "match": true,
+      "note": "MATCH — no tampering detected"
+    }
+  ],
+  "drifted_files_count": 0,
+  "drifted_files_sample": [],
+  "files_in_scope": 98,
+  "message": "GOV01 PASS — Evidence integrity verified. All 3 anchored values match recomputed values. No manual edits detected.",
+  "mismatch_count": 0,
+  "next_action": "Evidence integrity proven. Proceed to EDGE_UNLOCK evaluation.",
+  "reason_code": "NONE",
+  "run_id": "74a96076b41f",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

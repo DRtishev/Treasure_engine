@@ -161,19 +161,30 @@ const checksTable = checks.map((c) =>
   `| ${c.id} | ${c.env_var} | ${c.env_value} | ${c.ok ? 'PASS' : 'FAIL'} | ${c.reason} |`
 ).join('\n');
 
-const proofMd = `# NET_ISOLATION_PROOF.md — NET01 Network Isolation Proof
+const proofMd = `# NET_ISOLATION_PROOF.md — NET01 Network Usage Policy Proof
 
 STATUS: ${gateStatus}
 REASON_CODE: ${reasonCode}
 RUN_ID: ${RUN_ID}
 NEXT_ACTION: ${nextAction}
 
-## NET01 Policy
+## NET01 Policy and Scope Clarity
 
-Network is NEVER required for PASS. Any gate or pipeline step that requires
-live network access violates the offline-truth-is-authority doctrine.
+WHAT THIS GATE PROVES: Policy checks that network is NOT required for PASS (offline-authoritative).
+WHAT THIS GATE DOES NOT PROVE: Hardware-level network isolation (no network namespace enforcement).
 
-Fail code NET01: Network isolation unavailable or not proven.
+This gate verifies via 6 policy checks:
+1. No network opt-in flags active (ENABLE_NET unset or 0)
+2. No live trading risk acknowledgement
+3. No live exchange API keys present
+4. node_modules already installed (no network needed for npm ci)
+5. package-lock.json exists (deterministic reinstall spec)
+6. VERIFY_MODE is GIT or BUNDLE (offline-authoritative, not network-dependent)
+
+Fail code NET01: Network usage policy violated or offline state not verifiable.
+For hardware-level isolation: use docker --network=none or unshare -n in CI.
+
+Offline-truth-is-authority: if all checks pass, network is never required for PASS.
 
 ## Isolation Checks
 

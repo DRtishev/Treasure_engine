@@ -618,6 +618,8 @@
     "gov:merkle": "node scripts/gov/merkle_root.mjs",
     "gov:integrity": "node scripts/gov/gov_integrity.mjs",
     "gov:gov01": "node scripts/gov/gov01_evidence_integrity.mjs",
+    "gov:op01": "node scripts/gov/op01_scripts_check.mjs",
+    "gov:reason-codes": "node scripts/gov/reason_code_audit.mjs",
     "infra:p0": "node scripts/verify/infra_p0_closeout.mjs",
     "verify:dep02:failclosed": "node scripts/verify/dep02_failclosed_readiness_gate.mjs",
     "p0:all": "npm run edge:calm:p0 && npm run infra:p0",

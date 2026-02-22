@@ -177,14 +177,23 @@ for (const rel of scopePaths) {
 const computedMerkleRoot = buildMerkleRoot(leafHashes);
 
 // Recompute RECEIPTS_CHAIN final hash
-// The receipts chain is: sha256_raw(prev_hash + ":" + sha256_norm) for each file in scope (sorted)
-// Initial hash: "GENESIS"
+// IMPORTANT: Use sha256_norm values FROM CHECKSUMS.md (same as edge_receipts_chain.mjs does).
+// Do NOT re-read files for chain recomputation — RECEIPTS_CHAIN.md is itself in scope and
+// was overwritten after CHECKSUMS.md was written, creating a circular dependency if we re-read.
+// This check verifies internal consistency: CHECKSUMS.md sha256_norm values → expected chain.
+const anchoredNormMapForChain = new Map();
+if (fs.existsSync(CHECKSUMS_PATH)) {
+  const ck = fs.readFileSync(CHECKSUMS_PATH, 'utf8');
+  const rowRe = /\|\s*`([^`]+)`\s*\|\s*`([0-9a-f]{64})`\s*\|\s*`([0-9a-f]{64})`\s*\|/g;
+  let m2;
+  while ((m2 = rowRe.exec(ck)) !== null) {
+    anchoredNormMapForChain.set(m2[1], m2[3]); // path -> sha256_norm
+  }
+}
 let chainHash = 'GENESIS';
 for (const rel of scopePaths) {
-  const abs = path.join(ROOT, rel);
-  if (fs.existsSync(abs)) {
-    const content = fs.readFileSync(abs, 'utf8');
-    const norm = sha256Norm(content);
+  const norm = anchoredNormMapForChain.get(rel);
+  if (norm) {
     chainHash = sha256Raw(chainHash + ':' + norm);
   }
 }
@@ -228,9 +237,72 @@ for (const c of comparisons) {
   if (!c.anchor_found) {
     c.match = false;
     c.note = `Anchor file missing or value not found: ${c.anchor_file}`;
+    c.diff_hint = `ANCHOR_MISSING: ${c.anchor_file}`;
   } else {
     c.match = c.anchored === c.computed;
     c.note = c.match ? 'MATCH — no tampering detected' : 'MISMATCH — possible manual edit or evidence drift';
+    c.diff_hint = c.match ? 'NONE' : null; // filled below
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Diff hints: for SCOPE_MANIFEST_SHA mismatch, identify changed files
+// by comparing current sha256_norm values to the anchored hash ledger
+// ---------------------------------------------------------------------------
+const scopeManifestMismatch = comparisons.find((c) => c.id === 'C01_SCOPE_MANIFEST_SHA' && !c.match);
+const driftedFiles = [];
+
+if (scopeManifestMismatch) {
+  // Read anchored norm hashes from CHECKSUMS.md
+  const anchoredNormMap = new Map();
+  if (fs.existsSync(CHECKSUMS_PATH)) {
+    const ck = fs.readFileSync(CHECKSUMS_PATH, 'utf8');
+    const rowRe = /\|\s*`([^`]+)`\s*\|\s*`([0-9a-f]{64})`\s*\|\s*`([0-9a-f]{64})`\s*\|/g;
+    let m;
+    while ((m = rowRe.exec(ck)) !== null) {
+      anchoredNormMap.set(m[1], m[3]); // path -> sha256_norm
+    }
+  }
+
+  // Compare current norm to anchored norm
+  for (const rel of scopePaths) {
+    const abs = path.join(ROOT, rel);
+    if (!fs.existsSync(abs)) {
+      driftedFiles.push({ path: rel, change: 'DELETED' });
+      continue;
+    }
+    const content = fs.readFileSync(abs, 'utf8');
+    const currentNorm = sha256Norm(content);
+    const anchoredNorm = anchoredNormMap.get(rel);
+    if (!anchoredNorm) {
+      driftedFiles.push({ path: rel, change: 'NEW_FILE', current: currentNorm.slice(0, 16) + '…' });
+    } else if (currentNorm !== anchoredNorm) {
+      driftedFiles.push({
+        path: rel,
+        change: 'MODIFIED',
+        anchored: anchoredNorm.slice(0, 16) + '…',
+        current: currentNorm.slice(0, 16) + '…',
+      });
+    }
+  }
+
+  // Also check files in anchored map that are no longer in scope
+  for (const [anchoredPath] of anchoredNormMap) {
+    if (!scopePaths.includes(anchoredPath)) {
+      driftedFiles.push({ path: anchoredPath, change: 'REMOVED_FROM_SCOPE' });
+    }
+  }
+
+  const hint = driftedFiles.length > 0
+    ? `${driftedFiles.length} file(s) drifted: first=${driftedFiles[0].path} (${driftedFiles[0].change})`
+    : `Scope manifest drifted but no individual file changes found (scope list changed?)`;
+  scopeManifestMismatch.diff_hint = hint;
+}
+
+// Fill null diff_hints for other mismatches
+for (const c of comparisons) {
+  if (c.diff_hint === null) {
+    c.diff_hint = `Recomputed ${c.label} does not match anchored value. Re-run: npm run edge:calm:p0 && npm run gov:integrity`;
   }
 }
 
@@ -253,6 +325,10 @@ const compTable = comparisons.map((c) =>
   `| ${c.id} | ${c.anchored.slice(0, 16)}… | ${c.computed.slice(0, 16)}… | ${c.match ? 'MATCH' : 'MISMATCH'} | ${c.note} |`
 ).join('\n');
 
+const diffHintsSection = comparisons.some((c) => !c.match)
+  ? `## Diff Hints\n\n${comparisons.filter((c) => !c.match).map((c) => `- **${c.id}**: ${c.diff_hint}`).join('\n')}${driftedFiles.length > 0 ? `\n\n### Drifted Files (first 10)\n\n| Path | Change | Anchored Norm | Current Norm |\n|------|--------|---------------|--------------|\n${driftedFiles.slice(0, 10).map((f) => `| \`${f.path}\` | ${f.change} | ${f.anchored || '—'} | ${f.current || '—'} |`).join('\n')}` : ''}`
+  : `## Diff Hints\n\nNO DRIFT — all anchored values match computed values.`;
+
 const integrityMd = `# GOV01_EVIDENCE_INTEGRITY.md — P1 GOV01 Evidence Integrity Gate
 
 STATUS: ${gateStatus}
@@ -271,6 +347,8 @@ Any mismatch => BLOCKED GOV01.
 | Check | Anchored (prefix) | Computed (prefix) | Result | Note |
 |-------|-------------------|-------------------|--------|------|
 ${compTable}
+
+${diffHintsSection}
 
 ## Scope Summary
 
@@ -307,11 +385,14 @@ const gateJson = {
     anchor_found: c.anchor_found,
     anchored: c.anchored,
     computed: c.computed,
+    diff_hint: c.diff_hint || 'NONE',
     id: c.id,
     label: c.label,
     match: c.match,
     note: c.note,
   })),
+  drifted_files_count: driftedFiles.length,
+  drifted_files_sample: driftedFiles.slice(0, 5).map((f) => ({ change: f.change, path: f.path })),
   files_in_scope: scopePaths.length,
   message,
   mismatch_count: mismatches.length,

@@ -1,0 +1,42 @@
+{
+  "gate": "ZERO_WAR_PROBE",
+  "message": "PASS — Zero-war kill switch ZW00 OBSERVED for all 4 probes. Trading path correctly blocked by T000 guard.",
+  "next_action": "ZW00 enforcement verified. Proceed with gov:integrity.",
+  "probe_results": [
+    {
+      "exit_code": 1,
+      "flag": "TRADING_ENABLED",
+      "reason_code": "ZW00",
+      "t000_detected": true,
+      "value": "1"
+    },
+    {
+      "exit_code": 1,
+      "flag": "LIVE_TRADING",
+      "reason_code": "ZW00",
+      "t000_detected": true,
+      "value": "1"
+    },
+    {
+      "exit_code": 1,
+      "flag": "ORDER_SUBMISSION_ENABLED",
+      "reason_code": "ZW00",
+      "t000_detected": true,
+      "value": "1"
+    },
+    {
+      "exit_code": 1,
+      "flag": "SUBMIT_ORDERS",
+      "reason_code": "ZW00",
+      "t000_detected": true,
+      "value": "1"
+    }
+  ],
+  "probes_total": 4,
+  "reason_code": "NONE",
+  "run_id": "74a96076b41f",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "zw00_observed_count": 4,
+  "zw01_breach_count": 0
+}

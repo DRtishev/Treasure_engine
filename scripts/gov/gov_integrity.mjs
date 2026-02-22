@@ -83,29 +83,43 @@ console.log('P1 GOVERNANCE INTEGRITY ORCHESTRATOR');
 console.log(`RUN_ID: ${RUN_ID}`);
 console.log('='.repeat(60));
 
+// Preflight Step 0: OP01 scripts check (phantom command prevention)
+const op01Result = runScript('scripts/gov/op01_scripts_check.mjs', 'R_OP01_SCRIPTS_CHECK');
+if (op01Result.exit_code !== 0) {
+  console.error('\n[BLOCKED OP01] Required scripts missing — cannot proceed with gov:integrity.');
+  process.exit(1);
+}
+
 // Step 1: Anchor Merkle root
 const merkleResult = runScript('scripts/gov/merkle_root.mjs', 'P1_MERKLE_ROOT');
 
 // Step 2: GOV01 integrity check
 const gov01Result = runScript('scripts/gov/gov01_evidence_integrity.mjs', 'P1_GOV01_ENFORCEMENT');
 
-// Step 3: Read P0 closeout
+// Step 3a: Reason code audit
+const rcAuditResult = runScript('scripts/gov/reason_code_audit.mjs', 'R_REASON_CODE_AUDIT');
+
+// Step 4: Read P0 closeout
 const p0Closeout = readGateJson('reports/evidence/INFRA_P0/gates/manual/infra_p0_closeout.json');
 const p0Status = p0Closeout.status;
 const p0EligibleForMicroLive = p0Closeout.eligible_for_micro_live;
 const p0EligibleForExecution = p0Closeout.eligible_for_execution;
 
-// Step 4: Read P0 CALM gate
+// Step 5: Read P0 CALM gate
 const calmP0Gate = readGateJson('reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json');
 const calmP0Status = calmP0Gate.status;
 
-// Step 5: Read P1 GOV01 result
+// Step 6: Read P1 GOV01 result
 const gov01Gate = readGateJson('reports/evidence/GOV/gates/manual/gov01_evidence_integrity.json');
 const gov01Status = gov01Gate.status;
 
-// Step 6: Read Merkle root result
+// Step 7: Read Merkle root result
 const merkleGate = readGateJson('reports/evidence/GOV/gates/manual/merkle_root.json');
 const merkleStatus = merkleGate.status;
+
+// Step 8: Read reason code audit result
+const rcAuditGate = readGateJson('reports/evidence/GOV/gates/manual/reason_code_audit.json');
+const rcAuditStatus = rcAuditGate.status;
 
 // ---------------------------------------------------------------------------
 // P0 SYSTEM PASS evaluation
@@ -120,10 +134,11 @@ const p0SystemPass =
 // ---------------------------------------------------------------------------
 // P1 SYSTEM PASS evaluation
 // ---------------------------------------------------------------------------
-// P1 requires: Merkle root present + GOV01 PASS
+// P1 requires: Merkle root present + GOV01 PASS + reason code audit PASS
 const p1SystemPass =
   (merkleStatus === 'PASS' || merkleStatus === 'PARTIAL') &&
-  gov01Status === 'PASS';
+  gov01Status === 'PASS' &&
+  rcAuditStatus === 'PASS';
 
 // ---------------------------------------------------------------------------
 // EDGE UNLOCK
@@ -144,6 +159,7 @@ if (!p0SystemPass) {
 if (!p1SystemPass) {
   if (merkleStatus !== 'PASS' && merkleStatus !== 'PARTIAL') blockReasons.push(`MERKLE_ROOT status=${merkleStatus}`);
   if (gov01Status !== 'PASS') blockReasons.push(`GOV01 status=${gov01Status} (${gov01Gate.reason_code || ''})`);
+  if (rcAuditStatus !== 'PASS') blockReasons.push(`REASON_CODE_AUDIT status=${rcAuditStatus}`);
 }
 
 const message = edgeUnlock
