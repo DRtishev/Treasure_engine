@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 3d37e68311e2
+RUN_ID: 74a96076b41f
 NEXT_ACTION: No action required. Dependencies are fully offline-satisfiable.
 
 ## Methodology
@@ -16,7 +16,7 @@ Scans stderr + stdout for registry fetch / native build / drift patterns.
 | Metric | Run 1 | Run 2 |
 |--------|-------|-------|
 | exit_code | 0 | 0 |
-| duration_ms | 1844 | 1768 |
+| duration_ms | 1808 | 1821 |
 | registry_patterns | 0 | 0 |
 | native_patterns | 0 | 0 |
 | x2_drift | false | - |

@@ -1,8 +1,14 @@
 {
-  "eligibility_reason": "No DEP blocking codes detected",
+  "eligibility_reason": "No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)",
   "eligible_for_execution": true,
   "eligible_for_micro_live": true,
   "gate_matrix": [
+    {
+      "blocker": true,
+      "gate": "NET_ISOLATION",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
     {
       "blocker": true,
       "gate": "NODE_TRUTH",
@@ -32,12 +38,24 @@
       "gate": "FORMAT_POLICY",
       "reason_code": "NONE",
       "status": "PASS"
+    },
+    {
+      "blocker": true,
+      "gate": "FIXTURE_GUARD",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "blocker": true,
+      "gate": "ZERO_WAR_PROBE",
+      "reason_code": "NONE",
+      "status": "PASS"
     }
   ],
-  "message": "INFRA P0 PASS — NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY all PASS. DEPS_OFFLINE reported honestly (NONE). ELIGIBLE_FOR_MICRO_LIVE=true.",
+  "message": "INFRA P0 PASS — NET_ISOLATION (NET01), NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY, FIXTURE_GUARD (FG01), ZERO_WAR_PROBE (ZW00/ZW01) all PASS. DEPS_OFFLINE reported honestly (NONE). ELIGIBLE_FOR_MICRO_LIVE=true.",
   "next_action": "Run edge:calm:p0 to complete full P0 closeout.",
   "overall_reason": "NONE",
-  "run_id": "3d37e68311e2",
+  "run_id": "74a96076b41f",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

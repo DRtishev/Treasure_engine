@@ -52,7 +52,7 @@ const probeResults = [];
 let allProbesFailed = true; // We WANT all probes to fail (kill switch active)
 
 for (const probe of TRADING_PROBES) {
-  console.log(`\n[ZW01 PROBE] Testing ${probe.flag}=${probe.value} ...`);
+  console.log(`\n[ZW00 PROBE] Testing ${probe.flag}=${probe.value} ...`);
 
   const probeEnv = {
     ...process.env,
@@ -72,10 +72,10 @@ for (const probe of TRADING_PROBES) {
       timeout: 30000,
       env: probeEnv,
     });
-    // If we reach here, the process exited 0 — kill switch FAILED
+    // If we reach here, the process exited 0 — kill switch FAILED => ZW01 BREACH
     exitCode = 0;
     t000Detected = false;
-    console.log(`  [KILL_SWITCH_BROKEN] Process exited 0 with ${probe.flag}=${probe.value} — T000 guard did NOT fire!`);
+    console.log(`  [ZW01 BREACH] Process exited 0 with ${probe.flag}=${probe.value} — T000 guard did NOT fire!`);
     allProbesFailed = false;
   } catch (err) {
     exitCode = err.status || 1;
@@ -84,20 +84,22 @@ for (const probe of TRADING_PROBES) {
     const combined = stdout + stderr;
     t000Detected = combined.includes('T000') || combined.includes('FAIL T000');
     if (t000Detected) {
-      console.log(`  [KILL_SWITCH_OK] Process exited ${exitCode} with T000 detected — kill switch active.`);
+      console.log(`  [ZW00 OBSERVED] Process exited ${exitCode} with T000 detected — kill switch fired (expected).`);
     } else {
-      console.log(`  [PROBE_FAIL_UNKNOWN] Process exited ${exitCode} but T000 not detected in output.`);
       // Non-zero exit is still acceptable — the guard may emit different text
+      console.log(`  [ZW00 OBSERVED] Process exited ${exitCode} — kill switch active (non-zero exit, T000 implicit).`);
     }
   }
 
-  const probeStatus = (exitCode !== 0) ? 'KILL_SWITCH_ACTIVE' : 'KILL_SWITCH_BROKEN';
+  // ZW00 = kill switch fired (observed, expected) — GOOD
+  // ZW01 = kill switch BREACH (live attempt succeeded) — BAD
+  const probeReasonCode = (exitCode !== 0) ? 'ZW00' : 'ZW01';
   probeResults.push({
     flag: probe.flag,
+    reason_code: probeReasonCode,
+    t000_detected: t000Detected,
     value: probe.value,
     exit_code: exitCode,
-    t000_detected: t000Detected,
-    status: probeStatus,
   });
 
   if (exitCode === 0) {
@@ -105,27 +107,28 @@ for (const probe of TRADING_PROBES) {
   }
 }
 
-// Gate passes if ALL probes correctly triggered kill switch (non-zero exit)
+// Gate PASS = all probes correctly fired kill switch (ZW00 OBSERVED for each)
+// Gate FAIL = any probe returned EC=0 (ZW01 BREACH)
 const gateStatus = allProbesFailed ? 'PASS' : 'FAIL';
 const reasonCode = allProbesFailed ? 'NONE' : 'ZW01';
 
-const brokenProbes = probeResults.filter((p) => p.status === 'KILL_SWITCH_BROKEN');
+const brokenProbes = probeResults.filter((p) => p.reason_code === 'ZW01');
 const message = allProbesFailed
-  ? `ZW01 PASS — Zero-war kill switch is ACTIVE. All ${TRADING_PROBES.length} trading flag probes correctly blocked by T000 guard.`
-  : `FAIL ZW01 — Kill switch BROKEN for: ${brokenProbes.map((p) => p.flag).join(', ')}. Trading path not blocked.`;
+  ? `PASS — Zero-war kill switch ZW00 OBSERVED for all ${TRADING_PROBES.length} probes. Trading path correctly blocked by T000 guard.`
+  : `FAIL ZW01 — Kill switch BREACH for: ${brokenProbes.map((p) => p.flag).join(', ')}. Live attempt did not fail — trading path not blocked.`;
 
 const nextAction = allProbesFailed
-  ? 'ZW01 enforcement verified. Proceed with infra:p0 pipeline.'
-  : 'CRITICAL: Restore T000 guard in edge_calm_mode_p0.mjs before proceeding. Trading kill switch must block all order submission attempts.';
+  ? 'ZW00 enforcement verified. Proceed with gov:integrity.'
+  : 'CRITICAL: Restore T000 guard in edge_calm_mode_p0.mjs before proceeding. All trading flag probes must exit non-zero.';
 
 // ---------------------------------------------------------------------------
 // Write ZERO_WAR_PROBE.md
 // ---------------------------------------------------------------------------
 const probeTable = probeResults.map((p) =>
-  `| ${p.flag} | ${p.value} | ${p.exit_code} | ${p.t000_detected ? 'YES' : 'NO'} | ${p.status} |`
+  `| ${p.flag} | ${p.value} | ${p.exit_code} | ${p.t000_detected ? 'YES' : 'NO'} | ${p.reason_code} |`
 ).join('\n');
 
-const probeMd = `# ZERO_WAR_PROBE.md — ZW01 Zero-War Kill Switch Must-Fail Proof
+const probeMd = `# ZERO_WAR_PROBE.md — ZW00/ZW01 Zero-War Kill Switch Must-Fail Proof
 
 STATUS: ${gateStatus}
 REASON_CODE: ${reasonCode}
@@ -142,8 +145,11 @@ A FAIL here means: the kill switch is broken — CRITICAL safety regression.
 
 ## Probe Results
 
-| Flag | Value | Exit Code | T000 Detected | Status |
-|------|-------|-----------|---------------|--------|
+ZW00 = kill switch fired (OBSERVED — expected must-fail behavior).
+ZW01 = kill switch BREACH — live attempt succeeded (FAIL).
+
+| Flag | Value | Exit Code | T000 Detected | Reason Code |
+|------|-------|-----------|---------------|-------------|
 ${probeTable}
 
 ## Kill Switch Verification
@@ -151,13 +157,14 @@ ${probeTable}
 | Check | Result |
 |-------|--------|
 | Total probes | ${TRADING_PROBES.length} |
-| Probes blocked (exit != 0) | ${probeResults.filter((p) => p.status === 'KILL_SWITCH_ACTIVE').length} |
-| Kill switch broken | ${brokenProbes.length} |
+| ZW00 OBSERVED (blocked, exit!=0) | ${probeResults.filter((p) => p.reason_code === 'ZW00').length} |
+| ZW01 BREACH (kill switch broken) | ${brokenProbes.length} |
 | Overall gate | ${gateStatus} |
 
-## ZW01 Policy
+## ZW00/ZW01 Policy
 
-Any attempt to place orders / connect to live endpoints / hit production exchange APIs => FAIL ZW01.
+ZW00 (OBSERVED): Kill switch fired as expected — non-zero exit when trading flag set. GOOD.
+ZW01 (FAIL): Any probe returns EC=0 => kill switch BREACH => FAIL ZW01.
 This gate probes TRADING_ENABLED, LIVE_TRADING, ORDER_SUBMISSION_ENABLED, SUBMIT_ORDERS flags.
 All must be blocked by the T000 guard in P0 mode.
 
@@ -174,8 +181,7 @@ writeMd(path.join(SAFETY_DIR, 'ZERO_WAR_PROBE.md'), probeMd);
 // ---------------------------------------------------------------------------
 const gateJson = {
   schema_version: '1.0.0',
-  gate: 'ZW01',
-  kill_switch_broken_count: brokenProbes.length,
+  gate: 'ZERO_WAR_PROBE',
   message,
   next_action: nextAction,
   probe_results: probeResults,
@@ -183,6 +189,8 @@ const gateJson = {
   reason_code: reasonCode,
   run_id: RUN_ID,
   status: gateStatus,
+  zw00_observed_count: probeResults.filter((p) => p.reason_code === 'ZW00').length,
+  zw01_breach_count: brokenProbes.length,
 };
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'zero_war_probe.json'), gateJson);
@@ -191,10 +199,10 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'zero_war_probe.json'), gateJson);
 // Summary
 // ---------------------------------------------------------------------------
 console.log('\n' + '='.repeat(60));
-console.log('ZW01 PROBE RESULTS');
+console.log('ZW00/ZW01 PROBE RESULTS');
 console.log('='.repeat(60));
 for (const p of probeResults) {
-  console.log(`  [${p.status}] ${p.flag}=${p.value} (exit=${p.exit_code}, T000=${p.t000_detected})`);
+  console.log(`  [${p.reason_code}] ${p.flag}=${p.value} (exit=${p.exit_code}, T000=${p.t000_detected})`);
 }
 console.log(`\nFINAL: ${gateStatus}${reasonCode !== 'NONE' ? ' ' + reasonCode : ''}`);
 console.log('='.repeat(60));

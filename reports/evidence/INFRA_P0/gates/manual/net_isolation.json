@@ -1,0 +1,60 @@
+{
+  "checks": [
+    {
+      "description": "ENABLE_NET is unset or 0 (network opt-in inactive)",
+      "env_value": "(unset)",
+      "env_var": "ENABLE_NET",
+      "id": "C01_ENABLE_NET_OFF",
+      "ok": true,
+      "reason": "ENABLE_NET not active — offline mode enforced"
+    },
+    {
+      "description": "I_UNDERSTAND_LIVE_RISK is unset (no live trading acknowledgement)",
+      "env_value": "(unset)",
+      "env_var": "I_UNDERSTAND_LIVE_RISK",
+      "id": "C02_LIVE_RISK_FLAG_OFF",
+      "ok": true,
+      "reason": "Live risk flag not active — not in live trading mode"
+    },
+    {
+      "description": "No live exchange API keys set (API_KEY, API_SECRET, BINANCE_KEY, etc.)",
+      "env_value": "(all unset)",
+      "env_var": "API_KEY, API_SECRET, BINANCE_KEY, BINANCE_SECRET, EXCHANGE_API_KEY",
+      "id": "C03_NO_LIVE_API_KEYS",
+      "ok": true,
+      "reason": "No live exchange API credentials found — cannot connect to live endpoints"
+    },
+    {
+      "description": "node_modules directory present (offline install completed, no network needed)",
+      "env_value": "N/A",
+      "env_var": "N/A",
+      "id": "C04_NODE_MODULES_PRESENT",
+      "ok": true,
+      "reason": "node_modules present — npm ci completed from cache/local state, no network required"
+    },
+    {
+      "description": "package-lock.json present (deterministic dependency spec)",
+      "env_value": "N/A",
+      "env_var": "N/A",
+      "id": "C05_LOCK_FILE_PRESENT",
+      "ok": true,
+      "reason": "package-lock.json found — deterministic install spec locked"
+    },
+    {
+      "description": "VERIFY_MODE is GIT or BUNDLE (authority from commit or bundle, not network)",
+      "env_value": "(unset, defaults to GIT)",
+      "env_var": "VERIFY_MODE",
+      "id": "C06_VERIFY_MODE_OFFLINE",
+      "ok": true,
+      "reason": "VERIFY_MODE=GIT — offline authority mode active"
+    }
+  ],
+  "checks_failed": 0,
+  "checks_total": 6,
+  "message": "NET01 PASS — Network isolation proven. 6/6 checks passed. No network required for PASS.",
+  "next_action": "Network isolation proven. Continue with infra:p0 pipeline.",
+  "reason_code": "NONE",
+  "run_id": "74a96076b41f",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
