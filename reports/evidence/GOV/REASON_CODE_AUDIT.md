@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 71bc743467cc
+RUN_ID: 3cb7828b3f1d
 NEXT_ACTION: No reason code violations. Proceed with gov:integrity.
 
 ## Audit Policy
@@ -16,9 +16,7 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 
 | Path | Reason Code | Status | Violation |
 |------|-------------|--------|-----------|
-| `reports/evidence/INFRA_P0/gates/manual/node_truth_gate.json` | NT02 | FAIL | UNKNOWN_CODE: reason_code="NT02" not in SSOT list |
-| `reports/evidence/GOV/gates/manual/edge_unlock.json` | BLOCKED | BLOCKED | UNKNOWN_CODE: reason_code="BLOCKED" not in SSOT list |
-| `reports/evidence/GOV/gates/manual/gov_integrity.json` | BLOCKED | BLOCKED | UNKNOWN_CODE: reason_code="BLOCKED" not in SSOT list |
+| (none) | — | — | CLEAN |
 
 ## Scanned Files (first 30 of 34)
 
@@ -29,11 +27,11 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 | `fixture_guard_gate.json` | NONE | PASS | OK |
 | `format_policy_gate.json` | NONE | PASS | OK |
 | `goldens_apply_gate.json` | NONE | PASS | OK |
-| `infra_p0_closeout.json` | NONE | FAIL | OK |
-| `infra_p0_commands.json` | NONE | FAIL | OK |
+| `infra_p0_closeout.json` | NONE | PASS | OK |
+| `infra_p0_commands.json` | NONE | PASS | OK |
 | `infra_p0_final.json` | NONE | PASS | OK |
 | `net_isolation.json` | NONE | PASS | OK |
-| `node_truth_gate.json` | NT02 | FAIL | VIOLATION |
+| `node_truth_gate.json` | NONE | PASS | OK |
 | `verify_mode_gate.json` | NONE | PASS | OK |
 | `calm_p0_final.json` | NONE | PASS | OK |
 | `calm_p0_x2.json` | NONE | PASS | OK |
@@ -52,7 +50,7 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 | `sli_baseline.json` | NONE | PASS | OK |
 | `op01_scripts_check.json` | NONE | PASS | OK |
 | `zero_war_probe.json` | NONE | PASS | OK |
-| `edge_unlock.json` | BLOCKED | BLOCKED | VIOLATION |
+| `edge_unlock.json` | NONE | PASS | OK |
 | `gov01_evidence_integrity.json` | NONE | PASS | OK |
 
 ## Summary
@@ -61,7 +59,7 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 |--------|-------|
 | Files scanned | 34 |
 | Hard violations | 0 |
-| Unknown code warnings | 3 |
+| Unknown code warnings | 0 |
 | D003 violations | 0 |
 | NEEDS_DATA abuse | 0 |
 

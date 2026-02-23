@@ -1,6 +1,6 @@
 {
-  "all_pass": false,
-  "next_action": "nvm use 22.22.0",
+  "all_pass": true,
+  "next_action": "npm run -s gov:integrity",
   "results": [
     {
       "exit_code": 0,
@@ -12,19 +12,19 @@
       "status": "PASS"
     },
     {
-      "exit_code": 1,
+      "exit_code": 0,
       "gate": "NODE_TRUTH",
       "json": "reports/evidence/INFRA_P0/gates/manual/node_truth_gate.json",
-      "message": "Node mismatch: running v20.19.6 (family 20) vs NODE_TRUTH.md allowed_family=22. Align the running Node version or update NODE_TRUTH.md via APPLY protocol.",
-      "reason_code": "NT02",
+      "message": "Node v22.22.0 matches allowed_family=22. Engines field: \">=22 <25\". Pinned minor: 22.22.0.",
+      "reason_code": "NONE",
       "script": "scripts/verify/node_truth_gate.mjs",
-      "status": "FAIL"
+      "status": "PASS"
     },
     {
       "exit_code": 0,
       "gate": "VERIFY_MODE",
       "json": "reports/evidence/INFRA_P0/gates/manual/verify_mode_gate.json",
-      "message": "VERIFY_MODE=GIT. RUN_ID resolved from git: 71bc743467cc. .git directory present.",
+      "message": "VERIFY_MODE=GIT. RUN_ID resolved from git: 3cb7828b3f1d. .git directory present.",
       "reason_code": "NONE",
       "script": "scripts/verify/verify_mode_gate.mjs",
       "status": "PASS"
@@ -75,7 +75,7 @@
       "status": "PASS"
     }
   ],
-  "run_id": "71bc743467cc",
+  "run_id": "3cb7828b3f1d",
   "schema_version": "1.0.0",
-  "status": "FAIL"
+  "status": "PASS"
 }

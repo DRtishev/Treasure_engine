@@ -1,0 +1,11 @@
+{
+  "ingest_status": "NEEDS_DATA",
+  "message": "Ingest status is NEEDS_DATA; expectancy is fail-closed.",
+  "min_n": 200,
+  "next_action": "npm run -s edge:profit:00:ingest -- --generate-sample",
+  "reason_code": "NDA02",
+  "run_id": "0786d6e21b8d",
+  "schema_version": "1.0.0",
+  "status": "NEEDS_DATA",
+  "trades_n": 0
+}

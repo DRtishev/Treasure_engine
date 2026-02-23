@@ -624,7 +624,15 @@
     "p0:all": "TREASURE_OMIT_OPTIONAL_PROOF=1 ENABLE_SQLITE_PERSISTENCE=0 npm run edge:calm:p0 && TREASURE_OMIT_OPTIONAL_PROOF=1 ENABLE_SQLITE_PERSISTENCE=0 npm run infra:p0",
     "p0:full": "npm run p0:all && npm run edge:micro:live:readiness && npm run verify:dep02:failclosed",
     "verify:op01": "node scripts/gov/op01_scripts_check.mjs",
-    "infra:p0:closeout": "node scripts/verify/infra_p0_closeout.mjs --render-only"
+    "infra:p0:closeout": "node scripts/verify/infra_p0_closeout.mjs --render-only",
+    "edge:profit:00": "node scripts/edge/edge_lab/edge_profit_00_closeout.mjs",
+    "edge:profit:00:ingest": "node scripts/edge/edge_lab/edge_paper_evidence_ingest.mjs",
+    "edge:profit:00:expectancy": "node scripts/edge/edge_lab/edge_expectancy_court.mjs",
+    "edge:profit:00:registry": "node scripts/edge/edge_lab/edge_hypothesis_registry_court.mjs",
+    "edge:profit:00:exec": "node scripts/edge/edge_lab/edge_execution_reality_court.mjs",
+    "edge:profit:00:overfit": "node scripts/edge/edge_lab/edge_overfit_court_mvp.mjs",
+    "edge:profit:00:sample": "node scripts/edge/edge_lab/paper_telemetry_sample_gen.mjs",
+    "edge:profit:00:x2": "node scripts/edge/edge_lab/edge_profit_00_x2.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

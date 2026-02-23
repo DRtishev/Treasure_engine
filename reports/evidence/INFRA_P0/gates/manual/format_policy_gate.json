@@ -103,7 +103,7 @@
   "next_action": "Migrate 11 legacy EDGE_LAB gate JSON files to schema_version in a follow-up PR.",
   "policy_present": true,
   "reason_code": "NONE",
-  "run_id": "71bc743467cc",
+  "run_id": "3cb7828b3f1d",
   "schema_version": "1.0.0",
   "status": "PASS",
   "strict_json_checked": 7,

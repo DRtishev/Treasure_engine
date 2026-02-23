@@ -1,24 +1,24 @@
 # NODE_TRUTH_GATE.md
 
-STATUS: FAIL
-REASON_CODE: NT02
-RUN_ID: 71bc743467cc
-NEXT_ACTION: Install Node 22.x to match NODE_TRUTH.md, or update NODE_TRUTH.md via PROPOSE→APPLY→RECEIPT protocol.
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: 3cb7828b3f1d
+NEXT_ACTION: No action required. Node truth is aligned.
 
 ## Gate Results
 
 | Field | Value |
 |-------|-------|
-| status | FAIL |
-| reason_code | NT02 |
-| running_node | v20.19.6 |
-| running_family | 20 |
+| status | PASS |
+| reason_code | NONE |
+| running_node | v22.22.0 |
+| running_family | 22 |
 | allowed_family | 22 |
 | node_truth_found | true |
 
 ## Message
 
-Node mismatch: running v20.19.6 (family 20) vs NODE_TRUTH.md allowed_family=22. Align the running Node version or update NODE_TRUTH.md via APPLY protocol.
+Node v22.22.0 matches allowed_family=22. Engines field: ">=22 <25". Pinned minor: 22.22.0.
 
 ## Evidence Paths
 
