@@ -1,55 +1,30 @@
 # EDGE_UNLOCK.md — EDGE/PROFIT Unlock Decision
 
 STATUS: BLOCKED
+REASON_CODE: BLOCKED
 EDGE_UNLOCK: false
-RUN_ID: f615eb934eb0
-NEXT_ACTION: Fix blockers: eligible_for_micro_live=false (DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.), eligible_for_execution=false — then rerun gov:integrity.
-
-## Unlock Policy
-
-EDGE/PROFIT unlock requires BOTH:
-- P0 SYSTEM PASS: INFRA_P0 PASS + CALM_P0 PASS + eligibility flags true (no DEP/FG01/ZW01 blocks)
-- P1 SYSTEM PASS: Merkle root anchored + GOV01 integrity PASS (no manual edits)
+RUN_ID: 71bc743467cc
+NEXT_ACTION: npm run -s p0:all
 
 ## Gate Matrix
 
-| Gate | Status | eligible_for_micro_live | Blocker |
-|------|--------|------------------------|---------|
-| INFRA_P0 | PASS | false | YES |
-| CALM_P0 | PASS | - | YES |
-| MERKLE_ROOT | PASS | - | YES |
-| GOV01_INTEGRITY | PASS | - | YES |
+| Gate | Status | Blocker |
+|------|--------|---------|
+| INFRA_P0 | FAIL | YES |
+| CALM_P0 | PASS | YES |
+| CALM_P0_X2 | PASS | YES |
+| OP01_SCRIPTS_CHECK | PASS | YES |
+| MERKLE_ROOT | PASS | YES |
+| GOV01_INTEGRITY | PASS | YES |
+| REASON_CODE_AUDIT | PASS | YES |
 
-## P0 System Pass
+## System Pass
 
-P0_SYSTEM_PASS: false
-- INFRA_P0 status: PASS
-- CALM_P0 status: PASS
-- eligible_for_micro_live: false
-- eligible_for_execution: false
-
-## P1 System Pass
-
-P1_SYSTEM_PASS: true
-- MERKLE_ROOT status: PASS
-- GOV01_INTEGRITY status: PASS
+- P0_SYSTEM_PASS: false
+- P1_SYSTEM_PASS: true
 
 ## Blocking Reasons
 
-- eligible_for_micro_live=false (DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.)
+- INFRA_P0 status=FAIL
+- eligible_for_micro_live=false (overallStatus=FAIL (eligibility requires overallStatus === PASS))
 - eligible_for_execution=false
-
-## Non-Goals
-
-- This unlock does NOT enable live trading.
-- ZW00 kill switch remains active in all modes.
-- ELIGIBLE_FOR_MICRO_LIVE=true only when DEP/FG01/ZW01 all clear.
-
-## Evidence Paths
-
-- reports/evidence/GOV/EDGE_UNLOCK.md
-- reports/evidence/GOV/gates/manual/edge_unlock.json
-- reports/evidence/GOV/MERKLE_ROOT.md
-- reports/evidence/GOV/GOV01_EVIDENCE_INTEGRITY.md
-- reports/evidence/INFRA_P0/INFRA_P0_CLOSEOUT.md
-- reports/evidence/EDGE_LAB/P0/CALM_MODE_P0_CLOSEOUT.md

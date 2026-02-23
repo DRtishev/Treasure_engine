@@ -11,13 +11,25 @@
  * - WAL mode for better concurrency
  */
 
-import Database from 'better-sqlite3';
+import { createRequire } from 'module';
 import { readFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
+
+
+const require = createRequire(import.meta.url);
+
+function loadBetterSqlite3() {
+  try {
+    return require('better-sqlite3');
+  } catch (err) {
+    const msg = err && err.message ? err.message : String(err);
+    throw new Error(`DEP02 better-sqlite3 unavailable. Install optional dependency and set ENABLE_SQLITE_PERSISTENCE=1 when persistence is required. Root cause: ${msg}`);
+  }
+}
 
 export class DatabaseManager {
   constructor(dbPath = './data/treasure_engine.db') {
@@ -33,6 +45,11 @@ export class DatabaseManager {
       throw new Error('Database already initialized');
     }
 
+    if (process.env.ENABLE_SQLITE_PERSISTENCE !== '1') {
+      throw new Error('SQLite persistence disabled by default. Set ENABLE_SQLITE_PERSISTENCE=1 to initialize DatabaseManager.');
+    }
+
+    const Database = loadBetterSqlite3();
     this.db = new Database(this.dbPath);
     
     // Enable WAL mode for better concurrency

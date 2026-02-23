@@ -34,30 +34,42 @@ fs.mkdirSync(MANUAL_DIR, { recursive: true });
 // ---------------------------------------------------------------------------
 function extractChecksumsFingerprint() {
   if (!fs.existsSync(CHECKSUMS_PATH)) {
-    return { fingerprint: 'MISSING', scope_manifest_sha: 'MISSING', norm_rows_count: 0, norm_rows: [] };
+    return { fingerprint: 'MISSING', scope_manifest_sha: 'MISSING', norm_rows_count: 0, norm_rows: [], rowPairs: [] };
   }
 
   const content = fs.readFileSync(CHECKSUMS_PATH, 'utf8');
-
-  // Extract scope_manifest_sha
   const smsMatch = content.match(/scope_manifest_sha\s*\|\s*`([0-9a-f]{64})`/);
   const scope_manifest_sha = smsMatch ? smsMatch[1] : 'NOT_FOUND';
 
-  // Extract all sha256_norm values from the hash ledger rows
-  // Format: | `path` | `sha256_raw` | `sha256_norm` |
-  const normRows = [];
-  const rowRe = /\|\s*`[^`]+`\s*\|\s*`([0-9a-f]{64})`\s*\|\s*`([0-9a-f]{64})`\s*\|/g;
+  const rowPairs = [];
+  const rowRe = /\|\s*`([^`]+)`\s*\|\s*`([0-9a-f]{64})`\s*\|\s*`([0-9a-f]{64})`\s*\|/g;
   let m;
   while ((m = rowRe.exec(content)) !== null) {
-    normRows.push(m[2]); // sha256_norm column
+    rowPairs.push({ path: m[1], sha256_norm: m[3] });
   }
 
-  // Build deterministic fingerprint from SCOPE_MANIFEST_SHA + sorted sha256_norm rows set
-  const sortedRows = [...normRows].sort();
-  const fingerprintInput = [scope_manifest_sha, ...sortedRows].join('\n');
+  const sortedPairs = [...rowPairs].sort((a, b) => a.path.localeCompare(b.path, 'en'));
+  const sortedRows = sortedPairs.map((x) => x.sha256_norm);
+  const fingerprintInput = [scope_manifest_sha, ...sortedPairs.map((x) => `${x.path}|${x.sha256_norm}`)].join('\n');
   const fingerprint = sha256Norm(fingerprintInput);
 
-  return { fingerprint, scope_manifest_sha, norm_rows_count: normRows.length, norm_rows: sortedRows };
+  return { fingerprint, scope_manifest_sha, norm_rows_count: sortedRows.length, norm_rows: sortedRows, rowPairs: sortedPairs };
+}
+
+function removeIfExists(relPath) {
+  const abs = path.join(ROOT, relPath);
+  if (fs.existsSync(abs)) fs.rmSync(abs, { force: true });
+}
+
+function prepareRunCleanRoom() {
+  const derived = [
+    'reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md',
+    'reports/evidence/EDGE_LAB/P0/CALM_MODE_P0_CLOSEOUT.md',
+    'reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json',
+    'reports/evidence/EDGE_LAB/gates/manual/evidence_hashes.json',
+    'reports/evidence/EDGE_LAB/gates/manual/receipts_chain.json',
+  ];
+  for (const rel of derived) removeIfExists(rel);
 }
 
 // ---------------------------------------------------------------------------
@@ -69,6 +81,7 @@ function runCalmP0(runNum) {
   console.log(`RUN_ID: ${RUN_ID}`);
   console.log('='.repeat(60));
 
+  prepareRunCleanRoom();
   const scriptPath = path.join(ROOT, 'scripts', 'edge', 'edge_lab', 'edge_calm_mode_p0.mjs');
   let exitCode = 0;
   let output = '';
@@ -115,12 +128,13 @@ const fingerprintsMatch = run1.fingerprint === run2.fingerprint;
 const status = fingerprintsMatch ? 'PASS' : 'FAIL';
 const reasonCode = fingerprintsMatch ? 'NONE' : 'ND01';
 
-// Drift analysis: find sha256_norm rows that differ
-const run1Set = new Set(run1.norm_rows);
-const run2Set = new Set(run2.norm_rows);
-const onlyInRun1 = run1.norm_rows.filter((r) => !run2Set.has(r));
-const onlyInRun2 = run2.norm_rows.filter((r) => !run1Set.has(r));
-const driftCount = onlyInRun1.length + onlyInRun2.length;
+// Drift analysis by relpath + sha256_norm pair
+const run1Map = new Map(run1.rowPairs.map((x) => [x.path, x.sha256_norm]));
+const run2Map = new Map(run2.rowPairs.map((x) => [x.path, x.sha256_norm]));
+const driftPaths = Array.from(new Set([...run1Map.keys(), ...run2Map.keys()]))
+  .sort((a, b) => a.localeCompare(b, 'en'))
+  .filter((p) => run1Map.get(p) !== run2Map.get(p));
+const driftCount = driftPaths.length;
 
 const message = fingerprintsMatch
   ? `CALM P0 is deterministic across two consecutive runs. SCOPE_MANIFEST_SHA stable. ${run1.norm_rows_count} sha256_norm rows match exactly.`
@@ -137,7 +151,7 @@ const run1RowsSample = run1.norm_rows.slice(0, 5).map((r) => `  - ${r.slice(0, 2
 const run2RowsSample = run2.norm_rows.slice(0, 5).map((r) => `  - ${r.slice(0, 24)}…`).join('\n');
 
 const driftSection = driftCount > 0
-  ? `## Drift Details\n\nRows only in run1: ${onlyInRun1.length}\nRows only in run2: ${onlyInRun2.length}\n`
+  ? `## Drift Details\n\nDrifted paths: ${driftPaths.length}\n${driftPaths.map((p) => `- ${p}`).join('\n')}\n`
   : '## Drift Details\n\nNO DRIFT — all sha256_norm rows identical across both runs.\n';
 
 const antiFlakeMd = `# CALM_P0_ANTI_FLAKE_X2.md — Calm P0 Determinism Verification
@@ -197,6 +211,7 @@ writeMd(path.join(P0_DIR, 'CALM_P0_ANTI_FLAKE_X2.md'), antiFlakeMd);
 const x2Gate = {
   schema_version: '1.0.0',
   drift_count: driftCount,
+  drift_paths: driftPaths,
   fingerprint_run1: run1.fingerprint,
   fingerprint_run2: run2.fingerprint,
   fingerprints_match: fingerprintsMatch,

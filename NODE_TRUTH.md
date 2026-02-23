@@ -26,8 +26,8 @@ Node 22.x satisfies this constraint and is the pinned production family.
 
 | File | Value | Notes |
 |------|-------|-------|
-| .nvmrc | 24 | Upgrade target — not yet promoted to production |
-| .node-version | 24 | Upgrade target — not yet promoted to production |
+| .nvmrc | 22.22.0 | Production-pinned hint file |
+| .node-version | 22.22.0 | Production-pinned hint file |
 | package.json engines | >=22 <25 | Active constraint |
 | NODE_TRUTH.md (this file) | 22 | **Authoritative: family 22 is production-pinned** |
 
@@ -40,8 +40,8 @@ Node 22.x satisfies this constraint and is the pinned production family.
 
 ## Migration Note
 
-When promoting Node 24 to production:
-1. Update `allowed_family: 24` and `hard_pinned_minor` in this file
+When promoting a new Node family:
+1. Update `allowed_family` and `hard_pinned_minor` in this file
 2. Run PROPOSE→APPLY→RECEIPT protocol
 3. Update .nvmrc and .node-version to match
 4. Run `node_truth_gate.mjs` to verify

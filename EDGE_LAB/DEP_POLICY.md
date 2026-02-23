@@ -1,6 +1,6 @@
 # DEP_POLICY.md — Dependency Governance SSOT
 
-VERSION: 1.0.0
+VERSION: 1.1.0
 SCOPE: INFRA_P0 + EDGE_LAB
 AUTHORITY: Principal Engineer + Release Gatekeeper
 
@@ -64,15 +64,16 @@ but eligibility flags provide the downstream signal.
 
 ## Context: DEP02 Current State
 
-As of INFRA P0 Hardening (v1.4.1 firmware), `better-sqlite3` triggers DEP02:
+As of INFRA P0 Hardening (v1.4.2 firmware), `better-sqlite3` is treated as optional-native with fail-closed constraints:
 
-- `better-sqlite3` requires node-gyp native compilation
-- The `deps_offline_install_contract` gate correctly records `FAIL DEP02`
-- **Mitigation paths:**
-  1. Use prebuilt binary: `npm install --ignore-scripts` + provide `.node` binary
-  2. Provision capsule with pre-compiled `better-sqlite3.node` for target platform
-  3. Replace `better-sqlite3` with a pure-JS alternative (e.g., `sql.js`)
-- Until mitigation is applied and proven, readiness MUST be `BLOCKED DEP02`
+- `better-sqlite3` requires node-gyp native compilation when installed
+- Default PASS contract for offline infra is now: `npm ci --omit=optional` and `ENABLE_SQLITE_PERSISTENCE=0`
+- If optional native module is present in `node_modules` OR `ENABLE_SQLITE_PERSISTENCE=1`, gate MUST emit `FAIL DEP02`
+- **Mitigation paths (when sqlite persistence is required):**
+  1. Provide approved prebuilt binary capsule for target platform
+  2. Provision a deterministic build capsule with toolchain attestation
+  3. Replace native dependency with a pure-JS/WASM alternative
+- Until explicit mitigation proof exists, readiness/unlock remains fail-closed
 
 ---
 

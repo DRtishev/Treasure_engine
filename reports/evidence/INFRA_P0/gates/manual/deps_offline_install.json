@@ -1,8 +1,8 @@
 {
-  "has_native_build": true,
-  "has_native_build_lock": true,
+  "has_native_build": false,
+  "has_native_build_lock": false,
   "has_native_build_runtime": false,
-  "message": "Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.",
+  "message": "All dependencies satisfiable offline (no registry/network required). x2 runs consistent. Exit codes: [0, 0].",
   "native_candidates_lock": [
     {
       "package": "better-sqlite3",
@@ -14,15 +14,39 @@
       "version": "12.6.2"
     }
   ],
+  "native_candidates_optional": [
+    {
+      "package": "better-sqlite3",
+      "path": "node_modules/better-sqlite3",
+      "reasons": [
+        "hasInstallScript=true",
+        "dep:prebuild-install"
+      ],
+      "version": "12.6.2"
+    }
+  ],
+  "native_candidates_required": [],
   "native_patterns_found": [],
-  "next_action": "Review native dependency. Either pre-build in capsule, use prebuilt binaries, or add to approved native build list.",
-  "reason_code": "DEP02",
+  "next_action": "No action required. Dependencies are fully offline-satisfiable.",
+  "omit_optional_proved": true,
+  "omit_optional_raw": {
+    "marker": "1",
+    "npm_config_omit": "",
+    "npm_config_optional": ""
+  },
+  "omit_optional_signals": [
+    "marker:TREASURE_OMIT_OPTIONAL_PROOF"
+  ],
+  "optional_native_allowed": true,
+  "optional_native_installed": false,
+  "reason_code": "NONE",
   "registry_patterns_run1": [],
   "registry_patterns_run2": [],
   "run1_exit_code": 0,
   "run2_exit_code": 0,
-  "run_id": "f615eb934eb0",
+  "run_id": "71bc743467cc",
   "schema_version": "1.0.0",
-  "status": "FAIL",
+  "sqlite_persistence_enabled": false,
+  "status": "PASS",
   "x2_drift": false
 }

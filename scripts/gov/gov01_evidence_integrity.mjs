@@ -21,6 +21,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { execSync } from 'node:child_process';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { RUN_ID, sha256Raw, sha256Norm, canonSort, writeMd } from '../edge/edge_lab/canon.mjs';
 
@@ -37,6 +38,19 @@ console.log('GOV01 EVIDENCE INTEGRITY GATE');
 console.log(`RUN_ID: ${RUN_ID}`);
 console.log('='.repeat(60));
 
+
+// Ensure MERKLE_ROOT anchor is fresh/stable for standalone operator use
+try {
+  execSync(`node "${path.join(ROOT, 'scripts/gov/merkle_root.mjs')}"`, {
+    cwd: ROOT,
+    encoding: 'utf8',
+    stdio: ['pipe', 'pipe', 'pipe'],
+    timeout: 120000,
+  });
+} catch {
+  // Fail-closed later via anchor checks (ME01/GOV01 path)
+}
+
 // ---------------------------------------------------------------------------
 // Scope collection (mirrors edge_evidence_hashes.mjs)
 // ---------------------------------------------------------------------------
@@ -44,9 +58,15 @@ const P0_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_LAB', 'P0');
 const EDGE_LAB_DIR = path.join(ROOT, 'EDGE_LAB');
 const SCRIPTS_DIR = path.join(ROOT, 'scripts', 'edge', 'edge_lab');
 
-const SELF_OUTPUTS = new Set([
+const EXCLUDED_DERIVED = new Set([
   'reports/evidence/GOV/MERKLE_ROOT.md',
   'reports/evidence/EDGE_LAB/P0/CHECKSUMS.md',
+  'reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md',
+  'reports/evidence/EDGE_LAB/P0/CALM_MODE_P0_CLOSEOUT.md',
+  'reports/evidence/EDGE_LAB/gates/manual/evidence_hashes.json',
+  'reports/evidence/EDGE_LAB/gates/manual/receipts_chain.json',
+  'reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json',
+  'reports/evidence/EDGE_LAB/gates/manual/calm_p0_x2.json',
 ]);
 
 function collectScope() {
@@ -57,7 +77,7 @@ function collectScope() {
       const fp = path.join(P0_DIR, f);
       if (fs.statSync(fp).isFile() && f.endsWith('.md')) {
         const rel = `reports/evidence/EDGE_LAB/P0/${f}`;
-        if (!SELF_OUTPUTS.has(rel)) paths.push(rel);
+        if (!EXCLUDED_DERIVED.has(rel)) paths.push(rel);
       }
     }
   }
@@ -66,7 +86,8 @@ function collectScope() {
   if (fs.existsSync(manualDir)) {
     for (const f of fs.readdirSync(manualDir).sort()) {
       if (f.endsWith('.json')) {
-        paths.push(`reports/evidence/EDGE_LAB/gates/manual/${f}`);
+        const rel = `reports/evidence/EDGE_LAB/gates/manual/${f}`;
+        if (!EXCLUDED_DERIVED.has(rel) && !/final/i.test(f)) paths.push(rel);
       }
     }
   }

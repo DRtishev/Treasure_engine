@@ -50,6 +50,7 @@ const VALID_REASON_CODES = new Set([
   'ND01',       // x2 fingerprint mismatch
   'NDA01',      // node_modules missing
   'NDA02',      // deps not installed
+  'NDA99',      // NEEDS_DATA misuse
   'LEDGER_CYCLE', // Self-hash cycle detected
   // Common legacy codes that may appear in older gates
   'PARTIAL',    // Partial result (e.g. some files missing but not critical)
@@ -66,6 +67,8 @@ const D003_GATE_ALLOWLIST = new Set(['CANON_SELFTEST', 'DATA_COURT', 'FORMAT_POL
 
 // Status values where reason_code must be 'NONE' or blank
 const PASS_STATUSES = new Set(['PASS', 'PARTIAL']);
+const NDA01_SIG = /(Cannot find module|MODULE_NOT_FOUND|node_modules.*missing)/i;
+const NDA02_SIG = /(package-lock\.json.*ENOENT|npm\s+ci.*not\s+run|lockfile\s+missing)/i;
 
 console.log('');
 console.log('='.repeat(60));
@@ -124,6 +127,18 @@ for (const dir of SCAN_DIRS) {
     if (status === 'NEEDS_DATA' && reasonCode !== 'NDA01' && reasonCode !== 'NDA02' && reasonCode !== 'DC90' && reasonCode !== 'NONE') {
       entry.violation = `NEEDS_DATA_ABUSE: status=NEEDS_DATA but reason_code="${reasonCode}" not in NDA01/NDA02/DC90 whitelist`;
       violations.push(entry);
+    }
+    // Rule 3b: NDA01/NDA02 must match whitelist signatures; else NDA99 misuse
+    if (status === 'NEEDS_DATA' && (reasonCode === 'NDA01' || reasonCode === 'NDA02')) {
+      const sigSource = `${data.message || ''}
+${data.stderr || ''}
+${data.next_action || ''}`;
+      const ok = reasonCode === 'NDA01' ? NDA01_SIG.test(sigSource) : NDA02_SIG.test(sigSource);
+      if (!ok) {
+        entry.violation = `NDA99_MISUSE: ${reasonCode} signature mismatch`;
+        entry.reason_code = 'NDA99';
+        violations.push(entry);
+      }
     }
 
     // Rule 4: PASS status should not have blocking reason codes

@@ -23,6 +23,23 @@ const MANUAL_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_LAB', 'gates', '
 fs.mkdirSync(P0_DIR, { recursive: true });
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
+
+function removeIfExists(relPath) {
+  const abs = path.join(ROOT, relPath);
+  if (fs.existsSync(abs)) fs.rmSync(abs, { force: true });
+}
+
+function prepareCleanRoomDerivedArtifacts() {
+  const derived = [
+    'reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md',
+    'reports/evidence/EDGE_LAB/P0/CALM_MODE_P0_CLOSEOUT.md',
+    'reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json',
+    'reports/evidence/EDGE_LAB/gates/manual/evidence_hashes.json',
+    'reports/evidence/EDGE_LAB/gates/manual/receipts_chain.json',
+  ];
+  for (const rel of derived) removeIfExists(rel);
+}
+
 // ---------------------------------------------------------------------------
 // R3: Trading must be OFF in P0 — check environment
 // ---------------------------------------------------------------------------
@@ -115,6 +132,8 @@ console.log('='.repeat(60));
 console.log('CALM MODE P0 — Hardening Pipeline');
 console.log(`RUN_ID: ${RUN_ID}`);
 console.log('='.repeat(60));
+
+prepareCleanRoomDerivedArtifacts();
 
 const stepResults = [];
 let pipelineStatus = 'PASS';

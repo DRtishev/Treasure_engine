@@ -1,23 +1,10 @@
 /**
- * gov_integrity.mjs — P1 Governance Integrity Orchestrator
+ * gov_integrity.mjs — Governance Integrity Orchestrator
  *
- * Implements SHAMAN_OS_FIRMWARE v2.0.1 P1 RELIABILITY PACK:
- *   1. P1_MERKLE_ROOT: Compute and anchor Merkle root
- *   2. P1_GOV01_ENFORCEMENT: Verify anchored values match computed ones
- *   3. EDGE_UNLOCK: Evaluate P0+P1 SYSTEM PASS → emit unlock decision
- *
- * Execution order (C5 in EXECUTION_ORDER):
- *   Step 1: npm run gov:merkle (anchor Merkle root)
- *   Step 2: run GOV01 integrity check (compare anchored vs computed)
- *   Step 3: read P0 closeout + GOV01 results → evaluate EDGE_UNLOCK
- *
- * Writes:
- *   reports/evidence/GOV/EDGE_UNLOCK.md
- *   reports/evidence/GOV/gates/manual/edge_unlock.json
- *
- * Exit codes:
- *   0 — P0+P1 SYSTEM PASS, EDGE_UNLOCK=true
- *   1 — Blocked or failed; EDGE_UNLOCK=false
+ * Strict fail-closed semantics:
+ * - EDGE unlock requires strict PASS-only gates
+ * - NEEDS_DATA is never treated as PASS for unlock
+ * - Missing prerequisites emit ME01 (not RD01)
  */
 
 import fs from 'node:fs';
@@ -33,9 +20,6 @@ const MANUAL_DIR = path.join(GOV_DIR, 'gates', 'manual');
 fs.mkdirSync(GOV_DIR, { recursive: true });
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
-// ---------------------------------------------------------------------------
-// Helper: run a script and capture result
-// ---------------------------------------------------------------------------
 function runScript(scriptPath, label) {
   console.log(`\n[GOV] Running: ${label}`);
   const abs = path.join(ROOT, scriptPath);
@@ -45,11 +29,12 @@ function runScript(scriptPath, label) {
   }
   try {
     const output = execSync(`node "${abs}"`, {
-      cwd: ROOT, encoding: 'utf8',
+      cwd: ROOT,
+      encoding: 'utf8',
       stdio: ['pipe', 'pipe', 'pipe'],
       timeout: 120000,
     });
-    console.log(output.trim());
+    if (output.trim()) console.log(output.trim());
     return { label, exit_code: 0, status: 'PASS' };
   } catch (err) {
     const stdout = err.stdout?.toString().trim() ?? '';
@@ -60,228 +45,151 @@ function runScript(scriptPath, label) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Helper: read gate JSON status
-// ---------------------------------------------------------------------------
 function readGateJson(relPath) {
   const abs = path.join(ROOT, relPath);
-  if (!fs.existsSync(abs)) return { status: 'MISSING', reason_code: 'RD01', message: `File not found: ${relPath}` };
+  if (!fs.existsSync(abs)) {
+    return {
+      status: 'BLOCKED',
+      reason_code: 'ME01',
+      message: `Missing required evidence: ${relPath}`,
+      __missing: true,
+      __path: relPath,
+    };
+  }
   try {
     const d = JSON.parse(fs.readFileSync(abs, 'utf8'));
-    return { status: d.status || 'UNKNOWN', reason_code: d.reason_code || '-', message: d.message || '', ...d };
-  } catch (_) {
-    return { status: 'PARSE_ERROR', reason_code: 'FP01', message: `Parse error: ${relPath}` };
+    return { status: d.status || 'UNKNOWN', reason_code: d.reason_code || 'NONE', ...d };
+  } catch {
+    return { status: 'FAIL', reason_code: 'ME01', message: `Unreadable evidence JSON: ${relPath}`, __path: relPath };
   }
 }
 
-// ---------------------------------------------------------------------------
-// Main: governance pipeline
-// ---------------------------------------------------------------------------
-console.log('');
-console.log('='.repeat(60));
+console.log('\n' + '='.repeat(60));
 console.log('P1 GOVERNANCE INTEGRITY ORCHESTRATOR');
 console.log(`RUN_ID: ${RUN_ID}`);
 console.log('='.repeat(60));
 
-// Preflight Step 0: OP01 scripts check (phantom command prevention)
 const op01Result = runScript('scripts/gov/op01_scripts_check.mjs', 'R_OP01_SCRIPTS_CHECK');
-if (op01Result.exit_code !== 0) {
-  console.error('\n[BLOCKED OP01] Required scripts missing — cannot proceed with gov:integrity.');
-  process.exit(1);
-}
-
-// Step 1: Anchor Merkle root
 const merkleResult = runScript('scripts/gov/merkle_root.mjs', 'P1_MERKLE_ROOT');
-
-// Step 2: GOV01 integrity check
 const gov01Result = runScript('scripts/gov/gov01_evidence_integrity.mjs', 'P1_GOV01_ENFORCEMENT');
-
-// Step 3a: Reason code audit
 const rcAuditResult = runScript('scripts/gov/reason_code_audit.mjs', 'R_REASON_CODE_AUDIT');
 
-// Step 4: Read P0 closeout
 const p0Closeout = readGateJson('reports/evidence/INFRA_P0/gates/manual/infra_p0_closeout.json');
-const p0Status = p0Closeout.status;
-const p0EligibleForMicroLive = p0Closeout.eligible_for_micro_live;
-const p0EligibleForExecution = p0Closeout.eligible_for_execution;
-
-// Step 5: Read P0 CALM gate
-const calmP0Gate = readGateJson('reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json');
-const calmP0Status = calmP0Gate.status;
-
-// Step 6: Read P1 GOV01 result
+const calmP0Final = readGateJson('reports/evidence/EDGE_LAB/gates/manual/calm_p0_final.json');
+const calmP0x2 = readGateJson('reports/evidence/EDGE_LAB/gates/manual/calm_p0_x2.json');
 const gov01Gate = readGateJson('reports/evidence/GOV/gates/manual/gov01_evidence_integrity.json');
-const gov01Status = gov01Gate.status;
-
-// Step 7: Read Merkle root result
 const merkleGate = readGateJson('reports/evidence/GOV/gates/manual/merkle_root.json');
-const merkleStatus = merkleGate.status;
-
-// Step 8: Read reason code audit result
 const rcAuditGate = readGateJson('reports/evidence/GOV/gates/manual/reason_code_audit.json');
-const rcAuditStatus = rcAuditGate.status;
+const op01Gate = readGateJson('reports/evidence/SAFETY/gates/manual/op01_scripts_check.json');
 
-// ---------------------------------------------------------------------------
-// P0 SYSTEM PASS evaluation
-// ---------------------------------------------------------------------------
-// P0 requires: infra:p0 PASS + calm:p0 PASS/NEEDS_DATA + eligibility flags
+const missingEvidence = [p0Closeout, calmP0Final, calmP0x2, gov01Gate, merkleGate, rcAuditGate, op01Gate]
+  .filter((x) => x.__missing)
+  .map((x) => x.__path);
+
 const p0SystemPass =
-  (p0Status === 'PASS' || p0Status === 'NEEDS_DATA') &&
-  (calmP0Status === 'PASS' || calmP0Status === 'NEEDS_DATA') &&
-  p0EligibleForMicroLive === true &&
-  p0EligibleForExecution === true;
+  p0Closeout.status === 'PASS' &&
+  calmP0Final.status === 'PASS' &&
+  calmP0x2.status === 'PASS' &&
+  p0Closeout.eligible_for_micro_live === true &&
+  p0Closeout.eligible_for_execution === true;
 
-// ---------------------------------------------------------------------------
-// P1 SYSTEM PASS evaluation
-// ---------------------------------------------------------------------------
-// P1 requires: Merkle root present + GOV01 PASS + reason code audit PASS
 const p1SystemPass =
-  (merkleStatus === 'PASS' || merkleStatus === 'PARTIAL') &&
-  gov01Status === 'PASS' &&
-  rcAuditStatus === 'PASS';
+  merkleGate.status === 'PASS' &&
+  gov01Gate.status === 'PASS' &&
+  rcAuditGate.status === 'PASS' &&
+  op01Gate.status === 'PASS';
 
-// ---------------------------------------------------------------------------
-// EDGE UNLOCK
-// ---------------------------------------------------------------------------
 const edgeUnlock = p0SystemPass && p1SystemPass;
-
-// Build status string
 const overallStatus = edgeUnlock ? 'PASS' : 'BLOCKED';
 
-// Identify blocking reasons
 const blockReasons = [];
-if (!p0SystemPass) {
-  if (p0Status !== 'PASS' && p0Status !== 'NEEDS_DATA') blockReasons.push(`INFRA_P0 status=${p0Status}`);
-  if (calmP0Status !== 'PASS' && calmP0Status !== 'NEEDS_DATA') blockReasons.push(`CALM_P0 status=${calmP0Status}`);
-  if (!p0EligibleForMicroLive) blockReasons.push(`eligible_for_micro_live=false (${p0Closeout.eligibility_reason || 'DEP/FG01/ZW01'})`);
-  if (!p0EligibleForExecution) blockReasons.push(`eligible_for_execution=false`);
-}
-if (!p1SystemPass) {
-  if (merkleStatus !== 'PASS' && merkleStatus !== 'PARTIAL') blockReasons.push(`MERKLE_ROOT status=${merkleStatus}`);
-  if (gov01Status !== 'PASS') blockReasons.push(`GOV01 status=${gov01Status} (${gov01Gate.reason_code || ''})`);
-  if (rcAuditStatus !== 'PASS') blockReasons.push(`REASON_CODE_AUDIT status=${rcAuditStatus}`);
-}
+if (op01Result.exit_code !== 0 || op01Gate.status !== 'PASS') blockReasons.push(`OP01 status=${op01Gate.status}`);
+if (merkleResult.exit_code !== 0 || merkleGate.status !== 'PASS') blockReasons.push(`MERKLE_ROOT status=${merkleGate.status}`);
+if (gov01Result.exit_code !== 0 || gov01Gate.status !== 'PASS') blockReasons.push(`GOV01 status=${gov01Gate.status} (${gov01Gate.reason_code || 'NONE'})`);
+if (rcAuditResult.exit_code !== 0 || rcAuditGate.status !== 'PASS') blockReasons.push(`REASON_CODE_AUDIT status=${rcAuditGate.status}`);
+if (p0Closeout.status !== 'PASS') blockReasons.push(`INFRA_P0 status=${p0Closeout.status}`);
+if (calmP0Final.status !== 'PASS') blockReasons.push(`CALM_P0 status=${calmP0Final.status}`);
+if (calmP0x2.status !== 'PASS') blockReasons.push(`CALM_P0_X2 status=${calmP0x2.status}`);
+if (!p0Closeout.eligible_for_micro_live) blockReasons.push(`eligible_for_micro_live=false (${p0Closeout.eligibility_reason || 'UNKNOWN'})`);
+if (!p0Closeout.eligible_for_execution) blockReasons.push('eligible_for_execution=false');
+if (missingEvidence.length > 0) blockReasons.unshift(`ME01 missing evidence: ${missingEvidence.join(', ')}`);
 
-const message = edgeUnlock
-  ? `EDGE UNLOCK GRANTED — P0 SYSTEM PASS and P1 SYSTEM PASS. All eligibility flags true. Evidence integrity verified.`
-  : `EDGE UNLOCK BLOCKED — ${blockReasons.join('; ')}. Fix all blockers before proceeding.`;
+let reasonCode = 'NONE';
+if (!edgeUnlock) {
+  reasonCode = missingEvidence.length > 0 ? 'ME01' : (blockReasons.some((r) => r.includes('OP01')) ? 'OP01' : 'BLOCKED');
+}
 
 const nextAction = edgeUnlock
-  ? 'EDGE_UNLOCK=true. System ready for controlled micro-live operations (subject to ZW00 enforcement).'
-  : `Fix blockers: ${blockReasons.join(', ')} — then rerun gov:integrity.`;
-
-// ---------------------------------------------------------------------------
-// Write EDGE_UNLOCK.md
-// ---------------------------------------------------------------------------
-const gateMatrix = [
-  { gate: 'INFRA_P0', status: p0Status, eligible_for_micro_live: p0EligibleForMicroLive, blocker: true },
-  { gate: 'CALM_P0', status: calmP0Status, eligible_for_micro_live: '-', blocker: true },
-  { gate: 'MERKLE_ROOT', status: merkleStatus, eligible_for_micro_live: '-', blocker: true },
-  { gate: 'GOV01_INTEGRITY', status: gov01Status, eligible_for_micro_live: '-', blocker: true },
-];
-
-const matrixTable = gateMatrix.map((g) =>
-  `| ${g.gate} | ${g.status} | ${g.eligible_for_micro_live} | ${g.blocker ? 'YES' : 'NO'} |`
-).join('\n');
+  ? 'EDGE_UNLOCK=true. Continue controlled operations with safeguards.'
+  : (missingEvidence.includes('reports/evidence/EDGE_LAB/gates/manual/calm_p0_x2.json')
+    ? 'npm run -s edge:calm:p0:x2'
+    : 'npm run -s p0:all');
 
 const unlockMd = `# EDGE_UNLOCK.md — EDGE/PROFIT Unlock Decision
 
 STATUS: ${overallStatus}
+REASON_CODE: ${reasonCode}
 EDGE_UNLOCK: ${edgeUnlock}
 RUN_ID: ${RUN_ID}
 NEXT_ACTION: ${nextAction}
 
-## Unlock Policy
-
-EDGE/PROFIT unlock requires BOTH:
-- P0 SYSTEM PASS: INFRA_P0 PASS + CALM_P0 PASS + eligibility flags true (no DEP/FG01/ZW01 blocks)
-- P1 SYSTEM PASS: Merkle root anchored + GOV01 integrity PASS (no manual edits)
-
 ## Gate Matrix
 
-| Gate | Status | eligible_for_micro_live | Blocker |
-|------|--------|------------------------|---------|
-${matrixTable}
+| Gate | Status | Blocker |
+|------|--------|---------|
+| INFRA_P0 | ${p0Closeout.status} | YES |
+| CALM_P0 | ${calmP0Final.status} | YES |
+| CALM_P0_X2 | ${calmP0x2.status} | YES |
+| OP01_SCRIPTS_CHECK | ${op01Gate.status} | YES |
+| MERKLE_ROOT | ${merkleGate.status} | YES |
+| GOV01_INTEGRITY | ${gov01Gate.status} | YES |
+| REASON_CODE_AUDIT | ${rcAuditGate.status} | YES |
 
-## P0 System Pass
+## System Pass
 
-P0_SYSTEM_PASS: ${p0SystemPass}
-- INFRA_P0 status: ${p0Status}
-- CALM_P0 status: ${calmP0Status}
-- eligible_for_micro_live: ${p0EligibleForMicroLive}
-- eligible_for_execution: ${p0EligibleForExecution}
-
-## P1 System Pass
-
-P1_SYSTEM_PASS: ${p1SystemPass}
-- MERKLE_ROOT status: ${merkleStatus}
-- GOV01_INTEGRITY status: ${gov01Status}
+- P0_SYSTEM_PASS: ${p0SystemPass}
+- P1_SYSTEM_PASS: ${p1SystemPass}
 
 ## Blocking Reasons
 
-${blockReasons.length > 0 ? blockReasons.map((r) => `- ${r}`).join('\n') : 'NONE — all gates pass'}
-
-## Non-Goals
-
-- This unlock does NOT enable live trading.
-- ZW00 kill switch remains active in all modes.
-- ELIGIBLE_FOR_MICRO_LIVE=true only when DEP/FG01/ZW01 all clear.
-
-## Evidence Paths
-
-- reports/evidence/GOV/EDGE_UNLOCK.md
-- reports/evidence/GOV/gates/manual/edge_unlock.json
-- reports/evidence/GOV/MERKLE_ROOT.md
-- reports/evidence/GOV/GOV01_EVIDENCE_INTEGRITY.md
-- reports/evidence/INFRA_P0/INFRA_P0_CLOSEOUT.md
-- reports/evidence/EDGE_LAB/P0/CALM_MODE_P0_CLOSEOUT.md
+${blockReasons.length ? blockReasons.map((r) => `- ${r}`).join('\n') : '- NONE'}
 `;
 
 writeMd(path.join(GOV_DIR, 'EDGE_UNLOCK.md'), unlockMd);
 
-// ---------------------------------------------------------------------------
-// Write edge_unlock.json
-// ---------------------------------------------------------------------------
-const unlockJson = {
+const gatePayload = {
   schema_version: '1.0.0',
-  block_reasons: blockReasons,
+  status: overallStatus,
+  reason_code: reasonCode,
+  message: edgeUnlock ? 'EDGE unlock granted (strict PASS-only).' : `EDGE unlock blocked: ${blockReasons.join('; ')}`,
+  run_id: RUN_ID,
   edge_unlock: edgeUnlock,
-  gov01_status: gov01Status,
-  infra_p0_eligible_for_execution: p0EligibleForExecution,
-  infra_p0_eligible_for_micro_live: p0EligibleForMicroLive,
-  infra_p0_status: p0Status,
-  merkle_root_status: merkleStatus,
-  message,
-  next_action: nextAction,
   p0_system_pass: p0SystemPass,
   p1_system_pass: p1SystemPass,
-  reason_code: edgeUnlock ? 'NONE' : 'BLOCKED',
-  run_id: RUN_ID,
-  status: overallStatus,
+  block_reasons: blockReasons,
+  missing_evidence: missingEvidence,
+  next_action: nextAction,
+  op01_status: op01Gate.status,
+  merkle_root_status: merkleGate.status,
+  gov01_status: gov01Gate.status,
+  reason_code_audit_status: rcAuditGate.status,
+  infra_p0_status: p0Closeout.status,
+  calm_p0_status: calmP0Final.status,
+  calm_p0_x2_status: calmP0x2.status,
+  infra_p0_eligible_for_micro_live: p0Closeout.eligible_for_micro_live,
+  infra_p0_eligible_for_execution: p0Closeout.eligible_for_execution,
 };
 
-writeJsonDeterministic(path.join(MANUAL_DIR, 'edge_unlock.json'), unlockJson);
+writeJsonDeterministic(path.join(MANUAL_DIR, 'edge_unlock.json'), gatePayload);
+writeJsonDeterministic(path.join(MANUAL_DIR, 'gov_integrity.json'), gatePayload);
 
-// ---------------------------------------------------------------------------
-// Summary
-// ---------------------------------------------------------------------------
 console.log('\n' + '='.repeat(60));
 console.log('P1 GOVERNANCE INTEGRITY RESULT');
 console.log('='.repeat(60));
 console.log(`  P0_SYSTEM_PASS: ${p0SystemPass}`);
 console.log(`  P1_SYSTEM_PASS: ${p1SystemPass}`);
 console.log(`  EDGE_UNLOCK: ${edgeUnlock}`);
-if (blockReasons.length > 0) {
-  console.log(`  BLOCKERS:`);
-  for (const r of blockReasons) console.log(`    - ${r}`);
-}
-console.log(`\n  FINAL: ${overallStatus}`);
+console.log(`  FINAL: ${overallStatus}`);
 console.log('='.repeat(60));
 
-if (!edgeUnlock) {
-  console.error(`\n[BLOCKED] gov:integrity — Edge unlock denied. Resolve blockers.`);
-  process.exit(1);
-}
-
-console.log(`\n[PASS] gov:integrity — EDGE_UNLOCK=true. P0+P1 SYSTEM PASS.`);
-process.exit(0);
+process.exit(edgeUnlock ? 0 : 1);

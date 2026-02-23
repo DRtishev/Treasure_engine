@@ -1,5 +1,5 @@
 {
-  "eligibility_reason": "DEP02: Native build candidates detected via static lock scan: [better-sqlite3@12.6.2]. Native builds require capsule/toolchain policy approval. Cannot claim offline-satisfiable.",
+  "eligibility_reason": "overallStatus=FAIL (eligibility requires overallStatus === PASS)",
   "eligible_for_execution": false,
   "eligible_for_micro_live": false,
   "gate_matrix": [
@@ -12,8 +12,8 @@
     {
       "blocker": true,
       "gate": "NODE_TRUTH",
-      "reason_code": "NONE",
-      "status": "PASS"
+      "reason_code": "NT02",
+      "status": "FAIL"
     },
     {
       "blocker": true,
@@ -24,8 +24,8 @@
     {
       "blocker": false,
       "gate": "DEPS_OFFLINE",
-      "reason_code": "DEP02",
-      "status": "FAIL"
+      "reason_code": "NONE",
+      "status": "PASS"
     },
     {
       "blocker": true,
@@ -52,10 +52,10 @@
       "status": "PASS"
     }
   ],
-  "message": "INFRA P0 PASS — NET_ISOLATION (NET01), NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY, FIXTURE_GUARD (FG01), ZERO_WAR_PROBE (ZW00/ZW01) all PASS. DEPS_OFFLINE reported honestly (DEP02). ELIGIBLE_FOR_MICRO_LIVE=false.",
-  "next_action": "Resolve DEP02 before proceeding to readiness. See EDGE_LAB/DEP_POLICY.md for mitigation paths.",
-  "overall_reason": "NONE",
-  "run_id": "f615eb934eb0",
+  "message": "INFRA P0 FAIL — NT02: Node mismatch: running v20.19.6 (family 20) vs NODE_TRUTH.md allowed_family=22. Align the running Node version or update NODE_TRUTH.md via APPLY protocol.",
+  "next_action": "nvm use 22.22.0",
+  "overall_reason": "NT02",
+  "run_id": "71bc743467cc",
   "schema_version": "1.0.0",
-  "status": "PASS"
+  "status": "FAIL"
 }
