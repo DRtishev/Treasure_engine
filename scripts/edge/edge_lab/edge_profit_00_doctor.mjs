@@ -45,6 +45,11 @@ function readCommandsLaneSummary() {
 }
 
 function profileNextAction(profile, closeout) {
+  if (profile === 'public') {
+    if (!closeout || closeout.status === 'NEEDS_DATA') return 'npm run -s epoch:edge:profit:public:00';
+    if (closeout.status === 'PASS') return 'npm run -s epoch:edge:profit:public:00:x2';
+    return 'npm run -s epoch:edge:profit:public:00';
+  }
   if (!closeout) return 'npm run -s edge:profit:00';
   if (profile === 'conflict') return 'npm run -s edge:profit:00:expect-blocked:conflict';
   if (closeout.status === 'NEEDS_DATA') {
@@ -74,7 +79,7 @@ for (const profile of profiles) {
     : false;
 
   writeMd(idxPath, `# PROFILE_INDEX.md — EDGE_PROFIT_00/${profile}\n\nSTATUS: ${status === 'MISSING' ? 'BLOCKED' : 'PASS'}\nREASON_CODE: ${status === 'MISSING' ? 'ME01' : 'NONE'}\nNEXT_ACTION: ${nextAction}\n\n- profile: ${profile}\n- closeout_status: ${status}\n- closeout_reason_code: ${reason}\n- evidence_source: ${evidenceSource}\n- real_stub_tag: ${realStub}\n- PROMOTION_ELIGIBLE: ${promotionEligible}\n- promotion_eligibility_reason: ${promotionReason}\n- closeout_json_path: reports/evidence/EDGE_PROFIT_00/${profile}/gates/manual/edge_profit_00_closeout.json\n`);
-  profileRows.push(`| ${profile} | ${status} | ${reason} | ${evidenceSource} | ${realStub} | ${promotionEligible} | ${nextAction} |`);
+  profileRows.push(`| ${profile} | ${status} | ${reason} | ${evidenceSource} | ${realStub} | ${promotionEligible} | ${Boolean(closeout?.eligible_for_micro_live)} | ${nextAction} |`);
 }
 
 const activeCloseoutPath = activeProfile ? path.join(BASE_DIR, activeProfile, 'gates', 'manual', 'edge_profit_00_closeout.json') : path.join(BASE_DIR, 'gates', 'manual', 'edge_profit_00_closeout.json');

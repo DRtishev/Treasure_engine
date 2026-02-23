@@ -24,7 +24,7 @@ const execution = readJson(EXEC_JSON);
 
 let status = 'PASS';
 let reasonCode = 'NONE';
-let message = 'Expectancy proof satisfied (REAL source, CI/PSR/MinTRL/trade thresholds).';
+let message = 'Expectancy proof satisfied (REAL/REAL_PUBLIC source, CI/PSR/MinTRL/trade thresholds).';
 let nextAction = PASS_NEXT_ACTION;
 
 const evidenceSource = String(ingest?.evidence_source || 'UNKNOWN').toUpperCase();
@@ -41,10 +41,10 @@ if (!ingest || !expectancy || !execution) {
   reasonCode = 'ME01';
   message = 'Required gate artifacts missing for expectancy proof.';
   nextAction = 'npm run -s edge:profit:00';
-} else if (evidenceSource !== 'REAL') {
+} else if (!new Set(['REAL', 'REAL_PUBLIC']).has(evidenceSource)) {
   status = 'NEEDS_DATA';
   reasonCode = 'EP02_REAL_REQUIRED';
-  message = `Expectancy proof requires REAL telemetry; got evidence_source=${evidenceSource}.`;
+  message = `Expectancy proof requires REAL/REAL_PUBLIC telemetry; got evidence_source=${evidenceSource}.`;
   nextAction = 'npm run -s edge:profit:00:import:csv';
 } else if (expectancy.status !== 'PASS' || execution.status !== 'PASS' || ingest.status !== 'PASS') {
   status = 'BLOCKED';

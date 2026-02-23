@@ -9,6 +9,8 @@ const REG_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'regist
 const MANUAL_DIR = path.join(REG_DIR, 'gates', 'manual');
 const INGEST_JSON = path.join(resolveProfit00ManualDir(ROOT), 'paper_evidence_ingest.json');
 const PROFILE = resolveProfit00Profile(ROOT);
+
+const LEGACY_ROOT_MANUAL = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'gates', 'manual');
 const NEXT_ACTION = 'npm run -s executor:run:chain';
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
@@ -34,6 +36,15 @@ if (!fs.existsSync(INGEST_JSON)) {
   }
 }
 
+if (status === 'PASS' && PROFILE === 'public' && fs.existsSync(LEGACY_ROOT_MANUAL)) {
+  const entries = fs.readdirSync(LEGACY_ROOT_MANUAL).filter((x) => x.endsWith('.json'));
+  if (entries.length > 0) {
+    status = 'FAIL';
+    reasonCode = 'SG01';
+    message = `Legacy root manual writes present in profile mode: ${entries.join(', ')}`;
+  }
+}
+
 writeMd(path.join(REG_DIR, 'REGRESSION_PROFILE_SOURCE_MISMATCH.md'), `# REGRESSION_PROFILE_SOURCE_MISMATCH.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- ingest_json: ${path.relative(ROOT, INGEST_JSON).replace(/\\/g, '/')}\n- profile_marker: ${PROFILE || 'MISSING'}\n- evidence_source: ${evidenceSource}\n- expected_profile: ${expectedProfile || 'UNKNOWN'}\n`);
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'regression_profile_source_mismatch.json'), {
@@ -47,6 +58,7 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'regression_profile_source_mismatch
   evidence_source: evidenceSource,
   expected_profile: expectedProfile || null,
   ingest_json: path.relative(ROOT, INGEST_JSON).replace(/\\/g, '/'),
+  legacy_root_manual_exists: fs.existsSync(LEGACY_ROOT_MANUAL),
 });
 
 console.log(`[${status}] regression_profile_source_mismatch — ${reasonCode}`);

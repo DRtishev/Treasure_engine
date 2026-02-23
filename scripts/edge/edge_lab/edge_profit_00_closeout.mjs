@@ -80,14 +80,15 @@ if (failGate) {
 }
 
 const ingestEvidenceSource = String(gateMap.PAPER_EVIDENCE_INGEST?.evidence_source || 'FIXTURE').toUpperCase();
-const eligibleForProfitTrack = status === 'PASS' && ingestEvidenceSource === 'REAL';
+const eligibleForProfitTrack = status === 'PASS' && new Set(['REAL', 'REAL_PUBLIC']).has(ingestEvidenceSource);
+const eligibleForMicroLive = status === 'PASS' && ingestEvidenceSource === 'REAL_EXECUTION';
 const promotionReason = eligibleForProfitTrack
-  ? 'REAL-only promotion gate satisfied.'
-  : ingestEvidenceSource === 'REAL'
+  ? 'REAL/REAL_PUBLIC promotion gate satisfied.'
+  : new Set(['REAL', 'REAL_PUBLIC']).has(ingestEvidenceSource)
     ? 'Closeout not PASS; promotion denied.'
     : ingestEvidenceSource === 'REAL_SANDBOX'
-    ? 'EP02_REAL_REQUIRED: REAL_SANDBOX is dry-run only and cannot promote.'
-    : 'EP02_REAL_REQUIRED: evidence_source is not REAL.';
+      ? 'EP02_REAL_REQUIRED: REAL_SANDBOX is dry-run only and cannot promote.'
+      : 'EP02_REAL_REQUIRED: evidence_source is not REAL/REAL_PUBLIC.';
 
 const nextAction = status === 'PASS'
   ? 'npm run -s executor:run:chain'
@@ -119,6 +120,7 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'edge_profit_00_closeout.json'), {
   active_live_flags: [],
   evidence_source: ingestEvidenceSource,
   eligible_for_profit_track: eligibleForProfitTrack,
+  eligible_for_micro_live: eligibleForMicroLive,
   promotion_eligibility_reason: promotionReason,
 });
 

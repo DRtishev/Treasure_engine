@@ -14,6 +14,30 @@ fs.mkdirSync(EXEC_DIR, { recursive: true });
 
 const VERIFY_MODE = (process.env.VERIFY_MODE || 'GIT').toUpperCase();
 
+function readMdStatus(abs) {
+  if (!fs.existsSync(abs)) return 'MISSING';
+  const raw = fs.readFileSync(abs, 'utf8');
+  return (raw.match(/^STATUS:\s*(\S+)\s*$/m)?.[1] || 'MISSING').toUpperCase();
+}
+
+const LOCKDOWN_CERT_MD = path.join(ROOT, 'reports', 'evidence', 'GOV', 'SYSTEM_LOCKDOWN_CERT.md');
+if (fs.existsSync(LOCKDOWN_CERT_MD)) {
+  const lockdownStatus = readMdStatus(LOCKDOWN_CERT_MD);
+  if (lockdownStatus !== 'PASS') {
+    writeMd(COMMANDS_MD, `# COMMANDS_RUN
+GENERATED_BY: scripts/executor/executor_run_chain.mjs
+RUN_ID: ${RUN_ID}
+VERIFY_MODE: ${VERIFY_MODE}
+STATUS: FAIL
+REASON_CODE: SL02
+NEXT_ACTION: ${SSOT_ENTRYPOINT}
+
+- lockdown_cert_status: ${lockdownStatus}`);
+    console.log('[FAIL] executor_run_chain — SL02');
+    process.exit(1);
+  }
+}
+
 function runShell(cmd) {
   const startedAt = new Date().toISOString();
   const result = spawnSync('bash', ['-lc', cmd], {
@@ -151,7 +175,7 @@ function appendRun(records, cmd, lane) {
 
 const records = [];
 const evidenceSource = detectEvidenceSource();
-const laneBReal = evidenceSource === 'REAL';
+const laneBReal = evidenceSource === 'REAL' || evidenceSource === 'REAL_PUBLIC';
 const laneBMode = laneBReal ? 'LIVE_REQUIRED' : 'DRY_RUN';
 const laneB = laneBReal ? laneBBase : laneBBase.map((c) => `EDGE_PROFIT_DRY_RUN=1 ${c}`);
 
