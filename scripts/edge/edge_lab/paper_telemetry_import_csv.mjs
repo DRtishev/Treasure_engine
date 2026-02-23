@@ -3,13 +3,32 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd, canonSort } from './canon.mjs';
+import { profileForEvidenceSource, resolveProfit00EpochDir, resolveProfit00ManualDir } from './edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const CSV_PATH = path.join(ROOT, 'artifacts', 'incoming', 'raw_paper_telemetry.csv');
 const JSONL_PATH = path.join(ROOT, 'artifacts', 'incoming', 'paper_telemetry.jsonl');
 const PROFILE_PATH = path.join(ROOT, 'artifacts', 'incoming', 'paper_telemetry.profile');
-const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'real');
-const MANUAL_DIR = path.join(EPOCH_DIR, 'gates', 'manual');
+let outputProfile = '';
+
+function withOutputProfile(fn) {
+  const prev = process.env.EDGE_PROFIT_PROFILE;
+  if (outputProfile) process.env.EDGE_PROFIT_PROFILE = outputProfile;
+  const out = fn();
+  if (outputProfile) {
+    if (prev === undefined) delete process.env.EDGE_PROFIT_PROFILE;
+    else process.env.EDGE_PROFIT_PROFILE = prev;
+  }
+  return out;
+}
+
+function outputEpochDir() {
+  return withOutputProfile(() => resolveProfit00EpochDir(ROOT));
+}
+
+function outputManualDir() {
+  return withOutputProfile(() => resolveProfit00ManualDir(ROOT));
+}
 
 const SCHEMA = [
   ['ts', 'string_iso8601z'],
@@ -32,7 +51,7 @@ const ALLOWED_SIDE = new Set(['BUY', 'SELL']);
 const SCHEMA_SIGNATURE = crypto.createHash('sha256').update(JSON.stringify(SCHEMA)).digest('hex');
 
 fs.mkdirSync(path.dirname(JSONL_PATH), { recursive: true });
-fs.mkdirSync(MANUAL_DIR, { recursive: true });
+fs.mkdirSync(outputManualDir(), { recursive: true });
 
 function fileSha256(content) {
   return crypto.createHash('sha256').update(content).digest('hex');
@@ -40,8 +59,9 @@ function fileSha256(content) {
 
 function writeOutputs({ status, reasonCode, why, nextAction, signatures = [], diagnostics = [] }) {
   const md = `# IMPORT_CSV.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## CODE\n\n- code: ${reasonCode}\n\n## WHY\n\n- ${why}\n\n## SIGNATURES\n\n- schema_signature: ${SCHEMA_SIGNATURE}\n${signatures.length ? signatures.map((s) => `- ${s}`).join('\n') : '- NONE'}\n\n## DIAGNOSTICS\n\n${diagnostics.length ? diagnostics.map((d) => `- ${d}`).join('\n') : '- NONE'}\n`;
-  writeMd(path.join(EPOCH_DIR, 'IMPORT_CSV.md'), md);
-  writeJsonDeterministic(path.join(MANUAL_DIR, 'import_csv.json'), {
+  fs.mkdirSync(outputManualDir(), { recursive: true });
+  writeMd(path.join(outputEpochDir(), 'IMPORT_CSV.md'), md);
+  writeJsonDeterministic(path.join(outputManualDir(), 'import_csv.json'), {
     schema_version: '1.0.0',
     status,
     reason_code: reasonCode,
@@ -218,8 +238,23 @@ const importedEvidenceSource = hasSandboxTag
     ? 'FIXTURE_STUB'
     : 'REAL';
 const jsonl = mapped.map((r) => JSON.stringify(r)).join('\n') + '\n';
+const resolvedProfile = profileForEvidenceSource(importedEvidenceSource);
+outputProfile = resolvedProfile;
+if (!resolvedProfile) {
+  writeOutputs({
+    status: 'BLOCKED',
+    reasonCode: 'PF01',
+    why: `Unable to map imported evidence_source=${importedEvidenceSource} to profile marker.`,
+    nextAction: 'npm run -s edge:profit:00:import:csv',
+    signatures: [`input_sha256: ${inputSha256}`],
+    diagnostics: ['profile_mapping_failed:true'],
+  });
+  console.log('[BLOCKED] paper_telemetry_import_csv — PF01');
+  process.exit(1);
+}
+
 fs.writeFileSync(JSONL_PATH, jsonl);
-fs.writeFileSync(PROFILE_PATH, 'real\n');
+fs.writeFileSync(PROFILE_PATH, `${resolvedProfile}\n`);
 
 const outputSha256 = fileSha256(jsonl);
 writeOutputs({
@@ -233,7 +268,7 @@ writeOutputs({
     `imported_evidence_source: ${importedEvidenceSource}`,
     `rows_raw: ${rows.length}`,
     `rows_exported: ${mapped.length}`,
-    'evidence_source: REAL',
+    `profile: ${resolvedProfile}`,
   ],
   diagnostics: [
     `input_path: ${path.relative(ROOT, CSV_PATH).replace(/\\/g, '/')}`,

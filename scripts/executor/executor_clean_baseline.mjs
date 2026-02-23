@@ -8,9 +8,8 @@ const CLEAN_MD = path.join(EXEC_DIR, 'CLEAN_BASELINE.md');
 
 const TARGETS = [
   path.join(ROOT, 'reports', 'evidence', 'EXECUTOR'),
-  path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'clean'),
-  path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'missing'),
-  path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'conflict'),
+  path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'sandbox'),
+  path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'stub'),
 ];
 
 function clearChildren(dir) {

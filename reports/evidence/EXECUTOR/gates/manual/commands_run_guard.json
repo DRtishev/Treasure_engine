@@ -1,0 +1,10 @@
+{
+  "commands_run_path": "reports/evidence/EXECUTOR/COMMANDS_RUN.md",
+  "diagnostics": [],
+  "message": "COMMANDS_RUN guard passed.",
+  "next_action": "npm run -s executor:run:chain",
+  "reason_code": "NONE",
+  "run_id": "a7fda148d63c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

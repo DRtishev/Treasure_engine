@@ -6,7 +6,7 @@ import { RUN_ID, writeMd } from './canon.mjs';
 const ROOT = path.resolve(process.cwd());
 const CSV_PATH = path.join(ROOT, 'artifacts', 'incoming', 'raw_paper_telemetry.csv');
 const PROFILE_PATH = path.join(ROOT, 'artifacts', 'incoming', 'paper_telemetry.profile');
-const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'real');
+const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'stub');
 const ROWS = Number(process.env.PAPER_REAL_STUB_ROWS || 360);
 const SEED = Number(process.env.PAPER_REAL_STUB_SEED || 20260223);
 
@@ -65,10 +65,10 @@ for (let i = 0; i < ROWS; i++) {
 rows.sort((a, b) => a[0].localeCompare(b[0]) || a[3].localeCompare(b[3]));
 const csv = [header.join(','), ...rows.map((r) => r.join(','))].join('\n') + '\n';
 fs.writeFileSync(CSV_PATH, csv);
-fs.writeFileSync(PROFILE_PATH, 'real\n');
+fs.writeFileSync(PROFILE_PATH, 'stub\n');
 
 const csvSha = crypto.createHash('sha256').update(csv).digest('hex');
 
-writeMd(path.join(EPOCH_DIR, 'REAL_STUB_GENERATION.md'), `# REAL_STUB_GENERATION.md\n\nSTATUS: PASS\nREASON_CODE: NONE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: npm run -s edge:profit:00:real:run\n\n## Stub\n\n- mode: REAL_STUB\n- rows: ${ROWS}\n- seed: ${SEED}\n- csv_path: artifacts/incoming/raw_paper_telemetry.csv\n- csv_sha256: ${csvSha}\n- profile_marker_path: artifacts/incoming/paper_telemetry.profile\n- profile_marker_value: real\n- source_tag: REAL_STUB_V1\n- expected_ingest_evidence_source: FIXTURE_STUB\n`);
+writeMd(path.join(EPOCH_DIR, 'REAL_STUB_GENERATION.md'), `# REAL_STUB_GENERATION.md\n\nSTATUS: PASS\nREASON_CODE: NONE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: npm run -s edge:profit:00:real:run\n\n## Stub\n\n- mode: REAL_STUB\n- rows: ${ROWS}\n- seed: ${SEED}\n- csv_path: artifacts/incoming/raw_paper_telemetry.csv\n- csv_sha256: ${csvSha}\n- profile_marker_path: artifacts/incoming/paper_telemetry.profile\n- profile_marker_value: stub\n- source_tag: REAL_STUB_V1\n- expected_ingest_evidence_source: FIXTURE_STUB\n`);
 
 console.log(`[PASS] paper_telemetry_real_stub_gen — rows=${ROWS}`);

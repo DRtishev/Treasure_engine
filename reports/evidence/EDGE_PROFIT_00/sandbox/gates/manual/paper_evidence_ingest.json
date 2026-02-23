@@ -1,0 +1,16 @@
+{
+  "evidence_source": "REAL_SANDBOX",
+  "input_kind": "JSONL",
+  "input_sha256": "1f3be2ca037095ab9d417a38ec9a2a8b34a4c23216145b055e0e65a66b69af81",
+  "message": "Telemetry ingest pass with deterministic normalization.",
+  "missing_field_rows": [],
+  "next_action": "npm run -s edge:profit:00:expectancy",
+  "outlier_count": 0,
+  "outlier_marks": [],
+  "reason_code": "NONE",
+  "row_count": 360,
+  "run_id": "a7fda148d63c",
+  "schema_version": "1.0.0",
+  "severe_conflict_count": 0,
+  "status": "PASS"
+}

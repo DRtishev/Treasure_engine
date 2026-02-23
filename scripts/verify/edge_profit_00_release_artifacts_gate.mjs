@@ -53,8 +53,8 @@ let missing = [];
 let contractError = null;
 
 if (!contract || !contractKeys.every((k) => typeof contract[k] === 'string' && contract[k].length > 0)) {
-  status = 'NEEDS_DATA';
-  reasonCode = 'RA02';
+  status = 'FAIL';
+  reasonCode = 'EC02';
   message = 'Export contract missing or unparseable.';
   contractError = 'missing_or_unparseable_contract';
 } else {
@@ -64,28 +64,44 @@ if (!contract || !contractKeys.every((k) => typeof contract[k] === 'string' && c
     { key: 'FINAL_VALIDATED_SHA256_SIDECAR_PATH', rel: expandContractPath(contract.FINAL_VALIDATED_SHA256_SIDECAR_PATH, evidenceEpoch) },
   ];
 
-  artifacts = resolved.map((item) => {
-    const abs = path.join(ROOT, item.rel);
-    const present = fs.existsSync(abs);
-    return {
-      contract_key: item.key,
-      path: item.rel.replace(/\\/g, '/'),
-      present,
-      sha256: present ? sha256File(abs) : 'MISSING',
-    };
-  });
+  const byPath = new Map();
+  for (const item of resolved) {
+    const normalizedRel = item.rel.replace(/\\/g, '/');
+    const abs = path.join(ROOT, normalizedRel);
+    if (!byPath.has(normalizedRel)) {
+      byPath.set(normalizedRel, {
+        path: normalizedRel,
+        present: fs.existsSync(abs),
+        sha256: fs.existsSync(abs) ? sha256File(abs) : 'MISSING',
+        contract_keys: [item.key],
+      });
+    } else {
+      byPath.get(normalizedRel).contract_keys.push(item.key);
+    }
+  }
 
-  missing = artifacts.filter((a) => !a.present).map((a) => `${a.contract_key}:${a.path}`);
+  artifacts = [...byPath.values()]
+    .sort((a, b) => a.path.localeCompare(b.path))
+    .map((entry) => ({
+      ...entry,
+      contract_keys: entry.contract_keys.sort((a, b) => a.localeCompare(b)),
+      alias: entry.contract_keys.length > 1,
+    }));
+
+  missing = artifacts
+    .filter((a) => !a.present)
+    .flatMap((a) => a.contract_keys.map((key) => `${key}:${a.path}`));
+
   if (missing.length > 0) {
-    status = 'NEEDS_DATA';
-    reasonCode = 'RA01';
-    message = 'Release artifacts missing; export is required.';
+    status = 'FAIL';
+    reasonCode = 'EC02';
+    message = 'Required release artifacts missing; export contract violated.';
   }
 }
 
 const nextAction = status === 'PASS' ? PASS_NEXT_ACTION : REMEDIATION_NEXT_ACTION;
 
-const md = `# RELEASE_ARTIFACTS.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Contract\n\n- contract_path: GOV/EXPORT_CONTRACT.md\n- contract_loaded: ${Boolean(contract)}\n- evidence_epoch: ${evidenceEpoch}\n- contract_error: ${contractError || 'NONE'}\n\n## Artifact Checks\n\n${artifacts.length ? artifacts.map((a) => `- ${a.contract_key}: ${a.present ? 'PRESENT' : 'MISSING'} | ${a.path} | sha256=${a.sha256}`).join('\n') : '- NONE'}\n\n## Missing\n\n${missing.length ? missing.map((m) => `- ${m}`).join('\n') : '- NONE'}\n`;
+const md = `# RELEASE_ARTIFACTS.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Contract\n\n- contract_path: GOV/EXPORT_CONTRACT.md\n- contract_loaded: ${Boolean(contract)}\n- evidence_epoch: ${evidenceEpoch}\n- contract_error: ${contractError || 'NONE'}\n\n## Artifact Checks\n\n${artifacts.length ? artifacts.map((a) => `- ${a.contract_keys.join('+')}: ${a.present ? 'PRESENT' : 'MISSING'} | ${a.path} | sha256=${a.sha256} | alias=${a.alias}`).join('\n') : '- NONE'}\n\n## Missing\n\n${missing.length ? missing.map((m) => `- ${m}`).join('\n') : '- NONE'}\n`;
 
 writeMd(path.join(REGISTRY_DIR, 'RELEASE_ARTIFACTS.md'), md);
 

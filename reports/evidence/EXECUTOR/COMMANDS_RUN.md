@@ -1,17 +1,28 @@
-# COMMANDS_RUN.md
-STATUS: PASS
-REASON_CODE: NONE
+# COMMANDS_RUN
+GENERATED_BY: scripts/executor/executor_run_chain.mjs
 NODE_VERSION: v22.22.0
 NPM_VERSION: 10.9.4
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 VERIFY_MODE: GIT
+LANE_A_STATUS: PASS
+LANE_B_STATUS: NEEDS_DATA
+LANE_B_MODE: DRY_RUN
 NEXT_ACTION: npm run -s executor:run:chain
+STATUS: PASS
+REASON_CODE: NONE
+
+## LANE_SUMMARY
+- lane_a_status: PASS
+- lane_b_status: NEEDS_DATA
+- lane_b_mode: DRY_RUN
+- records_n: 21
+
 ## STEP 1
 LANE: A
 COMMAND: npm run -s verify:env:authority
 EC: 0
-STARTED_AT: 2026-02-23T14:05:48.701Z
-COMPLETED_AT: 2026-02-23T14:05:51.097Z
+STARTED_AT: 2026-02-23T15:27:32.454Z
+COMPLETED_AT: 2026-02-23T15:27:34.999Z
 ```
 [PASS] env_node_truth_authority — NONE
 ```
@@ -19,19 +30,22 @@ COMPLETED_AT: 2026-02-23T14:05:51.097Z
 LANE: A
 COMMAND: ENABLE_SQLITE_PERSISTENCE=0 TREASURE_OMIT_OPTIONAL_PROOF=1 npm ci --omit=optional
 EC: 0
-STARTED_AT: 2026-02-23T14:05:51.098Z
-COMPLETED_AT: 2026-02-23T14:05:54.430Z
+STARTED_AT: 2026-02-23T15:27:35.000Z
+COMPLETED_AT: 2026-02-23T15:27:38.052Z
 ```
 (no output)
+```
 ## STEP 3
 LANE: A
 COMMAND: npm run -s p0:all
 EC: 0
-STARTED_AT: 2026-02-23T14:05:54.431Z
-COMPLETED_AT: 2026-02-23T14:06:01.823Z
+STARTED_AT: 2026-02-23T15:27:38.052Z
+COMPLETED_AT: 2026-02-23T15:27:45.210Z
+```
+
 ============================================================
 CALM MODE P0 — Hardening Pipeline
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 ============================================================
 
 [P0] Running: CANON_SELFTEST — Canon normalization selftest (R10)
@@ -59,7 +73,7 @@ RUN_ID: 1e93566551e0
 [P0 OK] EVIDENCE_HASHES: PASS
 
 [P0] Running: RECEIPTS_CHAIN — Receipt chain on sha256_norm (R5, R11)
-[PASS] edge_receipts_chain — 121 entries chained, final=1a4238190558f1fe...
+[PASS] edge_receipts_chain — 121 entries chained, final=dc88399d107b1d09...
 [P0 OK] RECEIPTS_CHAIN: PASS
 
 ============================================================
@@ -76,7 +90,7 @@ FINAL: PASS
 [INFRA_RUN] NET_ISOLATION
 ============================================================
 NET01 NETWORK ISOLATION PROOF
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 ============================================================
 
 ============================================================
@@ -98,7 +112,7 @@ FINAL: PASS
 [PASS] node_truth_gate — Node v22.22.0 matches allowed_family=22
 
 [INFRA_RUN] VERIFY_MODE
-[PASS] verify_mode_gate — VERIFY_MODE=GIT, RUN_ID=1e93566551e0
+[PASS] verify_mode_gate — VERIFY_MODE=GIT, RUN_ID=a7fda148d63c
 
 [INFRA_RUN] DEPS_OFFLINE
 [deps_offline] Running static lock scan for native build candidates...
@@ -118,7 +132,7 @@ FINAL: PASS
 [INFRA_RUN] FIXTURE_GUARD
 ============================================================
 FG01 FIXTURE GUARD — Evidence Source Verification
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 ALLOW_FIXTURES: unset (REAL_ONLY mode)
 ============================================================
 
@@ -136,7 +150,7 @@ FG01 FIXTURE GUARD RESULT
 [INFRA_RUN] ZERO_WAR_PROBE
 ============================================================
 ZW01 ZERO-WAR PROBE — Must-Fail Gate
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 ============================================================
 
 [ZW00 PROBE] Testing TRADING_ENABLED=1 ...
@@ -147,6 +161,7 @@ RUN_ID: 1e93566551e0
 
 [ZW00 PROBE] Testing ORDER_SUBMISSION_ENABLED=1 ...
   [ZW00 OBSERVED] Process exited 1 with T000 detected — kill switch fired (expected).
+
 [ZW00 PROBE] Testing SUBMIT_ORDERS=1 ...
   [ZW00 OBSERVED] Process exited 1 with T000 detected — kill switch fired (expected).
 
@@ -164,7 +179,7 @@ FINAL: PASS
 [PASS] zero_war_probe — ZW01 kill switch proven active for all 4 probes.
 ============================================================
 INFRA P0 — Gate Suite
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 ============================================================
 
 ============================================================
@@ -183,18 +198,24 @@ FINAL: PASS
 ELIGIBLE_FOR_MICRO_LIVE: true
 ELIGIBLE_FOR_EXECUTION: true
 ============================================================
+```
 ## STEP 4
 LANE: A
-STARTED_AT: 2026-02-23T14:06:01.824Z
-COMPLETED_AT: 2026-02-23T14:06:05.699Z
+COMMAND: npm run -s gov:integrity
+EC: 0
+STARTED_AT: 2026-02-23T15:27:45.211Z
+COMPLETED_AT: 2026-02-23T15:27:48.760Z
+```
+
+============================================================
 P1 GOVERNANCE INTEGRITY ORCHESTRATOR
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 ============================================================
 
 [GOV] Running: R_OP01_SCRIPTS_CHECK
 ============================================================
 OP01 SCRIPTS CHECK — Phantom Command Prevention
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 ============================================================
 
 ============================================================
@@ -222,37 +243,37 @@ FINAL: PASS
 [GOV] Running: P1_MERKLE_ROOT
 ============================================================
 P1 MERKLE ROOT — Evidence Integrity Anchor
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 ============================================================
 [MERKLE] Files in scope: 121
 [MERKLE] Files hashed: 121
 [MERKLE] Files missing: 0
 [MERKLE] Tree depth: 8
-[MERKLE] Root: 083d3d0c92377bc9d134c1f19c2dccb139d2192e0b849fa9add09f3715b7deca
+[MERKLE] Root: 5181e4fb68637aabcfd433aa5211e354e40bd658ddb14b9a9777151157807ec2
 [MERKLE] SCOPE_MANIFEST_SHA: b58e9929b24f9461d993b38c1c5fab0c8350f955a9b4d11061498b18089cc775
 
 ============================================================
 P1 MERKLE ROOT RESULT
 ============================================================
-  Root: 083d3d0c92377bc9d134c1f19c2dccb139d2192e0b849fa9add09f3715b7deca
+  Root: 5181e4fb68637aabcfd433aa5211e354e40bd658ddb14b9a9777151157807ec2
   Files: 121/121 (0 missing)
   Depth: 8 levels
   Status: PASS
 ============================================================
 
-[PASS] merkle_root — Merkle root anchored at 083d3d0c92377bc9…
+[PASS] merkle_root — Merkle root anchored at 5181e4fb68637aab…
 
 [GOV] Running: P1_GOV01_ENFORCEMENT
 ============================================================
 GOV01 EVIDENCE INTEGRITY GATE
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 ============================================================
 [GOV01] Anchored SCOPE_MANIFEST_SHA: b58e9929b24f9461…
-[GOV01] Anchored MERKLE_ROOT: 083d3d0c92377bc9…
-[GOV01] Anchored RECEIPTS final: 1a4238190558f1fe…
+[GOV01] Anchored MERKLE_ROOT: 5181e4fb68637aab…
+[GOV01] Anchored RECEIPTS final: dc88399d107b1d09…
 [GOV01] Computed SCOPE_MANIFEST_SHA: b58e9929b24f9461…
-[GOV01] Computed MERKLE_ROOT: 083d3d0c92377bc9…
-[GOV01] Computed RECEIPTS final: 1a4238190558f1fe…
+[GOV01] Computed MERKLE_ROOT: 5181e4fb68637aab…
+[GOV01] Computed RECEIPTS final: dc88399d107b1d09…
 
 ============================================================
 GOV01 INTEGRITY RESULTS
@@ -269,13 +290,13 @@ FINAL: PASS
 [GOV] Running: R_REASON_CODE_AUDIT
 ============================================================
 REASON CODE AUDIT — SSOT Collision Check
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 ============================================================
 
 ============================================================
 REASON CODE AUDIT RESULT
 ============================================================
-  Files scanned: 34
+  Files scanned: 36
   Hard violations: 0
   Unknown code warnings: 0
   Status: PASS
@@ -291,12 +312,14 @@ P1 GOVERNANCE INTEGRITY RESULT
   EDGE_UNLOCK: true
   FINAL: PASS
 ============================================================
+```
 ## STEP 5
 LANE: A
 COMMAND: npm run -s edge:profit:01:super
 EC: 0
-STARTED_AT: 2026-02-23T14:06:05.700Z
-COMPLETED_AT: 2026-02-23T14:06:18.636Z
+STARTED_AT: 2026-02-23T15:27:48.762Z
+COMPLETED_AT: 2026-02-23T15:28:01.595Z
+```
 [PASS] env_node_truth_authority — NONE
 [PASS] paper_telemetry_real_stub_gen — rows=360
 [PASS] paper_telemetry_import_csv — NONE
@@ -308,8 +331,8 @@ COMPLETED_AT: 2026-02-23T14:06:18.636Z
 [PASS] edge_profit_00_closeout — NONE
 
 ============================================================
-EDGE_PROFIT_00 X2 — Deterministic Anti-Flake [real]
-RUN_ID: 1e93566551e0
+EDGE_PROFIT_00 X2 — Deterministic Anti-Flake [stub]
+RUN_ID: a7fda148d63c
 ============================================================
 
 [X2] Run 1/2
@@ -319,6 +342,7 @@ RUN_ID: 1e93566551e0
 [PASS] edge_expectancy_court — NONE
 [PASS] edge_overfit_court_mvp — NONE
 [PASS] edge_profit_00_closeout — NONE
+
 [X2] Run 2/2
 [PASS] edge_hypothesis_registry_court — NONE
 [PASS] edge_paper_evidence_ingest — NONE
@@ -331,8 +355,8 @@ RUN_ID: 1e93566551e0
 [PASS] edge_profit_00_doctor — NONE
 
 ============================================================
-EDGE_PROFIT_00 X2 — Deterministic Anti-Flake [real]
-RUN_ID: 1e93566551e0
+EDGE_PROFIT_00 X2 — Deterministic Anti-Flake [stub]
+RUN_ID: a7fda148d63c
 ============================================================
 
 [X2] Run 1/2
@@ -353,16 +377,17 @@ RUN_ID: 1e93566551e0
 
 [PASS] edge_profit_00_x2 — NONE
 FINAL_VALIDATED=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz
-SHA256=355cb8dda9c38678f4766142973c4d34b75298a416292a5e9fe5c59d1faa1eaf
+SHA256=04dca1d987c98ad7f8711e2284304fb09720752bf60d7c460af5d9a225d3758b
 SHA_FILE=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256
 [PASS] edge_profit_00_release_artifacts_gate — NONE
 [PASS] edge_profit_00_doctor — NONE
+```
 ## STEP 6
 LANE: A
 COMMAND: npm run -s edge:profit:01:wf-lite
 EC: 0
-STARTED_AT: 2026-02-23T14:06:18.640Z
-COMPLETED_AT: 2026-02-23T14:06:21.064Z
+STARTED_AT: 2026-02-23T15:28:01.601Z
+COMPLETED_AT: 2026-02-23T15:28:03.966Z
 ```
 [PASS] edge_walk_forward_lite — NONE
 ```
@@ -370,16 +395,17 @@ COMPLETED_AT: 2026-02-23T14:06:21.064Z
 LANE: B
 COMMAND: EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:expectancy-proof
 EC: 1
-STARTED_AT: 2026-02-23T14:06:21.067Z
-COMPLETED_AT: 2026-02-23T14:06:23.608Z
+STARTED_AT: 2026-02-23T15:28:03.967Z
+COMPLETED_AT: 2026-02-23T15:28:06.320Z
+```
 [NEEDS_DATA] edge_profit_02_expectancy_proof — EP02_REAL_REQUIRED
 ```
 ## STEP 8
 LANE: B
 COMMAND: EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:pbo
 EC: 1
-STARTED_AT: 2026-02-23T14:06:23.609Z
-COMPLETED_AT: 2026-02-23T14:06:26.203Z
+STARTED_AT: 2026-02-23T15:28:06.321Z
+COMPLETED_AT: 2026-02-23T15:28:08.665Z
 ```
 [NEEDS_DATA] edge_profit_02_pbo_cpcv — EP02_REAL_REQUIRED
 ```
@@ -387,8 +413,8 @@ COMPLETED_AT: 2026-02-23T14:06:26.203Z
 LANE: B
 COMMAND: EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:risk
 EC: 1
-STARTED_AT: 2026-02-23T14:06:26.205Z
-COMPLETED_AT: 2026-02-23T14:06:28.728Z
+STARTED_AT: 2026-02-23T15:28:08.667Z
+COMPLETED_AT: 2026-02-23T15:28:11.031Z
 ```
 [NEEDS_DATA] edge_profit_02_risk_mcdd — EP02_REAL_REQUIRED
 ```
@@ -396,8 +422,8 @@ COMPLETED_AT: 2026-02-23T14:06:28.728Z
 LANE: B
 COMMAND: EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:proof:index
 EC: 1
-STARTED_AT: 2026-02-23T14:06:28.729Z
-COMPLETED_AT: 2026-02-23T14:06:31.288Z
+STARTED_AT: 2026-02-23T15:28:11.032Z
+COMPLETED_AT: 2026-02-23T15:28:13.405Z
 ```
 [NEEDS_DATA] edge_profit_02_proof_index — EP02_REAL_REQUIRED
 ```
@@ -405,79 +431,103 @@ COMPLETED_AT: 2026-02-23T14:06:31.288Z
 LANE: A
 COMMAND: npm run -s export:final-validated
 EC: 0
-STARTED_AT: 2026-02-23T14:06:31.289Z
-COMPLETED_AT: 2026-02-23T14:06:34.228Z
+STARTED_AT: 2026-02-23T15:28:13.408Z
+COMPLETED_AT: 2026-02-23T15:28:15.934Z
 ```
 FINAL_VALIDATED=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz
-SHA256=355cb8dda9c38678f4766142973c4d34b75298a416292a5e9fe5c59d1faa1eaf
+SHA256=04dca1d987c98ad7f8711e2284304fb09720752bf60d7c460af5d9a225d3758b
 SHA_FILE=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256
 ```
 ## STEP 12
 LANE: A
 COMMAND: npm run -s verify:edge:profit:00:release
 EC: 0
-STARTED_AT: 2026-02-23T14:06:34.231Z
-COMPLETED_AT: 2026-02-23T14:06:36.843Z
+STARTED_AT: 2026-02-23T15:28:15.935Z
+COMPLETED_AT: 2026-02-23T15:28:18.481Z
 ```
 [PASS] edge_profit_00_release_artifacts_gate — NONE
 ```
 ## STEP 13
 LANE: A
-COMMAND: npm run -s edge:profit:00:doctor
+COMMAND: npm run -s verify:export:contract
 EC: 0
-STARTED_AT: 2026-02-23T14:06:36.844Z
-COMPLETED_AT: 2026-02-23T14:06:39.402Z
+STARTED_AT: 2026-02-23T15:28:18.484Z
+COMPLETED_AT: 2026-02-23T15:28:20.932Z
 ```
-[PASS] edge_profit_00_doctor — NONE
+[PASS] export_contract_integrity_gate — NONE
 ```
 ## STEP 14
 LANE: A
-COMMAND: npm run -s verify:report:contradiction
+COMMAND: npm run -s verify:export:receipt
 EC: 0
-STARTED_AT: 2026-02-23T14:06:39.403Z
-COMPLETED_AT: 2026-02-23T14:06:41.918Z
+STARTED_AT: 2026-02-23T15:28:20.933Z
+COMPLETED_AT: 2026-02-23T15:28:23.385Z
 ```
-[PASS] report_contradiction_guard — NONE
+[PASS] export_contract_receipt_format_guard — NONE
 ```
 ## STEP 15
 LANE: A
-COMMAND: npm run -s verify:regression:no-stub-promotion
+COMMAND: npm run -s gov:final:index
 EC: 0
-STARTED_AT: 2026-02-23T14:06:41.919Z
-COMPLETED_AT: 2026-02-23T14:06:46.360Z
+STARTED_AT: 2026-02-23T15:28:23.386Z
+COMPLETED_AT: 2026-02-23T15:28:26.313Z
 ```
-[PASS] regression_no_stub_promotion — NONE
+[PASS] final_validated_index — NONE
 ```
 ## STEP 16
 LANE: A
+COMMAND: npm run -s gov:final:fingerprint
+EC: 0
+STARTED_AT: 2026-02-23T15:28:26.314Z
+COMPLETED_AT: 2026-02-23T15:28:28.856Z
+```
+[PASS] final_validated_fingerprint — NONE
+```
+## STEP 17
+LANE: A
+COMMAND: npm run -s edge:profit:00:doctor
+EC: 0
+STARTED_AT: 2026-02-23T15:28:28.857Z
+COMPLETED_AT: 2026-02-23T15:28:31.361Z
+```
+[PASS] edge_profit_00_doctor — NONE
+```
+## STEP 18
+LANE: A
+COMMAND: npm run -s verify:report:contradiction
+EC: 0
+STARTED_AT: 2026-02-23T15:28:31.362Z
+COMPLETED_AT: 2026-02-23T15:28:33.856Z
+```
+[PASS] report_contradiction_guard — NONE
+```
+## STEP 19
+LANE: A
+COMMAND: npm run -s verify:regression:profile-source
+EC: 0
+STARTED_AT: 2026-02-23T15:28:33.857Z
+COMPLETED_AT: 2026-02-23T15:28:36.305Z
+```
+[PASS] regression_profile_source_mismatch — NONE
+```
+## STEP 20
+LANE: A
+COMMAND: npm run -s verify:regression:no-stub-promotion
+EC: 0
+STARTED_AT: 2026-02-23T15:28:36.307Z
+COMPLETED_AT: 2026-02-23T15:28:40.484Z
+```
+[PASS] regression_no_stub_promotion — NONE
+```
+## STEP 21
+LANE: A
 COMMAND: npm run -s verify:regression:no-sandbox-promotion
 EC: 0
-STARTED_AT: 2026-02-23T14:06:46.361Z
-COMPLETED_AT: 2026-02-23T14:06:51.149Z
+STARTED_AT: 2026-02-23T15:28:40.485Z
+COMPLETED_AT: 2026-02-23T15:28:45.225Z
 ```
 [PASS] regression_no_sandbox_promotion — NONE
 ```
-- ec: 0
-- output: FINAL_VALIDATED=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz
-  SHA256=7f17664a5147c09ef85c4a8d3c781a7232bedd661d54df318017974d7cd43475
-  SHA_FILE=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256
-```
 
-## source ~/.nvm/nvm.sh && nvm use 22.22.0 >/dev/null && npm run -s verify:edge:profit:00:release
-```
-- ec: 0
-- output: [PASS] edge_profit_00_release_artifacts_gate — NONE
-```
-
-## source ~/.nvm/nvm.sh && nvm use 22.22.0 >/dev/null && npm run -s edge:profit:00:doctor
-```
-- ec: 0
-- output: [PASS] edge_profit_00_doctor — NONE
-```
-
-## source ~/.nvm/nvm.sh && nvm use 22.22.0 >/dev/null && npm run -s verify:report:contradiction
-```
-- ec: 1
-- output: [FAIL] report_contradiction_guard — REP01
-```
-
+## NOTES
+- executor_chain_verdict: PASS

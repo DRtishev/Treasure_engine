@@ -28,6 +28,22 @@ function readContract() {
   }
   return kv;
 }
+
+function readCommandsLaneSummary() {
+  const p = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR', 'COMMANDS_RUN.md');
+  if (!fs.existsSync(p)) {
+    return { laneA: 'MISSING', laneB: 'MISSING', laneBMode: 'MISSING', nextAction: 'npm run -s executor:run:chain' };
+  }
+  const text = fs.readFileSync(p, 'utf8');
+  const get = (k) => (text.match(new RegExp(`^${k}:\\s*(.+)$`, 'm')) || [])[1] || 'MISSING';
+  return {
+    laneA: get('LANE_A_STATUS'),
+    laneB: get('LANE_B_STATUS'),
+    laneBMode: get('LANE_B_MODE'),
+    nextAction: get('NEXT_ACTION'),
+  };
+}
+
 function profileNextAction(profile, closeout) {
   if (!closeout) return 'npm run -s edge:profit:00';
   if (profile === 'conflict') return 'npm run -s edge:profit:00:expect-blocked:conflict';
@@ -77,7 +93,9 @@ const releaseRows = releasePaths.map((p) => `- ${p}: ${fs.existsSync(path.join(R
 const releaseState = !contract ? 'RA02' : releasePaths.every((p) => fs.existsSync(path.join(ROOT, p))) ? 'PASS' : 'RA01';
 const releaseNextAction = releaseState === 'PASS' ? globalNextAction : 'npm run -s export:final-validated';
 
-const md = `# PROFILES_INDEX.md — EDGE_PROFIT_00\n\nSTATUS: PASS\nREASON_CODE: NONE\nNEXT_ACTION: ${releaseNextAction}\n\n## Active Profile\n\n- active_profile: ${activeProfile || 'clean(default)'}\n- active_closeout_path: ${activeProfile ? `reports/evidence/EDGE_PROFIT_00/${activeProfile}/gates/manual/edge_profit_00_closeout.json` : 'reports/evidence/EDGE_PROFIT_00/gates/manual/edge_profit_00_closeout.json'}\n- active_closeout_status: ${activeCloseout?.status || 'MISSING'}\n- active_closeout_reason_code: ${activeCloseout?.reason_code || 'ME01'}\n- active_evidence_source: ${activeCloseout?.evidence_source || 'UNKNOWN'}\n- active_promotion_eligible: ${Boolean(activeCloseout?.eligible_for_profit_track)}\n- active_promotion_reason: ${activeCloseout?.promotion_eligibility_reason || (activeCloseout?.evidence_source === 'REAL' ? 'Closeout not PASS; promotion denied.' : 'EP02_REAL_REQUIRED: evidence_source is not REAL.')}\n\n## Release Discipline (contract-aware)\n\n- contract_path: GOV/EXPORT_CONTRACT.md\n- contract_state: ${releaseState}\n- evidence_epoch_resolved: ${evidenceEpoch}\n${releaseRows.length ? releaseRows.join('\n') : '- contract_missing_or_unparseable'}\n\n## Available Profiles\n\n| profile | closeout_status | closeout_reason_code | evidence_source | real_stub | promotion_eligible | next_action |\n|---|---|---|---|---|---|---|\n${profileRows.join('\n') || '| NONE | MISSING | ME01 | UNKNOWN | false | false | npm run -s edge:profit:00 |'}\n`;
+const laneSummary = readCommandsLaneSummary();
+
+const md = `# PROFILES_INDEX.md — EDGE_PROFIT_00\n\nSTATUS: PASS\nREASON_CODE: NONE\nNEXT_ACTION: ${releaseNextAction}\n\n## Executor Lane Summary\n\n- lane_a_status: ${laneSummary.laneA}\n- lane_b_status: ${laneSummary.laneB}\n- lane_b_mode: ${laneSummary.laneBMode}\n- commands_next_action: ${laneSummary.nextAction}\n\n## Active Profile\n\n- active_profile: ${activeProfile || 'clean(default)'}\n- active_closeout_path: ${activeProfile ? `reports/evidence/EDGE_PROFIT_00/${activeProfile}/gates/manual/edge_profit_00_closeout.json` : 'reports/evidence/EDGE_PROFIT_00/gates/manual/edge_profit_00_closeout.json'}\n- active_closeout_status: ${activeCloseout?.status || 'MISSING'}\n- active_closeout_reason_code: ${activeCloseout?.reason_code || 'ME01'}\n- active_evidence_source: ${activeCloseout?.evidence_source || 'UNKNOWN'}\n- active_promotion_eligible: ${Boolean(activeCloseout?.eligible_for_profit_track)}\n- active_promotion_reason: ${activeCloseout?.promotion_eligibility_reason || (activeCloseout?.evidence_source === 'REAL' ? 'Closeout not PASS; promotion denied.' : 'EP02_REAL_REQUIRED: evidence_source is not REAL.')}\n\n## Release Discipline (contract-aware)\n\n- contract_path: GOV/EXPORT_CONTRACT.md\n- contract_state: ${releaseState}\n- evidence_epoch_resolved: ${evidenceEpoch}\n${releaseRows.length ? releaseRows.join('\n') : '- contract_missing_or_unparseable'}\n\n## Available Profiles\n\n| profile | closeout_status | closeout_reason_code | evidence_source | real_stub | promotion_eligible | next_action |\n|---|---|---|---|---|---|---|\n${profileRows.join('\n') || '| NONE | MISSING | ME01 | UNKNOWN | false | false | npm run -s edge:profit:00 |'}\n`;
 
 writeMd(path.join(BASE_DIR, 'PROFILES_INDEX.md'), md);
 console.log('[PASS] edge_profit_00_doctor — NONE');

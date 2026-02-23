@@ -1,0 +1,18 @@
+{
+  "drawdown_p50": null,
+  "drawdown_p75": null,
+  "drawdown_p90": null,
+  "drawdown_p95": null,
+  "evidence_source": "FIXTURE_STUB",
+  "iterations": 5000,
+  "message": "Risk proof requires REAL telemetry; got FIXTURE_STUB.",
+  "next_action": "npm run -s edge:profit:00:import:csv",
+  "quarter_kelly_cap": null,
+  "reason_code": "EP02_REAL_REQUIRED",
+  "required_trades_n": 200,
+  "run_id": "a7fda148d63c",
+  "schema_version": "1.0.0",
+  "seed": 20260223,
+  "status": "NEEDS_DATA",
+  "trades_n": 360
+}

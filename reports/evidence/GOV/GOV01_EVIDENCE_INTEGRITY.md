@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 NEXT_ACTION: npm run -s gov:integrity
 
 ## GOV01 Policy
@@ -16,8 +16,8 @@ Any mismatch => BLOCKED GOV01.
 | Check | Anchored (prefix) | Computed (prefix) | Result | Note |
 |-------|-------------------|-------------------|--------|------|
 | C01_SCOPE_MANIFEST_SHA | b58e9929b24f9461… | b58e9929b24f9461… | MATCH | MATCH — no tampering detected |
-| C02_MERKLE_ROOT | 083d3d0c92377bc9… | 083d3d0c92377bc9… | MATCH | MATCH — no tampering detected |
-| C03_RECEIPTS_CHAIN_FINAL | 1a4238190558f1fe… | 1a4238190558f1fe… | MATCH | MATCH — no tampering detected |
+| C02_MERKLE_ROOT | 5181e4fb68637aab… | 5181e4fb68637aab… | MATCH | MATCH — no tampering detected |
+| C03_RECEIPTS_CHAIN_FINAL | dc88399d107b1d09… | dc88399d107b1d09… | MATCH | MATCH — no tampering detected |
 
 ## Diff Hints
 

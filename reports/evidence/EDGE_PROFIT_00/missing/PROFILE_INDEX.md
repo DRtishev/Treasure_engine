@@ -1,12 +1,12 @@
 # PROFILE_INDEX.md — EDGE_PROFIT_00/missing
 
-STATUS: BLOCKED
-REASON_CODE: ME01
-NEXT_ACTION: npm run -s edge:profit:00
+STATUS: PASS
+REASON_CODE: NONE
+NEXT_ACTION: npm run -s edge:profit:00:sample:missing
 
 - profile: missing
-- closeout_status: MISSING
-- closeout_reason_code: ME01
+- closeout_status: NEEDS_DATA
+- closeout_reason_code: NDA02
 - evidence_source: UNKNOWN
 - real_stub_tag: false
 - PROMOTION_ELIGIBLE: false
