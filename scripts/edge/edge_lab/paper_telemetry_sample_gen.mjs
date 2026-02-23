@@ -36,6 +36,7 @@ function makeRng(seed) {
 
 const rng = makeRng(SEED);
 const rows = [];
+let injectedAnomalies = 0;
 for (let i = 0; i < ROWS; i++) {
   const minute = String(i % 60).padStart(2, '0');
   const hour = String(10 + Math.floor(i / 60)).padStart(2, '0');
@@ -63,19 +64,26 @@ for (let i = 0; i < ROWS; i++) {
 
 // deterministic anomalies for gate coverage
 rows[5].slippage_bps = 420; // outlier
+injectedAnomalies += 1;
 rows[11].latency_ms = 7000; // outlier
-rows[17].result_pnl = PROFILE === 'clean' ? 0.85 : 150000; // profile-tuned
+injectedAnomalies += 1;
+if (PROFILE !== 'clean') {
+  rows[17].result_pnl = 150000; // profile-tuned outlier
+  injectedAnomalies += 1;
+}
 
 if (PROFILE === 'missing') {
   const missingA = { ...rows[21] };
   delete missingA.fee;
   missingA.signal_id = 'SIG-MISS-0001';
   rows.push(missingA);
+  injectedAnomalies += 1;
 
   const missingB = { ...rows[22] };
   delete missingB.intended_exit;
   missingB.signal_id = 'SIG-MISS-0002';
   rows.push(missingB);
+  injectedAnomalies += 1;
 }
 
 if (PROFILE === 'conflict') {
@@ -85,13 +93,16 @@ if (PROFILE === 'conflict') {
     side: baseA.side === 'BUY' ? 'SELL' : 'BUY',
     source_tag: `${SOURCE_TAG_BY_PROFILE[PROFILE]}_conflict_side`,
   });
+  injectedAnomalies += 1;
 
   const baseB = rows[50];
   rows.push({
     ...baseB,
     source_tag: `${SOURCE_TAG_BY_PROFILE[PROFILE]}_conflict_source`,
   });
+  injectedAnomalies += 1;
 }
+
 
 rows.sort((a, b) => String(a.signal_id).localeCompare(String(b.signal_id)) || String(a.ts).localeCompare(String(b.ts)) || String(a.symbol).localeCompare(String(b.symbol)));
 
@@ -100,7 +111,7 @@ fs.writeFileSync(IN_PATH, jsonl);
 fs.writeFileSync(PROFILE_PATH, `${PROFILE}\n`);
 const sha = crypto.createHash('sha256').update(jsonl).digest('hex');
 
-const anomalyCount = PROFILE === 'clean' ? 2 : 5;
+const anomalyCount = injectedAnomalies;
 writeMd(path.join(EPOCH_DIR, 'SAMPLE_TELEMETRY.md'), `# SAMPLE_TELEMETRY.md\n\nSTATUS: PASS\nREASON_CODE: NONE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: npm run -s edge:profit:00\n\n## Generator\n\n- seed: ${SEED}\n- profile: ${PROFILE}\n- rows_total: ${rows.length}\n- rows_nominal: ${ROWS}\n- rows_with_anomalies: ${anomalyCount}\n- output_path: artifacts/incoming/paper_telemetry.jsonl\n- profile_marker_path: artifacts/incoming/paper_telemetry.profile\n- sha256: ${sha}\n`);
 
 console.log(`[PASS] paper_telemetry_sample_gen(${PROFILE}) — wrote ${rows.length} rows, sha256=${sha.slice(0, 16)}...`);

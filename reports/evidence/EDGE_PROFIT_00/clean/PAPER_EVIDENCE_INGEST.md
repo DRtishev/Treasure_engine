@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 17833396303c
+RUN_ID: 1e640a385aaa
 NEXT_ACTION: npm run -s edge:profit:00:expectancy
 
 ## Input
@@ -11,6 +11,7 @@ NEXT_ACTION: npm run -s edge:profit:00:expectancy
 - input_path: artifacts/incoming/paper_telemetry.jsonl
 - rows_raw: 220
 - rows_normalized: 220
+- input_sha256: 22fc3008e7fce06b53cad276feb720d1b902a485a1edcb87af0ca3f4bb4830a2
 
 ## Outlier + Conflict Summary
 

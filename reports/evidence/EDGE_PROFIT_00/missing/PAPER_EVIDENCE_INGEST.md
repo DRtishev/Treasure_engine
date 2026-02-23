@@ -2,7 +2,7 @@
 
 STATUS: NEEDS_DATA
 REASON_CODE: NDA02
-RUN_ID: 17833396303c
+RUN_ID: 1e640a385aaa
 NEXT_ACTION: npm run -s edge:profit:00:sample
 
 ## Input
@@ -11,6 +11,7 @@ NEXT_ACTION: npm run -s edge:profit:00:sample
 - input_path: artifacts/incoming/paper_telemetry.jsonl
 - rows_raw: 222
 - rows_normalized: 220
+- input_sha256: b5fe41e20929801270755c2436e3c051512f4815113c84452573d0cb1ba039d1
 
 ## Outlier + Conflict Summary
 

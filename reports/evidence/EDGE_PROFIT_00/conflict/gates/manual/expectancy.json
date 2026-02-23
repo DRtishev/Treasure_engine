@@ -4,7 +4,7 @@
   "min_n": 200,
   "next_action": "npm run -s edge:profit:00",
   "reason_code": "DC90",
-  "run_id": "17833396303c",
+  "run_id": "1e640a385aaa",
   "schema_version": "1.0.0",
   "status": "BLOCKED",
   "trades_n": 0

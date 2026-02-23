@@ -31,7 +31,9 @@ function run(gate, cmd) {
   catch (e) { return { gate, exit_code: e.status || 1 }; }
 }
 function readGate(name) {
-  const p = path.join(MANUAL_DIR, `${name}.json`);
+  const p = name === 'hypothesis_registry'
+    ? path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'registry', 'gates', 'manual', 'hypothesis_registry.json')
+    : path.join(MANUAL_DIR, `${name}.json`);
   if (!fs.existsSync(p)) return { status: 'BLOCKED', reason_code: 'ME01' };
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }

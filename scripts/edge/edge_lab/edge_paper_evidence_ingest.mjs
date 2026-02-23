@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd, canonSort } from './canon.mjs';
 import { resolveProfit00EpochDir, resolveProfit00ManualDir } from './edge_profit_00_paths.mjs';
@@ -43,19 +44,24 @@ if (process.argv.includes('--generate-sample')) {
 
 let inputKind = 'NONE';
 let rawRows = [];
+let inputSha256 = 'NONE';
 if (fs.existsSync(JSONL_PATH)) {
   inputKind = 'JSONL';
-  rawRows = fs.readFileSync(JSONL_PATH, 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l));
+  const rawText = fs.readFileSync(JSONL_PATH, 'utf8');
+  inputSha256 = crypto.createHash('sha256').update(rawText).digest('hex');
+  rawRows = rawText.split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l));
 } else if (fs.existsSync(CSV_PATH)) {
   inputKind = 'CSV';
-  rawRows = parseCsv(fs.readFileSync(CSV_PATH, 'utf8'));
+  const rawText = fs.readFileSync(CSV_PATH, 'utf8');
+  inputSha256 = crypto.createHash('sha256').update(rawText).digest('hex');
+  rawRows = parseCsv(rawText);
 }
 
 if (inputKind === 'NONE') {
   const status = 'NEEDS_DATA';
   const reasonCode = 'NDA02';
   const nextAction = 'npm run -s edge:profit:00:sample';
-  writeMd(path.join(EPOCH_DIR, 'PAPER_EVIDENCE_INGEST.md'), `# PAPER_EVIDENCE_INGEST.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\nNo telemetry input found at:\n- artifacts/incoming/paper_telemetry.jsonl\n- artifacts/incoming/paper_telemetry.csv\n`);
+  writeMd(path.join(EPOCH_DIR, 'PAPER_EVIDENCE_INGEST.md'), `# PAPER_EVIDENCE_INGEST.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\nNo telemetry input found at:\n- artifacts/incoming/paper_telemetry.jsonl\n- artifacts/incoming/paper_telemetry.csv\n\ninput_sha256: ${inputSha256}\n`);
   writeJsonDeterministic(path.join(MANUAL_DIR, 'paper_evidence_ingest.json'), {
     schema_version: '1.0.0',
     status,
@@ -67,6 +73,7 @@ if (inputKind === 'NONE') {
     row_count: 0,
     outlier_count: 0,
     severe_conflict_count: 0,
+    input_sha256: inputSha256,
   });
   console.log(`[${status}] edge_paper_evidence_ingest — ${reasonCode}`);
   process.exit(0);
@@ -140,17 +147,17 @@ const nextAction = status === 'PASS'
     ? 'npm run -s edge:profit:00'
     : 'npm run -s edge:profit:00:sample';
 
-const md = `# PAPER_EVIDENCE_INGEST.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Input\n\n- input_kind: ${inputKind}\n- input_path: ${inputKind === 'JSONL' ? 'artifacts/incoming/paper_telemetry.jsonl' : 'artifacts/incoming/paper_telemetry.csv'}\n- rows_raw: ${rawRows.length}\n- rows_normalized: ${normalized.length}\n\n## Outlier + Conflict Summary\n\n- outlier_count: ${outliers.length}\n- severe_conflict_count: ${severeConflictCount}\n\n## Missing Required Fields\n\n${missingFieldRows.length ? missingFieldRows.map((e) => `- ${e}`).join('\n') : '- NONE'}\n\n## Outlier Marks (not deleted)\n\n${outliers.length ? canonSort(outliers).map((e) => `- ${e}`).join('\n') : '- NONE'}\n`;
+const md = `# PAPER_EVIDENCE_INGEST.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Input\n\n- input_kind: ${inputKind}\n- input_path: ${inputKind === 'JSONL' ? 'artifacts/incoming/paper_telemetry.jsonl' : 'artifacts/incoming/paper_telemetry.csv'}\n- rows_raw: ${rawRows.length}\n- rows_normalized: ${normalized.length}\n- input_sha256: ${inputSha256}\n\n## Outlier + Conflict Summary\n\n- outlier_count: ${outliers.length}\n- severe_conflict_count: ${severeConflictCount}\n\n## Missing Required Fields\n\n${missingFieldRows.length ? missingFieldRows.map((e) => `- ${e}`).join('\n') : '- NONE'}\n\n## Outlier Marks (not deleted)\n\n${outliers.length ? canonSort(outliers).map((e) => `- ${e}`).join('\n') : '- NONE'}\n`;
 
 writeMd(path.join(EPOCH_DIR, 'PAPER_EVIDENCE_INGEST.md'), md);
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'paper_evidence_normalized.json'), {
   schema_version: '1.0.0',
-  status: 'PASS',
-  reason_code: 'NONE',
+  status,
+  reason_code: reasonCode,
   run_id: RUN_ID,
-  record_count: normalized.length,
-  records: normalized,
+  record_count: status === 'PASS' ? normalized.length : 0,
+  records: status === 'PASS' ? normalized : [],
 });
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'paper_evidence_ingest.json'), {
@@ -170,6 +177,7 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'paper_evidence_ingest.json'), {
   severe_conflict_count: severeConflictCount,
   missing_field_rows: canonSort(missingFieldRows),
   outlier_marks: canonSort(outliers),
+  input_sha256: inputSha256,
 });
 
 console.log(`[${status}] edge_paper_evidence_ingest — ${reasonCode}`);

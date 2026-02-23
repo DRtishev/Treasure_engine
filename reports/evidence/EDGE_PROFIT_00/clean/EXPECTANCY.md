@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 17833396303c
+RUN_ID: 1e640a385aaa
 NEXT_ACTION: npm run -s edge:profit:00:overfit
 
 ## Inputs
@@ -18,13 +18,13 @@ NEXT_ACTION: npm run -s edge:profit:00:overfit
 
 ## Metrics
 
-- mean_pnl_per_trade: 0.155401
-- stddev_pnl: 0.076712
+- mean_pnl_per_trade: 0.151784
+- stddev_pnl: 0.060952
 - winrate: 1.000000
 - profit_factor: 999.000000
 - max_drawdown_proxy: 0.000000
-- ci95_low: 0.145857
-- ci95_high: 0.166048
-- sharpe_proxy: 32.157974
+- ci95_low: 0.143697
+- ci95_high: 0.159800
+- sharpe_proxy: 39.530862
 - psr0: 1.000000
 - trl_proxy: 2.200000

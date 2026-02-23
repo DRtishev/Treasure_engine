@@ -7,7 +7,7 @@ import { resolveProfit00EpochDir, resolveProfit00ManualDir } from './edge_profit
 const ROOT = path.resolve(process.cwd());
 const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
 const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
-const REG_PATH = path.join(MANUAL_DIR, 'hypothesis_registry.json');
+const REG_PATH = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'registry', 'gates', 'manual', 'hypothesis_registry.json');
 const EXP_PATH = path.join(MANUAL_DIR, 'expectancy.json');
 const BASE = Number(process.env.OVERFIT_BASE_PSR || 0.95);
 

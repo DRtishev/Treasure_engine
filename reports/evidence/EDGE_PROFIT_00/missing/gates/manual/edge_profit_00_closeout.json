@@ -35,7 +35,7 @@
   "message": "EDGE_PROFIT_00 needs more telemetry evidence.",
   "next_action": "npm run -s edge:profit:00:sample",
   "reason_code": "NDA02",
-  "run_id": "17833396303c",
+  "run_id": "1e640a385aaa",
   "schema_version": "1.0.0",
   "status": "NEEDS_DATA"
 }

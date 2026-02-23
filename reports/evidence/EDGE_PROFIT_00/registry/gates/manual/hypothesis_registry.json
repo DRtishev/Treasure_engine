@@ -1,0 +1,16 @@
+{
+  "errors": [],
+  "evidence_scope": "reports/evidence/EDGE_PROFIT_00/registry",
+  "hypothesis_count": 2,
+  "message": "Registry valid with 2 immutable hypothesis entries.",
+  "next_action": "npm run -s edge:profit:00:ingest",
+  "reason_code": "NONE",
+  "registry_ids": [
+    "HYP-0001",
+    "HYP-0002"
+  ],
+  "run_id": "1e640a385aaa",
+  "schema_version": "1.0.0",
+  "ssot_path": "EDGE_PROFIT_00/HYPOTHESES_SSOT.md",
+  "status": "PASS"
+}

@@ -2,7 +2,7 @@
 
 STATUS: BLOCKED
 REASON_CODE: DC90
-RUN_ID: 17833396303c
+RUN_ID: 1e640a385aaa
 NEXT_ACTION: npm run -s edge:profit:00
 
 ## Input
@@ -11,6 +11,7 @@ NEXT_ACTION: npm run -s edge:profit:00
 - input_path: artifacts/incoming/paper_telemetry.jsonl
 - rows_raw: 222
 - rows_normalized: 222
+- input_sha256: 3fd0ce98e7a0dd27b5d4fd9e06e3424d01fc0a425a99380de8d541079a35ecc6
 
 ## Outlier + Conflict Summary
 

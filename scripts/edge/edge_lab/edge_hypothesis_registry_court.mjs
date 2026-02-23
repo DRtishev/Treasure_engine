@@ -2,41 +2,53 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from './canon.mjs';
-import { resolveProfit00EpochDir, resolveProfit00ManualDir } from './edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
-const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
+const SSOT_PATH = path.join(ROOT, 'EDGE_PROFIT_00', 'HYPOTHESES_SSOT.md');
+const REGISTRY_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'registry');
+const MANUAL_DIR = path.join(REGISTRY_DIR, 'gates', 'manual');
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
-const registry = [
-  {
-    id: 'HYP-0001',
-    name: 'BTC mean-reversion micro swing (paper only)',
-    params: { lookback_bars: 48, z_entry: 2.2, z_exit: 0.6 },
-    timeframe: '5m',
-    venue: 'BINANCE_SPOT',
-    expected_edge_type: 'MEAN_REVERSION',
-    status: 'CANDIDATE',
-  },
-  {
-    id: 'HYP-0002',
-    name: 'ETH momentum continuation with latency-aware exits (paper only)',
-    params: { breakout_bars: 24, trail_bps: 14, max_latency_ms: 350 },
-    timeframe: '1m',
-    venue: 'BINANCE_SPOT',
-    expected_edge_type: 'MOMENTUM',
-    status: 'CANDIDATE',
-  },
-];
+function parseSsot(text) {
+  const rows = [];
+  const errors = [];
+  const lines = text.split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  for (const line of lines) {
+    if (!line.startsWith('HYP-')) continue;
+    const parts = line.split('|');
+    if (parts.length !== 7) {
+      errors.push(`bad_row_format:${line}`);
+      continue;
+    }
+    const [id, name, paramsJson, timeframe, venue, expectedEdgeType, status] = parts;
+    let params = null;
+    try {
+      params = JSON.parse(paramsJson);
+      if (!params || typeof params !== 'object' || Array.isArray(params)) {
+        errors.push(`params_not_object:${id}`);
+        continue;
+      }
+    } catch {
+      errors.push(`bad_params_json:${id}`);
+      continue;
+    }
+    rows.push({ id, name, params, timeframe, venue, expected_edge_type: expectedEdgeType, status });
+  }
+  return { rows, errors };
+}
+
+const readOk = fs.existsSync(SSOT_PATH);
+const ssotText = readOk ? fs.readFileSync(SSOT_PATH, 'utf8') : '';
+const { rows: registry, errors } = parseSsot(ssotText);
+
+if (!readOk) errors.push('missing_ssot:EDGE_PROFIT_00/HYPOTHESES_SSOT.md');
 
 const required = ['id', 'name', 'params', 'timeframe', 'venue', 'expected_edge_type', 'status'];
 const ids = new Set();
-const errors = [];
 for (const row of registry) {
   for (const k of required) {
-    if (!(k in row)) errors.push(`missing_field:${row.id || 'UNKNOWN'}:${k}`);
+    if (!(k in row) || String(row[k]).trim() === '') errors.push(`missing_field:${row.id || 'UNKNOWN'}:${k}`);
   }
   if (!/^HYP-\d{4}$/.test(row.id)) errors.push(`bad_id_format:${row.id}`);
   if (ids.has(row.id)) errors.push(`duplicate_id:${row.id}`);
@@ -56,23 +68,23 @@ REASON_CODE: ${reasonCode}
 RUN_ID: ${RUN_ID}
 NEXT_ACTION: ${nextAction}
 
+## Registry Scope
+
+- ssot_path: EDGE_PROFIT_00/HYPOTHESES_SSOT.md
+- evidence_scope: reports/evidence/EDGE_PROFIT_00/registry
+
 ## Registry Rows
 
 | id | name | timeframe | venue | expected_edge_type | status |
 |---|---|---|---|---|---|
-${registry.map((r) => `| ${r.id} | ${r.name} | ${r.timeframe} | ${r.venue} | ${r.expected_edge_type} | ${r.status} |`).join('\n')}
-
-## Change Protocol
-
-- PROPOSE → APPLY receipts required for any mutation.
-- IDs are immutable and append-only.
+${registry.map((r) => `| ${r.id} | ${r.name} | ${r.timeframe} | ${r.venue} | ${r.expected_edge_type} | ${r.status} |`).join('\n') || '| NONE | NONE | NONE | NONE | NONE | NONE |'}
 
 ## Validation Errors
 
 ${errors.length ? errors.map((e) => `- ${e}`).join('\n') : '- NONE'}
 `;
 
-writeMd(path.join(EPOCH_DIR, 'HYPOTHESIS_REGISTRY.md'), md);
+writeMd(path.join(REGISTRY_DIR, 'HYPOTHESIS_REGISTRY.md'), md);
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'hypothesis_registry.json'), {
   schema_version: '1.0.0',
@@ -86,6 +98,8 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'hypothesis_registry.json'), {
   hypothesis_count: registry.length,
   registry_ids: registry.map((r) => r.id),
   errors,
+  ssot_path: 'EDGE_PROFIT_00/HYPOTHESES_SSOT.md',
+  evidence_scope: 'reports/evidence/EDGE_PROFIT_00/registry',
 });
 
 console.log(`[${status}] edge_hypothesis_registry_court — ${reasonCode}`);
