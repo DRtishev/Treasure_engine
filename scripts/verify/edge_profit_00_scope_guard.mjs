@@ -42,18 +42,24 @@ for (const file of files) {
 }
 
 const profileMarkerExists = fs.existsSync(PROFILE_MARKER);
-const violations = [
-  ...consumerViolations,
-  ...(profileMarkerExists ? legacyWriteViolations : []),
-];
+let status = 'PASS';
+let reasonCode = 'NONE';
+let nextAction = 'npm run -s executor:run:chain';
+let violations = [];
 
-const status = violations.length === 0 ? 'PASS' : 'BLOCKED';
-const reasonCode = violations.length === 0 ? 'NONE' : 'SG01';
-const nextAction = status === 'PASS'
-  ? 'npm run -s edge:profit:00'
-  : 'npm run -s verify:edge:profit:00:scope';
+if (profileMarkerExists && consumerViolations.length > 0) {
+  status = 'FAIL';
+  reasonCode = 'RG01';
+  nextAction = 'npm run -s verify:edge:profit:00:scope';
+  violations = canonSort(consumerViolations);
+} else if (profileMarkerExists && legacyWriteViolations.length > 0) {
+  status = 'BLOCKED';
+  reasonCode = 'SG01';
+  nextAction = 'npm run -s verify:edge:profit:00:scope';
+  violations = canonSort(legacyWriteViolations);
+}
 
-const md = `# SCOPE_GUARD.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Checks\n\n- registry_consumer_scope_enforced: ${consumerViolations.length === 0}\n- profile_marker_exists: ${profileMarkerExists}\n- legacy_root_manual_write_enforced_when_profile_exists: ${profileMarkerExists ? legacyWriteViolations.length === 0 : 'SKIPPED'}\n\n## Violations\n\n${violations.length ? canonSort(violations).map((v) => `- ${v}`).join('\n') : '- NONE'}\n`;
+const md = `# SCOPE_GUARD.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Checks\n\n- profile_marker_exists: ${profileMarkerExists}\n- registry_consumer_scope_enforced_when_profile_exists: ${profileMarkerExists ? consumerViolations.length === 0 : 'SKIPPED'}\n- legacy_root_manual_write_enforced_when_profile_exists: ${profileMarkerExists ? legacyWriteViolations.length === 0 : 'SKIPPED'}\n\n## Violations\n\n${violations.length ? violations.map((v) => `- ${v}`).join('\n') : '- NONE'}\n`;
 
 writeMd(path.join(REGISTRY_DIR, 'SCOPE_GUARD.md'), md);
 
@@ -63,13 +69,15 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'scope_guard.json'), {
   reason_code: reasonCode,
   run_id: RUN_ID,
   message: status === 'PASS'
-    ? 'Scope guard passed: registry consumers are registry-scoped and no legacy root manual writes were detected under profile mode.'
-    : 'Scope guard blocked due to scope violations.',
+    ? 'Scope guard passed for profile-aware EDGE_PROFIT_00 registry consumers.'
+    : reasonCode === 'RG01'
+      ? 'Registry consumer reads non-SSOT path while profile marker exists.'
+      : 'Legacy root manual write detected while profile marker exists.',
   next_action: nextAction,
   profile_marker_exists: profileMarkerExists,
   consumer_violation_count: consumerViolations.length,
-  legacy_write_violation_count: profileMarkerExists ? legacyWriteViolations.length : 0,
-  violations: canonSort(violations),
+  legacy_write_violation_count: legacyWriteViolations.length,
+  violations,
   required_registry_path: 'reports/evidence/EDGE_PROFIT_00/registry/gates/manual/hypothesis_registry.json',
 });
 

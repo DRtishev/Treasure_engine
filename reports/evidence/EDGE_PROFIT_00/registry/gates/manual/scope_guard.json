@@ -1,0 +1,13 @@
+{
+  "consumer_violation_count": 0,
+  "legacy_write_violation_count": 0,
+  "message": "Scope guard passed for profile-aware EDGE_PROFIT_00 registry consumers.",
+  "next_action": "npm run -s executor:run:chain",
+  "profile_marker_exists": true,
+  "reason_code": "NONE",
+  "required_registry_path": "reports/evidence/EDGE_PROFIT_00/registry/gates/manual/hypothesis_registry.json",
+  "run_id": "a7fda148d63c",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": []
+}

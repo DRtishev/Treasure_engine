@@ -703,6 +703,9 @@ scripts/verify/epoch55_paper_fitness_lab.mjs
 scripts/verify/epoch56_trickpack01.mjs
 scripts/verify/events_schema_check.mjs
 scripts/verify/evidence_commit_binding_check.mjs
+scripts/verify/executor_commands_run_guard.mjs
+scripts/verify/export_contract_integrity_gate.mjs
+scripts/verify/export_contract_receipt_format_guard.mjs
 scripts/verify/fixture_guard_gate.mjs
 scripts/verify/fixtures/nondeterminism_bad.mjs
 scripts/verify/format_policy_gate.mjs
@@ -745,6 +748,7 @@ scripts/verify/provenance_check.mjs
 scripts/verify/reachability.mjs
 scripts/verify/regression_no_sandbox_promotion.mjs
 scripts/verify/regression_no_stub_promotion.mjs
+scripts/verify/regression_profile_source_mismatch.mjs
 scripts/verify/release_chain_check.mjs
 scripts/verify/release_check.mjs
 scripts/verify/release_governor_check.mjs

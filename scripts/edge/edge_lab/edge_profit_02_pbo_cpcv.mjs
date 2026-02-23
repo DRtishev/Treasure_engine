@@ -2,15 +2,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from './canon.mjs';
+import { resolveProfit00EpochDir } from './edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const REAL_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'real');
-const MANUAL_DIR = path.join(REAL_DIR, 'gates', 'manual');
+const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
+const MANUAL_DIR = path.join(EPOCH_DIR, 'gates', 'manual');
 const INGEST_JSON = path.join(MANUAL_DIR, 'paper_evidence_ingest.json');
 const NORM_JSON = path.join(MANUAL_DIR, 'paper_evidence_normalized.json');
 const EXPECT_JSON = path.join(MANUAL_DIR, 'expectancy.json');
 const LEDGER = path.join(ROOT, 'EDGE_PROFIT_00', 'TRIALS_LEDGER.md');
-const OUT_MD = path.join(REAL_DIR, 'PBO_CPCV.md');
+const OUT_MD = path.join(EPOCH_DIR, 'PBO_CPCV.md');
 const OUT_JSON = path.join(MANUAL_DIR, 'pbo_cpcv.json');
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });

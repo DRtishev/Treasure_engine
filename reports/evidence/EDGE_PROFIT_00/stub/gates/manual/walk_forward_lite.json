@@ -1,0 +1,15 @@
+{
+  "message": "Walk-forward-lite check passed.",
+  "n_test": 109,
+  "n_total": 360,
+  "n_train": 251,
+  "next_action": "npm run -s edge:profit:00",
+  "reason_code": "NONE",
+  "run_id": "a7fda148d63c",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "test_ci95_high": 0.3021362,
+  "test_ci95_low": 0.27532869,
+  "train_ci95_high": 0.29449113,
+  "train_ci95_low": 0.27808439
+}

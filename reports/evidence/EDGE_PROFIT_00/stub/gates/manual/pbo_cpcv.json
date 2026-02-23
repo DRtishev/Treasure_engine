@@ -1,0 +1,16 @@
+{
+  "evidence_source": "FIXTURE_STUB",
+  "message": "PBO/CPCV requires REAL telemetry; got FIXTURE_STUB.",
+  "next_action": "npm run -s edge:profit:00:import:csv",
+  "pbo_estimate": null,
+  "reason_code": "EP02_REAL_REQUIRED",
+  "required_trades_n": 200,
+  "required_trials_n": 10,
+  "run_id": "a7fda148d63c",
+  "samples_s": 30,
+  "schema_version": "1.0.0",
+  "seed": 20260223,
+  "status": "NEEDS_DATA",
+  "trades_n": 360,
+  "trials_ledger_n": 3
+}

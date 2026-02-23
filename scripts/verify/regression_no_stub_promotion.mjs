@@ -3,11 +3,14 @@ import path from 'node:path';
 import { execSync } from 'node:child_process';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
+import { resolveProfit00EpochDir } from '../edge/edge_lab/edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const REG_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'registry');
 const MANUAL_DIR = path.join(REG_DIR, 'gates', 'manual');
-const CLOSEOUT_JSON = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'real', 'gates', 'manual', 'edge_profit_00_closeout.json');
+function closeoutJsonPath() {
+  return path.join(resolveProfit00EpochDir(ROOT), 'gates', 'manual', 'edge_profit_00_closeout.json');
+}
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
@@ -30,6 +33,7 @@ try {
 }
 
 if (status === 'PASS') {
+  const CLOSEOUT_JSON = closeoutJsonPath();
   if (!fs.existsSync(CLOSEOUT_JSON)) {
     status = 'BLOCKED';
     reasonCode = 'ME01';
@@ -50,7 +54,7 @@ if (status === 'PASS') {
   }
 }
 
-writeMd(path.join(REG_DIR, 'REGRESSION_NO_STUB_PROMOTION.md'), `# REGRESSION_NO_STUB_PROMOTION.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n- closeout_json: reports/evidence/EDGE_PROFIT_00/real/gates/manual/edge_profit_00_closeout.json\n- closeout_status: ${closeoutStatus}\n- evidence_source: ${evidenceSource}\n- eligible_for_profit_track: ${eligible === null ? 'MISSING' : eligible}\n`);
+writeMd(path.join(REG_DIR, 'REGRESSION_NO_STUB_PROMOTION.md'), `# REGRESSION_NO_STUB_PROMOTION.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n- closeout_json: dynamic(active profile)/gates/manual/edge_profit_00_closeout.json\n- closeout_status: ${closeoutStatus}\n- evidence_source: ${evidenceSource}\n- eligible_for_profit_track: ${eligible === null ? 'MISSING' : eligible}\n`);
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'regression_no_stub_promotion.json'), {
   schema_version: '1.0.0',

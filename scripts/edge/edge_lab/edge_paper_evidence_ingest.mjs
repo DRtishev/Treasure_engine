@@ -3,13 +3,13 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd, canonSort } from './canon.mjs';
-import { resolveProfit00EpochDir, resolveProfit00ManualDir, resolveProfit00Profile } from './edge_profit_00_paths.mjs';
+import { profileForEvidenceSource, resolveProfit00EpochDir, resolveProfit00ManualDir, resolveProfit00Profile } from './edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
 const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
 const PROFILE = resolveProfit00Profile(ROOT);
-let evidenceSource = PROFILE ? (PROFILE === 'real' ? 'REAL' : 'FIXTURE') : 'REAL';
+let evidenceSource = PROFILE === 'sandbox' ? 'REAL_SANDBOX' : PROFILE === 'stub' ? 'FIXTURE_STUB' : 'REAL';
 const JSONL_PATH = path.join(ROOT, 'artifacts', 'incoming', 'paper_telemetry.jsonl');
 const CSV_PATH = path.join(ROOT, 'artifacts', 'incoming', 'paper_telemetry.csv');
 const REQUIRED = ['ts', 'symbol', 'side', 'signal_id', 'intended_entry', 'intended_exit', 'fill_price', 'fee', 'slippage_bps', 'latency_ms', 'result_pnl', 'source_tag'];
@@ -138,12 +138,17 @@ const severeConflictCount = outliers.filter((x) => x.includes('conflict_')).leng
 const sourceTags = new Set(normalized.map((r) => String(r.source_tag || '').toUpperCase()));
 const stubTagged = normalized.length > 0 && [...sourceTags].every((t) => t.includes('REAL_STUB'));
 const sandboxTagged = normalized.length > 0 && [...sourceTags].every((t) => t.includes('REAL_SANDBOX'));
-if (PROFILE === 'real' && sandboxTagged) {
+if (sandboxTagged) {
   evidenceSource = 'REAL_SANDBOX';
-} else if (PROFILE === 'real' && stubTagged) {
+} else if (stubTagged) {
   evidenceSource = 'FIXTURE_STUB';
-} else if (PROFILE === 'real' && (inputKind === 'CSV' || inputKind === 'JSONL')) {
+} else if (inputKind === 'CSV' || inputKind === 'JSONL') {
   evidenceSource = 'REAL';
+}
+
+const expectedProfile = profileForEvidenceSource(evidenceSource);
+if (expectedProfile && PROFILE && expectedProfile !== PROFILE) {
+  evidenceSource = expectedProfile === 'real' ? 'REAL' : expectedProfile === 'sandbox' ? 'REAL_SANDBOX' : 'FIXTURE_STUB';
 }
 const hasMissing = missingFieldRows.length > 0;
 const blocked = severeConflictCount > 0;

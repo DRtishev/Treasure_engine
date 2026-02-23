@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 1e93566551e0
+RUN_ID: a7fda148d63c
 NEXT_ACTION: All NEXT_ACTION references are valid. No phantom commands.
 
 ## OP01 Policy
@@ -36,7 +36,7 @@ Missing script => BLOCKED OP01.
 | Found | 13 |
 | Missing | 0 |
 
-## All Available Scripts (649 total, sorted)
+## All Available Scripts (657 total, sorted)
 
 - `approve:snapshots`
 - `court:v1`
@@ -113,6 +113,8 @@ Missing script => BLOCKED OP01.
 - `edge:verdict`
 - `epoch:close`
 - `epoch:edge:profit:03`
+- `epoch:mega:proof`
+- `epoch:mega:proof:x2`
 - `epoch:next`
 - `epoch:run`
 - `evidence:pack:epoch`
@@ -125,6 +127,8 @@ Missing script => BLOCKED OP01.
 - `gate:exec`
 - `gate:integration`
 - `gate:obs`
+- `gov:final:fingerprint`
+- `gov:final:index`
 - `gov:gov01`
 - `gov:integrity`
 - `gov:merkle`
@@ -619,6 +623,9 @@ Missing script => BLOCKED OP01.
 - `verify:exec:recon:demo`
 - `verify:exec:recon:demo:daily`
 - `verify:exec:recon:microfill`
+- `verify:executor:commands:guard`
+- `verify:export:contract`
+- `verify:export:receipt`
 - `verify:fixture:guard`
 - `verify:format:policy`
 - `verify:golden`
@@ -660,6 +667,7 @@ Missing script => BLOCKED OP01.
 - `verify:reality-gap`
 - `verify:regression:no-sandbox-promotion`
 - `verify:regression:no-stub-promotion`
+- `verify:regression:profile-source`
 - `verify:release`
 - `verify:release-governor`
 - `verify:release:chain`

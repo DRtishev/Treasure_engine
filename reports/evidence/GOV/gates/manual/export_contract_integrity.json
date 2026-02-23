@@ -1,0 +1,13 @@
+{
+  "contract_path": "GOV/EXPORT_CONTRACT.md",
+  "contract_sha256": "5bb6be74f282300ca376a6ce0811342a26e6aeed4982964406dddc25d896d81a",
+  "message": "EXPORT_CONTRACT integrity verified against pinned receipt hash.",
+  "next_action": "npm run -s epoch:mega:proof:x2",
+  "reason_code": "NONE",
+  "receipt_contract_sha256": "5bb6be74f282300ca376a6ce0811342a26e6aeed4982964406dddc25d896d81a",
+  "receipt_loaded": true,
+  "receipt_path": "GOV/EXPORT_CONTRACT_RECEIPT.md",
+  "run_id": "a7fda148d63c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

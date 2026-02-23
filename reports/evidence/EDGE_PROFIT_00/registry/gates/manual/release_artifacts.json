@@ -1,22 +1,23 @@
 {
   "artifacts": [
     {
-      "contract_key": "FINAL_VALIDATED_PRIMARY_PATH",
-      "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz",
-      "present": true,
-      "sha256": "355cb8dda9c38678f4766142973c4d34b75298a416292a5e9fe5c59d1faa1eaf"
-    },
-    {
-      "contract_key": "EVIDENCE_CHAIN_PRIMARY_PATH",
-      "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz",
-      "present": true,
-      "sha256": "355cb8dda9c38678f4766142973c4d34b75298a416292a5e9fe5c59d1faa1eaf"
-    },
-    {
-      "contract_key": "FINAL_VALIDATED_SHA256_SIDECAR_PATH",
+      "alias": false,
+      "contract_keys": [
+        "FINAL_VALIDATED_SHA256_SIDECAR_PATH"
+      ],
       "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256",
       "present": true,
-      "sha256": "86cd748405ab0925dcb40b26f5796804f69fe94d7ce7dfc44fa0aa88cda8d7a4"
+      "sha256": "aa25c62f41530e6bfe109c3220421c19c0df55af60116c7a9a366a0d31949897"
+    },
+    {
+      "alias": true,
+      "contract_keys": [
+        "EVIDENCE_CHAIN_PRIMARY_PATH",
+        "FINAL_VALIDATED_PRIMARY_PATH"
+      ],
+      "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz",
+      "present": true,
+      "sha256": "04dca1d987c98ad7f8711e2284304fb09720752bf60d7c460af5d9a225d3758b"
     }
   ],
   "contract_error": "NONE",
@@ -27,7 +28,7 @@
   "missing": [],
   "next_action": "npm run -s executor:run:chain",
   "reason_code": "NONE",
-  "run_id": "1e93566551e0",
+  "run_id": "a7fda148d63c",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

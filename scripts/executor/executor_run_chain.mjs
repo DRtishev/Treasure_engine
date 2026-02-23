@@ -2,12 +2,13 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
+import { resolveProfit00ManualDir } from '../edge/edge_lab/edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
 const COMMANDS_MD = path.join(EXEC_DIR, 'COMMANDS_RUN.md');
 const SSOT_ENTRYPOINT = 'npm run -s executor:run:chain';
-const INGEST_GATE = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'real', 'gates', 'manual', 'paper_evidence_ingest.json');
+const INGEST_GATE = path.join(resolveProfit00ManualDir(ROOT), 'paper_evidence_ingest.json');
 
 fs.mkdirSync(EXEC_DIR, { recursive: true });
 
@@ -55,13 +56,43 @@ const laneBBase = [
 const laneAFinal = [
   'npm run -s export:final-validated',
   'npm run -s verify:edge:profit:00:release',
+  'npm run -s verify:export:contract',
+  'npm run -s verify:export:receipt',
+  'npm run -s gov:final:index',
+  'npm run -s gov:final:fingerprint',
   'npm run -s edge:profit:00:doctor',
   'npm run -s verify:report:contradiction',
+  'npm run -s verify:regression:profile-source',
   'npm run -s verify:regression:no-stub-promotion',
   'npm run -s verify:regression:no-sandbox-promotion',
 ];
 
-function render(records, status, reason) {
+function detectEvidenceSource() {
+  if (!fs.existsSync(INGEST_GATE)) return 'UNKNOWN';
+  try {
+    const data = JSON.parse(fs.readFileSync(INGEST_GATE, 'utf8'));
+    return String(data.evidence_source || 'UNKNOWN').toUpperCase();
+  } catch {
+    return 'UNKNOWN';
+  }
+}
+
+function summarizeLaneA(records) {
+  const laneRecs = records.filter((r) => r.lane === 'A');
+  if (!laneRecs.length) return 'SKIPPED';
+  return laneRecs.every((r) => r.ec === 0) ? 'PASS' : 'BLOCKED';
+}
+
+function summarizeLaneB(records, laneBMode) {
+  const laneRecs = records.filter((r) => r.lane === 'B');
+  if (!laneRecs.length) return 'SKIPPED';
+  if (laneBMode === 'DRY_RUN') return laneRecs.every((r) => r.ec === 0) ? 'PASS' : 'NEEDS_DATA';
+  return laneRecs.every((r) => r.ec === 0) ? 'PASS' : 'BLOCKED';
+}
+
+function render(records, status, reason, laneBMode) {
+  const laneAStatus = summarizeLaneA(records);
+  const laneBStatus = summarizeLaneB(records, laneBMode);
   const sections = records.map((r, idx) => {
     const out = (r.stdout + r.stderr).trimEnd();
     return [
@@ -78,18 +109,34 @@ function render(records, status, reason) {
     ].join('\n');
   }).join('');
 
+  const notes = status === 'PASS'
+    ? '- executor_chain_verdict: PASS'
+    : `- executor_chain_verdict: ${status}`;
+
   const md = [
-    '# COMMANDS_RUN.md',
-    '',
-    `STATUS: ${status}`,
-    `REASON_CODE: ${reason}`,
+    '# COMMANDS_RUN',
+    'GENERATED_BY: scripts/executor/executor_run_chain.mjs',
     `NODE_VERSION: ${process.version}`,
     `NPM_VERSION: ${npmVersion.ec === 0 ? npmVersion.stdout.trim() : 'MISSING'}`,
     `RUN_ID: ${RUN_ID}`,
     `VERIFY_MODE: ${VERIFY_MODE}`,
+    `LANE_A_STATUS: ${laneAStatus}`,
+    `LANE_B_STATUS: ${laneBStatus}`,
+    `LANE_B_MODE: ${laneBMode}`,
     `NEXT_ACTION: ${SSOT_ENTRYPOINT}`,
+    `STATUS: ${status}`,
+    `REASON_CODE: ${reason}`,
+    '',
+    '## LANE_SUMMARY',
+    `- lane_a_status: ${laneAStatus}`,
+    `- lane_b_status: ${laneBStatus}`,
+    `- lane_b_mode: ${laneBMode}`,
+    `- records_n: ${records.length}`,
     '',
     sections,
+    '## NOTES',
+    notes,
+    '',
   ].join('\n');
 
   writeMd(COMMANDS_MD, md);
@@ -102,52 +149,43 @@ function appendRun(records, cmd, lane) {
   return rec;
 }
 
-function detectEvidenceSource() {
-  if (!fs.existsSync(INGEST_GATE)) return 'UNKNOWN';
-  try {
-    const data = JSON.parse(fs.readFileSync(INGEST_GATE, 'utf8'));
-    return String(data.evidence_source || 'UNKNOWN').toUpperCase();
-  } catch {
-    return 'UNKNOWN';
-  }
-}
-
 const records = [];
-render(records, 'RUNNING', 'RUN01');
+const evidenceSource = detectEvidenceSource();
+const laneBReal = evidenceSource === 'REAL';
+const laneBMode = laneBReal ? 'LIVE_REQUIRED' : 'DRY_RUN';
+const laneB = laneBReal ? laneBBase : laneBBase.map((c) => `EDGE_PROFIT_DRY_RUN=1 ${c}`);
+
+render(records, 'RUNNING', 'RUN01', laneBMode);
 
 for (const cmd of laneA) {
   const rec = appendRun(records, cmd, 'A');
   if (rec.ec !== 0) {
-    render(records, 'BLOCKED', 'EC01');
+    render(records, 'BLOCKED', 'EC01', laneBMode);
     console.log('[BLOCKED] executor_run_chain — EC01');
     process.exit(1);
   }
-  render(records, 'RUNNING', 'RUN01');
+  render(records, 'RUNNING', 'RUN01', laneBMode);
 }
-
-const evidenceSource = detectEvidenceSource();
-const laneBReal = evidenceSource === 'REAL';
-const laneB = laneBReal ? laneBBase : laneBBase.map((c) => `EDGE_PROFIT_DRY_RUN=1 ${c}`);
 
 for (const cmd of laneB) {
   const rec = appendRun(records, cmd, 'B');
   if (rec.ec !== 0 && laneBReal) {
-    render(records, 'BLOCKED', 'EC01');
+    render(records, 'BLOCKED', 'EC01', laneBMode);
     console.log('[BLOCKED] executor_run_chain — EC01');
     process.exit(1);
   }
-  render(records, 'RUNNING', 'RUN01');
+  render(records, 'RUNNING', 'RUN01', laneBMode);
 }
 
 for (const cmd of laneAFinal) {
   const rec = appendRun(records, cmd, 'A');
   if (rec.ec !== 0) {
-    render(records, 'BLOCKED', 'EC01');
+    render(records, 'BLOCKED', 'EC01', laneBMode);
     console.log('[BLOCKED] executor_run_chain — EC01');
     process.exit(1);
   }
-  render(records, 'RUNNING', 'RUN01');
+  render(records, 'RUNNING', 'RUN01', laneBMode);
 }
 
-render(records, 'PASS', 'NONE');
+render(records, 'PASS', 'NONE', laneBMode);
 console.log('[PASS] executor_run_chain — NONE');

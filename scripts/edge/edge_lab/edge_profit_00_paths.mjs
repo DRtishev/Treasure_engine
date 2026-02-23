@@ -2,13 +2,23 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const PROFILE_MARKER = path.join('artifacts', 'incoming', 'paper_telemetry.profile');
+const ALLOWED_PROFILES = new Set(['real', 'sandbox', 'stub', 'clean', 'missing', 'conflict']);
+
+export function profileForEvidenceSource(evidenceSource) {
+  const source = String(evidenceSource || '').trim().toUpperCase();
+  if (source === 'REAL') return 'real';
+  if (source === 'REAL_SANDBOX') return 'sandbox';
+  if (source === 'FIXTURE_STUB') return 'stub';
+  return '';
+}
 
 export function resolveProfit00Profile(ROOT = process.cwd()) {
   const fromEnv = String(process.env.EDGE_PROFIT_PROFILE || '').trim().toLowerCase();
-  if (fromEnv) return fromEnv;
+  if (fromEnv) return ALLOWED_PROFILES.has(fromEnv) ? fromEnv : '';
   const markerPath = path.join(ROOT, PROFILE_MARKER);
   if (!fs.existsSync(markerPath)) return '';
-  return String(fs.readFileSync(markerPath, 'utf8')).trim().toLowerCase();
+  const fromMarker = String(fs.readFileSync(markerPath, 'utf8')).trim().toLowerCase();
+  return ALLOWED_PROFILES.has(fromMarker) ? fromMarker : '';
 }
 
 export function resolveProfit00EpochDir(ROOT = process.cwd()) {

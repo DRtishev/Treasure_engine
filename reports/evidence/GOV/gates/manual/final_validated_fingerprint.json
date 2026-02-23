@@ -1,0 +1,14 @@
+{
+  "artifact_path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz",
+  "contract_sha256": "5bb6be74f282300ca376a6ce0811342a26e6aeed4982964406dddc25d896d81a",
+  "entry_count": 785,
+  "message": "Final validated fingerprint computed.",
+  "next_action": "npm run -s epoch:mega:proof:x2",
+  "reason_code": "NONE",
+  "run_id": "a7fda148d63c",
+  "schema_version": "1.0.0",
+  "sha256": "04dca1d987c98ad7f8711e2284304fb09720752bf60d7c460af5d9a225d3758b",
+  "sidecar_path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256",
+  "status": "PASS",
+  "total_bytes": 2921365
+}

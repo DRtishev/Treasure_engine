@@ -1,0 +1,19 @@
+{
+  "ci95_low": 0.28001992,
+  "evidence_source": "FIXTURE_STUB",
+  "execution_reality_status": "PASS",
+  "expectancy_status": "PASS",
+  "ingest_status": "PASS",
+  "message": "Expectancy proof requires REAL telemetry; got evidence_source=FIXTURE_STUB.",
+  "min_n_trades": 200,
+  "min_trl": 2,
+  "min_trl_trades": 3.6,
+  "next_action": "npm run -s edge:profit:00:import:csv",
+  "psr0": 1,
+  "psr_min": 0.95,
+  "reason_code": "EP02_REAL_REQUIRED",
+  "run_id": "a7fda148d63c",
+  "schema_version": "1.0.0",
+  "status": "NEEDS_DATA",
+  "trades_n": 360
+}
