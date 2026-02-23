@@ -1,0 +1,81 @@
+{
+  "all_pass": false,
+  "next_action": "nvm use 22.22.0",
+  "results": [
+    {
+      "exit_code": 0,
+      "gate": "NET_ISOLATION",
+      "json": "reports/evidence/INFRA_P0/gates/manual/net_isolation.json",
+      "message": "NET01 PASS — Network isolation proven. 6/6 checks passed. No network required for PASS.",
+      "reason_code": "NONE",
+      "script": "scripts/verify/net_isolation_proof.mjs",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 1,
+      "gate": "NODE_TRUTH",
+      "json": "reports/evidence/INFRA_P0/gates/manual/node_truth_gate.json",
+      "message": "Node mismatch: running v20.19.6 (family 20) vs NODE_TRUTH.md allowed_family=22. Align the running Node version or update NODE_TRUTH.md via APPLY protocol.",
+      "reason_code": "NT02",
+      "script": "scripts/verify/node_truth_gate.mjs",
+      "status": "FAIL"
+    },
+    {
+      "exit_code": 0,
+      "gate": "VERIFY_MODE",
+      "json": "reports/evidence/INFRA_P0/gates/manual/verify_mode_gate.json",
+      "message": "VERIFY_MODE=GIT. RUN_ID resolved from git: 1036a732eb93. .git directory present.",
+      "reason_code": "NONE",
+      "script": "scripts/verify/verify_mode_gate.mjs",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "gate": "DEPS_OFFLINE",
+      "json": "reports/evidence/INFRA_P0/gates/manual/deps_offline_install.json",
+      "message": "All dependencies satisfiable offline (no registry/network required). x2 runs consistent. Exit codes: [0, 0].",
+      "reason_code": "NONE",
+      "script": "scripts/verify/deps_offline_install_contract.mjs",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "gate": "GOLDENS_APPLY",
+      "json": "reports/evidence/INFRA_P0/gates/manual/goldens_apply_gate.json",
+      "message": "14 golden file(s) present and readable. Protocol file present. G001/G002 governance satisfied.",
+      "reason_code": "NONE",
+      "script": "scripts/verify/goldens_apply_gate.mjs",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "gate": "FORMAT_POLICY",
+      "json": "reports/evidence/INFRA_P0/gates/manual/format_policy_gate.json",
+      "message": "Format policy satisfied (strict scope). 7 new JSON file(s) verified. 11 legacy file(s) queued for schema_version migration.",
+      "reason_code": "NONE",
+      "script": "scripts/verify/format_policy_gate.mjs",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "gate": "FIXTURE_GUARD",
+      "json": "reports/evidence/INFRA_P0/gates/manual/fixture_guard_gate.json",
+      "message": "FG01 PASS (REAL_ONLY) — No fixture contamination detected in 23 evidence files scanned.",
+      "reason_code": "NONE",
+      "script": "scripts/verify/fixture_guard_gate.mjs",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "gate": "ZERO_WAR_PROBE",
+      "json": "reports/evidence/SAFETY/gates/manual/zero_war_probe.json",
+      "message": "PASS — Zero-war kill switch ZW00 OBSERVED for all 4 probes. Trading path correctly blocked by T000 guard.",
+      "reason_code": "NONE",
+      "script": "scripts/verify/zero_war_probe.mjs",
+      "status": "PASS"
+    }
+  ],
+  "run_id": "1036a732eb93",
+  "schema_version": "1.0.0",
+  "status": "FAIL"
+}

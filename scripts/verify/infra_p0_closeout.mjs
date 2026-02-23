@@ -22,6 +22,8 @@ const MANUAL_DIR = path.join(INFRA_DIR, 'gates', 'manual');
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
+const renderOnly = process.argv.includes('--render-only') || process.env.INFRA_P0_RENDER_ONLY === '1';
+
 const GATES = [
   {
     // NET01: Network isolation proof — pre-flight check
@@ -91,7 +93,7 @@ const DEP_BLOCKING_CODES = ['DEP01', 'DEP02', 'DEP03'];
 
 function readGateStatus(jsonPath) {
   const abs = path.join(ROOT, jsonPath);
-  if (!fs.existsSync(abs)) return { status: 'MISSING', reason_code: 'FILE_NOT_FOUND' };
+  if (!fs.existsSync(abs)) return { status: 'BLOCKED', reason_code: 'ME01', message: `Missing required gate JSON: ${jsonPath}` };
   try {
     const data = JSON.parse(fs.readFileSync(abs, 'utf8'));
     return { status: data.status || 'UNKNOWN', reason_code: data.reason_code || '-', message: data.message || '' };
@@ -123,12 +125,14 @@ console.log('INFRA P0 — Gate Suite');
 console.log(`RUN_ID: ${RUN_ID}`);
 console.log('='.repeat(60));
 
-// Run all gates
+// Run all gates unless renderer-only mode
 const runResults = [];
-for (const gate of GATES) {
-  console.log(`\n[INFRA_P0] Running: ${gate.id}`);
-  const runResult = runGate(gate);
-  runResults.push(runResult);
+if (!renderOnly) {
+  for (const gate of GATES) {
+    console.log(`\n[INFRA_P0] Running: ${gate.id}`);
+    const runResult = runGate(gate);
+    runResults.push(runResult);
+  }
 }
 
 // Read gate statuses from written JSON
@@ -146,6 +150,10 @@ const gateStatuses = GATES.map((gate) => {
 // Determine overall pipeline status (blocker gates only)
 let overallStatus = 'PASS';
 for (const g of gateStatuses) {
+  if (g.reason_code === 'ME01' || g.status === 'MISSING' || g.status === 'PARSE_ERROR') {
+    overallStatus = 'BLOCKED';
+    break;
+  }
   if (g.blocker && g.status !== 'PASS') {
     overallStatus = g.status === 'FAIL' ? 'FAIL' : 'BLOCKED';
     break;
@@ -156,7 +164,7 @@ for (const g of gateStatuses) {
 // B2 seal: eligibility MUST be false whenever overallStatus != PASS
 const depGate = gateStatuses.find((g) => g.gate === 'DEPS_OFFLINE');
 const depReasonCode = depGate?.reason_code || 'NONE';
-const hasDepBlock = DEP_BLOCKING_CODES.includes(depReasonCode);
+const hasDepBlock = !depGate || depGate.status !== 'PASS' || DEP_BLOCKING_CODES.includes(depReasonCode);
 
 // FG01: Fixture guard blocks eligibility (MISSING or BLOCKED both block)
 const fgGate = gateStatuses.find((g) => g.gate === 'FIXTURE_GUARD');
@@ -208,10 +216,8 @@ const message = overallStatus === 'PASS'
   : `INFRA P0 ${overallStatus} — ${overallReason}: ${gateStatuses.find((g) => g.blocker && g.status !== 'PASS')?.message || ''}`;
 
 const nextAction = overallStatus === 'PASS'
-  ? (eligible_for_micro_live
-      ? 'Run edge:calm:p0 to complete full P0 closeout.'
-      : `Resolve ${depReasonCode} before proceeding to readiness. See EDGE_LAB/DEP_POLICY.md for mitigation paths.`)
-  : `Fix ${gateStatuses.find((g) => g.blocker && g.status !== 'PASS')?.gate} before proceeding.`;
+  ? (eligible_for_micro_live ? 'npm run -s edge:micro:live:readiness' : 'ENABLE_SQLITE_PERSISTENCE=0 npm ci --omit=optional')
+  : (gateStatuses.find((g) => g.reason_code === 'NT02') ? 'nvm use 22.22.0' : 'npm run -s infra:p0');
 
 // Write closeout markdown
 const closeoutMd = `# INFRA_P0_CLOSEOUT.md — Infrastructure P0 Hardening Closeout

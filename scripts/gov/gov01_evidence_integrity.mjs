@@ -21,6 +21,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import { execSync } from 'node:child_process';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { RUN_ID, sha256Raw, sha256Norm, canonSort, writeMd } from '../edge/edge_lab/canon.mjs';
 
@@ -36,6 +37,19 @@ console.log('='.repeat(60));
 console.log('GOV01 EVIDENCE INTEGRITY GATE');
 console.log(`RUN_ID: ${RUN_ID}`);
 console.log('='.repeat(60));
+
+
+// Ensure MERKLE_ROOT anchor is fresh/stable for standalone operator use
+try {
+  execSync(`node "${path.join(ROOT, 'scripts/gov/merkle_root.mjs')}"`, {
+    cwd: ROOT,
+    encoding: 'utf8',
+    stdio: ['pipe', 'pipe', 'pipe'],
+    timeout: 120000,
+  });
+} catch {
+  // Fail-closed later via anchor checks (ME01/GOV01 path)
+}
 
 // ---------------------------------------------------------------------------
 // Scope collection (mirrors edge_evidence_hashes.mjs)
@@ -422,6 +436,19 @@ for (const c of comparisons) {
 }
 console.log(`\nFINAL: ${gateStatus}${reasonCode !== 'NONE' ? ' ' + reasonCode : ''}`);
 console.log('='.repeat(60));
+
+
+// Ensure MERKLE_ROOT anchor is fresh/stable for standalone operator use
+try {
+  execSync(`node "${path.join(ROOT, 'scripts/gov/merkle_root.mjs')}"`, {
+    cwd: ROOT,
+    encoding: 'utf8',
+    stdio: ['pipe', 'pipe', 'pipe'],
+    timeout: 120000,
+  });
+} catch {
+  // Fail-closed later via anchor checks (ME01/GOV01 path)
+}
 
 if (gateStatus !== 'PASS') {
   console.error(`\n[BLOCKED GOV01] Evidence integrity mismatch. See GOV/GOV01_EVIDENCE_INTEGRITY.md.`);

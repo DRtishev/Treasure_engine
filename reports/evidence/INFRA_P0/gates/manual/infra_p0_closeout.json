@@ -53,9 +53,9 @@
     }
   ],
   "message": "INFRA P0 FAIL — NT02: Node mismatch: running v20.19.6 (family 20) vs NODE_TRUTH.md allowed_family=22. Align the running Node version or update NODE_TRUTH.md via APPLY protocol.",
-  "next_action": "Fix NODE_TRUTH before proceeding.",
+  "next_action": "nvm use 22.22.0",
   "overall_reason": "NT02",
-  "run_id": "6eec9cd2d45e",
+  "run_id": "1036a732eb93",
   "schema_version": "1.0.0",
   "status": "FAIL"
 }

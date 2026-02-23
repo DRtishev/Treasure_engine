@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 6eec9cd2d45e
+RUN_ID: 1036a732eb93
 NEXT_ACTION: No reason code violations. Proceed with gov:integrity.
 
 ## Audit Policy
@@ -20,7 +20,7 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 | `reports/evidence/GOV/gates/manual/edge_unlock.json` | BLOCKED | BLOCKED | UNKNOWN_CODE: reason_code="BLOCKED" not in SSOT list |
 | `reports/evidence/GOV/gates/manual/gov_integrity.json` | BLOCKED | BLOCKED | UNKNOWN_CODE: reason_code="BLOCKED" not in SSOT list |
 
-## Scanned Files (first 30 of 33)
+## Scanned Files (first 30 of 34)
 
 | File | Reason Code | Status | Check |
 |------|-------------|--------|-------|
@@ -30,6 +30,7 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 | `format_policy_gate.json` | NONE | PASS | OK |
 | `goldens_apply_gate.json` | NONE | PASS | OK |
 | `infra_p0_closeout.json` | NONE | FAIL | OK |
+| `infra_p0_commands.json` | NONE | FAIL | OK |
 | `infra_p0_final.json` | NONE | PASS | OK |
 | `net_isolation.json` | NONE | PASS | OK |
 | `node_truth_gate.json` | NT02 | FAIL | VIOLATION |
@@ -53,13 +54,12 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 | `zero_war_probe.json` | NONE | PASS | OK |
 | `edge_unlock.json` | BLOCKED | BLOCKED | VIOLATION |
 | `gov01_evidence_integrity.json` | NONE | PASS | OK |
-| `gov_integrity.json` | BLOCKED | BLOCKED | VIOLATION |
 
 ## Summary
 
 | Metric | Value |
 |--------|-------|
-| Files scanned | 33 |
+| Files scanned | 34 |
 | Hard violations | 0 |
 | Unknown code warnings | 3 |
 | D003 violations | 0 |

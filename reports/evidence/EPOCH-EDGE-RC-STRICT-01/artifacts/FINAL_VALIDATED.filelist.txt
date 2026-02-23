@@ -717,6 +717,7 @@ scripts/verify/goldens/golden_vectors_manifest.json
 scripts/verify/governance_check.mjs
 scripts/verify/hacks_validate.mjs
 scripts/verify/infra_p0_closeout.mjs
+scripts/verify/infra_p0_run.mjs
 scripts/verify/json_schema_check.mjs
 scripts/verify/kb_check.mjs
 scripts/verify/ledger_check.mjs

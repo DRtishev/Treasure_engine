@@ -7,7 +7,7 @@
   "reason_code": "NONE",
   "results": [
     {
-      "command": "node scripts/verify/infra_p0_closeout.mjs",
+      "command": "TREASURE_OMIT_OPTIONAL_PROOF=1 ENABLE_SQLITE_PERSISTENCE=0 node scripts/verify/i",
       "exists": true,
       "reason": "EXECUTION_ORDER C1",
       "script": "infra:p0"
@@ -85,8 +85,8 @@
       "script": "edge:calm:hashes"
     }
   ],
-  "run_id": "6eec9cd2d45e",
+  "run_id": "1036a732eb93",
   "schema_version": "1.0.0",
   "status": "PASS",
-  "total_scripts_in_package": 616
+  "total_scripts_in_package": 617
 }

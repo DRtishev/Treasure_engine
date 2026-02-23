@@ -2,11 +2,11 @@
 
 STATUS: FAIL
 REASON_CODE: NT02
-RUN_ID: 6eec9cd2d45e
+RUN_ID: 1036a732eb93
 ELIGIBLE_FOR_MICRO_LIVE: false
 ELIGIBLE_FOR_EXECUTION: false
 ELIGIBILITY_REASON: No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)
-NEXT_ACTION: Fix NODE_TRUTH before proceeding.
+NEXT_ACTION: nvm use 22.22.0
 
 ## Gate Matrix
 
@@ -36,14 +36,14 @@ See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 | Evidence Path | sha256_raw (prefix) | sha256_norm (prefix) |
 |--------------|--------------------|--------------------|
-| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `ffbf6a1df631f5e5…` | `ffbf6a1df631f5e5…` |
-| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `486d0e859ebee7f0…` | `486d0e859ebee7f0…` |
-| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `09651974ead28115…` | `09651974ead28115…` |
-| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `eee8b9b09b084440…` | `eee8b9b09b084440…` |
-| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `bf92a6bc86d6581f…` | `bf92a6bc86d6581f…` |
-| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `192af8c20761e166…` | `192af8c20761e166…` |
-| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `d0da28e6ea073ed2…` | `d0da28e6ea073ed2…` |
-| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `e8955bf97237fb00…` | `e8955bf97237fb00…` |
+| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `3ebfe971d8da2755…` | `3ebfe971d8da2755…` |
+| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `611f3a71aab30e1d…` | `611f3a71aab30e1d…` |
+| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `1431e4f25997684d…` | `1431e4f25997684d…` |
+| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `043c74dad4b1618e…` | `043c74dad4b1618e…` |
+| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `b5353bacc43513dd…` | `b5353bacc43513dd…` |
+| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `d994183593a5b16d…` | `d994183593a5b16d…` |
+| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `cc29b2dd13de8e2d…` | `cc29b2dd13de8e2d…` |
+| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `ee8ce1e38418be41…` | `ee8ce1e38418be41…` |
 
 ## What Changed (v1.5.3 patchset)
 
@@ -64,4 +64,4 @@ See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 ## Next Action
 
-Fix NODE_TRUTH before proceeding.
+nvm use 22.22.0
