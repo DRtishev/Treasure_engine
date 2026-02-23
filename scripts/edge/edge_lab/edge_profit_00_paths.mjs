@@ -2,11 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const PROFILE_MARKER = path.join('artifacts', 'incoming', 'paper_telemetry.profile');
-const ALLOWED_PROFILES = new Set(['real', 'sandbox', 'stub', 'clean', 'missing', 'conflict']);
+const ALLOWED_PROFILES = new Set(['real', 'public', 'sandbox', 'stub', 'clean', 'missing', 'conflict']);
 
 export function profileForEvidenceSource(evidenceSource) {
   const source = String(evidenceSource || '').trim().toUpperCase();
   if (source === 'REAL') return 'real';
+  if (source === 'REAL_PUBLIC') return 'public';
   if (source === 'REAL_SANDBOX') return 'sandbox';
   if (source === 'FIXTURE_STUB') return 'stub';
   return '';

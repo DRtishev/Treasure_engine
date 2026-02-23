@@ -50,10 +50,10 @@ if (!ingest || !normalized || !expectancy) {
   reasonCode = 'ME01';
   message = 'Missing ingest/normalized/expectancy artifacts.';
   nextAction = 'npm run -s edge:profit:00';
-} else if (evidenceSource !== 'REAL') {
+} else if (!new Set(['REAL', 'REAL_PUBLIC']).has(evidenceSource)) {
   status = 'NEEDS_DATA';
   reasonCode = 'EP02_REAL_REQUIRED';
-  message = `PBO/CPCV requires REAL telemetry; got ${evidenceSource}.`;
+  message = `PBO/CPCV requires REAL/REAL_PUBLIC telemetry; got ${evidenceSource}.`;
   nextAction = 'npm run -s edge:profit:00:import:csv';
 } else if (tradesN < 200 || ledgerTrials < 10) {
   status = 'NEEDS_DATA';

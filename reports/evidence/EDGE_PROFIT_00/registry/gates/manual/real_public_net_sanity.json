@@ -1,0 +1,43 @@
+{
+  "allowlist": [
+    "binance",
+    "bybit",
+    "okx",
+    "kraken"
+  ],
+  "attempts": [
+    {
+      "class": "UNKNOWN",
+      "code": "",
+      "message": "fetch failed",
+      "provider_id": "binance"
+    },
+    {
+      "class": "UNKNOWN",
+      "code": "",
+      "message": "fetch failed",
+      "provider_id": "bybit"
+    },
+    {
+      "class": "UNKNOWN",
+      "code": "",
+      "message": "fetch failed",
+      "provider_id": "okx"
+    },
+    {
+      "class": "UNKNOWN",
+      "code": "",
+      "message": "fetch failed",
+      "provider_id": "kraken"
+    }
+  ],
+  "message": "No allowlisted providers reachable in probe stage.",
+  "next_action": "npm run -s verify:real-public:net",
+  "reason_code": "ACQ02",
+  "run_id": "4f2bdd29e1ec",
+  "schema_version": "1.0.0",
+  "selected_provider": null,
+  "status": "BLOCKED",
+  "symbol": "BTCUSDT",
+  "tf": "5m"
+}

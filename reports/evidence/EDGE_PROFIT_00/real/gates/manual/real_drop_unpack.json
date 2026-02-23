@@ -1,0 +1,13 @@
+{
+  "diagnostics": [
+    "missing:artifacts/incoming/REAL_DROP.tar.gz"
+  ],
+  "drop_path": "artifacts/incoming/REAL_DROP.tar.gz",
+  "extracted": [],
+  "message": "REAL_DROP.tar.gz is missing.",
+  "next_action": "npm run -s edge:profit:00:real:drop:unpack",
+  "reason_code": "RDROP01",
+  "run_id": "fd69f4ac5c8e",
+  "schema_version": "1.0.0",
+  "status": "NEEDS_DATA"
+}

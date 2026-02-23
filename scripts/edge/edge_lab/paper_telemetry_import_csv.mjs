@@ -230,13 +230,16 @@ if (parseErrors.length > 0) {
 mapped.sort((a, b) => a.ts.localeCompare(b.ts) || a.signal_id.localeCompare(b.signal_id) || a.symbol.localeCompare(b.symbol));
 
 const sourceTags = new Set(mapped.map((r) => String(r.source_tag || '').toUpperCase()));
+const hasPublicTag = [...sourceTags].some((t) => t.includes('REAL_PUBLIC'));
 const hasStubTag = [...sourceTags].some((t) => t.includes('REAL_STUB'));
 const hasSandboxTag = [...sourceTags].some((t) => t.includes('REAL_SANDBOX'));
 const importedEvidenceSource = hasSandboxTag
   ? 'REAL_SANDBOX'
   : hasStubTag
     ? 'FIXTURE_STUB'
-    : 'REAL';
+    : hasPublicTag
+      ? 'REAL_PUBLIC'
+      : 'REAL';
 const jsonl = mapped.map((r) => JSON.stringify(r)).join('\n') + '\n';
 const resolvedProfile = profileForEvidenceSource(importedEvidenceSource);
 outputProfile = resolvedProfile;

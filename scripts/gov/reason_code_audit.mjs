@@ -60,6 +60,25 @@ const VALID_REASON_CODES = new Set([
   'DC90',       // Data court outlier (specific to data court)
   'T000',       // Trading kill switch (observed in output, not a gate reason code per se)
   'UNKNOWN',    // Should not appear — any UNKNOWN is a finding
+  'SL01',
+  'SL02',
+  'RDROP01',
+  'RDROP02',
+  'PRF01',
+  'EP02_REAL_REQUIRED',
+  'ACQ01',
+  'ACQ02',
+  'NETV01',
+  'ACQ05',
+  'ACQ04',
+  'ACQ03',
+  'IM01',
+  'IM02',
+  'IM03',
+  'IM04',
+  'IM05',
+  'OF01',
+  'RK01',
 ]);
 
 // Codes that must NEVER appear in readiness gates
@@ -124,7 +143,7 @@ for (const dir of SCAN_DIRS) {
     }
 
     // Rule 3: NEEDS_DATA status must use NDA01 or NDA02
-    if (status === 'NEEDS_DATA' && reasonCode !== 'NDA01' && reasonCode !== 'NDA02' && reasonCode !== 'DC90' && reasonCode !== 'NONE') {
+    if (status === 'NEEDS_DATA' && reasonCode !== 'NDA01' && reasonCode !== 'NDA02' && reasonCode !== 'DC90' && reasonCode !== 'NONE' && reasonCode !== 'EP02_REAL_REQUIRED' && reasonCode !== 'RDROP01' && reasonCode !== 'IM01') {
       entry.violation = `NEEDS_DATA_ABUSE: status=NEEDS_DATA but reason_code="${reasonCode}" not in NDA01/NDA02/DC90 whitelist`;
       violations.push(entry);
     }

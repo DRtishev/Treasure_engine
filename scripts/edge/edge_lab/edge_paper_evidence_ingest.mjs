@@ -9,7 +9,7 @@ const ROOT = path.resolve(process.cwd());
 const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
 const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
 const PROFILE = resolveProfit00Profile(ROOT);
-let evidenceSource = PROFILE === 'sandbox' ? 'REAL_SANDBOX' : PROFILE === 'stub' ? 'FIXTURE_STUB' : 'REAL';
+let evidenceSource = PROFILE === 'sandbox' ? 'REAL_SANDBOX' : PROFILE === 'stub' ? 'FIXTURE_STUB' : PROFILE === 'public' ? 'REAL_PUBLIC' : 'REAL';
 const JSONL_PATH = path.join(ROOT, 'artifacts', 'incoming', 'paper_telemetry.jsonl');
 const CSV_PATH = path.join(ROOT, 'artifacts', 'incoming', 'paper_telemetry.csv');
 const REQUIRED = ['ts', 'symbol', 'side', 'signal_id', 'intended_entry', 'intended_exit', 'fill_price', 'fee', 'slippage_bps', 'latency_ms', 'result_pnl', 'source_tag'];
@@ -138,17 +138,26 @@ const severeConflictCount = outliers.filter((x) => x.includes('conflict_')).leng
 const sourceTags = new Set(normalized.map((r) => String(r.source_tag || '').toUpperCase()));
 const stubTagged = normalized.length > 0 && [...sourceTags].every((t) => t.includes('REAL_STUB'));
 const sandboxTagged = normalized.length > 0 && [...sourceTags].every((t) => t.includes('REAL_SANDBOX'));
+const publicTagged = normalized.length > 0 && [...sourceTags].every((t) => t.includes('REAL_PUBLIC'));
 if (sandboxTagged) {
   evidenceSource = 'REAL_SANDBOX';
 } else if (stubTagged) {
   evidenceSource = 'FIXTURE_STUB';
+} else if (publicTagged) {
+  evidenceSource = 'REAL_PUBLIC';
 } else if (inputKind === 'CSV' || inputKind === 'JSONL') {
   evidenceSource = 'REAL';
 }
 
 const expectedProfile = profileForEvidenceSource(evidenceSource);
 if (expectedProfile && PROFILE && expectedProfile !== PROFILE) {
-  evidenceSource = expectedProfile === 'real' ? 'REAL' : expectedProfile === 'sandbox' ? 'REAL_SANDBOX' : 'FIXTURE_STUB';
+  evidenceSource = expectedProfile === 'real'
+    ? 'REAL'
+    : expectedProfile === 'public'
+      ? 'REAL_PUBLIC'
+      : expectedProfile === 'sandbox'
+        ? 'REAL_SANDBOX'
+        : 'FIXTURE_STUB';
 }
 const hasMissing = missingFieldRows.length > 0;
 const blocked = severeConflictCount > 0;

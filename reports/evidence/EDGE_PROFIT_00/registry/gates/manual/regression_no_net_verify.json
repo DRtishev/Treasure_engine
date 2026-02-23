@@ -1,0 +1,12 @@
+{
+  "allowlist": [
+    "edge_profit_00_acquire_real_public.mjs"
+  ],
+  "findings": [],
+  "message": "No direct network calls in verify/profit scripts outside ACQUIRE allowlist.",
+  "next_action": "npm run -s epoch:edge:profit:public:00",
+  "reason_code": "NONE",
+  "run_id": "4f2bdd29e1ec",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
