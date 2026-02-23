@@ -6,7 +6,7 @@
   "message": "FG01 PASS (REAL_ONLY) — No fixture contamination detected in 25 evidence files scanned.",
   "next_action": "Fixture guard satisfied. Eligibility not blocked by FG01.",
   "reason_code": "NONE",
-  "run_id": "2c52a286482d",
+  "run_id": "6eec9cd2d45e",
   "schema_version": "1.0.0",
   "status": "PASS",
   "violations": [],

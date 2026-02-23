@@ -45,12 +45,12 @@
     {
       "exit_code": 0,
       "id": "RECEIPTS_CHAIN",
-      "message": "[PASS] edge_receipts_chain — 96 entries chained, final=48fed294dbd1a80c...",
+      "message": "[PASS] edge_receipts_chain — 96 entries chained, final=64f0bfcee42d6d4e...",
       "status": "PASS"
     }
   ],
   "reason_code": "NONE",
-  "run_id": "2c52a286482d",
+  "run_id": "6eec9cd2d45e",
   "schema_version": "1.0.0",
   "status": "PASS",
   "trading_off": true

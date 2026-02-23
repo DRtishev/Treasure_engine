@@ -2,7 +2,7 @@
 
 STATUS: FAIL
 REASON_CODE: NT02
-RUN_ID: 2c52a286482d
+RUN_ID: 6eec9cd2d45e
 ELIGIBLE_FOR_MICRO_LIVE: false
 ELIGIBLE_FOR_EXECUTION: false
 ELIGIBILITY_REASON: No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)
@@ -36,14 +36,14 @@ See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 | Evidence Path | sha256_raw (prefix) | sha256_norm (prefix) |
 |--------------|--------------------|--------------------|
-| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `c3a941793373b93a…` | `c3a941793373b93a…` |
-| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `241f965974378295…` | `241f965974378295…` |
-| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `beafcdcdf81e2d62…` | `beafcdcdf81e2d62…` |
-| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `841c8bcd8c1ef29c…` | `841c8bcd8c1ef29c…` |
-| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `308dfd46ac9f3342…` | `308dfd46ac9f3342…` |
-| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `275528e18f70e4db…` | `275528e18f70e4db…` |
-| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `4a49ddfa81247696…` | `4a49ddfa81247696…` |
-| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `8dec1573d99c6bda…` | `8dec1573d99c6bda…` |
+| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `ffbf6a1df631f5e5…` | `ffbf6a1df631f5e5…` |
+| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `486d0e859ebee7f0…` | `486d0e859ebee7f0…` |
+| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `09651974ead28115…` | `09651974ead28115…` |
+| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `eee8b9b09b084440…` | `eee8b9b09b084440…` |
+| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `bf92a6bc86d6581f…` | `bf92a6bc86d6581f…` |
+| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `192af8c20761e166…` | `192af8c20761e166…` |
+| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `d0da28e6ea073ed2…` | `d0da28e6ea073ed2…` |
+| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `e8955bf97237fb00…` | `e8955bf97237fb00…` |
 
 ## What Changed (v1.5.3 patchset)
 

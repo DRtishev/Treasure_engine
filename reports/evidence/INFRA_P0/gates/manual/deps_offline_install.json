@@ -28,6 +28,15 @@
   "native_candidates_required": [],
   "native_patterns_found": [],
   "next_action": "No action required. Dependencies are fully offline-satisfiable.",
+  "omit_optional_proved": true,
+  "omit_optional_raw": {
+    "marker": "1",
+    "npm_config_omit": "",
+    "npm_config_optional": ""
+  },
+  "omit_optional_signals": [
+    "marker:TREASURE_OMIT_OPTIONAL_PROOF"
+  ],
   "optional_native_allowed": true,
   "optional_native_installed": false,
   "reason_code": "NONE",
@@ -35,7 +44,7 @@
   "registry_patterns_run2": [],
   "run1_exit_code": 0,
   "run2_exit_code": 0,
-  "run_id": "2c52a286482d",
+  "run_id": "6eec9cd2d45e",
   "schema_version": "1.0.0",
   "sqlite_persistence_enabled": false,
   "status": "PASS",

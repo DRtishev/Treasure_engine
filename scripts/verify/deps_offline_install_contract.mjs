@@ -57,6 +57,31 @@ function readRootPackageJson() {
   }
 }
 
+function detectOmitOptionalProof() {
+  const npmOmit = String(process.env.npm_config_omit || '').toLowerCase();
+  const npmOptional = String(process.env.npm_config_optional || '').toLowerCase();
+  const argv = process.argv.join(' ').toLowerCase();
+  const marker = String(process.env.TREASURE_OMIT_OPTIONAL_PROOF || '').toLowerCase();
+
+  const proofSignals = [];
+  if (npmOmit.split(/[ ,]+/).includes('optional')) proofSignals.push('env:npm_config_omit=optional');
+  if (npmOptional === 'false') proofSignals.push('env:npm_config_optional=false');
+  if (argv.includes('--omit=optional') || argv.includes('--omit optional')) proofSignals.push('argv:omit_optional');
+  if (marker === '1' || marker === 'true' || marker === 'omit_optional') {
+    proofSignals.push('marker:TREASURE_OMIT_OPTIONAL_PROOF');
+  }
+
+  return {
+    proved: proofSignals.length > 0,
+    signals: proofSignals,
+    raw: {
+      npm_config_omit: process.env.npm_config_omit || '',
+      npm_config_optional: process.env.npm_config_optional || '',
+      marker,
+    },
+  };
+}
+
 
 function scanLockFileForNativeCandidates() {
   const lockPath = path.join(ROOT, 'package-lock.json');
@@ -119,6 +144,7 @@ const lockScan = scanLockFileForNativeCandidates();
 const nativeCandidates = lockScan.candidates;
 const lockScanError = lockScan.error;
 const { optionalNativeSet, sqliteEnabled } = readRootPackageJson();
+const omitProof = detectOmitOptionalProof();
 
 const requiredNativeCandidates = nativeCandidates.filter((c) => !optionalNativeSet.has(c.package));
 const optionalNativeCandidates = nativeCandidates.filter((c) => optionalNativeSet.has(c.package));
@@ -215,7 +241,7 @@ const needsNetwork2 = registryPatterns2.length > 0 || (run2.exitCode !== 0 && !r
 // --dry-run skips install scripts so runtime patterns alone cannot be trusted for DEP02.
 const hasNativeBuildRuntime = nativePatterns1.length > 0 || nativePatterns2.length > 0;
 const optionalNativeInstalled = optionalNativeCandidates.some((c) => fs.existsSync(path.join(ROOT, c.path)));
-const optionalNativeAllowed = !sqliteEnabled && !optionalNativeInstalled;
+const optionalNativeAllowed = omitProof.proved && !sqliteEnabled && !optionalNativeInstalled;
 const hasNativeBuildLock = requiredNativeCandidates.length > 0 || (optionalNativeCandidates.length > 0 && !optionalNativeAllowed);
 const hasNativeBuild = hasNativeBuildLock || hasNativeBuildRuntime;
 
@@ -241,8 +267,8 @@ if (hasNativeBuild) {
   const detectionSource = hasNativeBuildLock ? 'static lock scan' : 'runtime pattern scan';
   const candidatePool = hasNativeBuildLock ? (requiredNativeCandidates.length > 0 ? requiredNativeCandidates : optionalNativeCandidates) : nativeCandidates;
   const candidateNames = candidatePool.map((c) => `${c.package}@${c.version}`).join(', ') || '(runtime-detected only)';
-  message = `Native build candidates detected via ${detectionSource}: [${candidateNames}]. Native builds require capsule/toolchain policy approval unless optional-native policy is satisfied.`;
-  next_action = 'Use npm ci --omit=optional and keep ENABLE_SQLITE_PERSISTENCE=0, or provide approved native capsule mitigation.';
+  message = `Native build candidates detected via ${detectionSource}: [${candidateNames}]. Optional-native candidates require omit-optional proof and ENABLE_SQLITE_PERSISTENCE=0.`;
+  next_action = 'Run ENABLE_SQLITE_PERSISTENCE=0 npm ci --omit=optional and rerun deps gate, or provide approved native capsule mitigation.';
 } else if (x2Drift && run1.exitCode === 0 && run2.exitCode === 0) {
   status = 'FAIL';
   reason_code = 'DEP03';
@@ -266,6 +292,9 @@ const gateResult = {
   has_native_build: hasNativeBuild,
   has_native_build_lock: hasNativeBuildLock,
   has_native_build_runtime: hasNativeBuildRuntime,
+  omit_optional_proved: omitProof.proved,
+  omit_optional_signals: omitProof.signals,
+  omit_optional_raw: omitProof.raw,
   optional_native_allowed: optionalNativeAllowed,
   optional_native_installed: optionalNativeInstalled,
   sqlite_persistence_enabled: sqliteEnabled,
@@ -309,6 +338,13 @@ This is deterministic and not affected by --dry-run illusions.
 **Secondary: Closed-port registry test** — npm_config_registry=http://127.0.0.1:9 + prefer-offline.
 Runs npm install --dry-run twice (x2 anti-flake) for DEP01/DEP03 detection.
 
+## Omit-Optional Proof
+
+- proved: ${omitProof.proved}
+- signals: ${omitProof.signals.join(', ') || '(none)'}
+- npm_config_omit: ${omitProof.raw.npm_config_omit || '(unset)'}
+- npm_config_optional: ${omitProof.raw.npm_config_optional || '(unset)'}
+
 ## Native Candidates (Static Lock Scan)
 
 | Package | Version | Reasons |
@@ -323,6 +359,8 @@ ${nativeCandidatesTable}
 | duration_ms | ${run1.durationMs} | ${run2.durationMs} |
 | registry_patterns | ${registryPatterns1.length} | ${registryPatterns2.length} |
 | native_patterns (runtime) | ${nativePatterns1.length} | ${nativePatterns2.length} |
+| omit_optional_proved | ${omitProof.proved} | - |
+| omit_optional_signals | ${omitProof.signals.join(', ') || '(none)'} | - |
 | optional_native_allowed | ${optionalNativeAllowed} | - |
 | optional_native_installed | ${optionalNativeInstalled} | - |
 | ENABLE_SQLITE_PERSISTENCE | ${sqliteEnabled ? '1' : '0'} | - |

@@ -621,7 +621,7 @@
     "gov:reason-codes": "node scripts/gov/reason_code_audit.mjs",
     "infra:p0": "node scripts/verify/infra_p0_closeout.mjs",
     "verify:dep02:failclosed": "node scripts/verify/dep02_failclosed_readiness_gate.mjs",
-    "p0:all": "npm run edge:calm:p0 && npm run infra:p0",
+    "p0:all": "TREASURE_OMIT_OPTIONAL_PROOF=1 ENABLE_SQLITE_PERSISTENCE=0 npm run edge:calm:p0 && TREASURE_OMIT_OPTIONAL_PROOF=1 ENABLE_SQLITE_PERSISTENCE=0 npm run infra:p0",
     "p0:full": "npm run p0:all && npm run edge:micro:live:readiness && npm run verify:dep02:failclosed",
     "verify:op01": "node scripts/gov/op01_scripts_check.mjs"
   },

@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 2c52a286482d
+RUN_ID: 6eec9cd2d45e
 NEXT_ACTION: No action required. Dependencies are fully offline-satisfiable.
 
 ## Methodology
@@ -15,6 +15,13 @@ This is deterministic and not affected by --dry-run illusions.
 **Secondary: Closed-port registry test** — npm_config_registry=http://127.0.0.1:9 + prefer-offline.
 Runs npm install --dry-run twice (x2 anti-flake) for DEP01/DEP03 detection.
 
+## Omit-Optional Proof
+
+- proved: true
+- signals: marker:TREASURE_OMIT_OPTIONAL_PROOF
+- npm_config_omit: (unset)
+- npm_config_optional: (unset)
+
 ## Native Candidates (Static Lock Scan)
 
 | Package | Version | Reasons |
@@ -26,9 +33,11 @@ Runs npm install --dry-run twice (x2 anti-flake) for DEP01/DEP03 detection.
 | Metric | Run 1 | Run 2 |
 |--------|-------|-------|
 | exit_code | 0 | 0 |
-| duration_ms | 527 | 503 |
+| duration_ms | 690 | 702 |
 | registry_patterns | 0 | 0 |
 | native_patterns (runtime) | 0 | 0 |
+| omit_optional_proved | true | - |
+| omit_optional_signals | marker:TREASURE_OMIT_OPTIONAL_PROOF | - |
 | optional_native_allowed | true | - |
 | optional_native_installed | false | - |
 | ENABLE_SQLITE_PERSISTENCE | 0 | - |
