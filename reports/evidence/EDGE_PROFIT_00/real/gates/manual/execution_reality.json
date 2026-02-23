@@ -1,0 +1,21 @@
+{
+  "calibration_k": 0.99639787,
+  "calibration_rmse_bps": 0.07298193,
+  "fill_rate": -1,
+  "fills_n": 360,
+  "ingest_status": "PASS",
+  "mean_fee_bps": 0.3,
+  "mean_latency_ms": 155.44607571,
+  "mean_slippage_bps": 1.98613393,
+  "median_latency_ms": 151.52124588,
+  "median_slippage_bps": 1.99399869,
+  "message": "Execution reality metrics and calibration computed.",
+  "min_fills": 100,
+  "next_action": "npm run -s edge:profit:00:expectancy",
+  "p95_latency_ms": 255.98029859,
+  "p95_slippage_bps": 2.6785267,
+  "reason_code": "NONE",
+  "run_id": "1e93566551e0",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

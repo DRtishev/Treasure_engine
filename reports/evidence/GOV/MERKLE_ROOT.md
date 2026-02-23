@@ -2,22 +2,22 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 3cb7828b3f1d
+RUN_ID: 1e93566551e0
 
 ## Merkle Root
 
-MERKLE_ROOT: `8757b5183a6ab17d85e3772b80245b782c3314d4060fe168673c0eba4ccba3d0`
+MERKLE_ROOT: `083d3d0c92377bc9d134c1f19c2dccb139d2192e0b849fa9add09f3715b7deca`
 
 ## Scope
 
 | Field | Value |
 |-------|-------|
-| scope_manifest_sha | `0b75f6c15507133c7775dd85d627b7f87b8582d4093adf5ee20074fcbafcf213` |
-| files_in_scope | 96 |
-| files_hashed | 96 |
+| scope_manifest_sha | `b58e9929b24f9461d993b38c1c5fab0c8350f955a9b4d11061498b18089cc775` |
+| files_in_scope | 121 |
+| files_hashed | 121 |
 | files_missing | 0 |
 | tree_depth | 8 |
-| leaves_count | 96 |
+| leaves_count | 121 |
 
 ## Algorithm
 
@@ -28,7 +28,7 @@ MERKLE_ROOT: `8757b5183a6ab17d85e3772b80245b782c3314d4060fe168673c0eba4ccba3d0`
 - Odd level: duplicate last leaf (standard Merkle padding)
 - Root: single hash at top of binary tree
 
-## Leaf Hashes (first 20 of 96)
+## Leaf Hashes (first 20 of 121)
 
 | Path | Leaf Hash (prefix) | sha256_norm (prefix) |
 |------|-------------------|---------------------|
@@ -36,23 +36,23 @@ MERKLE_ROOT: `8757b5183a6ab17d85e3772b80245b782c3314d4060fe168673c0eba4ccba3d0`
 | `EDGE_LAB/COURT_MANIFEST.md` | `9fd83d582cac2f2e730e92e7…` | `6413adbce60c222f3ddbdec9…` |
 | `EDGE_LAB/DATASET_CONTRACT.md` | `c941f454c35359f0fad79cb5…` | `d58e82f882583db6c098e6fc…` |
 | `EDGE_LAB/DATA_CONFIRM_POLICY.md` | `f3b6b27716f7bdc44f609087…` | `0dc429f5041c59763ee387e8…` |
-| `EDGE_LAB/DELTA_CALC_SPEC.md` | `b429727f075ee122638fed3b…` | `361437d67d4926ea8f70f3ce…` |
+| `EDGE_LAB/DELTA_CALC_SPEC.md` | `66474646d3b522473d187117…` | `875dc47af399cd0663df7272…` |
 | `EDGE_LAB/DEP_POLICY.md` | `80f9a7a6e82facebcb7c037d…` | `857c544a6609997b167737b6…` |
 | `EDGE_LAB/ERROR_BUDGET_POLICY.md` | `62b64203a888ac4e3c4ebf10…` | `fbd5cc865ac70276692369d2…` |
 | `EDGE_LAB/EVIDENCE_CANON_RULES.md` | `17500f0002bc79ea0e853c7d…` | `021ba0511726a903c5d184a5…` |
-| `EDGE_LAB/EVIDENCE_INDEX.md` | `b1f9661c48a4d5b321d6dd34…` | `ad493ba07c6650062b0e0e17…` |
+| `EDGE_LAB/EVIDENCE_INDEX.md` | `175502aa1dd5e51498792f59…` | `85775b0745d8591a6f76f1fd…` |
 | `EDGE_LAB/EXECUTION_MODEL.md` | `c30a5b225fddbaf008cd0c6c…` | `6072ee361588d9ea048acf2e…` |
 | `EDGE_LAB/EXECUTION_REALITY_POLICY.md` | `ed7e918351d218bc2d5c88b6…` | `79c313a9e3578c25d2b81eb1…` |
 | `EDGE_LAB/EXECUTION_SENSITIVITY_SPEC.md` | `afb2fb87fd2d2fb3a23892e8…` | `2ef6481e548f8cead408f269…` |
+| `EDGE_LAB/EXECUTOR_ENTRYPOINT_DOCTRINE.md` | `efc380acef6a03e200cd3484…` | `b7c2ce5051762b3b5112f8a9…` |
 | `EDGE_LAB/EXPECTANCY_CI_POLICY.md` | `792160fe2cdf39c765f6131b…` | `7cff212a4ce580c4ab3ef66b…` |
-| `EDGE_LAB/FINAL_VERDICT.md` | `f17b3cc31dcb13ef60ac8988…` | `031a224280cb1cbaea5889fc…` |
+| `EDGE_LAB/EXPECTANCY_POLICY.md` | `5a56af688e0e815f57753f5c…` | `c7a45d923b14dc19041e0959…` |
+| `EDGE_LAB/FINAL_VERDICT.md` | `812a0aaf36b912499e778e48…` | `677021e9ed48ca449aab4f45…` |
 | `EDGE_LAB/GATE_FSM_SPEC.md` | `ee44eaa4af58790ae41b4cb4…` | `381bf240e65dbe9211ddc4e1…` |
 | `EDGE_LAB/HACK_REGISTRY.md` | `379c3a73e7faa24caaca8855…` | `9e40f7916cb116cba1ee2476…` |
 | `EDGE_LAB/HACK_SCHEMA.md` | `adf83e6399e1ec060447e851…` | `93ebb1445493c3cb68fb17db…` |
-| `EDGE_LAB/INCIDENT_PLAYBOOK.md` | `939d9297cca9e84ac4753b53…` | `7360902b98e192ac6cbd1633…` |
-| `EDGE_LAB/MANIFEST_CHECK.md` | `8f91e3fe71eca06b1988f339…` | `5d56586c6036727e47075727…` |
-| `EDGE_LAB/MICRO_LIVE_SRE_POLICY.md` | `7a6ef18c8c7e9a573c3c7822…` | `cced6551d3098e24565a6f3a…` |
-| … (76 more rows) | … | … |
+| `EDGE_LAB/HYPOTHESIS_REGISTRY.md` | `53b3d58502079be6513b1a5a…` | `ceda190573d8016db8290f70…` |
+| … (101 more rows) | … | … |
 
 ## GOV01 Usage
 

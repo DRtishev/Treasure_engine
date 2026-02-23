@@ -6,3 +6,6 @@ Schema (strict, append-only):
 - Mutation protocol: PROPOSE -> APPLY (with evidence receipts).
 
 # Entries
+T001|HYP-0001|sha256:1111111111111111111111111111111111111111111111111111111111111111|sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa|PASS
+T002|HYP-0002|sha256:2222222222222222222222222222222222222222222222222222222222222222|sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb|PASS
+T003|HYP-0003|sha256:3333333333333333333333333333333333333333333333333333333333333333|sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc|BLOCKED

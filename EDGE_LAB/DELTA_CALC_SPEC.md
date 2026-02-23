@@ -48,3 +48,14 @@ If scope_delta=true without APPLY receipt => E003 FAIL
 
 Each receipt in the chain stores `sha256_norm` of the evidence at that point.
 A break in the chain (missing receipt or hash mismatch) => E001 FAIL.
+
+
+## Execution Reality calibration fields
+
+Execution reality evidence includes deterministic calibration fields:
+- `calibration_k`
+- `calibration_rmse_bps`
+- `mean/median/p95` summaries for slippage and latency
+- `mean_fee_bps` and `fill_rate`
+
+These fields are compared using numeric delta rules above.

@@ -2,8 +2,8 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 3cb7828b3f1d
-NEXT_ACTION: Evidence integrity proven. Proceed to EDGE_UNLOCK evaluation.
+RUN_ID: 1e93566551e0
+NEXT_ACTION: npm run -s gov:integrity
 
 ## GOV01 Policy
 
@@ -15,9 +15,9 @@ Any mismatch => BLOCKED GOV01.
 
 | Check | Anchored (prefix) | Computed (prefix) | Result | Note |
 |-------|-------------------|-------------------|--------|------|
-| C01_SCOPE_MANIFEST_SHA | 0b75f6c15507133c… | 0b75f6c15507133c… | MATCH | MATCH — no tampering detected |
-| C02_MERKLE_ROOT | 8757b5183a6ab17d… | 8757b5183a6ab17d… | MATCH | MATCH — no tampering detected |
-| C03_RECEIPTS_CHAIN_FINAL | a2c79c5bbe4a3ad6… | a2c79c5bbe4a3ad6… | MATCH | MATCH — no tampering detected |
+| C01_SCOPE_MANIFEST_SHA | b58e9929b24f9461… | b58e9929b24f9461… | MATCH | MATCH — no tampering detected |
+| C02_MERKLE_ROOT | 083d3d0c92377bc9… | 083d3d0c92377bc9… | MATCH | MATCH — no tampering detected |
+| C03_RECEIPTS_CHAIN_FINAL | 1a4238190558f1fe… | 1a4238190558f1fe… | MATCH | MATCH — no tampering detected |
 
 ## Diff Hints
 
@@ -27,8 +27,8 @@ NO DRIFT — all anchored values match computed values.
 
 | Metric | Value |
 |--------|-------|
-| Files in scope | 96 |
-| Files accessible | 96 |
+| Files in scope | 121 |
+| Files accessible | 121 |
 | Comparisons | 3 |
 | Mismatches | 0 |
 

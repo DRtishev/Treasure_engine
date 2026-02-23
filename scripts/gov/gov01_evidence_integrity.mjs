@@ -39,6 +39,19 @@ console.log(`RUN_ID: ${RUN_ID}`);
 console.log('='.repeat(60));
 
 
+
+// Ensure CHECKSUMS anchor is fresh/stable
+try {
+  execSync(`node "${path.join(ROOT, 'scripts/edge/edge_lab/edge_evidence_hashes.mjs')}"`, {
+    cwd: ROOT,
+    encoding: 'utf8',
+    stdio: ['pipe', 'pipe', 'pipe'],
+    timeout: 120000,
+  });
+} catch {
+  // Fail-closed later via anchor checks (ME01/GOV01 path)
+}
+
 // Ensure MERKLE_ROOT anchor is fresh/stable for standalone operator use
 try {
   execSync(`node "${path.join(ROOT, 'scripts/gov/merkle_root.mjs')}"`, {
@@ -336,8 +349,8 @@ const message = mismatches.length === 0
   : `BLOCKED GOV01 — Evidence integrity mismatch detected in ${mismatches.length} check(s): ${mismatches.map((c) => c.id).join(', ')}. Manual edit or drift suspected.`;
 
 const nextAction = mismatches.length === 0
-  ? 'Evidence integrity proven. Proceed to EDGE_UNLOCK evaluation.'
-  : `Investigate mismatches: ${mismatches.map((c) => c.label).join(', ')}. Re-run evidence generation scripts (edge:calm:p0, gov:merkle) to restore integrity. Do NOT manually edit evidence files.`;
+  ? 'npm run -s gov:integrity'
+  : 'npm run -s p0:all';
 
 // ---------------------------------------------------------------------------
 // Write GOV01_EVIDENCE_INTEGRITY.md

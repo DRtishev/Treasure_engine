@@ -3,11 +3,13 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd, canonSort } from './canon.mjs';
-import { resolveProfit00EpochDir, resolveProfit00ManualDir } from './edge_profit_00_paths.mjs';
+import { resolveProfit00EpochDir, resolveProfit00ManualDir, resolveProfit00Profile } from './edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
 const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
+const PROFILE = resolveProfit00Profile(ROOT);
+let evidenceSource = PROFILE ? (PROFILE === 'real' ? 'REAL' : 'FIXTURE') : 'REAL';
 const JSONL_PATH = path.join(ROOT, 'artifacts', 'incoming', 'paper_telemetry.jsonl');
 const CSV_PATH = path.join(ROOT, 'artifacts', 'incoming', 'paper_telemetry.csv');
 const REQUIRED = ['ts', 'symbol', 'side', 'signal_id', 'intended_entry', 'intended_exit', 'fill_price', 'fee', 'slippage_bps', 'latency_ms', 'result_pnl', 'source_tag'];
@@ -74,6 +76,7 @@ if (inputKind === 'NONE') {
     outlier_count: 0,
     severe_conflict_count: 0,
     input_sha256: inputSha256,
+    evidence_source: evidenceSource,
   });
   console.log(`[${status}] edge_paper_evidence_ingest — ${reasonCode}`);
   process.exit(0);
@@ -97,6 +100,9 @@ for (let i = 0; i < rawRows.length; i++) {
     pnl: toNum(row.result_pnl),
     slip_bps: toNum(row.slippage_bps),
     lat_ms: toNum(row.latency_ms),
+    fee_bps: (toNum(row.fee) / Math.max(1e-9, Math.abs(toNum(row.fill_price)))) * 10000,
+    spread_bps: Number.isFinite(toNum(row.spread_bps)) ? toNum(row.spread_bps) : 1,
+    size_ratio: Number.isFinite(toNum(row.size_ratio)) ? toNum(row.size_ratio) : 1,
     source_tag: String(row.source_tag),
   });
 }
@@ -128,6 +134,17 @@ for (const row of normalized) {
 }
 
 const severeConflictCount = outliers.filter((x) => x.includes('conflict_')).length;
+
+const sourceTags = new Set(normalized.map((r) => String(r.source_tag || '').toUpperCase()));
+const stubTagged = normalized.length > 0 && [...sourceTags].every((t) => t.includes('REAL_STUB'));
+const sandboxTagged = normalized.length > 0 && [...sourceTags].every((t) => t.includes('REAL_SANDBOX'));
+if (PROFILE === 'real' && sandboxTagged) {
+  evidenceSource = 'REAL_SANDBOX';
+} else if (PROFILE === 'real' && stubTagged) {
+  evidenceSource = 'FIXTURE_STUB';
+} else if (PROFILE === 'real' && (inputKind === 'CSV' || inputKind === 'JSONL')) {
+  evidenceSource = 'REAL';
+}
 const hasMissing = missingFieldRows.length > 0;
 const blocked = severeConflictCount > 0;
 
@@ -147,7 +164,7 @@ const nextAction = status === 'PASS'
     ? 'npm run -s edge:profit:00'
     : 'npm run -s edge:profit:00:sample';
 
-const md = `# PAPER_EVIDENCE_INGEST.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Input\n\n- input_kind: ${inputKind}\n- input_path: ${inputKind === 'JSONL' ? 'artifacts/incoming/paper_telemetry.jsonl' : 'artifacts/incoming/paper_telemetry.csv'}\n- rows_raw: ${rawRows.length}\n- rows_normalized: ${normalized.length}\n- input_sha256: ${inputSha256}\n\n## Outlier + Conflict Summary\n\n- outlier_count: ${outliers.length}\n- severe_conflict_count: ${severeConflictCount}\n\n## Missing Required Fields\n\n${missingFieldRows.length ? missingFieldRows.map((e) => `- ${e}`).join('\n') : '- NONE'}\n\n## Outlier Marks (not deleted)\n\n${outliers.length ? canonSort(outliers).map((e) => `- ${e}`).join('\n') : '- NONE'}\n`;
+const md = `# PAPER_EVIDENCE_INGEST.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Input\n\n- input_kind: ${inputKind}\n- input_path: ${inputKind === 'JSONL' ? 'artifacts/incoming/paper_telemetry.jsonl' : 'artifacts/incoming/paper_telemetry.csv'}\n- rows_raw: ${rawRows.length}\n- rows_normalized: ${normalized.length}\n- input_sha256: ${inputSha256}\n- evidence_source: ${evidenceSource}\n\n## Outlier + Conflict Summary\n\n- outlier_count: ${outliers.length}\n- severe_conflict_count: ${severeConflictCount}\n\n## Missing Required Fields\n\n${missingFieldRows.length ? missingFieldRows.map((e) => `- ${e}`).join('\n') : '- NONE'}\n\n## Outlier Marks (not deleted)\n\n${outliers.length ? canonSort(outliers).map((e) => `- ${e}`).join('\n') : '- NONE'}\n`;
 
 writeMd(path.join(EPOCH_DIR, 'PAPER_EVIDENCE_INGEST.md'), md);
 
@@ -158,6 +175,7 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'paper_evidence_normalized.json'), 
   run_id: RUN_ID,
   record_count: status === 'PASS' ? normalized.length : 0,
   records: status === 'PASS' ? normalized : [],
+  evidence_source: evidenceSource,
 });
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'paper_evidence_ingest.json'), {
@@ -178,6 +196,7 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'paper_evidence_ingest.json'), {
   missing_field_rows: canonSort(missingFieldRows),
   outlier_marks: canonSort(outliers),
   input_sha256: inputSha256,
+  evidence_source: evidenceSource,
 });
 
 console.log(`[${status}] edge_paper_evidence_ingest — ${reasonCode}`);

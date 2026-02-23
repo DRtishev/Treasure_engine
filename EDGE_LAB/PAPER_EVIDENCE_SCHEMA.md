@@ -28,3 +28,10 @@ Required MVP fields per row:
 
 - Machine JSON under `reports/evidence/**/gates/**` must not contain ISO-8601 timestamps.
 - Normalized time keys must use `YYYY-MM-DD_HH:MM:SS` (e.g., from `ts`) or a deterministic integer index.
+
+## Eligibility semantics (REAL_ONLY)
+
+- `paper_evidence_ingest.json` must include `evidence_source` with value `FIXTURE` or `REAL`.
+- Default fail-closed behavior: if a profile marker exists, treat ingest as `FIXTURE` unless marker is explicitly `real`.
+- Pipeline `PASS` and promotion eligibility are separate concerns.
+- `edge_profit_00_closeout.json` may report `status=PASS` for fixture runs, but `eligible_for_profit_track` must stay `false` unless `status=PASS` AND `evidence_source=REAL`.

@@ -1,0 +1,31 @@
+# IMPORT_CSV.md
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: 1e93566551e0
+NEXT_ACTION: npm run -s edge:profit:00
+
+## CODE
+
+- code: NONE
+
+## WHY
+
+- CSV import completed with deterministic normalization.
+
+## SIGNATURES
+
+- schema_signature: dfe23a090dc2b3262cb390dba7251c3a0a1b9bf47e9db508bba5c1a216dd0ab0
+- input_sha256: 03d0bf07723301f843d044e11ed0dc72b882e51a1266b1d606b66390709764d7
+- output_sha256: 1f3be2ca037095ab9d417a38ec9a2a8b34a4c23216145b055e0e65a66b69af81
+- imported_evidence_source: REAL_SANDBOX
+- rows_raw: 360
+- rows_exported: 360
+- evidence_source: REAL
+
+## DIAGNOSTICS
+
+- input_path: artifacts/incoming/raw_paper_telemetry.csv
+- output_path: artifacts/incoming/paper_telemetry.jsonl
+- profile_marker_path: artifacts/incoming/paper_telemetry.profile
+- first_data_line: 2026-02-20T09:00:00Z,BTCUSDT,BUY,REAL-SANDBOX-00001,59976.42494140,59957.96045072,59988.82477720,1.79966474,2.06745164,1
