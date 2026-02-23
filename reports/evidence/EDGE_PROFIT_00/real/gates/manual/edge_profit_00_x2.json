@@ -1,0 +1,14 @@
+{
+  "drift": [],
+  "drift_count": 0,
+  "fingerprint_run1": "27dce65fd27a486f6d8beb623e60f3e2432dd4863fa38b42ed67d868aa721825",
+  "fingerprint_run2": "27dce65fd27a486f6d8beb623e60f3e2432dd4863fa38b42ed67d868aa721825",
+  "fingerprints_match": true,
+  "message": "EDGE_PROFIT_00 deterministic across two consecutive runs.",
+  "next_action": "npm run -s edge:profit:00",
+  "reason_code": "NONE",
+  "row_count": 11,
+  "run_id": "b455ad077aff",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

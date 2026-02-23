@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 3cb7828b3f1d
+RUN_ID: b455ad077aff
 NEXT_ACTION: All NEXT_ACTION references are valid. No phantom commands.
 
 ## OP01 Policy
@@ -36,7 +36,7 @@ Missing script => BLOCKED OP01.
 | Found | 13 |
 | Missing | 0 |
 
-## All Available Scripts (617 total, sorted)
+## All Available Scripts (639 total, sorted)
 
 - `approve:snapshots`
 - `court:v1`
@@ -80,6 +80,24 @@ Missing script => BLOCKED OP01.
 - `edge:paper:ingest`
 - `edge:paper:runner`
 - `edge:portfolio`
+- `edge:profit:00`
+- `edge:profit:00:doctor`
+- `edge:profit:00:exec`
+- `edge:profit:00:expect-blocked:conflict`
+- `edge:profit:00:expectancy`
+- `edge:profit:00:import:csv`
+- `edge:profit:00:ingest`
+- `edge:profit:00:overfit`
+- `edge:profit:00:real:run`
+- `edge:profit:00:real:stub`
+- `edge:profit:00:registry`
+- `edge:profit:00:sample`
+- `edge:profit:00:sample:clean`
+- `edge:profit:00:sample:conflict`
+- `edge:profit:00:sample:missing`
+- `edge:profit:00:x2`
+- `edge:profit:01:super`
+- `edge:profit:01:wf-lite`
 - `edge:profit:candidates`
 - `edge:raw:x2`
 - `edge:redteam`
@@ -527,6 +545,8 @@ Missing script => BLOCKED OP01.
 - `verify:edge:magic:suite:x2`
 - `verify:edge:magic:x2`
 - `verify:edge:meta:x2`
+- `verify:edge:profit:00:release`
+- `verify:edge:profit:00:scope`
 - `verify:edge:profit:envelope:x2`
 - `verify:edge:profit:search:x2`
 - `verify:edge:profit:x2`
@@ -534,6 +554,7 @@ Missing script => BLOCKED OP01.
 - `verify:edge:shortlist`
 - `verify:edge:stress:x2`
 - `verify:edge:strict`
+- `verify:env:authority`
 - `verify:epoch06`
 - `verify:epoch07`
 - `verify:epoch08`
@@ -635,6 +656,7 @@ Missing script => BLOCKED OP01.
 - `verify:release:repro`
 - `verify:repo`
 - `verify:repo:selftest`
+- `verify:report:contradiction`
 - `verify:safety`
 - `verify:sim-schema`
 - `verify:snapshots`

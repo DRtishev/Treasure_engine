@@ -657,6 +657,9 @@ scripts/verify/e99_stage_contract.mjs
 scripts/verify/edge_all_epochs.mjs
 scripts/verify/edge_epoch_gate.mjs
 scripts/verify/edge_lab_validation.mjs
+scripts/verify/edge_profit_00_release_artifacts_gate.mjs
+scripts/verify/edge_profit_00_scope_guard.mjs
+scripts/verify/env_node_truth_authority.mjs
 scripts/verify/epoch_fallback_gate.mjs
 scripts/verify/epoch_freeze_regression.mjs
 scripts/verify/epoch_sweep_1_58.mjs
@@ -746,6 +749,7 @@ scripts/verify/release_governor_check.mjs
 scripts/verify/release_repro_check.mjs
 scripts/verify/repo_manifest.mjs
 scripts/verify/repo_sanity_check.mjs
+scripts/verify/report_contradiction_guard.mjs
 scripts/verify/run_with_context.mjs
 scripts/verify/safety_gates_check.mjs
 scripts/verify/safety_integrated_executor_check.mjs

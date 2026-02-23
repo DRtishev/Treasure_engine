@@ -3,8 +3,8 @@
     {
       "anchor_file": "reports/evidence/EDGE_LAB/P0/CHECKSUMS.md",
       "anchor_found": true,
-      "anchored": "0b75f6c15507133c7775dd85d627b7f87b8582d4093adf5ee20074fcbafcf213",
-      "computed": "0b75f6c15507133c7775dd85d627b7f87b8582d4093adf5ee20074fcbafcf213",
+      "anchored": "a202ce963b6330f554b6f387cb0151e60d81af24a699ae9f2c2499a978a4040f",
+      "computed": "a202ce963b6330f554b6f387cb0151e60d81af24a699ae9f2c2499a978a4040f",
       "diff_hint": "NONE",
       "id": "C01_SCOPE_MANIFEST_SHA",
       "label": "SCOPE_MANIFEST_SHA",
@@ -14,8 +14,8 @@
     {
       "anchor_file": "reports/evidence/GOV/MERKLE_ROOT.md",
       "anchor_found": true,
-      "anchored": "8757b5183a6ab17d85e3772b80245b782c3314d4060fe168673c0eba4ccba3d0",
-      "computed": "8757b5183a6ab17d85e3772b80245b782c3314d4060fe168673c0eba4ccba3d0",
+      "anchored": "a91446a84476e375742f0fbd6aaaa44cb6729dac7308d6a6a617483041a96200",
+      "computed": "a91446a84476e375742f0fbd6aaaa44cb6729dac7308d6a6a617483041a96200",
       "diff_hint": "NONE",
       "id": "C02_MERKLE_ROOT",
       "label": "MERKLE_ROOT",
@@ -25,8 +25,8 @@
     {
       "anchor_file": "reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md",
       "anchor_found": true,
-      "anchored": "a2c79c5bbe4a3ad668fe6aac4a2524b67374dd2b8f657b0aaf6634d2ca189df4",
-      "computed": "a2c79c5bbe4a3ad668fe6aac4a2524b67374dd2b8f657b0aaf6634d2ca189df4",
+      "anchored": "0cb69e38613a67cc0edb3fb5db6be0ee203bd6f5957504f102df79d010384d10",
+      "computed": "0cb69e38613a67cc0edb3fb5db6be0ee203bd6f5957504f102df79d010384d10",
       "diff_hint": "NONE",
       "id": "C03_RECEIPTS_CHAIN_FINAL",
       "label": "RECEIPTS_CHAIN_FINAL",
@@ -36,12 +36,12 @@
   ],
   "drifted_files_count": 0,
   "drifted_files_sample": [],
-  "files_in_scope": 96,
+  "files_in_scope": 115,
   "message": "GOV01 PASS — Evidence integrity verified. All 3 anchored values match recomputed values. No manual edits detected.",
   "mismatch_count": 0,
-  "next_action": "Evidence integrity proven. Proceed to EDGE_UNLOCK evaluation.",
+  "next_action": "npm run -s gov:integrity",
   "reason_code": "NONE",
-  "run_id": "3cb7828b3f1d",
+  "run_id": "b455ad077aff",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

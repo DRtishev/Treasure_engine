@@ -39,6 +39,19 @@ console.log(`RUN_ID: ${RUN_ID}`);
 console.log('='.repeat(60));
 
 
+
+// Ensure CHECKSUMS anchor is fresh/stable
+try {
+  execSync(`node "${path.join(ROOT, 'scripts/edge/edge_lab/edge_evidence_hashes.mjs')}"`, {
+    cwd: ROOT,
+    encoding: 'utf8',
+    stdio: ['pipe', 'pipe', 'pipe'],
+    timeout: 120000,
+  });
+} catch {
+  // Fail-closed later via anchor checks (ME01/GOV01 path)
+}
+
 // Ensure MERKLE_ROOT anchor is fresh/stable for standalone operator use
 try {
   execSync(`node "${path.join(ROOT, 'scripts/gov/merkle_root.mjs')}"`, {

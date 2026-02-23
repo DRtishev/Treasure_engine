@@ -1,0 +1,33 @@
+{
+  "artifacts": [
+    {
+      "contract_key": "FINAL_VALIDATED_PRIMARY_PATH",
+      "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz",
+      "present": true,
+      "sha256": "7f17664a5147c09ef85c4a8d3c781a7232bedd661d54df318017974d7cd43475"
+    },
+    {
+      "contract_key": "EVIDENCE_CHAIN_PRIMARY_PATH",
+      "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz",
+      "present": true,
+      "sha256": "7f17664a5147c09ef85c4a8d3c781a7232bedd661d54df318017974d7cd43475"
+    },
+    {
+      "contract_key": "FINAL_VALIDATED_SHA256_SIDECAR_PATH",
+      "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256",
+      "present": true,
+      "sha256": "9366c6aa79f4087b12238cbbb6ef7dc6dfa43688f85183510b1ce9b210376ea0"
+    }
+  ],
+  "contract_error": "NONE",
+  "contract_loaded": true,
+  "contract_path": "GOV/EXPORT_CONTRACT.md",
+  "evidence_epoch": "EPOCH-EDGE-RC-STRICT-01",
+  "message": "Release artifacts present with sha256 checksums.",
+  "missing": [],
+  "next_action": "npm run -s export:final-validated",
+  "reason_code": "NONE",
+  "run_id": "b455ad077aff",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

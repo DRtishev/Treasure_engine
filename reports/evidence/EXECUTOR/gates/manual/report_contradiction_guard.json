@@ -1,0 +1,10 @@
+{
+  "commands_runtime_node_version": "MISSING",
+  "env_runtime_node_version": "v22.22.0",
+  "message": "Node version contradiction detected env=v22.22.0 commands=MISSING.",
+  "next_action": "npm run -s verify:env:authority",
+  "reason_code": "REP01",
+  "run_id": "b455ad077aff",
+  "schema_version": "1.0.0",
+  "status": "FAIL"
+}

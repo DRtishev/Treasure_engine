@@ -1,0 +1,23 @@
+# RELEASE_ARTIFACTS.md — EDGE_PROFIT_00
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: b455ad077aff
+NEXT_ACTION: npm run -s export:final-validated
+
+## Contract
+
+- contract_path: GOV/EXPORT_CONTRACT.md
+- contract_loaded: true
+- evidence_epoch: EPOCH-EDGE-RC-STRICT-01
+- contract_error: NONE
+
+## Artifact Checks
+
+- FINAL_VALIDATED_PRIMARY_PATH: PRESENT | reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz | sha256=7f17664a5147c09ef85c4a8d3c781a7232bedd661d54df318017974d7cd43475
+- EVIDENCE_CHAIN_PRIMARY_PATH: PRESENT | reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz | sha256=7f17664a5147c09ef85c4a8d3c781a7232bedd661d54df318017974d7cd43475
+- FINAL_VALIDATED_SHA256_SIDECAR_PATH: PRESENT | reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256 | sha256=9366c6aa79f4087b12238cbbb6ef7dc6dfa43688f85183510b1ce9b210376ea0
+
+## Missing
+
+- NONE

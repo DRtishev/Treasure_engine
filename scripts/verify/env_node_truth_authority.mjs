@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 
@@ -23,13 +24,16 @@ let message = 'Node authority preflight passed.';
 let allowedFamily = '';
 let pinnedMinor = '';
 let contractLoaded = false;
+let nodeTruthSha = 'MISSING';
 
 if (!fs.existsSync(NODE_TRUTH)) {
   status = 'NEEDS_DATA';
   reasonCode = 'ENV01';
   message = 'NODE_TRUTH.md missing.';
 } else {
-  const parsed = parseNodeTruth(fs.readFileSync(NODE_TRUTH, 'utf8'));
+  const nodeTruthRaw = fs.readFileSync(NODE_TRUTH, 'utf8');
+  nodeTruthSha = crypto.createHash('sha256').update(nodeTruthRaw).digest('hex');
+  const parsed = parseNodeTruth(nodeTruthRaw);
   allowedFamily = parsed.allowed_family;
   pinnedMinor = parsed.hard_pinned_minor;
   contractLoaded = Boolean(allowedFamily && pinnedMinor);
@@ -43,7 +47,7 @@ if (!fs.existsSync(NODE_TRUTH)) {
   }
 }
 
-writeMd(path.join(EXECUTOR_DIR, 'ENV_AUTHORITY.md'), `# ENV_AUTHORITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- node_truth_path: NODE_TRUTH.md\n- contract_loaded: ${contractLoaded}\n- allowed_family: ${allowedFamily || 'UNKNOWN'}\n- hard_pinned_minor: ${pinnedMinor || 'UNKNOWN'}\n- runtime_node: ${process.version}\n`);
+writeMd(path.join(EXECUTOR_DIR, 'ENV_AUTHORITY.md'), `# ENV_AUTHORITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- node_truth_path: NODE_TRUTH.md\n- contract_loaded: ${contractLoaded}\n- allowed_family: ${allowedFamily || 'UNKNOWN'}\n- expected_pinned_minor: ${pinnedMinor || 'UNKNOWN'}\n- runtime_node_version: ${process.version}\n- node_truth_sha256: ${nodeTruthSha}\n- verdict: ${status}\n`);
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'env_authority.json'), {
   schema_version: '1.0.0',
@@ -55,8 +59,10 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'env_authority.json'), {
   node_truth_path: 'NODE_TRUTH.md',
   contract_loaded: contractLoaded,
   allowed_family: allowedFamily || 'UNKNOWN',
-  hard_pinned_minor: pinnedMinor || 'UNKNOWN',
-  runtime_node: process.version,
+  expected_pinned_minor: pinnedMinor || 'UNKNOWN',
+  runtime_node_version: process.version,
+  node_truth_sha256: nodeTruthSha,
+  verdict: status,
 });
 
 console.log(`[${status}] env_node_truth_authority — ${reasonCode}`);
