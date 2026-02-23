@@ -81,11 +81,16 @@ if (failGate) {
 
 const ingestEvidenceSource = String(gateMap.PAPER_EVIDENCE_INGEST?.evidence_source || 'FIXTURE').toUpperCase();
 const eligibleForProfitTrack = status === 'PASS' && ingestEvidenceSource === 'REAL';
+const promotionReason = eligibleForProfitTrack
+  ? 'REAL-only promotion gate satisfied.'
+  : ingestEvidenceSource === 'REAL'
+    ? 'Closeout not PASS; promotion denied.'
+    : 'EP02_REAL_REQUIRED: evidence_source is not REAL.';
 
 const nextAction = status === 'PASS'
-  ? 'npm run -s edge:profit:00'
+  ? 'npm run -s executor:run:chain'
   : status === 'NEEDS_DATA'
-    ? 'npm run -s edge:profit:00:sample'
+    ? 'npm run -s edge:profit:00:import:csv'
     : 'npm run -s edge:profit:00';
 
 const rows = runResults.map((r) => {
@@ -112,6 +117,7 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'edge_profit_00_closeout.json'), {
   active_live_flags: [],
   evidence_source: ingestEvidenceSource,
   eligible_for_profit_track: eligibleForProfitTrack,
+  promotion_eligibility_reason: promotionReason,
 });
 
 console.log(`[${status}] edge_profit_00_closeout — ${reasonCode}`);

@@ -1,7 +1,7 @@
 {
   "active_live_flags": [],
-  "eligible_for_profit_track": true,
-  "evidence_source": "REAL",
+  "eligible_for_profit_track": false,
+  "evidence_source": "FIXTURE_STUB",
   "gate_results": [
     {
       "exit_code": 0,
@@ -35,9 +35,10 @@
     }
   ],
   "message": "EDGE_PROFIT_00 closeout PASS.",
-  "next_action": "npm run -s edge:profit:00",
+  "next_action": "npm run -s executor:run:chain",
+  "promotion_eligibility_reason": "EP02_REAL_REQUIRED: evidence_source is not REAL.",
   "reason_code": "NONE",
-  "run_id": "b68b470a2f03",
+  "run_id": "7df4dc3a1062",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: b68b470a2f03
+RUN_ID: 7df4dc3a1062
 NEXT_ACTION: npm run -s edge:profit:00:real:run
 
 ## Stub
@@ -15,3 +15,4 @@ NEXT_ACTION: npm run -s edge:profit:00:real:run
 - profile_marker_path: artifacts/incoming/paper_telemetry.profile
 - profile_marker_value: real
 - source_tag: REAL_STUB_V1
+- expected_ingest_evidence_source: FIXTURE_STUB

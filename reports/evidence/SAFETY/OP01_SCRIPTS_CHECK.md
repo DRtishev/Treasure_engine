@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: b68b470a2f03
+RUN_ID: 7df4dc3a1062
 NEXT_ACTION: All NEXT_ACTION references are valid. No phantom commands.
 
 ## OP01 Policy
@@ -36,7 +36,7 @@ Missing script => BLOCKED OP01.
 | Found | 13 |
 | Missing | 0 |
 
-## All Available Scripts (641 total, sorted)
+## All Available Scripts (645 total, sorted)
 
 - `approve:snapshots`
 - `court:v1`
@@ -98,6 +98,9 @@ Missing script => BLOCKED OP01.
 - `edge:profit:00:x2`
 - `edge:profit:01:super`
 - `edge:profit:01:wf-lite`
+- `edge:profit:02:expectancy-proof`
+- `edge:profit:02:pbo`
+- `edge:profit:02:risk`
 - `edge:profit:candidates`
 - `edge:raw:x2`
 - `edge:redteam`
@@ -652,6 +655,7 @@ Missing script => BLOCKED OP01.
 - `verify:quiet:smoke`
 - `verify:reachability`
 - `verify:reality-gap`
+- `verify:regression:no-stub-promotion`
 - `verify:release`
 - `verify:release-governor`
 - `verify:release:chain`

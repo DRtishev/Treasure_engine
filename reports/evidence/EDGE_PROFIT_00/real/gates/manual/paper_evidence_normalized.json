@@ -1,5 +1,5 @@
 {
-  "evidence_source": "REAL",
+  "evidence_source": "FIXTURE_STUB",
   "reason_code": "NONE",
   "record_count": 360,
   "records": [
@@ -5044,7 +5044,7 @@
       "t": "2026-02-21_11:59:00"
     }
   ],
-  "run_id": "b68b470a2f03",
+  "run_id": "7df4dc3a1062",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

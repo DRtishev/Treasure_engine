@@ -1,0 +1,11 @@
+{
+  "closeout_status": "PASS",
+  "eligible_for_profit_track": false,
+  "evidence_source": "FIXTURE_STUB",
+  "message": "Stub promotion regression passed (promotion remains false).",
+  "next_action": "npm run -s executor:run:chain",
+  "reason_code": "NONE",
+  "run_id": "7df4dc3a1062",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

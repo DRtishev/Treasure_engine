@@ -1,5 +1,5 @@
 {
-  "evidence_source": "REAL",
+  "evidence_source": "FIXTURE_STUB",
   "input_kind": "JSONL",
   "input_sha256": "12996740bb12e027b3bcae7b7b974d0c5f89dcd4d6e66f216dbf5b7c0b0679f1",
   "message": "Telemetry ingest pass with deterministic normalization.",
@@ -9,7 +9,7 @@
   "outlier_marks": [],
   "reason_code": "NONE",
   "row_count": 360,
-  "run_id": "b68b470a2f03",
+  "run_id": "7df4dc3a1062",
   "schema_version": "1.0.0",
   "severe_conflict_count": 0,
   "status": "PASS"

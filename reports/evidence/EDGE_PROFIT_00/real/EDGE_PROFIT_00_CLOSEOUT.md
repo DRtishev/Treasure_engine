@@ -2,13 +2,13 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: b68b470a2f03
-NEXT_ACTION: npm run -s edge:profit:00
+RUN_ID: 7df4dc3a1062
+NEXT_ACTION: npm run -s executor:run:chain
 
 ## Eligibility
 
-- evidence_source: REAL
-- eligible_for_profit_track: true
+- evidence_source: FIXTURE_STUB
+- eligible_for_profit_track: false
 
 ## Gate Matrix
 

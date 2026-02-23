@@ -17,7 +17,7 @@
   "psr_min": 0.95,
   "rationale": "CI lower > 0, PSR and MinTRL thresholds satisfied.",
   "reason_code": "NONE",
-  "run_id": "b68b470a2f03",
+  "run_id": "7df4dc3a1062",
   "schema_version": "1.0.0",
   "sharpe_proxy": 67.20483018,
   "status": "PASS",

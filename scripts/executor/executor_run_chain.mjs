@@ -46,6 +46,10 @@ if (fs.existsSync(path.join(ROOT, 'scripts', 'edge', 'edge_lab', 'edge_walk_forw
 }
 
 commands.push(
+  'npm run -s edge:profit:02:expectancy-proof',
+  'npm run -s edge:profit:02:pbo',
+  'npm run -s edge:profit:02:risk',
+  'npm run -s verify:regression:no-stub-promotion',
   'npm run -s export:final-validated',
   'npm run -s verify:edge:profit:00:release',
   'npm run -s edge:profit:00:doctor',

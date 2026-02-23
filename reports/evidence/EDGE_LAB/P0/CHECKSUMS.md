@@ -2,17 +2,17 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: b68b470a2f03
+RUN_ID: 7df4dc3a1062
 NEXT_ACTION: Proceed to RECEIPTS_CHAIN.
 
 ## Metadata
 
 | Field | Value |
 |-------|-------|
-| scope_manifest_sha | `e7b38c740dd76f72a139cf6cf26411f49250ab1a68da4aea2710df0f475900c6` |
+| scope_manifest_sha | `2dfccc092d7c304f375b2e02364b97eb71379d70e4c340daabd4b88c701d2782` |
 | norm_rules_sha | `021ba0511726a903c5d184a555e10a5137eae2eeed9e3df597b23eca255ac496` |
-| files_in_scope | 116 |
-| files_hashed | 116 |
+| files_in_scope | 119 |
+| files_hashed | 119 |
 | files_missing | 0 |
 
 ## Hash Ledger (sha256_raw + sha256_norm, ASCII sorted)
@@ -27,14 +27,14 @@ NEXT_ACTION: Proceed to RECEIPTS_CHAIN.
 | `EDGE_LAB/DEP_POLICY.md` | `857c544a6609997b167737b65539808e458d1cb28a3a2559498283aa71a22846` | `857c544a6609997b167737b65539808e458d1cb28a3a2559498283aa71a22846` |
 | `EDGE_LAB/ERROR_BUDGET_POLICY.md` | `fbd5cc865ac70276692369d206399754d863f38c11cadf5064212744b36c38fc` | `fbd5cc865ac70276692369d206399754d863f38c11cadf5064212744b36c38fc` |
 | `EDGE_LAB/EVIDENCE_CANON_RULES.md` | `021ba0511726a903c5d184a555e10a5137eae2eeed9e3df597b23eca255ac496` | `021ba0511726a903c5d184a555e10a5137eae2eeed9e3df597b23eca255ac496` |
-| `EDGE_LAB/EVIDENCE_INDEX.md` | `226fc507e3b82f5f9f2d317fb22ae94bb89c3ba9e62220add65a334425a0d94d` | `56e857749b0d4ea719b835b28951dc1814deece851bee9afd07634f59c0d8e69` |
+| `EDGE_LAB/EVIDENCE_INDEX.md` | `226fc507e3b82f5f9f2d317fb22ae94bb89c3ba9e62220add65a334425a0d94d` | `a29079617dcfb3d5cb4786dbac990c139ec8e0d2e3742a409cffd28aed0e9ebf` |
 | `EDGE_LAB/EXECUTION_MODEL.md` | `6072ee361588d9ea048acf2ec978c7ee69a189d67477a5b22cbdc93edf2a0ada` | `6072ee361588d9ea048acf2ec978c7ee69a189d67477a5b22cbdc93edf2a0ada` |
 | `EDGE_LAB/EXECUTION_REALITY_POLICY.md` | `79c313a9e3578c25d2b81eb18d3a8888a800dc8d7c535dcc65f644f64a610c57` | `79c313a9e3578c25d2b81eb18d3a8888a800dc8d7c535dcc65f644f64a610c57` |
 | `EDGE_LAB/EXECUTION_SENSITIVITY_SPEC.md` | `2ef6481e548f8cead408f2697cc496a3243685756e2f81a27116c2825fc407f6` | `2ef6481e548f8cead408f2697cc496a3243685756e2f81a27116c2825fc407f6` |
 | `EDGE_LAB/EXECUTOR_ENTRYPOINT_DOCTRINE.md` | `b7c2ce5051762b3b5112f8a9e25c9628779352beb5e7c09c104d259012ba3d98` | `b7c2ce5051762b3b5112f8a9e25c9628779352beb5e7c09c104d259012ba3d98` |
 | `EDGE_LAB/EXPECTANCY_CI_POLICY.md` | `7cff212a4ce580c4ab3ef66bb9342eb5a1e154af7046ff7944798dc2a7d526c6` | `7cff212a4ce580c4ab3ef66bb9342eb5a1e154af7046ff7944798dc2a7d526c6` |
 | `EDGE_LAB/EXPECTANCY_POLICY.md` | `c7a45d923b14dc19041e0959e13b07b61f84ffbcfc7519d602eb2767e51b5351` | `c7a45d923b14dc19041e0959e13b07b61f84ffbcfc7519d602eb2767e51b5351` |
-| `EDGE_LAB/FINAL_VERDICT.md` | `be14f17cae4a9f745ee8b1e1e8813ac396c72bac49ce31e59952a84b5ba06b40` | `6eea6cebc4dd227fe70e7966d43c3f49fab6959af8860e70a95d3b6c000335a5` |
+| `EDGE_LAB/FINAL_VERDICT.md` | `be14f17cae4a9f745ee8b1e1e8813ac396c72bac49ce31e59952a84b5ba06b40` | `95770fdcbd51eda76f32ff7e0a34117619942b9b29b84af60dd64d96746ca152` |
 | `EDGE_LAB/GATE_FSM_SPEC.md` | `381bf240e65dbe9211ddc4e1e090f99ea3a00d2ffa86a3b84cf191f9645121ae` | `381bf240e65dbe9211ddc4e1e090f99ea3a00d2ffa86a3b84cf191f9645121ae` |
 | `EDGE_LAB/HACK_REGISTRY.md` | `9e40f7916cb116cba1ee2476eab229f6f60a13fae7992341bf559b97c5b767d3` | `9e40f7916cb116cba1ee2476eab229f6f60a13fae7992341bf559b97c5b767d3` |
 | `EDGE_LAB/HACK_SCHEMA.md` | `93ebb1445493c3cb68fb17dbaa78d665b11f7bbe4100c13a6a9ed0c02e7cff35` | `93ebb1445493c3cb68fb17dbaa78d665b11f7bbe4100c13a6a9ed0c02e7cff35` |
@@ -72,9 +72,9 @@ NEXT_ACTION: Proceed to RECEIPTS_CHAIN.
 | `EDGE_LAB/VERDICT_SEMANTICS.md` | `fc6d6d3bf66d6e867d2ff3611e861b1b2277813fd74b73634bf315b50e139439` | `fc6d6d3bf66d6e867d2ff3611e861b1b2277813fd74b73634bf315b50e139439` |
 | `EDGE_LAB/WALK_FORWARD_PROTOCOL.md` | `0cbb83e53e415b157294b92ac140a6b9593c1a7eb78069352f80dccbcd962b98` | `0cbb83e53e415b157294b92ac140a6b9593c1a7eb78069352f80dccbcd962b98` |
 | `reports/evidence/EDGE_LAB/P0/CALM_P0_ANTI_FLAKE_X2.md` | `5a28031b20351469c8d3a6b20336cab8cd72b3ba705ab015ee5db4706d517d22` | `5a28031b20351469c8d3a6b20336cab8cd72b3ba705ab015ee5db4706d517d22` |
-| `reports/evidence/EDGE_LAB/P0/CANON_SELFTEST.md` | `b85586a833b7db9a0b8d336adf3f311d98bc4639ab97888756fdd008a59341b7` | `b85586a833b7db9a0b8d336adf3f311d98bc4639ab97888756fdd008a59341b7` |
-| `reports/evidence/EDGE_LAB/P0/DATA_COURT.md` | `43dfc29a3b0d386cf6b83b409f6b39cb6947759e927eeebcd414e101f13f7aa7` | `43dfc29a3b0d386cf6b83b409f6b39cb6947759e927eeebcd414e101f13f7aa7` |
-| `reports/evidence/EDGE_LAB/gates/manual/canon_selftest.json` | `a1efe8c97b8577d714cc0be769b764affe64e2c6151a28e3c5e0731dbd6508f0` | `a1efe8c97b8577d714cc0be769b764affe64e2c6151a28e3c5e0731dbd6508f0` |
+| `reports/evidence/EDGE_LAB/P0/CANON_SELFTEST.md` | `f2140a07203d0c6f2f8cd47a02984967daec696168fe4afe1c7707d9bd9ded17` | `f2140a07203d0c6f2f8cd47a02984967daec696168fe4afe1c7707d9bd9ded17` |
+| `reports/evidence/EDGE_LAB/P0/DATA_COURT.md` | `320d0e04cdab3c772fcf40c03cc050959ae80fc75036d8c3e36d6bb5b5eaa471` | `320d0e04cdab3c772fcf40c03cc050959ae80fc75036d8c3e36d6bb5b5eaa471` |
+| `reports/evidence/EDGE_LAB/gates/manual/canon_selftest.json` | `ad28f3a95e23b402e350114b8c3261e3cea183291c557ef38b334ee3cc9b00fc` | `ad28f3a95e23b402e350114b8c3261e3cea183291c557ef38b334ee3cc9b00fc` |
 | `reports/evidence/EDGE_LAB/gates/manual/execution_reality_court.json` | `aeda39d0f7f47706d1d191ed3c99ca5c9427744615d2a38df5260cb5ad572ed6` | `aeda39d0f7f47706d1d191ed3c99ca5c9427744615d2a38df5260cb5ad572ed6` |
 | `reports/evidence/EDGE_LAB/gates/manual/expectancy_ci.json` | `69cd40db926c2f2f25a7331ed0867bd2e5e7616d6cccbb03ac2347efa42fd1aa` | `69cd40db926c2f2f25a7331ed0867bd2e5e7616d6cccbb03ac2347efa42fd1aa` |
 | `reports/evidence/EDGE_LAB/gates/manual/micro_live_readiness.json` | `96ae517f3a497d6fc92d123d0a84068de89f6dbbc080fb3898b34c2a5dbe297e` | `96ae517f3a497d6fc92d123d0a84068de89f6dbbc080fb3898b34c2a5dbe297e` |
@@ -112,15 +112,18 @@ NEXT_ACTION: Proceed to RECEIPTS_CHAIN.
 | `scripts/edge/edge_lab/edge_overfit.mjs` | `739134e7eadcbfbe9d5a7fbb0a08757d99aa187ed7b657c172d8d9891814853b` | `739134e7eadcbfbe9d5a7fbb0a08757d99aa187ed7b657c172d8d9891814853b` |
 | `scripts/edge/edge_lab/edge_overfit_court_mvp.mjs` | `8bb441b6040ceef9f1d86390e6814b2863638a6d2b88e26c6d349b424d8aa454` | `8bb441b6040ceef9f1d86390e6814b2863638a6d2b88e26c6d349b424d8aa454` |
 | `scripts/edge/edge_lab/edge_paper_evidence.mjs` | `33c2a31e682567753c9e74066a0dfdc61a0f9f3f05189c59c81b8b4f2ec9027c` | `33c2a31e682567753c9e74066a0dfdc61a0f9f3f05189c59c81b8b4f2ec9027c` |
-| `scripts/edge/edge_lab/edge_paper_evidence_ingest.mjs` | `196646e0b578f0a35f5d8947139490dc186252d78be0eb8ccca15f480b12876b` | `196646e0b578f0a35f5d8947139490dc186252d78be0eb8ccca15f480b12876b` |
+| `scripts/edge/edge_lab/edge_paper_evidence_ingest.mjs` | `cf591e05e2c0f7466b6c0bbf1e3ae1ea8a401507d7c028a357eb2c157faf2bfb` | `cf591e05e2c0f7466b6c0bbf1e3ae1ea8a401507d7c028a357eb2c157faf2bfb` |
 | `scripts/edge/edge_lab/edge_paper_ingest.mjs` | `bca8ea1591271dae49d752b251654fac35cac24b7bd4c563e698a0171de88b4c` | `bca8ea1591271dae49d752b251654fac35cac24b7bd4c563e698a0171de88b4c` |
 | `scripts/edge/edge_lab/edge_portfolio_court.mjs` | `39388001ca211a7e61f9f4becce61b743f296d3a0b793327d9207e8accff84c4` | `39388001ca211a7e61f9f4becce61b743f296d3a0b793327d9207e8accff84c4` |
-| `scripts/edge/edge_lab/edge_profit_00_closeout.mjs` | `d28b1af257b2738942fc64ee60372a95697e42babee12ae0fafbf593a110c733` | `d28b1af257b2738942fc64ee60372a95697e42babee12ae0fafbf593a110c733` |
-| `scripts/edge/edge_lab/edge_profit_00_doctor.mjs` | `7c083a6c990889f54bd748af02b731e75c74a88c2a53aa5a0ddb086908a9c827` | `7c083a6c990889f54bd748af02b731e75c74a88c2a53aa5a0ddb086908a9c827` |
+| `scripts/edge/edge_lab/edge_profit_00_closeout.mjs` | `7b602132b23903c437929fff43d41434896eb856ed75d4c11be3cdb9fab66345` | `7b602132b23903c437929fff43d41434896eb856ed75d4c11be3cdb9fab66345` |
+| `scripts/edge/edge_lab/edge_profit_00_doctor.mjs` | `b1ea767a1fb234c31b32a64319e22a0fab9ad10ff94d7bf5d3a28672a4aa4975` | `b1ea767a1fb234c31b32a64319e22a0fab9ad10ff94d7bf5d3a28672a4aa4975` |
 | `scripts/edge/edge_lab/edge_profit_00_expect_blocked_conflict.mjs` | `1da46caf8a44a866e1da675fe30d686b0609f74756f1522b496cad32b85454b0` | `1da46caf8a44a866e1da675fe30d686b0609f74756f1522b496cad32b85454b0` |
 | `scripts/edge/edge_lab/edge_profit_00_paths.mjs` | `5993bbb60fe2d6c779cfe946d27b6d0692c190f861a5114d7f04e322cfceb3d7` | `5993bbb60fe2d6c779cfe946d27b6d0692c190f861a5114d7f04e322cfceb3d7` |
 | `scripts/edge/edge_lab/edge_profit_00_x2.mjs` | `637405f3b3dfe709e1ca4a188869602aa75c716ac47d1f49e4737329b82da976` | `637405f3b3dfe709e1ca4a188869602aa75c716ac47d1f49e4737329b82da976` |
 | `scripts/edge/edge_lab/edge_profit_01_super.mjs` | `b23a50af2f8b152af0eb6897a6c48c5f2bb90d54493831ae491af016b5d0f930` | `b23a50af2f8b152af0eb6897a6c48c5f2bb90d54493831ae491af016b5d0f930` |
+| `scripts/edge/edge_lab/edge_profit_02_expectancy_proof.mjs` | `a9eb0e0db101ba057c32291f3afb6a1a40fad598f174100cff261c93e9b078e2` | `a9eb0e0db101ba057c32291f3afb6a1a40fad598f174100cff261c93e9b078e2` |
+| `scripts/edge/edge_lab/edge_profit_02_pbo_cpcv.mjs` | `d23b6db553279a5fb3e20f59a6b182cd8e906f2565a008750b78121e9e84d724` | `d23b6db553279a5fb3e20f59a6b182cd8e906f2565a008750b78121e9e84d724` |
+| `scripts/edge/edge_lab/edge_profit_02_risk_mcdd.mjs` | `3ce2620d05965b88a74588679178d7c78a2173e8599bcc1f1a61dde2313609c6` | `3ce2620d05965b88a74588679178d7c78a2173e8599bcc1f1a61dde2313609c6` |
 | `scripts/edge/edge_lab/edge_profit_candidates.mjs` | `6243223ac863e97ca687e03bead7b49a1f21ba59bf44828427a0f0d7ee6b3307` | `6243223ac863e97ca687e03bead7b49a1f21ba59bf44828427a0f0d7ee6b3307` |
 | `scripts/edge/edge_lab/edge_raw_x2.mjs` | `7b7df6836d96cb4de68497783582afb58658fec62aba11945cdd6e6897bcaef9` | `7b7df6836d96cb4de68497783582afb58658fec62aba11945cdd6e6897bcaef9` |
 | `scripts/edge/edge_lab/edge_receipts_chain.mjs` | `e98030165a11cd13e6682b5e133dffe7f2a102e9841eb2062b4e6739bdebf9e3` | `e98030165a11cd13e6682b5e133dffe7f2a102e9841eb2062b4e6739bdebf9e3` |
@@ -133,7 +136,7 @@ NEXT_ACTION: Proceed to RECEIPTS_CHAIN.
 | `scripts/edge/edge_lab/edge_walk_forward_lite.mjs` | `902ec6a161cccb1bdd1a27f4bc09c89c8dac22c278781429bc7d1214fb1de1d8` | `902ec6a161cccb1bdd1a27f4bc09c89c8dac22c278781429bc7d1214fb1de1d8` |
 | `scripts/edge/edge_lab/paper_epoch_runner.mjs` | `1ef02b9cc48b197f2f49817553090da43a6cab8daf548c421abce9279e390613` | `1ef02b9cc48b197f2f49817553090da43a6cab8daf548c421abce9279e390613` |
 | `scripts/edge/edge_lab/paper_telemetry_import_csv.mjs` | `02e43b66388dfa52e2f56960d862605364b84b97f2f56bb3d737b7c54f38f157` | `02e43b66388dfa52e2f56960d862605364b84b97f2f56bb3d737b7c54f38f157` |
-| `scripts/edge/edge_lab/paper_telemetry_real_stub_gen.mjs` | `f93a3f04672505f6e82ec54f7eacad9b22969db0081671a158123fa7da2d043f` | `f93a3f04672505f6e82ec54f7eacad9b22969db0081671a158123fa7da2d043f` |
+| `scripts/edge/edge_lab/paper_telemetry_real_stub_gen.mjs` | `d652183d83a86bdb1c31d19ef4601c078f2c1d219e1b06a9db82a7f39f0137ef` | `d652183d83a86bdb1c31d19ef4601c078f2c1d219e1b06a9db82a7f39f0137ef` |
 | `scripts/edge/edge_lab/paper_telemetry_sample_gen.mjs` | `dec02f9e858a7b27254b605f8d47d9b23906f26264df694c9e53a4494aaf34c3` | `dec02f9e858a7b27254b605f8d47d9b23906f26264df694c9e53a4494aaf34c3` |
 
 ## Scope Manifest
@@ -241,6 +244,9 @@ scripts/edge/edge_lab/edge_profit_00_expect_blocked_conflict.mjs
 scripts/edge/edge_lab/edge_profit_00_paths.mjs
 scripts/edge/edge_lab/edge_profit_00_x2.mjs
 scripts/edge/edge_lab/edge_profit_01_super.mjs
+scripts/edge/edge_lab/edge_profit_02_expectancy_proof.mjs
+scripts/edge/edge_lab/edge_profit_02_pbo_cpcv.mjs
+scripts/edge/edge_lab/edge_profit_02_risk_mcdd.mjs
 scripts/edge/edge_lab/edge_profit_candidates.mjs
 scripts/edge/edge_lab/edge_raw_x2.mjs
 scripts/edge/edge_lab/edge_receipts_chain.mjs
