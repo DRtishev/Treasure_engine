@@ -1,0 +1,41 @@
+{
+  "active_live_flags": [],
+  "gate_results": [
+    {
+      "exit_code": 0,
+      "gate": "HYPOTHESIS_REGISTRY",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "gate": "PAPER_EVIDENCE_INGEST",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "gate": "EXECUTION_REALITY",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "gate": "EXPECTANCY",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "gate": "OVERFIT",
+      "reason_code": "NONE",
+      "status": "PASS"
+    }
+  ],
+  "message": "EDGE_PROFIT_00 closeout PASS.",
+  "next_action": "npm run -s edge:profit:00",
+  "reason_code": "NONE",
+  "run_id": "1e640a385aaa",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

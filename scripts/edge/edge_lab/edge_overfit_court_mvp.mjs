@@ -2,11 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from './canon.mjs';
+import { resolveProfit00EpochDir, resolveProfit00ManualDir } from './edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00');
-const MANUAL_DIR = path.join(EPOCH_DIR, 'gates', 'manual');
-const REG_PATH = path.join(MANUAL_DIR, 'hypothesis_registry.json');
+const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
+const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
+const REG_PATH = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'registry', 'gates', 'manual', 'hypothesis_registry.json');
 const EXP_PATH = path.join(MANUAL_DIR, 'expectancy.json');
 const BASE = Number(process.env.OVERFIT_BASE_PSR || 0.95);
 
@@ -59,7 +60,7 @@ if (exp.status === 'NEEDS_DATA') {
 const nextAction = status === 'PASS'
   ? 'npm run -s edge:profit:00'
   : status === 'NEEDS_DATA'
-    ? 'npm run -s edge:profit:00:ingest -- --generate-sample'
+    ? 'npm run -s edge:profit:00:sample'
     : 'npm run -s edge:profit:00';
 
 const md = `# OVERFIT_DEFENSE.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## MVP Defense\n\n- trials_n: ${trialsN}\n- base_psr_threshold: ${BASE.toFixed(6)}\n- corrected_psr_threshold: ${corrected.toFixed(6)}\n- expectancy_status: ${exp.status}\n- psr0: ${psr0.toFixed(6)}\n`;

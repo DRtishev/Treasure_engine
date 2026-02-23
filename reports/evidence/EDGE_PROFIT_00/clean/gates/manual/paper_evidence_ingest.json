@@ -1,0 +1,18 @@
+{
+  "input_kind": "JSONL",
+  "input_sha256": "22fc3008e7fce06b53cad276feb720d1b902a485a1edcb87af0ca3f4bb4830a2",
+  "message": "Telemetry ingest pass with deterministic normalization.",
+  "missing_field_rows": [],
+  "next_action": "npm run -s edge:profit:00:expectancy",
+  "outlier_count": 2,
+  "outlier_marks": [
+    "row_12:value_outlier",
+    "row_6:value_outlier"
+  ],
+  "reason_code": "NONE",
+  "row_count": 220,
+  "run_id": "1e640a385aaa",
+  "schema_version": "1.0.0",
+  "severe_conflict_count": 0,
+  "status": "PASS"
+}

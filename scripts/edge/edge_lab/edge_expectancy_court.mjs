@@ -2,10 +2,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from './canon.mjs';
+import { resolveProfit00EpochDir, resolveProfit00ManualDir } from './edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00');
-const MANUAL_DIR = path.join(EPOCH_DIR, 'gates', 'manual');
+const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
+const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
 const INGEST_GATE = path.join(MANUAL_DIR, 'paper_evidence_ingest.json');
 const EXEC_GATE = path.join(MANUAL_DIR, 'execution_reality.json');
 const NORM_FILE = path.join(MANUAL_DIR, 'paper_evidence_normalized.json');
@@ -64,13 +65,13 @@ if (!ingest || !execReality) {
 if (ingest.status !== 'PASS') {
   const status = ingest.status === 'NEEDS_DATA' ? 'NEEDS_DATA' : 'BLOCKED';
   const reasonCode = ingest.reason_code || (status === 'NEEDS_DATA' ? 'NDA02' : 'DC90');
-  const nextAction = status === 'NEEDS_DATA' ? 'npm run -s edge:profit:00:ingest -- --generate-sample' : 'npm run -s edge:profit:00';
+  const nextAction = status === 'NEEDS_DATA' ? 'npm run -s edge:profit:00:sample' : 'npm run -s edge:profit:00';
   writeAndExit(status, reasonCode, nextAction, `Ingest status is ${ingest.status}; expectancy is fail-closed.`, { min_n: MIN_N, trades_n: 0, ingest_status: ingest.status }, status === 'BLOCKED' ? 1 : 0);
 }
 if (execReality.status !== 'PASS') {
   const status = execReality.status === 'NEEDS_DATA' ? 'NEEDS_DATA' : 'BLOCKED';
   const reasonCode = execReality.reason_code || (status === 'NEEDS_DATA' ? 'NDA02' : 'DC90');
-  const nextAction = status === 'NEEDS_DATA' ? 'npm run -s edge:profit:00:ingest -- --generate-sample' : 'npm run -s edge:profit:00';
+  const nextAction = status === 'NEEDS_DATA' ? 'npm run -s edge:profit:00:sample' : 'npm run -s edge:profit:00';
   writeAndExit(status, reasonCode, nextAction, `Execution reality status is ${execReality.status}; expectancy is fail-closed.`, { min_n: MIN_N, trades_n: 0, execution_reality_status: execReality.status }, status === 'BLOCKED' ? 1 : 0);
 }
 
@@ -109,7 +110,7 @@ if (n < MIN_N || trl < MIN_TRL) {
 }
 
 const nextAction = status === 'PASS' ? 'npm run -s edge:profit:00:overfit' : status === 'NEEDS_DATA'
-  ? 'npm run -s edge:profit:00:ingest -- --generate-sample' : 'npm run -s edge:profit:00';
+  ? 'npm run -s edge:profit:00:sample' : 'npm run -s edge:profit:00';
 
 const md = `# EXPECTANCY.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Inputs\n\n- ingest_status: ${ingest.status}\n- execution_reality_status: ${execReality.status}\n- min_n: ${MIN_N}\n- min_trl: ${MIN_TRL}\n- psr_threshold: ${PSR_THRESHOLD}\n- bootstrap_n: ${BOOTSTRAP_N}\n- bootstrap_seed: ${BOOTSTRAP_SEED}\n- trades_n: ${n}\n\n## Metrics\n\n- mean_pnl_per_trade: ${m.toFixed(6)}\n- stddev_pnl: ${sd.toFixed(6)}\n- winrate: ${n ? (wins / n).toFixed(6) : '0.000000'}\n- profit_factor: ${pf.toFixed(6)}\n- max_drawdown_proxy: ${mdd.toFixed(6)}\n- ci95_low: ${ciLow.toFixed(6)}\n- ci95_high: ${ciHigh.toFixed(6)}\n- sharpe_proxy: ${sr.toFixed(6)}\n- psr0: ${psr0.toFixed(6)}\n- trl_proxy: ${trl.toFixed(6)}\n`;
 writeMd(path.join(EPOCH_DIR, 'EXPECTANCY.md'), md);

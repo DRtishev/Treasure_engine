@@ -1,13 +1,13 @@
 {
   "base_psr_threshold": 0.95,
   "corrected_psr_threshold": 0.95693147,
-  "expectancy_status": "NEEDS_DATA",
-  "message": "Overfit court needs more expectancy data.",
-  "next_action": "npm run -s edge:profit:00:ingest -- --generate-sample",
+  "expectancy_status": "BLOCKED",
+  "message": "Overfit MVP defense did not pass corrected PSR threshold.",
+  "next_action": "npm run -s edge:profit:00",
   "psr0": 0,
-  "reason_code": "NDA02",
-  "run_id": "0786d6e21b8d",
+  "reason_code": "OF90",
+  "run_id": "835061ba7062",
   "schema_version": "1.0.0",
-  "status": "NEEDS_DATA",
+  "status": "BLOCKED",
   "trials_n": 2
 }

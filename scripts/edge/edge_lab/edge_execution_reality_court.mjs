@@ -2,10 +2,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from './canon.mjs';
+import { resolveProfit00EpochDir, resolveProfit00ManualDir } from './edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00');
-const MANUAL_DIR = path.join(EPOCH_DIR, 'gates', 'manual');
+const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
+const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
 const INGEST_PATH = path.join(MANUAL_DIR, 'paper_evidence_ingest.json');
 const NORM_PATH = path.join(MANUAL_DIR, 'paper_evidence_normalized.json');
 const MIN_FILLS = Number(process.env.EXEC_REALITY_MIN_FILLS || 100);
@@ -34,7 +35,7 @@ if (!ingest) {
 if (ingest.status !== 'PASS') {
   const status = ingest.status === 'NEEDS_DATA' ? 'NEEDS_DATA' : 'BLOCKED';
   const reasonCode = ingest.reason_code || (status === 'NEEDS_DATA' ? 'NDA02' : 'DC90');
-  const nextAction = status === 'NEEDS_DATA' ? 'npm run -s edge:profit:00:ingest -- --generate-sample' : 'npm run -s edge:profit:00';
+  const nextAction = status === 'NEEDS_DATA' ? 'npm run -s edge:profit:00:sample' : 'npm run -s edge:profit:00';
   writeMd(path.join(EPOCH_DIR, 'EXECUTION_REALITY.md'), `# EXECUTION_REALITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\nIngest status is ${ingest.status}; execution reality court is fail-closed.`);
   writeJsonDeterministic(path.join(MANUAL_DIR, 'execution_reality.json'), {
     schema_version: '1.0.0', status, reason_code: reasonCode, run_id: RUN_ID,
@@ -80,7 +81,7 @@ if (fillsN < MIN_FILLS) {
 
 const nextAction = status === 'PASS'
   ? 'npm run -s edge:profit:00:expectancy'
-  : 'npm run -s edge:profit:00:ingest -- --generate-sample';
+  : 'npm run -s edge:profit:00:sample';
 
 const md = `# EXECUTION_REALITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Reality Metrics\n\n- fills_n: ${fillsN}\n- min_fills_required: ${MIN_FILLS}\n- avg_slippage_bps: ${avg(slippage).toFixed(6)}\n- p95_slippage_bps: ${p95(slippage).toFixed(6)}\n- avg_latency_ms: ${avg(latency).toFixed(6)}\n- p95_latency_ms: ${p95(latency).toFixed(6)}\n`;
 writeMd(path.join(EPOCH_DIR, 'EXECUTION_REALITY.md'), md);

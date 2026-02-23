@@ -1,0 +1,22 @@
+{
+  "input_kind": "JSONL",
+  "input_sha256": "b5fe41e20929801270755c2436e3c051512f4815113c84452573d0cb1ba039d1",
+  "message": "Telemetry rows missing required fields.",
+  "missing_field_rows": [
+    "row_221:fee",
+    "row_222:intended_exit"
+  ],
+  "next_action": "npm run -s edge:profit:00:sample",
+  "outlier_count": 3,
+  "outlier_marks": [
+    "row_12:value_outlier",
+    "row_18:value_outlier",
+    "row_6:value_outlier"
+  ],
+  "reason_code": "NDA02",
+  "row_count": 220,
+  "run_id": "1e640a385aaa",
+  "schema_version": "1.0.0",
+  "severe_conflict_count": 0,
+  "status": "NEEDS_DATA"
+}

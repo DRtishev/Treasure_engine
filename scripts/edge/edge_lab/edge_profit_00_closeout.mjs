@@ -3,10 +3,11 @@ import path from 'node:path';
 import { execSync } from 'node:child_process';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from './canon.mjs';
+import { resolveProfit00EpochDir, resolveProfit00ManualDir } from './edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00');
-const MANUAL_DIR = path.join(EPOCH_DIR, 'gates', 'manual');
+const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
+const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
 const LIVE_FLAGS = ['TRADING_ENABLED', 'LIVE_TRADING', 'ORDER_SUBMISSION_ENABLED', 'SUBMIT_ORDERS'];
@@ -30,7 +31,9 @@ function run(gate, cmd) {
   catch (e) { return { gate, exit_code: e.status || 1 }; }
 }
 function readGate(name) {
-  const p = path.join(MANUAL_DIR, `${name}.json`);
+  const p = name === 'hypothesis_registry'
+    ? path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'registry', 'gates', 'manual', 'hypothesis_registry.json')
+    : path.join(MANUAL_DIR, `${name}.json`);
   if (!fs.existsSync(p)) return { status: 'BLOCKED', reason_code: 'ME01' };
   return JSON.parse(fs.readFileSync(p, 'utf8'));
 }
@@ -51,21 +54,35 @@ const gateMap = {
   OVERFIT: readGate('overfit'),
 };
 
-const statuses = Object.values(gateMap).map((g) => g.status);
-let status = 'BLOCKED';
-let reasonCode = 'EP00';
-if (statuses.every((s) => s === 'PASS')) {
-  status = 'PASS';
-  reasonCode = 'NONE';
-} else if (statuses.some((s) => s === 'NEEDS_DATA')) {
+const gatesInOrder = runResults.map((r) => gateMap[r.gate] || { status: 'BLOCKED', reason_code: 'ME01' });
+const firstOfStatus = (wanted, preferNonMe01 = false) => {
+  if (preferNonMe01) {
+    const preferred = gatesInOrder.find((g) => g.status === wanted && g.reason_code !== 'ME01');
+    if (preferred) return preferred;
+  }
+  return gatesInOrder.find((g) => g.status === wanted);
+};
+
+let status = 'PASS';
+let reasonCode = 'NONE';
+const failGate = firstOfStatus('FAIL');
+const blockedGate = firstOfStatus('BLOCKED', true) || firstOfStatus('BLOCKED');
+const needsDataGate = firstOfStatus('NEEDS_DATA');
+if (failGate) {
+  status = 'FAIL';
+  reasonCode = failGate.reason_code || 'EP00';
+} else if (blockedGate) {
+  status = 'BLOCKED';
+  reasonCode = blockedGate.reason_code || 'EP00';
+} else if (needsDataGate) {
   status = 'NEEDS_DATA';
-  reasonCode = 'NDA02';
+  reasonCode = needsDataGate.reason_code || 'NDA02';
 }
 
 const nextAction = status === 'PASS'
   ? 'npm run -s edge:profit:00'
   : status === 'NEEDS_DATA'
-    ? 'npm run -s edge:profit:00:ingest -- --generate-sample'
+    ? 'npm run -s edge:profit:00:sample'
     : 'npm run -s edge:profit:00';
 
 const rows = runResults.map((r) => {

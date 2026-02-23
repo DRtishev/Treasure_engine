@@ -24,3 +24,7 @@ Required MVP fields per row:
 - Outliers are marked, never deleted.
 - Severe data conflicts => `BLOCKED` / `DC90`.
 - Determinism required: stable sort by (`signal_id`, `ts`, `symbol`) and deterministic summaries.
+## Machine JSON timestamp normalization
+
+- Machine JSON under `reports/evidence/**/gates/**` must not contain ISO-8601 timestamps.
+- Normalized time keys must use `YYYY-MM-DD_HH:MM:SS` (e.g., from `ts`) or a deterministic integer index.

@@ -1,0 +1,41 @@
+{
+  "active_live_flags": [],
+  "gate_results": [
+    {
+      "exit_code": 0,
+      "gate": "HYPOTHESIS_REGISTRY",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 0,
+      "gate": "PAPER_EVIDENCE_INGEST",
+      "reason_code": "NDA02",
+      "status": "NEEDS_DATA"
+    },
+    {
+      "exit_code": 0,
+      "gate": "EXECUTION_REALITY",
+      "reason_code": "NDA02",
+      "status": "NEEDS_DATA"
+    },
+    {
+      "exit_code": 0,
+      "gate": "EXPECTANCY",
+      "reason_code": "NDA02",
+      "status": "NEEDS_DATA"
+    },
+    {
+      "exit_code": 0,
+      "gate": "OVERFIT",
+      "reason_code": "NDA02",
+      "status": "NEEDS_DATA"
+    }
+  ],
+  "message": "EDGE_PROFIT_00 needs more telemetry evidence.",
+  "next_action": "npm run -s edge:profit:00:sample",
+  "reason_code": "NDA02",
+  "run_id": "1e640a385aaa",
+  "schema_version": "1.0.0",
+  "status": "NEEDS_DATA"
+}

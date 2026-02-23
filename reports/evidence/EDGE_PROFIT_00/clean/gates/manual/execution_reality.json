@@ -1,0 +1,15 @@
+{
+  "avg_latency_ms": 218.71313513,
+  "avg_slippage_bps": 8.9358191,
+  "fills_n": 220,
+  "ingest_status": "PASS",
+  "message": "Execution reality metrics satisfied MVP thresholds.",
+  "min_fills": 100,
+  "next_action": "npm run -s edge:profit:00:expectancy",
+  "p95_latency_ms": 284.431892,
+  "p95_slippage_bps": 10.549189,
+  "reason_code": "NONE",
+  "run_id": "1e640a385aaa",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -4,10 +4,12 @@ import crypto from 'node:crypto';
 import { execSync } from 'node:child_process';
 import { RUN_ID, sha256Norm, canonSort, writeMd } from './canon.mjs';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
+import { resolveProfit00EpochDir, resolveProfit00ManualDir, resolveProfit00Profile } from './edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00');
-const MANUAL_DIR = path.join(EPOCH_DIR, 'gates', 'manual');
+const PROFILE = resolveProfit00Profile(ROOT);
+const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
+const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
 function runProfit() {
@@ -15,14 +17,12 @@ function runProfit() {
 }
 
 function collectRows() {
-  const keyMd = [
-    'reports/evidence/EDGE_PROFIT_00/EXPECTANCY.md',
-    'reports/evidence/EDGE_PROFIT_00/OVERFIT_DEFENSE.md',
-    'reports/evidence/EDGE_PROFIT_00/EDGE_PROFIT_00_CLOSEOUT.md',
-  ];
-  const jsonDir = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'gates', 'manual');
-  const jsonFiles = fs.existsSync(jsonDir)
-    ? fs.readdirSync(jsonDir).filter((f) => f.endsWith('.json')).map((f) => `reports/evidence/EDGE_PROFIT_00/gates/manual/${f}`)
+  const mdNames = ['EXPECTANCY.md', 'OVERFIT_DEFENSE.md', 'EDGE_PROFIT_00_CLOSEOUT.md'];
+  const keyMd = mdNames.map((name) => path.relative(ROOT, path.join(EPOCH_DIR, name)).replace(/\\/g, '/'));
+  const jsonFiles = fs.existsSync(MANUAL_DIR)
+    ? fs.readdirSync(MANUAL_DIR)
+      .filter((f) => f.endsWith('.json'))
+      .map((f) => path.relative(ROOT, path.join(MANUAL_DIR, f)).replace(/\\/g, '/'))
     : [];
   const files = canonSort([...keyMd, ...jsonFiles]);
   const rows = [];
@@ -43,7 +43,7 @@ function fingerprint(rows) {
 }
 
 console.log('\n============================================================');
-console.log('EDGE_PROFIT_00 X2 — Deterministic Anti-Flake');
+console.log(`EDGE_PROFIT_00 X2 — Deterministic Anti-Flake${PROFILE ? ` [${PROFILE}]` : ''}`);
 console.log(`RUN_ID: ${RUN_ID}`);
 console.log('============================================================');
 

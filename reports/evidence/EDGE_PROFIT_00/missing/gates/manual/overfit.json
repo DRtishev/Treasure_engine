@@ -1,0 +1,13 @@
+{
+  "base_psr_threshold": 0.95,
+  "corrected_psr_threshold": 0.95693147,
+  "expectancy_status": "NEEDS_DATA",
+  "message": "Overfit court needs more expectancy data.",
+  "next_action": "npm run -s edge:profit:00:sample",
+  "psr0": 0,
+  "reason_code": "NDA02",
+  "run_id": "1e640a385aaa",
+  "schema_version": "1.0.0",
+  "status": "NEEDS_DATA",
+  "trials_n": 2
+}
