@@ -2,10 +2,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { writeJsonDeterministic } from '../../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from './canon.mjs';
+import { resolveProfit00EpochDir, resolveProfit00ManualDir } from './edge_profit_00_paths.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00');
-const MANUAL_DIR = path.join(EPOCH_DIR, 'gates', 'manual');
+const EPOCH_DIR = resolveProfit00EpochDir(ROOT);
+const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
 const INGEST_PATH = path.join(MANUAL_DIR, 'paper_evidence_ingest.json');
 const NORM_PATH = path.join(MANUAL_DIR, 'paper_evidence_normalized.json');
 const MIN_FILLS = Number(process.env.EXEC_REALITY_MIN_FILLS || 100);

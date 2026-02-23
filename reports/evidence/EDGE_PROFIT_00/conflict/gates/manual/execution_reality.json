@@ -1,0 +1,11 @@
+{
+  "fills_n": 0,
+  "ingest_status": "BLOCKED",
+  "message": "Execution reality not computed because ingest did not pass.",
+  "min_fills": 100,
+  "next_action": "npm run -s edge:profit:00",
+  "reason_code": "DC90",
+  "run_id": "17833396303c",
+  "schema_version": "1.0.0",
+  "status": "BLOCKED"
+}

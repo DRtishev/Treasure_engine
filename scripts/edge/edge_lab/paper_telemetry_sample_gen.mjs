@@ -5,14 +5,16 @@ import { RUN_ID, writeMd } from './canon.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const IN_PATH = path.join(ROOT, 'artifacts', 'incoming', 'paper_telemetry.jsonl');
-const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00');
-
-fs.mkdirSync(path.dirname(IN_PATH), { recursive: true });
-fs.mkdirSync(EPOCH_DIR, { recursive: true });
+const PROFILE_PATH = path.join(ROOT, 'artifacts', 'incoming', 'paper_telemetry.profile');
 
 const SEED = 13371337;
 const ROWS = Number(process.env.PAPER_SAMPLE_ROWS || 220);
 const PROFILE = String(process.env.PAPER_SAMPLE_PROFILE || 'clean').toLowerCase();
+const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', PROFILE);
+
+fs.mkdirSync(path.dirname(IN_PATH), { recursive: true });
+fs.mkdirSync(EPOCH_DIR, { recursive: true });
+
 const SOURCE_TAG_BY_PROFILE = {
   clean: 'paper_sample_clean_v1',
   missing: 'paper_sample_missing_v1',
@@ -95,9 +97,10 @@ rows.sort((a, b) => String(a.signal_id).localeCompare(String(b.signal_id)) || St
 
 const jsonl = rows.map((r) => JSON.stringify(r)).join('\n') + '\n';
 fs.writeFileSync(IN_PATH, jsonl);
+fs.writeFileSync(PROFILE_PATH, `${PROFILE}\n`);
 const sha = crypto.createHash('sha256').update(jsonl).digest('hex');
 
 const anomalyCount = PROFILE === 'clean' ? 2 : 5;
-writeMd(path.join(EPOCH_DIR, 'SAMPLE_TELEMETRY.md'), `# SAMPLE_TELEMETRY.md\n\nSTATUS: PASS\nREASON_CODE: NONE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: npm run -s edge:profit:00\n\n## Generator\n\n- seed: ${SEED}\n- profile: ${PROFILE}\n- rows_total: ${rows.length}\n- rows_nominal: ${ROWS}\n- rows_with_anomalies: ${anomalyCount}\n- output_path: artifacts/incoming/paper_telemetry.jsonl\n- sha256: ${sha}\n`);
+writeMd(path.join(EPOCH_DIR, 'SAMPLE_TELEMETRY.md'), `# SAMPLE_TELEMETRY.md\n\nSTATUS: PASS\nREASON_CODE: NONE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: npm run -s edge:profit:00\n\n## Generator\n\n- seed: ${SEED}\n- profile: ${PROFILE}\n- rows_total: ${rows.length}\n- rows_nominal: ${ROWS}\n- rows_with_anomalies: ${anomalyCount}\n- output_path: artifacts/incoming/paper_telemetry.jsonl\n- profile_marker_path: artifacts/incoming/paper_telemetry.profile\n- sha256: ${sha}\n`);
 
 console.log(`[PASS] paper_telemetry_sample_gen(${PROFILE}) — wrote ${rows.length} rows, sha256=${sha.slice(0, 16)}...`);

@@ -1,0 +1,13 @@
+{
+  "base_psr_threshold": 0.95,
+  "corrected_psr_threshold": 0.95693147,
+  "expectancy_status": "BLOCKED",
+  "message": "Overfit MVP defense did not pass corrected PSR threshold.",
+  "next_action": "npm run -s edge:profit:00",
+  "psr0": 0,
+  "reason_code": "OF90",
+  "run_id": "17833396303c",
+  "schema_version": "1.0.0",
+  "status": "BLOCKED",
+  "trials_n": 2
+}

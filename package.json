@@ -635,7 +635,8 @@
     "edge:profit:00:sample:clean": "PAPER_SAMPLE_PROFILE=clean node scripts/edge/edge_lab/paper_telemetry_sample_gen.mjs",
     "edge:profit:00:sample:missing": "PAPER_SAMPLE_PROFILE=missing node scripts/edge/edge_lab/paper_telemetry_sample_gen.mjs",
     "edge:profit:00:sample:conflict": "PAPER_SAMPLE_PROFILE=conflict node scripts/edge/edge_lab/paper_telemetry_sample_gen.mjs",
-    "edge:profit:00:x2": "node scripts/edge/edge_lab/edge_profit_00_x2.mjs"
+    "edge:profit:00:x2": "node scripts/edge/edge_lab/edge_profit_00_x2.mjs",
+    "edge:profit:00:expect-blocked:conflict": "node scripts/edge/edge_lab/edge_profit_00_expect_blocked_conflict.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

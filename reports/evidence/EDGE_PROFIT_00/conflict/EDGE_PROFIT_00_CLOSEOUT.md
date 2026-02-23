@@ -1,0 +1,16 @@
+# EDGE_PROFIT_00_CLOSEOUT.md
+
+STATUS: BLOCKED
+REASON_CODE: DC90
+RUN_ID: 17833396303c
+NEXT_ACTION: npm run -s edge:profit:00
+
+## Gate Matrix
+
+| Gate | Exit Code | Status | Reason Code |
+|---|---:|---|---|
+| HYPOTHESIS_REGISTRY | 0 | PASS | NONE |
+| PAPER_EVIDENCE_INGEST | 1 | BLOCKED | DC90 |
+| EXECUTION_REALITY | 1 | BLOCKED | DC90 |
+| EXPECTANCY | 1 | BLOCKED | DC90 |
+| OVERFIT | 1 | BLOCKED | OF90 |

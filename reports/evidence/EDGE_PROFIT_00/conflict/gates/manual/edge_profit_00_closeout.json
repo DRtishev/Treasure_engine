@@ -1,0 +1,41 @@
+{
+  "active_live_flags": [],
+  "gate_results": [
+    {
+      "exit_code": 0,
+      "gate": "HYPOTHESIS_REGISTRY",
+      "reason_code": "NONE",
+      "status": "PASS"
+    },
+    {
+      "exit_code": 1,
+      "gate": "PAPER_EVIDENCE_INGEST",
+      "reason_code": "DC90",
+      "status": "BLOCKED"
+    },
+    {
+      "exit_code": 1,
+      "gate": "EXECUTION_REALITY",
+      "reason_code": "DC90",
+      "status": "BLOCKED"
+    },
+    {
+      "exit_code": 1,
+      "gate": "EXPECTANCY",
+      "reason_code": "DC90",
+      "status": "BLOCKED"
+    },
+    {
+      "exit_code": 1,
+      "gate": "OVERFIT",
+      "reason_code": "OF90",
+      "status": "BLOCKED"
+    }
+  ],
+  "message": "EDGE_PROFIT_00 blocked by one or more gates.",
+  "next_action": "npm run -s edge:profit:00",
+  "reason_code": "DC90",
+  "run_id": "17833396303c",
+  "schema_version": "1.0.0",
+  "status": "BLOCKED"
+}
