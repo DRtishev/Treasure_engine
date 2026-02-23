@@ -1,26 +1,22 @@
 {
-  "block_reasons": [
-    "INFRA_P0 status=FAIL",
-    "eligible_for_micro_live=false (overallStatus=FAIL (eligibility requires overallStatus === PASS))",
-    "eligible_for_execution=false"
-  ],
+  "block_reasons": [],
   "calm_p0_status": "PASS",
   "calm_p0_x2_status": "PASS",
-  "edge_unlock": false,
+  "edge_unlock": true,
   "gov01_status": "PASS",
-  "infra_p0_eligible_for_execution": false,
-  "infra_p0_eligible_for_micro_live": false,
-  "infra_p0_status": "FAIL",
+  "infra_p0_eligible_for_execution": true,
+  "infra_p0_eligible_for_micro_live": true,
+  "infra_p0_status": "PASS",
   "merkle_root_status": "PASS",
-  "message": "EDGE unlock blocked: INFRA_P0 status=FAIL; eligible_for_micro_live=false (overallStatus=FAIL (eligibility requires overallStatus === PASS)); eligible_for_execution=false",
+  "message": "EDGE unlock granted (strict PASS-only).",
   "missing_evidence": [],
-  "next_action": "npm run -s p0:all",
+  "next_action": "npm run -s export:final-validated",
   "op01_status": "PASS",
-  "p0_system_pass": false,
+  "p0_system_pass": true,
   "p1_system_pass": true,
-  "reason_code": "BLOCKED",
+  "reason_code": "NONE",
   "reason_code_audit_status": "PASS",
-  "run_id": "71bc743467cc",
+  "run_id": "3cb7828b3f1d",
   "schema_version": "1.0.0",
-  "status": "BLOCKED"
+  "status": "PASS"
 }

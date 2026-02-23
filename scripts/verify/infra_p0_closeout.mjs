@@ -264,13 +264,18 @@ ${hashesTable}
 
 ## Real Risks
 
-1. **DEP02 (FAIL)**: \`better-sqlite3\` requires native build (node-gyp).
-   eligible_for_micro_live=false until resolved.
-   Mitigation: use prebuilt binaries or provision capsule with pre-built .node file.
-2. **Legacy FP01 warnings**: 14 pre-existing EDGE_LAB gate JSON files lack schema_version.
+${(
+  depReasonCode === 'DEP02' || process.env.ENABLE_SQLITE_PERSISTENCE === '1'
+    ? `1. **DEP02 (conditional)**: native SQLite path can require node-gyp builds for \`better-sqlite3\`.
+   Triggered when DEP02 is reported or SQLite persistence is enabled.
+   Mitigation: use prebuilt binaries or provision capsule with pre-built .node file.`
+    : `1. **DEP02 (not triggered in this mode)**: optional-native mitigation active; DEP02 not triggered in this mode.
+   Condition: DEPS_OFFLINE PASS with omit_optional_proved=true and sqlite persistence disabled.`
+)}
+2. **Legacy FP01 warnings**: pre-existing EDGE_LAB gate JSON files may lack schema_version.
    Mitigation: migrate in follow-up PR.
-3. **DEP01**: if npm cache is absent, fresh install would require network (capsule needed).
-   Mitigation: pre-seed npm cache or use vendored node_modules in CI.
+3. **DEP01 (conditional)**: if npm cache is absent, fresh install would require network (capsule needed).
+   Mitigation: pre-seed npm cache in the execution capsule.
 
 ## Next Action
 

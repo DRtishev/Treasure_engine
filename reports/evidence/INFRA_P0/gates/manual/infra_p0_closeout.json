@@ -1,7 +1,7 @@
 {
-  "eligibility_reason": "overallStatus=FAIL (eligibility requires overallStatus === PASS)",
-  "eligible_for_execution": false,
-  "eligible_for_micro_live": false,
+  "eligibility_reason": "No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)",
+  "eligible_for_execution": true,
+  "eligible_for_micro_live": true,
   "gate_matrix": [
     {
       "blocker": true,
@@ -12,8 +12,8 @@
     {
       "blocker": true,
       "gate": "NODE_TRUTH",
-      "reason_code": "NT02",
-      "status": "FAIL"
+      "reason_code": "NONE",
+      "status": "PASS"
     },
     {
       "blocker": true,
@@ -52,10 +52,10 @@
       "status": "PASS"
     }
   ],
-  "message": "INFRA P0 FAIL — NT02: Node mismatch: running v20.19.6 (family 20) vs NODE_TRUTH.md allowed_family=22. Align the running Node version or update NODE_TRUTH.md via APPLY protocol.",
-  "next_action": "nvm use 22.22.0",
-  "overall_reason": "NT02",
-  "run_id": "71bc743467cc",
+  "message": "INFRA P0 PASS — NET_ISOLATION (NET01), NODE_TRUTH, VERIFY_MODE, GOLDENS_APPLY, FORMAT_POLICY, FIXTURE_GUARD (FG01), ZERO_WAR_PROBE (ZW00/ZW01) all PASS. DEPS_OFFLINE reported honestly (NONE). ELIGIBLE_FOR_MICRO_LIVE=true.",
+  "next_action": "npm run -s edge:micro:live:readiness",
+  "overall_reason": "NONE",
+  "run_id": "3cb7828b3f1d",
   "schema_version": "1.0.0",
-  "status": "FAIL"
+  "status": "PASS"
 }

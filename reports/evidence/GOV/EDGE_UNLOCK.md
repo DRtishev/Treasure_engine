@@ -1,16 +1,16 @@
 # EDGE_UNLOCK.md — EDGE/PROFIT Unlock Decision
 
-STATUS: BLOCKED
-REASON_CODE: BLOCKED
-EDGE_UNLOCK: false
-RUN_ID: 71bc743467cc
-NEXT_ACTION: npm run -s p0:all
+STATUS: PASS
+REASON_CODE: NONE
+EDGE_UNLOCK: true
+RUN_ID: 3cb7828b3f1d
+NEXT_ACTION: npm run -s export:final-validated
 
 ## Gate Matrix
 
 | Gate | Status | Blocker |
 |------|--------|---------|
-| INFRA_P0 | FAIL | YES |
+| INFRA_P0 | PASS | YES |
 | CALM_P0 | PASS | YES |
 | CALM_P0_X2 | PASS | YES |
 | OP01_SCRIPTS_CHECK | PASS | YES |
@@ -20,11 +20,9 @@ NEXT_ACTION: npm run -s p0:all
 
 ## System Pass
 
-- P0_SYSTEM_PASS: false
+- P0_SYSTEM_PASS: true
 - P1_SYSTEM_PASS: true
 
 ## Blocking Reasons
 
-- INFRA_P0 status=FAIL
-- eligible_for_micro_live=false (overallStatus=FAIL (eligibility requires overallStatus === PASS))
-- eligible_for_execution=false
+- NONE

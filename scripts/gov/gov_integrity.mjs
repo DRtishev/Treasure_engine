@@ -120,7 +120,7 @@ if (!edgeUnlock) {
 }
 
 const nextAction = edgeUnlock
-  ? 'EDGE_UNLOCK=true. Continue controlled operations with safeguards.'
+  ? 'npm run -s export:final-validated'
   : (missingEvidence.includes('reports/evidence/EDGE_LAB/gates/manual/calm_p0_x2.json')
     ? 'npm run -s edge:calm:p0:x2'
     : 'npm run -s p0:all');
