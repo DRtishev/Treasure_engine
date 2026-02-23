@@ -10,10 +10,10 @@ const MANUAL_DIR = resolveProfit00ManualDir(ROOT);
 const INGEST_GATE = path.join(MANUAL_DIR, 'paper_evidence_ingest.json');
 const EXEC_GATE = path.join(MANUAL_DIR, 'execution_reality.json');
 const NORM_FILE = path.join(MANUAL_DIR, 'paper_evidence_normalized.json');
-const MIN_N = Number(process.env.EXPECTANCY_MIN_N || 200);
+const MIN_N_TRADES = Number(process.env.EXPECTANCY_MIN_N_TRADES || process.env.EXPECTANCY_MIN_N || 200);
 const MIN_TRL = Number(process.env.EXPECTANCY_MIN_TRL || 2);
-const PSR_THRESHOLD = Number(process.env.EXPECTANCY_PSR_THRESHOLD || 0.95);
-const BOOTSTRAP_N = Number(process.env.EXPECTANCY_BOOTSTRAP_N || 10000);
+const PSR_MIN = Number(process.env.EXPECTANCY_PSR_MIN || process.env.EXPECTANCY_PSR_MIN || 0.95);
+const BOOTSTRAP_ITERS = Number(process.env.EXPECTANCY_BOOTSTRAP_ITERS || process.env.EXPECTANCY_BOOTSTRAP_ITERS || 10000);
 const BOOTSTRAP_SEED = Number(process.env.EXPECTANCY_BOOTSTRAP_SEED || 20260223);
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
@@ -60,24 +60,24 @@ function writeAndExit(status, reasonCode, nextAction, message, extras = {}, code
 const ingest = readJson(INGEST_GATE);
 const execReality = readJson(EXEC_GATE);
 if (!ingest || !execReality) {
-  writeAndExit('BLOCKED', 'ME01', 'npm run -s edge:profit:00', 'Missing ingest or execution reality evidence.', { min_n: MIN_N, trades_n: 0 }, 1);
+  writeAndExit('BLOCKED', 'ME01', 'npm run -s edge:profit:00', 'Missing ingest or execution reality evidence.', { min_n_trades: MIN_N_TRADES, trades_n: 0 }, 1);
 }
 if (ingest.status !== 'PASS') {
   const status = ingest.status === 'NEEDS_DATA' ? 'NEEDS_DATA' : 'BLOCKED';
   const reasonCode = ingest.reason_code || (status === 'NEEDS_DATA' ? 'NDA02' : 'DC90');
   const nextAction = status === 'NEEDS_DATA' ? 'npm run -s edge:profit:00:sample' : 'npm run -s edge:profit:00';
-  writeAndExit(status, reasonCode, nextAction, `Ingest status is ${ingest.status}; expectancy is fail-closed.`, { min_n: MIN_N, trades_n: 0, ingest_status: ingest.status }, status === 'BLOCKED' ? 1 : 0);
+  writeAndExit(status, reasonCode, nextAction, `Ingest status is ${ingest.status}; expectancy is fail-closed.`, { min_n_trades: MIN_N_TRADES, trades_n: 0, ingest_status: ingest.status }, status === 'BLOCKED' ? 1 : 0);
 }
 if (execReality.status !== 'PASS') {
   const status = execReality.status === 'NEEDS_DATA' ? 'NEEDS_DATA' : 'BLOCKED';
   const reasonCode = execReality.reason_code || (status === 'NEEDS_DATA' ? 'NDA02' : 'DC90');
   const nextAction = status === 'NEEDS_DATA' ? 'npm run -s edge:profit:00:sample' : 'npm run -s edge:profit:00';
-  writeAndExit(status, reasonCode, nextAction, `Execution reality status is ${execReality.status}; expectancy is fail-closed.`, { min_n: MIN_N, trades_n: 0, execution_reality_status: execReality.status }, status === 'BLOCKED' ? 1 : 0);
+  writeAndExit(status, reasonCode, nextAction, `Execution reality status is ${execReality.status}; expectancy is fail-closed.`, { min_n_trades: MIN_N_TRADES, trades_n: 0, execution_reality_status: execReality.status }, status === 'BLOCKED' ? 1 : 0);
 }
 
 const norm = readJson(NORM_FILE);
 if (!norm) {
-  writeAndExit('BLOCKED', 'ME01', 'npm run -s edge:profit:00:ingest', 'Missing normalized ingest output.', { min_n: MIN_N, trades_n: 0 }, 1);
+  writeAndExit('BLOCKED', 'ME01', 'npm run -s edge:profit:00:ingest', 'Missing normalized ingest output.', { min_n_trades: MIN_N_TRADES, trades_n: 0 }, 1);
 }
 
 const pnl = (norm.records || []).map((r) => Number(r.pnl)).filter((x) => Number.isFinite(x));
@@ -85,7 +85,7 @@ const n = pnl.length;
 const m = mean(pnl);
 const sd = stddev(pnl, m);
 const { lower: ciLow, upper: ciHigh } = n > 0
-  ? bootstrapCi(pnl, BOOTSTRAP_N, BOOTSTRAP_SEED)
+  ? bootstrapCi(pnl, BOOTSTRAP_ITERS, BOOTSTRAP_SEED)
   : { lower: 0, upper: 0 };
 const wins = pnl.filter((x) => x > 0).length;
 const grossWin = pnl.filter((x) => x > 0).reduce((a, b) => a + b, 0);
@@ -101,18 +101,24 @@ const trl = n / 100;
 
 let status = 'BLOCKED';
 let reasonCode = 'EX90';
-if (n < MIN_N || trl < MIN_TRL) {
+if (n < MIN_N_TRADES || trl < MIN_TRL) {
   status = 'NEEDS_DATA';
   reasonCode = 'NDA02';
-} else if (m > 0 && ciLow > 0 && psr0 >= PSR_THRESHOLD) {
+} else if (m > 0 && ciLow > 0 && psr0 >= PSR_MIN) {
   status = 'PASS';
   reasonCode = 'NONE';
 }
 
+const rationale = status === 'PASS'
+  ? 'CI lower > 0, PSR and MinTRL thresholds satisfied.'
+  : status === 'NEEDS_DATA'
+    ? 'Insufficient trades or TRL to evaluate expectancy safely.'
+    : 'Threshold(s) failed under sufficient sample size.';
+
 const nextAction = status === 'PASS' ? 'npm run -s edge:profit:00:overfit' : status === 'NEEDS_DATA'
   ? 'npm run -s edge:profit:00:sample' : 'npm run -s edge:profit:00';
 
-const md = `# EXPECTANCY.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Inputs\n\n- ingest_status: ${ingest.status}\n- execution_reality_status: ${execReality.status}\n- min_n: ${MIN_N}\n- min_trl: ${MIN_TRL}\n- psr_threshold: ${PSR_THRESHOLD}\n- bootstrap_n: ${BOOTSTRAP_N}\n- bootstrap_seed: ${BOOTSTRAP_SEED}\n- trades_n: ${n}\n\n## Metrics\n\n- mean_pnl_per_trade: ${m.toFixed(6)}\n- stddev_pnl: ${sd.toFixed(6)}\n- winrate: ${n ? (wins / n).toFixed(6) : '0.000000'}\n- profit_factor: ${pf.toFixed(6)}\n- max_drawdown_proxy: ${mdd.toFixed(6)}\n- ci95_low: ${ciLow.toFixed(6)}\n- ci95_high: ${ciHigh.toFixed(6)}\n- sharpe_proxy: ${sr.toFixed(6)}\n- psr0: ${psr0.toFixed(6)}\n- trl_proxy: ${trl.toFixed(6)}\n`;
+const md = `# EXPECTANCY.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Inputs\n\n- ingest_status: ${ingest.status}\n- execution_reality_status: ${execReality.status}\n- min_n_trades: ${MIN_N_TRADES}\n- min_trl: ${MIN_TRL}\n- psr_min: ${PSR_MIN}\n- bootstrap_iters: ${BOOTSTRAP_ITERS}\n- bootstrap_seed: ${BOOTSTRAP_SEED}\n- trades_n: ${n}\n\n## Metrics\n\n- mean_pnl_per_trade: ${m.toFixed(6)}\n- stddev_pnl: ${sd.toFixed(6)}\n- winrate: ${n ? (wins / n).toFixed(6) : '0.000000'}\n- profit_factor: ${pf.toFixed(6)}\n- max_drawdown_proxy: ${mdd.toFixed(6)}\n- ci95_low: ${ciLow.toFixed(6)}\n- ci95_high: ${ciHigh.toFixed(6)}\n- sharpe_proxy: ${sr.toFixed(6)}\n- psr0: ${psr0.toFixed(6)}\n- min_trl_trades: ${trl.toFixed(6)}\n- rationale: ${rationale}\n`;
 writeMd(path.join(EPOCH_DIR, 'EXPECTANCY.md'), md);
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'expectancy.json'), {
@@ -126,10 +132,10 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'expectancy.json'), {
       ? 'Insufficient evidence to satisfy expectancy thresholds.'
       : 'Expectancy blocked by threshold failure.',
   next_action: nextAction,
-  min_n: MIN_N,
+  min_n_trades: MIN_N_TRADES,
   min_trl: MIN_TRL,
-  psr_threshold: Number(PSR_THRESHOLD.toFixed(8)),
-  bootstrap_n: BOOTSTRAP_N,
+  psr_min: Number(PSR_MIN.toFixed(8)),
+  bootstrap_iters: BOOTSTRAP_ITERS,
   bootstrap_seed: BOOTSTRAP_SEED,
   trades_n: n,
   mean_pnl_per_trade: Number(m.toFixed(8)),
@@ -141,7 +147,8 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'expectancy.json'), {
   ci95_high: Number(ciHigh.toFixed(8)),
   sharpe_proxy: Number(sr.toFixed(8)),
   psr0: Number(psr0.toFixed(8)),
-  trl_proxy: Number(trl.toFixed(8)),
+  min_trl_trades: Number(trl.toFixed(8)),
+  rationale,
   ingest_status: ingest.status,
   execution_reality_status: execReality.status,
 });

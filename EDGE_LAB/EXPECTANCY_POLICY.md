@@ -1,29 +1,27 @@
-# EXPECTANCY_POLICY.md — EDGE_PROFIT_00 MVP
+# EXPECTANCY_POLICY.md — EDGE_PROFIT_00 P0
 
-## Inputs
+## Policy thresholds (deterministic defaults)
 
-Consumes normalized paper telemetry from EDGE_PROFIT_00 ingest court.
+- `MIN_N_TRADES`: 200
+- `BOOTSTRAP_ITERS`: 10000
+- `PSR_MIN`: 0.95
+- `CI_LOWER_GT_ZERO`: required (`ci95_low > 0`)
+- `MIN_TRL_TRADES`: 2.0 (proxy threshold)
 
-## Metrics
+## Verdict requirements
 
-- trades (N)
-- mean pnl per trade
-- standard deviation
-- winrate
-- profit factor
-- max drawdown proxy (equity curve peak-to-trough)
-- confidence interval (95% t-interval around mean)
+PASS only if all are true:
+1. ingest status = PASS
+2. execution reality status = PASS
+3. `N >= MIN_N_TRADES`
+4. `ci95_low > 0`
+5. `psr0 >= PSR_MIN`
+6. `MinTRL_trades >= MIN_TRL_TRADES`
 
-## Fail-closed gates
-
-- If `N < MIN_N` (default 200) => `NEEDS_DATA` / `NDA02`.
-- PASS only when:
-  1) ingest status is PASS,
-  2) expectancy mean > 0,
-  3) CI lower bound > 0.
-
-Otherwise BLOCKED (`EX90`) or NEEDS_DATA (`NDA02`).
+Otherwise:
+- `NEEDS_DATA` for insufficient sample/TRL
+- `BLOCKED` for threshold failure under sufficient sample
 
 ## Safety
 
-This policy does not unlock live trading and cannot override ZW01.
+This policy never unlocks live trading and cannot override ZW01.
