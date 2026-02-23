@@ -644,7 +644,8 @@
     "edge:profit:00:real:run": "npm run -s edge:profit:00:import:csv && npm run -s edge:profit:00 && npm run -s edge:profit:00:x2 && npm run -s edge:profit:00:doctor",
     "edge:profit:00:real:stub": "node scripts/edge/edge_lab/paper_telemetry_real_stub_gen.mjs",
     "edge:profit:01:wf-lite": "node scripts/edge/edge_lab/edge_walk_forward_lite.mjs",
-    "edge:profit:01:super": "npm run -s edge:profit:00:real:stub && npm run -s edge:profit:00:real:run && npm run -s edge:profit:00:x2 && npm run -s export:final-validated && npm run -s verify:edge:profit:00:release && npm run -s edge:profit:00:doctor"
+    "edge:profit:01:super": "node scripts/edge/edge_lab/edge_profit_01_super.mjs",
+    "verify:env:authority": "node scripts/verify/env_node_truth_authority.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

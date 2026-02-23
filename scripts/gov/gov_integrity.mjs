@@ -86,6 +86,15 @@ const missingEvidence = [p0Closeout, calmP0Final, calmP0x2, gov01Gate, merkleGat
   .filter((x) => x.__missing)
   .map((x) => x.__path);
 
+
+const critical = [
+  { name: 'OP01', result: op01Result, gate: op01Gate },
+  { name: 'MERKLE', result: merkleResult, gate: merkleGate },
+  { name: 'GOV01', result: gov01Result, gate: gov01Gate },
+  { name: 'RC_AUDIT', result: rcAuditResult, gate: rcAuditGate },
+];
+const staleViolations = critical.filter((x) => (x.result.exit_code !== 0 && x.gate.status === 'PASS') || (x.gate.run_id && x.gate.run_id !== RUN_ID));
+
 const p0SystemPass =
   p0Closeout.status === 'PASS' &&
   calmP0Final.status === 'PASS' &&
@@ -97,7 +106,12 @@ const p1SystemPass =
   merkleGate.status === 'PASS' &&
   gov01Gate.status === 'PASS' &&
   rcAuditGate.status === 'PASS' &&
-  op01Gate.status === 'PASS';
+  op01Gate.status === 'PASS' &&
+  op01Result.exit_code === 0 &&
+  merkleResult.exit_code === 0 &&
+  gov01Result.exit_code === 0 &&
+  rcAuditResult.exit_code === 0 &&
+  staleViolations.length === 0;
 
 const edgeUnlock = p0SystemPass && p1SystemPass;
 const overallStatus = edgeUnlock ? 'PASS' : 'BLOCKED';
@@ -113,10 +127,15 @@ if (calmP0x2.status !== 'PASS') blockReasons.push(`CALM_P0_X2 status=${calmP0x2.
 if (!p0Closeout.eligible_for_micro_live) blockReasons.push(`eligible_for_micro_live=false (${p0Closeout.eligibility_reason || 'UNKNOWN'})`);
 if (!p0Closeout.eligible_for_execution) blockReasons.push('eligible_for_execution=false');
 if (missingEvidence.length > 0) blockReasons.unshift(`ME01 missing evidence: ${missingEvidence.join(', ')}`);
+if (staleViolations.length > 0) blockReasons.push(`GOVS01 stale/mismatched gate JSON detected for: ${staleViolations.map((x) => x.name).join(', ')}`);
 
 let reasonCode = 'NONE';
 if (!edgeUnlock) {
-  reasonCode = missingEvidence.length > 0 ? 'ME01' : (blockReasons.some((r) => r.includes('OP01')) ? 'OP01' : 'BLOCKED');
+  if (missingEvidence.length > 0) reasonCode = 'ME01';
+  else if ((gov01Gate.reason_code || '') === 'GOV01') reasonCode = 'GOV01';
+  else if (blockReasons.some((r) => r.includes('OP01'))) reasonCode = 'OP01';
+  else if (staleViolations.length > 0) reasonCode = 'GOVS01';
+  else reasonCode = 'BLOCKED';
 }
 
 const nextAction = edgeUnlock
@@ -168,6 +187,7 @@ const gatePayload = {
   p1_system_pass: p1SystemPass,
   block_reasons: blockReasons,
   missing_evidence: missingEvidence,
+  stale_violations: staleViolations.map((x) => x.name),
   next_action: nextAction,
   op01_status: op01Gate.status,
   merkle_root_status: merkleGate.status,

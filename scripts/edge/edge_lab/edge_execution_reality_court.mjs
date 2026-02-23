@@ -80,7 +80,7 @@ const latency = records.map((r) => Number(r.lat_ms)).filter(Number.isFinite);
 const feeBps = records.map((r) => Number(r.fee_bps)).filter(Number.isFinite);
 const spreads = records.map((r) => Number(r.spread_bps)).filter(Number.isFinite);
 const sizeRatios = records.map((r) => Number(r.size_ratio)).filter(Number.isFinite);
-const fillRate = fillsN === 0 ? 0 : 1;
+const fillRate = Number.isFinite(Number(ingest.fill_rate)) ? Number(ingest.fill_rate) : null;
 
 let num = 0;
 let den = 0;
@@ -107,7 +107,7 @@ if (fillsN < MIN_FILLS) {
 
 const nextAction = status === 'PASS' ? 'npm run -s edge:profit:00:expectancy' : 'npm run -s edge:profit:00:sample';
 
-const md = `# EXECUTION_REALITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Reality Metrics\n\n- fills_n: ${fillsN}\n- min_fills_required: ${MIN_FILLS}\n- fill_rate: ${fillRate.toFixed(6)}\n- mean_slippage_bps: ${avg(slippage).toFixed(6)}\n- median_slippage_bps: ${med(slippage).toFixed(6)}\n- p95_slippage_bps: ${p95(slippage).toFixed(6)}\n- mean_latency_ms: ${avg(latency).toFixed(6)}\n- median_latency_ms: ${med(latency).toFixed(6)}\n- p95_latency_ms: ${p95(latency).toFixed(6)}\n- mean_fee_bps: ${avg(feeBps).toFixed(6)}\n\n## Calibration\n\n- model: predicted_slippage_bps = spread_bps/2 + k*sqrt(size_ratio)\n- k: ${k.toFixed(8)}\n- rmse_bps: ${rmse.toFixed(8)}\n`;
+const md = `# EXECUTION_REALITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Reality Metrics\n\n- fills_n: ${fillsN}\n- min_fills_required: ${MIN_FILLS}\n- fill_rate: ${fillRate === null ? 'UNAVAILABLE' : fillRate.toFixed(6)}\n- mean_slippage_bps: ${avg(slippage).toFixed(6)}\n- median_slippage_bps: ${med(slippage).toFixed(6)}\n- p95_slippage_bps: ${p95(slippage).toFixed(6)}\n- mean_latency_ms: ${avg(latency).toFixed(6)}\n- median_latency_ms: ${med(latency).toFixed(6)}\n- p95_latency_ms: ${p95(latency).toFixed(6)}\n- mean_fee_bps: ${avg(feeBps).toFixed(6)}\n\n## Calibration\n\n- model: predicted_slippage_bps = spread_bps/2 + k*sqrt(size_ratio)\n- k: ${k.toFixed(8)}\n- rmse_bps: ${rmse.toFixed(8)}\n`;
 writeMd(path.join(EPOCH_DIR, 'EXECUTION_REALITY.md'), md);
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'execution_reality.json'), {
@@ -119,7 +119,7 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'execution_reality.json'), {
   next_action: nextAction,
   fills_n: fillsN,
   min_fills: MIN_FILLS,
-  fill_rate: Number(fillRate.toFixed(8)),
+  fill_rate: fillRate === null ? -1 : Number(fillRate.toFixed(8)),
   mean_slippage_bps: Number(avg(slippage).toFixed(8)),
   median_slippage_bps: Number(med(slippage).toFixed(8)),
   p95_slippage_bps: Number(p95(slippage).toFixed(8)),

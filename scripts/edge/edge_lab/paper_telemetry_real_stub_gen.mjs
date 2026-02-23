@@ -68,11 +68,7 @@ fs.writeFileSync(CSV_PATH, csv);
 fs.writeFileSync(PROFILE_PATH, 'real\n');
 
 const csvSha = crypto.createHash('sha256').update(csv).digest('hex');
-const jsonl = rows.map((r) => JSON.stringify({
-  ts: r[0], symbol: r[1], side: r[2], signal_id: r[3], intended_entry: Number(r[4]), intended_exit: Number(r[5]), fill_price: Number(r[6]), fee: Number(r[7]), slippage_bps: Number(r[8]), latency_ms: Number(r[9]), result_pnl: Number(r[10]), source_tag: r[11], spread_bps: Number(r[12]), size_ratio: Number(r[13])
-})).join('\n') + '\n';
-const jsonlSha = crypto.createHash('sha256').update(jsonl).digest('hex');
 
-writeMd(path.join(EPOCH_DIR, 'REAL_STUB_GENERATION.md'), `# REAL_STUB_GENERATION.md\n\nSTATUS: PASS\nREASON_CODE: NONE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: npm run -s edge:profit:00:real:run\n\n## Stub\n\n- mode: REAL_STUB\n- rows: ${ROWS}\n- seed: ${SEED}\n- csv_path: artifacts/incoming/raw_paper_telemetry.csv\n- csv_sha256: ${csvSha}\n- derived_jsonl_sha256: ${jsonlSha}\n- profile_marker_path: artifacts/incoming/paper_telemetry.profile\n- profile_marker_value: real\n- source_tag: REAL_STUB_V1\n`);
+writeMd(path.join(EPOCH_DIR, 'REAL_STUB_GENERATION.md'), `# REAL_STUB_GENERATION.md\n\nSTATUS: PASS\nREASON_CODE: NONE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: npm run -s edge:profit:00:real:run\n\n## Stub\n\n- mode: REAL_STUB\n- rows: ${ROWS}\n- seed: ${SEED}\n- csv_path: artifacts/incoming/raw_paper_telemetry.csv\n- csv_sha256: ${csvSha}\n- profile_marker_path: artifacts/incoming/paper_telemetry.profile\n- profile_marker_value: real\n- source_tag: REAL_STUB_V1\n`);
 
 console.log(`[PASS] paper_telemetry_real_stub_gen — rows=${ROWS}`);

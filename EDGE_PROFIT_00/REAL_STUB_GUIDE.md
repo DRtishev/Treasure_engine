@@ -12,3 +12,5 @@ Outputs:
 - `reports/evidence/EDGE_PROFIT_00/real/REAL_STUB_GENERATION.md`
 
 The data is synthetic and tagged `REAL_STUB_V1`; eligibility remains REAL, and Doctor should surface that this run source is REAL_STUB.
+
+Hash contract: stub generator is authoritative for CSV sha256 only; JSONL hash is produced by importer evidence (`IMPORT_CSV.md`).

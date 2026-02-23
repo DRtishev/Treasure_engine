@@ -336,8 +336,8 @@ const message = mismatches.length === 0
   : `BLOCKED GOV01 — Evidence integrity mismatch detected in ${mismatches.length} check(s): ${mismatches.map((c) => c.id).join(', ')}. Manual edit or drift suspected.`;
 
 const nextAction = mismatches.length === 0
-  ? 'Evidence integrity proven. Proceed to EDGE_UNLOCK evaluation.'
-  : `Investigate mismatches: ${mismatches.map((c) => c.label).join(', ')}. Re-run evidence generation scripts (edge:calm:p0, gov:merkle) to restore integrity. Do NOT manually edit evidence files.`;
+  ? 'npm run -s gov:integrity'
+  : 'npm run -s p0:all';
 
 // ---------------------------------------------------------------------------
 // Write GOV01_EVIDENCE_INTEGRITY.md
