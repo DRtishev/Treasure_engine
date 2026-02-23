@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 1036a732eb93
+RUN_ID: 71bc743467cc
 NEXT_ACTION: No action required. Dependencies are fully offline-satisfiable.
 
 ## Methodology
@@ -33,7 +33,7 @@ Runs npm install --dry-run twice (x2 anti-flake) for DEP01/DEP03 detection.
 | Metric | Run 1 | Run 2 |
 |--------|-------|-------|
 | exit_code | 0 | 0 |
-| duration_ms | 733 | 750 |
+| duration_ms | 505 | 491 |
 | registry_patterns | 0 | 0 |
 | native_patterns (runtime) | 0 | 0 |
 | omit_optional_proved | true | - |

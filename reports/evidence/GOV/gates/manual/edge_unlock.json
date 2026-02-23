@@ -1,7 +1,7 @@
 {
   "block_reasons": [
     "INFRA_P0 status=FAIL",
-    "eligible_for_micro_live=false (No blocking codes detected (DEP/FG01/ZW01/NET01 all clear))",
+    "eligible_for_micro_live=false (overallStatus=FAIL (eligibility requires overallStatus === PASS))",
     "eligible_for_execution=false"
   ],
   "calm_p0_status": "PASS",
@@ -12,7 +12,7 @@
   "infra_p0_eligible_for_micro_live": false,
   "infra_p0_status": "FAIL",
   "merkle_root_status": "PASS",
-  "message": "EDGE unlock blocked: INFRA_P0 status=FAIL; eligible_for_micro_live=false (No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)); eligible_for_execution=false",
+  "message": "EDGE unlock blocked: INFRA_P0 status=FAIL; eligible_for_micro_live=false (overallStatus=FAIL (eligibility requires overallStatus === PASS)); eligible_for_execution=false",
   "missing_evidence": [],
   "next_action": "npm run -s p0:all",
   "op01_status": "PASS",
@@ -20,7 +20,7 @@
   "p1_system_pass": true,
   "reason_code": "BLOCKED",
   "reason_code_audit_status": "PASS",
-  "run_id": "1036a732eb93",
+  "run_id": "71bc743467cc",
   "schema_version": "1.0.0",
   "status": "BLOCKED"
 }

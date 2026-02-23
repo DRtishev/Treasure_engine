@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 1036a732eb93
+RUN_ID: 71bc743467cc
 NEXT_ACTION: Proceed to npm run edge:micro:live:readiness.
 
 ## Methodology
@@ -16,8 +16,8 @@ Compares fingerprints: mismatch => FAIL ND01.
 
 | Run | Fingerprint | scope_manifest_sha (prefix) | norm_rows |
 |-----|-------------|----------------------------|-----------|
-| run1 | a0d4f3b1cb7ee06554e977ea31b1ddc08eb94fc3ea3e791cebe992501e79ee11 | 0b75f6c15507133c… | 96 |
-| run2 | a0d4f3b1cb7ee06554e977ea31b1ddc08eb94fc3ea3e791cebe992501e79ee11 | 0b75f6c15507133c… | 96 |
+| run1 | 4756af5a41d45dd89ad13dbdf7889502ceebb1b6249d5316263caef74f02aef7 | 0b75f6c15507133c… | 96 |
+| run2 | 4756af5a41d45dd89ad13dbdf7889502ceebb1b6249d5316263caef74f02aef7 | 0b75f6c15507133c… | 96 |
 
 ## Fingerprint Match
 

@@ -3,7 +3,7 @@
   "message": "Node mismatch: running v20.19.6 (family 20) vs NODE_TRUTH.md allowed_family=22. Align the running Node version or update NODE_TRUTH.md via APPLY protocol.",
   "next_action": "Install Node 22.x to match NODE_TRUTH.md, or update NODE_TRUTH.md via PROPOSE→APPLY→RECEIPT protocol.",
   "reason_code": "NT02",
-  "run_id": "1036a732eb93",
+  "run_id": "71bc743467cc",
   "running_family": 20,
   "running_version": "v20.19.6",
   "schema_version": "1.0.0",

@@ -437,19 +437,6 @@ for (const c of comparisons) {
 console.log(`\nFINAL: ${gateStatus}${reasonCode !== 'NONE' ? ' ' + reasonCode : ''}`);
 console.log('='.repeat(60));
 
-
-// Ensure MERKLE_ROOT anchor is fresh/stable for standalone operator use
-try {
-  execSync(`node "${path.join(ROOT, 'scripts/gov/merkle_root.mjs')}"`, {
-    cwd: ROOT,
-    encoding: 'utf8',
-    stdio: ['pipe', 'pipe', 'pipe'],
-    timeout: 120000,
-  });
-} catch {
-  // Fail-closed later via anchor checks (ME01/GOV01 path)
-}
-
 if (gateStatus !== 'PASS') {
   console.error(`\n[BLOCKED GOV01] Evidence integrity mismatch. See GOV/GOV01_EVIDENCE_INTEGRITY.md.`);
   process.exit(1);

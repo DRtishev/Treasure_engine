@@ -182,15 +182,17 @@ const hasNet01Block = net01Gate?.reason_code === 'NET01' || net01Gate?.status ==
 // Also blocked by specific codes: DEP/FG01/ZW01/NET01
 const eligible_for_micro_live = overallStatus === 'PASS' && !hasDepBlock && !hasFg01Block && !hasZw01Fail && !hasNet01Block;
 const eligible_for_execution = overallStatus === 'PASS' && !hasDepBlock && !hasFg01Block && !hasZw01Fail && !hasNet01Block;
-const eligibility_reason = hasDepBlock
-  ? `${depReasonCode}: ${depGate?.message || 'DEP gate failure detected'}`
-  : hasFg01Block
-    ? `FG01: Fixture guard violation — evidence sources not verified as real`
-    : hasZw01Fail
-      ? `ZW01: Zero-war kill switch probe failed — trading path not blocked`
-      : hasNet01Block
-        ? `NET01: Network isolation not proven — network required for PASS`
-        : 'No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)';
+const eligibility_reason = overallStatus !== 'PASS'
+  ? `overallStatus=${overallStatus} (eligibility requires overallStatus === PASS)`
+  : hasDepBlock
+    ? `${depReasonCode}: ${depGate?.message || 'DEP gate failure detected'}`
+    : hasFg01Block
+      ? `FG01: Fixture guard violation — evidence sources not verified as real`
+      : hasZw01Fail
+        ? `ZW01: Zero-war kill switch probe failed — trading path not blocked`
+        : hasNet01Block
+          ? `NET01: Network isolation not proven — network required for PASS`
+          : 'No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)';
 
 // Compute evidence hashes
 const evidenceHashes = gateStatuses.map((g) => {
@@ -313,4 +315,4 @@ if (!eligible_for_micro_live) {
 }
 console.log('='.repeat(60));
 
-process.exit(overallStatus === 'PASS' || overallStatus === 'NEEDS_DATA' ? 0 : 1);
+process.exit(renderOnly ? 0 : (overallStatus === 'PASS' ? 0 : 1));

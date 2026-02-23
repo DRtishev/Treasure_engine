@@ -2,10 +2,10 @@
 
 STATUS: FAIL
 REASON_CODE: NT02
-RUN_ID: 1036a732eb93
+RUN_ID: 71bc743467cc
 ELIGIBLE_FOR_MICRO_LIVE: false
 ELIGIBLE_FOR_EXECUTION: false
-ELIGIBILITY_REASON: No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)
+ELIGIBILITY_REASON: overallStatus=FAIL (eligibility requires overallStatus === PASS)
 NEXT_ACTION: nvm use 22.22.0
 
 ## Gate Matrix
@@ -25,8 +25,8 @@ NEXT_ACTION: nvm use 22.22.0
 
 | Flag | Value | Reason |
 |------|-------|--------|
-| eligible_for_micro_live | false | No blocking codes detected (DEP/FG01/ZW01/NET01 all clear) |
-| eligible_for_execution | false | No blocking codes detected (DEP/FG01/ZW01/NET01 all clear) |
+| eligible_for_micro_live | false | overallStatus=FAIL (eligibility requires overallStatus === PASS) |
+| eligible_for_execution | false | overallStatus=FAIL (eligibility requires overallStatus === PASS) |
 
 **Note:** Infra closeout may PASS overall while eligibility is false.
 Readiness gate MUST honour these flags and emit BLOCKED with the same DEP reason code.
@@ -36,14 +36,14 @@ See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 | Evidence Path | sha256_raw (prefix) | sha256_norm (prefix) |
 |--------------|--------------------|--------------------|
-| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `3ebfe971d8da2755…` | `3ebfe971d8da2755…` |
-| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `611f3a71aab30e1d…` | `611f3a71aab30e1d…` |
-| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `1431e4f25997684d…` | `1431e4f25997684d…` |
-| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `043c74dad4b1618e…` | `043c74dad4b1618e…` |
-| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `b5353bacc43513dd…` | `b5353bacc43513dd…` |
-| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `d994183593a5b16d…` | `d994183593a5b16d…` |
-| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `cc29b2dd13de8e2d…` | `cc29b2dd13de8e2d…` |
-| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `ee8ce1e38418be41…` | `ee8ce1e38418be41…` |
+| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `6f9f05c73d816ec6…` | `6f9f05c73d816ec6…` |
+| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `f0c9e5128e2e3375…` | `f0c9e5128e2e3375…` |
+| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `863fb7edcc4d764d…` | `863fb7edcc4d764d…` |
+| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `355582597f696e11…` | `355582597f696e11…` |
+| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `a6cc54b851a1c61c…` | `a6cc54b851a1c61c…` |
+| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `5d6ffe40a18f1bc9…` | `5d6ffe40a18f1bc9…` |
+| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `da6e6cb9f1b2b0aa…` | `da6e6cb9f1b2b0aa…` |
+| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `9370ce5c62c8cfb0…` | `9370ce5c62c8cfb0…` |
 
 ## What Changed (v1.5.3 patchset)
 

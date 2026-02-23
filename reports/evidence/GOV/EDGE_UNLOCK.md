@@ -3,7 +3,7 @@
 STATUS: BLOCKED
 REASON_CODE: BLOCKED
 EDGE_UNLOCK: false
-RUN_ID: 1036a732eb93
+RUN_ID: 71bc743467cc
 NEXT_ACTION: npm run -s p0:all
 
 ## Gate Matrix
@@ -26,5 +26,5 @@ NEXT_ACTION: npm run -s p0:all
 ## Blocking Reasons
 
 - INFRA_P0 status=FAIL
-- eligible_for_micro_live=false (No blocking codes detected (DEP/FG01/ZW01/NET01 all clear))
+- eligible_for_micro_live=false (overallStatus=FAIL (eligibility requires overallStatus === PASS))
 - eligible_for_execution=false
