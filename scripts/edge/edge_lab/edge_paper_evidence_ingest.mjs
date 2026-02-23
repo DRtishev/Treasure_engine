@@ -53,7 +53,7 @@ if (fs.existsSync(JSONL_PATH)) {
 if (inputKind === 'NONE') {
   const status = 'NEEDS_DATA';
   const reasonCode = 'NDA02';
-  const nextAction = 'npm run -s edge:profit:00:ingest -- --generate-sample';
+  const nextAction = 'npm run -s edge:profit:00:sample';
   writeMd(path.join(EPOCH_DIR, 'PAPER_EVIDENCE_INGEST.md'), `# PAPER_EVIDENCE_INGEST.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\nNo telemetry input found at:\n- artifacts/incoming/paper_telemetry.jsonl\n- artifacts/incoming/paper_telemetry.csv\n`);
   writeJsonDeterministic(path.join(MANUAL_DIR, 'paper_evidence_ingest.json'), {
     schema_version: '1.0.0',
@@ -137,7 +137,7 @@ const nextAction = status === 'PASS'
   ? 'npm run -s edge:profit:00:expectancy'
   : status === 'BLOCKED'
     ? 'npm run -s edge:profit:00'
-    : 'npm run -s edge:profit:00:ingest -- --generate-sample';
+    : 'npm run -s edge:profit:00:sample';
 
 const md = `# PAPER_EVIDENCE_INGEST.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Input\n\n- input_kind: ${inputKind}\n- input_path: ${inputKind === 'JSONL' ? 'artifacts/incoming/paper_telemetry.jsonl' : 'artifacts/incoming/paper_telemetry.csv'}\n- rows_raw: ${rawRows.length}\n- rows_normalized: ${normalized.length}\n\n## Outlier + Conflict Summary\n\n- outlier_count: ${outliers.length}\n- severe_conflict_count: ${severeConflictCount}\n\n## Missing Required Fields\n\n${missingFieldRows.length ? missingFieldRows.map((e) => `- ${e}`).join('\n') : '- NONE'}\n\n## Outlier Marks (not deleted)\n\n${outliers.length ? canonSort(outliers).map((e) => `- ${e}`).join('\n') : '- NONE'}\n`;
 

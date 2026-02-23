@@ -2,14 +2,15 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 0786d6e21b8d
+RUN_ID: 835061ba7062
 NEXT_ACTION: npm run -s edge:profit:00
 
 ## Generator
 
 - seed: 13371337
+- profile: conflict
 - rows_total: 222
 - rows_nominal: 220
 - rows_with_anomalies: 5
 - output_path: artifacts/incoming/paper_telemetry.jsonl
-- sha256: 51a89674b0c7cabb1f78f61116b02806a64b44fa7934852b7c1d3e3ae34bbf25
+- sha256: 3fd0ce98e7a0dd27b5d4fd9e06e3424d01fc0a425a99380de8d541079a35ecc6

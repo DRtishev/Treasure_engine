@@ -12,6 +12,17 @@ fs.mkdirSync(EPOCH_DIR, { recursive: true });
 
 const SEED = 13371337;
 const ROWS = Number(process.env.PAPER_SAMPLE_ROWS || 220);
+const PROFILE = String(process.env.PAPER_SAMPLE_PROFILE || 'clean').toLowerCase();
+const SOURCE_TAG_BY_PROFILE = {
+  clean: 'paper_sample_clean_v1',
+  missing: 'paper_sample_missing_v1',
+  conflict: 'paper_sample_conflict_v1',
+};
+
+if (!(PROFILE in SOURCE_TAG_BY_PROFILE)) {
+  console.error(`[FAIL] unsupported PAPER_SAMPLE_PROFILE='${PROFILE}'. expected one of: clean, missing, conflict`);
+  process.exit(1);
+}
 
 function makeRng(seed) {
   let x = seed >>> 0;
@@ -44,24 +55,41 @@ for (let i = 0; i < ROWS; i++) {
     slippage_bps: Number((3 + rng() * 8).toFixed(6)),
     latency_ms: Number((70 + rng() * 220).toFixed(6)),
     result_pnl: Number((0.04 + rng() * 0.22).toFixed(6)),
-    source_tag: 'paper_sample_v1',
+    source_tag: SOURCE_TAG_BY_PROFILE[PROFILE],
   });
 }
 
 // deterministic anomalies for gate coverage
-rows[5].slippage_bps = 420;          // outlier
-rows[11].latency_ms = 7000;          // outlier
-rows[17].result_pnl = 150000;        // outlier
+rows[5].slippage_bps = 420; // outlier
+rows[11].latency_ms = 7000; // outlier
+rows[17].result_pnl = PROFILE === 'clean' ? 0.85 : 150000; // profile-tuned
 
-const missingA = { ...rows[21] };
-delete missingA.fee;
-missingA.signal_id = 'SIG-MISS-0001';
-rows.push(missingA);
+if (PROFILE === 'missing') {
+  const missingA = { ...rows[21] };
+  delete missingA.fee;
+  missingA.signal_id = 'SIG-MISS-0001';
+  rows.push(missingA);
 
-const missingB = { ...rows[22] };
-delete missingB.intended_exit;
-missingB.signal_id = 'SIG-MISS-0002';
-rows.push(missingB);
+  const missingB = { ...rows[22] };
+  delete missingB.intended_exit;
+  missingB.signal_id = 'SIG-MISS-0002';
+  rows.push(missingB);
+}
+
+if (PROFILE === 'conflict') {
+  const baseA = rows[25];
+  rows.push({
+    ...baseA,
+    side: baseA.side === 'BUY' ? 'SELL' : 'BUY',
+    source_tag: `${SOURCE_TAG_BY_PROFILE[PROFILE]}_conflict_side`,
+  });
+
+  const baseB = rows[50];
+  rows.push({
+    ...baseB,
+    source_tag: `${SOURCE_TAG_BY_PROFILE[PROFILE]}_conflict_source`,
+  });
+}
 
 rows.sort((a, b) => String(a.signal_id).localeCompare(String(b.signal_id)) || String(a.ts).localeCompare(String(b.ts)) || String(a.symbol).localeCompare(String(b.symbol)));
 
@@ -69,6 +97,7 @@ const jsonl = rows.map((r) => JSON.stringify(r)).join('\n') + '\n';
 fs.writeFileSync(IN_PATH, jsonl);
 const sha = crypto.createHash('sha256').update(jsonl).digest('hex');
 
-writeMd(path.join(EPOCH_DIR, 'SAMPLE_TELEMETRY.md'), `# SAMPLE_TELEMETRY.md\n\nSTATUS: PASS\nREASON_CODE: NONE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: npm run -s edge:profit:00\n\n## Generator\n\n- seed: ${SEED}\n- rows_total: ${rows.length}\n- rows_nominal: ${ROWS}\n- rows_with_anomalies: 5\n- output_path: artifacts/incoming/paper_telemetry.jsonl\n- sha256: ${sha}\n`);
+const anomalyCount = PROFILE === 'clean' ? 2 : 5;
+writeMd(path.join(EPOCH_DIR, 'SAMPLE_TELEMETRY.md'), `# SAMPLE_TELEMETRY.md\n\nSTATUS: PASS\nREASON_CODE: NONE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: npm run -s edge:profit:00\n\n## Generator\n\n- seed: ${SEED}\n- profile: ${PROFILE}\n- rows_total: ${rows.length}\n- rows_nominal: ${ROWS}\n- rows_with_anomalies: ${anomalyCount}\n- output_path: artifacts/incoming/paper_telemetry.jsonl\n- sha256: ${sha}\n`);
 
-console.log(`[PASS] paper_telemetry_sample_gen — wrote ${rows.length} rows, sha256=${sha.slice(0, 16)}...`);
+console.log(`[PASS] paper_telemetry_sample_gen(${PROFILE}) — wrote ${rows.length} rows, sha256=${sha.slice(0, 16)}...`);

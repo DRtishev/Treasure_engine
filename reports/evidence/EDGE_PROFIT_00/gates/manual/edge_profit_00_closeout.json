@@ -8,34 +8,34 @@
       "status": "PASS"
     },
     {
-      "exit_code": 0,
+      "exit_code": 1,
       "gate": "PAPER_EVIDENCE_INGEST",
-      "reason_code": "NDA02",
-      "status": "NEEDS_DATA"
+      "reason_code": "DC90",
+      "status": "BLOCKED"
     },
     {
-      "exit_code": 0,
+      "exit_code": 1,
       "gate": "EXECUTION_REALITY",
-      "reason_code": "NDA02",
-      "status": "NEEDS_DATA"
+      "reason_code": "DC90",
+      "status": "BLOCKED"
     },
     {
-      "exit_code": 0,
+      "exit_code": 1,
       "gate": "EXPECTANCY",
-      "reason_code": "NDA02",
-      "status": "NEEDS_DATA"
+      "reason_code": "DC90",
+      "status": "BLOCKED"
     },
     {
-      "exit_code": 0,
+      "exit_code": 1,
       "gate": "OVERFIT",
-      "reason_code": "NDA02",
-      "status": "NEEDS_DATA"
+      "reason_code": "OF90",
+      "status": "BLOCKED"
     }
   ],
-  "message": "EDGE_PROFIT_00 needs more telemetry evidence.",
-  "next_action": "npm run -s edge:profit:00:ingest -- --generate-sample",
-  "reason_code": "NDA02",
-  "run_id": "0786d6e21b8d",
+  "message": "EDGE_PROFIT_00 blocked by one or more gates.",
+  "next_action": "npm run -s edge:profit:00",
+  "reason_code": "EP00",
+  "run_id": "835061ba7062",
   "schema_version": "1.0.0",
-  "status": "NEEDS_DATA"
+  "status": "BLOCKED"
 }

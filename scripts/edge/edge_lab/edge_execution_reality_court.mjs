@@ -34,7 +34,7 @@ if (!ingest) {
 if (ingest.status !== 'PASS') {
   const status = ingest.status === 'NEEDS_DATA' ? 'NEEDS_DATA' : 'BLOCKED';
   const reasonCode = ingest.reason_code || (status === 'NEEDS_DATA' ? 'NDA02' : 'DC90');
-  const nextAction = status === 'NEEDS_DATA' ? 'npm run -s edge:profit:00:ingest -- --generate-sample' : 'npm run -s edge:profit:00';
+  const nextAction = status === 'NEEDS_DATA' ? 'npm run -s edge:profit:00:sample' : 'npm run -s edge:profit:00';
   writeMd(path.join(EPOCH_DIR, 'EXECUTION_REALITY.md'), `# EXECUTION_REALITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\nIngest status is ${ingest.status}; execution reality court is fail-closed.`);
   writeJsonDeterministic(path.join(MANUAL_DIR, 'execution_reality.json'), {
     schema_version: '1.0.0', status, reason_code: reasonCode, run_id: RUN_ID,
@@ -80,7 +80,7 @@ if (fillsN < MIN_FILLS) {
 
 const nextAction = status === 'PASS'
   ? 'npm run -s edge:profit:00:expectancy'
-  : 'npm run -s edge:profit:00:ingest -- --generate-sample';
+  : 'npm run -s edge:profit:00:sample';
 
 const md = `# EXECUTION_REALITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Reality Metrics\n\n- fills_n: ${fillsN}\n- min_fills_required: ${MIN_FILLS}\n- avg_slippage_bps: ${avg(slippage).toFixed(6)}\n- p95_slippage_bps: ${p95(slippage).toFixed(6)}\n- avg_latency_ms: ${avg(latency).toFixed(6)}\n- p95_latency_ms: ${p95(latency).toFixed(6)}\n`;
 writeMd(path.join(EPOCH_DIR, 'EXECUTION_REALITY.md'), md);

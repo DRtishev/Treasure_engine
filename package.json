@@ -631,7 +631,10 @@
     "edge:profit:00:registry": "node scripts/edge/edge_lab/edge_hypothesis_registry_court.mjs",
     "edge:profit:00:exec": "node scripts/edge/edge_lab/edge_execution_reality_court.mjs",
     "edge:profit:00:overfit": "node scripts/edge/edge_lab/edge_overfit_court_mvp.mjs",
-    "edge:profit:00:sample": "node scripts/edge/edge_lab/paper_telemetry_sample_gen.mjs",
+    "edge:profit:00:sample": "npm run -s edge:profit:00:sample:clean",
+    "edge:profit:00:sample:clean": "PAPER_SAMPLE_PROFILE=clean node scripts/edge/edge_lab/paper_telemetry_sample_gen.mjs",
+    "edge:profit:00:sample:missing": "PAPER_SAMPLE_PROFILE=missing node scripts/edge/edge_lab/paper_telemetry_sample_gen.mjs",
+    "edge:profit:00:sample:conflict": "PAPER_SAMPLE_PROFILE=conflict node scripts/edge/edge_lab/paper_telemetry_sample_gen.mjs",
     "edge:profit:00:x2": "node scripts/edge/edge_lab/edge_profit_00_x2.mjs"
   },
   "devDependencies": {

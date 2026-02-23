@@ -65,7 +65,7 @@ if (statuses.every((s) => s === 'PASS')) {
 const nextAction = status === 'PASS'
   ? 'npm run -s edge:profit:00'
   : status === 'NEEDS_DATA'
-    ? 'npm run -s edge:profit:00:ingest -- --generate-sample'
+    ? 'npm run -s edge:profit:00:sample'
     : 'npm run -s edge:profit:00';
 
 const rows = runResults.map((r) => {

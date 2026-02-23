@@ -59,7 +59,7 @@ if (exp.status === 'NEEDS_DATA') {
 const nextAction = status === 'PASS'
   ? 'npm run -s edge:profit:00'
   : status === 'NEEDS_DATA'
-    ? 'npm run -s edge:profit:00:ingest -- --generate-sample'
+    ? 'npm run -s edge:profit:00:sample'
     : 'npm run -s edge:profit:00';
 
 const md = `# OVERFIT_DEFENSE.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## MVP Defense\n\n- trials_n: ${trialsN}\n- base_psr_threshold: ${BASE.toFixed(6)}\n- corrected_psr_threshold: ${corrected.toFixed(6)}\n- expectancy_status: ${exp.status}\n- psr0: ${psr0.toFixed(6)}\n`;
