@@ -85,6 +85,8 @@ const promotionReason = eligibleForProfitTrack
   ? 'REAL-only promotion gate satisfied.'
   : ingestEvidenceSource === 'REAL'
     ? 'Closeout not PASS; promotion denied.'
+    : ingestEvidenceSource === 'REAL_SANDBOX'
+    ? 'EP02_REAL_REQUIRED: REAL_SANDBOX is dry-run only and cannot promote.'
     : 'EP02_REAL_REQUIRED: evidence_source is not REAL.';
 
 const nextAction = status === 'PASS'
@@ -98,7 +100,7 @@ const rows = runResults.map((r) => {
   return `| ${r.gate} | ${r.exit_code} | ${g.status || 'BLOCKED'} | ${g.reason_code || 'ME01'} |`;
 }).join('\n');
 
-const md = `# EDGE_PROFIT_00_CLOSEOUT.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Eligibility\n\n- evidence_source: ${ingestEvidenceSource}\n- eligible_for_profit_track: ${eligibleForProfitTrack}\n\n## Gate Matrix\n\n| Gate | Exit Code | Status | Reason Code |\n|---|---:|---|---|\n${rows}\n`;
+const md = `# EDGE_PROFIT_00_CLOSEOUT.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Eligibility\n\n- evidence_source: ${ingestEvidenceSource}\n- eligible_for_profit_track: ${eligibleForProfitTrack}\n- promotion_eligibility_reason: ${promotionReason}\n\n## Gate Matrix\n\n| Gate | Exit Code | Status | Reason Code |\n|---|---:|---|---|\n${rows}\n`;
 writeMd(path.join(EPOCH_DIR, 'EDGE_PROFIT_00_CLOSEOUT.md'), md);
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'edge_profit_00_closeout.json'), {

@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 7df4dc3a1062
+RUN_ID: 1e93566551e0
 NEXT_ACTION: npm run -s edge:profit:00:expectancy
 
 ## Reality Metrics
@@ -10,16 +10,16 @@ NEXT_ACTION: npm run -s edge:profit:00:expectancy
 - fills_n: 360
 - min_fills_required: 100
 - fill_rate: UNAVAILABLE
-- mean_slippage_bps: 2.505801
-- median_slippage_bps: 2.526107
-- p95_slippage_bps: 3.376297
-- mean_latency_ms: 184.631754
-- median_latency_ms: 176.715146
-- p95_latency_ms: 304.809377
-- mean_fee_bps: 0.350000
+- mean_slippage_bps: 1.986134
+- median_slippage_bps: 1.993999
+- p95_slippage_bps: 2.678527
+- mean_latency_ms: 155.446076
+- median_latency_ms: 151.521246
+- p95_latency_ms: 255.980299
+- mean_fee_bps: 0.300000
 
 ## Calibration
 
 - model: predicted_slippage_bps = spread_bps/2 + k*sqrt(size_ratio)
-- k: 1.14494483
-- rmse_bps: 0.10124290
+- k: 0.99639787
+- rmse_bps: 0.07298193

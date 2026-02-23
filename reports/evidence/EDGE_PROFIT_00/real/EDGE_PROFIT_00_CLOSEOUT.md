@@ -2,13 +2,14 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 7df4dc3a1062
+RUN_ID: 1e93566551e0
 NEXT_ACTION: npm run -s executor:run:chain
 
 ## Eligibility
 
-- evidence_source: FIXTURE_STUB
+- evidence_source: REAL_SANDBOX
 - eligible_for_profit_track: false
+- promotion_eligibility_reason: EP02_REAL_REQUIRED: REAL_SANDBOX is dry-run only and cannot promote.
 
 ## Gate Matrix
 

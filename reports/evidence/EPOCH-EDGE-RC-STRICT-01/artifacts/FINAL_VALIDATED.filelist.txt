@@ -743,6 +743,7 @@ scripts/verify/phoenix_x2.mjs
 scripts/verify/properties.mjs
 scripts/verify/provenance_check.mjs
 scripts/verify/reachability.mjs
+scripts/verify/regression_no_sandbox_promotion.mjs
 scripts/verify/regression_no_stub_promotion.mjs
 scripts/verify/release_chain_check.mjs
 scripts/verify/release_check.mjs

@@ -643,16 +643,20 @@
     "verify:edge:profit:00:release": "node scripts/verify/edge_profit_00_release_artifacts_gate.mjs",
     "edge:profit:00:real:run": "npm run -s edge:profit:00:import:csv && npm run -s edge:profit:00 && npm run -s edge:profit:00:x2 && npm run -s edge:profit:00:doctor",
     "edge:profit:00:real:stub": "node scripts/edge/edge_lab/paper_telemetry_real_stub_gen.mjs",
+    "edge:profit:00:real:sandbox": "node scripts/edge/edge_lab/paper_telemetry_real_sandbox_gen.mjs",
     "edge:profit:01:wf-lite": "node scripts/edge/edge_lab/edge_walk_forward_lite.mjs",
     "edge:profit:01:super": "node scripts/edge/edge_lab/edge_profit_01_super.mjs",
     "edge:profit:02:expectancy-proof": "node scripts/edge/edge_lab/edge_profit_02_expectancy_proof.mjs",
     "edge:profit:02:pbo": "node scripts/edge/edge_lab/edge_profit_02_pbo_cpcv.mjs",
     "edge:profit:02:risk": "node scripts/edge/edge_lab/edge_profit_02_risk_mcdd.mjs",
+    "edge:profit:02:proof:index": "node scripts/edge/edge_lab/edge_profit_02_proof_index.mjs",
     "verify:regression:no-stub-promotion": "node scripts/verify/regression_no_stub_promotion.mjs",
+    "verify:regression:no-sandbox-promotion": "node scripts/verify/regression_no_sandbox_promotion.mjs",
     "verify:env:authority": "node scripts/verify/env_node_truth_authority.mjs",
     "verify:report:contradiction": "node scripts/verify/report_contradiction_guard.mjs",
     "executor:clean:baseline": "node scripts/executor/executor_clean_baseline.mjs",
-    "executor:run:chain": "node scripts/executor/executor_run_chain.mjs"
+    "executor:run:chain": "node scripts/executor/executor_run_chain.mjs",
+    "epoch:edge:profit:03": "npm run -s executor:clean:baseline && bash -lc \"source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0 >/dev/null && npm run -s edge:profit:00:real:sandbox && npm run -s executor:run:chain\""
   },
   "devDependencies": {
     "ajv": "^8.17.1"

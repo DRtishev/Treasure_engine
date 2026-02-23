@@ -208,6 +208,15 @@ if (parseErrors.length > 0) {
 }
 
 mapped.sort((a, b) => a.ts.localeCompare(b.ts) || a.signal_id.localeCompare(b.signal_id) || a.symbol.localeCompare(b.symbol));
+
+const sourceTags = new Set(mapped.map((r) => String(r.source_tag || '').toUpperCase()));
+const hasStubTag = [...sourceTags].some((t) => t.includes('REAL_STUB'));
+const hasSandboxTag = [...sourceTags].some((t) => t.includes('REAL_SANDBOX'));
+const importedEvidenceSource = hasSandboxTag
+  ? 'REAL_SANDBOX'
+  : hasStubTag
+    ? 'FIXTURE_STUB'
+    : 'REAL';
 const jsonl = mapped.map((r) => JSON.stringify(r)).join('\n') + '\n';
 fs.writeFileSync(JSONL_PATH, jsonl);
 fs.writeFileSync(PROFILE_PATH, 'real\n');
@@ -221,6 +230,7 @@ writeOutputs({
   signatures: [
     `input_sha256: ${inputSha256}`,
     `output_sha256: ${outputSha256}`,
+    `imported_evidence_source: ${importedEvidenceSource}`,
     `rows_raw: ${rows.length}`,
     `rows_exported: ${mapped.length}`,
     'evidence_source: REAL',

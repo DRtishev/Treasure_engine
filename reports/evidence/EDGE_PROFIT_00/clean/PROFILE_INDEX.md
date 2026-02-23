@@ -1,12 +1,12 @@
 # PROFILE_INDEX.md — EDGE_PROFIT_00/clean
 
-STATUS: PASS
-REASON_CODE: NONE
-NEXT_ACTION: npm run -s edge:profit:00:x2
+STATUS: BLOCKED
+REASON_CODE: ME01
+NEXT_ACTION: npm run -s edge:profit:00
 
 - profile: clean
-- closeout_status: PASS
-- closeout_reason_code: NONE
+- closeout_status: MISSING
+- closeout_reason_code: ME01
 - evidence_source: UNKNOWN
 - real_stub_tag: false
 - PROMOTION_ELIGIBLE: false

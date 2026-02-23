@@ -135,12 +135,14 @@ for (const row of normalized) {
 
 const severeConflictCount = outliers.filter((x) => x.includes('conflict_')).length;
 
-const stubTagged = normalized.length > 0 && normalized.every((r) => String(r.source_tag || '').includes('REAL_STUB'));
-if (PROFILE === 'real' && stubTagged) {
+const sourceTags = new Set(normalized.map((r) => String(r.source_tag || '').toUpperCase()));
+const stubTagged = normalized.length > 0 && [...sourceTags].every((t) => t.includes('REAL_STUB'));
+const sandboxTagged = normalized.length > 0 && [...sourceTags].every((t) => t.includes('REAL_SANDBOX'));
+if (PROFILE === 'real' && sandboxTagged) {
+  evidenceSource = 'REAL_SANDBOX';
+} else if (PROFILE === 'real' && stubTagged) {
   evidenceSource = 'FIXTURE_STUB';
-} else if (PROFILE === 'real' && inputKind === 'CSV') {
-  evidenceSource = 'REAL';
-} else if (PROFILE === 'real' && inputKind === 'JSONL' && !stubTagged) {
+} else if (PROFILE === 'real' && (inputKind === 'CSV' || inputKind === 'JSONL')) {
   evidenceSource = 'REAL';
 }
 const hasMissing = missingFieldRows.length > 0;

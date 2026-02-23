@@ -1,7 +1,7 @@
 {
-  "evidence_source": "FIXTURE_STUB",
+  "evidence_source": "REAL_SANDBOX",
   "input_kind": "JSONL",
-  "input_sha256": "12996740bb12e027b3bcae7b7b974d0c5f89dcd4d6e66f216dbf5b7c0b0679f1",
+  "input_sha256": "1f3be2ca037095ab9d417a38ec9a2a8b34a4c23216145b055e0e65a66b69af81",
   "message": "Telemetry ingest pass with deterministic normalization.",
   "missing_field_rows": [],
   "next_action": "npm run -s edge:profit:00:expectancy",
@@ -9,7 +9,7 @@
   "outlier_marks": [],
   "reason_code": "NONE",
   "row_count": 360,
-  "run_id": "7df4dc3a1062",
+  "run_id": "1e93566551e0",
   "schema_version": "1.0.0",
   "severe_conflict_count": 0,
   "status": "PASS"
