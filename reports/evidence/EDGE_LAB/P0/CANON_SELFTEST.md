@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 NEXT_ACTION: No action required. Canon selftest is GREEN.
 
 ## Summary
@@ -30,7 +30,7 @@ NEXT_ACTION: No action required. Canon selftest is GREEN.
 | Hash Type | Value |
 |-----------|-------|
 | sha256_raw | ed8d2a7d707b4678989ed10c4010439be1f690d4b5e0808124bd7a8267701826 |
-| sha256_norm | 0512faa3352af6bd6109d24c50a883d272ef76aef6d12acf38d060d6b237e01e |
+| sha256_norm | 6e13e3d476df7875bfd721b4f70d572213ec09d1e291d1d3392058eac12c598f |
 | hashes_differ | true |
 
 Input: `generated_at: 2026-02-21T12:00:00.000Z

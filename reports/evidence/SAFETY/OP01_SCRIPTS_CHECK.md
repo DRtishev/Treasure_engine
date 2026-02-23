@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 NEXT_ACTION: All NEXT_ACTION references are valid. No phantom commands.
 
 ## OP01 Policy
@@ -36,7 +36,7 @@ Missing script => BLOCKED OP01.
 | Found | 13 |
 | Missing | 0 |
 
-## All Available Scripts (640 total, sorted)
+## All Available Scripts (641 total, sorted)
 
 - `approve:snapshots`
 - `court:v1`
@@ -111,6 +111,7 @@ Missing script => BLOCKED OP01.
 - `epoch:run`
 - `evidence:pack:epoch`
 - `evidence:pack:verify`
+- `executor:clean:baseline`
 - `executor:run:chain`
 - `export:final-validated`
 - `export:validated`

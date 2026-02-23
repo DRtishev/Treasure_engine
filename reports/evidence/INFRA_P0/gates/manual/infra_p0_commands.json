@@ -24,7 +24,7 @@
       "exit_code": 0,
       "gate": "VERIFY_MODE",
       "json": "reports/evidence/INFRA_P0/gates/manual/verify_mode_gate.json",
-      "message": "VERIFY_MODE=GIT. RUN_ID resolved from git: 312268916f58. .git directory present.",
+      "message": "VERIFY_MODE=GIT. RUN_ID resolved from git: b68b470a2f03. .git directory present.",
       "reason_code": "NONE",
       "script": "scripts/verify/verify_mode_gate.mjs",
       "status": "PASS"
@@ -75,7 +75,7 @@
       "status": "PASS"
     }
   ],
-  "run_id": "312268916f58",
+  "run_id": "b68b470a2f03",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

@@ -17,7 +17,7 @@ let reasonCode = 'NONE';
 let message = 'No contradiction between env authority and command log node versions.';
 let envNode = 'MISSING';
 let cmdNode = 'MISSING';
-let nextAction = 'npm run -s gov:integrity';
+let nextAction = RUN_CHAIN_CMD;
 
 if (!fs.existsSync(ENV_JSON) || !fs.existsSync(COMMANDS_MD)) {
   status = 'NEEDS_DATA';

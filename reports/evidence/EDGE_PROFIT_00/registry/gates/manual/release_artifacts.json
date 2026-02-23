@@ -4,19 +4,19 @@
       "contract_key": "FINAL_VALIDATED_PRIMARY_PATH",
       "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz",
       "present": true,
-      "sha256": "531e0a8eeb1d20eecb5bdaef6c693fd786a97fa7c284280a4cc04549084d2622"
+      "sha256": "235b7adb8106554b3727dcccb7382cdd6b489149fde5d97630f180a5190ca4b0"
     },
     {
       "contract_key": "EVIDENCE_CHAIN_PRIMARY_PATH",
       "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz",
       "present": true,
-      "sha256": "531e0a8eeb1d20eecb5bdaef6c693fd786a97fa7c284280a4cc04549084d2622"
+      "sha256": "235b7adb8106554b3727dcccb7382cdd6b489149fde5d97630f180a5190ca4b0"
     },
     {
       "contract_key": "FINAL_VALIDATED_SHA256_SIDECAR_PATH",
       "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256",
       "present": true,
-      "sha256": "241185f61c9e2da23d60e811a0133db806e4d583d5ec4d2a7c3df89a791e75bb"
+      "sha256": "acdf31e3c3588413b944413fee282376e67fb6c9aac9bed4fe91e5da287abfc4"
     }
   ],
   "contract_error": "NONE",
@@ -25,9 +25,9 @@
   "evidence_epoch": "EPOCH-EDGE-RC-STRICT-01",
   "message": "Release artifacts present with sha256 checksums.",
   "missing": [],
-  "next_action": "npm run -s export:final-validated",
+  "next_action": "npm run -s executor:run:chain",
   "reason_code": "NONE",
-  "run_id": "312268916f58",
+  "run_id": "b68b470a2f03",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

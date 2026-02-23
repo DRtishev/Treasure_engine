@@ -6,6 +6,7 @@ import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
 const COMMANDS_MD = path.join(EXEC_DIR, 'COMMANDS_RUN.md');
+const SSOT_ENTRYPOINT = 'npm run -s executor:run:chain';
 
 fs.mkdirSync(EXEC_DIR, { recursive: true });
 
@@ -38,52 +39,65 @@ const commands = [
   'npm run -s gov:gov01',
   'npm run -s gov:integrity',
   'npm run -s edge:profit:01:super',
+];
+
+if (fs.existsSync(path.join(ROOT, 'scripts', 'edge', 'edge_lab', 'edge_walk_forward_lite.mjs'))) {
+  commands.push('npm run -s edge:profit:01:wf-lite');
+}
+
+commands.push(
   'npm run -s export:final-validated',
   'npm run -s verify:edge:profit:00:release',
   'npm run -s edge:profit:00:doctor',
-];
+  'npm run -s verify:report:contradiction',
+);
+
+function render(records, status, reason) {
+  const sections = records.map((r, idx) => {
+    const out = (r.stdout + r.stderr).trimEnd();
+    return [
+      `## STEP ${idx + 1}`,
+      `COMMAND: ${r.cmd}`,
+      `EC: ${r.ec}`,
+      `STARTED_AT: ${r.startedAt}`,
+      `COMPLETED_AT: ${r.completedAt}`,
+      '```',
+      out || '(no output)',
+      '```',
+      '',
+    ].join('\n');
+  }).join('');
+
+  const md = [
+    '# COMMANDS_RUN.md',
+    '',
+    `STATUS: ${status}`,
+    `REASON_CODE: ${reason}`,
+    `NODE_VERSION: ${process.version}`,
+    `NPM_VERSION: ${npmVersion.ec === 0 ? npmVersion.stdout.trim() : 'MISSING'}`,
+    `RUN_ID: ${RUN_ID}`,
+    `VERIFY_MODE: ${VERIFY_MODE}`,
+    `NEXT_ACTION: ${SSOT_ENTRYPOINT}`,
+    '',
+    sections,
+  ].join('\n');
+
+  writeMd(COMMANDS_MD, md);
+}
 
 const records = [];
+render(records, 'RUNNING', 'RUN01');
+
 for (const cmd of commands) {
   const rec = runShell(cmd);
   records.push(rec);
-  if (rec.ec !== 0) break;
+  if (rec.ec !== 0) {
+    render(records, 'BLOCKED', 'EC01');
+    console.log('[BLOCKED] executor_run_chain — EC01');
+    process.exit(1);
+  }
+  render(records, 'RUNNING', 'RUN01');
 }
 
-const firstFail = records.find((r) => r.ec !== 0);
-const status = firstFail ? 'BLOCKED' : 'PASS';
-const reason = firstFail ? 'EC01' : 'NONE';
-const nextAction = firstFail ? firstFail.cmd : 'npm run -s verify:report:contradiction';
-
-const sections = records.map((r, idx) => {
-  const out = (r.stdout + r.stderr).trimEnd();
-  return [
-    `## STEP ${idx + 1}`,
-    `COMMAND: ${r.cmd}`,
-    `EC: ${r.ec}`,
-    `STARTED_AT: ${r.startedAt}`,
-    `COMPLETED_AT: ${r.completedAt}`,
-    '```',
-    out || '(no output)',
-    '```',
-    '',
-  ].join('\n');
-}).join('');
-
-const md = [
-  '# COMMANDS_RUN.md',
-  '',
-  `STATUS: ${status}`,
-  `REASON_CODE: ${reason}`,
-  `NODE_VERSION: ${process.version}`,
-  `NPM_VERSION: ${npmVersion.ec === 0 ? npmVersion.stdout.trim() : 'MISSING'}`,
-  `RUN_ID: ${RUN_ID}`,
-  `VERIFY_MODE: ${VERIFY_MODE}`,
-  `NEXT_ACTION: ${nextAction}`,
-  '',
-  sections,
-].join('\n');
-
-writeMd(COMMANDS_MD, md);
-console.log(`[${status}] executor_run_chain — ${reason}`);
-process.exit(firstFail ? 1 : 0);
+render(records, 'PASS', 'NONE');
+console.log('[PASS] executor_run_chain — NONE');

@@ -8,7 +8,8 @@ const ROOT = path.resolve(process.cwd());
 const EXECUTOR_DIR = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
 const MANUAL_DIR = path.join(EXECUTOR_DIR, 'gates', 'manual');
 const NODE_TRUTH = path.join(ROOT, 'NODE_TRUTH.md');
-const NEXT_ACTION = 'source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0';
+const PASS_NEXT_ACTION = 'npm run -s executor:run:chain';
+const REMEDIATION_NEXT_ACTION = 'source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0';
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
@@ -50,7 +51,9 @@ if (!fs.existsSync(NODE_TRUTH)) {
   }
 }
 
-writeMd(path.join(EXECUTOR_DIR, 'ENV_AUTHORITY.md'), `# ENV_AUTHORITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- node_truth_path: NODE_TRUTH.md\n- contract_loaded: ${contractLoaded}\n- allowed_family: ${allowedFamily || 'UNKNOWN'}\n- expected_pinned_minor: ${pinnedMinor || 'UNKNOWN'}\n- runtime_node_version: ${process.version}\n- runtime_exec_path: ${runtimeExecPath}\n- platform: ${runtimePlatform}\n- arch: ${runtimeArch}\n- node_truth_sha256: ${nodeTruthSha}\n- verdict: ${status}\n`);
+const nextAction = status === 'PASS' ? PASS_NEXT_ACTION : REMEDIATION_NEXT_ACTION;
+
+writeMd(path.join(EXECUTOR_DIR, 'ENV_AUTHORITY.md'), `# ENV_AUTHORITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n- node_truth_path: NODE_TRUTH.md\n- contract_loaded: ${contractLoaded}\n- allowed_family: ${allowedFamily || 'UNKNOWN'}\n- expected_pinned_minor: ${pinnedMinor || 'UNKNOWN'}\n- runtime_node_version: ${process.version}\n- runtime_exec_path: ${runtimeExecPath}\n- platform: ${runtimePlatform}\n- arch: ${runtimeArch}\n- node_truth_sha256: ${nodeTruthSha}\n- verdict: ${status}\n`);
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'env_authority.json'), {
   schema_version: '1.0.0',
@@ -58,7 +61,7 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'env_authority.json'), {
   reason_code: reasonCode,
   run_id: RUN_ID,
   message,
-  next_action: NEXT_ACTION,
+  next_action: nextAction,
   node_truth_path: 'NODE_TRUTH.md',
   contract_loaded: contractLoaded,
   allowed_family: allowedFamily || 'UNKNOWN',

@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 NEXT_ACTION: Run npm run edge:calm:p0:x2 to verify x2 determinism. Then proceed to INFRA_P0 closeout.
 
 ## WHAT CHANGED
@@ -41,7 +41,7 @@ NEXT_ACTION: Run npm run edge:calm:p0:x2 to verify x2 determinism. Then proceed 
 
 | Field | Value |
 |-------|-------|
-| scope_manifest_sha | `a202ce963b6330f554b6f387cb0151e60d81af24a699ae9f2c2499a978a4040f` |
+| scope_manifest_sha | `e7b38c740dd76f72a139cf6cf26411f49250ab1a68da4aea2710df0f475900c6` |
 | norm_rules_sha | `021ba0511726a903c5d184a555e10a5137eae2eeed9e3df597b23eca255ac496` |
 | closeout_sha256_raw | `66f7fcf2a165122347f05af0bd904652394e7041e8a08565d220877b0cbef1e5` |
 | closeout_sha256_norm | `4cce0a9c82d92315392d842a5efe1268dc023f0440540ebe338a77d151326a3e` |

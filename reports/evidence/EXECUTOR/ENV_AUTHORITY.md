@@ -2,8 +2,8 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 312268916f58
-NEXT_ACTION: source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0
+RUN_ID: b68b470a2f03
+NEXT_ACTION: npm run -s executor:run:chain
 
 - node_truth_path: NODE_TRUTH.md
 - contract_loaded: true

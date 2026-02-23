@@ -8,7 +8,8 @@ const ROOT = path.resolve(process.cwd());
 const REGISTRY_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'registry');
 const MANUAL_DIR = path.join(REGISTRY_DIR, 'gates', 'manual');
 const CONTRACT_PATH = path.join(ROOT, 'GOV', 'EXPORT_CONTRACT.md');
-const NEXT_ACTION = 'npm run -s export:final-validated';
+const PASS_NEXT_ACTION = 'npm run -s executor:run:chain';
+const REMEDIATION_NEXT_ACTION = 'npm run -s export:final-validated';
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
@@ -82,7 +83,9 @@ if (!contract || !contractKeys.every((k) => typeof contract[k] === 'string' && c
   }
 }
 
-const md = `# RELEASE_ARTIFACTS.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n## Contract\n\n- contract_path: GOV/EXPORT_CONTRACT.md\n- contract_loaded: ${Boolean(contract)}\n- evidence_epoch: ${evidenceEpoch}\n- contract_error: ${contractError || 'NONE'}\n\n## Artifact Checks\n\n${artifacts.length ? artifacts.map((a) => `- ${a.contract_key}: ${a.present ? 'PRESENT' : 'MISSING'} | ${a.path} | sha256=${a.sha256}`).join('\n') : '- NONE'}\n\n## Missing\n\n${missing.length ? missing.map((m) => `- ${m}`).join('\n') : '- NONE'}\n`;
+const nextAction = status === 'PASS' ? PASS_NEXT_ACTION : REMEDIATION_NEXT_ACTION;
+
+const md = `# RELEASE_ARTIFACTS.md — EDGE_PROFIT_00\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n## Contract\n\n- contract_path: GOV/EXPORT_CONTRACT.md\n- contract_loaded: ${Boolean(contract)}\n- evidence_epoch: ${evidenceEpoch}\n- contract_error: ${contractError || 'NONE'}\n\n## Artifact Checks\n\n${artifacts.length ? artifacts.map((a) => `- ${a.contract_key}: ${a.present ? 'PRESENT' : 'MISSING'} | ${a.path} | sha256=${a.sha256}`).join('\n') : '- NONE'}\n\n## Missing\n\n${missing.length ? missing.map((m) => `- ${m}`).join('\n') : '- NONE'}\n`;
 
 writeMd(path.join(REGISTRY_DIR, 'RELEASE_ARTIFACTS.md'), md);
 
@@ -92,7 +95,7 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'release_artifacts.json'), {
   reason_code: reasonCode,
   run_id: RUN_ID,
   message,
-  next_action: NEXT_ACTION,
+  next_action: nextAction,
   contract_path: 'GOV/EXPORT_CONTRACT.md',
   contract_loaded: Boolean(contract),
   evidence_epoch: evidenceEpoch,

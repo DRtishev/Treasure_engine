@@ -54,7 +54,7 @@
   "message": "NET01 PASS — Network isolation proven. 6/6 checks passed. No network required for PASS.",
   "next_action": "Network isolation proven. Continue with infra:p0 pipeline.",
   "reason_code": "NONE",
-  "run_id": "312268916f58",
+  "run_id": "b68b470a2f03",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

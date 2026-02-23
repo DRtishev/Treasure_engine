@@ -3,32 +3,32 @@ STATUS: PASS
 REASON_CODE: NONE
 NODE_VERSION: v22.22.0
 NPM_VERSION: 10.9.4
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 VERIFY_MODE: GIT
-NEXT_ACTION: npm run -s verify:report:contradiction
+NEXT_ACTION: npm run -s executor:run:chain
 ## STEP 1
 COMMAND: npm run -s verify:env:authority
 EC: 0
-STARTED_AT: 2026-02-23T13:12:37.188Z
-COMPLETED_AT: 2026-02-23T13:12:38.868Z
+STARTED_AT: 2026-02-23T13:24:27.489Z
+COMPLETED_AT: 2026-02-23T13:24:28.998Z
 ```
 [PASS] env_node_truth_authority — NONE
 ```
 ## STEP 2
 COMMAND: ENABLE_SQLITE_PERSISTENCE=0 TREASURE_OMIT_OPTIONAL_PROOF=1 npm ci --omit=optional
 EC: 0
-STARTED_AT: 2026-02-23T13:12:38.868Z
-COMPLETED_AT: 2026-02-23T13:12:41.164Z
+STARTED_AT: 2026-02-23T13:24:28.999Z
+COMPLETED_AT: 2026-02-23T13:24:31.214Z
 ```
 (no output)
 ## STEP 3
 COMMAND: npm run -s p0:all
 EC: 0
-STARTED_AT: 2026-02-23T13:12:41.164Z
-COMPLETED_AT: 2026-02-23T13:12:46.461Z
+STARTED_AT: 2026-02-23T13:24:31.214Z
+COMPLETED_AT: 2026-02-23T13:24:36.486Z
 ============================================================
 CALM MODE P0 — Hardening Pipeline
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
 
 [P0] Running: CANON_SELFTEST — Canon normalization selftest (R10)
@@ -52,11 +52,11 @@ RUN_ID: 312268916f58
 [P0 OK] DATA_COURT: PASS
 
 [P0] Running: EVIDENCE_HASHES — Evidence checksums (R5 dual-hash + R11 SCOPE_MANIFEST_SHA)
-[PASS] edge_evidence_hashes — 115 files hashed, SCOPE_MANIFEST_SHA=a202ce963b6330f5...
+[PASS] edge_evidence_hashes — 116 files hashed, SCOPE_MANIFEST_SHA=e7b38c740dd76f72...
 [P0 OK] EVIDENCE_HASHES: PASS
 
 [P0] Running: RECEIPTS_CHAIN — Receipt chain on sha256_norm (R5, R11)
-[PASS] edge_receipts_chain — 115 entries chained, final=dc0b0e2af37ee6a2...
+[PASS] edge_receipts_chain — 116 entries chained, final=60912cb82100ed1b...
 [P0 OK] RECEIPTS_CHAIN: PASS
 
 ============================================================
@@ -73,7 +73,7 @@ FINAL: PASS
 [INFRA_RUN] NET_ISOLATION
 ============================================================
 NET01 NETWORK ISOLATION PROOF
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
 
 ============================================================
@@ -95,7 +95,7 @@ FINAL: PASS
 [PASS] node_truth_gate — Node v22.22.0 matches allowed_family=22
 
 [INFRA_RUN] VERIFY_MODE
-[PASS] verify_mode_gate — VERIFY_MODE=GIT, RUN_ID=312268916f58
+[PASS] verify_mode_gate — VERIFY_MODE=GIT, RUN_ID=b68b470a2f03
 
 [INFRA_RUN] DEPS_OFFLINE
 [deps_offline] Running static lock scan for native build candidates...
@@ -115,7 +115,7 @@ FINAL: PASS
 [INFRA_RUN] FIXTURE_GUARD
 ============================================================
 FG01 FIXTURE GUARD — Evidence Source Verification
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ALLOW_FIXTURES: unset (REAL_ONLY mode)
 ============================================================
 
@@ -133,7 +133,7 @@ FG01 FIXTURE GUARD RESULT
 [INFRA_RUN] ZERO_WAR_PROBE
 ============================================================
 ZW01 ZERO-WAR PROBE — Must-Fail Gate
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
 
 [ZW00 PROBE] Testing TRADING_ENABLED=1 ...
@@ -161,7 +161,7 @@ FINAL: PASS
 [PASS] zero_war_probe — ZW01 kill switch proven active for all 4 probes.
 ============================================================
 INFRA P0 — Gate Suite
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
 
 ============================================================
@@ -183,18 +183,18 @@ ELIGIBLE_FOR_EXECUTION: true
 ## STEP 4
 COMMAND: npm run -s gov:gov01
 EC: 0
-STARTED_AT: 2026-02-23T13:12:46.461Z
-COMPLETED_AT: 2026-02-23T13:12:48.713Z
+STARTED_AT: 2026-02-23T13:24:36.486Z
+COMPLETED_AT: 2026-02-23T13:24:38.717Z
 ============================================================
 GOV01 EVIDENCE INTEGRITY GATE
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
-[GOV01] Anchored SCOPE_MANIFEST_SHA: a202ce963b6330f5…
-[GOV01] Anchored MERKLE_ROOT: 172cb6ccf5259d36…
-[GOV01] Anchored RECEIPTS final: dc0b0e2af37ee6a2…
-[GOV01] Computed SCOPE_MANIFEST_SHA: a202ce963b6330f5…
-[GOV01] Computed MERKLE_ROOT: 172cb6ccf5259d36…
-[GOV01] Computed RECEIPTS final: dc0b0e2af37ee6a2…
+[GOV01] Anchored SCOPE_MANIFEST_SHA: e7b38c740dd76f72…
+[GOV01] Anchored MERKLE_ROOT: dd014fc0ea09e935…
+[GOV01] Anchored RECEIPTS final: 60912cb82100ed1b…
+[GOV01] Computed SCOPE_MANIFEST_SHA: e7b38c740dd76f72…
+[GOV01] Computed MERKLE_ROOT: dd014fc0ea09e935…
+[GOV01] Computed RECEIPTS final: 60912cb82100ed1b…
 
 ============================================================
 GOV01 INTEGRITY RESULTS
@@ -210,17 +210,17 @@ FINAL: PASS
 ## STEP 5
 COMMAND: npm run -s gov:integrity
 EC: 0
-STARTED_AT: 2026-02-23T13:12:48.713Z
-COMPLETED_AT: 2026-02-23T13:12:51.272Z
+STARTED_AT: 2026-02-23T13:24:38.718Z
+COMPLETED_AT: 2026-02-23T13:24:41.664Z
 ============================================================
 P1 GOVERNANCE INTEGRITY ORCHESTRATOR
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
 
 [GOV] Running: R_OP01_SCRIPTS_CHECK
 ============================================================
 OP01 SCRIPTS CHECK — Phantom Command Prevention
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
 
 ============================================================
@@ -248,37 +248,37 @@ FINAL: PASS
 [GOV] Running: P1_MERKLE_ROOT
 ============================================================
 P1 MERKLE ROOT — Evidence Integrity Anchor
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
-[MERKLE] Files in scope: 115
-[MERKLE] Files hashed: 115
+[MERKLE] Files in scope: 116
+[MERKLE] Files hashed: 116
 [MERKLE] Files missing: 0
 [MERKLE] Tree depth: 8
-[MERKLE] Root: 172cb6ccf5259d36ac9c7320d0bdb7d2992e8b3311dded43fe2a76a369178bce
-[MERKLE] SCOPE_MANIFEST_SHA: a202ce963b6330f554b6f387cb0151e60d81af24a699ae9f2c2499a978a4040f
+[MERKLE] Root: dd014fc0ea09e935152b323f07e2f863e8a082624223c6239666edd1eb1cb716
+[MERKLE] SCOPE_MANIFEST_SHA: e7b38c740dd76f72a139cf6cf26411f49250ab1a68da4aea2710df0f475900c6
 
 ============================================================
 P1 MERKLE ROOT RESULT
 ============================================================
-  Root: 172cb6ccf5259d36ac9c7320d0bdb7d2992e8b3311dded43fe2a76a369178bce
-  Files: 115/115 (0 missing)
+  Root: dd014fc0ea09e935152b323f07e2f863e8a082624223c6239666edd1eb1cb716
+  Files: 116/116 (0 missing)
   Depth: 8 levels
   Status: PASS
 ============================================================
 
-[PASS] merkle_root — Merkle root anchored at 172cb6ccf5259d36…
+[PASS] merkle_root — Merkle root anchored at dd014fc0ea09e935…
 
 [GOV] Running: P1_GOV01_ENFORCEMENT
 ============================================================
 GOV01 EVIDENCE INTEGRITY GATE
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
-[GOV01] Anchored SCOPE_MANIFEST_SHA: a202ce963b6330f5…
-[GOV01] Anchored MERKLE_ROOT: 172cb6ccf5259d36…
-[GOV01] Anchored RECEIPTS final: dc0b0e2af37ee6a2…
-[GOV01] Computed SCOPE_MANIFEST_SHA: a202ce963b6330f5…
-[GOV01] Computed MERKLE_ROOT: 172cb6ccf5259d36…
-[GOV01] Computed RECEIPTS final: dc0b0e2af37ee6a2…
+[GOV01] Anchored SCOPE_MANIFEST_SHA: e7b38c740dd76f72…
+[GOV01] Anchored MERKLE_ROOT: dd014fc0ea09e935…
+[GOV01] Anchored RECEIPTS final: 60912cb82100ed1b…
+[GOV01] Computed SCOPE_MANIFEST_SHA: e7b38c740dd76f72…
+[GOV01] Computed MERKLE_ROOT: dd014fc0ea09e935…
+[GOV01] Computed RECEIPTS final: 60912cb82100ed1b…
 
 ============================================================
 GOV01 INTEGRITY RESULTS
@@ -295,7 +295,7 @@ FINAL: PASS
 [GOV] Running: R_REASON_CODE_AUDIT
 ============================================================
 REASON CODE AUDIT — SSOT Collision Check
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
 
 ============================================================
@@ -320,8 +320,8 @@ P1 GOVERNANCE INTEGRITY RESULT
 ## STEP 6
 COMMAND: npm run -s edge:profit:01:super
 EC: 0
-STARTED_AT: 2026-02-23T13:12:51.272Z
-COMPLETED_AT: 2026-02-23T13:13:00.670Z
+STARTED_AT: 2026-02-23T13:24:41.668Z
+COMPLETED_AT: 2026-02-23T13:24:52.483Z
 [PASS] env_node_truth_authority — NONE
 [PASS] paper_telemetry_real_stub_gen — rows=360
 [PASS] paper_telemetry_import_csv — NONE
@@ -334,7 +334,7 @@ COMPLETED_AT: 2026-02-23T13:13:00.670Z
 
 ============================================================
 EDGE_PROFIT_00 X2 — Deterministic Anti-Flake [real]
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
 
 [X2] Run 1/2
@@ -357,7 +357,7 @@ RUN_ID: 312268916f58
 
 ============================================================
 EDGE_PROFIT_00 X2 — Deterministic Anti-Flake [real]
-RUN_ID: 312268916f58
+RUN_ID: b68b470a2f03
 ============================================================
 
 [X2] Run 1/2
@@ -378,31 +378,47 @@ RUN_ID: 312268916f58
 
 [PASS] edge_profit_00_x2 — NONE
 FINAL_VALIDATED=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz
-SHA256=531e0a8eeb1d20eecb5bdaef6c693fd786a97fa7c284280a4cc04549084d2622
+SHA256=235b7adb8106554b3727dcccb7382cdd6b489149fde5d97630f180a5190ca4b0
 SHA_FILE=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256
 [PASS] edge_profit_00_release_artifacts_gate — NONE
 [PASS] edge_profit_00_doctor — NONE
 ## STEP 7
+COMMAND: npm run -s edge:profit:01:wf-lite
+EC: 0
+STARTED_AT: 2026-02-23T13:24:52.484Z
+COMPLETED_AT: 2026-02-23T13:24:54.201Z
+```
+[PASS] edge_walk_forward_lite — NONE
+```
+## STEP 8
 COMMAND: npm run -s export:final-validated
 EC: 0
-STARTED_AT: 2026-02-23T13:13:00.670Z
-COMPLETED_AT: 2026-02-23T13:13:02.493Z
+STARTED_AT: 2026-02-23T13:24:54.202Z
+COMPLETED_AT: 2026-02-23T13:24:56.088Z
 FINAL_VALIDATED=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz
-SHA256=531e0a8eeb1d20eecb5bdaef6c693fd786a97fa7c284280a4cc04549084d2622
+SHA256=235b7adb8106554b3727dcccb7382cdd6b489149fde5d97630f180a5190ca4b0
 SHA_FILE=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256
-## STEP 8
+## STEP 9
 COMMAND: npm run -s verify:edge:profit:00:release
 EC: 0
-STARTED_AT: 2026-02-23T13:13:02.493Z
-COMPLETED_AT: 2026-02-23T13:13:04.174Z
+STARTED_AT: 2026-02-23T13:24:56.089Z
+COMPLETED_AT: 2026-02-23T13:24:58.001Z
 [PASS] edge_profit_00_release_artifacts_gate — NONE
-## STEP 9
+## STEP 10
 COMMAND: npm run -s edge:profit:00:doctor
 EC: 0
-STARTED_AT: 2026-02-23T13:13:04.174Z
-COMPLETED_AT: 2026-02-23T13:13:05.873Z
+STARTED_AT: 2026-02-23T13:24:58.001Z
+COMPLETED_AT: 2026-02-23T13:24:59.854Z
 ```
 [PASS] edge_profit_00_doctor — NONE
+```
+## STEP 11
+COMMAND: npm run -s verify:report:contradiction
+EC: 0
+STARTED_AT: 2026-02-23T13:24:59.855Z
+COMPLETED_AT: 2026-02-23T13:25:01.729Z
+```
+[PASS] report_contradiction_guard — NONE
 ```
 
 ## source ~/.nvm/nvm.sh && nvm use 22.22.0 >/dev/null && npm run -s export:final-validated
