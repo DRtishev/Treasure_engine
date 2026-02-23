@@ -1,10 +1,10 @@
 {
-  "commands_runtime_node_version": "MISSING",
+  "commands_runtime_node_version": "v22.22.0",
   "env_runtime_node_version": "v22.22.0",
-  "message": "Node version contradiction detected env=v22.22.0 commands=MISSING.",
-  "next_action": "npm run -s verify:env:authority",
-  "reason_code": "REP01",
-  "run_id": "b455ad077aff",
+  "message": "No contradiction between env authority and command log node versions.",
+  "next_action": "npm run -s gov:integrity",
+  "reason_code": "NONE",
+  "run_id": "312268916f58",
   "schema_version": "1.0.0",
-  "status": "FAIL"
+  "status": "PASS"
 }

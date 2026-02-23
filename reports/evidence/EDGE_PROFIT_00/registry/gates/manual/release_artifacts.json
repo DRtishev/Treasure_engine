@@ -4,19 +4,19 @@
       "contract_key": "FINAL_VALIDATED_PRIMARY_PATH",
       "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz",
       "present": true,
-      "sha256": "7f17664a5147c09ef85c4a8d3c781a7232bedd661d54df318017974d7cd43475"
+      "sha256": "531e0a8eeb1d20eecb5bdaef6c693fd786a97fa7c284280a4cc04549084d2622"
     },
     {
       "contract_key": "EVIDENCE_CHAIN_PRIMARY_PATH",
       "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz",
       "present": true,
-      "sha256": "7f17664a5147c09ef85c4a8d3c781a7232bedd661d54df318017974d7cd43475"
+      "sha256": "531e0a8eeb1d20eecb5bdaef6c693fd786a97fa7c284280a4cc04549084d2622"
     },
     {
       "contract_key": "FINAL_VALIDATED_SHA256_SIDECAR_PATH",
       "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256",
       "present": true,
-      "sha256": "9366c6aa79f4087b12238cbbb6ef7dc6dfa43688f85183510b1ce9b210376ea0"
+      "sha256": "241185f61c9e2da23d60e811a0133db806e4d583d5ec4d2a7c3df89a791e75bb"
     }
   ],
   "contract_error": "NONE",
@@ -27,7 +27,7 @@
   "missing": [],
   "next_action": "npm run -s export:final-validated",
   "reason_code": "NONE",
-  "run_id": "b455ad077aff",
+  "run_id": "312268916f58",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

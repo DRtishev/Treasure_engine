@@ -646,7 +646,8 @@
     "edge:profit:01:wf-lite": "node scripts/edge/edge_lab/edge_walk_forward_lite.mjs",
     "edge:profit:01:super": "node scripts/edge/edge_lab/edge_profit_01_super.mjs",
     "verify:env:authority": "node scripts/verify/env_node_truth_authority.mjs",
-    "verify:report:contradiction": "node scripts/verify/report_contradiction_guard.mjs"
+    "verify:report:contradiction": "node scripts/verify/report_contradiction_guard.mjs",
+    "executor:run:chain": "node scripts/executor/executor_run_chain.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

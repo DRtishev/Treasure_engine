@@ -17,9 +17,9 @@ NEXT_ACTION: npm run -s edge:profit:00:x2
 - contract_path: GOV/EXPORT_CONTRACT.md
 - contract_state: PASS
 - evidence_epoch_resolved: EPOCH-EDGE-RC-STRICT-01
-- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz: PRESENT | sha256=7f17664a5147c09ef85c4a8d3c781a7232bedd661d54df318017974d7cd43475
-- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz: PRESENT | sha256=7f17664a5147c09ef85c4a8d3c781a7232bedd661d54df318017974d7cd43475
-- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256: PRESENT | sha256=9366c6aa79f4087b12238cbbb6ef7dc6dfa43688f85183510b1ce9b210376ea0
+- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz: PRESENT | sha256=531e0a8eeb1d20eecb5bdaef6c693fd786a97fa7c284280a4cc04549084d2622
+- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz: PRESENT | sha256=531e0a8eeb1d20eecb5bdaef6c693fd786a97fa7c284280a4cc04549084d2622
+- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256: PRESENT | sha256=241185f61c9e2da23d60e811a0133db806e4d583d5ec4d2a7c3df89a791e75bb
 
 ## Available Profiles
 

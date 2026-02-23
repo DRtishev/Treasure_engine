@@ -25,6 +25,9 @@ let allowedFamily = '';
 let pinnedMinor = '';
 let contractLoaded = false;
 let nodeTruthSha = 'MISSING';
+const runtimeExecPath = process.execPath || 'UNKNOWN';
+const runtimePlatform = process.platform || 'UNKNOWN';
+const runtimeArch = process.arch || 'UNKNOWN';
 
 if (!fs.existsSync(NODE_TRUTH)) {
   status = 'NEEDS_DATA';
@@ -47,7 +50,7 @@ if (!fs.existsSync(NODE_TRUTH)) {
   }
 }
 
-writeMd(path.join(EXECUTOR_DIR, 'ENV_AUTHORITY.md'), `# ENV_AUTHORITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- node_truth_path: NODE_TRUTH.md\n- contract_loaded: ${contractLoaded}\n- allowed_family: ${allowedFamily || 'UNKNOWN'}\n- expected_pinned_minor: ${pinnedMinor || 'UNKNOWN'}\n- runtime_node_version: ${process.version}\n- node_truth_sha256: ${nodeTruthSha}\n- verdict: ${status}\n`);
+writeMd(path.join(EXECUTOR_DIR, 'ENV_AUTHORITY.md'), `# ENV_AUTHORITY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- node_truth_path: NODE_TRUTH.md\n- contract_loaded: ${contractLoaded}\n- allowed_family: ${allowedFamily || 'UNKNOWN'}\n- expected_pinned_minor: ${pinnedMinor || 'UNKNOWN'}\n- runtime_node_version: ${process.version}\n- runtime_exec_path: ${runtimeExecPath}\n- platform: ${runtimePlatform}\n- arch: ${runtimeArch}\n- node_truth_sha256: ${nodeTruthSha}\n- verdict: ${status}\n`);
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'env_authority.json'), {
   schema_version: '1.0.0',
@@ -61,6 +64,9 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'env_authority.json'), {
   allowed_family: allowedFamily || 'UNKNOWN',
   expected_pinned_minor: pinnedMinor || 'UNKNOWN',
   runtime_node_version: process.version,
+  runtime_exec_path: runtimeExecPath,
+  platform: runtimePlatform,
+  arch: runtimeArch,
   node_truth_sha256: nodeTruthSha,
   verdict: status,
 });
