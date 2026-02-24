@@ -31,13 +31,15 @@ function sha256(s) {
 
 function normalizeForMega(content) {
   const base = stableEvidenceNormalize(content, { assertD005: false });
-  return base
+  const noCodeBlocks = base.replace(/```[\s\S]*?```/g, "```<BLOCK>```");
+  return noCodeBlocks
     .split(/\r?\n/)
     .filter((line) => !/^(STARTED_AT|COMPLETED_AT):\s*/.test(line.trim()))
     .filter((line) => !/^RUN_ID:\s*/.test(line.trim()))
     .filter((line) => !/^SHA256=/.test(line.trim()))
     .filter((line) => !/\b(STARTED_AT|COMPLETED_AT|RUN_ID):\s*/.test(line))
     .filter((line) => !/sha256=/.test(line))
+    .filter((line) => !/\bRUN_ID=/.test(line))
     .join('\n');
 }
 
