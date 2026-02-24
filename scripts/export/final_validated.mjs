@@ -42,7 +42,9 @@ const listPath = path.join(artifactDir, 'FINAL_VALIDATED.filelist.txt');
 fs.writeFileSync(listPath, `${sorted.join('\n')}\n`);
 
 const archivePath = path.join(artifactDir, 'FINAL_VALIDATED.tar.gz');
+const tarPath = path.join(artifactDir, 'FINAL_VALIDATED.tar');
 if (fs.existsSync(archivePath)) fs.unlinkSync(archivePath);
+if (fs.existsSync(tarPath)) fs.unlinkSync(tarPath);
 
 const tar = spawnSync('tar', [
   '--sort=name',
@@ -50,10 +52,13 @@ const tar = spawnSync('tar', [
   '--owner=0',
   '--group=0',
   '--numeric-owner',
-  '-czf', archivePath,
+  '-cf', tarPath,
   '-T', listPath
 ], { cwd: root, encoding: 'utf8' });
 if (tar.status !== 0) throw new Error(`tar failed: ${tar.stderr || tar.stdout}`);
+
+const gz = spawnSync('gzip', ['-n', '-f', tarPath], { cwd: root, encoding: 'utf8' });
+if (gz.status !== 0) throw new Error(`gzip failed: ${gz.stderr || gz.stdout}`);
 
 const sha = spawnSync('sha256sum', [archivePath], { cwd: root, encoding: 'utf8' });
 if (sha.status !== 0) throw new Error(`sha256sum failed: ${sha.stderr || sha.stdout}`);

@@ -1,4 +1,5 @@
 import { sha256Buffer, parseChecksumText } from '../real_public_checksum.mjs';
+import { inflateRawSync } from 'node:zlib';
 
 const BASE = 'https://data.binance.vision';
 const TF_MS = new Map([['1m',60000],['5m',300000],['15m',900000],['30m',1800000],['1h',3600000],['4h',14400000],['1d',86400000]]);
@@ -17,14 +18,48 @@ function ymd(tsMs){
   return `${y}-${m}-${day}`;
 }
 
+function extractCsvFromZip(zipBuf) {
+  const sig = 0x04034b50;
+  if (zipBuf.length < 30 || zipBuf.readUInt32LE(0) !== sig) {
+    const e = new Error('ZIP local header missing'); e.code = 'ACQ_PD03'; throw e;
+  }
+  const method = zipBuf.readUInt16LE(8);
+  const compressedSize = zipBuf.readUInt32LE(18);
+  const fileNameLen = zipBuf.readUInt16LE(26);
+  const extraLen = zipBuf.readUInt16LE(28);
+  const dataStart = 30 + fileNameLen + extraLen;
+  const dataEnd = dataStart + compressedSize;
+  if (dataStart < 30 || dataEnd > zipBuf.length) {
+    const e = new Error('ZIP payload bounds invalid'); e.code = 'ACQ_PD03'; throw e;
+  }
+  const payload = zipBuf.subarray(dataStart, dataEnd);
+  if (method === 8) return inflateRawSync(payload).toString('utf8');
+  if (method === 0) return payload.toString('utf8');
+  const e = new Error(`ZIP compression method unsupported ${method}`); e.code = 'ACQ_PD03'; throw e;
+}
+
 function csvRowsToCandles(symbol, tf, csvText){
   const rows = String(csvText||'').split(/\r?\n/).filter(Boolean);
-  return rows.map((line)=>{
+  let seenMs = false;
+  let seenUs = false;
+  const candles = rows.map((line)=>{
     const c = line.split(',');
     const tRaw = Number(c[0]);
-    const t = tRaw > 1e13 ? Math.floor(tRaw/1000) : tRaw;
+    const isUs = tRaw >= 1e14;
+    if (isUs) seenUs = true;
+    else seenMs = true;
+    const t = isUs ? Math.floor(tRaw/1000) : tRaw;
     return {symbol, tf, ts_open_ms:t, o:Number(c[1]), h:Number(c[2]), l:Number(c[3]), c:Number(c[4]), v:Number(c[5])};
   });
+  if (seenMs && seenUs) { const e = new Error('Mixed timestamp units in single dataset'); e.code='TSU01'; throw e; }
+  return {
+    candles,
+    timeUnitDetected: seenUs ? 'us' : 'ms',
+    timeUnitNormalizedTo: 'ms',
+    timeUnitMixed: false,
+    rowCount: candles.length,
+    extractedCsvSha256: sha256Buffer(Buffer.from(String(csvText || ''), 'utf8')),
+  };
 }
 
 export const provider = {
@@ -52,10 +87,9 @@ export const provider = {
     if (!parsed.ok) { const e = new Error(`Checksum parse failed ${file}`); e.code='ACQ_PD01'; throw e; }
     const got = sha256Buffer(zipBuf);
     if (got !== parsed.sha256) { const e = new Error(`Checksum mismatch ${file}`); e.code='ACQ_PD02'; throw e; }
-    const csvPath = `${BASE}${zipPath}`.replace(/\.zip$/, '.csv');
-    const csvResp = await fetch(csvPath);
-    if (!csvResp.ok) { const e = new Error(`CSV fallback missing ${file}`); e.code='ACQ_PD03'; throw e; }
-    const candles = csvRowsToCandles(symbol, tf, await csvResp.text());
+    const extractedCsvText = extractCsvFromZip(zipBuf);
+    const parsedCsv = csvRowsToCandles(symbol, tf, extractedCsvText);
+    const candles = parsedCsv.candles;
     if (!candles.length) { const e = new Error('No candles in public data'); e.code='DATA01'; throw e; }
     const bars = Math.max(1, Number(limit || 260));
     const rows = candles.slice(-bars);
@@ -70,6 +104,11 @@ export const provider = {
       canary: [],
       public_data_checksum_sha256: parsed.sha256,
       public_data_file: file,
+      zip_sha256: got,
+      extracted_csv_sha256: parsedCsv.extractedCsvSha256,
+      time_unit_detected: parsedCsv.timeUnitDetected,
+      time_unit_normalized_to: parsedCsv.timeUnitNormalizedTo,
+      time_unit_mixed: parsedCsv.timeUnitMixed,
     };
   },
 };

@@ -664,7 +664,7 @@
     "epoch:mega:proof": "bash -lc \"source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0 >/dev/null && npm run -s executor:clean:baseline && npm run -s executor:run:chain && npm run -s verify:executor:commands:guard && npm run -s verify:edge:profit:00:scope && npm run -s verify:export:contract && npm run -s gov:final:index\"",
     "gov:final:fingerprint": "node scripts/gov/final_validated_fingerprint.mjs",
     "verify:export:receipt": "node scripts/verify/export_contract_receipt_format_guard.mjs",
-    "epoch:mega:proof:x2": "bash -lc \"source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0 >/dev/null && node scripts/executor/executor_mega_proof_x2.mjs\"",
+    "epoch:mega:proof:x2": "bash -lc \"source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0 >/dev/null && node scripts/executor/executor_mega_proof_x2.mjs\" && npm run -s verify:regression:public-smoke-offline-replay && npm run -s verify:regression:publicdata-no-csv-fallback && npm run -s verify:regression:mega-proof-x2-stability-contract && npm run -s verify:regression:public-provider-hostpool-determinism && npm run -s verify:regression:public-epoch-offline-replay-no-network",
     "verify:system:lockdown": "node scripts/verify/system_lockdown_cert_gate.mjs",
     "edge:profit:00:real:drop:unpack": "node scripts/edge/edge_lab/paper_telemetry_real_drop_unpack.mjs",
     "epoch:profit:real:00": "node scripts/executor/executor_profit_real_entry.mjs",
@@ -684,7 +684,22 @@
     "edge:profit:00:acquire:public:smoke": "node scripts/edge/edge_lab/edge_profit_00_acquire_public_smoke.mjs",
     "verify:netv01:probe": "node scripts/verify/netv01_probe.mjs",
     "verify:regression:public-no-smoke-bypass": "node scripts/verify/regression_public_no_smoke_bypass.mjs",
-    "verify:regression:verify-netkill-enforced": "node scripts/verify/regression_verify_netkill_enforced.mjs"
+    "verify:regression:verify-netkill-enforced": "node scripts/verify/regression_verify_netkill_enforced.mjs",
+    "verify:regression:public-zip-authority": "node scripts/verify/regression_public_zip_authority.mjs",
+    "verify:regression:tsu01-mixed-units": "node scripts/verify/regression_tsu01_mixed_units.mjs",
+    "verify:regression:net-diag-rootcause-none-on-pass": "node scripts/verify/regression_net_diag_rootcause_none_on_pass.mjs",
+    "epoch:edge:profit:public:00:ladder:node22": "bash scripts/executor/executor_with_node22.sh npm run -s epoch:edge:profit:public:00:ladder",
+    "epoch:edge:profit:public:00:ladder": "node scripts/executor/executor_epoch_edge_profit_public_00_ladder.mjs",
+    "verify:regression:public-smoke-offline-replay": "node scripts/verify/regression_public_smoke_offline_replay.mjs",
+    "verify:regression:publicdata-no-csv-fallback": "node scripts/verify/regression_publicdata_no_csv_fallback.mjs",
+    "verify:regression:public-provider-hostpool-determinism": "node scripts/verify/regression_public_provider_hostpool_determinism.mjs",
+    "verify:regression:public-epoch-offline-replay-no-network": "node scripts/verify/regression_public_epoch_offline_replay_no_network.mjs",
+    "verify:regression:mega-proof-x2-stability-contract": "node scripts/verify/regression_mega_proof_x2_stability_contract.mjs",
+    "verify:regression:no-unbounded-spawn": "node scripts/verify/regression_no_unbounded_spawnsync.mjs",
+    "verify:regression:node22-wrapper-timeout": "node scripts/verify/regression_node22_wrapper_timeout.mjs",
+    "verify:regression:public-diag-bounded": "node scripts/verify/regression_public_diag_bounded.mjs",
+    "verify:regression:export-final-validated-x2": "node scripts/verify/regression_export_final_validated_x2.mjs",
+    "verify:profit:foundation": "node scripts/verify/profit_foundation_freeze_gate.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

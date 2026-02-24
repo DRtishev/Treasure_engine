@@ -21,14 +21,20 @@ const acquirePos = stepsRaw.indexOf(acquireNeedle);
 
 let status = 'PASS';
 let reasonCode = 'NONE';
+const smokeScript = fs.readFileSync(path.join(ROOT, 'scripts', 'edge', 'edge_lab', 'edge_profit_00_acquire_public_smoke.mjs'), 'utf8');
+const hasOfflineReplay = smokeScript.includes('smoke_mode: OFFLINE_REPLAY');
 let message = 'Smoke gate is ordered before guarded acquire in public epoch.';
 if (smokePos < 0 || acquirePos < 0 || smokePos > acquirePos) {
   status = 'FAIL';
   reasonCode = 'SMK_ORDER01';
   message = 'Ordering violation: acquire can run before smoke gate.';
+} else if (!hasOfflineReplay) {
+  status = 'FAIL';
+  reasonCode = 'SMK01';
+  message = 'Smoke script missing OFFLINE_REPLAY lock-first mode.';
 }
 
-writeMd(path.join(REG_DIR, 'REGRESSION_SMOKE_IS_FIRST.md'), `# REGRESSION_SMOKE_IS_FIRST.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- script: scripts/executor/executor_epoch_edge_profit_public_00.mjs\n- smoke_pos: ${smokePos}\n- acquire_pos: ${acquirePos}\n`);
+writeMd(path.join(REG_DIR, 'REGRESSION_SMOKE_IS_FIRST.md'), `# REGRESSION_SMOKE_IS_FIRST.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- script: scripts/executor/executor_epoch_edge_profit_public_00.mjs\n- smoke_pos: ${smokePos}\n- acquire_pos: ${acquirePos}\n- has_offline_replay: ${hasOfflineReplay}\n`);
 
 writeJsonDeterministic(path.join(MANUAL_DIR, 'regression_smoke_is_first.json'), {
   schema_version: '1.0.0',
@@ -40,6 +46,7 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'regression_smoke_is_first.json'), 
   script: 'scripts/executor/executor_epoch_edge_profit_public_00.mjs',
   smoke_pos: smokePos,
   acquire_pos: acquirePos,
+  has_offline_replay: hasOfflineReplay,
 });
 
 console.log(`[${status}] regression_smoke_is_first — ${reasonCode}`);

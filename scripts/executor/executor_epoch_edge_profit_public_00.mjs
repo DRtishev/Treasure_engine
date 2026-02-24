@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
+import { runBounded } from './spawn_bounded.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
@@ -16,17 +16,19 @@ const SMOKE_JSON = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'reg
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
 function run(cmd) {
-  const r = spawnSync('bash', ['-lc', cmd], { cwd: ROOT, encoding: 'utf8', env: process.env, maxBuffer: 64 * 1024 * 1024 });
-  return { cmd, ec: Number.isInteger(r.status) ? r.status : 1 };
+  const r = runBounded(cmd, { cwd: ROOT, env: process.env, maxBuffer: 64 * 1024 * 1024 });
+  return { cmd, ec: r.ec, timed_out: r.timedOut, timeout_ms: r.timeout_ms };
+}
+
+function readSmokeJson() {
+  if (!fs.existsSync(SMOKE_JSON)) return null;
+  try { return JSON.parse(fs.readFileSync(SMOKE_JSON, 'utf8')); } catch { return null; }
 }
 
 function readSmokeReason() {
-  if (!fs.existsSync(SMOKE_JSON)) return 'SMK_ORDER01';
-  try {
-    return String(JSON.parse(fs.readFileSync(SMOKE_JSON, 'utf8')).reason_code || 'SMK01');
-  } catch {
-    return 'SMK01';
-  }
+  const j = readSmokeJson();
+  if (!j) return 'SMK_ORDER01';
+  return String(j.reason_code || 'SMK01');
 }
 
 const acquireMode = fs.existsSync(LOCK_PATH) ? 'LOCK_FIRST' : 'NETWORK';
@@ -35,6 +37,7 @@ const acquireCmd = acquireMode === 'NETWORK'
   : 'ACQUIRE_IF_MISSING=1 npm run -s edge:profit:00:acquire:public';
 
 let smokePassed = false;
+let smokeMode = 'UNKNOWN';
 function guardedAcquireCommand() {
   if (!smokePassed) throw new Error('SMK_ORDER01');
   return acquireCmd;
@@ -61,15 +64,24 @@ let reasonCode = 'NONE';
 let message = 'Public epoch completed.';
 for (const step of steps) {
   const cmd = step === 'GUARDED_ACQUIRE' ? guardedAcquireCommand() : step;
+  if (cmd.includes('edge:profit:00:acquire:public:diag') && smokeMode === 'OFFLINE_REPLAY') {
+    records.push({ cmd, ec: 0, skipped: 'OFFLINE_REPLAY' });
+    continue;
+  }
   const rec = run(cmd);
   records.push(rec);
 
   if (cmd.includes('edge:profit:00:acquire:public:smoke') && rec.ec === 0) {
     smokePassed = true;
+    smokeMode = String(readSmokeJson()?.smoke_mode || 'NETWORK');
   }
 
   if (rec.ec !== 0) {
-    if (cmd.includes('edge:profit:00:acquire:public:smoke')) {
+    if (rec.timed_out) {
+      status = 'BLOCKED';
+      reasonCode = 'TO01';
+      message = `Command timed out: ${cmd}`;
+    } else if (cmd.includes('edge:profit:00:acquire:public:smoke')) {
       const smokeReason = readSmokeReason();
       if (smokeReason === 'ACQ02') {
         status = 'NEEDS_DATA';
@@ -101,7 +113,8 @@ for (const step of steps) {
   }
 }
 
-writeMd(OUT_MD, `# EPOCH_EDGE_PROFIT_PUBLIC_00.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- ACQUIRE_MODE: ${acquireMode}\n- smoke_passed: ${smokePassed}\n\n## COMMANDS\n\n${records.map((r) => `- ${r.cmd} | ec=${r.ec}`).join('\n') || '- NONE'}\n`);
+writeMd(OUT_MD, `# EPOCH_EDGE_PROFIT_PUBLIC_00.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- ACQUIRE_MODE: ${acquireMode}\n- smoke_passed: ${smokePassed}
+- smoke_mode: ${smokeMode}\n\n## COMMANDS\n\n${records.map((r) => `- ${r.cmd} | ec=${r.ec}`).join('\n') || '- NONE'}\n`);
 
 writeJsonDeterministic(OUT_JSON, {
   schema_version: '1.0.0',
@@ -112,6 +125,7 @@ writeJsonDeterministic(OUT_JSON, {
   next_action: NEXT_ACTION,
   acquire_mode: acquireMode,
   smoke_passed: smokePassed,
+  smoke_mode: smokeMode,
   commands: records,
 });
 
