@@ -5,21 +5,40 @@ import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EDGE_DIR = path.join(ROOT, 'scripts', 'edge', 'edge_lab');
-const REAL_PUBLIC_DIR = path.join(EDGE_DIR, 'real_public');
 const REG_DIR = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'registry');
 const MANUAL_DIR = path.join(REG_DIR, 'gates', 'manual');
-const NEXT_ACTION = 'npm run -s epoch:edge:profit:public:00';
+const NEXT_ACTION = 'npm run -s verify:regression:no-network-in-verify-profit';
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
-const allowlist = new Set(['edge_profit_00_acquire_real_public.mjs']);
 const findings = [];
-const patterns = [/\bfetch\s*\(/, /\bWebSocket\s*\(/, /from\s+['\"]ws['\"]/, /new\s+WebSocket\s*\(/];
-function scanDir(base, allowAll = false) {
+const patterns = [
+  /\bfetch\s*\(/i,
+  /\bWebSocket\s*\(/i,
+  /from\s+['"]ws['"]/i,
+  /from\s+['"]node:http['"]/i,
+  /from\s+['"]node:https['"]/i,
+  /from\s+['"]node:dns['"]/i,
+  /from\s+['"]node:net['"]/i,
+  /from\s+['"]node:tls['"]/i,
+  /from\s+['"]node:dgram['"]/i,
+  /from\s+['"]undici['"]/i,
+  /from\s+['"]axios['"]/i,
+  /from\s+['"]node-fetch['"]/i,
+  /\bhttp\.request\s*\(/i,
+  /\bhttps\.request\s*\(/i,
+  /\brequest\s*\(/i,
+];
+
+function isAllowlisted(relPath) {
+  return relPath === 'edge_profit_00_acquire_real_public.mjs' || relPath === 'edge_profit_00_acquire_public_diag.mjs' || relPath.startsWith('real_public/');
+}
+
+function scanDir(base) {
   if (!fs.existsSync(base)) return;
   for (const name of fs.readdirSync(base, { withFileTypes: true })) {
     if (name.isDirectory()) {
-      scanDir(path.join(base, name.name), allowAll || name.name === 'real_public');
+      scanDir(path.join(base, name.name));
       continue;
     }
     if (!name.name.endsWith('.mjs')) continue;
@@ -28,8 +47,7 @@ function scanDir(base, allowAll = false) {
     const text = fs.readFileSync(abs, 'utf8');
     for (const re of patterns) {
       if (!re.test(text)) continue;
-      const allowed = allowAll || allowlist.has(name.name);
-      if (!allowed) findings.push(`${rel}:${re.source}`);
+      if (!isAllowlisted(rel)) findings.push(`${rel}:${re.source}`);
     }
   }
 }
@@ -51,7 +69,7 @@ writeJsonDeterministic(path.join(MANUAL_DIR, 'regression_no_net_verify.json'), {
   run_id: RUN_ID,
   message,
   next_action: NEXT_ACTION,
-  allowlist: [...allowlist],
+  allowlist: ['scripts/edge/edge_lab/edge_profit_00_acquire_real_public.mjs', 'scripts/edge/edge_lab/edge_profit_00_acquire_public_diag.mjs', 'scripts/edge/edge_lab/real_public/**'],
   findings,
 });
 

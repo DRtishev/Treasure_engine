@@ -673,7 +673,18 @@
     "epoch:edge:profit:public:00": "node scripts/executor/executor_epoch_edge_profit_public_00.mjs",
     "epoch:edge:profit:public:00:x2": "node scripts/executor/executor_epoch_edge_profit_public_00_x2.mjs",
     "verify:regression:no-network-in-verify-profit": "node scripts/verify/regression_no_network_in_verify_profit.mjs",
-    "verify:real-public:net": "node scripts/verify/real_public_network_sanity_gate.mjs"
+    "verify:real-public:net": "node scripts/verify/real_public_network_sanity_gate.mjs",
+    "epoch:edge:profit:public:00:x2:node22": "bash scripts/executor/executor_with_node22.sh npm run -s epoch:edge:profit:public:00:x2",
+    "edge:profit:00:acquire:public:diag": "node scripts/edge/edge_lab/edge_profit_00_acquire_public_diag.mjs",
+    "env:node22:bootstrap:gate": "node scripts/verify/env_node22_bootstrap_gate.mjs",
+    "epoch:edge:profit:public:00:node22": "bash scripts/executor/executor_with_node22.sh npm run -s epoch:edge:profit:public:00",
+    "verify:regression:public-acq02-not-nd01": "node scripts/verify/regression_public_acq02_is_not_nd01.mjs",
+    "verify:regression:public-publicdata-lock-smoke": "node scripts/verify/regression_public_publicdata_lock_smoke.mjs",
+    "verify:regression:smoke-is-first": "node scripts/verify/regression_smoke_is_first.mjs",
+    "edge:profit:00:acquire:public:smoke": "node scripts/edge/edge_lab/edge_profit_00_acquire_public_smoke.mjs",
+    "verify:netv01:probe": "node scripts/verify/netv01_probe.mjs",
+    "verify:regression:public-no-smoke-bypass": "node scripts/verify/regression_public_no_smoke_bypass.mjs",
+    "verify:regression:verify-netkill-enforced": "node scripts/verify/regression_verify_netkill_enforced.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

@@ -46,9 +46,12 @@ function readCommandsLaneSummary() {
 
 function profileNextAction(profile, closeout) {
   if (profile === 'public') {
-    if (!closeout || closeout.status === 'NEEDS_DATA') return 'npm run -s epoch:edge:profit:public:00';
-    if (closeout.status === 'PASS') return 'npm run -s epoch:edge:profit:public:00:x2';
-    return 'npm run -s epoch:edge:profit:public:00';
+    const lockPath = path.join(ROOT, 'artifacts', 'incoming', 'real_public_market.lock.md');
+    if (!fs.existsSync(lockPath)) return 'npm run -s epoch:edge:profit:public:00:x2:node22';
+    if (!String(process.env.ENABLE_NETWORK || '0').match(/^(1|true)$/i)) return 'npm run -s epoch:edge:profit:public:00:x2:node22';
+    if (!closeout || closeout.status === 'NEEDS_DATA') return 'npm run -s epoch:edge:profit:public:00:x2:node22';
+    if (closeout.status === 'PASS') return 'npm run -s epoch:edge:profit:public:00:x2:node22';
+    return 'npm run -s epoch:edge:profit:public:00:x2:node22';
   }
   if (!closeout) return 'npm run -s edge:profit:00';
   if (profile === 'conflict') return 'npm run -s edge:profit:00:expect-blocked:conflict';
@@ -85,6 +88,12 @@ for (const profile of profiles) {
 const activeCloseoutPath = activeProfile ? path.join(BASE_DIR, activeProfile, 'gates', 'manual', 'edge_profit_00_closeout.json') : path.join(BASE_DIR, 'gates', 'manual', 'edge_profit_00_closeout.json');
 const activeCloseout = readJson(activeCloseoutPath);
 const globalNextAction = profileNextAction(activeProfile, activeCloseout);
+const publicLockJson = readJson(path.join(ROOT, 'artifacts', 'incoming', 'real_public_market.lock.json'));
+const publicCloseout = readJson(path.join(BASE_DIR, 'public', 'gates', 'manual', 'edge_profit_00_closeout.json'));
+const netDiag = readJson(path.join(BASE_DIR, 'registry', 'gates', 'manual', 'net_diag.json'));
+const publicRootCause = netDiag?.root_cause_code || 'NONE';
+const publicRoute = publicLockJson?.route || 'UNKNOWN';
+const publicNetFamily = publicLockJson?.net_family ?? netDiag?.net_family ?? 'UNKNOWN';
 
 const contract = readContract();
 const evidenceEpoch = process.env.EVIDENCE_EPOCH || contract?.EVIDENCE_EPOCH_DEFAULT || 'EPOCH-EDGE-RC-STRICT-01';
@@ -100,7 +109,7 @@ const releaseNextAction = releaseState === 'PASS' ? globalNextAction : 'npm run 
 
 const laneSummary = readCommandsLaneSummary();
 
-const md = `# PROFILES_INDEX.md — EDGE_PROFIT_00\n\nSTATUS: PASS\nREASON_CODE: NONE\nNEXT_ACTION: ${releaseNextAction}\n\n## Executor Lane Summary\n\n- lane_a_status: ${laneSummary.laneA}\n- lane_b_status: ${laneSummary.laneB}\n- lane_b_mode: ${laneSummary.laneBMode}\n- commands_next_action: ${laneSummary.nextAction}\n\n## Active Profile\n\n- active_profile: ${activeProfile || 'clean(default)'}\n- active_closeout_path: ${activeProfile ? `reports/evidence/EDGE_PROFIT_00/${activeProfile}/gates/manual/edge_profit_00_closeout.json` : 'reports/evidence/EDGE_PROFIT_00/gates/manual/edge_profit_00_closeout.json'}\n- active_closeout_status: ${activeCloseout?.status || 'MISSING'}\n- active_closeout_reason_code: ${activeCloseout?.reason_code || 'ME01'}\n- active_evidence_source: ${activeCloseout?.evidence_source || 'UNKNOWN'}\n- active_promotion_eligible: ${Boolean(activeCloseout?.eligible_for_profit_track)}\n- active_promotion_reason: ${activeCloseout?.promotion_eligibility_reason || (activeCloseout?.evidence_source === 'REAL' ? 'Closeout not PASS; promotion denied.' : 'EP02_REAL_REQUIRED: evidence_source is not REAL.')}\n\n## Release Discipline (contract-aware)\n\n- contract_path: GOV/EXPORT_CONTRACT.md\n- contract_state: ${releaseState}\n- evidence_epoch_resolved: ${evidenceEpoch}\n${releaseRows.length ? releaseRows.join('\n') : '- contract_missing_or_unparseable'}\n\n## Available Profiles\n\n| profile | closeout_status | closeout_reason_code | evidence_source | real_stub | promotion_eligible | next_action |\n|---|---|---|---|---|---|---|\n${profileRows.join('\n') || '| NONE | MISSING | ME01 | UNKNOWN | false | false | npm run -s edge:profit:00 |'}\n`;
+const md = `# PROFILES_INDEX.md — EDGE_PROFIT_00\n\nSTATUS: PASS\nREASON_CODE: NONE\nNEXT_ACTION: ${releaseNextAction}\n\n## Executor Lane Summary\n\n- lane_a_status: ${laneSummary.laneA}\n- lane_b_status: ${laneSummary.laneB}\n- lane_b_mode: ${laneSummary.laneBMode}\n- commands_next_action: ${laneSummary.nextAction}\n\n## Active Profile\n\n- active_profile: ${activeProfile || 'clean(default)'}\n- active_closeout_path: ${activeProfile ? `reports/evidence/EDGE_PROFIT_00/${activeProfile}/gates/manual/edge_profit_00_closeout.json` : 'reports/evidence/EDGE_PROFIT_00/gates/manual/edge_profit_00_closeout.json'}\n- active_closeout_status: ${activeCloseout?.status || 'MISSING'}\n- active_closeout_reason_code: ${activeCloseout?.reason_code || 'ME01'}\n- active_evidence_source: ${activeCloseout?.evidence_source || 'UNKNOWN'}\n- active_promotion_eligible: ${Boolean(activeCloseout?.eligible_for_profit_track)}\n- active_promotion_reason: ${activeCloseout?.promotion_eligibility_reason || (activeCloseout?.evidence_source === 'REAL' ? 'Closeout not PASS; promotion denied.' : 'EP02_REAL_REQUIRED: evidence_source is not REAL.')}\n\n## Release Discipline (contract-aware)\n\n- contract_path: GOV/EXPORT_CONTRACT.md\n- contract_state: ${releaseState}\n- evidence_epoch_resolved: ${evidenceEpoch}\n${releaseRows.length ? releaseRows.join('\n') : '- contract_missing_or_unparseable'}\n\n## Public Profile Snapshot\n\n- public_lock_exists: ${fs.existsSync(path.join(ROOT, 'artifacts', 'incoming', 'real_public_market.lock.md'))}\n- public_lock_path: artifacts/incoming/real_public_market.lock.md\n- public_lock_json_path: artifacts/incoming/real_public_market.lock.json\n- public_market_path: artifacts/incoming/real_public_market.jsonl\n- public_telemetry_csv_path: artifacts/incoming/paper_telemetry.csv\n- public_provider_id: ${publicLockJson?.provider_id || 'UNKNOWN'}\n- public_anchor_server_time_ms: ${publicLockJson?.server_time_anchor_ms || 'MISSING'}\n- public_anchor_end_ms: ${publicLockJson?.end_anchor_ms || 'MISSING'}\n- public_dataset_sha256: ${publicLockJson?.sha256_norm_dataset || 'MISSING'}\n- public_telemetry_sha256: ${publicLockJson?.telemetry_csv_sha256 || 'MISSING'}\n- public_profile_promotion_eligible: ${Boolean(publicCloseout?.eligible_for_profit_track)}\n- public_route: ${publicRoute}\n- public_net_family: ${publicNetFamily}\n- public_root_cause_code: ${publicRootCause}\n- public_sentinel_exists: ${fs.existsSync(path.join(ROOT, 'reports', 'evidence', 'EXECUTOR', 'PUBLIC_REACHABILITY_SENTINEL.md'))}\n- public_summary: route=${publicRoute} | net_family=${publicNetFamily} | root_cause_code=${publicRootCause} | sentinel_exists=${fs.existsSync(path.join(ROOT, 'reports', 'evidence', 'EXECUTOR', 'PUBLIC_REACHABILITY_SENTINEL.md'))}\n\n## Available Profiles\n\n| profile | closeout_status | closeout_reason_code | evidence_source | real_stub | promotion_eligible | micro_live_eligible | next_action |\n|---|---|---|---|---|---|---|---|\n${profileRows.join('\n') || '| NONE | MISSING | ME01 | UNKNOWN | false | false | false | npm run -s edge:profit:00 |'}\n`;
 
 writeMd(path.join(BASE_DIR, 'PROFILES_INDEX.md'), md);
 console.log('[PASS] edge_profit_00_doctor — NONE');

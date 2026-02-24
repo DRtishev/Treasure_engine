@@ -101,3 +101,6 @@ artifacts/outgoing/*.gz
 tools/node/
 
 artifacts/incoming/node/
+# REAL_PUBLIC incoming datasets must never be committed
+artifacts/incoming/*.csv
+artifacts/incoming/*.jsonl
