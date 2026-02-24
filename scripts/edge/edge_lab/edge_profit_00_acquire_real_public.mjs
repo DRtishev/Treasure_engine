@@ -14,6 +14,7 @@ const LOCK_JSON = path.join(INCOMING, 'real_public_market.lock.json');
 const CSV_RAW = path.join(INCOMING, 'raw_paper_telemetry.csv');
 const CSV_IMPORT = path.join(INCOMING, 'paper_telemetry.csv');
 const PROFILE = path.join(INCOMING, 'paper_telemetry.profile');
+const NET_DIAG_JSON = path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'registry', 'gates', 'manual', 'net_diag.json');
 const NEXT_ACTION = 'npm run -s epoch:edge:profit:public:00:x2:node22';
 
 fs.mkdirSync(INCOMING, { recursive: true });
@@ -94,7 +95,10 @@ const allowlist = providersFromAllowlist(allowlistRaw);
 const lockMd = parseLockMd();
 const lockJson = readJson(LOCK_JSON);
 const lockFirst = Boolean(lockMd || lockJson);
-const netFamily = process.env.NET_FAMILY === '4' ? 4 : process.env.NET_FAMILY === '6' ? 6 : 0;
+const diagJson = fs.existsSync(NET_DIAG_JSON) ? readJson(NET_DIAG_JSON) : null;
+const selectedNetFamily = process.env.NET_FAMILY === '4' ? 4 : process.env.NET_FAMILY === '6' ? 6 : Number(diagJson?.selected_net_family || 0);
+const hosts = Array.isArray(diagJson?.hosts) ? diagJson.hosts : [];
+const netFamily = selectedNetFamily || 0;
 
 if (String(process.env.REAL_PUBLIC_DRY_RUN || '0').match(/^(1|true)$/i)) {
   const dryMd = `# REAL_PUBLIC_MARKET_LOCK.md\n\n- gate_decision: NEEDS_DATA\n- reason_code: ACQ02\n- next_action: ${NEXT_ACTION}\n- mode: DRY_RUN\n- provider_allowlist: ${allowlistRaw}\n- lock_first_detected: ${lockFirst}\n`;
@@ -148,6 +152,7 @@ for (const providerId of allowlist) {
   try { assertNetworkAllowed(providerId); } catch { fail('ACQ01', `network disabled by policy for provider=${providerId}`); }
 }
 
+if (lockFirst && lockJson?.selected_host && !process.env.PUBLIC_ROUTE_OVERRIDE) process.env.PUBLIC_LOCKED_HOST = String(lockJson.selected_host);
 const selected = await probeSelectProvider({ allowlistRaw, symbol: hyp.symbol, tf: hyp.tf });
 if (!selected.provider || !selected.selected) {
   fail('ACQ02', `No reachable providers from allowlist=${allowlistRaw}. NEXT_ACTION: ${NEXT_ACTION}`, selected.attempts);
@@ -208,6 +213,14 @@ const lockMdText = `# REAL_PUBLIC_MARKET_LOCK.md
 - schema_signature: ${sig}
 - telemetry_csv_sha256: ${csvSha}
 - acquire_mode: NETWORK
+- zip_sha256: ${String(fetched?.zip_sha256 || 'NA')}
+- extracted_csv_sha256: ${String(fetched?.extracted_csv_sha256 || 'NA')}
+- time_unit_detected: ${String(fetched?.time_unit_detected || 'ms')}
+- time_unit_normalized_to: ${String(fetched?.time_unit_normalized_to || 'ms')}
+- time_unit_mixed: ${Boolean(fetched?.time_unit_mixed)}
+- selected_net_family: ${netFamily || 'NONE'}
+- hosts: ${hosts.join(',') || 'NONE'}
+- selected_host: ${String(fetched?.selected_host || '').trim() || 'NONE'}
 
 ## PROVIDER_FAILURES_BEFORE_SELECT
 
@@ -230,6 +243,10 @@ writeDeterministicJson(LOCK_JSON, {
   chunks: providerChunks,
   canary: providerCanary,
   net_family: netFamily,
+  selected_net_family: netFamily,
+  hosts,
+  selected_host: String(fetched?.selected_host || ''),
+  host_pool_attempts: Array.isArray(fetched?.host_pool_attempts) ? fetched.host_pool_attempts.map((x)=>({ base: String(x.base||''), code: String(x.code||'' ) })) : [],
   route: String(fetched?.route || 'REST'),
   output_files: {
     jsonl_path: 'artifacts/incoming/real_public_market.jsonl',
@@ -239,6 +256,11 @@ writeDeterministicJson(LOCK_JSON, {
   },
   schema_signature: sig,
   row_count: rows.length,
+  zip_sha256: String(fetched?.zip_sha256 || ''),
+  extracted_csv_sha256: String(fetched?.extracted_csv_sha256 || ''),
+  time_unit_detected: String(fetched?.time_unit_detected || 'ms'),
+  time_unit_normalized_to: String(fetched?.time_unit_normalized_to || 'ms'),
+  time_unit_mixed: Boolean(fetched?.time_unit_mixed),
   attempts: selected.attempts.map((a) => ({ provider: a.provider_id, step: a.step || 'probe', outcome: a.outcome || 'error', error_class: a.class || 'UNKNOWN' })),
   hypotheses_sha256: hypSha,
   sha256_raw_responses: responseSha,

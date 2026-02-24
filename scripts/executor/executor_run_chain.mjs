@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { resolveProfit00ManualDir } from '../edge/edge_lab/edge_profit_00_paths.mjs';
+import { runBounded } from './spawn_bounded.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
@@ -39,22 +39,17 @@ NEXT_ACTION: ${SSOT_ENTRYPOINT}
 }
 
 function runShell(cmd, forceNetKill = false) {
-  const startedAt = new Date().toISOString();
   const env = forceNetKill ? { ...process.env, TREASURE_NET_KILL: '1' } : process.env;
-  const result = spawnSync('bash', ['-lc', cmd], {
-    cwd: ROOT,
-    encoding: 'utf8',
-    env,
-    maxBuffer: 16 * 1024 * 1024,
-  });
-  const completedAt = new Date().toISOString();
+  const result = runBounded(cmd, { cwd: ROOT, env, maxBuffer: 16 * 1024 * 1024 });
   return {
     cmd,
-    startedAt,
-    completedAt,
-    ec: Number.isInteger(result.status) ? result.status : 1,
-    stdout: result.stdout || '',
-    stderr: result.stderr || '',
+    startedAt: result.startedAt,
+    completedAt: result.completedAt,
+    ec: result.ec,
+    stdout: result.stdout,
+    stderr: result.stderr,
+    timed_out: result.timedOut,
+    timeout_ms: result.timeout_ms,
     net_kill: forceNetKill ? 1 : 0,
   };
 }
@@ -132,6 +127,8 @@ function render(records, status, reason, laneBMode) {
       `COMMAND: ${r.cmd}`,
       `EC: ${r.ec}`,
       `NET_KILL: ${r.net_kill}`,
+      `TIMEOUT_MS: ${r.timeout_ms ?? 'NA'}`,
+      `TIMED_OUT: ${Boolean(r.timed_out)}`,
       `STARTED_AT: ${r.startedAt}`,
       `COMPLETED_AT: ${r.completedAt}`,
       '```',
@@ -193,8 +190,9 @@ render(records, 'RUNNING', 'RUN01', laneBMode);
 for (const cmd of laneA) {
   const rec = appendRun(records, cmd, 'A');
   if (rec.ec !== 0) {
-    render(records, 'BLOCKED', 'EC01', laneBMode);
-    console.log('[BLOCKED] executor_run_chain — EC01');
+    const reason = rec.timed_out ? 'TO01' : 'EC01';
+    render(records, 'BLOCKED', reason, laneBMode);
+    console.log(`[BLOCKED] executor_run_chain — ${reason}`);
     process.exit(1);
   }
   render(records, 'RUNNING', 'RUN01', laneBMode);
@@ -203,8 +201,9 @@ for (const cmd of laneA) {
 for (const cmd of laneB) {
   const rec = appendRun(records, cmd, 'B');
   if (rec.ec !== 0 && laneBReal) {
-    render(records, 'BLOCKED', 'EC01', laneBMode);
-    console.log('[BLOCKED] executor_run_chain — EC01');
+    const reason = rec.timed_out ? 'TO01' : 'EC01';
+    render(records, 'BLOCKED', reason, laneBMode);
+    console.log(`[BLOCKED] executor_run_chain — ${reason}`);
     process.exit(1);
   }
   render(records, 'RUNNING', 'RUN01', laneBMode);
@@ -213,8 +212,9 @@ for (const cmd of laneB) {
 for (const cmd of laneAFinal) {
   const rec = appendRun(records, cmd, 'A');
   if (rec.ec !== 0) {
-    render(records, 'BLOCKED', 'EC01', laneBMode);
-    console.log('[BLOCKED] executor_run_chain — EC01');
+    const reason = rec.timed_out ? 'TO01' : 'EC01';
+    render(records, 'BLOCKED', reason, laneBMode);
+    console.log(`[BLOCKED] executor_run_chain — ${reason}`);
     process.exit(1);
   }
   render(records, 'RUNNING', 'RUN01', laneBMode);

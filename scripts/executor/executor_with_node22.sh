@@ -57,4 +57,15 @@ if [[ "$(bash -lc "source '$NVM_SH' && nvm use 22.22.0 >/dev/null && node -v")" 
 fi
 
 emit_gate "complete" "success" "NONE"
-exec bash -lc "source '$NVM_SH' && nvm use 22.22.0 >/dev/null && $*"
+NODE22_WRAPPED_TIMEOUT="${NODE22_WRAPPED_TIMEOUT:-900s}"
+if timeout "$NODE22_WRAPPED_TIMEOUT" bash -lc "source '$NVM_SH' && nvm use 22.22.0 >/dev/null && exec "\$@"" bash "$@"; then
+  exit 0
+else
+  rc=$?
+  if [[ $rc -eq 124 ]]; then
+    emit_gate "wrapped_cmd" "timeout" "ENV02"
+  else
+    emit_gate "wrapped_cmd" "fail" "ENV01"
+  fi
+  exit 1
+fi

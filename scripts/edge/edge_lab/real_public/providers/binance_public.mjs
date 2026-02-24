@@ -1,6 +1,12 @@
 import crypto from 'node:crypto';
 
-const BASE = 'https://api.binance.com';
+const BASE_POOL = [
+  'https://api.binance.com',
+  'https://api1.binance.com',
+  'https://api2.binance.com',
+  'https://api3.binance.com',
+  'https://data-api.binance.vision',
+];
 const RETRY_DELAYS_MS = [1000, 2000, 4000, 8000, 16000];
 const REQUEST_TIMEOUT_MS = 30000;
 const TF_MS = new Map([
@@ -50,6 +56,17 @@ function createAcqError(code, message) {
   return e;
 }
 
+function resolveBasePool() {
+  const override = String(process.env.PUBLIC_ROUTE_OVERRIDE || '').trim();
+  const locked = String(process.env.PUBLIC_LOCKED_HOST || '').trim();
+  const selected = override || locked;
+  if (selected) {
+    const normalized = selected.startsWith('http') ? selected : `https://${selected}`;
+    return [normalized];
+  }
+  return [...BASE_POOL];
+}
+
 async function fetchJsonDeterministic(url) {
   let lastErr = null;
   for (let attempt = 0; attempt <= RETRY_DELAYS_MS.length; attempt++) {
@@ -75,7 +92,7 @@ async function fetchJsonDeterministic(url) {
       if (!r.ok) throw createAcqError('DATA04', `HTTP ${r.status} ${url}`);
       let json;
       try { json = JSON.parse(text); } catch { throw createAcqError('DATA04', `Invalid JSON ${url}`); }
-      return { json, text, base_url_used: BASE };
+      return { json, text, url };
     } catch (err) {
       lastErr = err;
       const name = String(err?.name || '');
@@ -92,24 +109,38 @@ async function fetchJsonDeterministic(url) {
   throw lastErr || createAcqError('ACQ02', `Network error ${url}`);
 }
 
+async function fetchFromBasePool(pathAndQuery) {
+  const attempts = [];
+  for (const base of resolveBasePool()) {
+    const url = `${base}${pathAndQuery}`;
+    try {
+      const out = await fetchJsonDeterministic(url);
+      return { ...out, base_url_used: base, attempts };
+    } catch (err) {
+      attempts.push({ base, code: String(err?.code || 'ACQ02'), message: String(err?.message || 'ERR') });
+    }
+  }
+  throw createAcqError('ACQ02', `Network error all hosts exhausted for ${pathAndQuery}`);
+}
+
 function alignEnd(anchorMs, tfMs) {
   return Math.floor(Number(anchorMs) / tfMs) * tfMs;
 }
 
 export const provider = {
   id: 'binance',
-  baseUrl: BASE,
+  baseUrl: BASE_POOL[0],
   async getServerTime() {
-    const out = await fetchJsonDeterministic(`${BASE}/api/v3/time`);
-    return Number(out.json.serverTime);
+    const out = await fetchFromBasePool('/api/v3/time');
+    return { serverTimeMs: Number(out.json.serverTime), base_url_used: out.base_url_used, host_pool_attempts: out.attempts || [] };
   },
   async probe(symbol, tf) {
     const tfMs = tfToMs(tf);
-    const serverTimeMs = await this.getServerTime();
-    const end = alignEnd(serverTimeMs, tfMs);
+    const server = await this.getServerTime();
+    const end = alignEnd(server.serverTimeMs, tfMs);
     const start = end - (2 * tfMs);
-    const out = await fetchJsonDeterministic(`${BASE}/api/v3/klines?symbol=${symbol}&interval=${tf}&startTime=${start}&endTime=${end}&limit=3`);
-    return { serverTimeMs, rows: mapKlines(symbol, tf, out.json || []) };
+    const out = await fetchFromBasePool(`/api/v3/klines?symbol=${symbol}&interval=${tf}&startTime=${start}&endTime=${end}&limit=3`);
+    return { serverTimeMs: server.serverTimeMs, rows: mapKlines(symbol, tf, out.json || []), base_url_used: out.base_url_used, host_pool_attempts: [...(server.host_pool_attempts || []), ...(out.attempts || [])] };
   },
   async fetchCandles(symbol, tf, endAnchorMs, limit) {
     const tfMs = tfToMs(tf);
@@ -120,15 +151,18 @@ export const provider = {
     const rows = [];
     const chunks = [];
     const canary = [];
+    const hostPoolAttempts = [];
     let chunkStartMs = startMs;
     let prevChunkEndMs = null;
+    let selectedBaseUrl = '';
 
     while (chunkStartMs <= endAlignedMs) {
       const remainingBars = Math.floor((endAlignedMs - chunkStartMs) / tfMs) + 1;
       const barsThisChunk = Math.min(1000, remainingBars);
       const chunkEndMs = chunkStartMs + ((barsThisChunk - 1) * tfMs);
-      const url = `${BASE}/api/v3/klines?symbol=${symbol}&interval=${tf}&startTime=${chunkStartMs}&endTime=${chunkEndMs}&limit=1000`;
-      const out = await fetchJsonDeterministic(url);
+      const out = await fetchFromBasePool(`/api/v3/klines?symbol=${symbol}&interval=${tf}&startTime=${chunkStartMs}&endTime=${chunkEndMs}&limit=1000`);
+      if (!selectedBaseUrl) selectedBaseUrl = out.base_url_used;
+      hostPoolAttempts.push(...(out.attempts || []));
       const mapped = mapKlines(symbol, tf, out.json || []);
       rows.push(...mapped);
       chunks.push({ start_ms: chunkStartMs, end_ms: chunkEndMs, count: mapped.length, sha256_raw: sha256Text(out.text) });
@@ -136,9 +170,10 @@ export const provider = {
       if (prevChunkEndMs !== null) {
         const overlapStart = Math.max(startMs, prevChunkEndMs - (4 * tfMs));
         const overlapEnd = prevChunkEndMs;
-        const canaryUrl = `${BASE}/api/v3/klines?symbol=${symbol}&interval=${tf}&startTime=${overlapStart}&endTime=${overlapEnd}&limit=5`;
-        const a = await fetchJsonDeterministic(canaryUrl);
-        const b = await fetchJsonDeterministic(canaryUrl);
+        const canaryUrl = `/api/v3/klines?symbol=${symbol}&interval=${tf}&startTime=${overlapStart}&endTime=${overlapEnd}&limit=5`;
+        const a = await fetchFromBasePool(canaryUrl);
+        const b = await fetchFromBasePool(canaryUrl);
+        hostPoolAttempts.push(...(a.attempts || []), ...(b.attempts || []));
         const shaA = sha256Text(a.text);
         const shaB = sha256Text(b.text);
         canary.push({ overlap_start_ms: overlapStart, overlap_end_ms: overlapEnd, sha256_raw_a: shaA, sha256_raw_b: shaB });
@@ -151,7 +186,9 @@ export const provider = {
 
     return {
       rows,
-      base_url_used: BASE,
+      base_url_used: selectedBaseUrl || BASE_POOL[0],
+      selected_host: (selectedBaseUrl || BASE_POOL[0]).replace(/^https?:\/\//, ''),
+      host_pool_attempts: hostPoolAttempts,
       start_ms: startMs,
       end_anchor_ms: endAlignedMs,
       server_time_ms: Number(endAnchorMs),

@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { spawnSync } from 'node:child_process';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd, stableEvidenceNormalize } from '../edge/edge_lab/canon.mjs';
+import { runBounded } from './spawn_bounded.mjs';
 import { stableDiagSummary } from './executor_public_x2_diag_only.mjs';
 
 const ROOT = path.resolve(process.cwd());
@@ -15,6 +15,8 @@ const LADDER_MD = path.join(EXEC_DIR, 'PUBLIC_X2_DIAG_LADDER.md');
 const LADDER_JSON = path.join(MANUAL_DIR, 'public_x2_diag_ladder.json');
 const SENTINEL_MD = path.join(EXEC_DIR, 'PUBLIC_REACHABILITY_SENTINEL.md');
 const SENTINEL_JSON = path.join(MANUAL_DIR, 'public_reachability_sentinel.json');
+const SNAP_MD = path.join(EXEC_DIR, 'PUBLIC_X2_FINGERPRINT_SNAPSHOT.md');
+const SNAP_JSON = path.join(MANUAL_DIR, 'public_x2_fingerprint_snapshot.json');
 const NEXT_ACTION = 'npm run -s epoch:edge:profit:public:00:x2:node22';
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
@@ -26,11 +28,11 @@ function runEpoch(runIndex) {
     ENABLE_NETWORK: process.env.ENABLE_NETWORK || '0',
     PROVIDER_ALLOWLIST: process.env.PROVIDER_ALLOWLIST || 'binance,bybit,okx,kraken',
   };
-  const r = spawnSync('bash', ['-lc', 'npm run -s epoch:edge:profit:public:00:node22'], { cwd: ROOT, encoding: 'utf8', env, maxBuffer: 64 * 1024 * 1024 });
+  const r = runBounded('npm run -s epoch:edge:profit:public:00:node22', { cwd: ROOT, env, maxBuffer: 64 * 1024 * 1024 });
   const ep = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR', 'gates', 'manual', 'epoch_edge_profit_public_00.json');
   const epoch = fs.existsSync(ep) ? JSON.parse(fs.readFileSync(ep, 'utf8')) : { status: 'BLOCKED', reason_code: 'ME01' };
   const diag = stableDiagSummary(ROOT);
-  return { run: runIndex, ec: Number.isInteger(r.status) ? r.status : 1, epoch, diag };
+  return { run: runIndex, ec: r.ec, timed_out: r.timedOut, epoch, diag };
 }
 
 function sha256(s) { return crypto.createHash('sha256').update(s).digest('hex'); }
@@ -65,13 +67,23 @@ function fingerprint() {
 }
 
 const r1 = runEpoch(1);
+const snapshotRun1 = fingerprint();
 const r2 = runEpoch(2);
+if (String(process.env.PUBLIC_X2_REGRESSION_DRIFT || '0').match(/^(1|true)$/i)) {
+  const driftPath = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR', 'gates', 'manual', 'epoch_edge_profit_public_00.json');
+  if (fs.existsSync(driftPath)) {
+    const j = JSON.parse(fs.readFileSync(driftPath, 'utf8'));
+    j.regression_drift_toggle = 'PUBLIC_X2_REGRESSION_DRIFT';
+    writeJsonDeterministic(driftPath, j);
+  }
+}
+const snapshotRun2 = fingerprint();
 
 let status = 'PASS';
 let reasonCode = 'NONE';
 let message = 'Public epoch x2 deterministic fingerprint match.';
-let f1 = null;
-let f2 = null;
+let f1 = snapshotRun1;
+let f2 = snapshotRun2;
 
 const bothAcq02 = r1.epoch?.reason_code === 'ACQ02' && r2.epoch?.reason_code === 'ACQ02';
 const bothSmk01 = r1.epoch?.reason_code === 'SMK01' && r2.epoch?.reason_code === 'SMK01';
@@ -94,13 +106,15 @@ if (bothAcq02) {
   status = 'FAIL';
   reasonCode = 'SMK_ORDER01';
   message = 'Acquire bypassed smoke ordering guard in one or more runs.';
+} else if (r1.timed_out || r2.timed_out) {
+  status = 'BLOCKED';
+  reasonCode = 'TO01';
+  message = 'epoch:edge:profit:public:00 timed out in one or both runs.';
 } else if (r1.ec !== 0 || r2.ec !== 0) {
   status = 'FAIL';
   reasonCode = 'ND01';
   message = 'epoch:edge:profit:public:00 failed in one or both runs.';
 } else {
-  f1 = fingerprint();
-  f2 = fingerprint();
   if (!f1.ok || !f2.ok) {
     status = 'FAIL';
     reasonCode = 'ND01';
@@ -132,7 +146,7 @@ if (bothAcq02) {
   });
 }
 
-writeMd(LADDER_MD, `# PUBLIC_X2_DIAG_LADDER.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- run1_reason_code: ${r1.epoch?.reason_code || 'UNKNOWN'}\n- run2_reason_code: ${r2.epoch?.reason_code || 'UNKNOWN'}\n- run1_diag_digest: ${r1.diag?.digest || 'MISSING'}\n- run2_diag_digest: ${r2.diag?.digest || 'MISSING'}\n- run1_net_family: ${r1.diag?.net_family ?? 'MISSING'}\n- run2_net_family: ${r2.diag?.net_family ?? 'MISSING'}\n- run1_hosts: ${(r1.diag?.hosts || []).join(',') || 'NONE'}\n- run2_hosts: ${(r2.diag?.hosts || []).join(',') || 'NONE'}\n`);
+writeMd(LADDER_MD, `# PUBLIC_X2_DIAG_LADDER.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- run1_reason_code: ${r1.epoch?.reason_code || 'UNKNOWN'}\n- run2_reason_code: ${r2.epoch?.reason_code || 'UNKNOWN'}\n- run1_diag_digest: ${r1.diag?.digest || 'MISSING'}\n- run2_diag_digest: ${r2.diag?.digest || 'MISSING'}\n- run1_net_family: ${r1.diag?.net_family ?? 'MISSING'}\n- run2_net_family: ${r2.diag?.net_family ?? 'MISSING'}\n- run1_selected_net_family: ${r1.diag?.selected_net_family ?? 'MISSING'}\n- run2_selected_net_family: ${r2.diag?.selected_net_family ?? 'MISSING'}\n- run1_hosts: ${(r1.diag?.hosts || []).join(',') || 'NONE'}\n- run2_hosts: ${(r2.diag?.hosts || []).join(',') || 'NONE'}\n`);
 
 writeJsonDeterministic(LADDER_JSON, {
   schema_version: '1.0.0',
@@ -147,8 +161,43 @@ writeJsonDeterministic(LADDER_JSON, {
   run2_diag_digest: r2.diag?.digest || null,
   run1_net_family: r1.diag?.net_family ?? null,
   run2_net_family: r2.diag?.net_family ?? null,
+  run1_selected_net_family: r1.diag?.selected_net_family ?? null,
+  run2_selected_net_family: r2.diag?.selected_net_family ?? null,
   run1_hosts: r1.diag?.hosts || [],
   run2_hosts: r2.diag?.hosts || [],
+});
+
+
+writeMd(SNAP_MD, `# PUBLIC_X2_FINGERPRINT_SNAPSHOT.md
+
+STATUS: ${status}
+REASON_CODE: ${reasonCode}
+RUN_ID: ${RUN_ID}
+NEXT_ACTION: ${NEXT_ACTION}
+
+- run1_snapshot_aggregate: ${f1?.aggregate || 'MISSING'}
+- run2_snapshot_aggregate: ${f2?.aggregate || 'MISSING'}
+- run1_snapshot_ok: ${Boolean(f1?.ok)}
+- run2_snapshot_ok: ${Boolean(f2?.ok)}
+- run1_snapshot_missing: ${f1?.missing || 'NONE'}
+- run2_snapshot_missing: ${f2?.missing || 'NONE'}
+`);
+
+writeJsonDeterministic(SNAP_JSON, {
+  schema_version: '1.0.0',
+  status,
+  reason_code: reasonCode,
+  run_id: RUN_ID,
+  message,
+  next_action: NEXT_ACTION,
+  run1_snapshot_ok: Boolean(f1?.ok),
+  run2_snapshot_ok: Boolean(f2?.ok),
+  run1_snapshot_missing: f1?.missing || null,
+  run2_snapshot_missing: f2?.missing || null,
+  run1_snapshot_aggregate: f1?.aggregate || null,
+  run2_snapshot_aggregate: f2?.aggregate || null,
+  inputs_run_1: f1?.parts || [],
+  inputs_run_2: f2?.parts || [],
 });
 
 writeMd(OUT_MD, `# EPOCH_EDGE_PROFIT_PUBLIC_00_X2.md\n\nSTATUS: ${status}\nREASON_CODE: ${reasonCode}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- run_1_ec: ${r1.ec}\n- run_2_ec: ${r2.ec}\n- aggregate_run_1: ${f1?.aggregate || 'MISSING'}\n- aggregate_run_2: ${f2?.aggregate || 'MISSING'}\n`);
