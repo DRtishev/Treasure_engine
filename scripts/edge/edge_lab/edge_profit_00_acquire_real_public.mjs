@@ -3,14 +3,18 @@ import path from 'node:path';
 import { assertNetworkAllowed } from '../../../core/net/network_guard.mjs';
 import { probeSelectProvider, providerById, providersFromAllowlist } from './real_public/real_public_provider_select.mjs';
 import { normalizeRows, schemaSignature, sha256Text } from './real_public/providers/_provider_interface.mjs';
+import { readJson, writeDeterministicJson } from './real_public/real_public_io.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const INCOMING = path.join(ROOT, 'artifacts', 'incoming');
 const HYP = path.join(ROOT, 'EDGE_PROFIT_00', 'HYPOTHESES_SSOT.md');
 const MARKET_JSONL = path.join(INCOMING, 'real_public_market.jsonl');
 const LOCK_MD = path.join(INCOMING, 'real_public_market.lock.md');
-const CSV = path.join(INCOMING, 'raw_paper_telemetry.csv');
+const LOCK_JSON = path.join(INCOMING, 'real_public_market.lock.json');
+const CSV_RAW = path.join(INCOMING, 'raw_paper_telemetry.csv');
+const CSV_IMPORT = path.join(INCOMING, 'paper_telemetry.csv');
 const PROFILE = path.join(INCOMING, 'paper_telemetry.profile');
+const NEXT_ACTION = 'npm run -s epoch:edge:profit:public:00:x2:node22';
 
 fs.mkdirSync(INCOMING, { recursive: true });
 
@@ -41,18 +45,15 @@ function parseHyp() {
   return fallback;
 }
 
-function parseLock() {
+function parseLockMd() {
   if (!fs.existsSync(LOCK_MD)) return null;
   const text = fs.readFileSync(LOCK_MD, 'utf8');
   const pick = (key) => text.match(new RegExp(`^- ${key}:\\s*(.+)$`, 'm'))?.[1]?.trim() || '';
   return {
     providerId: pick('provider_id'),
-    serverTimeAnchorMs: Number(pick('server_time_anchor_ms') || 0),
-    windowStartMs: Number(pick('window_start_ms') || 0),
-    windowEndMs: Number(pick('window_end_ms') || 0),
-    symbols: pick('symbols'),
-    tf: pick('tf'),
     schemaSig: pick('schema_signature'),
+    datasetSha: pick('sha256_norm_dataset'),
+    csvSha: pick('telemetry_csv_sha256'),
   };
 }
 
@@ -82,26 +83,62 @@ function writeCsv(rows, providerId) {
       `REAL_PUBLIC_${providerId.toUpperCase()}_V1`, (1 + (i % 3)).toFixed(8), (1 + ((i % 4) * 0.25)).toFixed(8),
     ].join(','));
   }
-  fs.writeFileSync(CSV, `${out.join('\n')}\n`);
+  const csv = `${out.join('\n')}\n`;
+  fs.writeFileSync(CSV_RAW, csv);
+  fs.writeFileSync(CSV_IMPORT, csv);
 }
 
 const hyp = parseHyp();
 const allowlistRaw = process.env.PROVIDER_ALLOWLIST || 'binance,bybit,okx,kraken';
 const allowlist = providersFromAllowlist(allowlistRaw);
-const lock = parseLock();
-const lockFirst = Boolean(lock);
+const lockMd = parseLockMd();
+const lockJson = readJson(LOCK_JSON);
+const lockFirst = Boolean(lockMd || lockJson);
+const netFamily = process.env.NET_FAMILY === '4' ? 4 : process.env.NET_FAMILY === '6' ? 6 : 0;
+
+if (String(process.env.REAL_PUBLIC_DRY_RUN || '0').match(/^(1|true)$/i)) {
+  const dryMd = `# REAL_PUBLIC_MARKET_LOCK.md\n\n- gate_decision: NEEDS_DATA\n- reason_code: ACQ02\n- next_action: ${NEXT_ACTION}\n- mode: DRY_RUN\n- provider_allowlist: ${allowlistRaw}\n- lock_first_detected: ${lockFirst}\n`;
+  fs.writeFileSync(LOCK_MD, dryMd);
+  writeDeterministicJson(LOCK_JSON, {
+    schema_version: '1.0.0',
+    gate_decision: 'NEEDS_DATA',
+    reason_code: 'ACQ02',
+    next_action: NEXT_ACTION,
+    mode: 'DRY_RUN',
+    provider_allowlist: allowlist,
+    lock_first_detected: lockFirst,
+    net_family: netFamily,
+    route: 'DRY_RUN',
+    output_files: {
+      jsonl_path: 'artifacts/incoming/real_public_market.jsonl',
+      telemetry_csv_path: 'artifacts/incoming/paper_telemetry.csv',
+    },
+  });
+  console.log('[NEEDS_DATA] edge_profit_00_acquire_real_public — ACQ02 (DRY_RUN)');
+  process.exit(0);
+}
 
 if (lockFirst) {
-  if (!fs.existsSync(MARKET_JSONL) || !fs.existsSync(CSV)) {
-    fail('ACQ05', 'Lock exists but dataset/csv file is missing.');
+  if (!fs.existsSync(MARKET_JSONL) || !fs.existsSync(CSV_IMPORT)) {
+    fail('DATA02', 'Lock exists but required dataset/telemetry file is missing.');
   }
-  if (lock.providerId && !allowlist.includes(lock.providerId)) {
-    fail('ACQ03', `Existing lock provider=${lock.providerId} not present in PROVIDER_ALLOWLIST=${allowlistRaw}`);
+  const lockProvider = String(lockJson?.provider || lockMd?.providerId || '').toLowerCase();
+  if (lockProvider && !allowlist.includes(lockProvider)) {
+    fail('ACQ01', `Existing lock provider=${lockProvider} not present in PROVIDER_ALLOWLIST=${allowlistRaw}. NEXT_ACTION: ${NEXT_ACTION}`);
   }
   const rows = fs.readFileSync(MARKET_JSONL, 'utf8').split(/\r?\n/).filter(Boolean).map((l) => JSON.parse(l));
   const norm = normalizeRows(rows);
-  if (norm.length < 210) fail('ACQ05', `Lock dataset row count too low: ${norm.length}`);
-  if (lock.schemaSig && lock.schemaSig !== schemaSignature()) fail('ACQ04', 'Lock schema signature mismatch.');
+  if (norm.length < 210) fail('DATA04', `Lock dataset row count too low: ${norm.length}`);
+  const expectedSchema = String(lockJson?.schema_signature || lockMd?.schemaSig || '');
+  if (expectedSchema && expectedSchema !== schemaSignature()) fail('DATA04', 'Lock schema signature mismatch.');
+
+  const gotDatasetSha = sha256File(MARKET_JSONL);
+  const gotCsvSha = sha256File(CSV_IMPORT);
+  const expectedDatasetSha = String(lockJson?.output_files?.jsonl_sha256 || lockMd?.datasetSha || '');
+  const expectedCsvSha = String(lockJson?.output_files?.telemetry_csv_sha256 || lockMd?.csvSha || '');
+  if ((expectedDatasetSha && expectedDatasetSha !== gotDatasetSha) || (expectedCsvSha && expectedCsvSha !== gotCsvSha)) {
+    fail('DATA02', 'LOCK_FIRST integrity mismatch (dataset/telemetry hash drift).');
+  }
   fs.writeFileSync(PROFILE, 'public\n');
   console.log('[PASS] edge_profit_00_acquire_real_public — NONE (LOCK_FIRST)');
   process.exit(0);
@@ -113,16 +150,30 @@ for (const providerId of allowlist) {
 
 const selected = await probeSelectProvider({ allowlistRaw, symbol: hyp.symbol, tf: hyp.tf });
 if (!selected.provider || !selected.selected) {
-  fail('ACQ02', `No reachable providers from allowlist=${allowlistRaw}`, selected.attempts);
+  fail('ACQ02', `No reachable providers from allowlist=${allowlistRaw}. NEXT_ACTION: ${NEXT_ACTION}`, selected.attempts);
 }
 
 const provider = providerById(selected.selected);
 const serverTimeAnchorMs = Number(selected.serverTimeMs || 0);
-const fetched = await provider.fetchCandles(hyp.symbol, hyp.tf, serverTimeAnchorMs, 260);
-const rows = normalizeRows(fetched);
-if (rows.length < 210) fail('ACQ04', `Fetched rows below threshold: ${rows.length}`);
+let fetched;
+try {
+  fetched = await provider.fetchCandles(hyp.symbol, hyp.tf, serverTimeAnchorMs, 260);
+} catch (err) {
+  fail(String(err?.code || 'ACQ02'), String(err?.message || 'fetchCandles failed'), selected.attempts);
+}
+const fetchedRows = Array.isArray(fetched) ? fetched : fetched?.rows;
+const rows = normalizeRows(fetchedRows || []);
+if (rows.length < 210) fail('DATA04', `Fetched rows below threshold: ${rows.length}`);
 if (rows.some((r) => !Number.isFinite(r.ts_open_ms) || !Number.isFinite(r.o) || !Number.isFinite(r.h) || !Number.isFinite(r.l) || !Number.isFinite(r.c) || !Number.isFinite(r.v))) {
-  fail('ACQ04', 'Non-finite candle fields after canonicalization.');
+  fail('DATA04', 'Non-finite candle fields after canonicalization.');
+}
+
+const providerChunks = Array.isArray(fetched?.chunks) ? fetched.chunks : [];
+const providerCanary = Array.isArray(fetched?.canary) ? fetched.canary : [];
+for (const c of providerCanary) {
+  if (String(c.sha256_raw_a || '') !== String(c.sha256_raw_b || '')) {
+    fail('DATA02', `Drift canary mismatch for overlap window ${c.overlap_start_ms}-${c.overlap_end_ms}`);
+  }
 }
 
 const datasetJsonl = rows.map((r) => JSON.stringify(r)).join('\n') + '\n';
@@ -130,19 +181,22 @@ fs.writeFileSync(MARKET_JSONL, datasetJsonl);
 writeCsv(rows, selected.selected);
 fs.writeFileSync(PROFILE, 'public\n');
 
-const windowStartMs = rows[0].ts_open_ms;
+const windowStartMs = Number(fetched?.start_ms || rows[0].ts_open_ms);
 const windowEndMs = rows[rows.length - 1].ts_open_ms;
+const endAnchorMs = Number(fetched?.end_anchor_ms || windowEndMs);
 const hypSha = fs.existsSync(HYP) ? sha256File(HYP) : 'MISSING';
 const datasetSha = sha256File(MARKET_JSONL);
-const csvSha = sha256File(CSV);
+const csvSha = sha256File(CSV_IMPORT);
 const responseSha = sha256Text(JSON.stringify({ probe: selected.probeRows, fetched_rows_n: rows.length }));
 const sig = schemaSignature();
 
-const lockMd = `# REAL_PUBLIC_MARKET_LOCK.md
+const lockMdText = `# REAL_PUBLIC_MARKET_LOCK.md
 
 - provider_id: ${selected.selected}
 - provider_api_version: public_v1
 - server_time_anchor_ms: ${serverTimeAnchorMs}
+- start_ms: ${windowStartMs}
+- end_anchor_ms: ${endAnchorMs}
 - window_start_ms: ${windowStartMs}
 - window_end_ms: ${windowEndMs}
 - tf: ${hyp.tf}
@@ -161,6 +215,33 @@ const lockMd = `# REAL_PUBLIC_MARKET_LOCK.md
 |---|---|---|---|
 ${renderProviderFailures(selected.attempts)}
 `;
-fs.writeFileSync(LOCK_MD, lockMd);
+fs.writeFileSync(LOCK_MD, lockMdText);
+
+writeDeterministicJson(LOCK_JSON, {
+  schema_version: '1.0.0',
+  provider: selected.selected,
+  provider_id: selected.selected,
+  base_url_used: String(fetched?.base_url_used || provider?.baseUrl || ''),
+  symbol: hyp.symbol,
+  timeframe: hyp.tf,
+  start_ms: windowStartMs,
+  end_anchor_ms: endAnchorMs,
+  server_time_ms: Number(fetched?.server_time_ms || serverTimeAnchorMs),
+  chunks: providerChunks,
+  canary: providerCanary,
+  net_family: netFamily,
+  route: String(fetched?.route || 'REST'),
+  output_files: {
+    jsonl_path: 'artifacts/incoming/real_public_market.jsonl',
+    jsonl_sha256: datasetSha,
+    telemetry_csv_path: 'artifacts/incoming/paper_telemetry.csv',
+    telemetry_csv_sha256: csvSha,
+  },
+  schema_signature: sig,
+  row_count: rows.length,
+  attempts: selected.attempts.map((a) => ({ provider: a.provider_id, step: a.step || 'probe', outcome: a.outcome || 'error', error_class: a.class || 'UNKNOWN' })),
+  hypotheses_sha256: hypSha,
+  sha256_raw_responses: responseSha,
+});
 
 console.log(`[PASS] edge_profit_00_acquire_real_public — NONE (${selected.selected})`);

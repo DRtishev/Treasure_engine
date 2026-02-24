@@ -38,12 +38,13 @@ NEXT_ACTION: ${SSOT_ENTRYPOINT}
   }
 }
 
-function runShell(cmd) {
+function runShell(cmd, forceNetKill = false) {
   const startedAt = new Date().toISOString();
+  const env = forceNetKill ? { ...process.env, TREASURE_NET_KILL: '1' } : process.env;
   const result = spawnSync('bash', ['-lc', cmd], {
     cwd: ROOT,
     encoding: 'utf8',
-    env: process.env,
+    env,
     maxBuffer: 16 * 1024 * 1024,
   });
   const completedAt = new Date().toISOString();
@@ -54,7 +55,12 @@ function runShell(cmd) {
     ec: Number.isInteger(result.status) ? result.status : 1,
     stdout: result.stdout || '',
     stderr: result.stderr || '',
+    net_kill: forceNetKill ? 1 : 0,
   };
+}
+
+function isVerifyStep(cmd) {
+  return /(npm run -s (verify:|gov:|p0:all|edge:profit:0[12]:|export:final-validated))/i.test(cmd);
 }
 
 const npmVersion = runShell('npm -v');
@@ -78,6 +84,7 @@ const laneBBase = [
 ];
 
 const laneAFinal = [
+  'npm run -s verify:netv01:probe',
   'npm run -s export:final-validated',
   'npm run -s verify:edge:profit:00:release',
   'npm run -s verify:export:contract',
@@ -124,6 +131,7 @@ function render(records, status, reason, laneBMode) {
       `LANE: ${r.lane}`,
       `COMMAND: ${r.cmd}`,
       `EC: ${r.ec}`,
+      `NET_KILL: ${r.net_kill}`,
       `STARTED_AT: ${r.startedAt}`,
       `COMPLETED_AT: ${r.completedAt}`,
       '```',
@@ -155,6 +163,7 @@ function render(records, status, reason, laneBMode) {
     `- lane_a_status: ${laneAStatus}`,
     `- lane_b_status: ${laneBStatus}`,
     `- lane_b_mode: ${laneBMode}`,
+    `- lane_a_net_kill_enforced: 1`,
     `- records_n: ${records.length}`,
     '',
     sections,
@@ -167,7 +176,7 @@ function render(records, status, reason, laneBMode) {
 }
 
 function appendRun(records, cmd, lane) {
-  const rec = runShell(cmd);
+  const rec = runShell(cmd, isVerifyStep(cmd));
   rec.lane = lane;
   records.push(rec);
   return rec;
