@@ -58,7 +58,7 @@ fi
 
 emit_gate "complete" "success" "NONE"
 NODE22_WRAPPED_TIMEOUT="${NODE22_WRAPPED_TIMEOUT:-900s}"
-if timeout "$NODE22_WRAPPED_TIMEOUT" bash -lc "source '$NVM_SH' && nvm use 22.22.0 >/dev/null && exec "\$@"" bash "$@"; then
+if timeout "$NODE22_WRAPPED_TIMEOUT" bash -lc "source '$NVM_SH' && nvm use 22.22.0 >/dev/null && exec \"\$@\"" bash "$@"; then
   exit 0
 else
   rc=$?

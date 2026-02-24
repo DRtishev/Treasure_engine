@@ -699,7 +699,13 @@
     "verify:regression:node22-wrapper-timeout": "node scripts/verify/regression_node22_wrapper_timeout.mjs",
     "verify:regression:public-diag-bounded": "node scripts/verify/regression_public_diag_bounded.mjs",
     "verify:regression:export-final-validated-x2": "node scripts/verify/regression_export_final_validated_x2.mjs",
-    "verify:profit:foundation": "node scripts/verify/profit_foundation_freeze_gate.mjs"
+    "verify:profit:foundation": "node scripts/verify/profit_foundation_freeze_gate.mjs",
+    "verify:regression:canon-commands-run-timestamps": "node scripts/verify/regression_canon_commands_run_timestamps.mjs",
+    "verify:regression:profit-foundation-freeze-ssot": "node scripts/verify/regression_profit_foundation_freeze_ssot.mjs",
+    "verify:regression:foundation-suite-x2-seal": "node scripts/verify/regression_foundation_suite_x2_seal.mjs",
+    "verify:regression:bounded-kill-tree": "node scripts/verify/regression_bounded_kill_tree.mjs",
+    "export:evidence-bundle": "node scripts/export/evidence_bundle.mjs",
+    "verify:regression:evidence-bundle-deterministic-x2": "node scripts/verify/regression_evidence_bundle_deterministic_x2.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { spawnSync } from 'node:child_process';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
+import { runBounded } from './spawn_bounded.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
@@ -14,10 +14,11 @@ const NEXT_ACTION = 'npm run -s epoch:profit:real:00';
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 
 function run(cmd) {
-  const r = spawnSync('bash', ['-lc', cmd], { cwd: ROOT, encoding: 'utf8', env: process.env, maxBuffer: 32 * 1024 * 1024 });
+  const r = runBounded(cmd, { cwd: ROOT, env: process.env, maxBuffer: 32 * 1024 * 1024 });
   return {
     cmd,
-    ec: Number.isInteger(r.status) ? r.status : 1,
+    ec: r.ec,
+    timedOut: r.timedOut,
     output: `${r.stdout || ''}${r.stderr || ''}`.trim(),
   };
 }
@@ -42,7 +43,7 @@ function recordStep(cmd, critical = true) {
   records.push(rec);
   if (rec.ec !== 0 && critical && status === 'PASS') {
     status = 'BLOCKED';
-    reasonCode = 'EC01';
+    reasonCode = rec.timedOut ? 'TO01' : 'EC01';
     message = `Command failed: ${cmd}`;
   }
   return rec;
