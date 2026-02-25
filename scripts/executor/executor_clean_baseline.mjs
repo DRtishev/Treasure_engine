@@ -5,7 +5,6 @@ import { runBounded } from './spawn_bounded.mjs';
 const ROOT = path.resolve(process.cwd());
 
 const TARGETS = [
-  path.join(ROOT, 'reports', 'evidence', 'EXECUTOR'),
   path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'sandbox'),
   path.join(ROOT, 'reports', 'evidence', 'EDGE_PROFIT_00', 'stub'),
 ];
@@ -72,6 +71,7 @@ const telemetry = {
   semantic: {
     baseline_files_restored_n: restorePre.size,
     baseline_evidence_removed_n: evidenceRemoved,
+    baseline_executor_receipts_preserved: true,
   },
   volatile: {
     baseline_clean_elapsed_ms: 0,

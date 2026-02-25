@@ -10,8 +10,8 @@ const NEXT_ACTION = 'npm run -s epoch:victory:seal';
 const sealSrc = fs.readFileSync(path.join(ROOT, 'scripts/executor/executor_epoch_victory_seal.mjs'), 'utf8');
 const triageSrc = fs.readFileSync(path.join(ROOT, 'scripts/executor/executor_epoch_victory_triage.mjs'), 'utf8');
 const checks = {
-  seal_uses_shared_steps: sealSrc.includes("getVictorySteps(victoryTestMode)"),
-  triage_uses_shared_steps: triageSrc.includes("getVictorySteps(victoryTestMode)"),
+  seal_uses_shared_step_plan: sealSrc.includes("getVictoryStepPlan(victoryTestMode)"),
+  triage_uses_shared_step_plan: triageSrc.includes("getVictoryStepPlan(victoryTestMode)"),
   triage_next_action_is_seal: triageSrc.includes("const NEXT_ACTION = 'npm run -s epoch:victory:seal'"),
 };
 const ok = Object.values(checks).every(Boolean);

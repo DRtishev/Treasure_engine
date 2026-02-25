@@ -748,7 +748,12 @@
     "verify:regression:victory-triage-ssot": "node scripts/verify/regression_victory_triage_ssot.mjs",
     "verify:regression:baseline-clean-no-tracked-drift": "node scripts/verify/regression_baseline_clean_no_tracked_drift.mjs",
     "verify:regression:drift-severity-classification": "node scripts/verify/regression_drift_severity_classification.mjs",
-    "verify:regression:baseline-telemetry-semantic-volatile-split": "node scripts/verify/regression_baseline_telemetry_semantic_volatile_split.mjs"
+    "verify:regression:baseline-telemetry-semantic-volatile-split": "node scripts/verify/regression_baseline_telemetry_semantic_volatile_split.mjs",
+    "verify:regression:victory-step-timeout-plan-contract": "node scripts/verify/regression_victory_step_timeout_plan_contract.mjs",
+    "verify:regression:op-safe01-receipt-presence-contract": "node scripts/verify/regression_op_safe01_receipt_presence_contract.mjs",
+    "verify:regression:foundation-timeout-triage-contract": "node scripts/verify/regression_foundation_timeout_triage_contract.mjs",
+    "verify:regression:baseline-preserve-critical-receipts": "node scripts/verify/regression_baseline_preserve_critical_receipts.mjs",
+    "verify:regression:victory-receipt-staleness-contract": "node scripts/verify/regression_victory_receipt_staleness_contract.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
