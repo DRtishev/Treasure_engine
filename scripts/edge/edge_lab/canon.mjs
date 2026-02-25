@@ -29,6 +29,9 @@ export const VOLATILE_MARKERS = [
   'Completed:',
   'STARTED_AT:',
   'COMPLETED_AT:',
+  'STARTED_AT_MS:',
+  'COMPLETED_AT_MS:',
+  'ELAPSED_MS:',
 ];
 
 // ---------------------------------------------------------------------------

@@ -4,6 +4,7 @@ import path from 'node:path';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { resolveProfit00ManualDir } from '../edge/edge_lab/edge_profit_00_paths.mjs';
 import { runBounded } from './spawn_bounded.mjs';
+import { COMMANDS_RUN_HEADER_LINES } from './commands_run_header_ssot.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
@@ -240,18 +241,25 @@ function render(records, status, reason, laneBMode) {
     ? '- executor_chain_verdict: PASS'
     : `- executor_chain_verdict: ${status}`;
 
+  const headerValueByPrefix = {
+    'NODE_VERSION:': process.version,
+    'NPM_VERSION:': npmVersion.ec === 0 ? npmVersion.stdout.trim() : 'MISSING',
+    'RUN_ID:': RUN_ID,
+    'VERIFY_MODE:': VERIFY_MODE,
+    'LANE_A_STATUS:': laneAStatus,
+    'LANE_B_STATUS:': laneBStatus,
+    'LANE_B_MODE:': laneBMode,
+    'EXECUTION_MODE:': executionMode,
+    'NEXT_ACTION:': SSOT_ENTRYPOINT,
+  };
+
+  const headerLines = COMMANDS_RUN_HEADER_LINES.map((line) => {
+    const value = headerValueByPrefix[line];
+    return value === undefined ? line : `${line} ${value}`;
+  });
+
   const md = [
-    '# COMMANDS_RUN',
-    'GENERATED_BY: scripts/executor/executor_run_chain.mjs',
-    `NODE_VERSION: ${process.version}`,
-    `NPM_VERSION: ${npmVersion.ec === 0 ? npmVersion.stdout.trim() : 'MISSING'}`,
-    `RUN_ID: ${RUN_ID}`,
-    `VERIFY_MODE: ${VERIFY_MODE}`,
-    `LANE_A_STATUS: ${laneAStatus}`,
-    `LANE_B_STATUS: ${laneBStatus}`,
-    `LANE_B_MODE: ${laneBMode}`,
-    `EXECUTION_MODE: ${executionMode}`,
-    `NEXT_ACTION: ${SSOT_ENTRYPOINT}`,
+    ...headerLines,
     `STATUS: ${status}`,
     `REASON_CODE: ${reason}`,
     '',

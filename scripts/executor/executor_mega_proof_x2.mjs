@@ -44,9 +44,11 @@ export function normalizeForMega(content, rel, mode) {
   return maybeCode
     .split(/\r?\n/)
     .filter((line) => !/^(STARTED_AT|COMPLETED_AT):\s*/.test(line.trim()))
+    .filter((line) => !/^(STARTED_AT_MS|COMPLETED_AT_MS|ELAPSED_MS):\s*/.test(line.trim()))
     .filter((line) => !/^RUN_ID:\s*/.test(line.trim()))
     .filter((line) => !/^SHA256=/.test(line.trim()))
     .filter((line) => !/\b(STARTED_AT|COMPLETED_AT|RUN_ID):\s*/.test(line))
+    .filter((line) => !/\b(STARTED_AT_MS|COMPLETED_AT_MS|ELAPSED_MS):\s*/.test(line))
     .filter((line) => !/sha256=/.test(line))
     .filter((line) => !/\bRUN_ID=/.test(line))
     .join('\n');
@@ -106,10 +108,10 @@ if (run1.timed_out || run2.timed_out) {
   reasonCode = 'TO01';
   message = 'epoch:mega:proof timed out in one or both runs.';
 } else if (run1.ec !== 0 || run2.ec !== 0) {
-  status = 'FAIL';
-  reasonCode = 'ND01';
-  mismatch_mode = 'NOISE';
-  message = 'epoch:mega:proof failed in one or both runs.';
+  status = 'BLOCKED';
+  reasonCode = 'EC01';
+  mismatch_mode = 'NONE';
+  message = `epoch:mega:proof failed in one or both runs (run_1_ec=${run1.ec}, run_2_ec=${run2.ec}).`;
 } else if (!fp1_noise.ok || !fp2_noise.ok || !fp1_semantic.ok || !fp2_semantic.ok) {
   status = 'FAIL';
   reasonCode = 'ND01';

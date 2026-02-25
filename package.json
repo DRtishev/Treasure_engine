@@ -753,7 +753,19 @@
     "verify:regression:op-safe01-receipt-presence-contract": "node scripts/verify/regression_op_safe01_receipt_presence_contract.mjs",
     "verify:regression:foundation-timeout-triage-contract": "node scripts/verify/regression_foundation_timeout_triage_contract.mjs",
     "verify:regression:baseline-preserve-critical-receipts": "node scripts/verify/regression_baseline_preserve_critical_receipts.mjs",
-    "verify:regression:victory-receipt-staleness-contract": "node scripts/verify/regression_victory_receipt_staleness_contract.mjs"
+    "verify:regression:victory-receipt-staleness-contract": "node scripts/verify/regression_victory_receipt_staleness_contract.mjs",
+    "verify:regression:commands-run-header-ssot": "node scripts/verify/regression_commands_run_header_ssot.mjs",
+    "verify:regression:mega-proof-x2-failure-classification": "node scripts/verify/regression_mega_proof_x2_failure_classification.mjs",
+    "verify:regression:mega-proof-x2-ignores-ms-timing": "node scripts/verify/regression_mega_proof_x2_ignores_ms_timing.mjs",
+    "verify:regression:canon-includes-ms-timing-markers": "node scripts/verify/regression_canon_includes_ms_timing_markers.mjs",
+    "verify:regression:profit-foundation-freeze-gate-autogen": "node scripts/verify/regression_profit_foundation_freeze_gate_autogen.mjs",
+    "verify:regression:victory-triage-readiness-classification": "node scripts/verify/regression_victory_triage_readiness_classification.mjs",
+    "epoch:victory:seal:accept-restore": "node scripts/executor/executor_epoch_victory_seal_accept_restore.mjs",
+    "verify:regression:opa01-op-safe-next-action-wrapper": "node scripts/verify/regression_opa01_op_safe_next_action_wrapper.mjs",
+    "verify:regression:opa02-op-safe-ignore-evidence-drift": "node scripts/verify/regression_opa02_op_safe_ignore_evidence_drift.mjs",
+    "verify:regression:victory-seal-needs-data-exitcode-contract": "node scripts/verify/regression_victory_seal_needs_data_exitcode_contract.mjs",
+    "verify:regression:accept-restore-propagates-exitcode": "node scripts/verify/regression_accept_restore_propagates_exitcode.mjs",
+    "verify:regression:op-safe-untracked-only-does-not-block": "node scripts/verify/regression_op_safe_untracked_only_does_not_block.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

@@ -60,10 +60,11 @@ NEXT_ACTION: npm run -s epoch:victory:seal
 ## Optional triage command
 - Optional isolator: `npm run -s epoch:victory:triage`.
 - Main operator `NEXT_ACTION` remains unchanged and env-free: `npm run -s epoch:victory:seal`.
+- If seal returns `OP_SAFE01`, use env-free override wrapper: `npm run -s epoch:victory:seal:accept-restore`.
 
 ## OP_SAFE01 restore safety guard
 - `epoch:victory:seal` blocks with `REASON_CODE: OP_SAFE01` when tracked/staged modifications exist before baseline restore.
-- Explicit override is required: `TREASURE_I_UNDERSTAND_RESTORE=1`.
+- Explicit override is required, but operator entrypoint is env-free: `npm run -s epoch:victory:seal:accept-restore`.
 - Safety receipts: `reports/evidence/EXECUTOR/BASELINE_SAFETY.md` and `reports/evidence/EXECUTOR/gates/manual/baseline_safety.json`.
 
 ## Baseline telemetry semantic/volatile split
