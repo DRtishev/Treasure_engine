@@ -1,0 +1,48 @@
+{
+  "checks": [
+    {
+      "code": "NETV01",
+      "message": "NETWORK_DISABLED_BY_TREASURE_NET_KILL",
+      "name": "fetch",
+      "ok": true
+    },
+    {
+      "code": "NETV01",
+      "message": "NETWORK_DISABLED_BY_TREASURE_NET_KILL",
+      "name": "http.request",
+      "ok": true
+    },
+    {
+      "code": "NETV01",
+      "message": "NETWORK_DISABLED_BY_TREASURE_NET_KILL",
+      "name": "https.request",
+      "ok": true
+    },
+    {
+      "code": "NETV01",
+      "message": "NETWORK_DISABLED_BY_TREASURE_NET_KILL",
+      "name": "dns.lookup",
+      "ok": true
+    },
+    {
+      "code": "NETV01",
+      "message": "NETWORK_DISABLED_BY_TREASURE_NET_KILL",
+      "name": "net.connect",
+      "ok": true
+    },
+    {
+      "code": "NETV01",
+      "message": "NETWORK_DISABLED_BY_TREASURE_NET_KILL",
+      "name": "tls.connect",
+      "ok": true
+    }
+  ],
+  "ec": 0,
+  "next_action": "npm run -s verify:regression:net-kill-preload-hard",
+  "node_options_used": "--require \"/workspace/Treasure_engine/scripts/safety/net_kill_preload.cjs\"",
+  "preload_path": "/workspace/Treasure_engine/scripts/safety/net_kill_preload.cjs",
+  "reason_code": "NONE",
+  "run_id": "a0e3806a2bb8",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

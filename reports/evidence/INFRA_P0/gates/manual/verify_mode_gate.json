@@ -6,10 +6,10 @@
       "result": "PRESENT"
     }
   ],
-  "message": "VERIFY_MODE=GIT. RUN_ID resolved from git: a7fda148d63c. .git directory present.",
+  "message": "VERIFY_MODE=GIT. RUN_ID resolved from git: a0e3806a2bb8. .git directory present.",
   "next_action": "No action required. VERIFY_MODE=GIT is valid.",
   "reason_code": "NONE",
-  "run_id": "a7fda148d63c",
+  "run_id": "a0e3806a2bb8",
   "schema_version": "1.0.0",
   "status": "PASS",
   "verify_mode": "GIT"

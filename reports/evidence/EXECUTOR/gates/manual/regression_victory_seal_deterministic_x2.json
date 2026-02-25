@@ -1,0 +1,12 @@
+{
+  "next_action": "npm run -s verify:regression:victory-seal-deterministic-x2",
+  "reason_code": "NONE",
+  "run1_ec": 2,
+  "run2_ec": 2,
+  "run_id": "da818a2b701a",
+  "schema_version": "1.0.0",
+  "semantic_hash_run1": "d24f48ca9a292c09a1e814bbf5eb983747f6f3de9d366f38c25d92af89693adf",
+  "semantic_hash_run2": "d24f48ca9a292c09a1e814bbf5eb983747f6f3de9d366f38c25d92af89693adf",
+  "stable_match": true,
+  "status": "PASS"
+}

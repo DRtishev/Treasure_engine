@@ -1,0 +1,13 @@
+{
+  "chain_ec": 0,
+  "ledger_records": 3,
+  "next_action": "npm run -s verify:regression:executor-netkill-ledger-proof",
+  "non_verify_ok": true,
+  "non_verify_records": 1,
+  "reason_code": "NONE",
+  "run_id": "da818a2b701a",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "verify_ok": true,
+  "verify_records": 2
+}

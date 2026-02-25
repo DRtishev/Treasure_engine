@@ -1,0 +1,10 @@
+{
+  "direct_overwrite": false,
+  "ledger_verify_preload_ok": true,
+  "next_action": "npm run -s verify:regression:node-options-preload-eviction",
+  "reason_code": "NONE",
+  "run_id": "c94f58df8bcb",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "verify_records": 2
+}

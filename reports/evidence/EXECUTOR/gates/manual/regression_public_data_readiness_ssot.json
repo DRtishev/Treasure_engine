@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "doc_lock": true,
+    "doc_next_action": true,
+    "doc_raw": true,
+    "src_lock": true,
+    "src_next_action": true,
+    "src_raw": true
+  },
+  "next_action": "npm run -s verify:public:data:readiness",
+  "reason_code": "NONE",
+  "run_id": "c94f58df8bcb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -2,11 +2,12 @@
 GENERATED_BY: scripts/executor/executor_run_chain.mjs
 NODE_VERSION: v22.22.0
 NPM_VERSION: 10.9.4
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 VERIFY_MODE: GIT
 LANE_A_STATUS: PASS
 LANE_B_STATUS: NEEDS_DATA
 LANE_B_MODE: DRY_RUN
+EXECUTION_MODE: FULL
 NEXT_ACTION: npm run -s executor:run:chain
 STATUS: PASS
 REASON_CODE: NONE
@@ -15,14 +16,24 @@ REASON_CODE: NONE
 - lane_a_status: PASS
 - lane_b_status: NEEDS_DATA
 - lane_b_mode: DRY_RUN
-- records_n: 21
+- lane_a_net_kill_enforced: 1
+- records_n: 22
 
 ## STEP 1
 LANE: A
 COMMAND: npm run -s verify:env:authority
 EC: 0
-STARTED_AT: 2026-02-23T15:27:32.454Z
-COMPLETED_AT: 2026-02-23T15:27:34.999Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:21:50.923Z
+COMPLETED_AT: 2026-02-25T09:21:52.696Z
+STARTED_AT_MS: 1772011310923
+COMPLETED_AT_MS: 1772011312696
+ELAPSED_MS: 1773
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
 [PASS] env_node_truth_authority — NONE
 ```
@@ -30,8 +41,17 @@ COMPLETED_AT: 2026-02-23T15:27:34.999Z
 LANE: A
 COMMAND: ENABLE_SQLITE_PERSISTENCE=0 TREASURE_OMIT_OPTIONAL_PROOF=1 npm ci --omit=optional
 EC: 0
-STARTED_AT: 2026-02-23T15:27:35.000Z
-COMPLETED_AT: 2026-02-23T15:27:38.052Z
+NET_KILL: 0
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:21:52.699Z
+COMPLETED_AT: 2026-02-25T09:21:54.790Z
+STARTED_AT_MS: 1772011312699
+COMPLETED_AT_MS: 1772011314790
+ELAPSED_MS: 2091
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
 (no output)
 ```
@@ -39,13 +59,22 @@ COMPLETED_AT: 2026-02-23T15:27:38.052Z
 LANE: A
 COMMAND: npm run -s p0:all
 EC: 0
-STARTED_AT: 2026-02-23T15:27:38.052Z
-COMPLETED_AT: 2026-02-23T15:27:45.210Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:21:54.792Z
+COMPLETED_AT: 2026-02-25T09:22:01.682Z
+STARTED_AT_MS: 1772011314792
+COMPLETED_AT_MS: 1772011321682
+ELAPSED_MS: 6890
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
 
 ============================================================
 CALM MODE P0 — Hardening Pipeline
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ============================================================
 
 [P0] Running: CANON_SELFTEST — Canon normalization selftest (R10)
@@ -69,11 +98,11 @@ RUN_ID: a7fda148d63c
 [P0 OK] DATA_COURT: PASS
 
 [P0] Running: EVIDENCE_HASHES — Evidence checksums (R5 dual-hash + R11 SCOPE_MANIFEST_SHA)
-[PASS] edge_evidence_hashes — 121 files hashed, SCOPE_MANIFEST_SHA=b58e9929b24f9461...
+[PASS] edge_evidence_hashes — 136 files hashed, SCOPE_MANIFEST_SHA=a271146caebc16bc...
 [P0 OK] EVIDENCE_HASHES: PASS
 
 [P0] Running: RECEIPTS_CHAIN — Receipt chain on sha256_norm (R5, R11)
-[PASS] edge_receipts_chain — 121 entries chained, final=dc88399d107b1d09...
+[PASS] edge_receipts_chain — 136 entries chained, final=30fb1ffa9950f5c8...
 [P0 OK] RECEIPTS_CHAIN: PASS
 
 ============================================================
@@ -90,7 +119,7 @@ FINAL: PASS
 [INFRA_RUN] NET_ISOLATION
 ============================================================
 NET01 NETWORK ISOLATION PROOF
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ============================================================
 
 ============================================================
@@ -112,7 +141,7 @@ FINAL: PASS
 [PASS] node_truth_gate — Node v22.22.0 matches allowed_family=22
 
 [INFRA_RUN] VERIFY_MODE
-[PASS] verify_mode_gate — VERIFY_MODE=GIT, RUN_ID=a7fda148d63c
+[PASS] verify_mode_gate — VERIFY_MODE=GIT, RUN_ID=a0e3806a2bb8
 
 [INFRA_RUN] DEPS_OFFLINE
 [deps_offline] Running static lock scan for native build candidates...
@@ -132,7 +161,7 @@ FINAL: PASS
 [INFRA_RUN] FIXTURE_GUARD
 ============================================================
 FG01 FIXTURE GUARD — Evidence Source Verification
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ALLOW_FIXTURES: unset (REAL_ONLY mode)
 ============================================================
 
@@ -150,7 +179,7 @@ FG01 FIXTURE GUARD RESULT
 [INFRA_RUN] ZERO_WAR_PROBE
 ============================================================
 ZW01 ZERO-WAR PROBE — Must-Fail Gate
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ============================================================
 
 [ZW00 PROBE] Testing TRADING_ENABLED=1 ...
@@ -179,7 +208,7 @@ FINAL: PASS
 [PASS] zero_war_probe — ZW01 kill switch proven active for all 4 probes.
 ============================================================
 INFRA P0 — Gate Suite
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ============================================================
 
 ============================================================
@@ -203,19 +232,28 @@ ELIGIBLE_FOR_EXECUTION: true
 LANE: A
 COMMAND: npm run -s gov:integrity
 EC: 0
-STARTED_AT: 2026-02-23T15:27:45.211Z
-COMPLETED_AT: 2026-02-23T15:27:48.760Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:01.687Z
+COMPLETED_AT: 2026-02-25T09:22:05.220Z
+STARTED_AT_MS: 1772011321687
+COMPLETED_AT_MS: 1772011325220
+ELAPSED_MS: 3533
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
 
 ============================================================
 P1 GOVERNANCE INTEGRITY ORCHESTRATOR
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ============================================================
 
 [GOV] Running: R_OP01_SCRIPTS_CHECK
 ============================================================
 OP01 SCRIPTS CHECK — Phantom Command Prevention
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ============================================================
 
 ============================================================
@@ -243,37 +281,37 @@ FINAL: PASS
 [GOV] Running: P1_MERKLE_ROOT
 ============================================================
 P1 MERKLE ROOT — Evidence Integrity Anchor
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ============================================================
-[MERKLE] Files in scope: 121
-[MERKLE] Files hashed: 121
+[MERKLE] Files in scope: 136
+[MERKLE] Files hashed: 136
 [MERKLE] Files missing: 0
-[MERKLE] Tree depth: 8
-[MERKLE] Root: 5181e4fb68637aabcfd433aa5211e354e40bd658ddb14b9a9777151157807ec2
-[MERKLE] SCOPE_MANIFEST_SHA: b58e9929b24f9461d993b38c1c5fab0c8350f955a9b4d11061498b18089cc775
+[MERKLE] Tree depth: 9
+[MERKLE] Root: 0dcf6192d251a8a375fb8a1f6dc0852f66bbd80f3646edce958a3244679f529c
+[MERKLE] SCOPE_MANIFEST_SHA: a271146caebc16bc645344cb29f469f9d44d2dfeb5a01787acd61c410efed269
 
 ============================================================
 P1 MERKLE ROOT RESULT
 ============================================================
-  Root: 5181e4fb68637aabcfd433aa5211e354e40bd658ddb14b9a9777151157807ec2
-  Files: 121/121 (0 missing)
-  Depth: 8 levels
+  Root: 0dcf6192d251a8a375fb8a1f6dc0852f66bbd80f3646edce958a3244679f529c
+  Files: 136/136 (0 missing)
+  Depth: 9 levels
   Status: PASS
 ============================================================
 
-[PASS] merkle_root — Merkle root anchored at 5181e4fb68637aab…
+[PASS] merkle_root — Merkle root anchored at 0dcf6192d251a8a3…
 
 [GOV] Running: P1_GOV01_ENFORCEMENT
 ============================================================
 GOV01 EVIDENCE INTEGRITY GATE
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ============================================================
-[GOV01] Anchored SCOPE_MANIFEST_SHA: b58e9929b24f9461…
-[GOV01] Anchored MERKLE_ROOT: 5181e4fb68637aab…
-[GOV01] Anchored RECEIPTS final: dc88399d107b1d09…
-[GOV01] Computed SCOPE_MANIFEST_SHA: b58e9929b24f9461…
-[GOV01] Computed MERKLE_ROOT: 5181e4fb68637aab…
-[GOV01] Computed RECEIPTS final: dc88399d107b1d09…
+[GOV01] Anchored SCOPE_MANIFEST_SHA: a271146caebc16bc…
+[GOV01] Anchored MERKLE_ROOT: 0dcf6192d251a8a3…
+[GOV01] Anchored RECEIPTS final: 30fb1ffa9950f5c8…
+[GOV01] Computed SCOPE_MANIFEST_SHA: a271146caebc16bc…
+[GOV01] Computed MERKLE_ROOT: 0dcf6192d251a8a3…
+[GOV01] Computed RECEIPTS final: 30fb1ffa9950f5c8…
 
 ============================================================
 GOV01 INTEGRITY RESULTS
@@ -290,13 +328,13 @@ FINAL: PASS
 [GOV] Running: R_REASON_CODE_AUDIT
 ============================================================
 REASON CODE AUDIT — SSOT Collision Check
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ============================================================
 
 ============================================================
 REASON CODE AUDIT RESULT
 ============================================================
-  Files scanned: 36
+  Files scanned: 41
   Hard violations: 0
   Unknown code warnings: 0
   Status: PASS
@@ -317,8 +355,17 @@ P1 GOVERNANCE INTEGRITY RESULT
 LANE: A
 COMMAND: npm run -s edge:profit:01:super
 EC: 0
-STARTED_AT: 2026-02-23T15:27:48.762Z
-COMPLETED_AT: 2026-02-23T15:28:01.595Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:05.222Z
+COMPLETED_AT: 2026-02-25T09:22:17.434Z
+STARTED_AT_MS: 1772011325222
+COMPLETED_AT_MS: 1772011337434
+ELAPSED_MS: 12212
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
 [PASS] env_node_truth_authority — NONE
 [PASS] paper_telemetry_real_stub_gen — rows=360
@@ -332,7 +379,7 @@ COMPLETED_AT: 2026-02-23T15:28:01.595Z
 
 ============================================================
 EDGE_PROFIT_00 X2 — Deterministic Anti-Flake [stub]
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ============================================================
 
 [X2] Run 1/2
@@ -356,7 +403,7 @@ RUN_ID: a7fda148d63c
 
 ============================================================
 EDGE_PROFIT_00 X2 — Deterministic Anti-Flake [stub]
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 ============================================================
 
 [X2] Run 1/2
@@ -377,7 +424,7 @@ RUN_ID: a7fda148d63c
 
 [PASS] edge_profit_00_x2 — NONE
 FINAL_VALIDATED=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz
-SHA256=04dca1d987c98ad7f8711e2284304fb09720752bf60d7c460af5d9a225d3758b
+SHA256=e88d97dfba7eb30cd01202fa313966f4725dcaf68415a4fdbf40de74c4b9f4e5
 SHA_FILE=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256
 [PASS] edge_profit_00_release_artifacts_gate — NONE
 [PASS] edge_profit_00_doctor — NONE
@@ -386,8 +433,17 @@ SHA_FILE=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha2
 LANE: A
 COMMAND: npm run -s edge:profit:01:wf-lite
 EC: 0
-STARTED_AT: 2026-02-23T15:28:01.601Z
-COMPLETED_AT: 2026-02-23T15:28:03.966Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:17.436Z
+COMPLETED_AT: 2026-02-25T09:22:19.100Z
+STARTED_AT_MS: 1772011337436
+COMPLETED_AT_MS: 1772011339100
+ELAPSED_MS: 1664
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
 [PASS] edge_walk_forward_lite — NONE
 ```
@@ -395,8 +451,17 @@ COMPLETED_AT: 2026-02-23T15:28:03.966Z
 LANE: B
 COMMAND: EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:expectancy-proof
 EC: 1
-STARTED_AT: 2026-02-23T15:28:03.967Z
-COMPLETED_AT: 2026-02-23T15:28:06.320Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:19.103Z
+COMPLETED_AT: 2026-02-25T09:22:20.767Z
+STARTED_AT_MS: 1772011339103
+COMPLETED_AT_MS: 1772011340767
+ELAPSED_MS: 1664
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
 [NEEDS_DATA] edge_profit_02_expectancy_proof — EP02_REAL_REQUIRED
 ```
@@ -404,8 +469,17 @@ COMPLETED_AT: 2026-02-23T15:28:06.320Z
 LANE: B
 COMMAND: EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:pbo
 EC: 1
-STARTED_AT: 2026-02-23T15:28:06.321Z
-COMPLETED_AT: 2026-02-23T15:28:08.665Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:20.770Z
+COMPLETED_AT: 2026-02-25T09:22:22.419Z
+STARTED_AT_MS: 1772011340770
+COMPLETED_AT_MS: 1772011342419
+ELAPSED_MS: 1649
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
 [NEEDS_DATA] edge_profit_02_pbo_cpcv — EP02_REAL_REQUIRED
 ```
@@ -413,8 +487,17 @@ COMPLETED_AT: 2026-02-23T15:28:08.665Z
 LANE: B
 COMMAND: EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:risk
 EC: 1
-STARTED_AT: 2026-02-23T15:28:08.667Z
-COMPLETED_AT: 2026-02-23T15:28:11.031Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:22.422Z
+COMPLETED_AT: 2026-02-25T09:22:24.049Z
+STARTED_AT_MS: 1772011342422
+COMPLETED_AT_MS: 1772011344049
+ELAPSED_MS: 1627
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
 [NEEDS_DATA] edge_profit_02_risk_mcdd — EP02_REAL_REQUIRED
 ```
@@ -422,109 +505,235 @@ COMPLETED_AT: 2026-02-23T15:28:11.031Z
 LANE: B
 COMMAND: EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:proof:index
 EC: 1
-STARTED_AT: 2026-02-23T15:28:11.032Z
-COMPLETED_AT: 2026-02-23T15:28:13.405Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:24.052Z
+COMPLETED_AT: 2026-02-25T09:22:25.678Z
+STARTED_AT_MS: 1772011344052
+COMPLETED_AT_MS: 1772011345678
+ELAPSED_MS: 1626
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
 [NEEDS_DATA] edge_profit_02_proof_index — EP02_REAL_REQUIRED
 ```
 ## STEP 11
 LANE: A
-COMMAND: npm run -s export:final-validated
+COMMAND: npm run -s verify:netv01:probe
 EC: 0
-STARTED_AT: 2026-02-23T15:28:13.408Z
-COMPLETED_AT: 2026-02-23T15:28:15.934Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:25.680Z
+COMPLETED_AT: 2026-02-25T09:22:27.427Z
+STARTED_AT_MS: 1772011345680
+COMPLETED_AT_MS: 1772011347427
+ELAPSED_MS: 1747
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
-FINAL_VALIDATED=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz
-SHA256=04dca1d987c98ad7f8711e2284304fb09720752bf60d7c460af5d9a225d3758b
-SHA_FILE=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256
+[PASS] netv01_probe — NONE
 ```
 ## STEP 12
 LANE: A
-COMMAND: npm run -s verify:edge:profit:00:release
+COMMAND: npm run -s export:final-validated
 EC: 0
-STARTED_AT: 2026-02-23T15:28:15.935Z
-COMPLETED_AT: 2026-02-23T15:28:18.481Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:27.431Z
+COMPLETED_AT: 2026-02-25T09:22:29.196Z
+STARTED_AT_MS: 1772011347431
+COMPLETED_AT_MS: 1772011349196
+ELAPSED_MS: 1765
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
-[PASS] edge_profit_00_release_artifacts_gate — NONE
+FINAL_VALIDATED=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz
+SHA256=e88d97dfba7eb30cd01202fa313966f4725dcaf68415a4fdbf40de74c4b9f4e5
+SHA_FILE=reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256
 ```
 ## STEP 13
 LANE: A
-COMMAND: npm run -s verify:export:contract
+COMMAND: npm run -s verify:edge:profit:00:release
 EC: 0
-STARTED_AT: 2026-02-23T15:28:18.484Z
-COMPLETED_AT: 2026-02-23T15:28:20.932Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:29.199Z
+COMPLETED_AT: 2026-02-25T09:22:30.859Z
+STARTED_AT_MS: 1772011349199
+COMPLETED_AT_MS: 1772011350859
+ELAPSED_MS: 1660
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
-[PASS] export_contract_integrity_gate — NONE
+[PASS] edge_profit_00_release_artifacts_gate — NONE
 ```
 ## STEP 14
 LANE: A
-COMMAND: npm run -s verify:export:receipt
+COMMAND: npm run -s verify:export:contract
 EC: 0
-STARTED_AT: 2026-02-23T15:28:20.933Z
-COMPLETED_AT: 2026-02-23T15:28:23.385Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:30.862Z
+COMPLETED_AT: 2026-02-25T09:22:32.554Z
+STARTED_AT_MS: 1772011350862
+COMPLETED_AT_MS: 1772011352554
+ELAPSED_MS: 1692
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
-[PASS] export_contract_receipt_format_guard — NONE
+[PASS] export_contract_integrity_gate — NONE
 ```
 ## STEP 15
 LANE: A
-COMMAND: npm run -s gov:final:index
+COMMAND: npm run -s verify:export:receipt
 EC: 0
-STARTED_AT: 2026-02-23T15:28:23.386Z
-COMPLETED_AT: 2026-02-23T15:28:26.313Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:32.558Z
+COMPLETED_AT: 2026-02-25T09:22:34.344Z
+STARTED_AT_MS: 1772011352558
+COMPLETED_AT_MS: 1772011354344
+ELAPSED_MS: 1786
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
-[PASS] final_validated_index — NONE
+[PASS] export_contract_receipt_format_guard — NONE
 ```
 ## STEP 16
 LANE: A
-COMMAND: npm run -s gov:final:fingerprint
+COMMAND: npm run -s gov:final:index
 EC: 0
-STARTED_AT: 2026-02-23T15:28:26.314Z
-COMPLETED_AT: 2026-02-23T15:28:28.856Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:34.348Z
+COMPLETED_AT: 2026-02-25T09:22:36.106Z
+STARTED_AT_MS: 1772011354348
+COMPLETED_AT_MS: 1772011356106
+ELAPSED_MS: 1758
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
-[PASS] final_validated_fingerprint — NONE
+[PASS] final_validated_index — NONE
 ```
 ## STEP 17
 LANE: A
-COMMAND: npm run -s edge:profit:00:doctor
+COMMAND: npm run -s gov:final:fingerprint
 EC: 0
-STARTED_AT: 2026-02-23T15:28:28.857Z
-COMPLETED_AT: 2026-02-23T15:28:31.361Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:36.109Z
+COMPLETED_AT: 2026-02-25T09:22:37.846Z
+STARTED_AT_MS: 1772011356109
+COMPLETED_AT_MS: 1772011357846
+ELAPSED_MS: 1737
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
-[PASS] edge_profit_00_doctor — NONE
+[PASS] final_validated_fingerprint — NONE
 ```
 ## STEP 18
 LANE: A
-COMMAND: npm run -s verify:report:contradiction
+COMMAND: npm run -s edge:profit:00:doctor
 EC: 0
-STARTED_AT: 2026-02-23T15:28:31.362Z
-COMPLETED_AT: 2026-02-23T15:28:33.856Z
+NET_KILL: 0
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:37.850Z
+COMPLETED_AT: 2026-02-25T09:22:39.682Z
+STARTED_AT_MS: 1772011357850
+COMPLETED_AT_MS: 1772011359682
+ELAPSED_MS: 1832
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
-[PASS] report_contradiction_guard — NONE
+[PASS] edge_profit_00_doctor — NONE
 ```
 ## STEP 19
 LANE: A
-COMMAND: npm run -s verify:regression:profile-source
+COMMAND: npm run -s verify:report:contradiction
 EC: 0
-STARTED_AT: 2026-02-23T15:28:33.857Z
-COMPLETED_AT: 2026-02-23T15:28:36.305Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:39.686Z
+COMPLETED_AT: 2026-02-25T09:22:41.609Z
+STARTED_AT_MS: 1772011359686
+COMPLETED_AT_MS: 1772011361609
+ELAPSED_MS: 1923
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
-[PASS] regression_profile_source_mismatch — NONE
+[PASS] report_contradiction_guard — NONE
 ```
 ## STEP 20
 LANE: A
-COMMAND: npm run -s verify:regression:no-stub-promotion
+COMMAND: npm run -s verify:regression:profile-source
 EC: 0
-STARTED_AT: 2026-02-23T15:28:36.307Z
-COMPLETED_AT: 2026-02-23T15:28:40.484Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:41.612Z
+COMPLETED_AT: 2026-02-25T09:22:43.368Z
+STARTED_AT_MS: 1772011361612
+COMPLETED_AT_MS: 1772011363368
+ELAPSED_MS: 1756
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
-[PASS] regression_no_stub_promotion — NONE
+[PASS] regression_profile_source_mismatch — NONE
 ```
 ## STEP 21
 LANE: A
+COMMAND: npm run -s verify:regression:no-stub-promotion
+EC: 0
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:43.371Z
+COMPLETED_AT: 2026-02-25T09:22:47.044Z
+STARTED_AT_MS: 1772011363371
+COMPLETED_AT_MS: 1772011367044
+ELAPSED_MS: 3673
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
+```
+[PASS] regression_no_stub_promotion — NONE
+```
+## STEP 22
+LANE: A
 COMMAND: npm run -s verify:regression:no-sandbox-promotion
 EC: 0
-STARTED_AT: 2026-02-23T15:28:40.485Z
-COMPLETED_AT: 2026-02-23T15:28:45.225Z
+NET_KILL: 1
+TIMEOUT_MS: 900000
+TIMED_OUT: false
+STARTED_AT: 2026-02-25T09:22:47.046Z
+COMPLETED_AT: 2026-02-25T09:22:51.116Z
+STARTED_AT_MS: 1772011367046
+COMPLETED_AT_MS: 1772011371116
+ELAPSED_MS: 4070
+TREE_KILL_ATTEMPTED: false
+TREE_KILL_OK: false
+TREE_KILL_NOTE: not-needed
 ```
 [PASS] regression_no_sandbox_promotion — NONE
 ```

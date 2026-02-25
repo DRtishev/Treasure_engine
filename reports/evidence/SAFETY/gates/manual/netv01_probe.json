@@ -1,0 +1,9 @@
+{
+  "message": "NET kill-switch probe failed network as expected.",
+  "next_action": "npm run -s epoch:edge:profit:public:00:x2:node22",
+  "probe_ec": 0,
+  "reason_code": "NONE",
+  "run_id": "a0e3806a2bb8",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

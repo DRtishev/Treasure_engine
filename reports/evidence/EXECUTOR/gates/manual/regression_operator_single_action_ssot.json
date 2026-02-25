@@ -1,0 +1,9 @@
+{
+  "env_prefixed_next_action": false,
+  "next_action": "npm run -s epoch:victory:seal",
+  "next_action_lines": 2,
+  "reason_code": "NONE",
+  "run_id": "a55643e6aac0",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

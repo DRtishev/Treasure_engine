@@ -2,14 +2,14 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 NEXT_ACTION: npm run -s executor:run:chain
 
 ## Eligibility
 
 - evidence_source: FIXTURE_STUB
 - eligible_for_profit_track: false
-- promotion_eligibility_reason: EP02_REAL_REQUIRED: evidence_source is not REAL.
+- promotion_eligibility_reason: EP02_REAL_REQUIRED: evidence_source is not REAL/REAL_PUBLIC.
 
 ## Gate Matrix
 

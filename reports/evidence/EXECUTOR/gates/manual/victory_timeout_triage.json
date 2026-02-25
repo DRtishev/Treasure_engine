@@ -1,0 +1,61 @@
+{
+  "next_action": "npm run -s epoch:victory:seal",
+  "reason_code": "EC01",
+  "run_id": "a0e3806a2bb8",
+  "schema_version": "1.0.0",
+  "status": "BLOCKED",
+  "steps": [
+    {
+      "cmd": "npm run -s verify:regression:determinism-audit",
+      "ec": 0,
+      "step_index": 1,
+      "timedOut": false,
+      "timeout_ms": 180000
+    },
+    {
+      "cmd": "npm run -s verify:regression:netkill-physics-full-surface",
+      "ec": 0,
+      "step_index": 2,
+      "timedOut": false,
+      "timeout_ms": 180000
+    },
+    {
+      "cmd": "npm run -s verify:regression:node-options-preload-eviction",
+      "ec": 0,
+      "step_index": 3,
+      "timedOut": false,
+      "timeout_ms": 180000
+    },
+    {
+      "cmd": "npm run -s verify:regression:net-kill-preload-hard",
+      "ec": 0,
+      "step_index": 4,
+      "timedOut": false,
+      "timeout_ms": 180000
+    },
+    {
+      "cmd": "npm run -s verify:regression:net-kill-preload-path-safe",
+      "ec": 0,
+      "step_index": 5,
+      "timedOut": false,
+      "timeout_ms": 180000
+    },
+    {
+      "cmd": "npm run -s verify:regression:executor-netkill-runtime-ledger",
+      "ec": 0,
+      "step_index": 6,
+      "timedOut": false,
+      "timeout_ms": 180000
+    },
+    {
+      "cmd": "npm run -s epoch:foundation:seal",
+      "ec": 1,
+      "step_index": 7,
+      "timedOut": false,
+      "timeout_ms": 180000
+    }
+  ],
+  "timeout_cmd": null,
+  "timeout_step_index": null,
+  "triage_mode": true
+}

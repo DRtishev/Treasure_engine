@@ -1,0 +1,14 @@
+{
+  "anomalies_match": true,
+  "ledger_exists": true,
+  "ledger_semantic_hash_match": true,
+  "next_action": "npm run -s verify:regression:netkill-ledger-summary-consistency",
+  "preload_verified_count_match": true,
+  "reason_code": "NONE",
+  "run_id": "da818a2b701a",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "summary_exists": true,
+  "total_steps_match": true,
+  "verify_steps_forced_match": true
+}

@@ -7,7 +7,7 @@
       ],
       "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256",
       "present": true,
-      "sha256": "aa25c62f41530e6bfe109c3220421c19c0df55af60116c7a9a366a0d31949897"
+      "sha256": "272b0186ed5e76017dcca9df0dbc3ef5293caad8715e6fecd288206d91aaa601"
     },
     {
       "alias": true,
@@ -17,7 +17,7 @@
       ],
       "path": "reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz",
       "present": true,
-      "sha256": "04dca1d987c98ad7f8711e2284304fb09720752bf60d7c460af5d9a225d3758b"
+      "sha256": "e88d97dfba7eb30cd01202fa313966f4725dcaf68415a4fdbf40de74c4b9f4e5"
     }
   ],
   "contract_error": "NONE",
@@ -28,7 +28,7 @@
   "missing": [],
   "next_action": "npm run -s executor:run:chain",
   "reason_code": "NONE",
-  "run_id": "a7fda148d63c",
+  "run_id": "a0e3806a2bb8",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

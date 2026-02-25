@@ -1,0 +1,12 @@
+{
+  "checks": {
+    "seal_uses_shared_steps": true,
+    "triage_next_action_is_seal": true,
+    "triage_uses_shared_steps": true
+  },
+  "next_action": "npm run -s epoch:victory:seal",
+  "reason_code": "NONE",
+  "run_id": "a55643e6aac0",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

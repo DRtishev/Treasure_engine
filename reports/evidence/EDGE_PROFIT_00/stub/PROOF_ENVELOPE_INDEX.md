@@ -2,10 +2,18 @@
 
 STATUS: NEEDS_DATA
 REASON_CODE: EP02_REAL_REQUIRED
-RUN_ID: a7fda148d63c
-NEXT_ACTION: npm run -s edge:profit:00:import:csv
+RUN_ID: a0e3806a2bb8
+NEXT_ACTION: npm run -s epoch:edge:profit:public:00:x2:node22
 
 - profile: stub
+
+## Court Summary
+
+- expectancy_ci95_low_gt_zero: true (value=0.28001992)
+- psr_gate: true (psr0=1, min=0.95)
+- min_trl_gate: true (value=3.6, min=2)
+- pbo_gate: false (value=NaN, max=0.3)
+- mcdd_p95_gate: false (value=NaN, max=Infinity)
 
 | gate | status | reason_code | next_action |
 |---|---|---|---|

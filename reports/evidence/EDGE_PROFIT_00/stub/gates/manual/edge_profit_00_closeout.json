@@ -1,5 +1,6 @@
 {
   "active_live_flags": [],
+  "eligible_for_micro_live": false,
   "eligible_for_profit_track": false,
   "evidence_source": "FIXTURE_STUB",
   "gate_results": [
@@ -36,9 +37,9 @@
   ],
   "message": "EDGE_PROFIT_00 closeout PASS.",
   "next_action": "npm run -s executor:run:chain",
-  "promotion_eligibility_reason": "EP02_REAL_REQUIRED: evidence_source is not REAL.",
+  "promotion_eligibility_reason": "EP02_REAL_REQUIRED: evidence_source is not REAL/REAL_PUBLIC.",
   "reason_code": "NONE",
-  "run_id": "a7fda148d63c",
+  "run_id": "a0e3806a2bb8",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

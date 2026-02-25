@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 NEXT_ACTION: npm run -s gov:integrity
 
 ## GOV01 Policy
@@ -15,9 +15,9 @@ Any mismatch => BLOCKED GOV01.
 
 | Check | Anchored (prefix) | Computed (prefix) | Result | Note |
 |-------|-------------------|-------------------|--------|------|
-| C01_SCOPE_MANIFEST_SHA | b58e9929b24f9461… | b58e9929b24f9461… | MATCH | MATCH — no tampering detected |
-| C02_MERKLE_ROOT | 5181e4fb68637aab… | 5181e4fb68637aab… | MATCH | MATCH — no tampering detected |
-| C03_RECEIPTS_CHAIN_FINAL | dc88399d107b1d09… | dc88399d107b1d09… | MATCH | MATCH — no tampering detected |
+| C01_SCOPE_MANIFEST_SHA | a271146caebc16bc… | a271146caebc16bc… | MATCH | MATCH — no tampering detected |
+| C02_MERKLE_ROOT | 0dcf6192d251a8a3… | 0dcf6192d251a8a3… | MATCH | MATCH — no tampering detected |
+| C03_RECEIPTS_CHAIN_FINAL | 30fb1ffa9950f5c8… | 30fb1ffa9950f5c8… | MATCH | MATCH — no tampering detected |
 
 ## Diff Hints
 
@@ -27,8 +27,8 @@ NO DRIFT — all anchored values match computed values.
 
 | Metric | Value |
 |--------|-------|
-| Files in scope | 121 |
-| Files accessible | 121 |
+| Files in scope | 136 |
+| Files accessible | 136 |
 | Comparisons | 3 |
 | Mismatches | 0 |
 

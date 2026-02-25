@@ -27,4 +27,4 @@ Timeout budget note (full-chain regeneration):
 - Do not run mega proof with very small timeout budgets.
 - Example only: `EXEC_TIMEOUT_MS=1800000 NODE22_WRAPPED_TIMEOUT=3600s npm run -s epoch:mega:proof:x2`
 
-NEXT_ACTION: npm run -s epoch:mega:proof:x2
+NEXT_ACTION: npm run -s epoch:foundation:seal
