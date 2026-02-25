@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
+import { COMMANDS_RUN_HEADER_LINES } from '../executor/commands_run_header_ssot.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
@@ -12,18 +13,7 @@ const NEXT_ACTION = 'npm run -s executor:run:chain';
 
 fs.mkdirSync(path.dirname(OUT_JSON), { recursive: true });
 
-const requiredStarts = [
-  '# COMMANDS_RUN',
-  'GENERATED_BY: scripts/executor/executor_run_chain.mjs',
-  'NODE_VERSION:',
-  'NPM_VERSION:',
-  'RUN_ID:',
-  'VERIFY_MODE:',
-  'LANE_A_STATUS:',
-  'LANE_B_STATUS:',
-  'LANE_B_MODE:',
-  'NEXT_ACTION:',
-];
+const requiredStarts = [...COMMANDS_RUN_HEADER_LINES];
 const allowedHeadings = new Set(['# COMMANDS_RUN', '## STEP', '## LANE_SUMMARY', '## NOTES']);
 
 let status = 'PASS';

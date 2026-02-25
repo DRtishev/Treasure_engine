@@ -9,3 +9,5 @@ INTERPRETATION:
 - BLOCKED/FAIL -> run doctor
 
 NEXT_ACTION: npm run -s epoch:victory:seal
+
+If OP_SAFE01 -> npm run -s epoch:victory:seal:accept-restore

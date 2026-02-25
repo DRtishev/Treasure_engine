@@ -10,6 +10,7 @@ const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports/evidence/EXECUTOR');
 const MANUAL = path.join(EXEC_DIR, 'gates/manual');
 const NEXT_ACTION = 'npm run -s epoch:victory:seal';
+const ACCEPT_RESTORE_NEXT_ACTION = 'npm run -s epoch:victory:seal:accept-restore';
 const TEST_MODE_MD = path.join(EXEC_DIR, 'TEST_MODE_ACTIVE.md');
 const NETKILL_SUMMARY = path.join(EXEC_DIR, 'NETKILL_LEDGER_SUMMARY.json');
 const PRECHECK_MD = path.join(EXEC_DIR, 'VICTORY_PRECHECK.md');
@@ -22,6 +23,29 @@ const miniMode = process.env.EXECUTOR_CHAIN_MINI === '1';
 const executionMode = miniMode ? 'MINI_CHAIN' : (victoryTestMode ? 'TEST_MODE' : 'FULL');
 const headProbe = runBounded('git rev-parse HEAD', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
 const HEAD_SHA = headProbe.ec === 0 ? String(headProbe.stdout || '').trim() : 'UNKNOWN';
+
+
+const OP_SAFE_ALLOWLIST_PREFIXES = [
+  'reports/evidence/',
+  'artifacts/incoming/',
+];
+
+function normalizePathForPolicy(relPath) {
+  return String(relPath || '').trim().replace(/\\/g, '/');
+}
+
+function isAllowlistedEvidencePath(relPath) {
+  const norm = normalizePathForPolicy(relPath);
+  return OP_SAFE_ALLOWLIST_PREFIXES.some((prefix) => norm.startsWith(prefix));
+}
+
+function filterOperatorRelevant(paths) {
+  return (Array.isArray(paths) ? paths : [])
+    .map((p) => normalizePathForPolicy(p))
+    .filter(Boolean)
+    .filter((p) => !isAllowlistedEvidencePath(p));
+}
+
 
 function toMs(iso, fallback) {
   const v = Date.parse(String(iso || ''));
@@ -104,9 +128,10 @@ function computeSemanticHash(status, reason_code, authoritative_run, steps, time
   };
 }
 
-function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run, timeoutInfo = {} }) {
+function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run, timeoutInfo = {}, next_action = NEXT_ACTION }) {
   const { semantic, semantic_hash } = computeSemanticHash(status, reason_code, authoritative_run, recs, timeoutInfo);
-  writeMd(path.join(EXEC_DIR, 'VICTORY_SEAL.md'), `# VICTORY_SEAL.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n\n## STEPS\n${recs.map((r) => `- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms}\n  STARTED_AT_MS: ${r.started_at_ms}\n  COMPLETED_AT_MS: ${r.completed_at_ms}\n  TREE_KILL_ATTEMPTED: ${r.tree_kill_attempted}\n  TREE_KILL_OK: ${r.tree_kill_ok}\n  TREE_KILL_NOTE: ${r.tree_kill_note}`).join('\n')}\n`);
+  const exit_code = status === 'PASS' ? 0 : (status === 'NEEDS_DATA' && reason_code === 'RDY01' ? 2 : 1);
+  writeMd(path.join(EXEC_DIR, 'VICTORY_SEAL.md'), `# VICTORY_SEAL.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${next_action}\nEXIT_CODE: ${exit_code}\n\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n\n## STEPS\n${recs.map((r) => `- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms}\n  STARTED_AT_MS: ${r.started_at_ms}\n  COMPLETED_AT_MS: ${r.completed_at_ms}\n  TREE_KILL_ATTEMPTED: ${r.tree_kill_attempted}\n  TREE_KILL_OK: ${r.tree_kill_ok}\n  TREE_KILL_NOTE: ${r.tree_kill_note}`).join('\n')}\n`);
 
   writeJsonDeterministic(path.join(MANUAL, 'victory_seal.json'), {
     schema_version: '1.0.0',
@@ -114,7 +139,7 @@ function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, compl
     reason_code,
     head_sha: HEAD_SHA,
     run_id: RUN_ID,
-    next_action: NEXT_ACTION,
+    next_action,
     execution_mode: executionMode,
     test_mode: victoryTestMode,
     authoritative_run,
@@ -124,6 +149,7 @@ function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, compl
     timeout_ms: timeoutInfo.timeout_ms ?? null,
     steps: semantic.steps,
     semantic_hash,
+    exit_code,
     volatile: {
       started_at_ms,
       completed_at_ms,
@@ -140,18 +166,18 @@ function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, compl
   if (fs.existsSync(NETKILL_SUMMARY)) {
     try { netkill_summary_hash = String(JSON.parse(fs.readFileSync(NETKILL_SUMMARY, 'utf8')).ledger_semantic_hash || 'MISSING'); } catch { netkill_summary_hash = 'INVALID'; }
   }
-  writeMd(path.join(EXEC_DIR, 'EXECUTION_FORENSICS.md'), `# EXECUTION_FORENSICS.md\n\nSTATUS: PASS\n\n- preload_abs_path: ${path.join(ROOT, 'scripts', 'safety', 'net_kill_preload.cjs')}\n- node_version: ${process.version}\n- net_kill_runtime_probe_result: ${netkill_probe_result}\n- execution_mode: ${executionMode}\n- test_mode: ${victoryTestMode}\n- netkill_summary_hash: ${netkill_summary_hash}\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n- operator_next_action: ${NEXT_ACTION}\n- executor_classification_mode: verify|gov|p0|edge_profit|export_final_validated\n`);
+  writeMd(path.join(EXEC_DIR, 'EXECUTION_FORENSICS.md'), `# EXECUTION_FORENSICS.md\n\nSTATUS: PASS\n\n- preload_abs_path: ${path.join(ROOT, 'scripts', 'safety', 'net_kill_preload.cjs')}\n- node_version: ${process.version}\n- net_kill_runtime_probe_result: ${netkill_probe_result}\n- execution_mode: ${executionMode}\n- test_mode: ${victoryTestMode}\n- netkill_summary_hash: ${netkill_summary_hash}\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n- operator_next_action: ${next_action}\n- executor_classification_mode: verify|gov|p0|edge_profit|export_final_validated\n`);
 }
 
-function writeBaselineSafety({ status, reason_code, tracked, staged, override }) {
-  writeMd(BASELINE_SAFETY_MD, `# BASELINE_SAFETY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- tracked_n: ${tracked.length}\n- staged_n: ${staged.length}\n- override_active: ${override}\n\n## TRACKED_FILES\n${tracked.map((f) => `- ${f}`).join('\n') || '- NONE'}\n\n## STAGED_FILES\n${staged.map((f) => `- ${f}`).join('\n') || '- NONE'}\n\n${status === 'BLOCKED' ? 'Set TREASURE_I_UNDERSTAND_RESTORE=1 only if you explicitly accept tracked-file restore risk.\n' : ''}`);
+function writeBaselineSafety({ status, reason_code, tracked, staged, override, next_action = NEXT_ACTION }) {
+  writeMd(BASELINE_SAFETY_MD, `# BASELINE_SAFETY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${next_action}\n\n- tracked_n: ${tracked.length}\n- staged_n: ${staged.length}\n- override_active: ${override}\n\n## TRACKED_FILES\n${tracked.map((f) => `- ${f}`).join('\n') || '- NONE'}\n\n## STAGED_FILES\n${staged.map((f) => `- ${f}`).join('\n') || '- NONE'}\n\n${status === 'BLOCKED' ? `Use ${ACCEPT_RESTORE_NEXT_ACTION} only if you explicitly accept tracked/staged restore risk.\n` : ''}`);
   writeJsonDeterministic(path.join(MANUAL, 'baseline_safety.json'), {
     schema_version: '1.0.0',
     status,
     reason_code,
     head_sha: HEAD_SHA,
     run_id: RUN_ID,
-    next_action: NEXT_ACTION,
+    next_action,
     tracked_n: tracked.length,
     staged_n: staged.length,
     tracked_files: tracked,
@@ -162,8 +188,10 @@ function writeBaselineSafety({ status, reason_code, tracked, staged, override })
 
 const preTracked = runBounded('git diff --name-only', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
 const preStaged = runBounded('git diff --cached --name-only', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
-const trackedBeforeBaseline = sortedLines((preTracked.stdout + preTracked.stderr).trim());
-const stagedBeforeBaseline = sortedLines((preStaged.stdout + preStaged.stderr).trim());
+const trackedBeforeBaselineRaw = sortedLines((preTracked.stdout + preTracked.stderr).trim());
+const stagedBeforeBaselineRaw = sortedLines((preStaged.stdout + preStaged.stderr).trim());
+const trackedBeforeBaseline = filterOperatorRelevant(trackedBeforeBaselineRaw);
+const stagedBeforeBaseline = filterOperatorRelevant(stagedBeforeBaselineRaw);
 const restoreOverride = process.env.TREASURE_I_UNDERSTAND_RESTORE === '1';
 
 if (!restoreOverride && (trackedBeforeBaseline.length > 0 || stagedBeforeBaseline.length > 0)) {
@@ -173,8 +201,9 @@ if (!restoreOverride && (trackedBeforeBaseline.length > 0 || stagedBeforeBaselin
     tracked: trackedBeforeBaseline,
     staged: stagedBeforeBaseline,
     override: false,
+    next_action: ACCEPT_RESTORE_NEXT_ACTION,
   });
-  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'OP_SAFE01', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false });
+  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'OP_SAFE01', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false, next_action: ACCEPT_RESTORE_NEXT_ACTION });
   console.log('[BLOCKED] executor_epoch_victory_seal — OP_SAFE01');
   process.exit(1);
 }
@@ -185,6 +214,7 @@ writeBaselineSafety({
   tracked: trackedBeforeBaseline,
   staged: stagedBeforeBaseline,
   override: restoreOverride,
+  next_action: NEXT_ACTION,
 });
 
 const preBaseline = runBounded('npm run -s executor:clean:baseline', { cwd: ROOT, env: process.env, timeoutMs: 60000, maxBuffer: 16 * 1024 * 1024 });

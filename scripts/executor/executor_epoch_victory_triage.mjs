@@ -77,10 +77,15 @@ for (const step of stepPlan) {
     elapsed_ms: elapsedMs,
   });
   if (r.ec !== 0) {
-    status = 'BLOCKED';
-    reason_code = r.timedOut ? 'TO01' : 'EC01';
     firstFailingStepIndex = step.step_index;
     firstFailingCmd = step.cmd;
+    if (step.cmd.includes('verify:public:data:readiness') && r.ec === 2) {
+      status = 'NEEDS_DATA';
+      reason_code = 'RDY01';
+    } else {
+      status = 'BLOCKED';
+      reason_code = r.timedOut ? 'TO01' : 'EC01';
+    }
     break;
   }
 }
@@ -109,4 +114,4 @@ writeJsonDeterministic(path.join(MANUAL, 'victory_timeout_triage.json'), {
 });
 
 console.log(`[${status}] executor_epoch_victory_triage — ${reason_code}`);
-process.exit(status === 'PASS' ? 0 : 1);
+process.exit(status === 'PASS' ? 0 : (status === 'NEEDS_DATA' ? 2 : 1));

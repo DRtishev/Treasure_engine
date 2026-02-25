@@ -22,6 +22,7 @@ if (fs.existsSync(pidFile)) childPid = Number((fs.readFileSync(pidFile, 'utf8') 
 
 let kill0 = 'unsupported';
 let ps = 'unavailable';
+let ps_state = 'unknown';
 let status = 'PASS';
 let reason_code = 'NONE';
 if (process.platform === 'win32') {
@@ -36,10 +37,13 @@ if (process.platform === 'win32') {
       try { process.kill(childPid, 0); kill0 = 'alive'; } catch { kill0 = 'gone'; }
       const p = spawnSync('ps', ['-p', String(childPid)], { encoding: 'utf8' });
       ps = (p.status === 0 && p.stdout.includes(String(childPid))) ? 'present' : 'gone';
+      const pState = spawnSync('ps', ['-o', 'stat=', '-p', String(childPid)], { encoding: 'utf8' });
+      ps_state = (pState.status === 0 ? String(pState.stdout || '').trim() : '') || 'unknown';
+      if (/(^|\s)Z/.test(ps_state)) ps = 'gone';
       if (kill0 === 'gone' && ps !== 'present') break;
       Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 100);
     }
-    if (kill0 === 'alive') { status = 'FAIL'; reason_code = 'RG_BKT02'; }
+    if (kill0 === 'alive' && ps === 'present') { status = 'FAIL'; reason_code = 'RG_BKT02'; }
     if (ps === 'present') { status = 'FAIL'; reason_code = 'RG_BKT03'; }
   }
 }
@@ -62,7 +66,8 @@ NEXT_ACTION: ${NEXT_ACTION}
 - child_pid: ${childPid || 0}
 - kill0: ${kill0}
 - ps: ${ps}
+- ps_state: ${ps_state}
 `);
-writeJsonDeterministic(path.join(MANUAL, 'regression_bounded_kill_tree.json'), { schema_version:'1.0.0', status, reason_code, run_id:RUN_ID, next_action:NEXT_ACTION, platform:process.platform, timeout_ec:r.ec, timed_out:r.timedOut, tree_kill_attempted:Boolean(r.tree_kill_attempted), tree_kill_ok:Boolean(r.tree_kill_ok), tree_kill_note:r.tree_kill_note || 'NONE', child_pid: childPid || 0, kill0, ps });
+writeJsonDeterministic(path.join(MANUAL, 'regression_bounded_kill_tree.json'), { schema_version:'1.0.0', status, reason_code, run_id:RUN_ID, next_action:NEXT_ACTION, platform:process.platform, timeout_ec:r.ec, timed_out:r.timedOut, tree_kill_attempted:Boolean(r.tree_kill_attempted), tree_kill_ok:Boolean(r.tree_kill_ok), tree_kill_note:r.tree_kill_note || 'NONE', child_pid: childPid || 0, kill0, ps, ps_state });
 console.log(`[${status}] regression_bounded_kill_tree — ${reason_code}`);
 process.exit(status === 'PASS' ? 0 : 1);
