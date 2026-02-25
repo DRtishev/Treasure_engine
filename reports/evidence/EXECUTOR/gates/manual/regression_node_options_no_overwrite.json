@@ -1,0 +1,11 @@
+{
+  "child_bypass_heuristic": false,
+  "has_additive_merge": true,
+  "has_direct_overwrite": false,
+  "has_preload_persistence": true,
+  "next_action": "npm run -s verify:regression:node-options-no-overwrite",
+  "reason_code": "NONE",
+  "run_id": "da818a2b701a",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

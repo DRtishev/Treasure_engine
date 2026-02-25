@@ -1,0 +1,21 @@
+{
+  "authoritative_run": false,
+  "execution_mode": "FULL",
+  "next_action": "npm run -s epoch:victory:seal",
+  "reason_code": "SNAP01",
+  "run_id": "1f97d6ca0785",
+  "schema_version": "1.0.0",
+  "semantic_hash": "8aa4833b0a5579708e5755e92ba8e2c9bedcf351f5c4f9c108917fd69920c0c6",
+  "status": "BLOCKED",
+  "steps": [],
+  "test_mode": false,
+  "timeout_cmd": null,
+  "timeout_elapsed_ms": null,
+  "timeout_ms": null,
+  "timeout_step_index": null,
+  "volatile": {
+    "completed_at_ms": 1772003316522,
+    "durations": [],
+    "started_at_ms": 1772003316522
+  }
+}

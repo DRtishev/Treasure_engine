@@ -2,11 +2,12 @@
   "evidence_source": "FIXTURE_STUB",
   "expected_profile": "stub",
   "ingest_json": "reports/evidence/EDGE_PROFIT_00/stub/gates/manual/paper_evidence_ingest.json",
+  "legacy_root_manual_exists": true,
   "message": "Profile/evidence_source mapping is consistent.",
   "next_action": "npm run -s executor:run:chain",
   "profile_marker": "stub",
   "reason_code": "NONE",
-  "run_id": "a7fda148d63c",
+  "run_id": "a0e3806a2bb8",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

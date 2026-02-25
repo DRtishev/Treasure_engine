@@ -1,10 +1,12 @@
 {
   "commands_run_path": "reports/evidence/EXECUTOR/COMMANDS_RUN.md",
-  "diagnostics": [],
-  "message": "COMMANDS_RUN guard passed.",
+  "diagnostics": [
+    "missing_or_reordered_header:NEXT_ACTION:"
+  ],
+  "message": "COMMANDS_RUN required SSOT header lines are missing or reordered.",
   "next_action": "npm run -s executor:run:chain",
-  "reason_code": "NONE",
-  "run_id": "a7fda148d63c",
+  "reason_code": "LOG01",
+  "run_id": "a0e3806a2bb8",
   "schema_version": "1.0.0",
-  "status": "PASS"
+  "status": "FAIL"
 }

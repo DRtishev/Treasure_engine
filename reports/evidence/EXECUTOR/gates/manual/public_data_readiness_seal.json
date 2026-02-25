@@ -1,0 +1,16 @@
+{
+  "missing": [
+    "artifacts/incoming/bybit_liq.lock.json",
+    "artifacts/incoming/bybit_liq.raw.json"
+  ],
+  "next_action": "npm run -s verify:public:data:readiness",
+  "reason_code": "RDY01",
+  "replay_ec": 0,
+  "required": [
+    "artifacts/incoming/bybit_liq.lock.json",
+    "artifacts/incoming/bybit_liq.raw.json"
+  ],
+  "run_id": "da818a2b701a",
+  "schema_version": "1.0.0",
+  "status": "NEEDS_DATA"
+}

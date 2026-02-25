@@ -1,0 +1,390 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import crypto from 'node:crypto';
+import { runBounded } from './spawn_bounded.mjs';
+import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
+import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
+import { getVictorySteps } from './victory_steps.mjs';
+
+const ROOT = path.resolve(process.cwd());
+const EXEC_DIR = path.join(ROOT, 'reports/evidence/EXECUTOR');
+const MANUAL = path.join(EXEC_DIR, 'gates/manual');
+const NEXT_ACTION = 'npm run -s epoch:victory:seal';
+const TEST_MODE_MD = path.join(EXEC_DIR, 'TEST_MODE_ACTIVE.md');
+const NETKILL_SUMMARY = path.join(EXEC_DIR, 'NETKILL_LEDGER_SUMMARY.json');
+const PRECHECK_MD = path.join(EXEC_DIR, 'VICTORY_PRECHECK.md');
+const TIMEOUT_TRIAGE_MD = path.join(EXEC_DIR, 'VICTORY_TIMEOUT_TRIAGE.md');
+const BASELINE_SAFETY_MD = path.join(EXEC_DIR, 'BASELINE_SAFETY.md');
+fs.mkdirSync(MANUAL, { recursive: true });
+
+const victoryTestMode = process.env.VICTORY_TEST_MODE === '1';
+const miniMode = process.env.EXECUTOR_CHAIN_MINI === '1';
+const executionMode = miniMode ? 'MINI_CHAIN' : (victoryTestMode ? 'TEST_MODE' : 'FULL');
+
+function toMs(iso, fallback) {
+  const v = Date.parse(String(iso || ''));
+  return Number.isFinite(v) ? v : fallback;
+}
+
+function sortedLines(text) {
+  return String(text || '').split(/\r?\n/).map((v) => v.trim()).filter(Boolean).sort((a, b) => a.localeCompare(b));
+}
+
+function toMdBullets(items, max = 50) {
+  if (!Array.isArray(items) || items.length === 0) return '- NONE';
+  const head = items.slice(0, max).map((f) => `- ${f}`);
+  const extra = items.length - head.length;
+  if (extra > 0) head.push(`- ... (+${extra} more)`);
+  return head.join('\n');
+}
+
+function parseBaselineTelemetry(outText) {
+  const m = String(outText || '').match(/BASELINE_TELEMETRY_JSON:(\{[^\n]+\})/);
+  if (!m) {
+    return {
+      semantic: { baseline_files_restored_n: null, baseline_evidence_removed_n: null },
+      volatile: { baseline_clean_elapsed_ms: null },
+    };
+  }
+  try {
+    const j = JSON.parse(m[1]);
+    return {
+      semantic: {
+        baseline_files_restored_n: Number.isFinite(Number(j?.semantic?.baseline_files_restored_n)) ? Number(j.semantic.baseline_files_restored_n) : null,
+        baseline_evidence_removed_n: Number.isFinite(Number(j?.semantic?.baseline_evidence_removed_n)) ? Number(j.semantic.baseline_evidence_removed_n) : null,
+      },
+      volatile: {
+        baseline_clean_elapsed_ms: Number.isFinite(Number(j?.volatile?.baseline_clean_elapsed_ms)) ? Number(j.volatile.baseline_clean_elapsed_ms) : null,
+      },
+    };
+  } catch {
+    return {
+      semantic: { baseline_files_restored_n: null, baseline_evidence_removed_n: null },
+      volatile: { baseline_clean_elapsed_ms: null },
+    };
+  }
+}
+
+function computeDriftSeverity(tracked, staged, untracked) {
+  if (tracked.length > 0) return 'HIGH';
+  if (staged.length > 0) return 'MEDIUM';
+  if (untracked.length > 0) return 'LOW';
+  return 'NONE';
+}
+
+function computeSemanticHash(status, reason_code, authoritative_run, steps, timeoutInfo = {}) {
+  const semantic = {
+    status,
+    reason_code,
+    execution_mode: executionMode,
+    test_mode: victoryTestMode,
+    authoritative_run,
+    timeout_step_index: timeoutInfo.timeout_step_index ?? null,
+    timeout_cmd: timeoutInfo.timeout_cmd ?? null,
+    timeout_elapsed_ms: timeoutInfo.timeout_elapsed_ms ?? null,
+    timeout_ms: timeoutInfo.timeout_ms ?? null,
+    steps: steps.map((r) => ({
+      step_index: r.step_index,
+      cmd: r.cmd,
+      ec: r.ec,
+      timedOut: r.timedOut,
+      timeout_ms: r.timeout_ms,
+      elapsed_ms: r.elapsed_ms,
+      tree_kill_attempted: r.tree_kill_attempted,
+      tree_kill_ok: r.tree_kill_ok,
+      tree_kill_note: r.tree_kill_note,
+    })),
+  };
+  return {
+    semantic,
+    semantic_hash: crypto.createHash('sha256').update(JSON.stringify(semantic)).digest('hex'),
+  };
+}
+
+function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run, timeoutInfo = {} }) {
+  const { semantic, semantic_hash } = computeSemanticHash(status, reason_code, authoritative_run, recs, timeoutInfo);
+  writeMd(path.join(EXEC_DIR, 'VICTORY_SEAL.md'), `# VICTORY_SEAL.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n\n## STEPS\n${recs.map((r) => `- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms}\n  STARTED_AT_MS: ${r.started_at_ms}\n  COMPLETED_AT_MS: ${r.completed_at_ms}\n  TREE_KILL_ATTEMPTED: ${r.tree_kill_attempted}\n  TREE_KILL_OK: ${r.tree_kill_ok}\n  TREE_KILL_NOTE: ${r.tree_kill_note}`).join('\n')}\n`);
+
+  writeJsonDeterministic(path.join(MANUAL, 'victory_seal.json'), {
+    schema_version: '1.0.0',
+    status,
+    reason_code,
+    run_id: RUN_ID,
+    next_action: NEXT_ACTION,
+    execution_mode: executionMode,
+    test_mode: victoryTestMode,
+    authoritative_run,
+    timeout_step_index: timeoutInfo.timeout_step_index ?? null,
+    timeout_cmd: timeoutInfo.timeout_cmd ?? null,
+    timeout_elapsed_ms: timeoutInfo.timeout_elapsed_ms ?? null,
+    timeout_ms: timeoutInfo.timeout_ms ?? null,
+    steps: semantic.steps,
+    semantic_hash,
+    volatile: {
+      started_at_ms,
+      completed_at_ms,
+      durations: recs.map((r) => ({ step_index: r.step_index, cmd: r.cmd, duration_ms: r.elapsed_ms })),
+    },
+  });
+
+  const netkillProbePath = path.join(MANUAL, 'regression_executor_netkill_runtime_ledger.json');
+  let netkill_probe_result = 'MISSING';
+  if (fs.existsSync(netkillProbePath)) {
+    try { netkill_probe_result = String(JSON.parse(fs.readFileSync(netkillProbePath, 'utf8')).status || 'MISSING'); } catch { netkill_probe_result = 'INVALID'; }
+  }
+  let netkill_summary_hash = 'MISSING';
+  if (fs.existsSync(NETKILL_SUMMARY)) {
+    try { netkill_summary_hash = String(JSON.parse(fs.readFileSync(NETKILL_SUMMARY, 'utf8')).ledger_semantic_hash || 'MISSING'); } catch { netkill_summary_hash = 'INVALID'; }
+  }
+  writeMd(path.join(EXEC_DIR, 'EXECUTION_FORENSICS.md'), `# EXECUTION_FORENSICS.md\n\nSTATUS: PASS\n\n- preload_abs_path: ${path.join(ROOT, 'scripts', 'safety', 'net_kill_preload.cjs')}\n- node_version: ${process.version}\n- net_kill_runtime_probe_result: ${netkill_probe_result}\n- execution_mode: ${executionMode}\n- test_mode: ${victoryTestMode}\n- netkill_summary_hash: ${netkill_summary_hash}\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n- operator_next_action: ${NEXT_ACTION}\n- executor_classification_mode: verify|gov|p0|edge_profit|export_final_validated\n`);
+}
+
+function writeBaselineSafety({ status, reason_code, tracked, staged, override }) {
+  writeMd(BASELINE_SAFETY_MD, `# BASELINE_SAFETY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- tracked_n: ${tracked.length}\n- staged_n: ${staged.length}\n- override_active: ${override}\n\n## TRACKED_FILES\n${tracked.map((f) => `- ${f}`).join('\n') || '- NONE'}\n\n## STAGED_FILES\n${staged.map((f) => `- ${f}`).join('\n') || '- NONE'}\n\n${status === 'BLOCKED' ? 'Set TREASURE_I_UNDERSTAND_RESTORE=1 only if you explicitly accept tracked-file restore risk.\n' : ''}`);
+  writeJsonDeterministic(path.join(MANUAL, 'baseline_safety.json'), {
+    schema_version: '1.0.0',
+    status,
+    reason_code,
+    run_id: RUN_ID,
+    next_action: NEXT_ACTION,
+    tracked_n: tracked.length,
+    staged_n: staged.length,
+    tracked_files: tracked,
+    staged_files: staged,
+    override_active: override,
+  });
+}
+
+const preTracked = runBounded('git diff --name-only', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
+const preStaged = runBounded('git diff --cached --name-only', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
+const trackedBeforeBaseline = sortedLines((preTracked.stdout + preTracked.stderr).trim());
+const stagedBeforeBaseline = sortedLines((preStaged.stdout + preStaged.stderr).trim());
+const restoreOverride = process.env.TREASURE_I_UNDERSTAND_RESTORE === '1';
+
+if (!restoreOverride && (trackedBeforeBaseline.length > 0 || stagedBeforeBaseline.length > 0)) {
+  writeBaselineSafety({
+    status: 'BLOCKED',
+    reason_code: 'OP_SAFE01',
+    tracked: trackedBeforeBaseline,
+    staged: stagedBeforeBaseline,
+    override: false,
+  });
+  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'OP_SAFE01', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false });
+  console.log('[BLOCKED] executor_epoch_victory_seal — OP_SAFE01');
+  process.exit(1);
+}
+
+writeBaselineSafety({
+  status: 'PASS',
+  reason_code: 'NONE',
+  tracked: trackedBeforeBaseline,
+  staged: stagedBeforeBaseline,
+  override: restoreOverride,
+});
+
+const preBaseline = runBounded('npm run -s executor:clean:baseline', { cwd: ROOT, env: process.env, timeoutMs: 60000, maxBuffer: 16 * 1024 * 1024 });
+const baseline_precheck_ok = preBaseline.ec === 0;
+const baselineOutputRaw = (preBaseline.stdout + preBaseline.stderr).trim();
+const baselineTelemetry = parseBaselineTelemetry(baselineOutputRaw);
+const baselineOutputForMd = baselineOutputRaw.replace(/BASELINE_TELEMETRY_JSON:\{[^\n]+\}/g, `BASELINE_TELEMETRY_JSON:${JSON.stringify(baselineTelemetry)}`);
+
+function writePrecheck({ status, reason_code, clean_tree_ok, drift_detected, drift_severity, tracked, staged, untracked, git_status, git_diff, git_diff_cached, snap_reason_code }) {
+  const guidance = [
+    '### SNAP01: WORKING TREE NOT CLEAN',
+    '',
+    'Detected:',
+    `- tracked: ${tracked.length}`,
+    `- staged: ${staged.length}`,
+    `- untracked: ${untracked.length}`,
+    '',
+    '#### Quick Fix Options',
+    '',
+    'A) discard untracked',
+    '   git clean -fd',
+    '',
+    'B) restore changes',
+    '   git restore --staged .',
+    '   git restore .',
+    '',
+    'C) commit drift',
+    '   git add -A',
+    '   git commit -m "chore: reconcile drift"',
+    '',
+    'Then run:',
+    'npm run -s epoch:victory:seal',
+  ].join('\n');
+
+  writeMd(PRECHECK_MD, `# VICTORY_PRECHECK.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- baseline_clean_ec: ${preBaseline.ec}\n- baseline_precheck_ok: ${baseline_precheck_ok}\n- clean_tree_ok: ${clean_tree_ok}\n- drift_detected: ${drift_detected}\n- drift_severity: ${drift_severity}\n- snap_reason_code: ${snap_reason_code}\n- dirty_tracked_n: ${tracked.length}\n- dirty_staged_n: ${staged.length}\n- dirty_untracked_n: ${untracked.length}\n\n## DIRTY_TRACKED_FILES (max 50 shown)\n${toMdBullets(tracked)}\n\n## DIRTY_STAGED_FILES (max 50 shown)\n${toMdBullets(staged)}\n\n## DIRTY_UNTRACKED_FILES (max 50 shown)\n${toMdBullets(untracked)}\n\n### Baseline Clean Telemetry (SEMANTIC)\n- baseline_files_restored_n: ${baselineTelemetry.semantic.baseline_files_restored_n ?? 'UNKNOWN'}\n- baseline_evidence_removed_n: ${baselineTelemetry.semantic.baseline_evidence_removed_n ?? 'UNKNOWN'}\n\n### Baseline Clean Telemetry (VOLATILE)\n- baseline_clean_elapsed_ms: ${baselineTelemetry.volatile.baseline_clean_elapsed_ms ?? 'UNKNOWN'}\n\n## BASELINE_CLEAN_OUTPUT\n\`\`\`\n${baselineOutputForMd || '(none)'}\n\`\`\`\n\n## GIT_STATUS_SB\n\`\`\`\n${git_status || '(none)'}\n\`\`\`\n\n## GIT_DIFF_NAME_ONLY\n\`\`\`\n${git_diff || '(none)'}\n\`\`\`\n\n## GIT_DIFF_CACHED_NAME_ONLY\n\`\`\`\n${git_diff_cached || '(none)'}\n\`\`\`\n\n${status === 'BLOCKED' ? guidance : ''}\n`);
+
+  writeJsonDeterministic(path.join(MANUAL, 'victory_precheck.json'), {
+    schema_version: '1.0.0',
+    status,
+    reason_code,
+    run_id: RUN_ID,
+    next_action: NEXT_ACTION,
+    baseline_clean_ec: preBaseline.ec,
+    baseline_precheck_ok,
+    clean_tree_ok,
+    drift_detected,
+    drift_severity,
+    snap_reason_code,
+    dirty_tracked_files: tracked,
+    dirty_staged_files: staged,
+    dirty_untracked_files: untracked,
+    baseline_telemetry: {
+      semantic: {
+        baseline_files_restored_n: baselineTelemetry.semantic.baseline_files_restored_n,
+        baseline_evidence_removed_n: baselineTelemetry.semantic.baseline_evidence_removed_n,
+      },
+      volatile: {
+        baseline_clean_elapsed_ms: baselineTelemetry.volatile.baseline_clean_elapsed_ms,
+      },
+    },
+    git_status,
+    git_diff,
+    git_diff_cached,
+  });
+}
+
+const preStatus = runBounded('git status -sb', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
+const preDiff = runBounded('git diff --name-only', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
+const preDiffCached = runBounded('git diff --cached --name-only', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
+const preUntracked = runBounded('git ls-files --others --exclude-standard', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
+
+const gitStatusText = (preStatus.stdout + preStatus.stderr).trim();
+const gitDiffText = (preDiff.stdout + preDiff.stderr).trim();
+const gitDiffCachedText = (preDiffCached.stdout + preDiffCached.stderr).trim();
+const tracked = sortedLines(gitDiffText);
+const staged = sortedLines(gitDiffCachedText);
+const untracked = sortedLines((preUntracked.stdout + preUntracked.stderr).trim());
+
+const clean_tree_ok = baseline_precheck_ok
+  && preStatus.ec === 0
+  && preDiff.ec === 0
+  && preDiffCached.ec === 0
+  && preUntracked.ec === 0
+  && tracked.length === 0
+  && staged.length === 0
+  && untracked.length === 0;
+const drift_detected = tracked.length > 0 || staged.length > 0 || untracked.length > 0;
+const drift_severity = computeDriftSeverity(tracked, staged, untracked);
+
+if (!clean_tree_ok) {
+  writePrecheck({
+    status: 'BLOCKED',
+    reason_code: 'SNAP01',
+    clean_tree_ok,
+    drift_detected: true,
+    drift_severity,
+    tracked,
+    staged,
+    untracked,
+    git_status: gitStatusText,
+    git_diff: gitDiffText,
+    git_diff_cached: gitDiffCachedText,
+    snap_reason_code: 'SNAP01',
+  });
+  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'SNAP01', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false });
+  console.log('[BLOCKED] executor_epoch_victory_seal — SNAP01');
+  process.exit(1);
+}
+
+writePrecheck({
+  status: 'PASS',
+  reason_code: 'NONE',
+  clean_tree_ok,
+  drift_detected,
+  drift_severity,
+  tracked,
+  staged,
+  untracked,
+  git_status: gitStatusText,
+  git_diff: gitDiffText,
+  git_diff_cached: gitDiffCachedText,
+  snap_reason_code: 'NONE',
+});
+
+if (victoryTestMode && String(process.env.CI || '').toLowerCase() === 'true') {
+  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'RG_TEST01', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false });
+  console.log('[BLOCKED] executor_epoch_victory_seal — RG_TEST01');
+  process.exit(1);
+}
+if (victoryTestMode) {
+  writeMd(TEST_MODE_MD, `# TEST_MODE_ACTIVE.md\n\nSTATUS: PASS\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- test_mode: true\n- execution_mode: ${executionMode}`);
+} else {
+  try { fs.unlinkSync(TEST_MODE_MD); } catch {}
+}
+if (victoryTestMode && !fs.existsSync(TEST_MODE_MD)) {
+  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'RG_TEST02', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false });
+  console.log('[BLOCKED] executor_epoch_victory_seal — RG_TEST02');
+  process.exit(1);
+}
+
+const steps = getVictorySteps(victoryTestMode);
+const recs = [];
+let status = 'PASS';
+let reason_code = 'NONE';
+let timeoutInfo = {};
+const stepTimeoutMs = Number(process.env.VICTORY_STEP_TIMEOUT_MS || 120000);
+const started_at_ms = Date.now();
+for (const [i, cmd] of steps.entries()) {
+  const r = runBounded(cmd, { cwd: ROOT, env: process.env, maxBuffer: 64 * 1024 * 1024, timeoutMs: stepTimeoutMs });
+  const started_at_ms_step = toMs(r.startedAt, Date.now());
+  const completed_at_ms_step = toMs(r.completedAt, started_at_ms_step);
+  const stepRec = {
+    step_index: i + 1,
+    cmd,
+    timeout_ms: r.timeout_ms,
+    started_at_ms: started_at_ms_step,
+    completed_at_ms: completed_at_ms_step,
+    elapsed_ms: Math.max(0, completed_at_ms_step - started_at_ms_step),
+    timedOut: Boolean(r.timedOut),
+    ec: r.ec,
+    tree_kill_attempted: Boolean(r.tree_kill_attempted),
+    tree_kill_ok: Boolean(r.tree_kill_ok),
+    tree_kill_note: String(r.tree_kill_note || ''),
+  };
+  recs.push(stepRec);
+  if (r.ec !== 0) {
+    if (cmd.includes('verify:public:data:readiness') && r.ec === 2) {
+      status = 'NEEDS_DATA';
+      reason_code = 'RDY01';
+    } else {
+      status = 'BLOCKED';
+      reason_code = r.timedOut ? 'TO01' : 'EC01';
+      if (r.timedOut) {
+        timeoutInfo = {
+          timeout_step_index: stepRec.step_index,
+          timeout_cmd: stepRec.cmd,
+          timeout_elapsed_ms: stepRec.elapsed_ms,
+          timeout_ms: stepRec.timeout_ms,
+        };
+      }
+    }
+    break;
+  }
+}
+
+const completed_at_ms = Date.now();
+const authoritative_run = clean_tree_ok && reason_code !== 'TO01';
+writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run, timeoutInfo });
+
+if (reason_code === 'TO01') {
+  const lastSteps = recs.slice(Math.max(0, recs.length - 5));
+  writeMd(TIMEOUT_TRIAGE_MD, `# VICTORY_TIMEOUT_TRIAGE.md\n\nSTATUS: BLOCKED\nREASON_CODE: TO01\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- timeout_step_index: ${timeoutInfo.timeout_step_index}\n- timeout_cmd: ${timeoutInfo.timeout_cmd}\n- timeout_elapsed_ms: ${timeoutInfo.timeout_elapsed_ms}\n- timeout_ms: ${timeoutInfo.timeout_ms}\n\n## LAST_STEPS\n${lastSteps.map((s) => `- step_${s.step_index}: ${s.cmd} | ec=${s.ec} | timedOut=${s.timedOut} | elapsed_ms=${s.elapsed_ms} | timeout_ms=${s.timeout_ms}`).join('\n')}\n`);
+  writeJsonDeterministic(path.join(MANUAL, 'victory_timeout_triage.json'), {
+    schema_version: '1.0.0',
+    status: 'BLOCKED',
+    reason_code: 'TO01',
+    run_id: RUN_ID,
+    next_action: NEXT_ACTION,
+    timeout_step_index: timeoutInfo.timeout_step_index,
+    timeout_cmd: timeoutInfo.timeout_cmd,
+    timeout_elapsed_ms: timeoutInfo.timeout_elapsed_ms,
+    timeout_ms: timeoutInfo.timeout_ms,
+    last_steps: lastSteps,
+  });
+}
+
+console.log(`[${status}] executor_epoch_victory_seal — ${reason_code}`);
+process.exit(status === 'PASS' ? 0 : status === 'NEEDS_DATA' ? 2 : 1);

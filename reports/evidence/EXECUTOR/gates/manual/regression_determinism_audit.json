@@ -1,0 +1,34 @@
+{
+  "allowlist": [
+    "/^scripts\\/edge\\/edge_lab\\//",
+    "/^scripts\\/verify\\/regression_net_kill_preload_hard\\.mjs$/",
+    "/^scripts\\/verify\\/regression_net_kill_preload_path_safe\\.mjs$/",
+    "/^scripts\\/safety\\/net_kill_preload\\.cjs$/",
+    "/^scripts\\/verify\\/regression_liquidations_offline_replay_no_network\\.mjs$/"
+  ],
+  "first_20_hits": [],
+  "hits": [],
+  "hits_count": 0,
+  "next_action": "npm run -s verify:regression:determinism-audit",
+  "reason_code": "NONE",
+  "run_id": "a55643e6aac0",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "target_files": [
+    "scripts/executor/executor_epoch_foundation_seal.mjs",
+    "scripts/executor/executor_mega_proof_x2.mjs",
+    "scripts/executor/executor_run_chain.mjs",
+    "scripts/export/evidence_bundle.mjs",
+    "scripts/safety/net_kill_preload.cjs",
+    "scripts/verify/regression_bounded_kill_tree.mjs",
+    "scripts/verify/regression_evidence_bundle_contract_ssot.mjs",
+    "scripts/verify/regression_evidence_bundle_portable_mode.mjs",
+    "scripts/verify/regression_foundation_seal_next_action_ssot.mjs",
+    "scripts/verify/regression_foundation_seal_step_order_ssot.mjs",
+    "scripts/verify/regression_liquidations_offline_replay_no_network.mjs",
+    "scripts/verify/regression_mega_proof_x2_semantic_mismatch_classification.mjs",
+    "scripts/verify/regression_mega_proof_x2_stability_contract.mjs",
+    "scripts/verify/regression_net_kill_preload_hard.mjs",
+    "scripts/verify/regression_net_kill_preload_path_safe.mjs"
+  ]
+}

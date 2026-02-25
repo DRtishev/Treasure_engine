@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: a7fda148d63c
+RUN_ID: a0e3806a2bb8
 NEXT_ACTION: No reason code violations. Proceed with gov:integrity.
 
 ## Audit Policy
@@ -18,7 +18,7 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 |------|-------------|--------|-----------|
 | (none) | — | — | CLEAN |
 
-## Scanned Files (first 30 of 36)
+## Scanned Files (first 30 of 41)
 
 | File | Reason Code | Status | Check |
 |------|-------------|--------|-------|
@@ -48,16 +48,16 @@ All gate JSON reason_code fields must use codes from the SSOT list.
 | `profit_candidates_court.json` | NONE | PASS | OK |
 | `proxy_guard.json` | NONE | PASS | OK |
 | `sli_baseline.json` | NONE | PASS | OK |
+| `netv01_probe.json` | NONE | PASS | OK |
 | `op01_scripts_check.json` | NONE | PASS | OK |
-| `zero_war_probe.json` | NONE | PASS | OK |
-| `edge_unlock.json` | NONE | PASS | OK |
-| `export_contract_integrity.json` | NONE | PASS | OK |
+| `regression_net_kill_preload_hard.json` | NONE | PASS | OK |
+| `regression_net_kill_preload_path_safe.json` | NONE | PASS | OK |
 
 ## Summary
 
 | Metric | Value |
 |--------|-------|
-| Files scanned | 36 |
+| Files scanned | 41 |
 | Hard violations | 0 |
 | Unknown code warnings | 0 |
 | D003 violations | 0 |

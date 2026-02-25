@@ -1,0 +1,13 @@
+{
+  "ci_run_ec": 1,
+  "local_run_ec": 2,
+  "marker_exists": true,
+  "next_action": "npm run -s verify:regression:victory-test-mode-safety",
+  "reason_code": "NONE",
+  "rg_test01_detected": true,
+  "rg_test02_detected": false,
+  "run_id": "da818a2b701a",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "victory_seal_test_mode_flag": "true"
+}

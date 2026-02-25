@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "model_next_action": true,
+    "model_rdy01": true,
+    "model_rdy02": true,
+    "model_rdy_net01": true,
+    "model_rdy_sch01": true,
+    "src_provider": true,
+    "src_reasons": true,
+    "src_registry": true
+  },
+  "next_action": "npm run -s verify:public:data:readiness",
+  "reason_code": "NONE",
+  "run_id": "c94f58df8bcb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

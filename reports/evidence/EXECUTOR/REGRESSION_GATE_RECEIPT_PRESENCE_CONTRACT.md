@@ -1,0 +1,14 @@
+# REGRESSION_GATE_RECEIPT_PRESENCE_CONTRACT.md
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: c94f58df8bcb
+NEXT_ACTION: npm run -s epoch:victory:seal
+
+- reports/evidence/EXECUTOR/gates/manual/regression_determinism_audit.json: exists=true schema=true status_ok=true
+- reports/evidence/EXECUTOR/gates/manual/regression_netkill_ledger_deterministic_x2.json: exists=true schema=true status_ok=true
+- reports/evidence/EXECUTOR/gates/manual/regression_netkill_ledger_summary_consistency.json: exists=true schema=true status_ok=true
+- reports/evidence/EXECUTOR/gates/manual/regression_node_options_preload_eviction.json: exists=true schema=true status_ok=true
+- reports/evidence/EXECUTOR/gates/manual/regression_netkill_physics_full_surface.json: exists=true schema=true status_ok=true
+- reports/evidence/EXECUTOR/gates/manual/regression_operator_single_action_ssot.json: exists=true schema=true status_ok=true
+- reports/evidence/EXECUTOR/gates/manual/public_data_readiness_seal.json: exists=true schema=true status_ok=true

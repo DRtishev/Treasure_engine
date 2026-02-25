@@ -1,0 +1,21 @@
+{
+  "checks": {
+    "doc_default_mode": true,
+    "doc_excluded_roots": true,
+    "doc_included_root": true,
+    "doc_portable_mode": true,
+    "ec01_bdl01": true,
+    "gzip_n": true,
+    "portable_doc_parity": true,
+    "portable_env_free": true,
+    "tar_mtime": true,
+    "tar_owner": true,
+    "tar_sort": true,
+    "volatile_excluded": true
+  },
+  "next_action": "npm run -s export:evidence-bundle",
+  "reason_code": "NONE",
+  "run_id": "c94f58df8bcb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

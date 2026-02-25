@@ -6,7 +6,7 @@
   "profile_marker_exists": true,
   "reason_code": "NONE",
   "required_registry_path": "reports/evidence/EDGE_PROFIT_00/registry/gates/manual/hypothesis_registry.json",
-  "run_id": "a7fda148d63c",
+  "run_id": "9ef009c01f8f",
   "schema_version": "1.0.0",
   "status": "PASS",
   "violations": []

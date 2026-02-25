@@ -1,0 +1,20 @@
+import fs from 'node:fs';
+import path from 'node:path';
+import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
+import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
+
+const ROOT = path.resolve(process.cwd());
+const EXEC_DIR = path.join(ROOT, 'reports/evidence/EXECUTOR');
+const MANUAL = path.join(EXEC_DIR, 'gates/manual');
+const NEXT_ACTION = 'npm run -s epoch:victory:seal';
+const doc = fs.readFileSync(path.join(ROOT, 'EDGE_LAB/OPERATOR_SINGLE_ACTION.md'), 'utf8');
+const victoryDoc = fs.readFileSync(path.join(ROOT, 'EDGE_LAB/VICTORY_SEAL.md'), 'utf8');
+const nextActionLines = [doc, victoryDoc].flatMap((txt) => txt.split(/\r?\n/).filter((l) => l.includes('NEXT_ACTION:')));
+const envPrefixedNextAction = nextActionLines.some((l) => /NEXT_ACTION:\s*[A-Z_]+=/.test(l));
+const ok = doc.includes('npm run -s epoch:victory:seal') && doc.includes('PASS ->') && doc.includes('NEEDS_DATA ->') && doc.includes('BLOCKED/FAIL ->') && victoryDoc.includes('Gate SSOT: `npm run -s epoch:victory:seal`') && !envPrefixedNextAction;
+const status = ok ? 'PASS' : 'FAIL';
+const reason_code = ok ? 'NONE' : (envPrefixedNextAction ? 'RG_OP02' : 'RG_OP01');
+writeMd(path.join(EXEC_DIR, 'REGRESSION_OPERATOR_SINGLE_ACTION_SSOT.md'), `# REGRESSION_OPERATOR_SINGLE_ACTION_SSOT.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- next_action_lines: ${nextActionLines.length}\n- env_prefixed_next_action: ${envPrefixedNextAction}\n`);
+writeJsonDeterministic(path.join(MANUAL, 'regression_operator_single_action_ssot.json'), { schema_version:'1.0.0', status, reason_code, run_id:RUN_ID, next_action:NEXT_ACTION, next_action_lines: nextActionLines.length, env_prefixed_next_action: envPrefixedNextAction });
+console.log(`[${status}] regression_operator_single_action_ssot — ${reason_code}`);
+process.exit(ok ? 0 : 1);

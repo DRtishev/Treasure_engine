@@ -1,0 +1,9 @@
+{
+  "chain_ec": 1,
+  "next_action": "npm run -s verify:regression:mini-chain-mode-guard",
+  "reason_code": "NONE",
+  "rg_mini01_detected": true,
+  "run_id": "da818a2b701a",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

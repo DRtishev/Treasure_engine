@@ -1,0 +1,14 @@
+{
+  "bad_lines": [],
+  "checks": {
+    "env_free": true,
+    "home_free": true,
+    "host_free": true,
+    "manifest_exists": true
+  },
+  "next_action": "npm run -s export:evidence-bundle:portable",
+  "reason_code": "NONE",
+  "run_id": "c94f58df8bcb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

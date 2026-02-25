@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "has_lock_path": true,
+    "has_raw_path": true,
+    "has_rdy01": true,
+    "has_rdy02": true,
+    "has_rdy_net01": true,
+    "has_schema": true
+  },
+  "next_action": "npm run -s verify:public:data:readiness",
+  "reason_code": "NONE",
+  "run_id": "c94f58df8bcb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
