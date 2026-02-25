@@ -8,7 +8,7 @@ const EXEC_DIR = path.join(ROOT, 'reports/evidence/EXECUTOR');
 const MANUAL = path.join(EXEC_DIR, 'gates/manual');
 const NEXT_ACTION = 'npm run -s epoch:victory:seal';
 
-const src = fs.readFileSync(path.join(ROOT,'scripts/executor/executor_epoch_victory_seal.mjs'),'utf8');
+const src = fs.readFileSync(path.join(ROOT,'scripts/executor/victory_steps.mjs'),'utf8');
 const doc = fs.readFileSync(path.join(ROOT,'EDGE_LAB/VICTORY_SEAL.md'),'utf8');
 const required = [
   'verify:regression:determinism-audit',
@@ -22,8 +22,11 @@ const required = [
   'verify:regression:evidence-bundle-deterministic-x2',
   'verify:regression:evidence-bundle-portable-mode',
 ];
+const fullBlockStart = src.indexOf('const VICTORY_FULL_MODE_STEPS');
+const fullBlockEnd = src.indexOf(']);', fullBlockStart);
+const fullBlock = fullBlockStart >= 0 && fullBlockEnd > fullBlockStart ? src.slice(fullBlockStart, fullBlockEnd) : '';
 let ok=true; let last=-1;
-for(const s of required){ const i=src.indexOf(s); if(i<0||i<last) ok=false; last=i; if(!doc.includes(s)) ok=false; }
+for(const s of required){ const i=fullBlock.indexOf(s); if(i<0||i<last) ok=false; last=i; if(!doc.includes(s)) ok=false; }
 const status=ok?'PASS':'FAIL';
 const reason_code=status==='PASS'?'NONE':'RG_VIC01';
 writeMd(path.join(EXEC_DIR,'REGRESSION_VICTORY_SEAL_STEP_ORDER_SSOT.md'), `# REGRESSION_VICTORY_SEAL_STEP_ORDER_SSOT.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n`);

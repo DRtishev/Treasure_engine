@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import { runBounded } from './spawn_bounded.mjs';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
-import { getVictorySteps } from './victory_steps.mjs';
+import { getVictoryStepPlan } from './victory_steps.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports/evidence/EXECUTOR');
@@ -20,6 +20,8 @@ fs.mkdirSync(MANUAL, { recursive: true });
 const victoryTestMode = process.env.VICTORY_TEST_MODE === '1';
 const miniMode = process.env.EXECUTOR_CHAIN_MINI === '1';
 const executionMode = miniMode ? 'MINI_CHAIN' : (victoryTestMode ? 'TEST_MODE' : 'FULL');
+const headProbe = runBounded('git rev-parse HEAD', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
+const HEAD_SHA = headProbe.ec === 0 ? String(headProbe.stdout || '').trim() : 'UNKNOWN';
 
 function toMs(iso, fallback) {
   const v = Date.parse(String(iso || ''));
@@ -76,6 +78,7 @@ function computeSemanticHash(status, reason_code, authoritative_run, steps, time
   const semantic = {
     status,
     reason_code,
+    head_sha: HEAD_SHA,
     execution_mode: executionMode,
     test_mode: victoryTestMode,
     authoritative_run,
@@ -109,6 +112,7 @@ function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, compl
     schema_version: '1.0.0',
     status,
     reason_code,
+    head_sha: HEAD_SHA,
     run_id: RUN_ID,
     next_action: NEXT_ACTION,
     execution_mode: executionMode,
@@ -145,6 +149,7 @@ function writeBaselineSafety({ status, reason_code, tracked, staged, override })
     schema_version: '1.0.0',
     status,
     reason_code,
+    head_sha: HEAD_SHA,
     run_id: RUN_ID,
     next_action: NEXT_ACTION,
     tracked_n: tracked.length,
@@ -220,6 +225,7 @@ function writePrecheck({ status, reason_code, clean_tree_ok, drift_detected, dri
     schema_version: '1.0.0',
     status,
     reason_code,
+    head_sha: HEAD_SHA,
     run_id: RUN_ID,
     next_action: NEXT_ACTION,
     baseline_clean_ec: preBaseline.ec,
@@ -320,20 +326,19 @@ if (victoryTestMode && !fs.existsSync(TEST_MODE_MD)) {
   process.exit(1);
 }
 
-const steps = getVictorySteps(victoryTestMode);
+const stepPlan = getVictoryStepPlan(victoryTestMode);
 const recs = [];
 let status = 'PASS';
 let reason_code = 'NONE';
 let timeoutInfo = {};
-const stepTimeoutMs = Number(process.env.VICTORY_STEP_TIMEOUT_MS || 120000);
 const started_at_ms = Date.now();
-for (const [i, cmd] of steps.entries()) {
-  const r = runBounded(cmd, { cwd: ROOT, env: process.env, maxBuffer: 64 * 1024 * 1024, timeoutMs: stepTimeoutMs });
+for (const step of stepPlan) {
+  const r = runBounded(step.cmd, { cwd: ROOT, env: process.env, maxBuffer: 64 * 1024 * 1024, timeoutMs: step.timeout_ms });
   const started_at_ms_step = toMs(r.startedAt, Date.now());
   const completed_at_ms_step = toMs(r.completedAt, started_at_ms_step);
   const stepRec = {
-    step_index: i + 1,
-    cmd,
+    step_index: step.step_index,
+    cmd: step.cmd,
     timeout_ms: r.timeout_ms,
     started_at_ms: started_at_ms_step,
     completed_at_ms: completed_at_ms_step,
@@ -346,7 +351,7 @@ for (const [i, cmd] of steps.entries()) {
   };
   recs.push(stepRec);
   if (r.ec !== 0) {
-    if (cmd.includes('verify:public:data:readiness') && r.ec === 2) {
+    if (step.cmd.includes('verify:public:data:readiness') && r.ec === 2) {
       status = 'NEEDS_DATA';
       reason_code = 'RDY01';
     } else {
