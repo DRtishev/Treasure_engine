@@ -1,0 +1,15 @@
+{
+  "excludes": [
+    "node_modules/",
+    "artifacts/incoming/",
+    "reports/evidence/EPOCH-",
+    "reports/evidence/RG_EPOCH",
+    ".git/",
+    "tmp/",
+    ".tmp/"
+  ],
+  "file_count": 3121,
+  "manifest_sha256": "84585b07db0a4c9ebb47afa85d76ff9008ffc78fb78a75a34100ebfad61e814a",
+  "run_id": "cdebeb157699",
+  "schema_version": "1.0.0"
+}

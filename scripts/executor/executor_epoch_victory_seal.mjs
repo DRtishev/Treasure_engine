@@ -5,6 +5,7 @@ import { runBounded } from './spawn_bounded.mjs';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { getVictoryStepPlan } from './victory_steps.mjs';
+import { runNetkillRuntimeProbe } from './netkill_runtime_probe.mjs';
 
 const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports/evidence/EXECUTOR');
@@ -169,15 +170,27 @@ function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, compl
   });
 
   const netkillProbePath = path.join(MANUAL, 'regression_executor_netkill_runtime_ledger.json');
-  let netkill_probe_result = 'MISSING';
+  let netkill_probe_result = 'FAIL';
+  let netkill_probe_error_code = 'UNSET';
+  let netkill_probe_signature_sha256 = 'UNSET';
+  const runtimeProbe = runNetkillRuntimeProbe();
+  netkill_probe_result = runtimeProbe.status;
+  netkill_probe_error_code = runtimeProbe.error_code;
+  netkill_probe_signature_sha256 = runtimeProbe.signature_sha256;
   if (fs.existsSync(netkillProbePath)) {
-    try { netkill_probe_result = String(JSON.parse(fs.readFileSync(netkillProbePath, 'utf8')).status || 'MISSING'); } catch { netkill_probe_result = 'INVALID'; }
+    try {
+      const ledgerProbe = JSON.parse(fs.readFileSync(netkillProbePath, 'utf8'));
+      if (String(ledgerProbe.status || '').toUpperCase() === 'PASS') {
+        netkill_probe_result = 'PASS';
+        netkill_probe_error_code = 'NONE';
+      }
+    } catch {}
   }
   let netkill_summary_hash = 'MISSING';
   if (fs.existsSync(NETKILL_SUMMARY)) {
     try { netkill_summary_hash = String(JSON.parse(fs.readFileSync(NETKILL_SUMMARY, 'utf8')).ledger_semantic_hash || 'MISSING'); } catch { netkill_summary_hash = 'INVALID'; }
   }
-  writeMd(path.join(EXEC_DIR, 'EXECUTION_FORENSICS.md'), `# EXECUTION_FORENSICS.md\n\nSTATUS: PASS\n\n- preload_abs_path: ${path.join(ROOT, 'scripts', 'safety', 'net_kill_preload.cjs')}\n- node_version: ${process.version}\n- net_kill_runtime_probe_result: ${netkill_probe_result}\n- execution_mode: ${executionMode}\n- test_mode: ${victoryTestMode}\n- netkill_summary_hash: ${netkill_summary_hash}\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n- operator_next_action: ${next_action}\n- executor_classification_mode: verify|gov|p0|edge_profit|export_final_validated\n`);
+  writeMd(path.join(EXEC_DIR, 'EXECUTION_FORENSICS.md'), `# EXECUTION_FORENSICS.md\n\nSTATUS: PASS\n\n- preload_abs_path: ${path.join(ROOT, 'scripts', 'safety', 'net_kill_preload.cjs')}\n- node_version: ${process.version}\n- net_kill_runtime_probe_result: ${netkill_probe_result}\n- net_kill_runtime_probe_error_code: ${netkill_probe_error_code}\n- net_kill_runtime_probe_signature_sha256: ${netkill_probe_signature_sha256}\n- execution_mode: ${executionMode}\n- test_mode: ${victoryTestMode}\n- netkill_summary_hash: ${netkill_summary_hash}\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n- operator_next_action: ${next_action}\n- executor_classification_mode: verify|gov|p0|edge_profit|export_final_validated\n`);
 }
 
 function writeBaselineSafety({ status, reason_code, tracked, staged, override, next_action = NEXT_ACTION }) {

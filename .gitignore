@@ -111,3 +111,8 @@ artifacts/incoming/*.jsonl
 artifacts/incoming/*.json
 artifacts/incoming/*.lock.json
 artifacts/incoming/*.raw.json
+
+# P1 liquidations lane run artifacts
+artifacts/incoming/liquidations/
+
+artifacts/incoming/ALLOW_NETWORK
