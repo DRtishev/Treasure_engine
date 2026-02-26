@@ -40,6 +40,24 @@ function restorePreserved(relPath, content) {
   fs.writeFileSync(absPath, content);
 }
 
+
+function readReasonFromEvidence() {
+  const candidates = [
+    path.join(MANUAL, 'victory_precheck.json'),
+    path.join(MANUAL, 'victory_seal.json'),
+    path.join(MANUAL, 'foundation_seal.json'),
+  ];
+  for (const file of candidates) {
+    if (!fs.existsSync(file)) continue;
+    try {
+      const j = JSON.parse(fs.readFileSync(file, 'utf8'));
+      const rc = String(j?.reason_code || '').trim();
+      if (rc) return rc;
+    } catch {}
+  }
+  return '';
+}
+
 function resolveBlockReasonSurface(reason_code) {
   if (reason_code === 'OP_SAFE01') return 'BASELINE_SAFETY';
   if (reason_code === 'SNAP01') return 'PRECHECK_SNAP01';
@@ -90,7 +108,8 @@ for (const step of stepPlan) {
       reason_code = 'RDY01';
     } else {
       status = 'BLOCKED';
-      reason_code = r.timedOut ? 'TO01' : 'EC01';
+      const surfaced = readReasonFromEvidence();
+      reason_code = r.timedOut ? 'TO01' : (surfaced || 'EC01');
     }
     break;
   }
