@@ -9,8 +9,8 @@ const MANUAL = path.join(EXEC, 'gates/manual');
 fs.mkdirSync(MANUAL, { recursive: true });
 
 const src = fs.readFileSync(path.join(ROOT, 'scripts/verify/regression_node_truth_enforcement.mjs'), 'utf8');
-const hasNextAction = src.includes('npm run -s env:node22:doctor');
-const hasScriptOnlyPattern = /NEXT_ACTION:\s*npm run -s env:node22:doctor/.test(fs.readFileSync(path.join(EXEC, 'REGRESSION_NODE_TRUTH_ENFORCEMENT.md'), 'utf8'));
+const hasNextAction = src.includes('npm run -s ops:node:truth');
+const hasScriptOnlyPattern = /NEXT_ACTION:\s*npm run -s ops:node:truth/.test(fs.readFileSync(path.join(EXEC, 'REGRESSION_NODE_TRUTH_ENFORCEMENT.md'), 'utf8'));
 const ok = hasNextAction && hasScriptOnlyPattern;
 const status = ok ? 'PASS' : 'FAIL';
 const reason_code = ok ? 'NONE' : 'RG_NODE02';

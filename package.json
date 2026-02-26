@@ -789,7 +789,12 @@
     "verify:regression:gitignore-allow-network": "node scripts/verify/regression_gitignore_allow_network.mjs",
     "verify:regression:victory-reason-classification": "node scripts/verify/regression_victory_reason_classification.mjs",
     "verify:regression:node-truth-next-action-contract": "node scripts/verify/regression_node_truth_next_action_contract.mjs",
-    "verify:regression:victory-triage-reason-surface": "node scripts/verify/regression_victory_triage_reason_surface.mjs"
+    "verify:regression:victory-triage-reason-surface": "node scripts/verify/regression_victory_triage_reason_surface.mjs",
+    "ops:node:truth": "node scripts/ops/node_truth_doctor.mjs",
+    "verify:regression:repo-byte-audit-anti-recursion": "node scripts/verify/regression_repo_byte_audit_anti_recursion.mjs",
+    "verify:regression:victory-precheck-offenders-contract": "node scripts/verify/regression_victory_precheck_offenders_contract.mjs",
+    "verify:regression:no-rg-writes-during-cert": "node scripts/verify/regression_no_rg_writes_during_cert.mjs",
+    "verify:regression:victory-readiness-coherence": "node scripts/verify/regression_victory_readiness_coherence.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

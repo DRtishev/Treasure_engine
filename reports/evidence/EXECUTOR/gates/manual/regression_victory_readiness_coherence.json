@@ -1,0 +1,12 @@
+{
+  "coherent_no_rdy01_when_readiness_pass": true,
+  "readiness_reason_code": "NONE",
+  "readiness_status": "PASS",
+  "reason_code": "NONE",
+  "run_id": "34ddbe4786b3",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "victory_ec": 1,
+  "victory_reason_code": "OP_SAFE01",
+  "victory_status": "BLOCKED"
+}

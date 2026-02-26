@@ -2,8 +2,8 @@
 
 STATUS: BLOCKED
 REASON_CODE: NT01
-RUN_ID: 9bc2486ca30b
-NEXT_ACTION: npm run -s env:node22:doctor
+RUN_ID: 34ddbe4786b3
+NEXT_ACTION: npm run -s ops:node:truth
 
 - process_version: v20.19.6
 - allowed_family: 22

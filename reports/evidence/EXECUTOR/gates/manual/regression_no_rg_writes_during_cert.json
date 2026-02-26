@@ -1,8 +1,7 @@
 {
-  "evidence_has_script_only_next_action": true,
+  "offenders_untracked": [],
   "reason_code": "NONE",
   "run_id": "34ddbe4786b3",
   "schema_version": "1.0.0",
-  "source_has_next_action": true,
   "status": "PASS"
 }

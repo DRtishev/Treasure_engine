@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 9bc2486ca30b
+RUN_ID: 34ddbe4786b3
 NEXT_ACTION: npm run -s verify:regression:node-truth-next-action-contract
 
 - source_has_next_action: true
