@@ -98,10 +98,19 @@ function computeDriftSeverity(tracked, staged, untracked) {
   return 'NONE';
 }
 
+
+function resolveBlockReasonSurface(reason_code) {
+  if (reason_code === 'OP_SAFE01') return 'BASELINE_SAFETY';
+  if (reason_code === 'SNAP01') return 'PRECHECK_SNAP01';
+  return 'STEP_FAILURE';
+}
+
 function computeSemanticHash(status, reason_code, authoritative_run, steps, timeoutInfo = {}) {
+  const block_reason_surface = resolveBlockReasonSurface(reason_code);
   const semantic = {
     status,
     reason_code,
+    block_reason_surface,
     head_sha: HEAD_SHA,
     execution_mode: executionMode,
     test_mode: victoryTestMode,
@@ -130,13 +139,15 @@ function computeSemanticHash(status, reason_code, authoritative_run, steps, time
 
 function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run, timeoutInfo = {}, next_action = NEXT_ACTION }) {
   const { semantic, semantic_hash } = computeSemanticHash(status, reason_code, authoritative_run, recs, timeoutInfo);
+  const block_reason_surface = resolveBlockReasonSurface(reason_code);
   const exit_code = status === 'PASS' ? 0 : (status === 'NEEDS_DATA' && reason_code === 'RDY01' ? 2 : 1);
-  writeMd(path.join(EXEC_DIR, 'VICTORY_SEAL.md'), `# VICTORY_SEAL.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${next_action}\nEXIT_CODE: ${exit_code}\n\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n\n## STEPS\n${recs.map((r) => `- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms}\n  STARTED_AT_MS: ${r.started_at_ms}\n  COMPLETED_AT_MS: ${r.completed_at_ms}\n  TREE_KILL_ATTEMPTED: ${r.tree_kill_attempted}\n  TREE_KILL_OK: ${r.tree_kill_ok}\n  TREE_KILL_NOTE: ${r.tree_kill_note}`).join('\n')}\n`);
+  writeMd(path.join(EXEC_DIR, 'VICTORY_SEAL.md'), `# VICTORY_SEAL.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nBLOCK_REASON_SURFACE: ${block_reason_surface}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${next_action}\nEXIT_CODE: ${exit_code}\n\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n\n## STEPS\n${recs.map((r) => `- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms}\n  STARTED_AT_MS: ${r.started_at_ms}\n  COMPLETED_AT_MS: ${r.completed_at_ms}\n  TREE_KILL_ATTEMPTED: ${r.tree_kill_attempted}\n  TREE_KILL_OK: ${r.tree_kill_ok}\n  TREE_KILL_NOTE: ${r.tree_kill_note}`).join('\n')}\n`);
 
   writeJsonDeterministic(path.join(MANUAL, 'victory_seal.json'), {
     schema_version: '1.0.0',
     status,
     reason_code,
+    block_reason_surface,
     head_sha: HEAD_SHA,
     run_id: RUN_ID,
     next_action,
@@ -251,10 +262,13 @@ function writePrecheck({ status, reason_code, clean_tree_ok, drift_detected, dri
 
   writeMd(PRECHECK_MD, `# VICTORY_PRECHECK.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- baseline_clean_ec: ${preBaseline.ec}\n- baseline_precheck_ok: ${baseline_precheck_ok}\n- clean_tree_ok: ${clean_tree_ok}\n- drift_detected: ${drift_detected}\n- drift_severity: ${drift_severity}\n- snap_reason_code: ${snap_reason_code}\n- dirty_tracked_n: ${tracked.length}\n- dirty_staged_n: ${staged.length}\n- dirty_untracked_n: ${untracked.length}\n\n## DIRTY_TRACKED_FILES (max 50 shown)\n${toMdBullets(tracked)}\n\n## DIRTY_STAGED_FILES (max 50 shown)\n${toMdBullets(staged)}\n\n## DIRTY_UNTRACKED_FILES (max 50 shown)\n${toMdBullets(untracked)}\n\n### Baseline Clean Telemetry (SEMANTIC)\n- baseline_files_restored_n: ${baselineTelemetry.semantic.baseline_files_restored_n ?? 'UNKNOWN'}\n- baseline_evidence_removed_n: ${baselineTelemetry.semantic.baseline_evidence_removed_n ?? 'UNKNOWN'}\n\n### Baseline Clean Telemetry (VOLATILE)\n- baseline_clean_elapsed_ms: ${baselineTelemetry.volatile.baseline_clean_elapsed_ms ?? 'UNKNOWN'}\n\n## BASELINE_CLEAN_OUTPUT\n\`\`\`\n${baselineOutputForMd || '(none)'}\n\`\`\`\n\n## GIT_STATUS_SB\n\`\`\`\n${git_status || '(none)'}\n\`\`\`\n\n## GIT_DIFF_NAME_ONLY\n\`\`\`\n${git_diff || '(none)'}\n\`\`\`\n\n## GIT_DIFF_CACHED_NAME_ONLY\n\`\`\`\n${git_diff_cached || '(none)'}\n\`\`\`\n\n${status === 'BLOCKED' ? guidance : ''}\n`);
 
+  const block_reason_surface = resolveBlockReasonSurface(snap_reason_code);
+
   writeJsonDeterministic(path.join(MANUAL, 'victory_precheck.json'), {
     schema_version: '1.0.0',
     status,
     reason_code,
+    block_reason_surface,
     head_sha: HEAD_SHA,
     run_id: RUN_ID,
     next_action: NEXT_ACTION,
@@ -292,7 +306,7 @@ const gitDiffText = (preDiff.stdout + preDiff.stderr).trim();
 const gitDiffCachedText = (preDiffCached.stdout + preDiffCached.stderr).trim();
 const tracked = sortedLines(gitDiffText);
 const staged = sortedLines(gitDiffCachedText);
-const untracked = sortedLines((preUntracked.stdout + preUntracked.stderr).trim());
+const untracked = filterOperatorRelevant(sortedLines((preUntracked.stdout + preUntracked.stderr).trim()));
 
 const clean_tree_ok = baseline_precheck_ok
   && preStatus.ec === 0
@@ -406,11 +420,12 @@ writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_m
 
 if (reason_code === 'TO01') {
   const lastSteps = recs.slice(Math.max(0, recs.length - 5));
-  writeMd(TIMEOUT_TRIAGE_MD, `# VICTORY_TIMEOUT_TRIAGE.md\n\nSTATUS: BLOCKED\nREASON_CODE: TO01\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- timeout_step_index: ${timeoutInfo.timeout_step_index}\n- timeout_cmd: ${timeoutInfo.timeout_cmd}\n- timeout_elapsed_ms: ${timeoutInfo.timeout_elapsed_ms}\n- timeout_ms: ${timeoutInfo.timeout_ms}\n\n## LAST_STEPS\n${lastSteps.map((s) => `- step_${s.step_index}: ${s.cmd} | ec=${s.ec} | timedOut=${s.timedOut} | elapsed_ms=${s.elapsed_ms} | timeout_ms=${s.timeout_ms}`).join('\n')}\n`);
+  writeMd(TIMEOUT_TRIAGE_MD, `# VICTORY_TIMEOUT_TRIAGE.md\n\nSTATUS: BLOCKED\nREASON_CODE: TO01\nBLOCK_REASON_SURFACE: STEP_FAILURE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- timeout_step_index: ${timeoutInfo.timeout_step_index}\n- timeout_cmd: ${timeoutInfo.timeout_cmd}\n- timeout_elapsed_ms: ${timeoutInfo.timeout_elapsed_ms}\n- timeout_ms: ${timeoutInfo.timeout_ms}\n\n## LAST_STEPS\n${lastSteps.map((s) => `- step_${s.step_index}: ${s.cmd} | ec=${s.ec} | timedOut=${s.timedOut} | elapsed_ms=${s.elapsed_ms} | timeout_ms=${s.timeout_ms}`).join('\n')}\n`);
   writeJsonDeterministic(path.join(MANUAL, 'victory_timeout_triage.json'), {
     schema_version: '1.0.0',
     status: 'BLOCKED',
     reason_code: 'TO01',
+    block_reason_surface: 'STEP_FAILURE',
     run_id: RUN_ID,
     next_action: NEXT_ACTION,
     timeout_step_index: timeoutInfo.timeout_step_index,

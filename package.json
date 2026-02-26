@@ -664,7 +664,7 @@
     "epoch:mega:proof": "bash -lc \"source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0 >/dev/null && npm run -s executor:clean:baseline && npm run -s executor:run:chain && npm run -s verify:executor:commands:guard && npm run -s verify:edge:profit:00:scope && npm run -s verify:export:contract && npm run -s gov:final:index\"",
     "gov:final:fingerprint": "node scripts/gov/final_validated_fingerprint.mjs",
     "verify:export:receipt": "node scripts/verify/export_contract_receipt_format_guard.mjs",
-    "epoch:mega:proof:x2": "bash -lc \"source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0 >/dev/null && node scripts/executor/executor_mega_proof_x2.mjs\" && npm run -s verify:regression:public-smoke-offline-replay && npm run -s verify:regression:publicdata-no-csv-fallback && npm run -s verify:regression:mega-proof-x2-stability-contract && npm run -s verify:regression:public-provider-hostpool-determinism && npm run -s verify:regression:public-epoch-offline-replay-no-network",
+    "epoch:mega:proof:x2": "bash -lc \"source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0 >/dev/null && node scripts/executor/executor_mega_proof_x2.mjs\" && npm run -s verify:regression:public-smoke-offline-replay && npm run -s verify:regression:publicdata-no-csv-fallback && npm run -s verify:regression:mega-proof-x2-stability-contract && npm run -s verify:regression:public-provider-hostpool-determinism && npm run -s verify:regression:public-epoch-offline-replay-no-network && npm run -s verify:regression:canon-ms-timestamps-normalized && npm run -s verify:regression:gitignore-incoming-json && npm run -s verify:regression:canon-d005-nonvolatile-unchanged && npm run -s verify:regression:epoch-evidence-cycle-gitignore",
     "verify:system:lockdown": "node scripts/verify/system_lockdown_cert_gate.mjs",
     "edge:profit:00:real:drop:unpack": "node scripts/edge/edge_lab/paper_telemetry_real_drop_unpack.mjs",
     "epoch:profit:real:00": "node scripts/executor/executor_profit_real_entry.mjs",
@@ -765,7 +765,11 @@
     "verify:regression:opa02-op-safe-ignore-evidence-drift": "node scripts/verify/regression_opa02_op_safe_ignore_evidence_drift.mjs",
     "verify:regression:victory-seal-needs-data-exitcode-contract": "node scripts/verify/regression_victory_seal_needs_data_exitcode_contract.mjs",
     "verify:regression:accept-restore-propagates-exitcode": "node scripts/verify/regression_accept_restore_propagates_exitcode.mjs",
-    "verify:regression:op-safe-untracked-only-does-not-block": "node scripts/verify/regression_op_safe_untracked_only_does_not_block.mjs"
+    "verify:regression:op-safe-untracked-only-does-not-block": "node scripts/verify/regression_op_safe_untracked_only_does_not_block.mjs",
+    "verify:regression:canon-ms-timestamps-normalized": "node scripts/verify/regression_canon_ms_timestamps_normalized.mjs",
+    "verify:regression:gitignore-incoming-json": "node scripts/verify/regression_gitignore_incoming_json.mjs",
+    "verify:regression:canon-d005-nonvolatile-unchanged": "node scripts/verify/regression_canon_d005_nonvolatile_unchanged.mjs",
+    "verify:regression:epoch-evidence-cycle-gitignore": "node scripts/verify/regression_epoch_evidence_cycle_gitignore.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

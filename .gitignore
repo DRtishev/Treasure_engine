@@ -31,6 +31,10 @@ temp/
 # keep evidence logs trackable
 !reports/evidence/**/*.log
 
+# run-scoped evidence cycles (transient)
+reports/evidence/EPOCH-*/
+reports/evidence/EPOCH-*/**
+
 # E112 pinned capsule snapshots (non-committed)
 .foundation-seal/capsules/
 !.foundation-seal/capsules/.gitkeep
@@ -104,3 +108,6 @@ artifacts/incoming/node/
 # REAL_PUBLIC incoming datasets must never be committed
 artifacts/incoming/*.csv
 artifacts/incoming/*.jsonl
+artifacts/incoming/*.json
+artifacts/incoming/*.lock.json
+artifacts/incoming/*.raw.json
