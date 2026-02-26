@@ -181,6 +181,8 @@ export function stableEvidenceNormalize(content, opts = {}) {
 
     // Only volatile lines get timestamp/ms normalization
     return line
+      .replace(/^(\s*)(STARTED_AT_MS|COMPLETED_AT_MS|ELAPSED_MS):\s*.*$/g, '$1RUN_MS: RUN_MS')
+      .replace(/\b(STARTED_AT_MS|COMPLETED_AT_MS|ELAPSED_MS):\s*[^\s,;|)]+/g, 'RUN_MS: RUN_MS')
       .replace(/20\d\d-\d\d-\d\dT\d\d:\d\d:\d\d(\.\d+)?Z/g, RUN_ID)
       .replace(/\(\d+ms\)/g, '(RUN_MS)')
       .replace(/after \d+ms/gi, 'after RUN_MS');

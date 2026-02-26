@@ -40,6 +40,12 @@ function restorePreserved(relPath, content) {
   fs.writeFileSync(absPath, content);
 }
 
+function resolveBlockReasonSurface(reason_code) {
+  if (reason_code === 'OP_SAFE01') return 'BASELINE_SAFETY';
+  if (reason_code === 'SNAP01') return 'PRECHECK_SNAP01';
+  return 'STEP_FAILURE';
+}
+
 function collectEvidencePaths() {
   const candidates = [
     'reports/evidence/EXECUTOR/VICTORY_PRECHECK.md',
@@ -94,14 +100,16 @@ restorePreserved(BASELINE_SAFETY_MD_REL, preservedBaselineSafetyMd);
 restorePreserved(BASELINE_SAFETY_JSON_REL, preservedBaselineSafetyJson);
 
 const evidencePaths = collectEvidencePaths();
+const block_reason_surface = resolveBlockReasonSurface(reason_code);
 
-writeMd(path.join(EXEC_DIR, 'VICTORY_TIMEOUT_TRIAGE.md'), `# VICTORY_TIMEOUT_TRIAGE.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- triage_mode: true\n- first_failing_step_index: ${firstFailingStepIndex ?? 'NONE'}\n- first_failing_cmd: ${firstFailingCmd ?? 'NONE'}\n\n## STEPS\n${recs.map((r)=>`- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms ?? 'NA'}`).join('\n')}\n\n## EVIDENCE_PATHS\n${evidencePaths.map((p) => `- ${p}`).join('\n')}\n`);
+writeMd(path.join(EXEC_DIR, 'VICTORY_TIMEOUT_TRIAGE.md'), `# VICTORY_TIMEOUT_TRIAGE.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nBLOCK_REASON_SURFACE: ${block_reason_surface}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- triage_mode: true\n- first_failing_step_index: ${firstFailingStepIndex ?? 'NONE'}\n- first_failing_cmd: ${firstFailingCmd ?? 'NONE'}\n\n## STEPS\n${recs.map((r)=>`- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms ?? 'NA'}`).join('\n')}\n\n## EVIDENCE_PATHS\n${evidencePaths.map((p) => `- ${p}`).join('\n')}\n`);
 
 writeJsonDeterministic(path.join(MANUAL, 'victory_timeout_triage.json'), {
   schema_version: '1.2.0',
   head_sha: HEAD_SHA,
   status,
   reason_code,
+  block_reason_surface,
   run_id: RUN_ID,
   next_action: NEXT_ACTION,
   triage_mode: true,
