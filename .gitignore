@@ -116,6 +116,7 @@ artifacts/incoming/*.raw.json
 artifacts/incoming/liquidations/
 
 artifacts/incoming/ALLOW_NETWORK
+artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 
 # node toolchains (vendored runtime backend)
 artifacts/toolchains/node/
