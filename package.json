@@ -803,7 +803,10 @@
     "_epoch:mega:proof:x2": "npm run -s verify:repo:byte-audit:x2 && npm run -s verify:regression:node-truth-enforcement && npm run -s verify:regression:netkill-ledger-enforcement && npm run -s verify:regression:execution-forensics-netkill-probe && bash -lc \"source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0 >/dev/null && node scripts/executor/executor_mega_proof_x2.mjs\" && npm run -s verify:regression:public-smoke-offline-replay && npm run -s verify:regression:publicdata-no-csv-fallback && npm run -s verify:regression:mega-proof-x2-stability-contract && npm run -s verify:regression:public-provider-hostpool-determinism && npm run -s verify:regression:public-epoch-offline-replay-no-network && npm run -s verify:regression:canon-ms-timestamps-normalized && npm run -s verify:regression:gitignore-incoming-json && npm run -s verify:regression:canon-d005-nonvolatile-unchanged && npm run -s verify:regression:epoch-evidence-cycle-gitignore",
     "verify:regression:node-truth-alignment": "node scripts/verify/regression_node_truth_alignment.mjs",
     "verify:regression:node-wrap-contract": "node scripts/verify/regression_node_wrap_contract.mjs",
-    "verify:regression:node-backend-receipt-contract": "node scripts/verify/regression_node_backend_receipt_contract.mjs"
+    "verify:regression:node-backend-receipt-contract": "node scripts/verify/regression_node_backend_receipt_contract.mjs",
+    "ops:node:backend:check": "bash scripts/ops/node_backend_check.sh",
+    "ops:node:toolchain:acquire": "node scripts/ops/node_toolchain_acquire.mjs",
+    "verify:regression:node-toolchain-lock-contract": "node scripts/verify/regression_node_toolchain_lock_contract.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

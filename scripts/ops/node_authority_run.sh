@@ -13,6 +13,10 @@ NEXT_ACTION="npm run -s ops:node:truth"
 REQUIRED_NODE="22.22.0"
 IMAGE_PRIMARY="node:22.22.0-bullseye-slim"
 IMAGE_FALLBACK="node:22.22.0-slim"
+TOOLCHAIN_BASE="${NODE22_TOOLCHAIN_DIR:-$ROOT/artifacts/toolchains/node/v22.22.0}"
+TOOLCHAIN_BASENAME="node-v22.22.0-linux-x64"
+TOOLCHAIN_LOCK="$TOOLCHAIN_BASE/${TOOLCHAIN_BASENAME}.lock.json"
+TOOLCHAIN_NODE="$TOOLCHAIN_BASE/linux-x64/${TOOLCHAIN_BASENAME}/bin/node"
 
 status="PASS"
 reason_code="NONE"
@@ -78,6 +82,7 @@ if [[ "${1:-}" == "--selftest" ]]; then
   mkdir -p "$SELFTEST_MANUAL_DIR"
   write_selftest_case "HOST_PASS" "PASS" "NONE" "HOST_NODE22" "v22.22.0" "NONE" "NONE"
   write_selftest_case "BLOCKED_NT02" "BLOCKED" "NT02" "NO_NODE22_BACKEND" "UNKNOWN" "NONE" "NONE"
+  write_selftest_case "VENDORED_PASS" "PASS" "NONE" "VENDORED_NODE22" "v22.22.0" "NONE" "NONE"
   cat > "$SELFTEST_DIR/NODE_AUTHORITY_SELFTEST.md" <<MD
 # NODE_AUTHORITY_SELFTEST.md
 
@@ -89,6 +94,7 @@ NEXT_ACTION: $NEXT_ACTION
 - cases:
   - HOST_PASS => PASS/NONE
   - BLOCKED_NT02 => BLOCKED/NT02
+  - VENDORED_PASS => PASS/NONE
 MD
   echo "[PASS] node_authority_run selftest"
   exit 0
@@ -99,41 +105,54 @@ if [[ "$node_runtime" =~ ^v22\. ]]; then
   exec "$@"
 fi
 
-if ! command -v docker >/dev/null 2>&1; then
-  status="BLOCKED"
-  reason_code="NT02"
-  backend="NO_NODE22_BACKEND"
-  write_receipt
-  echo "[BLOCKED] node_authority_run — NT02"
-  exit 2
+container_backend=""
+container_image=""
+if command -v docker >/dev/null 2>&1; then
+  container_backend="docker"
+elif command -v podman >/dev/null 2>&1; then
+  container_backend="podman"
 fi
 
-backend="DOCKER_NODE22"
-image_tag="$IMAGE_PRIMARY"
-if ! docker image inspect "$IMAGE_PRIMARY" >/dev/null 2>&1; then
-  if ! docker pull "$IMAGE_PRIMARY" >/dev/null 2>&1; then
-    image_tag="$IMAGE_FALLBACK"
-    docker pull "$IMAGE_FALLBACK" >/dev/null 2>&1 || {
-      status="BLOCKED"
-      reason_code="NT02"
-      backend="NO_NODE22_BACKEND"
-      image_tag="NONE"
+if [[ -n "$container_backend" ]]; then
+  backend="${container_backend^^}_NODE22"
+  image_tag="$IMAGE_PRIMARY"
+  if ! "$container_backend" image inspect "$IMAGE_PRIMARY" >/dev/null 2>&1; then
+    if ! "$container_backend" pull "$IMAGE_PRIMARY" >/dev/null 2>&1; then
+      image_tag="$IMAGE_FALLBACK"
+      if ! "$container_backend" pull "$IMAGE_FALLBACK" >/dev/null 2>&1; then
+        image_tag="NONE"
+      fi
+    fi
+  fi
+
+  if [[ "$image_tag" != "NONE" ]]; then
+    image_id="$("$container_backend" image inspect "$image_tag" --format '{{.Id}}' 2>/dev/null || echo UNKNOWN)"
+    node_runtime="$("$container_backend" run --rm "$image_tag" node -v 2>/dev/null || echo UNKNOWN)"
+    if [[ "$node_runtime" =~ ^v22\.22\.0$ ]]; then
       write_receipt
-      echo "[BLOCKED] node_authority_run — NT02"
-      exit 2
-    }
+      exec "$container_backend" run --rm -v "$ROOT:/repo" -w /repo "$image_tag" "$@"
+    fi
   fi
 fi
 
-image_id="$(docker image inspect "$image_tag" --format '{{.Id}}' 2>/dev/null || echo UNKNOWN)"
-node_runtime="$(docker run --rm "$image_tag" node -v 2>/dev/null || echo UNKNOWN)"
-if [[ ! "$node_runtime" =~ ^v22\.22\.0$ ]]; then
-  status="BLOCKED"
-  reason_code="NT02"
-  write_receipt
-  echo "[BLOCKED] node_authority_run — NT02"
-  exit 2
+if [[ -f "$TOOLCHAIN_LOCK" && -x "$TOOLCHAIN_NODE" ]]; then
+  backend="VENDORED_NODE22"
+  image_tag="NONE"
+  image_id="NONE"
+  node_runtime="$($TOOLCHAIN_NODE -v 2>/dev/null || echo UNKNOWN)"
+  if [[ "$node_runtime" =~ ^v22\.22\.0$ ]]; then
+    write_receipt
+    export PATH="$(dirname "$TOOLCHAIN_NODE"):$PATH"
+    exec "$@"
+  fi
 fi
 
+status="BLOCKED"
+reason_code="NT02"
+backend="NO_NODE22_BACKEND"
+node_runtime="UNKNOWN"
+image_tag="NONE"
+image_id="NONE"
 write_receipt
-exec docker run --rm -v "$ROOT:/repo" -w /repo "$image_tag" "$@"
+echo "[BLOCKED] node_authority_run — NT02"
+exit 2

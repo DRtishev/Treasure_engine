@@ -8,3 +8,4 @@ NEXT_ACTION: npm run -s ops:node:truth
 - cases:
   - HOST_PASS => PASS/NONE
   - BLOCKED_NT02 => BLOCKED/NT02
+  - VENDORED_PASS => PASS/NONE

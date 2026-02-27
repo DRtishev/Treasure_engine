@@ -116,3 +116,6 @@ artifacts/incoming/*.raw.json
 artifacts/incoming/liquidations/
 
 artifacts/incoming/ALLOW_NETWORK
+
+# node toolchains (vendored runtime backend)
+artifacts/toolchains/node/

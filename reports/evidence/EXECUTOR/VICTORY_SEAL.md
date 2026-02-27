@@ -1,11 +1,13 @@
 # VICTORY_SEAL.md
 
 STATUS: BLOCKED
-REASON_CODE: SNAP01
-RUN_ID: 1f97d6ca0785
-NEXT_ACTION: npm run -s epoch:victory:seal
+REASON_CODE: OP_SAFE01
+BLOCK_REASON_SURFACE: BASELINE_SAFETY
+RUN_ID: 82f54ff06164
+NEXT_ACTION: npm run -s epoch:victory:seal:accept-restore
+EXIT_CODE: 1
 
-- semantic_hash: 8aa4833b0a5579708e5755e92ba8e2c9bedcf351f5c4f9c108917fd69920c0c6
+- semantic_hash: b7078bf529eea1b8fb1c8d0a422bebbb47fa757e465ff43d32807ae95fe01fc4
 - authoritative_run: false
 
 ## STEPS
