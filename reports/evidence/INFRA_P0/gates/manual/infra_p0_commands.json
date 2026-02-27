@@ -24,7 +24,7 @@
       "exit_code": 0,
       "gate": "VERIFY_MODE",
       "json": "reports/evidence/INFRA_P0/gates/manual/verify_mode_gate.json",
-      "message": "VERIFY_MODE=GIT. RUN_ID resolved from git: aad548e5e739. .git directory present.",
+      "message": "VERIFY_MODE=GIT. RUN_ID resolved from git: 4d08f3b36857. .git directory present.",
       "reason_code": "NONE",
       "script": "scripts/verify/verify_mode_gate.mjs",
       "status": "PASS"
@@ -51,7 +51,7 @@
       "exit_code": 0,
       "gate": "FORMAT_POLICY",
       "json": "reports/evidence/INFRA_P0/gates/manual/format_policy_gate.json",
-      "message": "Format policy satisfied (strict scope). 7 new JSON file(s) verified. 11 legacy file(s) queued for schema_version migration.",
+      "message": "Format policy satisfied (strict scope). 8 new JSON file(s) verified. 11 legacy file(s) queued for schema_version migration.",
       "reason_code": "NONE",
       "script": "scripts/verify/format_policy_gate.mjs",
       "status": "PASS"
@@ -75,7 +75,7 @@
       "status": "PASS"
     }
   ],
-  "run_id": "aad548e5e739",
+  "run_id": "4d08f3b36857",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

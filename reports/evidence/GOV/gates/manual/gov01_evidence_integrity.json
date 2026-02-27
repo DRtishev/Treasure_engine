@@ -3,8 +3,8 @@
     {
       "anchor_file": "reports/evidence/EDGE_LAB/P0/CHECKSUMS.md",
       "anchor_found": true,
-      "anchored": "a271146caebc16bc645344cb29f469f9d44d2dfeb5a01787acd61c410efed269",
-      "computed": "a271146caebc16bc645344cb29f469f9d44d2dfeb5a01787acd61c410efed269",
+      "anchored": "540af2030b171b57e3cee3027c8c63c957122fa8458aa2a4c5a55cb0ef3e389f",
+      "computed": "540af2030b171b57e3cee3027c8c63c957122fa8458aa2a4c5a55cb0ef3e389f",
       "diff_hint": "NONE",
       "id": "C01_SCOPE_MANIFEST_SHA",
       "label": "SCOPE_MANIFEST_SHA",
@@ -14,8 +14,8 @@
     {
       "anchor_file": "reports/evidence/GOV/MERKLE_ROOT.md",
       "anchor_found": true,
-      "anchored": "71d5cb6534aa1a16d220466c2353170825e5d11b83e5ce0048d929d1778798bc",
-      "computed": "71d5cb6534aa1a16d220466c2353170825e5d11b83e5ce0048d929d1778798bc",
+      "anchored": "d242b50f577fc5ce72669ae4f70d2c0278872935ecc96edf5298ed460c591a71",
+      "computed": "d242b50f577fc5ce72669ae4f70d2c0278872935ecc96edf5298ed460c591a71",
       "diff_hint": "NONE",
       "id": "C02_MERKLE_ROOT",
       "label": "MERKLE_ROOT",
@@ -25,8 +25,8 @@
     {
       "anchor_file": "reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md",
       "anchor_found": true,
-      "anchored": "202350d163182b1d12f187ee86541e8d7715392095bb275a89703440c07c1e82",
-      "computed": "202350d163182b1d12f187ee86541e8d7715392095bb275a89703440c07c1e82",
+      "anchored": "9297a3090e761014a25391eff4a449d535b5b00214b3ff8d1b54ce96b91f93f7",
+      "computed": "9297a3090e761014a25391eff4a449d535b5b00214b3ff8d1b54ce96b91f93f7",
       "diff_hint": "NONE",
       "id": "C03_RECEIPTS_CHAIN_FINAL",
       "label": "RECEIPTS_CHAIN_FINAL",
@@ -36,12 +36,12 @@
   ],
   "drifted_files_count": 0,
   "drifted_files_sample": [],
-  "files_in_scope": 136,
+  "files_in_scope": 137,
   "message": "GOV01 PASS — Evidence integrity verified. All 3 anchored values match recomputed values. No manual edits detected.",
   "mismatch_count": 0,
   "next_action": "npm run -s gov:integrity",
   "reason_code": "NONE",
-  "run_id": "aad548e5e739",
+  "run_id": "4d08f3b36857",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

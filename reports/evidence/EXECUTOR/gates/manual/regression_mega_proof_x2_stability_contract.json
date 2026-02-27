@@ -8,7 +8,7 @@
   "message": "Mega-proof x2 stability contract checks passed.",
   "next_action": "npm run -s epoch:mega:proof:x2",
   "reason_code": "NONE",
-  "run_id": "64c21e9516d4",
+  "run_id": "4d08f3b36857",
   "schema_version": "1.0.0",
   "semantic_not_global": true,
   "status": "PASS"

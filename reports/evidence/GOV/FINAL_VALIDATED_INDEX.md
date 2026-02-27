@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: aad548e5e739
+RUN_ID: 4d08f3b36857
 NEXT_ACTION: npm run -s epoch:mega:proof:x2
 
 - contract_path: GOV/EXPORT_CONTRACT.md
@@ -14,8 +14,8 @@ NEXT_ACTION: npm run -s epoch:mega:proof:x2
 
 ## Totals
 
-- entry_count: 914
-- total_bytes: 3239520
+- entry_count: 922
+- total_bytes: 3264803
 
 ## Top-level summary
 
@@ -25,7 +25,7 @@ NEXT_ACTION: npm run -s epoch:mega:proof:x2
 | docs | 15 |
 | package-lock.json | 1 |
 | package.json | 1 |
-| scripts | 820 |
+| scripts | 828 |
 | specs | 12 |
 
 ## Tar Entries (first 200)
@@ -113,7 +113,7 @@ NEXT_ACTION: npm run -s epoch:mega:proof:x2
 | docs | docs/EDGE_RESEARCH/WOW_ROADMAP_POST_40.md | 1816 |
 | docs | docs/SDD_EDGE_EPOCHS_31_40.md | 9013 |
 | package-lock.json | package-lock.json | 20781 |
-| package.json | package.json | 75721 |
+| package.json | package.json | 77967 |
 | scripts | scripts/export/final_validated.mjs | 2651 |
 | scripts | scripts/verify/adversarial_safety.mjs | 4215 |
 | scripts | scripts/verify/agent_smoke.mjs | 9781 |

@@ -2,22 +2,22 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: aad548e5e739
+RUN_ID: 4d08f3b36857
 
 ## Merkle Root
 
-MERKLE_ROOT: `71d5cb6534aa1a16d220466c2353170825e5d11b83e5ce0048d929d1778798bc`
+MERKLE_ROOT: `d242b50f577fc5ce72669ae4f70d2c0278872935ecc96edf5298ed460c591a71`
 
 ## Scope
 
 | Field | Value |
 |-------|-------|
-| scope_manifest_sha | `a271146caebc16bc645344cb29f469f9d44d2dfeb5a01787acd61c410efed269` |
-| files_in_scope | 136 |
-| files_hashed | 136 |
+| scope_manifest_sha | `540af2030b171b57e3cee3027c8c63c957122fa8458aa2a4c5a55cb0ef3e389f` |
+| files_in_scope | 137 |
+| files_hashed | 137 |
 | files_missing | 0 |
 | tree_depth | 9 |
-| leaves_count | 136 |
+| leaves_count | 137 |
 
 ## Algorithm
 
@@ -28,7 +28,7 @@ MERKLE_ROOT: `71d5cb6534aa1a16d220466c2353170825e5d11b83e5ce0048d929d1778798bc`
 - Odd level: duplicate last leaf (standard Merkle padding)
 - Root: single hash at top of binary tree
 
-## Leaf Hashes (first 20 of 136)
+## Leaf Hashes (first 20 of 137)
 
 | Path | Leaf Hash (prefix) | sha256_norm (prefix) |
 |------|-------------------|---------------------|
@@ -42,17 +42,17 @@ MERKLE_ROOT: `71d5cb6534aa1a16d220466c2353170825e5d11b83e5ce0048d929d1778798bc`
 | `EDGE_LAB/ERROR_BUDGET_POLICY.md` | `62b64203a888ac4e3c4ebf10…` | `fbd5cc865ac70276692369d2…` |
 | `EDGE_LAB/EVIDENCE_BUNDLE_CONTRACT.md` | `95351741af2cb91ce7b0bf34…` | `f47e9180723817b69a5f3dd8…` |
 | `EDGE_LAB/EVIDENCE_CANON_RULES.md` | `17500f0002bc79ea0e853c7d…` | `021ba0511726a903c5d184a5…` |
-| `EDGE_LAB/EVIDENCE_INDEX.md` | `f9cb4b394af85abf8c6397bc…` | `26c5657006accd4b87f4f357…` |
+| `EDGE_LAB/EVIDENCE_INDEX.md` | `99d3d132f4a07625957d2581…` | `38dc6c90e1bd84853f79d696…` |
 | `EDGE_LAB/EXECUTION_MODEL.md` | `c30a5b225fddbaf008cd0c6c…` | `6072ee361588d9ea048acf2e…` |
 | `EDGE_LAB/EXECUTION_REALITY_POLICY.md` | `ed7e918351d218bc2d5c88b6…` | `79c313a9e3578c25d2b81eb1…` |
 | `EDGE_LAB/EXECUTION_SENSITIVITY_SPEC.md` | `afb2fb87fd2d2fb3a23892e8…` | `2ef6481e548f8cead408f269…` |
 | `EDGE_LAB/EXECUTOR_ENTRYPOINT_DOCTRINE.md` | `efc380acef6a03e200cd3484…` | `b7c2ce5051762b3b5112f8a9…` |
 | `EDGE_LAB/EXPECTANCY_CI_POLICY.md` | `792160fe2cdf39c765f6131b…` | `7cff212a4ce580c4ab3ef66b…` |
 | `EDGE_LAB/EXPECTANCY_POLICY.md` | `5a56af688e0e815f57753f5c…` | `c7a45d923b14dc19041e0959…` |
-| `EDGE_LAB/FINAL_VERDICT.md` | `f302df1f9a510fa639bf25e9…` | `8fa4efbf4e06a5f06ed7f501…` |
+| `EDGE_LAB/FINAL_VERDICT.md` | `db23f9e3c929c9d6d92dcfdd…` | `e6079583b67401a594d31062…` |
 | `EDGE_LAB/GATE_FSM_SPEC.md` | `ee44eaa4af58790ae41b4cb4…` | `381bf240e65dbe9211ddc4e1…` |
 | `EDGE_LAB/HACK_REGISTRY.md` | `379c3a73e7faa24caaca8855…` | `9e40f7916cb116cba1ee2476…` |
-| … (116 more rows) | … | … |
+| … (117 more rows) | … | … |
 
 ## GOV01 Usage
 
