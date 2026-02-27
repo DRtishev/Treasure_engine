@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import { runBounded } from './spawn_bounded.mjs';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
-import { getVictoryStepPlan } from './victory_steps.mjs';
+import { getVictoryStepPlan, getVictoryWrapperBudget } from './victory_steps.mjs';
 import { runNetkillRuntimeProbe } from './netkill_runtime_probe.mjs';
 
 const ROOT = path.resolve(process.cwd());
@@ -17,10 +17,60 @@ const PRECHECK_MD = path.join(EXEC_DIR, 'VICTORY_PRECHECK.md');
 const TIMEOUT_TRIAGE_MD = path.join(EXEC_DIR, 'VICTORY_TIMEOUT_TRIAGE.md');
 fs.mkdirSync(MANUAL, { recursive: true });
 
+
+function ensureVictoryDirs() {
+  fs.mkdirSync(EXEC_DIR, { recursive: true });
+  fs.mkdirSync(MANUAL, { recursive: true });
+}
+
 const victoryTestMode = process.env.VICTORY_TEST_MODE === '1';
 const allowDirtyForRegression = process.env.VICTORY_ALLOW_DIRTY === '1';
 const miniMode = process.env.EXECUTOR_CHAIN_MINI === '1';
 const executionMode = miniMode ? 'MINI_CHAIN' : (victoryTestMode ? 'TEST_MODE' : 'FULL');
+const wrapperBudget = getVictoryWrapperBudget(victoryTestMode);
+
+const HEARTBEAT_INTERVAL_SEC = Number(process.env.VICTORY_HEARTBEAT_INTERVAL_SEC || 15);
+
+function stepSlug(step) {
+  return String(step || '').toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '').slice(0, 64) || 'step';
+}
+
+function shQ(v) {
+  return `'${String(v).replace(/'/g, `'"'"'`)}'`;
+}
+
+
+function shouldDisableHeartbeat(step) {
+  return String(step?.cmd || '').includes('epoch:foundation:seal');
+}
+
+function runVictoryStepWithHeartbeat(step) {
+  if (shouldDisableHeartbeat(step)) {
+    const direct = runBounded(step.cmd, { cwd: ROOT, env: process.env, maxBuffer: 64 * 1024 * 1024, timeoutMs: step.timeout_ms });
+    return { run: direct, log_relpath: null };
+  }
+  const slug = stepSlug(step.cmd);
+  const logPath = path.join(EXEC_DIR, 'gates', `${String(step.step_index).padStart(2, '0')}_${slug}.log`);
+  ensureVictoryDirs();
+  fs.mkdirSync(path.dirname(logPath), { recursive: true });
+  const wrapped = [
+    'set -euo pipefail',
+    `LOG_PATH=${shQ(logPath)}`,
+    `STEP_NAME=${shQ(slug)}`,
+    `HEARTBEAT_INTERVAL_SEC=${Math.max(1, HEARTBEAT_INTERVAL_SEC)}`,
+    ': > "$LOG_PATH"',
+    '(i=0; while true; do echo "heartbeat step=${STEP_NAME} elapsed_sec=${i}" >> "$LOG_PATH"; sleep "$HEARTBEAT_INTERVAL_SEC"; i=$((i+HEARTBEAT_INTERVAL_SEC)); done) & HB_PID=$!',
+    `( ${step.cmd} ) >> "$LOG_PATH" 2>&1`,
+    'EC=$?',
+    'kill "$HB_PID" 2>/dev/null || true',
+    'wait "$HB_PID" 2>/dev/null || true',
+    'echo "step_exit_code=${EC}" >> "$LOG_PATH"',
+    'exit "$EC"',
+  ].join('\n');
+  const r = runBounded(wrapped, { cwd: ROOT, env: process.env, maxBuffer: 64 * 1024 * 1024, timeoutMs: step.timeout_ms });
+  return { run: r, log_relpath: path.relative(ROOT, logPath).replace(/\\/g, '/') };
+}
+
 const headProbe = runBounded('git rev-parse HEAD', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
 const HEAD_SHA = headProbe.ec === 0 ? String(headProbe.stdout || '').trim() : 'UNKNOWN';
 
@@ -172,10 +222,11 @@ function computeSemanticHash(status, reason_code, authoritative_run, steps, time
 }
 
 function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run, timeoutInfo = {}, next_action = NEXT_ACTION, first_failing_step_index = null, first_failing_step_cmd = null }) {
+  ensureVictoryDirs();
   const { semantic, semantic_hash } = computeSemanticHash(status, reason_code, authoritative_run, recs, timeoutInfo);
   const block_reason_surface = resolveBlockReasonSurface(reason_code);
   const exit_code = status === 'PASS' ? 0 : (status === 'NEEDS_DATA' && reason_code === 'RDY01' ? 2 : 1);
-  writeMd(path.join(EXEC_DIR, 'VICTORY_SEAL.md'), `# VICTORY_SEAL.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nBLOCK_REASON_SURFACE: ${block_reason_surface}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${next_action}\nEXIT_CODE: ${exit_code}\n\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n- first_failing_step_index: ${first_failing_step_index ?? 'NONE'}\n- first_failing_step_cmd: ${first_failing_step_cmd ?? 'NONE'}\n\n## RELATED_EVIDENCE_PATHS\n${collectRelatedEvidencePaths().map((p) => `- ${p}`).join('\n') || '- NONE'}\n\n## STEPS\n${recs.map((r) => `- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms}\n  STARTED_AT_MS: ${r.started_at_ms}\n  COMPLETED_AT_MS: ${r.completed_at_ms}\n  TREE_KILL_ATTEMPTED: ${r.tree_kill_attempted}\n  TREE_KILL_OK: ${r.tree_kill_ok}\n  TREE_KILL_NOTE: ${r.tree_kill_note}`).join('\n')}\n`);
+  writeMd(path.join(EXEC_DIR, 'VICTORY_SEAL.md'), `# VICTORY_SEAL.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nBLOCK_REASON_SURFACE: ${block_reason_surface}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${next_action}\nEXIT_CODE: ${exit_code}\n\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n- first_failing_step_index: ${first_failing_step_index ?? 'NONE'}\n- first_failing_step_cmd: ${first_failing_step_cmd ?? 'NONE'}\n- wrapper_timeout_ms: ${wrapperBudget.wrapper_timeout_ms}\n- step_timeout_sum_ms: ${wrapperBudget.step_timeout_sum_ms}\n- wrapper_overhead_margin_ms: ${wrapperBudget.overhead_margin_ms}\n\n## RELATED_EVIDENCE_PATHS\n${collectRelatedEvidencePaths().map((p) => `- ${p}`).join('\n') || '- NONE'}\n\n## STEPS\n${recs.map((r) => `- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms}\n  STARTED_AT_MS: ${r.started_at_ms}\n  COMPLETED_AT_MS: ${r.completed_at_ms}\n  TREE_KILL_ATTEMPTED: ${r.tree_kill_attempted}\n  TREE_KILL_OK: ${r.tree_kill_ok}\n  TREE_KILL_NOTE: ${r.tree_kill_note}`).join('\n')}\n`);
 
   writeJsonDeterministic(path.join(MANUAL, 'victory_seal.json'), {
     schema_version: '1.0.0',
@@ -198,6 +249,7 @@ function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, compl
     first_failing_step_index,
     first_failing_step_cmd,
     related_evidence_paths: collectRelatedEvidencePaths(),
+    wrapper_budget: wrapperBudget,
     volatile: {
       started_at_ms,
       completed_at_ms,
@@ -236,6 +288,7 @@ const baselineTelemetry = parseBaselineTelemetry(baselineOutputRaw);
 const baselineOutputForMd = baselineOutputRaw.replace(/BASELINE_TELEMETRY_JSON:\{[^\n]+\}/g, `BASELINE_TELEMETRY_JSON:${JSON.stringify(baselineTelemetry)}`);
 
 function writePrecheck({ status, reason_code, clean_tree_ok, drift_detected, drift_severity, tracked, staged, untracked, offenders_outside_allowed_roots, git_status, git_diff, git_diff_cached, snap_reason_code }) {
+  ensureVictoryDirs();
   const guidance = [
     '### CHURN01: WRITE_SCOPE_GUARD violation',
     '',
@@ -402,13 +455,18 @@ if (victoryTestMode && !fs.existsSync(TEST_MODE_MD)) {
 }
 
 const stepPlan = getVictoryStepPlan(victoryTestMode);
+if (wrapperBudget.wrapper_timeout_ms < wrapperBudget.required_min_wrapper_timeout_ms) {
+  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'RG_TO01_01', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false });
+  console.log('[BLOCKED] executor_epoch_victory_seal — RG_TO01_01');
+  process.exit(1);
+}
 const recs = [];
 let status = 'PASS';
 let reason_code = 'NONE';
 let timeoutInfo = {};
 const started_at_ms = Date.now();
 for (const step of stepPlan) {
-  const r = runBounded(step.cmd, { cwd: ROOT, env: process.env, maxBuffer: 64 * 1024 * 1024, timeoutMs: step.timeout_ms });
+  const { run: r, log_relpath } = runVictoryStepWithHeartbeat(step);
   const started_at_ms_step = toMs(r.startedAt, Date.now());
   const completed_at_ms_step = toMs(r.completedAt, started_at_ms_step);
   const stepRec = {
@@ -423,6 +481,7 @@ for (const step of stepPlan) {
     tree_kill_attempted: Boolean(r.tree_kill_attempted),
     tree_kill_ok: Boolean(r.tree_kill_ok),
     tree_kill_note: String(r.tree_kill_note || ''),
+    step_log_path: log_relpath,
   };
   recs.push(stepRec);
   if (r.ec !== 0) {
@@ -485,7 +544,7 @@ if (fs.existsSync(victorySealPath)) {
 
 if (reason_code === 'TO01') {
   const lastSteps = recs.slice(Math.max(0, recs.length - 5));
-  writeMd(TIMEOUT_TRIAGE_MD, `# VICTORY_TIMEOUT_TRIAGE.md\n\nSTATUS: BLOCKED\nREASON_CODE: TO01\nBLOCK_REASON_SURFACE: STEP_FAILURE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- timeout_step_index: ${timeoutInfo.timeout_step_index}\n- timeout_cmd: ${timeoutInfo.timeout_cmd}\n- timeout_elapsed_ms: ${timeoutInfo.timeout_elapsed_ms}\n- timeout_ms: ${timeoutInfo.timeout_ms}\n\n## LAST_STEPS\n${lastSteps.map((s) => `- step_${s.step_index}: ${s.cmd} | ec=${s.ec} | timedOut=${s.timedOut} | elapsed_ms=${s.elapsed_ms} | timeout_ms=${s.timeout_ms}`).join('\n')}\n`);
+  writeMd(TIMEOUT_TRIAGE_MD, `# VICTORY_TIMEOUT_TRIAGE.md\n\nSTATUS: BLOCKED\nREASON_CODE: TO01\nBLOCK_REASON_SURFACE: STEP_FAILURE\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- timeout_step_index: ${timeoutInfo.timeout_step_index}\n- timeout_cmd: ${timeoutInfo.timeout_cmd}\n- timeout_elapsed_ms: ${timeoutInfo.timeout_elapsed_ms}\n- timeout_ms: ${timeoutInfo.timeout_ms}\n\n## LAST_STEPS\n${lastSteps.map((s) => `- step_${s.step_index}: ${s.cmd} | ec=${s.ec} | timedOut=${s.timedOut} | elapsed_ms=${s.elapsed_ms} | timeout_ms=${s.timeout_ms} | step_log_path=${s.step_log_path || 'NONE'}`).join('\n')}\n`);
   writeJsonDeterministic(path.join(MANUAL, 'victory_timeout_triage.json'), {
     schema_version: '1.0.0',
     status: 'BLOCKED',
@@ -497,6 +556,8 @@ if (reason_code === 'TO01') {
     timeout_cmd: timeoutInfo.timeout_cmd,
     timeout_elapsed_ms: timeoutInfo.timeout_elapsed_ms,
     timeout_ms: timeoutInfo.timeout_ms,
+    first_failing_step_index: timeoutInfo.timeout_step_index,
+    first_failing_cmd: timeoutInfo.timeout_cmd,
     last_steps: lastSteps,
   });
 }
