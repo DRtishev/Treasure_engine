@@ -1,0 +1,2 @@
+{"bar_ts_ms":1735689600000,"burst_score":1,"buy_vol":4,"liq_pressure":0.75,"provider_id":"bybit_ws_v5","regime_flag":"BEAR_LIQ","run_id":"RG_DATA04_FIXTURE","schema_version":"signals.liq.v1","sell_vol":12,"symbol":"BTCUSDT","total_vol":16,"window_ms":60000}
+{"bar_ts_ms":1735689600000,"burst_score":1,"buy_vol":0,"liq_pressure":1,"provider_id":"bybit_ws_v5","regime_flag":"BEAR_LIQ","run_id":"RG_DATA04_FIXTURE","schema_version":"signals.liq.v1","sell_vol":20,"symbol":"ETHUSDT","total_vol":20,"window_ms":60000}
