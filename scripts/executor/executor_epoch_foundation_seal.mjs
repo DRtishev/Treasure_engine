@@ -13,6 +13,12 @@ fs.mkdirSync(MANUAL, { recursive: true });
 const headProbe = runBounded('git rev-parse HEAD', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
 const HEAD_SHA = headProbe.ec === 0 ? String(headProbe.stdout || '').trim() : 'UNKNOWN';
 
+
+function ensureFoundationDirs() {
+  fs.mkdirSync(EXEC_DIR, { recursive: true });
+  fs.mkdirSync(MANUAL, { recursive: true });
+}
+
 const steps = [
   'npm run -s epoch:mega:proof:x2',
   'npm run -s verify:regression:no-network-in-verify-profit',
@@ -89,6 +95,7 @@ if (status === 'PASS') for (const [index, cmd] of steps.entries()) {
   }
 }
 
+ensureFoundationDirs();
 writeMd(path.join(EXEC_DIR, 'FOUNDATION_SEAL.md'), `# FOUNDATION_SEAL.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n## STEPS\n${records.map((r) => `- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms ?? 'NA'}\n  STARTED_AT: ${r.started_at_iso}\n  COMPLETED_AT: ${r.completed_at_iso}`).join('\n')}\n`);
 writeJsonDeterministic(path.join(MANUAL, 'foundation_seal.json'), {
   schema_version: '1.1.0',
@@ -102,6 +109,7 @@ writeJsonDeterministic(path.join(MANUAL, 'foundation_seal.json'), {
 
 if (status === 'BLOCKED') {
   const evidencePaths = collectEvidencePaths();
+  ensureFoundationDirs();
   writeMd(path.join(EXEC_DIR, 'FOUNDATION_TIMEOUT_TRIAGE.md'), `# FOUNDATION_TIMEOUT_TRIAGE.md\n\nSTATUS: BLOCKED\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- first_failing_substep_index: ${firstFailingSubstepIndex}\n- first_failing_cmd: ${firstFailingCmd}\n\n## SUBSTEPS\n${records.map((r) => `- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms ?? 'NA'}`).join('\n')}\n\n## EVIDENCE_PATHS\n${evidencePaths.map((p) => `- ${p}`).join('\n')}\n`);
   writeJsonDeterministic(path.join(MANUAL, 'foundation_timeout_triage.json'), {
     schema_version: '1.0.0',

@@ -825,7 +825,21 @@
     "verify:regression:nodeauth-path-canonical": "node scripts/verify/regression_nodeauth01_path_canonical.mjs",
     "verify:regression:exec02-no-executor-writes-during-victory": "node scripts/verify/regression_exec02_no_executor_writes_during_victory.mjs",
     "verify:regression:rg02-no-rg-writes-during-certification": "node scripts/verify/regression_rg02_no_rg_writes_during_certification.mjs",
-    "verify:regression:tmp01-no-temp-outside-allowed-roots": "node scripts/verify/regression_tmp01_no_temp_outside_allowed_roots.mjs"
+    "verify:regression:tmp01-no-temp-outside-allowed-roots": "node scripts/verify/regression_tmp01_no_temp_outside_allowed_roots.mjs",
+    "verify:regression:to01-victory-wrapper-budget": "node scripts/verify/regression_to01_victory_wrapper_budget.mjs",
+    "verify:regression:to01-timeout-triage-contract": "node scripts/verify/regression_to01_timeout_triage_contract.mjs",
+    "verify:regression:closeout-not-before-victory": "node scripts/verify/regression_closeout_not_before_victory.mjs",
+    "epoch:victory:fast": "VICTORY_PROFILE=FAST bash scripts/ops/node_authority_run.sh npm run -s _epoch:victory:seal",
+    "epoch:victory:full": "npm run -s epoch:victory:audit",
+    "verify:fast": "npm run -s ops:node:toolchain:acquire && npm run -s verify:repo:byte-audit:x2 && npm run -s verify:regression:node-truth-alignment && npm run -s verify:regression:node-wrap-contract && npm run -s verify:regression:node-vendored-backend-must-win && npm run -s verify:regression:node-nvm-ban && npm run -s verify:regression:churn-contract01 && npm run -s verify:regression:ec01-reason-context-contract && npm run -s verify:regression:netkill-ledger-enforcement && npm run -s verify:regression:pr01-evidence-bloat-guard && npm run -s verify:regression:victory-fast-no-heavy",
+    "verify:full": "npm run -s epoch:mega:proof:x2 && npm run -s epoch:foundation:seal && npm run -s epoch:victory:full",
+    "verify:regression:pr01-evidence-bloat-guard": "node scripts/verify/regression_pr01_evidence_bloat_guard.mjs",
+    "ops:baseline:restore": "bash scripts/ops/baseline_restore.sh",
+    "verify:regression:victory-fast-no-heavy": "node scripts/verify/regression_victory_fast_no_heavy.mjs",
+    "epoch:victory:close": "VICTORY_PROFILE=CLOSE bash scripts/ops/node_authority_run.sh npm run -s _epoch:victory:seal",
+    "epoch:victory:audit": "VICTORY_PROFILE=AUDIT bash scripts/ops/node_authority_run.sh npm run -s _epoch:victory:seal",
+    "verify:regression:close01-no-exporters-in-close": "node scripts/verify/regression_close01_no_exporters_in_close.mjs",
+    "verify:regression:audit01-exporters-only-in-audit": "node scripts/verify/regression_audit01_exporters_only_in_audit.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
