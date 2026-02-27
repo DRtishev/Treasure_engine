@@ -1,0 +1,14 @@
+{
+  "canonical_receipt_prefix": true,
+  "double_prefix_offenders": [],
+  "epoch_nodeauth_dirs_n": 4,
+  "reason_code": "NONE",
+  "receipt_paths": [
+    "reports/evidence/EPOCH-NODEAUTH-6b2dc33_npm_run_s_epoch_victory_seal/node_authority/receipt.json",
+    "reports/evidence/EPOCH-NODEAUTH-72fe8dc_npm_run_s_epoch_victory_seal/node_authority/receipt.json"
+  ],
+  "receipt_paths_n": 2,
+  "run_id": "72fe8dc8c4dd",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -1,0 +1,11 @@
+# REGRESSION_EXPORT_FINAL_VALIDATED_X2.md
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: 0d5bf328af69
+NEXT_ACTION: npm run -s epoch:mega:proof:x2
+
+- run1_ec: 0
+- run2_ec: 0
+- hash_run1: 89395bfddbbb7e40fac20b55490f6b0180e4dd15e44907081fefe66853c44899
+- hash_run2: 89395bfddbbb7e40fac20b55490f6b0180e4dd15e44907081fefe66853c44899

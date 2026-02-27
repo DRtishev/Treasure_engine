@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: a0e3806a2bb8
+RUN_ID: aad548e5e739
 NEXT_ACTION: No action required. Node truth is aligned.
 
 ## Gate Results
@@ -18,7 +18,7 @@ NEXT_ACTION: No action required. Node truth is aligned.
 
 ## Message
 
-Node v22.22.0 matches allowed_family=22. Engines field: ">=22 <25". Pinned minor: 22.22.0.
+Node v22.22.0 matches allowed_family=22. Engines field: "22.22.0". Pinned minor: 22.22.0.
 
 ## Evidence Paths
 

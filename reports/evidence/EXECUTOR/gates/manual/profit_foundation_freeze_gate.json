@@ -1,0 +1,88 @@
+{
+  "checks": [
+    {
+      "cmd_attempted": false,
+      "cmd_ec": 0,
+      "detail": "status must be PASS",
+      "ok": false,
+      "path": "reports/evidence/EXECUTOR/gates/manual/mega_proof_x2.json",
+      "status": "FAIL"
+    },
+    {
+      "cmd_attempted": false,
+      "cmd_ec": 0,
+      "detail": "artifact not found",
+      "ok": false,
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_no_unbounded_spawnsync.json",
+      "status": "MISSING"
+    },
+    {
+      "cmd_attempted": false,
+      "cmd_ec": 0,
+      "detail": "ok",
+      "ok": true,
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_node22_wrapper_timeout.json",
+      "status": "PASS"
+    },
+    {
+      "cmd_attempted": true,
+      "cmd_ec": 0,
+      "detail": "ok",
+      "ok": true,
+      "path": "reports/evidence/EDGE_PROFIT_00/registry/gates/manual/regression_public_diag_bounded.json",
+      "status": "PASS"
+    },
+    {
+      "cmd_attempted": true,
+      "cmd_ec": 0,
+      "detail": "ok",
+      "ok": true,
+      "path": "reports/evidence/GOV/gates/manual/regression_export_final_validated_x2.json",
+      "status": "PASS"
+    }
+  ],
+  "foundation_frozen": false,
+  "missing": [
+    {
+      "cmd_attempted": false,
+      "cmd_ec": 0,
+      "detail": "status must be PASS",
+      "path": "reports/evidence/EXECUTOR/gates/manual/mega_proof_x2.json",
+      "status": "FAIL"
+    },
+    {
+      "cmd_attempted": false,
+      "cmd_ec": 0,
+      "detail": "artifact not found",
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_no_unbounded_spawnsync.json",
+      "status": "MISSING"
+    }
+  ],
+  "next_action": "npm run -s epoch:mega:proof:x2",
+  "reason_code": "PFZ01_NEEDS_DATA",
+  "required": [
+    {
+      "cmd": "",
+      "path": "reports/evidence/EXECUTOR/gates/manual/mega_proof_x2.json"
+    },
+    {
+      "cmd": "",
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_no_unbounded_spawnsync.json"
+    },
+    {
+      "cmd": "",
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_node22_wrapper_timeout.json"
+    },
+    {
+      "cmd": "npm run -s verify:regression:public-diag-bounded",
+      "path": "reports/evidence/EDGE_PROFIT_00/registry/gates/manual/regression_public_diag_bounded.json"
+    },
+    {
+      "cmd": "npm run -s verify:regression:export-final-validated-x2",
+      "path": "reports/evidence/GOV/gates/manual/regression_export_final_validated_x2.json"
+    }
+  ],
+  "run_id": "0d5bf328af69",
+  "schema_version": "1.1.0",
+  "status": "NEEDS_DATA"
+}

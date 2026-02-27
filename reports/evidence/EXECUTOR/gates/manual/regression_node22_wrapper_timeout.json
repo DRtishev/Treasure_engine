@@ -1,0 +1,11 @@
+{
+  "has_exec_forwarding_pattern": true,
+  "has_nvm_usage": false,
+  "has_overall_timeout": true,
+  "has_timeout_error_mapping": true,
+  "next_action": "npm run -s epoch:mega:proof:x2",
+  "reason_code": "NONE",
+  "run_id": "0d5bf328af69",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

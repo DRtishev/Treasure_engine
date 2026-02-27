@@ -1,0 +1,1 @@
+{"schema_version":"1.0.0","status":"BLOCKED","reason_code":"NT02","run_id":"NODEAUTH_SELFTEST","next_action":"npm run -s ops:node:truth","backend":"NO_NODE22_BACKEND","required_node":"22.22.0","node_runtime":"UNKNOWN","image_tag":"NONE","image_id":"NONE"}

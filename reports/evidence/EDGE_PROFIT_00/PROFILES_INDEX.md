@@ -26,9 +26,9 @@ NEXT_ACTION: npm run -s edge:profit:00:x2
 - contract_path: GOV/EXPORT_CONTRACT.md
 - contract_state: PASS
 - evidence_epoch_resolved: EPOCH-EDGE-RC-STRICT-01
-- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz: PRESENT | sha256=e88d97dfba7eb30cd01202fa313966f4725dcaf68415a4fdbf40de74c4b9f4e5
-- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz: PRESENT | sha256=e88d97dfba7eb30cd01202fa313966f4725dcaf68415a4fdbf40de74c4b9f4e5
-- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256: PRESENT | sha256=272b0186ed5e76017dcca9df0dbc3ef5293caad8715e6fecd288206d91aaa601
+- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz: PRESENT | sha256=2c601a2037a1fd96d51075e1958aaf2744d16f9b1c3c829cb82732a0ce4f0078
+- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.tar.gz: PRESENT | sha256=2c601a2037a1fd96d51075e1958aaf2744d16f9b1c3c829cb82732a0ce4f0078
+- reports/evidence/EPOCH-EDGE-RC-STRICT-01/artifacts/FINAL_VALIDATED.sha256: PRESENT | sha256=3c1b503acef72c4ebe32c5877d7e88afbd517b0f85d892a3cf5c5e94ee2be49b
 
 ## Public Profile Snapshot
 
@@ -37,17 +37,17 @@ NEXT_ACTION: npm run -s edge:profit:00:x2
 - public_lock_json_path: artifacts/incoming/real_public_market.lock.json
 - public_market_path: artifacts/incoming/real_public_market.jsonl
 - public_telemetry_csv_path: artifacts/incoming/paper_telemetry.csv
-- public_provider_id: UNKNOWN
+- public_provider_id: binance_public_data
 - public_anchor_server_time_ms: MISSING
 - public_anchor_end_ms: MISSING
 - public_dataset_sha256: MISSING
 - public_telemetry_sha256: MISSING
 - public_profile_promotion_eligible: false
-- public_route: UNKNOWN
+- public_route: PUBLIC_DATA
 - public_net_family: UNKNOWN
 - public_root_cause_code: NONE
 - public_sentinel_exists: false
-- public_summary: route=UNKNOWN | net_family=UNKNOWN | root_cause_code=NONE | sentinel_exists=false
+- public_summary: route=PUBLIC_DATA | net_family=UNKNOWN | root_cause_code=NONE | sentinel_exists=false
 
 ## Available Profiles
 

@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "status": "BLOCKED",
+  "reason_code": "STEP_EC_7",
+  "source_epoch": "reports/evidence/EPOCH-VICTORY-51fbe98e075d",
+  "first_failing_step_index": 7,
+  "first_failing_step_cmd": "npm run -s epoch:foundation:seal",
+  "exit_code": 1,
+  "step_record": {
+    "cmd": "npm run -s epoch:foundation:seal",
+    "ec": 1,
+    "elapsed_ms": 9495,
+    "step_index": 7,
+    "timedOut": false,
+    "timeout_ms": 900000,
+    "tree_kill_attempted": false,
+    "tree_kill_note": "not-needed",
+    "tree_kill_ok": false
+  }
+}

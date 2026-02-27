@@ -91,7 +91,7 @@ runScript('scripts/verify/infra_p0_closeout.mjs', '--render-only');
 
 const allPass = results.every((r) => r.status === 'PASS');
 const status = allPass ? 'PASS' : 'FAIL';
-const nextAction = allPass ? 'npm run -s gov:integrity' : (results.find((r) => r.reason_code === 'NT02') ? 'nvm use 22.22.0' : 'npm run -s infra:p0');
+const nextAction = allPass ? 'npm run -s gov:integrity' : (results.find((r) => r.reason_code === 'NT02') ? 'bash scripts/ops/node_authority_run.sh node -v' : 'npm run -s infra:p0');
 
 const md = `# INFRA_P0_COMMANDS_RUN.md\n\nSTATUS: ${status}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${nextAction}\n\n| Gate | Exit Code | Status | Reason Code |\n|---|---:|---|---|\n${results.map((r)=>`| ${r.gate} | ${r.exit_code} | ${r.status} | ${r.reason_code} |`).join('\n')}\n`;
 fs.writeFileSync(path.join(INFRA_DIR, 'INFRA_P0_COMMANDS_RUN.md'), md);

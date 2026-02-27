@@ -1,26 +1,118 @@
 {
-  "aggregate_noise_run1": null,
-  "aggregate_noise_run2": null,
-  "aggregate_semantic_run1": null,
-  "aggregate_semantic_run2": null,
-  "first_semantic_diff_pair": null,
-  "inputs_noise_run1": [],
-  "inputs_noise_run2": [],
-  "inputs_semantic_run1": [],
-  "inputs_semantic_run2": [],
-  "message": "epoch:mega:proof failed in one or both runs.",
-  "mismatch_mode": "NOISE",
-  "nd01_diff_hint_files": [],
+  "aggregate_noise_run1": "ec9890d8f2487586d4938b975e577fc799a507d0ec2b0bd7013fec1199d7e737",
+  "aggregate_noise_run2": "ec9890d8f2487586d4938b975e577fc799a507d0ec2b0bd7013fec1199d7e737",
+  "aggregate_semantic_run1": "8d89c3f05a86471b4ba7c3e00a921342edc695cb7145b12e51e6e9fc1cfe63e8",
+  "aggregate_semantic_run2": "b0cdc36f11905f5a3ed992e3d1ab9a4c937bdd0e9a81ae4196952ef19bd9ec02",
+  "first_semantic_diff_pair": {
+    "path": "reports/evidence/EXECUTOR/COMMANDS_RUN.md",
+    "sha256_norm_run1": "90276e8d62f308e9f17253a25dacf534401f6268e29124b9be576cb315272db2",
+    "sha256_norm_run2": "858500d992de77217679654e15c759a5e992c96fe6d0f1d03731b7bfd42c669a"
+  },
+  "inputs_noise_run1": [
+    {
+      "path": "reports/evidence/EDGE_PROFIT_00/registry/RELEASE_ARTIFACTS.md",
+      "sha256_norm": "257490de9e290acb46a80009adecff8193be2b95336063a67aad60c790d3a5b0"
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/COMMANDS_RUN_GUARD.md",
+      "sha256_norm": "56e7210fcb95e3009f168f19c7779a0fc6ce05f20571f031b2f5517958d73485"
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/COMMANDS_RUN.md",
+      "sha256_norm": "cd1ddc8f41bd74c5725583b264f5a9b393cdac507b8a69bb0f590190263553a3"
+    },
+    {
+      "path": "reports/evidence/GOV/EXPORT_CONTRACT_INTEGRITY.md",
+      "sha256_norm": "f5ae92e2f30b631b31858ed39a63d310c31ad9078e457afdbb03e653e4362dce"
+    },
+    {
+      "path": "reports/evidence/GOV/FINAL_VALIDATED_INDEX.md",
+      "sha256_norm": "f9fa5aa4ca76738a4fd10091dea96119a2788e9572f7fa723178ff28f131d03c"
+    }
+  ],
+  "inputs_noise_run2": [
+    {
+      "path": "reports/evidence/EDGE_PROFIT_00/registry/RELEASE_ARTIFACTS.md",
+      "sha256_norm": "257490de9e290acb46a80009adecff8193be2b95336063a67aad60c790d3a5b0"
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/COMMANDS_RUN_GUARD.md",
+      "sha256_norm": "56e7210fcb95e3009f168f19c7779a0fc6ce05f20571f031b2f5517958d73485"
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/COMMANDS_RUN.md",
+      "sha256_norm": "cd1ddc8f41bd74c5725583b264f5a9b393cdac507b8a69bb0f590190263553a3"
+    },
+    {
+      "path": "reports/evidence/GOV/EXPORT_CONTRACT_INTEGRITY.md",
+      "sha256_norm": "f5ae92e2f30b631b31858ed39a63d310c31ad9078e457afdbb03e653e4362dce"
+    },
+    {
+      "path": "reports/evidence/GOV/FINAL_VALIDATED_INDEX.md",
+      "sha256_norm": "f9fa5aa4ca76738a4fd10091dea96119a2788e9572f7fa723178ff28f131d03c"
+    }
+  ],
+  "inputs_semantic_run1": [
+    {
+      "path": "reports/evidence/EDGE_PROFIT_00/registry/RELEASE_ARTIFACTS.md",
+      "sha256_norm": "257490de9e290acb46a80009adecff8193be2b95336063a67aad60c790d3a5b0"
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/COMMANDS_RUN_GUARD.md",
+      "sha256_norm": "56e7210fcb95e3009f168f19c7779a0fc6ce05f20571f031b2f5517958d73485"
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/COMMANDS_RUN.md",
+      "sha256_norm": "90276e8d62f308e9f17253a25dacf534401f6268e29124b9be576cb315272db2"
+    },
+    {
+      "path": "reports/evidence/GOV/EXPORT_CONTRACT_INTEGRITY.md",
+      "sha256_norm": "f5ae92e2f30b631b31858ed39a63d310c31ad9078e457afdbb03e653e4362dce"
+    },
+    {
+      "path": "reports/evidence/GOV/FINAL_VALIDATED_INDEX.md",
+      "sha256_norm": "f9fa5aa4ca76738a4fd10091dea96119a2788e9572f7fa723178ff28f131d03c"
+    }
+  ],
+  "inputs_semantic_run2": [
+    {
+      "path": "reports/evidence/EDGE_PROFIT_00/registry/RELEASE_ARTIFACTS.md",
+      "sha256_norm": "257490de9e290acb46a80009adecff8193be2b95336063a67aad60c790d3a5b0"
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/COMMANDS_RUN_GUARD.md",
+      "sha256_norm": "56e7210fcb95e3009f168f19c7779a0fc6ce05f20571f031b2f5517958d73485"
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/COMMANDS_RUN.md",
+      "sha256_norm": "858500d992de77217679654e15c759a5e992c96fe6d0f1d03731b7bfd42c669a"
+    },
+    {
+      "path": "reports/evidence/GOV/EXPORT_CONTRACT_INTEGRITY.md",
+      "sha256_norm": "f5ae92e2f30b631b31858ed39a63d310c31ad9078e457afdbb03e653e4362dce"
+    },
+    {
+      "path": "reports/evidence/GOV/FINAL_VALIDATED_INDEX.md",
+      "sha256_norm": "f9fa5aa4ca76738a4fd10091dea96119a2788e9572f7fa723178ff28f131d03c"
+    }
+  ],
+  "message": "Determinism mismatch: semantic aggregate differs across x2 runs.",
+  "mismatch_mode": "SEMANTIC",
+  "nd01_diff_hint_files": [
+    "reports/evidence/EXECUTOR/COMMANDS_RUN.md"
+  ],
   "next_action": "npm run -s epoch:mega:proof:x2",
   "noisy_targets": [
     "reports/evidence/EXECUTOR/COMMANDS_RUN.md"
   ],
   "normalized_paths_used": true,
-  "reason_code": "ND01",
-  "run_1_ec": 1,
-  "run_2_ec": 1,
-  "run_id": "a0e3806a2bb8",
+  "reason_code": "ND01_SEM01",
+  "run_1_ec": 0,
+  "run_2_ec": 0,
+  "run_id": "049d62b236e1",
   "schema_version": "1.0.0",
-  "semantic_mismatch_files": [],
+  "semantic_mismatch_files": [
+    "reports/evidence/EXECUTOR/COMMANDS_RUN.md"
+  ],
   "status": "FAIL"
 }

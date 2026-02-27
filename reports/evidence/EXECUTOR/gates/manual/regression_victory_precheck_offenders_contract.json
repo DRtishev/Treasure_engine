@@ -1,0 +1,13 @@
+{
+  "checks": {
+    "has_filter_version": true,
+    "has_offenders_staged": true,
+    "has_offenders_tracked": true,
+    "has_offenders_untracked": true,
+    "precheck_schema_observed_or_not_required": true
+  },
+  "reason_code": "NONE",
+  "run_id": "34ddbe4786b3",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

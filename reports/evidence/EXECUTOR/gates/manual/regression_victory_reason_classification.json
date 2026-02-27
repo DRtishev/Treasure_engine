@@ -1,0 +1,12 @@
+{
+  "checks": {
+    "op_safe_requires_tracked_or_staged": true,
+    "snap01_block_surface_mapped": true,
+    "snap01_precheck_branch_exists": true,
+    "untracked_not_in_op_safe_branch": true
+  },
+  "reason_code": "NONE",
+  "run_id": "9bc2486ca30b",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

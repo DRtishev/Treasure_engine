@@ -1,0 +1,18 @@
+{
+  "excluded_paths": [
+    "reports/evidence/EXECUTOR/gates/manual/regression_repo_byte_audit_anti_recursion.json",
+    "reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json",
+    "reports/evidence/EXECUTOR/REGRESSION_REPO_BYTE_AUDIT_ANTI_RECURSION.md",
+    "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_SCOPE.json",
+    "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md",
+    "reports/evidence/EXECUTOR/REPO_SHA256SUMS.txt"
+  ],
+  "reason_code": "NONE",
+  "run_a_ec": 0,
+  "run_a_manifest_sha256": "6e84129fd1fe35acbabc9de532c5511099329ab01eac2b17aaa10076c1a1b5e0",
+  "run_b_ec": 0,
+  "run_b_manifest_sha256": "6e84129fd1fe35acbabc9de532c5511099329ab01eac2b17aaa10076c1a1b5e0",
+  "run_id": "34ddbe4786b3",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

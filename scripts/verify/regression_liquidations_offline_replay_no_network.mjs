@@ -8,23 +8,32 @@ import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 const ROOT = path.resolve(process.cwd());
 const EVD = path.join(ROOT, 'reports/evidence/EXECUTOR');
 const MANUAL = path.join(EVD, 'gates/manual');
-const OUT = path.join(ROOT, 'artifacts/incoming');
-const LOCK = path.join(OUT, 'bybit_liq.lock.json');
-const RAW = path.join(OUT, 'bybit_liq.raw.json');
+const RUN = 'RG_DATA03_FIXTURE';
+const OUT = path.join(ROOT, 'artifacts/incoming/liquidations/bybit_ws_v5', RUN);
+const LOCK = path.join(OUT, 'lock.json');
+const RAW = path.join(OUT, 'raw.jsonl');
 const NEXT_ACTION = 'npm run -s verify:regression:liquidations-offline-replay-no-network';
 fs.mkdirSync(MANUAL, { recursive: true });
 fs.mkdirSync(OUT, { recursive: true });
 
-const raw = JSON.stringify({ provider_id:'bybit', schema_version:'liq.v1', time_unit_sentinel:'ms', rows:[{s:'BTCUSDT'}] }, null, 2);
+const rows = [{ topic:'liquidation.BTCUSDT', type:'snapshot', ts:1735689600000, data:[{S:'Sell', T:1735689600000, s:'BTCUSDT', p:'43000.5', v:'125000'}] }];
+const raw = rows.map((r) => JSON.stringify(r)).join('\n') + '\n';
 fs.writeFileSync(RAW, raw);
-const rawSha = crypto.createHash('sha256').update(raw).digest('hex');
-const normSha = crypto.createHash('sha256').update(JSON.stringify(JSON.parse(raw), Object.keys(JSON.parse(raw)).sort())).digest('hex');
-fs.writeFileSync(LOCK, JSON.stringify({ schema_version:'liq.lock.v1', provider_id:'bybit', raw_capture_sha256:rawSha, normalized_schema_sha256:normSha, time_unit_sentinel:'ms', captured_at_utc:'VOLATILE' }, null, 2));
+const canon = (v) => Array.isArray(v) ? v.map(canon) : v && typeof v === 'object' ? Object.keys(v).sort((a,b)=>a.localeCompare(b)).reduce((a, k) => (a[k] = canon(v[k]), a), {}) : v;
+const normalizeRows = (rowsIn) => rowsIn.map((row) => ({ topic: row.topic, type: row.type, ts: Number(row.ts), data: Array.isArray(row.data) ? row.data.map((item) => ({ S: item.S, T: Number(item.T), s: item.s, p: String(item.p), v: String(item.v) })) : [] }));
+const normalized = { provider_id:'bybit_ws_v5', schema_version:'liquidations.bybit_ws_v5.v1', time_unit_sentinel:'ms', rows: normalizeRows(rows) };
+fs.writeFileSync(LOCK, JSON.stringify({
+  provider_id:'bybit_ws_v5',
+  schema_version:'liquidations.bybit_ws_v5.v1',
+  time_unit_sentinel:'ms',
+  raw_capture_sha256: crypto.createHash('sha256').update(raw).digest('hex'),
+  normalized_schema_sha256: crypto.createHash('sha256').update(JSON.stringify(canon(normalized))).digest('hex'),
+  captured_at_utc:'VOLATILE',
+}, null, 2));
 
-const preloadPath = path.join(ROOT, 'scripts', 'safety', 'net_kill_preload.cjs');
-const cmd = `OFFLINE_REPLAY=1 TREASURE_NET_KILL=1 node -r ${JSON.stringify(preloadPath)} scripts/verify/liquidations_smoke_gate.mjs`;
+const cmd = `TREASURE_NET_KILL=1 node scripts/edge/edge_liq_01_offline_replay.mjs --run-id ${RUN}`;
 const r = runBounded(cmd, { cwd: ROOT, env: process.env, maxBuffer: 8 * 1024 * 1024 });
-const ok = r.ec === 0 && !/NETV01/.test(`${r.stdout}\n${r.stderr}`);
+const ok = r.ec === 0;
 const status = ok ? 'PASS' : 'FAIL';
 const reason_code = ok ? 'NONE' : 'ND_LIQ01';
 

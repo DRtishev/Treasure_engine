@@ -1,0 +1,8 @@
+# REGRESSION_NODE_TOOLCHAIN_LOCK_CONTRACT.md
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: 82f54ff06164
+NEXT_ACTION: npm run -s epoch:victory:seal
+
+- offenders: []
