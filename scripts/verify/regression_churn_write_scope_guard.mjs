@@ -10,7 +10,7 @@ fs.mkdirSync(MANUAL, { recursive: true });
 
 const allowedSample = [
   'reports/evidence/EPOCH-TEST01/logs/x.log',
-  'reports/evidence/EPOCH-NODEAUTH-NODEAUTH_abc_epoch_victory_seal/node_authority/receipt.json',
+  'reports/evidence/EPOCH-NODEAUTH-abc_epoch_victory_seal/node_authority/receipt.json',
   'artifacts/incoming/liquidations/sample.jsonl',
 ];
 const offenders = allowedSample

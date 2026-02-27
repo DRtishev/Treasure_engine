@@ -31,7 +31,12 @@ const WRITE_SCOPE_ALLOWED_PREFIXES = [
 ];
 
 function normalizePathForPolicy(relPath) {
-  return String(relPath || '').trim().replace(/\\/g, '/');
+  const raw = String(relPath || '').trim().replace(/\\/g, '/');
+  const deDotted = raw.replace(/^\.\//, '');
+  const collapsed = deDotted.replace(/\/+/g, '/').replace(/^\.\//, '').replace(/^\//, '');
+  const parts = collapsed.split('/').filter((x) => x && x !== '.');
+  if (parts.some((seg) => seg === '..')) return 'INVALID_PATH_TRAVERSAL';
+  return parts.join('/');
 }
 
 function isAllowedWriteScopePath(relPath) {
@@ -114,7 +119,7 @@ function readFoundationReasonCode() {
 
 
 function resolveBlockReasonSurface(reason_code) {
-  if (reason_code === 'CHURN01') return 'WRITE_SCOPE_GUARD';
+  if (reason_code === 'CHURN01' || reason_code === 'CONTRACT_CHURN01') return 'WRITE_SCOPE_GUARD';
   if (reason_code === 'SNAP01') return 'PRECHECK_SNAP01';
   return 'STEP_FAILURE';
 }
@@ -323,10 +328,12 @@ const clean_tree_ok = baseline_precheck_ok
 const drift_detected = offenders_outside_allowed_roots.length > 0;
 const drift_severity = computeDriftSeverity(tracked, staged, untracked);
 
+const precheckReasonCode = (!clean_tree_ok && offenders_outside_allowed_roots.length === 0) ? 'CONTRACT_CHURN01' : 'CHURN01';
+
 if (!clean_tree_ok && !allowDirtyForRegression) {
   writePrecheck({
     status: 'BLOCKED',
-    reason_code: 'CHURN01',
+    reason_code: precheckReasonCode,
     clean_tree_ok,
     drift_detected: true,
     drift_severity,
@@ -337,10 +344,10 @@ if (!clean_tree_ok && !allowDirtyForRegression) {
     git_status: gitStatusText,
     git_diff: gitDiffText,
     git_diff_cached: gitDiffCachedText,
-    snap_reason_code: 'CHURN01',
+    snap_reason_code: precheckReasonCode,
   });
-  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'CHURN01', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false });
-  console.log('[BLOCKED] executor_epoch_victory_seal — CHURN01');
+  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: precheckReasonCode, recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false });
+  console.log(`[BLOCKED] executor_epoch_victory_seal — ${precheckReasonCode}`);
   process.exit(1);
 }
 

@@ -31,7 +31,7 @@ if (!fs.existsSync(lockPath)) {
 const head7 = (run('git', ['rev-parse', '--short=7', 'HEAD']).stdout || 'UNKNOWN').trim() || 'UNKNOWN';
 const forcedCmd = 'npm run -s epoch:victory:seal';
 const slug = 'npm_run_s_epoch_victory_seal';
-const epochId = `NODEAUTH_${head7}_${slug}`;
+const epochId = `${head7}_${slug}`;
 const witnessPath = path.join(ROOT, 'reports/evidence', `EPOCH-NODEAUTH-${RUN_ID}`, 'node_authority', 'BACKEND_WITNESS.json');
 const receiptPath = path.join(ROOT, 'reports/evidence', `EPOCH-NODEAUTH-${epochId}`, 'node_authority', 'receipt.json');
 

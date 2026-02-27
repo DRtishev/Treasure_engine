@@ -63,7 +63,7 @@ setup_receipt_paths() {
   if is_authoritative_cmd "$raw"; then
     local slug
     slug="$(cmdslug "$raw")"
-    local deterministic_run_id="NODEAUTH_${HEAD7}_${slug}"
+    local deterministic_run_id="${HEAD7}_${slug}"
     out_dir="$ROOT/reports/evidence/EPOCH-NODEAUTH-${deterministic_run_id}/node_authority"
     out_manual_dir="$out_dir"
     mkdir -p "$out_dir"
