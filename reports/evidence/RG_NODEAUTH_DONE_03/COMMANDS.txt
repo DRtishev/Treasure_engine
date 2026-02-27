@@ -1,0 +1,7 @@
+bash -n scripts/ops/node_authority_run.sh
+npm run -s ops:node:toolchain:acquire
+npm run -s epoch:victory:seal
+npm run -s verify:regression:churn-write-scope-guard
+npm run -s verify:regression:node-churn-receipt-routing
+bash scripts/ops/node_authority_run.sh --selftest
+npm run -s verify:regression:node-backend-receipt-contract

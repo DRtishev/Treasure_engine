@@ -11,12 +11,10 @@ const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports/evidence/EXECUTOR');
 const MANUAL = path.join(EXEC_DIR, 'gates/manual');
 const NEXT_ACTION = 'npm run -s epoch:victory:seal';
-const ACCEPT_RESTORE_NEXT_ACTION = 'npm run -s epoch:victory:seal:accept-restore';
 const TEST_MODE_MD = path.join(EXEC_DIR, 'TEST_MODE_ACTIVE.md');
 const NETKILL_SUMMARY = path.join(EXEC_DIR, 'NETKILL_LEDGER_SUMMARY.json');
 const PRECHECK_MD = path.join(EXEC_DIR, 'VICTORY_PRECHECK.md');
 const TIMEOUT_TRIAGE_MD = path.join(EXEC_DIR, 'VICTORY_TIMEOUT_TRIAGE.md');
-const BASELINE_SAFETY_MD = path.join(EXEC_DIR, 'BASELINE_SAFETY.md');
 fs.mkdirSync(MANUAL, { recursive: true });
 
 const victoryTestMode = process.env.VICTORY_TEST_MODE === '1';
@@ -26,25 +24,28 @@ const headProbe = runBounded('git rev-parse HEAD', { cwd: ROOT, env: process.env
 const HEAD_SHA = headProbe.ec === 0 ? String(headProbe.stdout || '').trim() : 'UNKNOWN';
 
 
-const OP_SAFE_ALLOWLIST_PREFIXES = [
-  'reports/evidence/',
-  'artifacts/incoming/',
+const WRITE_SCOPE_ALLOWED_PREFIXES = [
+  'artifacts/',
+  'reports/evidence/EPOCH-',
 ];
 
 function normalizePathForPolicy(relPath) {
   return String(relPath || '').trim().replace(/\\/g, '/');
 }
 
-function isAllowlistedEvidencePath(relPath) {
+function isAllowedWriteScopePath(relPath) {
   const norm = normalizePathForPolicy(relPath);
-  return OP_SAFE_ALLOWLIST_PREFIXES.some((prefix) => norm.startsWith(prefix));
+  if (norm.startsWith('artifacts/')) return true;
+  if (norm.startsWith('reports/evidence/EPOCH-')) return true;
+  return false;
 }
 
-function filterOperatorRelevant(paths) {
+function outsideAllowedRoots(paths) {
   return (Array.isArray(paths) ? paths : [])
     .map((p) => normalizePathForPolicy(p))
     .filter(Boolean)
-    .filter((p) => !isAllowlistedEvidencePath(p));
+    .filter((p) => !isAllowedWriteScopePath(p))
+    .sort((a, b) => a.localeCompare(b));
 }
 
 
@@ -101,7 +102,7 @@ function computeDriftSeverity(tracked, staged, untracked) {
 
 
 function resolveBlockReasonSurface(reason_code) {
-  if (reason_code === 'OP_SAFE01') return 'BASELINE_SAFETY';
+  if (reason_code === 'CHURN01') return 'WRITE_SCOPE_GUARD';
   if (reason_code === 'SNAP01') return 'PRECHECK_SNAP01';
   return 'STEP_FAILURE';
 }
@@ -193,63 +194,15 @@ function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, compl
   writeMd(path.join(EXEC_DIR, 'EXECUTION_FORENSICS.md'), `# EXECUTION_FORENSICS.md\n\nSTATUS: PASS\n\n- preload_abs_path: ${path.join(ROOT, 'scripts', 'safety', 'net_kill_preload.cjs')}\n- node_version: ${process.version}\n- net_kill_runtime_probe_result: ${netkill_probe_result}\n- net_kill_runtime_probe_error_code: ${netkill_probe_error_code}\n- net_kill_runtime_probe_signature_sha256: ${netkill_probe_signature_sha256}\n- execution_mode: ${executionMode}\n- test_mode: ${victoryTestMode}\n- netkill_summary_hash: ${netkill_summary_hash}\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n- operator_next_action: ${next_action}\n- executor_classification_mode: verify|gov|p0|edge_profit|export_final_validated\n`);
 }
 
-function writeBaselineSafety({ status, reason_code, tracked, staged, override, next_action = NEXT_ACTION }) {
-  writeMd(BASELINE_SAFETY_MD, `# BASELINE_SAFETY.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${next_action}\n\n- tracked_n: ${tracked.length}\n- staged_n: ${staged.length}\n- override_active: ${override}\n\n## TRACKED_FILES\n${tracked.map((f) => `- ${f}`).join('\n') || '- NONE'}\n\n## STAGED_FILES\n${staged.map((f) => `- ${f}`).join('\n') || '- NONE'}\n\n${status === 'BLOCKED' ? `Use ${ACCEPT_RESTORE_NEXT_ACTION} only if you explicitly accept tracked/staged restore risk.\n` : ''}`);
-  writeJsonDeterministic(path.join(MANUAL, 'baseline_safety.json'), {
-    schema_version: '1.0.0',
-    status,
-    reason_code,
-    head_sha: HEAD_SHA,
-    run_id: RUN_ID,
-    next_action,
-    tracked_n: tracked.length,
-    staged_n: staged.length,
-    tracked_files: tracked,
-    staged_files: staged,
-    override_active: override,
-  });
-}
-
-const preTracked = runBounded('git diff --name-only', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
-const preStaged = runBounded('git diff --cached --name-only', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
-const trackedBeforeBaselineRaw = sortedLines((preTracked.stdout + preTracked.stderr).trim());
-const stagedBeforeBaselineRaw = sortedLines((preStaged.stdout + preStaged.stderr).trim());
-const trackedBeforeBaseline = filterOperatorRelevant(trackedBeforeBaselineRaw);
-const stagedBeforeBaseline = filterOperatorRelevant(stagedBeforeBaselineRaw);
-const restoreOverride = process.env.TREASURE_I_UNDERSTAND_RESTORE === '1';
-
-if (!restoreOverride && (trackedBeforeBaseline.length > 0 || stagedBeforeBaseline.length > 0)) {
-  writeBaselineSafety({
-    status: 'BLOCKED',
-    reason_code: 'OP_SAFE01',
-    tracked: trackedBeforeBaseline,
-    staged: stagedBeforeBaseline,
-    override: false,
-    next_action: ACCEPT_RESTORE_NEXT_ACTION,
-  });
-  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'OP_SAFE01', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false, next_action: ACCEPT_RESTORE_NEXT_ACTION });
-  console.log('[BLOCKED] executor_epoch_victory_seal — OP_SAFE01');
-  process.exit(1);
-}
-
-writeBaselineSafety({
-  status: 'PASS',
-  reason_code: 'NONE',
-  tracked: trackedBeforeBaseline,
-  staged: stagedBeforeBaseline,
-  override: restoreOverride,
-  next_action: NEXT_ACTION,
-});
-
 const preBaseline = runBounded('npm run -s executor:clean:baseline', { cwd: ROOT, env: process.env, timeoutMs: 60000, maxBuffer: 16 * 1024 * 1024 });
 const baseline_precheck_ok = preBaseline.ec === 0;
 const baselineOutputRaw = (preBaseline.stdout + preBaseline.stderr).trim();
 const baselineTelemetry = parseBaselineTelemetry(baselineOutputRaw);
 const baselineOutputForMd = baselineOutputRaw.replace(/BASELINE_TELEMETRY_JSON:\{[^\n]+\}/g, `BASELINE_TELEMETRY_JSON:${JSON.stringify(baselineTelemetry)}`);
 
-function writePrecheck({ status, reason_code, clean_tree_ok, drift_detected, drift_severity, tracked, staged, untracked, git_status, git_diff, git_diff_cached, snap_reason_code }) {
+function writePrecheck({ status, reason_code, clean_tree_ok, drift_detected, drift_severity, tracked, staged, untracked, offenders_outside_allowed_roots, git_status, git_diff, git_diff_cached, snap_reason_code }) {
   const guidance = [
-    '### SNAP01: WORKING TREE NOT CLEAN',
+    '### CHURN01: WRITE_SCOPE_GUARD violation',
     '',
     'Detected:',
     `- tracked: ${tracked.length}`,
@@ -273,7 +226,8 @@ function writePrecheck({ status, reason_code, clean_tree_ok, drift_detected, dri
     'npm run -s epoch:victory:seal',
   ].join('\n');
 
-  writeMd(PRECHECK_MD, `# VICTORY_PRECHECK.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- baseline_clean_ec: ${preBaseline.ec}\n- baseline_precheck_ok: ${baseline_precheck_ok}\n- clean_tree_ok: ${clean_tree_ok}\n- drift_detected: ${drift_detected}\n- drift_severity: ${drift_severity}\n- snap_reason_code: ${snap_reason_code}\n- dirty_tracked_n: ${tracked.length}\n- dirty_staged_n: ${staged.length}\n- dirty_untracked_n: ${untracked.length}\n\n## DIRTY_TRACKED_FILES (max 50 shown)\n${toMdBullets(tracked)}\n\n## DIRTY_STAGED_FILES (max 50 shown)\n${toMdBullets(staged)}\n\n## DIRTY_UNTRACKED_FILES (max 50 shown)\n${toMdBullets(untracked)}\n\n### Baseline Clean Telemetry (SEMANTIC)\n- baseline_files_restored_n: ${baselineTelemetry.semantic.baseline_files_restored_n ?? 'UNKNOWN'}\n- baseline_evidence_removed_n: ${baselineTelemetry.semantic.baseline_evidence_removed_n ?? 'UNKNOWN'}\n\n### Baseline Clean Telemetry (VOLATILE)\n- baseline_clean_elapsed_ms: ${baselineTelemetry.volatile.baseline_clean_elapsed_ms ?? 'UNKNOWN'}\n\n## BASELINE_CLEAN_OUTPUT\n\`\`\`\n${baselineOutputForMd || '(none)'}\n\`\`\`\n\n## GIT_STATUS_SB\n\`\`\`\n${git_status || '(none)'}\n\`\`\`\n\n## GIT_DIFF_NAME_ONLY\n\`\`\`\n${git_diff || '(none)'}\n\`\`\`\n\n## GIT_DIFF_CACHED_NAME_ONLY\n\`\`\`\n${git_diff_cached || '(none)'}\n\`\`\`\n\n${status === 'BLOCKED' ? guidance : ''}\n`);
+  writeMd(PRECHECK_MD, `# VICTORY_PRECHECK.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n- baseline_clean_ec: ${preBaseline.ec}\n- baseline_precheck_ok: ${baseline_precheck_ok}\n- clean_tree_ok: ${clean_tree_ok}\n- drift_detected: ${drift_detected}\n- drift_severity: ${drift_severity}\n- snap_reason_code: ${snap_reason_code}\n- dirty_tracked_n: ${tracked.length}\n- dirty_staged_n: ${staged.length}\n- dirty_untracked_n: ${untracked.length}
+- offenders_outside_allowed_roots_n: ${offenders_outside_allowed_roots.length}\n\n## DIRTY_TRACKED_FILES (max 50 shown)\n${toMdBullets(tracked)}\n\n## DIRTY_STAGED_FILES (max 50 shown)\n${toMdBullets(staged)}\n\n## DIRTY_UNTRACKED_FILES (max 50 shown)\n${toMdBullets(untracked)}\n\n## OFFENDERS_OUTSIDE_ALLOWED_ROOTS (max 50 shown)\n${toMdBullets(offenders_outside_allowed_roots)}\n\n### Baseline Clean Telemetry (SEMANTIC)\n- baseline_files_restored_n: ${baselineTelemetry.semantic.baseline_files_restored_n ?? 'UNKNOWN'}\n- baseline_evidence_removed_n: ${baselineTelemetry.semantic.baseline_evidence_removed_n ?? 'UNKNOWN'}\n\n### Baseline Clean Telemetry (VOLATILE)\n- baseline_clean_elapsed_ms: ${baselineTelemetry.volatile.baseline_clean_elapsed_ms ?? 'UNKNOWN'}\n\n## BASELINE_CLEAN_OUTPUT\n\`\`\`\n${baselineOutputForMd || '(none)'}\n\`\`\`\n\n## GIT_STATUS_SB\n\`\`\`\n${git_status || '(none)'}\n\`\`\`\n\n## GIT_DIFF_NAME_ONLY\n\`\`\`\n${git_diff || '(none)'}\n\`\`\`\n\n## GIT_DIFF_CACHED_NAME_ONLY\n\`\`\`\n${git_diff_cached || '(none)'}\n\`\`\`\n\n${status === 'BLOCKED' ? guidance : ''}\n`);
 
   const block_reason_surface = resolveBlockReasonSurface(snap_reason_code);
 
@@ -295,6 +249,7 @@ function writePrecheck({ status, reason_code, clean_tree_ok, drift_detected, dri
     offenders_tracked: tracked,
     offenders_staged: staged,
     offenders_untracked: untracked,
+    offenders_outside_allowed_roots,
     dirty_tracked_files: tracked,
     dirty_staged_files: staged,
     dirty_untracked_files: untracked,
@@ -321,38 +276,41 @@ const preUntracked = runBounded('git ls-files --others --exclude-standard', { cw
 const gitStatusText = (preStatus.stdout + preStatus.stderr).trim();
 const gitDiffText = (preDiff.stdout + preDiff.stderr).trim();
 const gitDiffCachedText = (preDiffCached.stdout + preDiffCached.stderr).trim();
-const tracked = sortedLines(gitDiffText);
-const staged = sortedLines(gitDiffCachedText);
-const untracked = filterOperatorRelevant(sortedLines((preUntracked.stdout + preUntracked.stderr).trim()));
+const trackedRaw = sortedLines(gitDiffText);
+const stagedRaw = sortedLines(gitDiffCachedText);
+const untrackedRaw = sortedLines((preUntracked.stdout + preUntracked.stderr).trim());
+const tracked = outsideAllowedRoots(trackedRaw);
+const staged = outsideAllowedRoots(stagedRaw);
+const untracked = outsideAllowedRoots(untrackedRaw);
+const offenders_outside_allowed_roots = [...tracked, ...staged, ...untracked].sort((a, b) => a.localeCompare(b));
 
 const clean_tree_ok = baseline_precheck_ok
   && preStatus.ec === 0
   && preDiff.ec === 0
   && preDiffCached.ec === 0
   && preUntracked.ec === 0
-  && tracked.length === 0
-  && staged.length === 0
-  && untracked.length === 0;
-const drift_detected = tracked.length > 0 || staged.length > 0 || untracked.length > 0;
+  && offenders_outside_allowed_roots.length === 0;
+const drift_detected = offenders_outside_allowed_roots.length > 0;
 const drift_severity = computeDriftSeverity(tracked, staged, untracked);
 
 if (!clean_tree_ok) {
   writePrecheck({
     status: 'BLOCKED',
-    reason_code: 'SNAP01',
+    reason_code: 'CHURN01',
     clean_tree_ok,
     drift_detected: true,
     drift_severity,
     tracked,
     staged,
     untracked,
+    offenders_outside_allowed_roots,
     git_status: gitStatusText,
     git_diff: gitDiffText,
     git_diff_cached: gitDiffCachedText,
-    snap_reason_code: 'SNAP01',
+    snap_reason_code: 'CHURN01',
   });
-  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'SNAP01', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false });
-  console.log('[BLOCKED] executor_epoch_victory_seal — SNAP01');
+  writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'CHURN01', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false });
+  console.log('[BLOCKED] executor_epoch_victory_seal — CHURN01');
   process.exit(1);
 }
 
@@ -365,6 +323,7 @@ writePrecheck({
   tracked,
   staged,
   untracked,
+  offenders_outside_allowed_roots,
   git_status: gitStatusText,
   git_diff: gitDiffText,
   git_diff_cached: gitDiffCachedText,

@@ -10,7 +10,7 @@ STATUS: PASS
 - execution_mode: FULL
 - test_mode: false
 - netkill_summary_hash: 8c258871e596a094dd925832906125ea553efb25d13f8cd5ec499ae9da4b3674
-- semantic_hash: b7078bf529eea1b8fb1c8d0a422bebbb47fa757e465ff43d32807ae95fe01fc4
+- semantic_hash: 291d49addd5da3678192d0a822fb301897089f55e68265d56f53862e4fb48f5c
 - authoritative_run: false
-- operator_next_action: npm run -s epoch:victory:seal:accept-restore
+- operator_next_action: npm run -s epoch:victory:seal
 - executor_classification_mode: verify|gov|p0|edge_profit|export_final_validated

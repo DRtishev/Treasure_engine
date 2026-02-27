@@ -8,6 +8,7 @@ SELFTEST_DIR="$EXEC_DIR/selftest"
 SELFTEST_MANUAL_DIR="$SELFTEST_DIR/gates/manual"
 mkdir -p "$MANUAL_DIR"
 
+HEAD7="$(git -C "$ROOT" rev-parse --short=7 HEAD 2>/dev/null || echo UNKNOWN)"
 RUN_ID="$(git -C "$ROOT" rev-parse --short=12 HEAD 2>/dev/null || echo UNKNOWN)"
 NEXT_ACTION="npm run -s ops:node:truth"
 REQUIRED_NODE="22.22.0"
@@ -27,9 +28,43 @@ image_id="NONE"
 out_dir="$EXEC_DIR"
 out_manual_dir="$MANUAL_DIR"
 
+cmdslug() {
+  local raw="$*"
+  echo "$raw" | tr '[:upper:]' '[:lower:]' | tr ' /:' '___' | tr -cd 'a-z0-9_' | sed 's/_\+/_/g' | sed 's/^_//;s/_$//' | cut -c1-48
+}
+
+is_authoritative_cmd() {
+  local raw="$*"
+  [[ "$raw" == *"epoch:victory:seal"* ]] && return 0
+  [[ "$raw" == *"_epoch:victory:seal"* ]] && return 0
+  [[ "$raw" == *"epoch:mega:proof:x2"* ]] && return 0
+  [[ "$raw" == *"_epoch:mega:proof:x2"* ]] && return 0
+  [[ "$raw" == *"epoch:foundation:seal"* ]] && return 0
+  [[ "$raw" == *"_epoch:foundation:seal"* ]] && return 0
+  [[ "$raw" == *"epoch:victory:triage"* ]] && return 0
+  [[ "$raw" == *"_epoch:victory:triage"* ]] && return 0
+  [[ "$raw" == *"verify:repo:byte-audit:x2"* ]] && return 0
+  [[ "$raw" == *"_verify:repo:byte-audit:x2"* ]] && return 0
+  [[ "$raw" == *"verify:public:data:readiness"* ]] && return 0
+  [[ "$raw" == *"_verify:public:data:readiness"* ]] && return 0
+  return 1
+}
+
+setup_receipt_paths() {
+  local raw="$*"
+  if is_authoritative_cmd "$raw"; then
+    local slug
+    slug="$(cmdslug "$raw")"
+    local deterministic_run_id="NODEAUTH_${HEAD7}_${slug}"
+    out_dir="$ROOT/reports/evidence/EPOCH-NODEAUTH-${deterministic_run_id}/node_authority"
+    out_manual_dir="$out_dir"
+    mkdir -p "$out_dir"
+  fi
+}
+
 write_receipt() {
   mkdir -p "$out_manual_dir"
-  cat > "$out_dir/NODE_AUTHORITY_RECEIPT.md" <<MD
+  cat > "$out_dir/RECEIPT.md" <<MD
 # NODE_AUTHORITY_RECEIPT.md
 
 STATUS: $status
@@ -44,7 +79,7 @@ NEXT_ACTION: $NEXT_ACTION
 - image_id: $image_id
 MD
 
-  cat > "$out_manual_dir/node_authority_receipt.json" <<JSON
+  cat > "$out_manual_dir/receipt.json" <<JSON
 {"schema_version":"1.0.0","status":"$status","reason_code":"$reason_code","run_id":"$RUN_ID","next_action":"$NEXT_ACTION","backend":"$backend","required_node":"$REQUIRED_NODE","node_runtime":"$node_runtime","image_tag":"$image_tag","image_id":"$image_id"}
 JSON
 }
@@ -100,13 +135,15 @@ MD
   exit 0
 fi
 
+authority_probe_command="${NODEAUTH_FORCE_COMMAND:-$*}"
+setup_receipt_paths "$authority_probe_command"
+
 if [[ "$node_runtime" =~ ^v22\. ]]; then
   write_receipt
   exec "$@"
 fi
 
 container_backend=""
-container_image=""
 if command -v docker >/dev/null 2>&1; then
   container_backend="docker"
 elif command -v podman >/dev/null 2>&1; then

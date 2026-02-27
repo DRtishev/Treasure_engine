@@ -1,14 +1,14 @@
 {
   "authoritative_run": false,
-  "block_reason_surface": "BASELINE_SAFETY",
+  "block_reason_surface": "WRITE_SCOPE_GUARD",
   "execution_mode": "FULL",
   "exit_code": 1,
-  "head_sha": "82f54ff0616422622dc6530e47b809321c9e8c93",
-  "next_action": "npm run -s epoch:victory:seal:accept-restore",
-  "reason_code": "OP_SAFE01",
-  "run_id": "82f54ff06164",
+  "head_sha": "be213b42d54abec573bd77fdf91496320c74208b",
+  "next_action": "npm run -s epoch:victory:seal",
+  "reason_code": "CHURN01",
+  "run_id": "be213b42d54a",
   "schema_version": "1.0.0",
-  "semantic_hash": "b7078bf529eea1b8fb1c8d0a422bebbb47fa757e465ff43d32807ae95fe01fc4",
+  "semantic_hash": "291d49addd5da3678192d0a822fb301897089f55e68265d56f53862e4fb48f5c",
   "status": "BLOCKED",
   "steps": [],
   "test_mode": false,
@@ -17,8 +17,8 @@
   "timeout_ms": null,
   "timeout_step_index": null,
   "volatile": {
-    "completed_at_ms": 1772135496765,
+    "completed_at_ms": 1772146591317,
     "durations": [],
-    "started_at_ms": 1772135496765
+    "started_at_ms": 1772146591317
   }
 }

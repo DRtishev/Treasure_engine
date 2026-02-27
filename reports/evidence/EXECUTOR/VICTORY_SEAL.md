@@ -1,13 +1,13 @@
 # VICTORY_SEAL.md
 
 STATUS: BLOCKED
-REASON_CODE: OP_SAFE01
-BLOCK_REASON_SURFACE: BASELINE_SAFETY
-RUN_ID: 82f54ff06164
-NEXT_ACTION: npm run -s epoch:victory:seal:accept-restore
+REASON_CODE: CHURN01
+BLOCK_REASON_SURFACE: WRITE_SCOPE_GUARD
+RUN_ID: be213b42d54a
+NEXT_ACTION: npm run -s epoch:victory:seal
 EXIT_CODE: 1
 
-- semantic_hash: b7078bf529eea1b8fb1c8d0a422bebbb47fa757e465ff43d32807ae95fe01fc4
+- semantic_hash: 291d49addd5da3678192d0a822fb301897089f55e68265d56f53862e4fb48f5c
 - authoritative_run: false
 
 ## STEPS

@@ -806,7 +806,9 @@
     "verify:regression:node-backend-receipt-contract": "node scripts/verify/regression_node_backend_receipt_contract.mjs",
     "ops:node:backend:check": "bash scripts/ops/node_backend_check.sh",
     "ops:node:toolchain:acquire": "node scripts/ops/node_toolchain_acquire.mjs",
-    "verify:regression:node-toolchain-lock-contract": "node scripts/verify/regression_node_toolchain_lock_contract.mjs"
+    "verify:regression:node-toolchain-lock-contract": "node scripts/verify/regression_node_toolchain_lock_contract.mjs",
+    "verify:regression:churn-write-scope-guard": "node scripts/verify/regression_churn_write_scope_guard.mjs",
+    "verify:regression:node-churn-receipt-routing": "node scripts/verify/regression_node_churn_receipt_routing.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
