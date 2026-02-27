@@ -2,7 +2,8 @@
 
 STATUS: FAIL
 REASON_CODE: RG_BYTE_UNTRACKED
-RUN_ID: d22b4d02faa1
+RUN_ID: ef4898489c4d
 NEXT_ACTION: npm run -s verify:repo:byte-audit
 
-- untracked: scripts/verify/regression_sig02_determinism_x2.mjs
+- untracked: scripts/verify/regression_git_outgoing_ignore.mjs
+- untracked: scripts/verify/regression_sig03_semantic_mapping.mjs

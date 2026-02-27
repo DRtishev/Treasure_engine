@@ -6,9 +6,12 @@ import WebSocket from 'ws';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 
 const PROVIDER_ID = 'bybit_ws_v5';
-const SCHEMA_VERSION = 'liquidations.bybit_ws_v5.v1';
+const SCHEMA_VERSION = 'liquidations.bybit_ws_v5.v2';
 const TIME_UNIT_SENTINEL = 'ms';
 const ENDPOINT = 'wss://stream.bybit.com/v5/public/linear';
+// A1: allLiquidation.{symbol} — replaces deprecated liquidation.{symbol}
+// A2: liq_side mapping — Bybit allLiquidation: side=Buy => LONG position liquidated
+const mapLiqSide = (side) => (side === 'Buy' ? 'LONG' : 'SHORT');
 const ALLOW_NETWORK_FILE = path.join(process.cwd(), 'artifacts/incoming/ALLOW_NETWORK');
 
 function parseArgs(argv) {
@@ -72,16 +75,18 @@ async function acquireRows(durationSec) {
         resolve();
       }
     }, 250);
-    ws.once('open', () => ws.send(JSON.stringify({ op: 'subscribe', args: ['liquidation.BTCUSDT'] })));
+    ws.once('open', () => ws.send(JSON.stringify({ op: 'subscribe', args: ['allLiquidation.BTCUSDT'] })));
     ws.on('message', (raw) => {
       try {
         const msg = JSON.parse(String(raw));
-        if (msg?.topic !== 'liquidation.BTCUSDT' || !Array.isArray(msg?.data)) return;
+        if (typeof msg?.topic !== 'string' || !msg.topic.startsWith('allLiquidation.') || !Array.isArray(msg?.data)) return;
         for (const item of msg.data) {
+          const side = String(item.S);
           rows.push({
             provider_id: PROVIDER_ID,
-            symbol: item.s,
-            side: item.S,
+            symbol: String(item.s),
+            side,
+            liq_side: mapLiqSide(side),
             ts: Number(item.T || msg.ts),
             p: String(item.p),
             v: String(item.v),

@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: d22b4d02faa1
+RUN_ID: ef4898489c4d
 NEXT_ACTION: npm run -s verify:regression:sig01-schema-lock
 
 - checks: ALL_PASS

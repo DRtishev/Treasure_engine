@@ -31,9 +31,9 @@ const REQUIRED_TOP_FIELDS = [
 ];
 
 const REQUIRED_FEATURE_SCHEMA_COLS = [
-  'bar_ts_ms', 'burst_score', 'buy_vol', 'liq_pressure',
+  'bar_ts_ms', 'burst_score', 'liq_pressure', 'long_liq_vol',
   'provider_id', 'regime_flag', 'run_id', 'schema_version',
-  'sell_vol', 'symbol', 'total_vol', 'window_ms',
+  'short_liq_vol', 'symbol', 'total_vol', 'window_ms',
 ];
 
 const VALID_REGIME_FLAGS = new Set([

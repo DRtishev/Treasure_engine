@@ -24,7 +24,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 
 const PROVIDERS = {
-  bybit_ws_v5: { schema: 'liquidations.bybit_ws_v5.v1', dir: 'bybit_ws_v5' },
+  bybit_ws_v5: { schema: 'liquidations.bybit_ws_v5.v2', dir: 'bybit_ws_v5' },
   okx_ws_v5: { schema: 'liquidations.okx_ws_v5.v1', dir: 'okx_ws_v5' },
   binance_forceorder_ws: { schema: 'liquidations.binance_forceorder_ws.v1', dir: 'binance_forceorder_ws' },
 };
@@ -112,15 +112,18 @@ if (rows.length === 0) fail('SIG_RDY02', 'empty raw rows');
 const windowMs = args.windowMs;
 
 // Group by symbol → bar_ts (floor to windowMs boundary)
-const barMap = new Map(); // key: `${symbol}:${bar_ts}` → { symbol, bar_ts, sell_vol, buy_vol }
+// A3: liq_pressure uses long_liq_vol/total (liq_side=LONG → long position liquidated)
+const barMap = new Map(); // key: `${symbol}:${bar_ts}` → { symbol, bar_ts, long_liq_vol, short_liq_vol }
 
 for (const row of rows) {
   const bar_ts = Math.floor(row.ts / windowMs) * windowMs;
   const key = `${row.symbol}:${bar_ts}`;
-  if (!barMap.has(key)) barMap.set(key, { symbol: row.symbol, bar_ts, sell_vol: 0, buy_vol: 0 });
+  if (!barMap.has(key)) barMap.set(key, { symbol: row.symbol, bar_ts, long_liq_vol: 0, short_liq_vol: 0 });
   const bar = barMap.get(key);
-  if (row.side === 'Sell') bar.sell_vol += row.v;
-  else if (row.side === 'Buy') bar.buy_vol += row.v;
+  // Prefer liq_side (v2) field; fall back to side-based mapping for backward compat
+  const liq_side = row.liq_side || (row.side === 'Buy' ? 'LONG' : 'SHORT');
+  if (liq_side === 'LONG') bar.long_liq_vol += row.v;
+  else bar.short_liq_vol += row.v;
 }
 
 // Sort bars: (symbol ASC, bar_ts ASC) — deterministic
@@ -132,8 +135,9 @@ const bars = [...barMap.values()].sort((a, b) =>
 const symbolHistory = new Map(); // symbol → [total_vol, ...]
 
 const features = bars.map((bar) => {
-  const total_vol = bar.sell_vol + bar.buy_vol;
-  const liq_pressure = total_vol > 0 ? bar.sell_vol / total_vol : 0.5;
+  const total_vol = bar.long_liq_vol + bar.short_liq_vol;
+  // A3: liq_pressure = long_liq_vol/total — high value = many longs liquidated = bearish
+  const liq_pressure = total_vol > 0 ? bar.long_liq_vol / total_vol : 0.5;
 
   // Rolling mean (exclude current bar — look-back only)
   if (!symbolHistory.has(bar.symbol)) symbolHistory.set(bar.symbol, []);
@@ -163,8 +167,8 @@ const features = bars.map((bar) => {
     symbol: bar.symbol,
     bar_ts_ms: bar.bar_ts,
     window_ms: windowMs,
-    sell_vol: bar.sell_vol,
-    buy_vol: bar.buy_vol,
+    long_liq_vol: bar.long_liq_vol,
+    short_liq_vol: bar.short_liq_vol,
     total_vol,
     liq_pressure: Math.round(liq_pressure * 1e6) / 1e6,
     burst_score: Math.round(burst_score * 1e6) / 1e6,
@@ -183,13 +187,13 @@ const jsonlSha = sha256(jsonlContent);
 const featureSchemaCanon = {
   bar_ts_ms: 'integer_ms',
   burst_score: 'float_deterministic',
-  buy_vol: 'float',
   liq_pressure: 'float_0_to_1',
+  long_liq_vol: 'float',
   provider_id: 'string',
   regime_flag: 'BEAR_LIQ|BEAR_LIQ_BURST|BULL_LIQ|BULL_LIQ_BURST|NEUTRAL|NEUTRAL_BURST',
   run_id: 'string',
   schema_version: FEATURES_SCHEMA_VERSION,
-  sell_vol: 'float',
+  short_liq_vol: 'float',
   symbol: 'string',
   total_vol: 'float',
   window_ms: 'integer_ms',
@@ -225,6 +229,8 @@ const regimeCounts = features.reduce((m, f) => {
 console.log(`[PASS] edge_liq_02_signals — provider=${args.provider} run_id=${runId} bars=${features.length} sha256=${jsonlSha.slice(0, 16)}...`);
 console.log(`  liq_pressure_range: [${Math.min(...features.map(f => f.liq_pressure)).toFixed(4)}, ${Math.max(...features.map(f => f.liq_pressure)).toFixed(4)}]`);
 console.log(`  burst_score_range:  [${Math.min(...features.map(f => f.burst_score)).toFixed(4)}, ${Math.max(...features.map(f => f.burst_score)).toFixed(4)}]`);
+console.log(`  long_liq_vol_total: ${features.reduce((s, f) => s + f.long_liq_vol, 0)}`);
+console.log(`  short_liq_vol_total: ${features.reduce((s, f) => s + f.short_liq_vol, 0)}`);
 console.log(`  regime_counts: ${JSON.stringify(regimeCounts)}`);
 console.log(`  features_liq.jsonl:      ${jsonlPath}`);
 console.log(`  features_liq.lock.json:  ${lockOutPath}`);

@@ -101,6 +101,9 @@ reports/evidence/EPOCH-*/**
 artifacts/outgoing/*.tar.gz
 artifacts/outgoing/*.zip
 artifacts/outgoing/*.gz
+# A5: RG_GIT_OUT01 — computed features are transient outputs, never committed
+artifacts/outgoing/*.jsonl
+artifacts/outgoing/*.lock.json
 
 tools/node/
 

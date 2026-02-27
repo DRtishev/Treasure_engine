@@ -2,13 +2,13 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: d22b4d02faa1
+RUN_ID: ef4898489c4d
 NEXT_ACTION: npm run -s verify:regression:sig02-determinism-x2
 
 ## Runs
 
-- run1: sha256=fc846a3d9e2aa497ca574f97ddfa3e1e10090306f769cf1f368969dd7c6cb41f bars_n=2
-- run2: sha256=fc846a3d9e2aa497ca574f97ddfa3e1e10090306f769cf1f368969dd7c6cb41f bars_n=2
+- run1: sha256=cf7b5e79c500f475c1f6c858b43e13dd466d01a5a09ba77945a449758b3d8e90 bars_n=2
+- run2: sha256=cf7b5e79c500f475c1f6c858b43e13dd466d01a5a09ba77945a449758b3d8e90 bars_n=2
 
 ## Result
 

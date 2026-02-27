@@ -100,10 +100,11 @@
     }
   ],
   "reason_code": "RG_BYTE_UNTRACKED",
-  "run_id": "d22b4d02faa1",
+  "run_id": "ef4898489c4d",
   "schema_version": "1.1.0",
   "status": "FAIL",
   "untracked": [
-    "scripts/verify/regression_sig02_determinism_x2.mjs"
+    "scripts/verify/regression_git_outgoing_ignore.mjs",
+    "scripts/verify/regression_sig03_semantic_mapping.mjs"
   ]
 }
