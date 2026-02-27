@@ -819,7 +819,8 @@
     "verify:regression:ec01-reason-context-contract": "node scripts/verify/regression_ec01_reason_context_contract.mjs",
     "verify:regression:step7-foundation-writescope-contract": "node scripts/verify/regression_step7_foundation_writescope_contract.mjs",
     "verify:regression:node-nvm-ban": "node scripts/verify/regression_node_nvm01.mjs",
-    "verify:regression:victory-foundation-reason-propagation": "node scripts/verify/regression_vic_fnd01_reason_propagation.mjs"
+    "verify:regression:victory-foundation-reason-propagation": "node scripts/verify/regression_vic_fnd01_reason_propagation.mjs",
+    "verify:regression:node-vendored-backend-must-win": "node scripts/verify/regression_node_vendor01.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

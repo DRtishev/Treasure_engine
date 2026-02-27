@@ -4,7 +4,10 @@ import { spawnSync } from 'node:child_process';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 
-const ROOT = process.cwd();
+const SCRIPT_DIR = path.resolve(path.dirname(new URL(import.meta.url).pathname));
+const ROOT_CANDIDATE = path.resolve(SCRIPT_DIR, '..', '..');
+const gitRoot = spawnSync('git', ['-C', ROOT_CANDIDATE, 'rev-parse', '--show-toplevel'], { encoding: 'utf8' });
+const ROOT = gitRoot.status === 0 ? String(gitRoot.stdout || '').trim() : ROOT_CANDIDATE;
 const EXEC = path.join(ROOT, 'reports/evidence/EXECUTOR');
 const MANUAL = path.join(EXEC, 'gates/manual');
 const TOOLCHAIN_DIR = path.join(ROOT, 'artifacts/toolchains/node/v22.22.0');
@@ -53,6 +56,8 @@ try {
   if (r.status !== 0) throw new Error('TAR_FAIL');
 
   if (!fs.existsSync(NODE_BIN)) throw new Error('NODE_BIN_MISSING');
+  fs.chmodSync(NODE_BIN, 0o755);
+  fs.accessSync(NODE_BIN, fs.constants.X_OK);
   r = spawnSync(NODE_BIN, ['-v'], { encoding: 'utf8' });
   nodeRuntime = (r.stdout || '').trim() || 'UNKNOWN';
   if (r.status !== 0 || nodeRuntime !== 'v22.22.0') throw new Error('NODE_RUNTIME_MISMATCH');
