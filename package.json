@@ -822,7 +822,10 @@
     "verify:regression:victory-foundation-reason-propagation": "node scripts/verify/regression_vic_fnd01_reason_propagation.mjs",
     "verify:regression:node-vendored-backend-must-win": "node scripts/verify/regression_node_vendor01.mjs",
     "verify:regression:churn-contract01": "node scripts/verify/regression_churn_contract01.mjs",
-    "verify:regression:nodeauth-path-canonical": "node scripts/verify/regression_nodeauth01_path_canonical.mjs"
+    "verify:regression:nodeauth-path-canonical": "node scripts/verify/regression_nodeauth01_path_canonical.mjs",
+    "verify:regression:exec02-no-executor-writes-during-victory": "node scripts/verify/regression_exec02_no_executor_writes_during_victory.mjs",
+    "verify:regression:rg02-no-rg-writes-during-certification": "node scripts/verify/regression_rg02_no_rg_writes_during_certification.mjs",
+    "verify:regression:tmp01-no-temp-outside-allowed-roots": "node scripts/verify/regression_tmp01_no_temp_outside_allowed_roots.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
