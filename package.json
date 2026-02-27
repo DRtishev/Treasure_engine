@@ -839,7 +839,9 @@
     "epoch:victory:close": "VICTORY_PROFILE=CLOSE bash scripts/ops/node_authority_run.sh npm run -s _epoch:victory:seal",
     "epoch:victory:audit": "VICTORY_PROFILE=AUDIT bash scripts/ops/node_authority_run.sh npm run -s _epoch:victory:seal",
     "verify:regression:close01-no-exporters-in-close": "node scripts/verify/regression_close01_no_exporters_in_close.mjs",
-    "verify:regression:audit01-exporters-only-in-audit": "node scripts/verify/regression_audit01_exporters_only_in_audit.mjs"
+    "verify:regression:audit01-exporters-only-in-audit": "node scripts/verify/regression_audit01_exporters_only_in_audit.mjs",
+    "verify:regression:nd-commands-run01": "node scripts/verify/regression_nd_commands_run01.mjs",
+    "verify:regression:no-unbounded-spawnsync": "node scripts/verify/regression_no_unbounded_spawnsync.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

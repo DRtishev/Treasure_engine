@@ -1,17 +1,109 @@
 {
-  "excluded_paths": [
-    "reports/evidence/EXECUTOR/gates/manual/regression_repo_byte_audit_anti_recursion.json",
-    "reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json",
-    "reports/evidence/EXECUTOR/REGRESSION_REPO_BYTE_AUDIT_ANTI_RECURSION.md",
-    "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_SCOPE.json",
-    "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md",
-    "reports/evidence/EXECUTOR/REPO_SHA256SUMS.txt"
+  "exclude_rules": [
+    {
+      "prefix": "node_modules/",
+      "reason": "VOLATILE_DEPENDENCY_TREE"
+    },
+    {
+      "prefix": "reports/evidence/EPOCH-",
+      "reason": "RUN_SCOPED_EPOCH_EVIDENCE"
+    },
+    {
+      "prefix": "reports/evidence/EPOCH-NODEAUTH-",
+      "reason": "RUN_SCOPED_NODEAUTH_EVIDENCE"
+    },
+    {
+      "prefix": "reports/evidence/EXECUTOR/",
+      "reason": "VOLATILE_EXECUTOR_EVIDENCE"
+    },
+    {
+      "prefix": "reports/evidence/EDGE_PROFIT_00/",
+      "reason": "VOLATILE_EDGE_PROFIT_EVIDENCE"
+    },
+    {
+      "prefix": "reports/evidence/EDGE_PROFIT_00/stub/",
+      "reason": "VOLATILE_STUB_EVIDENCE"
+    },
+    {
+      "prefix": "reports/evidence/EDGE_PROFIT_00/sandbox/",
+      "reason": "VOLATILE_SANDBOX_EVIDENCE"
+    },
+    {
+      "prefix": "reports/evidence/EDGE_PROFIT_00/PROFILES_INDEX.md",
+      "reason": "VOLATILE_PROFILE_INDEX"
+    },
+    {
+      "prefix": "reports/evidence/EDGE_PROFIT_00/registry/",
+      "reason": "VOLATILE_REGISTRY_EVIDENCE"
+    },
+    {
+      "prefix": "reports/evidence/EXECUTOR/COMMANDS_RUN.md",
+      "reason": "VOLATILE_COMMAND_LOG"
+    },
+    {
+      "prefix": "reports/evidence/EXECUTOR/NETKILL_LEDGER.json",
+      "reason": "VOLATILE_NETKILL_LEDGER"
+    },
+    {
+      "prefix": "reports/evidence/EXECUTOR/NETKILL_LEDGER_SUMMARY.json",
+      "reason": "VOLATILE_NETKILL_LEDGER"
+    },
+    {
+      "prefix": ".git/",
+      "reason": "GIT_INTERNALS"
+    },
+    {
+      "prefix": "tmp/",
+      "reason": "TEMP_WORKSPACE"
+    },
+    {
+      "prefix": ".tmp/",
+      "reason": "TEMP_WORKSPACE"
+    },
+    {
+      "prefix": "artifacts/incoming/",
+      "reason": "VOLATILE_INCOMING_ARTIFACTS"
+    }
   ],
-  "file_count": 8391,
-  "forbidden_hits": [],
-  "manifest_sha256": "eb619fb772c21b06e04c8da13e7170bbde2387e3d1b68340a20a2fde51c3c1a7",
-  "reason_code": "NONE",
-  "run_id": "049d62b236e1",
-  "schema_version": "1.0.0",
-  "status": "PASS"
+  "excluded_paths": [
+    {
+      "excluded_reason": "SELF_OUTPUT",
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_repo_byte_audit_anti_recursion.json"
+    },
+    {
+      "excluded_reason": "SELF_OUTPUT",
+      "path": "reports/evidence/EXECUTOR/gates/manual/repo_byte_audit_x2.json"
+    },
+    {
+      "excluded_reason": "SELF_OUTPUT",
+      "path": "reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json"
+    },
+    {
+      "excluded_reason": "SELF_OUTPUT",
+      "path": "reports/evidence/EXECUTOR/REGRESSION_REPO_BYTE_AUDIT_ANTI_RECURSION.md"
+    },
+    {
+      "excluded_reason": "SELF_OUTPUT",
+      "path": "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_SCOPE.json"
+    },
+    {
+      "excluded_reason": "SELF_OUTPUT",
+      "path": "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_X2.md"
+    },
+    {
+      "excluded_reason": "SELF_OUTPUT",
+      "path": "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md"
+    },
+    {
+      "excluded_reason": "SELF_OUTPUT",
+      "path": "reports/evidence/EXECUTOR/REPO_SHA256SUMS.txt"
+    }
+  ],
+  "reason_code": "RG_BYTE_UNTRACKED",
+  "run_id": "64c21e9516d4",
+  "schema_version": "1.1.0",
+  "status": "FAIL",
+  "untracked": [
+    "scripts/verify/regression_nd_commands_run01.mjs"
+  ]
 }
