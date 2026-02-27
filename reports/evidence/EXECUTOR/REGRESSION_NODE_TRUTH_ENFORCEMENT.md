@@ -1,10 +1,10 @@
 # REGRESSION_NODE_TRUTH_ENFORCEMENT.md
 
-STATUS: BLOCKED
-REASON_CODE: NT01
-RUN_ID: 34ddbe4786b3
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: 049d62b236e1
 NEXT_ACTION: npm run -s ops:node:truth
 
-- process_version: v20.19.6
+- process_version: v22.22.0
 - allowed_family: 22
 - hard_pinned_minor: 22.22.0

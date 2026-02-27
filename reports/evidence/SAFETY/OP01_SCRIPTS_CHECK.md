@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 4c3eeb8ff082
+RUN_ID: aad548e5e739
 NEXT_ACTION: All NEXT_ACTION references are valid. No phantom commands.
 
 ## OP01 Policy
@@ -36,10 +36,13 @@ Missing script => BLOCKED OP01.
 | Found | 13 |
 | Missing | 0 |
 
-## All Available Scripts (806 total, sorted)
+## All Available Scripts (818 total, sorted)
 
+- `_epoch:edge:profit:03`
 - `_epoch:foundation:seal`
+- `_epoch:mega:proof`
 - `_epoch:mega:proof:x2`
+- `_epoch:profit:foundation:seal`
 - `_epoch:victory:seal`
 - `_epoch:victory:triage`
 - `_verify:public:data:readiness`
@@ -139,6 +142,7 @@ Missing script => BLOCKED OP01.
 - `epoch:mega:proof`
 - `epoch:mega:proof:x2`
 - `epoch:next`
+- `epoch:profit:foundation:seal`
 - `epoch:profit:real:00`
 - `epoch:run`
 - `epoch:victory:seal`
@@ -713,6 +717,7 @@ Missing script => BLOCKED OP01.
 - `verify:regression:canon-d005-nonvolatile-unchanged`
 - `verify:regression:canon-includes-ms-timing-markers`
 - `verify:regression:canon-ms-timestamps-normalized`
+- `verify:regression:churn-contract01`
 - `verify:regression:churn-write-scope-guard`
 - `verify:regression:commands-run-header-ssot`
 - `verify:regression:data-readiness-ssot`
@@ -724,6 +729,7 @@ Missing script => BLOCKED OP01.
 - `verify:regression:evidence-bundle-deterministic-x2`
 - `verify:regression:evidence-bundle-portable-mode`
 - `verify:regression:exec01-no-executor-writes-during-victory`
+- `verify:regression:exec02-no-executor-writes-during-victory`
 - `verify:regression:execution-forensics-netkill-probe`
 - `verify:regression:executor-netkill-coverage`
 - `verify:regression:executor-netkill-ledger-proof`
@@ -759,6 +765,7 @@ Missing script => BLOCKED OP01.
 - `verify:regression:no-unbounded-spawn`
 - `verify:regression:node-backend-receipt-contract`
 - `verify:regression:node-churn-receipt-routing`
+- `verify:regression:node-nvm-ban`
 - `verify:regression:node-options-netkill-dedupe`
 - `verify:regression:node-options-no-overwrite`
 - `verify:regression:node-options-preload-eviction`
@@ -766,8 +773,10 @@ Missing script => BLOCKED OP01.
 - `verify:regression:node-truth-alignment`
 - `verify:regression:node-truth-enforcement`
 - `verify:regression:node-truth-next-action-contract`
+- `verify:regression:node-vendored-backend-must-win`
 - `verify:regression:node-wrap-contract`
 - `verify:regression:node22-wrapper-timeout`
+- `verify:regression:nodeauth-path-canonical`
 - `verify:regression:op-safe-untracked-only-does-not-block`
 - `verify:regression:op-safe01-receipt-presence-contract`
 - `verify:regression:opa01-op-safe-next-action-wrapper`
@@ -794,12 +803,15 @@ Missing script => BLOCKED OP01.
 - `verify:regression:rg-data02-deep-canonical-json-stable`
 - `verify:regression:rg-data03-offline-replay-network-forbidden`
 - `verify:regression:rg01-no-rg-writes-during-certification`
+- `verify:regression:rg02-no-rg-writes-during-certification`
 - `verify:regression:smoke-is-first`
 - `verify:regression:step7-foundation-writescope-contract`
+- `verify:regression:tmp01-no-temp-outside-allowed-roots`
 - `verify:regression:truth-separation-no-foundation-readiness-claim`
 - `verify:regression:tsu01-mixed-units`
 - `verify:regression:verify-netkill-enforced`
 - `verify:regression:victory-evidence-seal-ssot`
+- `verify:regression:victory-foundation-reason-propagation`
 - `verify:regression:victory-precheck-clean-tree-contract`
 - `verify:regression:victory-precheck-offenders-contract`
 - `verify:regression:victory-readiness-coherence`

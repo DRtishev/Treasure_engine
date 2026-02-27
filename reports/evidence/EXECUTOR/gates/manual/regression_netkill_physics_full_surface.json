@@ -3,7 +3,7 @@
   "next_action": "npm run -s verify:regression:netkill-physics-full-surface",
   "output": "{\"checks\":[{\"name\":\"dns.resolve4\",\"ok\":true,\"code\":\"NETV01\",\"msg\":\"NETWORK_DISABLED_BY_TREASURE_NET_KILL\"},{\"name\":\"dns.resolve6\",\"ok\":true,\"code\":\"NETV01\",\"msg\":\"NETWORK_DISABLED_BY_TREASURE_NET_KILL\"},{\"name\":\"net.connect\",\"ok\":true,\"code\":\"NETV01\",\"msg\":\"NETWORK_DISABLED_BY_TREASURE_NET_KILL\"},{\"name\":\"tls.connect\",\"ok\":true,\"code\":\"NETV01\",\"msg\":\"NETWORK_DISABLED_BY_TREASURE_NET_KILL\"},{\"name\":\"undici.request\",\"ok\":true,\"code\":\"NETV01\",\"msg\":\"NETWORK_DISABLED_BY_TREASURE_NET_KILL\"},{\"name\":\"undici.stream\",\"ok\":true,\"code\":\"NETV01\",\"msg\":\"NETWORK_DISABLED_BY_TREASURE_NET_KILL\"}],\"bad_n\":0}",
   "reason_code": "NONE",
-  "run_id": "0d5bf328af69",
+  "run_id": "049d62b236e1",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

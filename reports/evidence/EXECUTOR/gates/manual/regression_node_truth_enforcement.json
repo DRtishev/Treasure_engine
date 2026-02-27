@@ -1,9 +1,9 @@
 {
   "allowed_family": 22,
   "hard_pinned_minor": "22.22.0",
-  "process_version": "v20.19.6",
-  "reason_code": "NT01",
-  "run_id": "34ddbe4786b3",
+  "process_version": "v22.22.0",
+  "reason_code": "NONE",
+  "run_id": "049d62b236e1",
   "schema_version": "1.0.0",
-  "status": "BLOCKED"
+  "status": "PASS"
 }
