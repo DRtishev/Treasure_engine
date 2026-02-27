@@ -1,0 +1,12 @@
+{
+  "archive_path": "artifacts/toolchains/node/v22.22.0/node-v22.22.0-linux-x64.tar.xz",
+  "archive_url": "https://nodejs.org/dist/v22.22.0/node-v22.22.0-linux-x64.tar.xz",
+  "lock_path": "artifacts/toolchains/node/v22.22.0/node-v22.22.0-linux-x64.lock.json",
+  "node_runtime": "v22.22.0",
+  "reason_code": "NONE",
+  "run_id": "0cbab385bcef",
+  "schema_version": "1.0.0",
+  "sha256_actual": "9aa8e9d2298ab68c600bd6fb86a6c13bce11a4eca1ba9b39d79fa021755d7c37",
+  "sha256_expected": "9aa8e9d2298ab68c600bd6fb86a6c13bce11a4eca1ba9b39d79fa021755d7c37",
+  "status": "PASS"
+}

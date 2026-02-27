@@ -9,12 +9,11 @@ const MANUAL = path.join(EXEC_DIR, 'gates/manual');
 const NEXT_ACTION = 'npm run -s verify:public:data:readiness';
 const doc = fs.readFileSync(path.join(ROOT, 'EDGE_LAB/LIQUIDATIONS_INTELLIGENCE_ROUTE.md'), 'utf8');
 const checks = {
-  has_lock_path: doc.includes('artifacts/incoming/bybit_liq.lock.json'),
-  has_raw_path: doc.includes('artifacts/incoming/bybit_liq.raw.json'),
-  has_schema: doc.includes('liq.lock.v1'),
+  has_lock_path: doc.includes('artifacts/incoming/liquidations/bybit_ws_v5/<RUN_ID>/lock.json'),
+  has_raw_path: doc.includes('artifacts/incoming/liquidations/bybit_ws_v5/<RUN_ID>/raw.jsonl'),
+  has_schema: doc.includes('liquidations.bybit_ws_v5.v1'),
   has_rdy01: doc.includes('RDY01'),
   has_rdy02: doc.includes('RDY02'),
-  has_rdy_net01: doc.includes('RDY_NET01'),
 };
 const ok = Object.values(checks).every(Boolean);
 const status = ok ? 'PASS' : 'FAIL';

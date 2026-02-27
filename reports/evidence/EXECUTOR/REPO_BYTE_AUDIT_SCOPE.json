@@ -1,0 +1,23 @@
+{
+  "excluded_paths": [
+    "reports/evidence/EXECUTOR/gates/manual/regression_repo_byte_audit_anti_recursion.json",
+    "reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json",
+    "reports/evidence/EXECUTOR/REGRESSION_REPO_BYTE_AUDIT_ANTI_RECURSION.md",
+    "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_SCOPE.json",
+    "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md",
+    "reports/evidence/EXECUTOR/REPO_SHA256SUMS.txt"
+  ],
+  "excludes_prefixes": [
+    "node_modules/",
+    "artifacts/incoming/",
+    "reports/evidence/EPOCH-",
+    ".git/",
+    "tmp/",
+    ".tmp/"
+  ],
+  "file_count": 8391,
+  "forbidden_hits": [],
+  "manifest_sha256": "eb619fb772c21b06e04c8da13e7170bbde2387e3d1b68340a20a2fde51c3c1a7",
+  "run_id": "049d62b236e1",
+  "schema_version": "1.0.0"
+}

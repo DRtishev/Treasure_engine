@@ -1,41 +1,38 @@
 # LIQUIDATIONS_INTELLIGENCE_ROUTE.md
 
-STATUS: DESIGN_ONLY
+STATUS: ACTIVE_P1
 
 ## Scope
-- Quarantined MVP scaffold for liquidations intelligence.
-- Not part of foundation freeze until stability hardening is complete.
+- Lock-first liquidation lane with offline-authoritative replay.
+- Providers: bybit (core), okx/binance (optional expansion).
 
-## Acquisition lanes
-- Offline replay (authoritative default): lock-first verification, no network.
-- Live acquire (optional): raw capture into `artifacts/incoming/`, lock emission, replay first.
+## Double-key network unlock (required)
+- Key-A: CLI `--enable-network`
+- Key-B: file `artifacts/incoming/ALLOW_NETWORK` with exact body `ALLOW_NETWORK: YES`
+- Missing any key => `NET_REQUIRED` (EC=2).
 
-## Lock schema (required)
-- schema_version
-- provider_id
-- raw_capture_sha256
-- normalized_schema_sha256
-- time_unit_sentinel (ms/us/ns)
-- captured_at_utc (VOLATILE)
+## Acquire lanes
+- bybit: `node scripts/edge/edge_liq_00_acquire_bybit_ws_v5.mjs --provider bybit_ws_v5 --duration-sec <N> --enable-network`
+- okx: `node scripts/edge/edge_liq_00_acquire_okx_ws_v5.mjs --duration-sec <N> --enable-network`
+- binance: `node scripts/edge/edge_liq_00_acquire_binance_forceorder_ws.mjs --duration-sec <N> --enable-network`
 
-## Replay contract
-- Replay must validate lock hashes before downstream use.
-- OFFLINE_REPLAY=1 must pass with TREASURE_NET_KILL=1 and preload active.
+## Replay lane
+- `TREASURE_NET_KILL=1 node scripts/edge/edge_liq_01_offline_replay.mjs --provider <id> --run-id <RUN_ID>`
+
+## Artifact paths
+- `artifacts/incoming/liquidations/bybit_ws_v5/<RUN_ID>/raw.jsonl`
+- `artifacts/incoming/liquidations/bybit_ws_v5/<RUN_ID>/lock.json`
+- `artifacts/incoming/liquidations/okx_ws_v5/<RUN_ID>/raw.jsonl`
+- `artifacts/incoming/liquidations/okx_ws_v5/<RUN_ID>/lock.json`
+- `artifacts/incoming/liquidations/binance_forceorder_ws/<RUN_ID>/raw.jsonl`
+- `artifacts/incoming/liquidations/binance_forceorder_ws/<RUN_ID>/lock.json`
 
 ## Reason codes
-- ACQ_LIQ01: acquisition blocked / data missing
-- ACQ_LIQ02: rate limited
-- ACQ_LIQ03: schema drift
-- DATA_LIQ01: content mismatch
-- ND_LIQ01: nondeterminism or offline contract violation
-
-## OFFLINE_REPLAY smoke
-- `OFFLINE_REPLAY=1 TREASURE_NET_KILL=1 node -r <ABS_PRELOAD> scripts/verify/liquidations_smoke_gate.mjs`
-- PASS requires lock + raw hash integrity + schema/version validation.
-- NEEDS_DATA when lock/raw missing.
-
-## Readiness reason codes (seal authority)
-- RDY01: missing lock/raw artifacts (`artifacts/incoming/bybit_liq.lock.json`, `artifacts/incoming/bybit_liq.raw.json`).
-- RDY02: lock hash/schema mismatch (`schema_version=liq.lock.v1` expected).
-- RDY_NET01: offline replay failed under net-kill.
-- RDY_SCH01: readiness provider registry/schema contract invalid.
+- ACQ_NET00: network unlock missing
+- ACQ_NET01: network transport unavailable (NEEDS_NETWORK)
+- ACQ_LIQ01: acquisition no data
+- ACQ_LIQ03: provider/schema argument contract error
+- RDY01: required lane artifacts missing
+- RDY02: replay/hash/schema invariant mismatch
+- RDY_SCH01: unknown provider schema contract
+- ND_LIQ01: replay attempted without net-kill

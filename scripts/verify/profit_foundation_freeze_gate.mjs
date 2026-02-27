@@ -48,8 +48,8 @@ const checks = required.map((item) => {
 
 const missing = checks.filter((x) => !x.ok).map((x) => ({ path: x.path, status: x.status, detail: x.detail, cmd_attempted: x.cmd_attempted, cmd_ec: x.cmd_ec }));
 const frozen = missing.length === 0;
-const status = frozen ? 'PASS' : 'BLOCKED';
-const reason_code = frozen ? 'NONE' : 'EC01';
+const status = frozen ? 'PASS' : 'NEEDS_DATA';
+const reason_code = frozen ? 'NONE' : 'PFZ01_NEEDS_DATA';
 
 writeMd(path.join(EXEC_DIR, 'PROFIT_FOUNDATION_FREEZE_GATE.md'), `# PROFIT_FOUNDATION_FREEZE_GATE.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${NEXT_ACTION}\n\n## REQUIRED\n${required.map((x) => `- ${x.path}${x.cmd ? ` | cmd: ${x.cmd}` : ''}`).join('\n')}\n\n## CHECKS\n${checks.map((x) => `- ${x.path}: ${x.status} (${x.detail}) cmd_attempted=${x.cmd_attempted} cmd_ec=${x.cmd_ec}`).join('\n')}\n\n## MISSING_OR_BLOCKING\n${missing.map((x) => `- ${x.path}: ${x.status} (${x.detail}) cmd_attempted=${x.cmd_attempted} cmd_ec=${x.cmd_ec}`).join('\n') || '- none'}\n\n- foundation_frozen: ${frozen}\n`);
 writeJsonDeterministic(path.join(MANUAL, 'profit_foundation_freeze_gate.json'), {
@@ -64,4 +64,4 @@ writeJsonDeterministic(path.join(MANUAL, 'profit_foundation_freeze_gate.json'), 
   missing,
 });
 console.log(`[${status}] profit_foundation_freeze_gate — ${reason_code}`);
-process.exit(frozen ? 0 : 1);
+process.exit(frozen ? 0 : 2);

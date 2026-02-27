@@ -1,11 +1,14 @@
 {
   "authoritative_run": false,
+  "block_reason_surface": "WRITE_SCOPE_GUARD",
   "execution_mode": "FULL",
+  "exit_code": 1,
+  "head_sha": "be213b42d54abec573bd77fdf91496320c74208b",
   "next_action": "npm run -s epoch:victory:seal",
-  "reason_code": "SNAP01",
-  "run_id": "1f97d6ca0785",
+  "reason_code": "CHURN01",
+  "run_id": "be213b42d54a",
   "schema_version": "1.0.0",
-  "semantic_hash": "8aa4833b0a5579708e5755e92ba8e2c9bedcf351f5c4f9c108917fd69920c0c6",
+  "semantic_hash": "291d49addd5da3678192d0a822fb301897089f55e68265d56f53862e4fb48f5c",
   "status": "BLOCKED",
   "steps": [],
   "test_mode": false,
@@ -14,8 +17,8 @@
   "timeout_ms": null,
   "timeout_step_index": null,
   "volatile": {
-    "completed_at_ms": 1772003316522,
+    "completed_at_ms": 1772146591317,
     "durations": [],
-    "started_at_ms": 1772003316522
+    "started_at_ms": 1772146591317
   }
 }

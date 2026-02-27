@@ -1,0 +1,17 @@
+{
+  "head_sha": "82f54ff0616422622dc6530e47b809321c9e8c93",
+  "next_action": "npm run -s epoch:victory:seal:accept-restore",
+  "override_active": false,
+  "reason_code": "OP_SAFE01",
+  "run_id": "82f54ff06164",
+  "schema_version": "1.0.0",
+  "staged_files": [],
+  "staged_n": 0,
+  "status": "BLOCKED",
+  "tracked_files": [
+    ".gitignore",
+    "package.json",
+    "scripts/ops/node_authority_run.sh"
+  ],
+  "tracked_n": 3
+}

@@ -1,0 +1,12 @@
+{
+  "checks": {
+    "checks_victory_precheck_json": true,
+    "checks_victory_seal_json": true,
+    "has_reason_reader": true,
+    "non_timeout_uses_surfaced_reason": true
+  },
+  "reason_code": "NONE",
+  "run_id": "d9f15fe1529a",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

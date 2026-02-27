@@ -1,0 +1,6 @@
+bash -n scripts/ops/node_authority_run.sh
+npm run -s verify:regression:node-truth-alignment
+npm run -s verify:regression:node-wrap-contract
+bash scripts/ops/node_authority_run.sh --selftest
+npm run -s verify:regression:node-backend-receipt-contract
+npm run -s epoch:victory:seal
