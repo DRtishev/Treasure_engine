@@ -2,11 +2,11 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: a61695cb46d4
+RUN_ID: 8baf4ea65951
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 176
+- changed_evidence_files_n: 184
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: true
 
@@ -105,9 +105,13 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_gitignore_incoming_json.json
 - reports/evidence/EXECUTOR/gates/manual/regression_liq_fixture_offline_x2.json
 - reports/evidence/EXECUTOR/gates/manual/regression_mega_proof_x2_stability_contract.json
+- reports/evidence/EXECUTOR/gates/manual/regression_microlive01_must_fail_default.json
+- reports/evidence/EXECUTOR/gates/manual/regression_microlive02_kill_switch.json
 - reports/evidence/EXECUTOR/gates/manual/regression_nd_commands_run01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_netkill_ledger_enforcement.json
 - reports/evidence/EXECUTOR/gates/manual/regression_no_unbounded_spawnsync.json
+- reports/evidence/EXECUTOR/gates/manual/regression_paper01_determinism.json
+- reports/evidence/EXECUTOR/gates/manual/regression_paper02_no_net.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
 - reports/evidence/EXECUTOR/gates/manual/regression_sig01_schema_lock.json
 - reports/evidence/EXECUTOR/gates/manual/regression_sig02_determinism_x2.json
@@ -133,9 +137,13 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_GITIGNORE_INCOMING_JSON.md
 - reports/evidence/EXECUTOR/REGRESSION_LIQ_FIXTURE_OFFLINE_X2.md
 - reports/evidence/EXECUTOR/REGRESSION_MEGA_PROOF_X2_STABILITY_CONTRACT.md
+- reports/evidence/EXECUTOR/REGRESSION_MICROLIVE01_MUST_FAIL_DEFAULT.md
+- reports/evidence/EXECUTOR/REGRESSION_MICROLIVE02_KILL_SWITCH.md
 - reports/evidence/EXECUTOR/REGRESSION_ND_COMMANDS_RUN01.md
 - reports/evidence/EXECUTOR/REGRESSION_NETKILL_LEDGER_ENFORCEMENT.md
 - reports/evidence/EXECUTOR/REGRESSION_NO_UNBOUNDED_SPAWNSYNC.md
+- reports/evidence/EXECUTOR/REGRESSION_PAPER01_DETERMINISM.md
+- reports/evidence/EXECUTOR/REGRESSION_PAPER02_NO_NET.md
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
 - reports/evidence/EXECUTOR/REGRESSION_SIG01_SCHEMA_LOCK.md
 - reports/evidence/EXECUTOR/REGRESSION_SIG02_DETERMINISM_X2.md
