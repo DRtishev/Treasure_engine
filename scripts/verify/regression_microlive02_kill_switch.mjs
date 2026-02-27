@@ -65,9 +65,18 @@ function runSim() {
     { env: { ...process.env, TREASURE_NET_KILL: '1' }, cwd: ROOT, encoding: 'utf8', timeout: 10_000 });
 }
 
-// T1: PNL below floor → KILL_SWITCH (exit 1)
+// v2 mock lock uses total_pnl_net (not total_pnl)
+const GOOD_LOCK = {
+  schema_version: 'paper_sim.v2',
+  total_pnl_net: 200, total_pnl_gross: 250, total_fee_cost: 50,
+  win_rate: 0.60, profit_factor: 2.0, max_drawdown: 80,
+  avg_slippage_cost: 10, wins_n: 6, losses_n: 4,
+  closed_n: 10, decisions_n: 10,
+};
+
+// T1: PNL_NET below floor → KILL_SWITCH (exit 1)
 const t1 = withUnlock('MICROLIVE: UNLOCKED', () =>
-  withLock({ total_pnl: -600, win_rate: 0.5, closed_n: 10, decisions_n: 10 }, runSim)
+  withLock({ ...GOOD_LOCK, total_pnl_net: -600 }, runSim)
 );
 if (t1.status !== 1)
   fails.push(`T1_KILL_PNL: expected exit 1 (KILL_SWITCH), got ${t1.status}`);
@@ -76,14 +85,14 @@ if (!t1.stderr.includes('KILL_SWITCH'))
 
 // T2: Win rate below threshold → KILL_SWITCH (exit 1)
 const t2 = withUnlock('MICROLIVE: UNLOCKED', () =>
-  withLock({ total_pnl: 100, win_rate: 0.20, closed_n: 10, decisions_n: 10 }, runSim)
+  withLock({ ...GOOD_LOCK, win_rate: 0.20 }, runSim)
 );
 if (t2.status !== 1)
   fails.push(`T2_KILL_WIN_RATE: expected exit 1 (KILL_SWITCH), got ${t2.status}`);
 
 // T3: Good metrics → PROCEED (exit 0)
 const t3 = withUnlock('MICROLIVE: UNLOCKED', () =>
-  withLock({ total_pnl: 200, win_rate: 0.60, closed_n: 10, decisions_n: 10 }, runSim)
+  withLock(GOOD_LOCK, runSim)
 );
 if (t3.status !== 0)
   fails.push(`T3_PROCEED: expected exit 0, got ${t3.status} stderr="${t3.stderr.slice(0, 150)}"`);
@@ -92,14 +101,14 @@ if (!t3.stdout.includes('PROCEED'))
 
 // T4: Fewer than MIN_TRADES closed → NEEDS_DATA (exit 2)
 const t4 = withUnlock('MICROLIVE: UNLOCKED', () =>
-  withLock({ total_pnl: 50, win_rate: 0.5, closed_n: 1, decisions_n: 2 }, runSim)
+  withLock({ ...GOOD_LOCK, closed_n: 1 }, runSim)
 );
 if (t4.status !== 2)
   fails.push(`T4_NEEDS_DATA: expected exit 2, got ${t4.status}`);
 
-// T5: Verify microlive_decision.json written on PROCEED
+// T5: Verify microlive_decision.json written on PROCEED with v2 schema
 withUnlock('MICROLIVE: UNLOCKED', () =>
-  withLock({ total_pnl: 300, win_rate: 0.70, closed_n: 5, decisions_n: 5 }, () => {
+  withLock(GOOD_LOCK, () => {
     spawnSync(process.execPath, [ML_SCRIPT],
       { env: { ...process.env, TREASURE_NET_KILL: '1' }, cwd: ROOT, encoding: 'utf8', timeout: 10_000 });
     const decisionPath = path.join(OUT_DIR, 'microlive_decision.json');
@@ -108,7 +117,9 @@ withUnlock('MICROLIVE: UNLOCKED', () =>
     } else {
       const d = JSON.parse(fs.readFileSync(decisionPath, 'utf8'));
       if (d.verdict !== 'PROCEED') fails.push(`T5_VERDICT: expected PROCEED, got ${d.verdict}`);
-      if (d.schema_version !== 'microlive_decision.v1') fails.push(`T5_SCHEMA: expected microlive_decision.v1`);
+      if (d.schema_version !== 'microlive_decision.v2') fails.push(`T5_SCHEMA: expected microlive_decision.v2, got ${d.schema_version}`);
+      if (!d.telemetry) fails.push('T5_TELEMETRY: telemetry block missing');
+      if (!d.thresholds) fails.push('T5_THRESHOLDS: thresholds block missing');
     }
   })
 );

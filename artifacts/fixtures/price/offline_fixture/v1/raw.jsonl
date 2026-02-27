@@ -1,0 +1,14 @@
+{"provider_id":"offline_fixture","symbol":"BTCUSDT","bar_ts_ms":1735689600000,"open":43000,"high":43150,"low":42950,"close":43100,"volume":120,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"BTCUSDT","bar_ts_ms":1735689660000,"open":43100,"high":43300,"low":43050,"close":43250,"volume":150,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"BTCUSDT","bar_ts_ms":1735689720000,"open":43250,"high":43400,"low":43200,"close":43350,"volume":130,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"BTCUSDT","bar_ts_ms":1735689780000,"open":43350,"high":43600,"low":43300,"close":43500,"volume":200,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"BTCUSDT","bar_ts_ms":1735689840000,"open":43500,"high":43550,"low":43350,"close":43400,"volume":80,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"BTCUSDT","bar_ts_ms":1735689900000,"open":43400,"high":43450,"low":43300,"close":43350,"volume":70,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"ETHUSDT","bar_ts_ms":1735689600000,"open":2400,"high":2430,"low":2390,"close":2420,"volume":300,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"ETHUSDT","bar_ts_ms":1735689660000,"open":2420,"high":2450,"low":2410,"close":2440,"volume":280,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"ETHUSDT","bar_ts_ms":1735689720000,"open":2440,"high":2460,"low":2420,"close":2430,"volume":260,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"ETHUSDT","bar_ts_ms":1735689780000,"open":2430,"high":2440,"low":2400,"close":2410,"volume":220,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"SOLUSDT","bar_ts_ms":1735689600000,"open":180,"high":184,"low":179,"close":183,"volume":1000,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"SOLUSDT","bar_ts_ms":1735689660000,"open":183,"high":186,"low":181,"close":185,"volume":900,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"SOLUSDT","bar_ts_ms":1735689720000,"open":185,"high":188,"low":183,"close":186,"volume":1100,"bar_ms":60000}
+{"provider_id":"offline_fixture","symbol":"SOLUSDT","bar_ts_ms":1735689780000,"open":186,"high":190,"low":184,"close":189,"volume":1200,"bar_ms":60000}

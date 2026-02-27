@@ -2,14 +2,18 @@
 
 STATUS: FAIL
 REASON_CODE: RG_BYTE_UNTRACKED
-RUN_ID: a61695cb46d4
+RUN_ID: 5b35ac334736
 NEXT_ACTION: npm run -s verify:repo:byte-audit
 
-- untracked: scripts/edge/edge_microlive_00_scaffold.mjs
-- untracked: scripts/edge/edge_paper_00_sim.mjs
-- untracked: scripts/edge/edge_price_00_bars_fixture.mjs
-- untracked: scripts/edge/edge_price_01_offline_replay.mjs
-- untracked: scripts/verify/regression_microlive01_must_fail_default.mjs
-- untracked: scripts/verify/regression_microlive02_kill_switch.mjs
-- untracked: scripts/verify/regression_paper01_determinism.mjs
-- untracked: scripts/verify/regression_paper02_no_net.mjs
+- untracked: artifacts/fixtures/liq/bybit_ws_v5/v2/lock.json
+- untracked: artifacts/fixtures/liq/bybit_ws_v5/v2/raw.jsonl
+- untracked: artifacts/fixtures/price/offline_fixture/v1/lock.json
+- untracked: artifacts/fixtures/price/offline_fixture/v1/raw.jsonl
+- untracked: scripts/edge/edge_fixtures_build.mjs
+- untracked: scripts/verify/regression_fix01_lock_schema.mjs
+- untracked: scripts/verify/regression_fix02_replay_pass.mjs
+- untracked: scripts/verify/regression_fix03_determinism_x2.mjs
+- untracked: scripts/verify/regression_live03_readiness_gate.mjs
+- untracked: scripts/verify/regression_live04_telemetry_contract.mjs
+- untracked: scripts/verify/regression_paper03_metrics_contract.mjs
+- untracked: scripts/verify/regression_paper04_slippage_sensitivity.mjs

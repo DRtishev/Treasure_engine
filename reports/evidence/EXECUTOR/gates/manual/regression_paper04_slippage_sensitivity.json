@@ -1,0 +1,37 @@
+{
+  "fails": [],
+  "fee": {
+    "high": {
+      "fee_rate": 0.0012,
+      "ok": true,
+      "total_fee_cost": 109.289967,
+      "total_pnl_net": -99.827467
+    },
+    "low": {
+      "fee_rate": 0.0003,
+      "ok": true,
+      "total_fee_cost": 27.322491,
+      "total_pnl_net": -17.859991
+    }
+  },
+  "reason_code": "NONE",
+  "run_id": "5b35ac334736",
+  "schema_version": "1.0.0",
+  "slippage": {
+    "high": {
+      "avg_slippage_cost": 45.5375,
+      "bps": 10,
+      "ok": true,
+      "profit_factor": 0,
+      "total_pnl_net": -90.719967
+    },
+    "low": {
+      "avg_slippage_cost": 9.1075,
+      "bps": 2,
+      "ok": true,
+      "profit_factor": 0.3806,
+      "total_pnl_net": -17.859993
+    }
+  },
+  "status": "PASS"
+}

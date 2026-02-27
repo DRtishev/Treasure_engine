@@ -1,0 +1,15 @@
+{
+  "bar_ms": 60000,
+  "captured_at_utc": "FIXTURE",
+  "normalized_sha256": "46c4b59e96acab88681add46bc3f7d67acfb4cbf33a47a3dc05911c24e766203",
+  "provider_id": "offline_fixture",
+  "raw_sha256": "6e4254275becbae61271ba18373de7c45fe45d05d5a6bcea41152e975b7e2cb5",
+  "rows_n": 14,
+  "run_id": "GOLDEN_V1",
+  "schema_version": "price_bars.offline_fixture.v1",
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+  ]
+}

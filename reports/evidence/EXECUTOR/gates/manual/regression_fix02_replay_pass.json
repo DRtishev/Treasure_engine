@@ -1,0 +1,19 @@
+{
+  "fails": [],
+  "reason_code": "NONE",
+  "results": {
+    "liq": {
+      "norm_sha_ok": true,
+      "raw_sha_ok": true,
+      "rows_n": 20
+    },
+    "price": {
+      "norm_sha_ok": true,
+      "raw_sha_ok": true,
+      "rows_n": 14
+    }
+  },
+  "run_id": "5b35ac334736",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

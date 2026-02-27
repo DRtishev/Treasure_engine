@@ -100,17 +100,21 @@
     }
   ],
   "reason_code": "RG_BYTE_UNTRACKED",
-  "run_id": "a61695cb46d4",
+  "run_id": "5b35ac334736",
   "schema_version": "1.1.0",
   "status": "FAIL",
   "untracked": [
-    "scripts/edge/edge_microlive_00_scaffold.mjs",
-    "scripts/edge/edge_paper_00_sim.mjs",
-    "scripts/edge/edge_price_00_bars_fixture.mjs",
-    "scripts/edge/edge_price_01_offline_replay.mjs",
-    "scripts/verify/regression_microlive01_must_fail_default.mjs",
-    "scripts/verify/regression_microlive02_kill_switch.mjs",
-    "scripts/verify/regression_paper01_determinism.mjs",
-    "scripts/verify/regression_paper02_no_net.mjs"
+    "artifacts/fixtures/liq/bybit_ws_v5/v2/lock.json",
+    "artifacts/fixtures/liq/bybit_ws_v5/v2/raw.jsonl",
+    "artifacts/fixtures/price/offline_fixture/v1/lock.json",
+    "artifacts/fixtures/price/offline_fixture/v1/raw.jsonl",
+    "scripts/edge/edge_fixtures_build.mjs",
+    "scripts/verify/regression_fix01_lock_schema.mjs",
+    "scripts/verify/regression_fix02_replay_pass.mjs",
+    "scripts/verify/regression_fix03_determinism_x2.mjs",
+    "scripts/verify/regression_live03_readiness_gate.mjs",
+    "scripts/verify/regression_live04_telemetry_contract.mjs",
+    "scripts/verify/regression_paper03_metrics_contract.mjs",
+    "scripts/verify/regression_paper04_slippage_sensitivity.mjs"
   ]
 }
