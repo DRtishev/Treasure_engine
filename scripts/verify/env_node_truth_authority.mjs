@@ -9,7 +9,7 @@ const EXECUTOR_DIR = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
 const MANUAL_DIR = path.join(EXECUTOR_DIR, 'gates', 'manual');
 const NODE_TRUTH = path.join(ROOT, 'NODE_TRUTH.md');
 const PASS_NEXT_ACTION = 'npm run -s executor:run:chain';
-const REMEDIATION_NEXT_ACTION = 'source ~/.nvm/nvm.sh && nvm install 22.22.0 && nvm use 22.22.0';
+const REMEDIATION_NEXT_ACTION = 'bash scripts/ops/node_authority_run.sh node -v';
 
 fs.mkdirSync(MANUAL_DIR, { recursive: true });
 

@@ -6,7 +6,13 @@ import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { getVictoryStepPlan } from './victory_steps.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const EXEC_DIR = path.join(ROOT, 'reports/evidence/EXECUTOR');
+const EVIDENCE_ROOT = path.join(ROOT, 'reports/evidence');
+const epochVictoryDirs = fs.existsSync(EVIDENCE_ROOT) ? fs.readdirSync(EVIDENCE_ROOT, { withFileTypes: true })
+  .filter((d) => d.isDirectory() && d.name.startsWith('EPOCH-VICTORY-'))
+  .map((d) => ({name: d.name, mtime: fs.statSync(path.join(EVIDENCE_ROOT, d.name)).mtimeMs}))
+  .sort((a, b) => a.mtime - b.mtime) : [];
+const latestEpoch = epochVictoryDirs.length ? epochVictoryDirs[epochVictoryDirs.length - 1].name : `EPOCH-VICTORY-${RUN_ID}`;
+const EXEC_DIR = path.join(EVIDENCE_ROOT, latestEpoch);
 const MANUAL = path.join(EXEC_DIR, 'gates/manual');
 const NEXT_ACTION = 'npm run -s epoch:victory:seal';
 const victoryTestMode = process.env.VICTORY_TEST_MODE === '1';
@@ -19,8 +25,6 @@ let reason_code = 'NONE';
 let firstFailingStepIndex = null;
 let firstFailingCmd = null;
 
-const BASELINE_SAFETY_MD_REL = 'reports/evidence/EXECUTOR/BASELINE_SAFETY.md';
-const BASELINE_SAFETY_JSON_REL = 'reports/evidence/EXECUTOR/gates/manual/baseline_safety.json';
 
 function toMs(iso) {
   const value = Date.parse(String(iso || ''));
@@ -40,34 +44,51 @@ function restorePreserved(relPath, content) {
   fs.writeFileSync(absPath, content);
 }
 
+
+function readReasonFromEvidence() {
+  const candidates = [
+    path.join(MANUAL, 'victory_seal.json'),
+    path.join(MANUAL, 'victory_precheck.json'),
+    path.join(MANUAL, 'foundation_seal.json'),
+  ];
+  for (const file of candidates) {
+    if (!fs.existsSync(file)) continue;
+    try {
+      const j = JSON.parse(fs.readFileSync(file, 'utf8'));
+      const reason_code = String(j?.reason_code || '').trim();
+      const block_reason_surface = String(j?.block_reason_surface || '').trim();
+      const first_failing_step_index = Number.isInteger(j?.first_failing_step_index) ? j.first_failing_step_index : null;
+      const first_failing_step_cmd = typeof j?.first_failing_step_cmd === 'string' ? j.first_failing_step_cmd : null;
+      const related_evidence_paths = Array.isArray(j?.related_evidence_paths) ? j.related_evidence_paths.slice().sort((a,b)=>String(a).localeCompare(String(b))) : [];
+      if (reason_code) {
+        return { reason_code, block_reason_surface, first_failing_step_index, first_failing_step_cmd, related_evidence_paths };
+      }
+    } catch {}
+  }
+  return { reason_code: '', block_reason_surface: '', first_failing_step_index: null, first_failing_step_cmd: null, related_evidence_paths: [] };
+}
+
 function resolveBlockReasonSurface(reason_code) {
-  if (reason_code === 'OP_SAFE01') return 'BASELINE_SAFETY';
+  if (reason_code === 'CHURN01') return 'WRITE_SCOPE_GUARD';
   if (reason_code === 'SNAP01') return 'PRECHECK_SNAP01';
   return 'STEP_FAILURE';
 }
 
 function collectEvidencePaths() {
   const candidates = [
-    'reports/evidence/EXECUTOR/VICTORY_PRECHECK.md',
-    'reports/evidence/EXECUTOR/gates/manual/victory_precheck.json',
-    'reports/evidence/EXECUTOR/VICTORY_SEAL.md',
-    'reports/evidence/EXECUTOR/gates/manual/victory_seal.json',
-    BASELINE_SAFETY_MD_REL,
-    BASELINE_SAFETY_JSON_REL,
-    'reports/evidence/EXECUTOR/FOUNDATION_SEAL.md',
-    'reports/evidence/EXECUTOR/gates/manual/foundation_seal.json',
-    'reports/evidence/EXECUTOR/EXECUTION_FORENSICS.md',
-    'reports/evidence/EXECUTOR/NETKILL_LEDGER.json',
-    'reports/evidence/EXECUTOR/NETKILL_LEDGER_SUMMARY.json',
-    'artifacts/incoming/NETKILL_LEDGER.sha256',
-    'reports/evidence/EXECUTOR/VICTORY_TIMEOUT_TRIAGE.md',
-    'reports/evidence/EXECUTOR/gates/manual/victory_timeout_triage.json',
+    `${path.relative(ROOT, EXEC_DIR).replace(/\\/g, '/')}/VICTORY_PRECHECK.md`,
+    `${path.relative(ROOT, EXEC_DIR).replace(/\\/g, '/')}/gates/manual/victory_precheck.json`,
+    `${path.relative(ROOT, EXEC_DIR).replace(/\\/g, '/')}/VICTORY_SEAL.md`,
+    `${path.relative(ROOT, EXEC_DIR).replace(/\\/g, '/')}/gates/manual/victory_seal.json`,
+    `${path.relative(ROOT, EXEC_DIR).replace(/\\/g, '/')}/FOUNDATION_SEAL.md`,
+    `${path.relative(ROOT, EXEC_DIR).replace(/\\/g, '/')}/gates/manual/foundation_seal.json`,
+    `${path.relative(ROOT, EXEC_DIR).replace(/\\/g, '/')}/EXECUTION_FORENSICS.md`,
+    `${path.relative(ROOT, EXEC_DIR).replace(/\\/g, '/')}/VICTORY_TIMEOUT_TRIAGE.md`,
+    `${path.relative(ROOT, EXEC_DIR).replace(/\\/g, '/')}/gates/manual/victory_timeout_triage.json`,
   ];
   return candidates.filter((p) => fs.existsSync(path.join(ROOT, p))).sort((a, b) => a.localeCompare(b));
 }
 
-const preservedBaselineSafetyMd = readIfExists(BASELINE_SAFETY_MD_REL);
-const preservedBaselineSafetyJson = readIfExists(BASELINE_SAFETY_JSON_REL);
 
 for (const step of stepPlan) {
   const r = runBounded(step.cmd, { cwd: ROOT, env: process.env, timeoutMs: step.timeout_ms, maxBuffer: 64 * 1024 * 1024 });
@@ -90,14 +111,21 @@ for (const step of stepPlan) {
       reason_code = 'RDY01';
     } else {
       status = 'BLOCKED';
-      reason_code = r.timedOut ? 'TO01' : 'EC01';
+      const surfaced = readReasonFromEvidence();
+      reason_code = r.timedOut ? 'TO01' : (surfaced.reason_code || `STEP_EC_${step.step_index}`);
+      if (!firstFailingStepIndex && Number.isInteger(surfaced.first_failing_step_index)) firstFailingStepIndex = surfaced.first_failing_step_index;
+      if (!firstFailingCmd && typeof surfaced.first_failing_step_cmd === 'string' && surfaced.first_failing_step_cmd) firstFailingCmd = surfaced.first_failing_step_cmd;
     }
     break;
   }
 }
 
-restorePreserved(BASELINE_SAFETY_MD_REL, preservedBaselineSafetyMd);
-restorePreserved(BASELINE_SAFETY_JSON_REL, preservedBaselineSafetyJson);
+
+const surfacedContract = readReasonFromEvidence();
+if (!String(surfacedContract.reason_code || reason_code).trim() || !String(resolveBlockReasonSurface(surfacedContract.reason_code || reason_code)).trim()) {
+  status = 'BLOCKED';
+  reason_code = 'CONTRACT_EC01';
+}
 
 const evidencePaths = collectEvidencePaths();
 const block_reason_surface = resolveBlockReasonSurface(reason_code);

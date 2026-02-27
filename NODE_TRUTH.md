@@ -18,9 +18,9 @@ hard_pinned_minor: 22.22.0
 
 ## Engines Alignment
 
-From package.json `engines`: `>=22 <25`
+From package.json `engines`: `22.22.0`
 
-Node 22.x satisfies this constraint and is the pinned production family.
+Node must be exactly 22.22.0 for authoritative execution.
 
 ## Version Files
 
@@ -28,7 +28,7 @@ Node 22.x satisfies this constraint and is the pinned production family.
 |------|-------|-------|
 | .nvmrc | 22.22.0 | Production-pinned hint file |
 | .node-version | 22.22.0 | Production-pinned hint file |
-| package.json engines | >=22 <25 | Active constraint |
+| package.json engines | 22.22.0 | Exact production pin |
 | NODE_TRUTH.md (this file) | 22 | **Authoritative: family 22 is production-pinned** |
 
 ## Gate Behavior

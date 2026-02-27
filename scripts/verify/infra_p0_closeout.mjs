@@ -219,7 +219,7 @@ const message = overallStatus === 'PASS'
 
 const nextAction = overallStatus === 'PASS'
   ? (eligible_for_micro_live ? 'npm run -s edge:micro:live:readiness' : 'ENABLE_SQLITE_PERSISTENCE=0 npm ci --omit=optional')
-  : (gateStatuses.find((g) => g.reason_code === 'NT02') ? 'nvm use 22.22.0' : 'npm run -s infra:p0');
+  : (gateStatuses.find((g) => g.reason_code === 'NT02') ? 'bash scripts/ops/node_authority_run.sh node -v' : 'npm run -s infra:p0');
 
 // Write closeout markdown
 const closeoutMd = `# INFRA_P0_CLOSEOUT.md — Infrastructure P0 Hardening Closeout

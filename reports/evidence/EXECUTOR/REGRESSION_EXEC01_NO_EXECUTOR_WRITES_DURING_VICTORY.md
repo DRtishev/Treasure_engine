@@ -1,0 +1,8 @@
+# REGRESSION_EXEC01_NO_EXECUTOR_WRITES_DURING_VICTORY.md
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: 4d2d8fac20a5
+NEXT_ACTION: npm run -s epoch:victory:seal
+
+- offenders: []

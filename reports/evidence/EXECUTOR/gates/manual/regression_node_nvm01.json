@@ -1,0 +1,14 @@
+{
+  "authoritative_scripts_scanned_n": 692,
+  "banned_patterns": [
+    "nvm.sh",
+    "nvm install",
+    "nvm use"
+  ],
+  "next_action": "npm run -s epoch:victory:seal",
+  "offenders": [],
+  "reason_code": "NONE",
+  "run_id": "0d5bf328af69",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

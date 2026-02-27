@@ -1,0 +1,9 @@
+# REGRESSION_TMP01_NO_TEMP_OUTSIDE_ALLOWED_ROOTS.md
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: 0d9d8c685698
+NEXT_ACTION: npm run -s epoch:victory:seal
+
+- offenders_n: 0
+- none
