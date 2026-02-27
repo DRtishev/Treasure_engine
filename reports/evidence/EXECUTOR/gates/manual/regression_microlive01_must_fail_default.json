@@ -1,9 +1,16 @@
 {
-  "latest_epoch_victory": "EPOCH-VICTORY-a61695cb46d4",
-  "offenders": [],
+  "fails": [],
   "reason_code": "NONE",
   "run_id": "a61695cb46d4",
   "schema_version": "1.0.0",
   "status": "PASS",
-  "wrapper_exit": 1
+  "t1": {
+    "exit": 2
+  },
+  "t2": {
+    "exit": 1
+  },
+  "t3": {
+    "exit": 2
+  }
 }

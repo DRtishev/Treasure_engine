@@ -100,11 +100,17 @@
     }
   ],
   "reason_code": "RG_BYTE_UNTRACKED",
-  "run_id": "ef4898489c4d",
+  "run_id": "a61695cb46d4",
   "schema_version": "1.1.0",
   "status": "FAIL",
   "untracked": [
-    "scripts/verify/regression_git_outgoing_ignore.mjs",
-    "scripts/verify/regression_sig03_semantic_mapping.mjs"
+    "scripts/edge/edge_microlive_00_scaffold.mjs",
+    "scripts/edge/edge_paper_00_sim.mjs",
+    "scripts/edge/edge_price_00_bars_fixture.mjs",
+    "scripts/edge/edge_price_01_offline_replay.mjs",
+    "scripts/verify/regression_microlive01_must_fail_default.mjs",
+    "scripts/verify/regression_microlive02_kill_switch.mjs",
+    "scripts/verify/regression_paper01_determinism.mjs",
+    "scripts/verify/regression_paper02_no_net.mjs"
   ]
 }

@@ -2,11 +2,11 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 370ebde86076
+RUN_ID: a61695cb46d4
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 172
+- changed_evidence_files_n: 176
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: true
 
@@ -101,6 +101,7 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_epoch_evidence_cycle_gitignore.json
 - reports/evidence/EXECUTOR/gates/manual/regression_evidence_bundle_deterministic_x2.json
 - reports/evidence/EXECUTOR/gates/manual/regression_foundation_suite_x2_seal.json
+- reports/evidence/EXECUTOR/gates/manual/regression_git_outgoing_ignore.json
 - reports/evidence/EXECUTOR/gates/manual/regression_gitignore_incoming_json.json
 - reports/evidence/EXECUTOR/gates/manual/regression_liq_fixture_offline_x2.json
 - reports/evidence/EXECUTOR/gates/manual/regression_mega_proof_x2_stability_contract.json
@@ -110,6 +111,7 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
 - reports/evidence/EXECUTOR/gates/manual/regression_sig01_schema_lock.json
 - reports/evidence/EXECUTOR/gates/manual/regression_sig02_determinism_x2.json
+- reports/evidence/EXECUTOR/gates/manual/regression_sig03_semantic_mapping.json
 - reports/evidence/EXECUTOR/gates/manual/regression_victory_fast_no_heavy.json
 - reports/evidence/EXECUTOR/gates/manual/repo_byte_audit_x2.json
 - reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json
@@ -127,6 +129,7 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_EPOCH_EVIDENCE_CYCLE_GITIGNORE.md
 - reports/evidence/EXECUTOR/REGRESSION_EVIDENCE_BUNDLE_DETERMINISTIC_X2.md
 - reports/evidence/EXECUTOR/REGRESSION_FOUNDATION_SUITE_X2_SEAL.md
+- reports/evidence/EXECUTOR/REGRESSION_GIT_OUTGOING_IGNORE.md
 - reports/evidence/EXECUTOR/REGRESSION_GITIGNORE_INCOMING_JSON.md
 - reports/evidence/EXECUTOR/REGRESSION_LIQ_FIXTURE_OFFLINE_X2.md
 - reports/evidence/EXECUTOR/REGRESSION_MEGA_PROOF_X2_STABILITY_CONTRACT.md
@@ -136,6 +139,7 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
 - reports/evidence/EXECUTOR/REGRESSION_SIG01_SCHEMA_LOCK.md
 - reports/evidence/EXECUTOR/REGRESSION_SIG02_DETERMINISM_X2.md
+- reports/evidence/EXECUTOR/REGRESSION_SIG03_SEMANTIC_MAPPING.md
 - reports/evidence/EXECUTOR/REGRESSION_VICTORY_FAST_NO_HEAVY.md
 - reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_X2.md
 - reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md
