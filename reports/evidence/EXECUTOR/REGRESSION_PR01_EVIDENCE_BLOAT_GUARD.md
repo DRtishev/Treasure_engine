@@ -2,11 +2,11 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 617fb99736b8
+RUN_ID: 370ebde86076
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 164
+- changed_evidence_files_n: 172
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: true
 
@@ -43,9 +43,11 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EDGE_PROFIT_00/registry/SCOPE_GUARD.md
 - reports/evidence/EDGE_PROFIT_00/sandbox/EDGE_PROFIT_00_CLOSEOUT.md
 - reports/evidence/EDGE_PROFIT_00/sandbox/EXECUTION_REALITY.md
+- reports/evidence/EDGE_PROFIT_00/sandbox/EXPECTANCY_PROOF.md
 - reports/evidence/EDGE_PROFIT_00/sandbox/EXPECTANCY.md
 - reports/evidence/EDGE_PROFIT_00/sandbox/gates/manual/edge_profit_00_closeout.json
 - reports/evidence/EDGE_PROFIT_00/sandbox/gates/manual/execution_reality.json
+- reports/evidence/EDGE_PROFIT_00/sandbox/gates/manual/expectancy_proof.json
 - reports/evidence/EDGE_PROFIT_00/sandbox/gates/manual/expectancy.json
 - reports/evidence/EDGE_PROFIT_00/sandbox/gates/manual/import_csv.json
 - reports/evidence/EDGE_PROFIT_00/sandbox/gates/manual/overfit.json
@@ -100,11 +102,14 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_evidence_bundle_deterministic_x2.json
 - reports/evidence/EXECUTOR/gates/manual/regression_foundation_suite_x2_seal.json
 - reports/evidence/EXECUTOR/gates/manual/regression_gitignore_incoming_json.json
+- reports/evidence/EXECUTOR/gates/manual/regression_liq_fixture_offline_x2.json
 - reports/evidence/EXECUTOR/gates/manual/regression_mega_proof_x2_stability_contract.json
 - reports/evidence/EXECUTOR/gates/manual/regression_nd_commands_run01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_netkill_ledger_enforcement.json
 - reports/evidence/EXECUTOR/gates/manual/regression_no_unbounded_spawnsync.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
+- reports/evidence/EXECUTOR/gates/manual/regression_sig01_schema_lock.json
+- reports/evidence/EXECUTOR/gates/manual/regression_sig02_determinism_x2.json
 - reports/evidence/EXECUTOR/gates/manual/regression_victory_fast_no_heavy.json
 - reports/evidence/EXECUTOR/gates/manual/repo_byte_audit_x2.json
 - reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json
@@ -123,11 +128,14 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_EVIDENCE_BUNDLE_DETERMINISTIC_X2.md
 - reports/evidence/EXECUTOR/REGRESSION_FOUNDATION_SUITE_X2_SEAL.md
 - reports/evidence/EXECUTOR/REGRESSION_GITIGNORE_INCOMING_JSON.md
+- reports/evidence/EXECUTOR/REGRESSION_LIQ_FIXTURE_OFFLINE_X2.md
 - reports/evidence/EXECUTOR/REGRESSION_MEGA_PROOF_X2_STABILITY_CONTRACT.md
 - reports/evidence/EXECUTOR/REGRESSION_ND_COMMANDS_RUN01.md
 - reports/evidence/EXECUTOR/REGRESSION_NETKILL_LEDGER_ENFORCEMENT.md
 - reports/evidence/EXECUTOR/REGRESSION_NO_UNBOUNDED_SPAWNSYNC.md
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
+- reports/evidence/EXECUTOR/REGRESSION_SIG01_SCHEMA_LOCK.md
+- reports/evidence/EXECUTOR/REGRESSION_SIG02_DETERMINISM_X2.md
 - reports/evidence/EXECUTOR/REGRESSION_VICTORY_FAST_NO_HEAVY.md
 - reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_X2.md
 - reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md
