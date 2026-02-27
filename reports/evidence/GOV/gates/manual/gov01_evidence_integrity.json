@@ -14,8 +14,8 @@
     {
       "anchor_file": "reports/evidence/GOV/MERKLE_ROOT.md",
       "anchor_found": true,
-      "anchored": "0dcf6192d251a8a375fb8a1f6dc0852f66bbd80f3646edce958a3244679f529c",
-      "computed": "0dcf6192d251a8a375fb8a1f6dc0852f66bbd80f3646edce958a3244679f529c",
+      "anchored": "c98cab43b16564d20e6305b3db5327f8df7aaacc04a5ae4d517c8496c8c11fe3",
+      "computed": "c98cab43b16564d20e6305b3db5327f8df7aaacc04a5ae4d517c8496c8c11fe3",
       "diff_hint": "NONE",
       "id": "C02_MERKLE_ROOT",
       "label": "MERKLE_ROOT",
@@ -25,8 +25,8 @@
     {
       "anchor_file": "reports/evidence/EDGE_LAB/P0/RECEIPTS_CHAIN.md",
       "anchor_found": true,
-      "anchored": "30fb1ffa9950f5c8f7828aaf2d6ef14bc7d6a0b106169620ca4f963a688ce279",
-      "computed": "30fb1ffa9950f5c8f7828aaf2d6ef14bc7d6a0b106169620ca4f963a688ce279",
+      "anchored": "3d6696d78d5f2f7cd3053c4497e434113c849b063d51f421654d85ada61442f6",
+      "computed": "3d6696d78d5f2f7cd3053c4497e434113c849b063d51f421654d85ada61442f6",
       "diff_hint": "NONE",
       "id": "C03_RECEIPTS_CHAIN_FINAL",
       "label": "RECEIPTS_CHAIN_FINAL",
@@ -41,7 +41,7 @@
   "mismatch_count": 0,
   "next_action": "npm run -s gov:integrity",
   "reason_code": "NONE",
-  "run_id": "a0e3806a2bb8",
+  "run_id": "4c3eeb8ff082",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

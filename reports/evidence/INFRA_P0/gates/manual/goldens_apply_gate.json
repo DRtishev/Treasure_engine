@@ -15,7 +15,7 @@
   "next_action": "No action required. Use UPDATE_GOLDENS=1 to update goldens via APPLY protocol.",
   "protocol_present": true,
   "reason_code": "NONE",
-  "run_id": "a0e3806a2bb8",
+  "run_id": "4c3eeb8ff082",
   "schema_version": "1.0.0",
   "status": "PASS",
   "update_goldens_mode": false

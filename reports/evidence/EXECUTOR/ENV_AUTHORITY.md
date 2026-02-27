@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: a0e3806a2bb8
+RUN_ID: 4c3eeb8ff082
 NEXT_ACTION: npm run -s executor:run:chain
 
 - node_truth_path: NODE_TRUTH.md
@@ -10,8 +10,8 @@ NEXT_ACTION: npm run -s executor:run:chain
 - allowed_family: 22
 - expected_pinned_minor: 22.22.0
 - runtime_node_version: v22.22.0
-- runtime_exec_path: /root/.nvm/versions/node/v22.22.0/bin/node
+- runtime_exec_path: /workspace/Treasure_engine/artifacts/toolchains/node/v22.22.0/linux-x64/node-v22.22.0-linux-x64/bin/node
 - platform: linux
 - arch: x64
-- node_truth_sha256: c7536565ed6453dfac4b2a7a78fe89242b8b647457d4aaeda0caef0102c911c6
+- node_truth_sha256: 7ebbb4a823297eff60d8608946d25167b59f28c5fbbbce76a0df6211e15acc16
 - verdict: PASS

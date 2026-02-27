@@ -15,7 +15,7 @@
       "exit_code": 0,
       "gate": "NODE_TRUTH",
       "json": "reports/evidence/INFRA_P0/gates/manual/node_truth_gate.json",
-      "message": "Node v22.22.0 matches allowed_family=22. Engines field: \">=22 <25\". Pinned minor: 22.22.0.",
+      "message": "Node v22.22.0 matches allowed_family=22. Engines field: \"22.22.0\". Pinned minor: 22.22.0.",
       "reason_code": "NONE",
       "script": "scripts/verify/node_truth_gate.mjs",
       "status": "PASS"
@@ -24,7 +24,7 @@
       "exit_code": 0,
       "gate": "VERIFY_MODE",
       "json": "reports/evidence/INFRA_P0/gates/manual/verify_mode_gate.json",
-      "message": "VERIFY_MODE=GIT. RUN_ID resolved from git: a0e3806a2bb8. .git directory present.",
+      "message": "VERIFY_MODE=GIT. RUN_ID resolved from git: 4c3eeb8ff082. .git directory present.",
       "reason_code": "NONE",
       "script": "scripts/verify/verify_mode_gate.mjs",
       "status": "PASS"
@@ -75,7 +75,7 @@
       "status": "PASS"
     }
   ],
-  "run_id": "a0e3806a2bb8",
+  "run_id": "4c3eeb8ff082",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

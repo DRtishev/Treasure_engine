@@ -5,7 +5,7 @@
   "n_train": 251,
   "next_action": "npm run -s edge:profit:00",
   "reason_code": "NONE",
-  "run_id": "a0e3806a2bb8",
+  "run_id": "4c3eeb8ff082",
   "schema_version": "1.0.0",
   "status": "PASS",
   "test_ci95_high": 0.3021362,

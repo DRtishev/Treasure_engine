@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: a0e3806a2bb8
+RUN_ID: 4c3eeb8ff082
 NEXT_ACTION: npm run -s epoch:mega:proof:x2
 
 - contract_path: GOV/EXPORT_CONTRACT.md
@@ -14,8 +14,8 @@ NEXT_ACTION: npm run -s epoch:mega:proof:x2
 
 ## Totals
 
-- entry_count: 855
-- total_bytes: 3100436
+- entry_count: 906
+- total_bytes: 3220009
 
 ## Top-level summary
 
@@ -25,7 +25,7 @@ NEXT_ACTION: npm run -s epoch:mega:proof:x2
 | docs | 15 |
 | package-lock.json | 1 |
 | package.json | 1 |
-| scripts | 761 |
+| scripts | 812 |
 | specs | 12 |
 
 ## Tar Entries (first 200)
@@ -113,7 +113,7 @@ NEXT_ACTION: npm run -s epoch:mega:proof:x2
 | docs | docs/EDGE_RESEARCH/WOW_ROADMAP_POST_40.md | 1816 |
 | docs | docs/SDD_EDGE_EPOCHS_31_40.md | 9013 |
 | package-lock.json | package-lock.json | 20781 |
-| package.json | package.json | 66511 |
+| package.json | package.json | 74612 |
 | scripts | scripts/export/final_validated.mjs | 2651 |
 | scripts | scripts/verify/adversarial_safety.mjs | 4215 |
 | scripts | scripts/verify/agent_smoke.mjs | 9781 |
@@ -126,7 +126,7 @@ NEXT_ACTION: npm run -s epoch:mega:proof:x2
 | scripts | scripts/verify/config_check.mjs | 7071 |
 | scripts | scripts/verify/contracts_check.mjs | 2010 |
 | scripts | scripts/verify/court_stub.mjs | 96 |
-| scripts | scripts/verify/data_readiness_seal.mjs | 2808 |
+| scripts | scripts/verify/data_readiness_seal.mjs | 3088 |
 | scripts | scripts/verify/dataset_check.mjs | 1990 |
 | scripts | scripts/verify/dep02_failclosed_readiness_gate.mjs | 11946 |
 | scripts | scripts/verify/deps_offline_install_contract.mjs | 15341 |

@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: a0e3806a2bb8
+RUN_ID: 4c3eeb8ff082
 NEXT_ACTION: No action required. Canon selftest is GREEN.
 
 ## Summary
@@ -30,7 +30,7 @@ NEXT_ACTION: No action required. Canon selftest is GREEN.
 | Hash Type | Value |
 |-----------|-------|
 | sha256_raw | ed8d2a7d707b4678989ed10c4010439be1f690d4b5e0808124bd7a8267701826 |
-| sha256_norm | a1124c7caf01a58d69a67f6bbf955cc3c05102bba94e06cbc3dc81778e8b3765 |
+| sha256_norm | e0550b9022cdfe6ab614ec37b53e597dc5977ad10d66a20613a965f857e17357 |
 | hashes_differ | true |
 
 Input: `generated_at: 2026-02-21T12:00:00.000Z
@@ -52,6 +52,9 @@ When content contains volatile fields, sha256_norm is stable across runs; sha256
 - `Completed:`
 - `STARTED_AT:`
 - `COMPLETED_AT:`
+- `STARTED_AT_MS:`
+- `COMPLETED_AT_MS:`
+- `ELAPSED_MS:`
 
 ## Forbidden Semantic Token Pattern
 

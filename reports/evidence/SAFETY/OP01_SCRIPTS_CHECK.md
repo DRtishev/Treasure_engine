@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: a0e3806a2bb8
+RUN_ID: 4c3eeb8ff082
 NEXT_ACTION: All NEXT_ACTION references are valid. No phantom commands.
 
 ## OP01 Policy
@@ -36,8 +36,14 @@ Missing script => BLOCKED OP01.
 | Found | 13 |
 | Missing | 0 |
 
-## All Available Scripts (741 total, sorted)
+## All Available Scripts (806 total, sorted)
 
+- `_epoch:foundation:seal`
+- `_epoch:mega:proof:x2`
+- `_epoch:victory:seal`
+- `_epoch:victory:triage`
+- `_verify:public:data:readiness`
+- `_verify:repo:byte-audit:x2`
 - `approve:snapshots`
 - `court:v1`
 - `court:v2`
@@ -71,6 +77,10 @@ Missing script => BLOCKED OP01.
 - `edge:execution:reality`
 - `edge:expectancy:ci`
 - `edge:ledger`
+- `edge:liq:acquire`
+- `edge:liq:acquire:binance`
+- `edge:liq:acquire:okx`
+- `edge:liq:replay`
 - `edge:micro:live:readiness`
 - `edge:micro:live:sre`
 - `edge:multi:hypothesis`
@@ -116,6 +126,7 @@ Missing script => BLOCKED OP01.
 - `edge:sre`
 - `edge:verdict`
 - `env:node22:bootstrap:gate`
+- `env:node22:doctor`
 - `epoch:close`
 - `epoch:edge:profit:03`
 - `epoch:edge:profit:public:00`
@@ -131,6 +142,7 @@ Missing script => BLOCKED OP01.
 - `epoch:profit:real:00`
 - `epoch:run`
 - `epoch:victory:seal`
+- `epoch:victory:seal:accept-restore`
 - `epoch:victory:triage`
 - `evidence:pack:epoch`
 - `evidence:pack:verify`
@@ -157,6 +169,9 @@ Missing script => BLOCKED OP01.
 - `labs:adversarial`
 - `labs:godtier`
 - `labs:live`
+- `ops:node:backend:check`
+- `ops:node:toolchain:acquire`
+- `ops:node:truth`
 - `p0:all`
 - `p0:full`
 - `package:final-validated`
@@ -687,16 +702,29 @@ Missing script => BLOCKED OP01.
 - `verify:reachability`
 - `verify:real-public:net`
 - `verify:reality-gap`
+- `verify:regression:accept-restore-propagates-exitcode`
+- `verify:regression:acq-network-unreachable-classification`
+- `verify:regression:acq-unlock-contract`
 - `verify:regression:baseline-clean-no-tracked-drift`
+- `verify:regression:baseline-preserve-critical-receipts`
 - `verify:regression:baseline-telemetry-semantic-volatile-split`
 - `verify:regression:bounded-kill-tree`
 - `verify:regression:canon-commands-run-timestamps`
+- `verify:regression:canon-d005-nonvolatile-unchanged`
+- `verify:regression:canon-includes-ms-timing-markers`
+- `verify:regression:canon-ms-timestamps-normalized`
+- `verify:regression:churn-write-scope-guard`
+- `verify:regression:commands-run-header-ssot`
 - `verify:regression:data-readiness-ssot`
 - `verify:regression:determinism-audit`
 - `verify:regression:drift-severity-classification`
+- `verify:regression:ec01-reason-context-contract`
+- `verify:regression:epoch-evidence-cycle-gitignore`
 - `verify:regression:evidence-bundle-contract-ssot`
 - `verify:regression:evidence-bundle-deterministic-x2`
 - `verify:regression:evidence-bundle-portable-mode`
+- `verify:regression:exec01-no-executor-writes-during-victory`
+- `verify:regression:execution-forensics-netkill-probe`
 - `verify:regression:executor-netkill-coverage`
 - `verify:regression:executor-netkill-ledger-proof`
 - `verify:regression:executor-netkill-runtime-ledger`
@@ -704,9 +732,16 @@ Missing script => BLOCKED OP01.
 - `verify:regression:foundation-seal-next-action-ssot`
 - `verify:regression:foundation-seal-step-order-ssot`
 - `verify:regression:foundation-suite-x2-seal`
+- `verify:regression:foundation-timeout-triage-contract`
 - `verify:regression:gate-receipt-presence-contract`
+- `verify:regression:gitignore-allow-network`
+- `verify:regression:gitignore-incoming-json`
+- `verify:regression:liq-fixture-offline-x2`
 - `verify:regression:liquidations-lock-schema-contract`
 - `verify:regression:liquidations-offline-replay-no-network`
+- `verify:regression:log01-logs-under-epoch-root`
+- `verify:regression:mega-proof-x2-failure-classification`
+- `verify:regression:mega-proof-x2-ignores-ms-timing`
 - `verify:regression:mega-proof-x2-semantic-mismatch-classification`
 - `verify:regression:mega-proof-x2-stability-contract`
 - `verify:regression:mini-chain-mode-guard`
@@ -714,20 +749,34 @@ Missing script => BLOCKED OP01.
 - `verify:regression:net-kill-preload-hard`
 - `verify:regression:net-kill-preload-path-safe`
 - `verify:regression:netkill-ledger-deterministic-x2`
+- `verify:regression:netkill-ledger-enforcement`
 - `verify:regression:netkill-ledger-summary-consistency`
 - `verify:regression:netkill-physics-full-surface`
 - `verify:regression:no-network-in-verify-profit`
+- `verify:regression:no-rg-writes-during-cert`
 - `verify:regression:no-sandbox-promotion`
 - `verify:regression:no-stub-promotion`
 - `verify:regression:no-unbounded-spawn`
+- `verify:regression:node-backend-receipt-contract`
+- `verify:regression:node-churn-receipt-routing`
 - `verify:regression:node-options-netkill-dedupe`
 - `verify:regression:node-options-no-overwrite`
 - `verify:regression:node-options-preload-eviction`
+- `verify:regression:node-toolchain-lock-contract`
+- `verify:regression:node-truth-alignment`
+- `verify:regression:node-truth-enforcement`
+- `verify:regression:node-truth-next-action-contract`
+- `verify:regression:node-wrap-contract`
 - `verify:regression:node22-wrapper-timeout`
+- `verify:regression:op-safe-untracked-only-does-not-block`
+- `verify:regression:op-safe01-receipt-presence-contract`
+- `verify:regression:opa01-op-safe-next-action-wrapper`
+- `verify:regression:opa02-op-safe-ignore-evidence-drift`
 - `verify:regression:operator-single-action-ssot`
 - `verify:regression:portable-manifest-env-byte-free-strict`
 - `verify:regression:portable-proof-pack-recipe-ssot`
 - `verify:regression:profile-source`
+- `verify:regression:profit-foundation-freeze-gate-autogen`
 - `verify:regression:profit-foundation-freeze-ssot`
 - `verify:regression:public-acq02-not-nd01`
 - `verify:regression:public-data-readiness-exitcode-contract`
@@ -740,22 +789,38 @@ Missing script => BLOCKED OP01.
 - `verify:regression:public-smoke-offline-replay`
 - `verify:regression:public-zip-authority`
 - `verify:regression:publicdata-no-csv-fallback`
+- `verify:regression:repo-byte-audit-anti-recursion`
+- `verify:regression:rg-data01-lock-schema-contract`
+- `verify:regression:rg-data02-deep-canonical-json-stable`
+- `verify:regression:rg-data03-offline-replay-network-forbidden`
+- `verify:regression:rg01-no-rg-writes-during-certification`
 - `verify:regression:smoke-is-first`
+- `verify:regression:step7-foundation-writescope-contract`
 - `verify:regression:truth-separation-no-foundation-readiness-claim`
 - `verify:regression:tsu01-mixed-units`
 - `verify:regression:verify-netkill-enforced`
 - `verify:regression:victory-evidence-seal-ssot`
 - `verify:regression:victory-precheck-clean-tree-contract`
+- `verify:regression:victory-precheck-offenders-contract`
+- `verify:regression:victory-readiness-coherence`
+- `verify:regression:victory-reason-classification`
+- `verify:regression:victory-receipt-staleness-contract`
 - `verify:regression:victory-seal-deterministic-x2`
+- `verify:regression:victory-seal-needs-data-exitcode-contract`
 - `verify:regression:victory-seal-step-order-ssot`
+- `verify:regression:victory-step-timeout-plan-contract`
 - `verify:regression:victory-test-mode-safety`
 - `verify:regression:victory-timeout-triage-contract`
+- `verify:regression:victory-triage-readiness-classification`
+- `verify:regression:victory-triage-reason-surface`
 - `verify:regression:victory-triage-ssot`
 - `verify:release`
 - `verify:release-governor`
 - `verify:release:chain`
 - `verify:release:repro`
 - `verify:repo`
+- `verify:repo:byte-audit`
+- `verify:repo:byte-audit:x2`
 - `verify:repo:selftest`
 - `verify:report:contradiction`
 - `verify:safety`

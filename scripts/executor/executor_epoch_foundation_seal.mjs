@@ -5,7 +5,7 @@ import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const EXEC_DIR = path.join(ROOT, 'reports/evidence/EXECUTOR');
+const EXEC_DIR = path.join(ROOT, 'reports/evidence', `EPOCH-FOUNDATION-${RUN_ID}`);
 const MANUAL = path.join(EXEC_DIR, 'gates/manual');
 const NEXT_ACTION = 'npm run -s epoch:foundation:seal';
 fs.mkdirSync(MANUAL, { recursive: true });
@@ -25,19 +25,31 @@ const steps = [
   'npm run -s verify:profit:foundation',
 ];
 
+function readSubstepReason() {
+  const p = path.join(ROOT, 'reports/evidence/EXECUTOR/gates/manual/mega_proof_x2.json');
+  if (!fs.existsSync(p)) return '';
+  try {
+    const j = JSON.parse(fs.readFileSync(p, 'utf8'));
+    return String(j.reason_code || '').trim();
+  } catch {
+    return '';
+  }
+}
+
 function toMs(iso) {
   const value = Date.parse(String(iso || ''));
   return Number.isFinite(value) ? value : null;
 }
 
 function collectEvidencePaths() {
+  const base = `reports/evidence/EPOCH-FOUNDATION-${RUN_ID}`;
   const candidates = [
-    'reports/evidence/EXECUTOR/FOUNDATION_SEAL.md',
-    'reports/evidence/EXECUTOR/gates/manual/foundation_seal.json',
+    `${base}/FOUNDATION_SEAL.md`,
+    `${base}/gates/manual/foundation_seal.json`,
     'reports/evidence/EXECUTOR/MEGA_PROOF_X2.md',
     'reports/evidence/EXECUTOR/gates/manual/mega_proof_x2.json',
-    'reports/evidence/EXECUTOR/FOUNDATION_TIMEOUT_TRIAGE.md',
-    'reports/evidence/EXECUTOR/gates/manual/foundation_timeout_triage.json',
+    `${base}/FOUNDATION_TIMEOUT_TRIAGE.md`,
+    `${base}/gates/manual/foundation_timeout_triage.json`,
   ];
   return candidates.filter((relPath) => fs.existsSync(path.join(ROOT, relPath))).sort((a, b) => a.localeCompare(b));
 }
@@ -65,7 +77,7 @@ for (const [index, cmd] of steps.entries()) {
   });
   if (r.ec !== 0) {
     status = 'BLOCKED';
-    reason_code = r.timedOut ? 'TO01' : 'EC01';
+    reason_code = r.timedOut ? 'TO01' : (readSubstepReason() || `FOUNDATION_STEP_EC_${index + 1}`);
     firstFailingSubstepIndex = index + 1;
     firstFailingCmd = cmd;
     break;

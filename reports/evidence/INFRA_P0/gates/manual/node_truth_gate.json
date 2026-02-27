@@ -1,9 +1,9 @@
 {
   "allowed_family": 22,
-  "message": "Node v22.22.0 matches allowed_family=22. Engines field: \">=22 <25\". Pinned minor: 22.22.0.",
+  "message": "Node v22.22.0 matches allowed_family=22. Engines field: \"22.22.0\". Pinned minor: 22.22.0.",
   "next_action": "No action required. Node truth is aligned.",
   "reason_code": "NONE",
-  "run_id": "a0e3806a2bb8",
+  "run_id": "4c3eeb8ff082",
   "running_family": 22,
   "running_version": "v22.22.0",
   "schema_version": "1.0.0",

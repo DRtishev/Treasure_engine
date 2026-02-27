@@ -812,7 +812,8 @@
     "verify:regression:exec01-no-executor-writes-during-victory": "node scripts/verify/regression_exec01_no_executor_writes_during_victory.mjs",
     "verify:regression:rg01-no-rg-writes-during-certification": "node scripts/verify/regression_rg01_no_rg_writes_during_certification.mjs",
     "verify:regression:log01-logs-under-epoch-root": "node scripts/verify/regression_log01_logs_under_epoch_root.mjs",
-    "verify:regression:ec01-reason-context-contract": "node scripts/verify/regression_ec01_reason_context_contract.mjs"
+    "verify:regression:ec01-reason-context-contract": "node scripts/verify/regression_ec01_reason_context_contract.mjs",
+    "verify:regression:step7-foundation-writescope-contract": "node scripts/verify/regression_step7_foundation_writescope_contract.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
