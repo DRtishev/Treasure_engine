@@ -1,0 +1,24 @@
+{
+  "fails": [],
+  "fixture_run_id": "RG_DATA04_FIXTURE",
+  "provider": "bybit_ws_v5",
+  "reason_code": "NONE",
+  "run_id": "d22b4d02faa1",
+  "runs": [
+    {
+      "bars_n": 2,
+      "run": 1,
+      "schema_version": "signals.liq.v1",
+      "sha256": "fc846a3d9e2aa497ca574f97ddfa3e1e10090306f769cf1f368969dd7c6cb41f"
+    },
+    {
+      "bars_n": 2,
+      "run": 2,
+      "schema_version": "signals.liq.v1",
+      "sha256": "fc846a3d9e2aa497ca574f97ddfa3e1e10090306f769cf1f368969dd7c6cb41f"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "sha_match": true,
+  "status": "PASS"
+}

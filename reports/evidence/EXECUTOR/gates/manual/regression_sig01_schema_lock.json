@@ -1,0 +1,14 @@
+{
+  "bars_n": 2,
+  "fails": [],
+  "features_jsonl_sha256": "fc846a3d9e2aa497ca574f97ddfa3e1e10090306f769cf1f368969dd7c6cb41f",
+  "lock_path": "/home/user/Treasure_engine/artifacts/outgoing/features_liq.lock.json",
+  "reason_code": "NONE",
+  "run_id": "d22b4d02faa1",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT"
+  ]
+}
