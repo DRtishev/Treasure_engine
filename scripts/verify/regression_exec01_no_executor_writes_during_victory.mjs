@@ -9,8 +9,9 @@ const MANUAL = path.join(EXEC, 'gates/manual');
 const evidenceRoot = path.join(ROOT, 'reports/evidence');
 const epochDirs = fs.existsSync(evidenceRoot) ? fs.readdirSync(evidenceRoot, { withFileTypes: true })
   .filter((d) => d.isDirectory() && d.name.startsWith('EPOCH-VICTORY-'))
-  .map((d) => d.name).sort() : [];
-const latestEpochDir = epochDirs.length ? epochDirs[epochDirs.length - 1] : null;
+  .map((d) => ({name: d.name, mtime: fs.statSync(path.join(evidenceRoot, d.name)).mtimeMs}))
+  .sort((a, b) => a.mtime - b.mtime) : [];
+const latestEpochDir = epochDirs.length ? epochDirs[epochDirs.length - 1].name : null;
 const precheckPath = latestEpochDir ? path.join(evidenceRoot, latestEpochDir, 'gates/manual/victory_precheck.json') : '';
 fs.mkdirSync(MANUAL, { recursive: true });
 

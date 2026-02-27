@@ -107,6 +107,21 @@ function resolveBlockReasonSurface(reason_code) {
   return 'STEP_FAILURE';
 }
 
+function collectRelatedEvidencePaths() {
+  const candidates = [
+    `reports/evidence/EPOCH-VICTORY-${RUN_ID}/VICTORY_PRECHECK.md`,
+    `reports/evidence/EPOCH-VICTORY-${RUN_ID}/gates/manual/victory_precheck.json`,
+    `reports/evidence/EPOCH-VICTORY-${RUN_ID}/VICTORY_SEAL.md`,
+    `reports/evidence/EPOCH-VICTORY-${RUN_ID}/gates/manual/victory_seal.json`,
+    `reports/evidence/EPOCH-VICTORY-${RUN_ID}/EXECUTION_FORENSICS.md`,
+    `reports/evidence/EPOCH-VICTORY-${RUN_ID}/VICTORY_TIMEOUT_TRIAGE.md`,
+    `reports/evidence/EPOCH-VICTORY-${RUN_ID}/gates/manual/victory_timeout_triage.json`,
+  ];
+  return candidates
+    .filter((rel) => fs.existsSync(path.join(ROOT, rel)))
+    .sort((a, b) => a.localeCompare(b));
+}
+
 function computeSemanticHash(status, reason_code, authoritative_run, steps, timeoutInfo = {}) {
   const block_reason_surface = resolveBlockReasonSurface(reason_code);
   const semantic = {
@@ -139,11 +154,11 @@ function computeSemanticHash(status, reason_code, authoritative_run, steps, time
   };
 }
 
-function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run, timeoutInfo = {}, next_action = NEXT_ACTION }) {
+function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run, timeoutInfo = {}, next_action = NEXT_ACTION, first_failing_step_index = null, first_failing_step_cmd = null }) {
   const { semantic, semantic_hash } = computeSemanticHash(status, reason_code, authoritative_run, recs, timeoutInfo);
   const block_reason_surface = resolveBlockReasonSurface(reason_code);
   const exit_code = status === 'PASS' ? 0 : (status === 'NEEDS_DATA' && reason_code === 'RDY01' ? 2 : 1);
-  writeMd(path.join(EXEC_DIR, 'VICTORY_SEAL.md'), `# VICTORY_SEAL.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nBLOCK_REASON_SURFACE: ${block_reason_surface}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${next_action}\nEXIT_CODE: ${exit_code}\n\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n\n## STEPS\n${recs.map((r) => `- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms}\n  STARTED_AT_MS: ${r.started_at_ms}\n  COMPLETED_AT_MS: ${r.completed_at_ms}\n  TREE_KILL_ATTEMPTED: ${r.tree_kill_attempted}\n  TREE_KILL_OK: ${r.tree_kill_ok}\n  TREE_KILL_NOTE: ${r.tree_kill_note}`).join('\n')}\n`);
+  writeMd(path.join(EXEC_DIR, 'VICTORY_SEAL.md'), `# VICTORY_SEAL.md\n\nSTATUS: ${status}\nREASON_CODE: ${reason_code}\nBLOCK_REASON_SURFACE: ${block_reason_surface}\nRUN_ID: ${RUN_ID}\nNEXT_ACTION: ${next_action}\nEXIT_CODE: ${exit_code}\n\n- semantic_hash: ${semantic_hash}\n- authoritative_run: ${authoritative_run}\n- first_failing_step_index: ${first_failing_step_index ?? 'NONE'}\n- first_failing_step_cmd: ${first_failing_step_cmd ?? 'NONE'}\n\n## RELATED_EVIDENCE_PATHS\n${collectRelatedEvidencePaths().map((p) => `- ${p}`).join('\n') || '- NONE'}\n\n## STEPS\n${recs.map((r) => `- step_${r.step_index}: ${r.cmd} | ec=${r.ec} | timedOut=${r.timedOut} | timeout_ms=${r.timeout_ms} | elapsed_ms=${r.elapsed_ms}\n  STARTED_AT_MS: ${r.started_at_ms}\n  COMPLETED_AT_MS: ${r.completed_at_ms}\n  TREE_KILL_ATTEMPTED: ${r.tree_kill_attempted}\n  TREE_KILL_OK: ${r.tree_kill_ok}\n  TREE_KILL_NOTE: ${r.tree_kill_note}`).join('\n')}\n`);
 
   writeJsonDeterministic(path.join(MANUAL, 'victory_seal.json'), {
     schema_version: '1.0.0',
@@ -163,6 +178,9 @@ function writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, compl
     steps: semantic.steps,
     semantic_hash,
     exit_code,
+    first_failing_step_index,
+    first_failing_step_cmd,
+    related_evidence_paths: collectRelatedEvidencePaths(),
     volatile: {
       started_at_ms,
       completed_at_ms,
@@ -376,7 +394,7 @@ for (const step of stepPlan) {
       reason_code = 'RDY01';
     } else {
       status = 'BLOCKED';
-      reason_code = r.timedOut ? 'TO01' : 'EC01';
+      reason_code = r.timedOut ? 'TO01' : `STEP_EC_${step.step_index}`;
       if (r.timedOut) {
         timeoutInfo = {
           timeout_step_index: stepRec.step_index,
@@ -392,7 +410,34 @@ for (const step of stepPlan) {
 
 const completed_at_ms = Date.now();
 const authoritative_run = clean_tree_ok && reason_code !== 'TO01';
-writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run, timeoutInfo });
+const firstFail = recs.find((r) => r.ec !== 0) || null;
+writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run, timeoutInfo, first_failing_step_index: firstFail ? firstFail.step_index : null, first_failing_step_cmd: firstFail ? firstFail.cmd : null });
+
+const victorySealPath = path.join(MANUAL, 'victory_seal.json');
+if (fs.existsSync(victorySealPath)) {
+  try {
+    const contract = JSON.parse(fs.readFileSync(victorySealPath, 'utf8'));
+    const missing = [];
+    if (!String(contract.block_reason_surface || '').trim()) missing.push('block_reason_surface');
+    if (!String(contract.reason_code || '').trim()) missing.push('reason_code');
+    if (!(Number.isInteger(contract.first_failing_step_index) || contract.first_failing_step_index === null)) missing.push('first_failing_step_index');
+    if (!(typeof contract.first_failing_step_cmd === 'string' || contract.first_failing_step_cmd === null)) missing.push('first_failing_step_cmd');
+    if (!Array.isArray(contract.related_evidence_paths)) missing.push('related_evidence_paths');
+    if (missing.length > 0) {
+      status = 'BLOCKED';
+      reason_code = 'CONTRACT_EC01';
+      writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run: false, timeoutInfo, first_failing_step_index: null, first_failing_step_cmd: null });
+      console.log(`[BLOCKED] executor_epoch_victory_seal — CONTRACT_EC01 missing=${missing.join(',')}`);
+      process.exit(1);
+    }
+  } catch {
+    status = 'BLOCKED';
+    reason_code = 'CONTRACT_EC01';
+    writeVictoryArtifacts({ status, reason_code, recs, started_at_ms, completed_at_ms, authoritative_run: false, timeoutInfo, first_failing_step_index: null, first_failing_step_cmd: null });
+    console.log('[BLOCKED] executor_epoch_victory_seal — CONTRACT_EC01 parse');
+    process.exit(1);
+  }
+}
 
 if (reason_code === 'TO01') {
   const lastSteps = recs.slice(Math.max(0, recs.length - 5));
