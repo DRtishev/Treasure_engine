@@ -8,16 +8,17 @@
     "wrapped_node_version_v22220": true
   },
   "commands": [
+    "npm run -s ops:node:toolchain:acquire",
     "bash scripts/ops/node_authority_run.sh node -v"
   ],
   "next_action": "npm run -s epoch:victory:seal",
   "reason_code": "NONE",
-  "receipt_path": "reports/evidence/EPOCH-NODEAUTH-6b2dc33_npm_run_s_epoch_victory_seal/node_authority/receipt.json",
-  "run_id": "6b2dc334f979",
+  "receipt_path": "reports/evidence/EPOCH-NODEAUTH-0cbab38_npm_run_s_epoch_victory_seal/node_authority/receipt.json",
+  "run_id": "0cbab385bcef",
   "schema_version": "1.0.0",
   "selected_backend": "VENDORED_NODE22",
   "status": "PASS",
-  "witness_path": "reports/evidence/EPOCH-NODEAUTH-6b2dc334f979/node_authority/BACKEND_WITNESS.json",
+  "witness_path": "reports/evidence/EPOCH-NODEAUTH-0cbab385bcef/node_authority/BACKEND_WITNESS.json",
   "wrapped_ec": 0,
   "wrapped_node_version": "v22.22.0"
 }

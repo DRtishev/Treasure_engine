@@ -1,5 +1,5 @@
 {
-  "authoritative_scripts_scanned_n": 692,
+  "authoritative_scripts_scanned_n": 698,
   "banned_patterns": [
     "nvm.sh",
     "nvm install",
@@ -8,7 +8,7 @@
   "next_action": "npm run -s epoch:victory:seal",
   "offenders": [],
   "reason_code": "NONE",
-  "run_id": "0d5bf328af69",
+  "run_id": "0cbab385bcef",
   "schema_version": "1.0.0",
   "status": "PASS"
 }
