@@ -1,0 +1,17 @@
+{
+  "child_pid": 44949,
+  "kill0": "alive",
+  "next_action": "npm run -s verify:regression:bounded-kill-tree",
+  "platform": "linux",
+  "ps": "gone",
+  "ps_state": "Z",
+  "reason_code": "NONE",
+  "run_id": "0a2e5de6eb7c",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "timed_out": true,
+  "timeout_ec": 124,
+  "tree_kill_attempted": true,
+  "tree_kill_note": "group-killed",
+  "tree_kill_ok": true
+}

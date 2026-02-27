@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "epoch_dir_rule_after_log_negation": true,
+    "epoch_recursive_rule_after_log_negation": true,
+    "epoch_rule_order_stable": true,
+    "has_epoch_dir_ignore_rule": true,
+    "has_epoch_recursive_ignore_rule": true,
+    "has_log_negation_anchor": true
+  },
+  "next_action": "npm run -s epoch:victory:seal",
+  "reason_code": "NONE",
+  "run_id": "0a2e5de6eb7c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

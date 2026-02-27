@@ -1,0 +1,10 @@
+{
+  "has_pool_order": true,
+  "has_provider_preferred_order": true,
+  "message": "Deterministic provider/hostpool ordering present.",
+  "next_action": "npm run -s epoch:edge:profit:public:00:x2:node22",
+  "reason_code": "NONE",
+  "run_id": "0a2e5de6eb7c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

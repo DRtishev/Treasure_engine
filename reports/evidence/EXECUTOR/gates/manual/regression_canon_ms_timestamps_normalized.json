@@ -1,0 +1,16 @@
+{
+  "checks": {
+    "completed_at_ms_normalized": true,
+    "elapsed_ms_normalized": true,
+    "indented_ms_fields_normalized": true,
+    "run_ms_marker_present": true,
+    "started_at_ms_normalized": true
+  },
+  "next_action": "npm run -s epoch:mega:proof:x2",
+  "normalized": "# SAMPLE\nRUN_MS: RUN_MS\nRUN_MS: RUN_MS\nRUN_MS: RUN_MS\nRUN_ID: 0a2e5de6eb7c\n  RUN_MS: RUN_MS\n",
+  "reason_code": "NONE",
+  "run_id": "0a2e5de6eb7c",
+  "sample": "# SAMPLE\nSTARTED_AT_MS: 1710000000000\nCOMPLETED_AT_MS: 1710000004321\nELAPSED_MS: 4321\nRUN_ID: 0a2e5de6eb7c\n  STARTED_AT_MS: 10",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -1,0 +1,14 @@
+{
+  "checks": {
+    "artifacts/incoming/*.json": true,
+    "artifacts/incoming/*.lock.json": true,
+    "artifacts/incoming/*.raw.json": true,
+    "no_global_lock_json": true,
+    "no_global_raw_json": true
+  },
+  "next_action": "npm run -s epoch:mega:proof:x2",
+  "reason_code": "NONE",
+  "run_id": "0a2e5de6eb7c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

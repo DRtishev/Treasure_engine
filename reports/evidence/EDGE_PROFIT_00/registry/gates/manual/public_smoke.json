@@ -1,0 +1,23 @@
+{
+  "boot_ec": 0,
+  "diag_ec": 0,
+  "diag_root_cause_code": "NONE",
+  "dry_run": 0,
+  "hosts": [],
+  "lock_integrity": "PASS",
+  "message": "Public smoke passed via lock-first offline replay integrity.",
+  "net_family": 4,
+  "next_action": "npm run -s epoch:edge:profit:public:00:x2:node22",
+  "probe_enabled": 0,
+  "provider_selected": "binance_public_data",
+  "reason_code": "NONE",
+  "root_cause_code": "NONE",
+  "run_id": "0a2e5de6eb7c",
+  "schema_version": "1.0.0",
+  "selected_net_family": 4,
+  "selected_provider": "binance_public_data",
+  "smoke_mode": "OFFLINE_REPLAY",
+  "status": "PASS",
+  "timeout_ms": 15000,
+  "tiny_probe_ok": true
+}

@@ -1,0 +1,12 @@
+{
+  "digest_run1": "85cab80584ee5eca2fe77553cc5f18e4c89309b927ebfd47ca4928a2d8cab5d3",
+  "digest_run2": "85cab80584ee5eca2fe77553cc5f18e4c89309b927ebfd47ca4928a2d8cab5d3",
+  "next_action": "npm run -s epoch:mega:proof:x2",
+  "reason_code": "NONE",
+  "run1_ec": 0,
+  "run2_ec": 0,
+  "run_id": "0a2e5de6eb7c",
+  "schema_version": "1.0.0",
+  "stable_match": true,
+  "status": "PASS"
+}
