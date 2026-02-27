@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "reason_code": "NONE",
+  "run_id": "a1c29f8e4936",
+  "closed": true,
+  "final_run_id": "a1c29f8e4936",
+  "final_status": "PASS",
+  "final_reason_code": "NONE",
+  "next_action": "npm run -s verify:fast",
+  "gate_matrix": {
+    "victory_precheck": {
+      "status": "PASS",
+      "reason_code": "NONE"
+    },
+    "victory_seal": {
+      "status": "PASS",
+      "reason_code": "NONE"
+    },
+    "regression_pr01_evidence_bloat_guard": {
+      "status": "PASS",
+      "reason_code": "NONE"
+    }
+  },
+  "evidence_paths": [
+    "reports/evidence/EPOCH-VICTORY-a1c29f8e4936/gates/manual/victory_precheck.json",
+    "reports/evidence/EPOCH-VICTORY-a1c29f8e4936/gates/manual/victory_seal.json",
+    "reports/evidence/EDGE_LAB/P0/VICTORY_EPOCH_CLOSEOUT.md",
+    "reports/evidence/EDGE_LAB/P0/gates/manual/victory_epoch_closeout.json"
+  ]
+}

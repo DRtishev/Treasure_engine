@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "closeout_gate_matrix_consistent": true,
+    "closeout_json_exists": true,
+    "closeout_md_exists": true,
+    "closeout_not_positive_when_victory_bad": true,
+    "closeout_reason_allowed": true,
+    "victory_seal_exists": true
+  },
+  "next_action": "npm run -s epoch:victory:seal",
+  "reason_code": "NONE",
+  "run_id": "a1c29f8e4936",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
