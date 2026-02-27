@@ -1,0 +1,12 @@
+{
+  "hash_run1": "89395bfddbbb7e40fac20b55490f6b0180e4dd15e44907081fefe66853c44899",
+  "hash_run2": "89395bfddbbb7e40fac20b55490f6b0180e4dd15e44907081fefe66853c44899",
+  "nd01_diff_hint_files": [],
+  "next_action": "npm run -s epoch:mega:proof:x2",
+  "reason_code": "NONE",
+  "run1_ec": 0,
+  "run2_ec": 0,
+  "run_id": "0d5bf328af69",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -811,6 +811,7 @@ scripts/verify/regression_no_stub_promotion.mjs
 scripts/verify/regression_no_unbounded_spawnsync.mjs
 scripts/verify/regression_node_backend_receipt_contract.mjs
 scripts/verify/regression_node_churn_receipt_routing.mjs
+scripts/verify/regression_node_nvm01.mjs
 scripts/verify/regression_node_options_netkill_dedupe.mjs
 scripts/verify/regression_node_options_no_overwrite.mjs
 scripts/verify/regression_node_options_preload_eviction.mjs
@@ -852,6 +853,7 @@ scripts/verify/regression_step7_foundation_writescope_contract.mjs
 scripts/verify/regression_truth_separation_no_foundation_readiness_claim.mjs
 scripts/verify/regression_tsu01_mixed_units.mjs
 scripts/verify/regression_verify_netkill_enforced.mjs
+scripts/verify/regression_vic_fnd01_reason_propagation.mjs
 scripts/verify/regression_victory_evidence_seal_ssot.mjs
 scripts/verify/regression_victory_precheck_clean_tree_contract.mjs
 scripts/verify/regression_victory_precheck_offenders_contract.mjs

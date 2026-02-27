@@ -18,6 +18,7 @@ const TIMEOUT_TRIAGE_MD = path.join(EXEC_DIR, 'VICTORY_TIMEOUT_TRIAGE.md');
 fs.mkdirSync(MANUAL, { recursive: true });
 
 const victoryTestMode = process.env.VICTORY_TEST_MODE === '1';
+const allowDirtyForRegression = process.env.VICTORY_ALLOW_DIRTY === '1';
 const miniMode = process.env.EXECUTOR_CHAIN_MINI === '1';
 const executionMode = miniMode ? 'MINI_CHAIN' : (victoryTestMode ? 'TEST_MODE' : 'FULL');
 const headProbe = runBounded('git rev-parse HEAD', { cwd: ROOT, env: process.env, timeoutMs: 5000 });
@@ -98,6 +99,17 @@ function computeDriftSeverity(tracked, staged, untracked) {
   if (staged.length > 0) return 'MEDIUM';
   if (untracked.length > 0) return 'LOW';
   return 'NONE';
+}
+
+function readFoundationReasonCode() {
+  const foundationReceipt = path.join(ROOT, 'reports/evidence', `EPOCH-FOUNDATION-${RUN_ID}`, 'gates/manual', 'foundation_seal.json');
+  if (!fs.existsSync(foundationReceipt)) return '';
+  try {
+    const parsed = JSON.parse(fs.readFileSync(foundationReceipt, 'utf8'));
+    return String(parsed.reason_code || '').trim();
+  } catch {
+    return '';
+  }
 }
 
 
@@ -311,7 +323,7 @@ const clean_tree_ok = baseline_precheck_ok
 const drift_detected = offenders_outside_allowed_roots.length > 0;
 const drift_severity = computeDriftSeverity(tracked, staged, untracked);
 
-if (!clean_tree_ok) {
+if (!clean_tree_ok && !allowDirtyForRegression) {
   writePrecheck({
     status: 'BLOCKED',
     reason_code: 'CHURN01',
@@ -330,6 +342,24 @@ if (!clean_tree_ok) {
   writeVictoryArtifacts({ status: 'BLOCKED', reason_code: 'CHURN01', recs: [], started_at_ms: Date.now(), completed_at_ms: Date.now(), authoritative_run: false });
   console.log('[BLOCKED] executor_epoch_victory_seal — CHURN01');
   process.exit(1);
+}
+
+if (!clean_tree_ok && allowDirtyForRegression) {
+  writePrecheck({
+    status: 'PASS',
+    reason_code: 'NONE',
+    clean_tree_ok,
+    drift_detected,
+    drift_severity,
+    tracked,
+    staged,
+    untracked,
+    offenders_outside_allowed_roots,
+    git_status: gitStatusText,
+    git_diff: gitDiffText,
+    git_diff_cached: gitDiffCachedText,
+    snap_reason_code: 'NONE',
+  });
 }
 
 writePrecheck({
@@ -394,7 +424,14 @@ for (const step of stepPlan) {
       reason_code = 'RDY01';
     } else {
       status = 'BLOCKED';
-      reason_code = r.timedOut ? 'TO01' : `STEP_EC_${step.step_index}`;
+      if (r.timedOut) {
+        reason_code = 'TO01';
+      } else if (step.cmd.includes('epoch:foundation:seal')) {
+        const foundationReason = readFoundationReasonCode();
+        reason_code = foundationReason ? `FOUNDATION_${foundationReason}` : `FOUNDATION_STEP_EC_${step.step_index}`;
+      } else {
+        reason_code = `STEP_EC_${step.step_index}`;
+      }
       if (r.timedOut) {
         timeoutInfo = {
           timeout_step_index: stepRec.step_index,

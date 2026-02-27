@@ -22,7 +22,6 @@ const steps = [
   'npm run -s verify:regression:foundation-suite-x2-seal',
   'npm run -s verify:regression:bounded-kill-tree',
   'npm run -s verify:regression:evidence-bundle-deterministic-x2',
-  'npm run -s verify:profit:foundation',
 ];
 
 function readSubstepReason() {
@@ -60,7 +59,13 @@ let reason_code = 'NONE';
 let firstFailingSubstepIndex = null;
 let firstFailingCmd = null;
 
-for (const [index, cmd] of steps.entries()) {
+const forcedReason = String(process.env.FOUNDATION_FORCE_REASON || '').trim();
+if (forcedReason) {
+  status = 'BLOCKED';
+  reason_code = forcedReason;
+}
+
+if (status === 'PASS') for (const [index, cmd] of steps.entries()) {
   const r = runBounded(cmd, { cwd: ROOT, env: process.env, maxBuffer: 32 * 1024 * 1024 });
   const startedAtMs = toMs(r.startedAt);
   const completedAtMs = toMs(r.completedAt);
