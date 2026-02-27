@@ -1,0 +1,8 @@
+# REGRESSION_RG01_NO_RG_WRITES_DURING_CERTIFICATION.md
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: 4d2d8fac20a5
+NEXT_ACTION: npm run -s epoch:victory:seal
+
+- offenders: []

@@ -8,7 +8,7 @@ import { getVictoryStepPlan } from './victory_steps.mjs';
 import { runNetkillRuntimeProbe } from './netkill_runtime_probe.mjs';
 
 const ROOT = path.resolve(process.cwd());
-const EXEC_DIR = path.join(ROOT, 'reports/evidence/EXECUTOR');
+const EXEC_DIR = path.join(ROOT, 'reports/evidence', `EPOCH-VICTORY-${RUN_ID}`);
 const MANUAL = path.join(EXEC_DIR, 'gates/manual');
 const NEXT_ACTION = 'npm run -s epoch:victory:seal';
 const TEST_MODE_MD = path.join(EXEC_DIR, 'TEST_MODE_ACTIVE.md');
