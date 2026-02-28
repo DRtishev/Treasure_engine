@@ -1,8 +1,9 @@
 /**
- * autopilot_court_v2.mjs — WOW8 Autopilot Court V2
+ * autopilot_court_v2.mjs — WOW8 Autopilot Court V2 (EventBus-unified)
  *
  * Routes actions and refuses when policy is violated.
  * Dry-run by default; apply requires double-key unlock.
+ * Emits events into EventBus: PLAN_CREATED, REFUSAL, APPLY_ALLOWED, APPLY_EXECUTED.
  *
  * Double-key apply unlock (R14):
  *   1) Flag --apply must be passed
@@ -16,12 +17,14 @@
  *   ACCEL   -> never authoritative
  *
  * Write-scope (R5): reports/evidence/EPOCH-AUTOPILOTV2-<RUN_ID>/
+ *                   reports/evidence/EPOCH-EVENTBUS-<RUN_ID>/ (via bus.flush)
  */
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
+import { createBus } from './eventbus_v1.mjs';
 
 const ROOT = process.cwd();
 const args = process.argv.slice(2);
@@ -218,6 +221,9 @@ const modeViolations = routeMode(mode, networkUnlock.unlocked);
 const researchCertCheck = checkResearchNoCert(mode);
 const cleanroom = checkPRCleanroom();
 
+// Create EventBus for state machine event emission (RG_AUTO05)
+const bus = createBus(RUN_ID);
+
 // Determine overall status and reason
 let overallStatus = 'PASS';
 let reason_code = 'NONE';
@@ -268,6 +274,53 @@ const planDetails = {
   actions: buildPlan(mode, applyUnlock, networkUnlock.unlocked),
 };
 
+// Emit state machine events into EventBus (RG_AUTO05)
+bus.append({
+  mode,
+  component: 'AUTOPILOT',
+  event: 'PLAN_CREATED',
+  reason_code,
+  surface: 'CONTRACT',
+  attrs: {
+    autopilot_status: overallStatus,
+    apply_flag: String(APPLY_FLAG),
+    actions_n: String(planDetails.actions.length),
+  },
+});
+
+for (const r of refusals) {
+  bus.append({
+    mode,
+    component: 'AUTOPILOT',
+    event: 'REFUSAL',
+    reason_code: r.code,
+    surface: r.surface,
+    attrs: { refusal_reason: r.reason },
+  });
+}
+
+if (APPLY_FLAG && applyUnlock.unlocked) {
+  bus.append({
+    mode,
+    component: 'AUTOPILOT',
+    event: 'APPLY_ALLOWED',
+    reason_code: 'NONE',
+    surface: 'CONTRACT',
+    attrs: { apply_unlock_reason: applyUnlock.reason },
+  });
+  bus.append({
+    mode,
+    component: 'AUTOPILOT',
+    event: 'APPLY_EXECUTED',
+    reason_code: 'NONE',
+    surface: 'CONTRACT',
+    attrs: { actions_n: String(planDetails.actions.length) },
+  });
+}
+
+// Flush EventBus
+const { jsonlPath: busJsonlPath, epochDir: busEpochDir } = bus.flush();
+
 const planJsonPath = path.join(EPOCH_DIR, 'PLAN.json');
 const planMdPath = path.join(EPOCH_DIR, 'PLAN.md');
 const refusalMdPath = path.join(EPOCH_DIR, 'REFUSAL.md');
@@ -292,6 +345,7 @@ writeJsonDeterministic(planJsonPath, {
   actions_count: planDetails.actions.length,
   refused: refusals.length > 0,
   refusal_codes: refusals.map((r) => r.code),
+  eventbus_source: true,
   next_action: 'npm run -s verify:fast',
 });
 
@@ -303,6 +357,7 @@ const dryRunLabel = APPLY_FLAG ? (applyUnlock.unlocked ? 'APPLY' : 'DRY_RUN(appl
 console.log(`[${overallStatus}] ops:autopilot — ${reason_code} [${dryRunLabel}] mode=${mode}`);
 console.log(`  PLAN:      ${path.relative(ROOT, planMdPath)}`);
 console.log(`  PLAN_JSON: ${path.relative(ROOT, planJsonPath)}`);
+console.log(`  EVENTBUS:  ${path.relative(ROOT, busEpochDir)}`);
 if (refusals.length > 0) {
   console.log(`  REFUSAL:   ${path.relative(ROOT, refusalMdPath)}`);
 }

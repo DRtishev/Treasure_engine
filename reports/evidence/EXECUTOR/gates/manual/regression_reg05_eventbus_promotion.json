@@ -1,0 +1,86 @@
+{
+  "checks": [
+    {
+      "check": "registry_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/candidate_registry.mjs",
+      "pass": true
+    },
+    {
+      "check": "supports_input_epoch_flag",
+      "detail": "--input-epoch flag required (no mtime/auto-latest)",
+      "pass": true
+    },
+    {
+      "check": "imports_eventbus_v1",
+      "detail": "createBus/eventbus_v1 import required",
+      "pass": true
+    },
+    {
+      "check": "emits_registry_created",
+      "detail": "REGISTRY_CREATED event required",
+      "pass": true
+    },
+    {
+      "check": "emits_candidate_promoted",
+      "detail": "CANDIDATE_PROMOTED event required",
+      "pass": true
+    },
+    {
+      "check": "declares_eventbus_source",
+      "detail": "eventbus_source: true required in REGISTRY.json",
+      "pass": true
+    },
+    {
+      "check": "declares_input_epoch_field",
+      "detail": "input_epoch field required in REGISTRY.json",
+      "pass": true
+    },
+    {
+      "check": "calls_bus_flush",
+      "detail": "bus.flush() required",
+      "pass": true
+    },
+    {
+      "check": "registry_runs_without_crash",
+      "detail": "exit code=0: [PASS] ops:candidates — NONE [RUNTIME]\n  REGISTRY: reports/evidence/EPOCH-REGISTRY-aead54a15263/REGISTRY.json\n  TOTAL:  ",
+      "pass": true
+    },
+    {
+      "check": "eventbus_jsonl_produced",
+      "detail": "reports/evidence/EPOCH-EVENTBUS-aead54a15263/EVENTS.jsonl",
+      "pass": true
+    },
+    {
+      "check": "eventbus_has_registry_events",
+      "detail": "1 REGISTRY events found",
+      "pass": true
+    },
+    {
+      "check": "registry_created_event_in_bus",
+      "detail": "REGISTRY_CREATED in bus",
+      "pass": true
+    },
+    {
+      "check": "registry_json_has_eventbus_source",
+      "detail": "eventbus_source=true",
+      "pass": true
+    },
+    {
+      "check": "registry_json_has_input_epoch_field",
+      "detail": "input_epoch=null",
+      "pass": true
+    },
+    {
+      "check": "input_epoch_nonexistent_graceful",
+      "detail": "--input-epoch nonexistent: exit code=0",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REG05_EVENTBUS_PROMOTION",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "aead54a15263",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

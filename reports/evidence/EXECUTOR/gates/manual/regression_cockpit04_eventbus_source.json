@@ -1,0 +1,71 @@
+{
+  "checks": [
+    {
+      "check": "cockpit_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/cockpit.mjs",
+      "pass": true
+    },
+    {
+      "check": "imports_eventbus",
+      "detail": "readBus/findLatestBusJsonl import required",
+      "pass": true
+    },
+    {
+      "check": "uses_read_bus",
+      "detail": "readBus() call required",
+      "pass": true
+    },
+    {
+      "check": "uses_find_latest_bus_jsonl",
+      "detail": "findLatestBusJsonl() required",
+      "pass": true
+    },
+    {
+      "check": "no_mtime_in_cockpit",
+      "detail": "no mtime — OK",
+      "pass": true
+    },
+    {
+      "check": "declares_eventbus_source",
+      "detail": "eventbus_source: true required in HUD.json",
+      "pass": true
+    },
+    {
+      "check": "cockpit_runs_without_crash",
+      "detail": "exit code=1: [BLOCKED] ops:cockpit — FAST_GATE\n  HUD:      reports/evidence/EPOCH-COCKPIT-aead54a15263/HUD.md\n  HUD_JSON: reports/evi",
+      "pass": true
+    },
+    {
+      "check": "hud_json_produced",
+      "detail": "reports/evidence/EPOCH-COCKPIT-aead54a15263/HUD.json",
+      "pass": true
+    },
+    {
+      "check": "hud_eventbus_source_true",
+      "detail": "eventbus_source=true",
+      "pass": true
+    },
+    {
+      "check": "timemachine_section_has_source",
+      "detail": "timemachine.source=EPOCH_FALLBACK",
+      "pass": true
+    },
+    {
+      "check": "autopilot_section_has_source",
+      "detail": "autopilot.source=EVENTBUS",
+      "pass": true
+    },
+    {
+      "check": "eventbus_section_in_hud",
+      "detail": "events_n=3",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_COCKPIT04_EVENTBUS_SOURCE",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "aead54a15263",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

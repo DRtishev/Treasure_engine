@@ -1,13 +1,15 @@
 /**
- * cockpit.mjs — ops:cockpit integration HUD (WOW6–WOW8)
+ * cockpit.mjs — ops:cockpit integration HUD (WOW6–WOW9, EventBus-unified)
  *
- * Reads latest EPOCH evidence for timemachine + autopilot + verify:fast,
- * produces a deterministic HUD with no timestamps.
+ * Reads timemachine + autopilot status from EventBus EVENTS.jsonl (reducer).
+ * Reads gate receipts from EXECUTOR/gates/manual/ for fast_gate + WOW gates.
  *
  * Design invariants:
  * - No wall-clock time fields in output
- * - Stable section ordering: TIMEMACHINE → AUTOPILOT → FAST_GATE → PR01
+ * - timemachine and autopilot sections derived from EventBus (RG_COCKPIT04)
+ * - Stable section ordering: TIMEMACHINE → AUTOPILOT → EVENTBUS → FAST_GATE → PR01 → WOW
  * - Output: reports/evidence/EPOCH-COCKPIT-<RUN_ID>/HUD.md + HUD.json
+ * - All evidence_paths in HUD.json must exist (RG_COCKPIT05)
  *
  * Write-scope (R5): reports/evidence/EPOCH-COCKPIT-<RUN_ID>/
  */
@@ -16,6 +18,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
+import { readBus, findLatestBusJsonl } from './eventbus_v1.mjs';
 
 const ROOT = process.cwd();
 const EVIDENCE_DIR = path.join(ROOT, 'reports', 'evidence');
@@ -23,9 +26,12 @@ const EXECUTOR_DIR = path.join(EVIDENCE_DIR, 'EXECUTOR');
 const EPOCH_DIR = path.join(EVIDENCE_DIR, `EPOCH-COCKPIT-${RUN_ID}`);
 fs.mkdirSync(EPOCH_DIR, { recursive: true });
 
-// ---------------------------------------------------------------------------
-// Find latest EPOCH dir by prefix (sorted lexicographically — stable)
-// ---------------------------------------------------------------------------
+function readJson(filePath) {
+  if (!fs.existsSync(filePath)) return null;
+  try { return JSON.parse(fs.readFileSync(filePath, 'utf8')); } catch { return null; }
+}
+
+// Find latest EPOCH dir by prefix (sorted lexicographically — stable, no mtime)
 function findLatestEpoch(prefix) {
   if (!fs.existsSync(EVIDENCE_DIR)) return null;
   const dirs = fs.readdirSync(EVIDENCE_DIR)
@@ -34,65 +40,143 @@ function findLatestEpoch(prefix) {
   return dirs.length > 0 ? dirs[dirs.length - 1] : null;
 }
 
-function readJson(filePath) {
-  if (!fs.existsSync(filePath)) return null;
-  try { return JSON.parse(fs.readFileSync(filePath, 'utf8')); } catch { return null; }
-}
+// ---------------------------------------------------------------------------
+// Load latest EventBus
+// ---------------------------------------------------------------------------
+const latestBusJsonl = findLatestBusJsonl(EVIDENCE_DIR);
+const bus = latestBusJsonl ? readBus(latestBusJsonl) : { events: () => [], reduce: (fn, init) => init };
+const allEvents = bus.events();
 
 // ---------------------------------------------------------------------------
-// Collect TimeMachine section
+// Collect TimeMachine section — from EventBus reducer (RG_COCKPIT04)
 // ---------------------------------------------------------------------------
 function collectTimemachine() {
-  const epochName = findLatestEpoch('EPOCH-TIMEMACHINE-');
-  if (!epochName) return { present: false, run_id: null, ticks_total: null, status: 'NO_EPOCH', paths: [] };
+  const tmEvents = allEvents.filter((e) => e.component === 'TIMEMACHINE');
+  if (tmEvents.length === 0) {
+    // Fallback: read from EPOCH-TIMEMACHINE- dir summary
+    const epochName = findLatestEpoch('EPOCH-TIMEMACHINE-');
+    if (!epochName) return { present: false, source: 'NONE', status: 'NO_EPOCH', paths: [] };
+    const epochDir = path.join(EVIDENCE_DIR, epochName);
+    const summary = readJson(path.join(epochDir, 'SUMMARY.json'));
+    return {
+      present: true,
+      source: 'EPOCH_FALLBACK',
+      epoch_name: epochName,
+      run_id: summary?.run_id ?? null,
+      ticks_total: summary?.ticks_total ?? null,
+      ticks_failed: summary?.ticks_failed ?? null,
+      status: summary?.status ?? 'UNKNOWN',
+      reason_code: summary?.reason_code ?? 'UNKNOWN',
+      paths: [],
+    };
+  }
 
-  const epochDir = path.join(EVIDENCE_DIR, epochName);
-  const summary = readJson(path.join(epochDir, 'SUMMARY.json'));
-  const jsonlPath = path.join(epochDir, 'TIMELINE.jsonl');
-  const mdPath = path.join(epochDir, 'TIMELINE.md');
+  // Derive status from bus events
+  const failedTmEvents = tmEvents.filter((e) => e.reason_code !== 'NONE');
+  const ledgerBoot = tmEvents.find((e) => e.event === 'LEDGER_BOOT');
+  const ledgerSeal = tmEvents.find((e) => e.event === 'LEDGER_SEAL');
+  const tmRunId = ledgerBoot?.run_id ?? null;
+
+  // Find epoch dir for file paths
+  const epochName = findLatestEpoch('EPOCH-TIMEMACHINE-');
+  const epochDir = epochName ? path.join(EVIDENCE_DIR, epochName) : null;
+  const paths = [];
+  if (epochDir) {
+    const jsonlP = path.join(epochDir, 'TIMELINE.jsonl');
+    const mdP = path.join(epochDir, 'TIMELINE.md');
+    if (fs.existsSync(jsonlP)) paths.push(path.relative(ROOT, jsonlP));
+    if (fs.existsSync(mdP)) paths.push(path.relative(ROOT, mdP));
+  }
 
   return {
     present: true,
-    epoch_name: epochName,
-    run_id: summary?.run_id ?? null,
-    ticks_total: summary?.ticks_total ?? null,
-    ticks_failed: summary?.ticks_failed ?? null,
-    status: summary?.status ?? 'UNKNOWN',
-    reason_code: summary?.reason_code ?? 'UNKNOWN',
-    paths: [
-      path.relative(ROOT, jsonlPath),
-      path.relative(ROOT, mdPath),
-    ].filter((p) => fs.existsSync(path.join(ROOT, p))),
+    source: 'EVENTBUS',
+    epoch_name: epochName ?? null,
+    run_id: tmRunId,
+    ticks_total: tmEvents.length,
+    ticks_failed: failedTmEvents.length,
+    has_ledger_boot: !!ledgerBoot,
+    has_ledger_seal: !!ledgerSeal,
+    status: failedTmEvents.length === 0 ? 'PASS' : 'FAIL',
+    reason_code: failedTmEvents.length === 0 ? 'NONE' : failedTmEvents[0].reason_code,
+    paths,
   };
 }
 
 // ---------------------------------------------------------------------------
-// Collect Autopilot section
+// Collect Autopilot section — from EventBus reducer (RG_COCKPIT04)
 // ---------------------------------------------------------------------------
 function collectAutopilot() {
-  const epochName = findLatestEpoch('EPOCH-AUTOPILOTV2-');
-  if (!epochName) return { present: false, run_id: null, mode: null, status: 'NO_EPOCH', paths: [] };
+  const apEvents = allEvents.filter((e) => e.component === 'AUTOPILOT');
+  if (apEvents.length === 0) {
+    // Fallback: read from EPOCH-AUTOPILOTV2- dir PLAN.json
+    const epochName = findLatestEpoch('EPOCH-AUTOPILOTV2-');
+    if (!epochName) return { present: false, source: 'NONE', status: 'NO_EPOCH', paths: [] };
+    const epochDir = path.join(EVIDENCE_DIR, epochName);
+    const plan = readJson(path.join(epochDir, 'PLAN.json'));
+    return {
+      present: true,
+      source: 'EPOCH_FALLBACK',
+      epoch_name: epochName,
+      run_id: plan?.run_id ?? null,
+      mode: plan?.mode ?? null,
+      status: plan?.status ?? 'UNKNOWN',
+      reason_code: plan?.reason_code ?? 'UNKNOWN',
+      paths: [],
+    };
+  }
 
-  const epochDir = path.join(EVIDENCE_DIR, epochName);
-  const plan = readJson(path.join(epochDir, 'PLAN.json'));
-  const planMdPath = path.join(epochDir, 'PLAN.md');
-  const refusalMdPath = path.join(epochDir, 'REFUSAL.md');
+  // Derive from bus events
+  const planCreated = apEvents.find((e) => e.event === 'PLAN_CREATED');
+  const refusals = apEvents.filter((e) => e.event === 'REFUSAL');
+  const applyAllowed = apEvents.find((e) => e.event === 'APPLY_ALLOWED');
+  const applyExecuted = apEvents.find((e) => e.event === 'APPLY_EXECUTED');
+
+  const apMode = planCreated?.mode ?? null;
+  const apRunId = planCreated?.run_id ?? null;
+  const apStatus = planCreated?.attrs?.autopilot_status ?? (refusals.length > 0 ? 'BLOCKED' : 'PASS');
+  const apReasonCode = planCreated?.reason_code ?? 'NONE';
+
+  // Find epoch dir for file paths
+  const epochName = findLatestEpoch('EPOCH-AUTOPILOTV2-');
+  const epochDir = epochName ? path.join(EVIDENCE_DIR, epochName) : null;
+  const paths = [];
+  if (epochDir) {
+    const planMdP = path.join(epochDir, 'PLAN.md');
+    const refusalMdP = path.join(epochDir, 'REFUSAL.md');
+    if (fs.existsSync(planMdP)) paths.push(path.relative(ROOT, planMdP));
+    if (fs.existsSync(refusalMdP)) paths.push(path.relative(ROOT, refusalMdP));
+  }
 
   return {
     present: true,
-    epoch_name: epochName,
-    run_id: plan?.run_id ?? null,
-    mode: plan?.mode ?? null,
-    apply_flag: plan?.apply_flag ?? null,
-    apply_unlocked: plan?.apply_unlocked ?? null,
-    status: plan?.status ?? 'UNKNOWN',
-    reason_code: plan?.reason_code ?? 'UNKNOWN',
-    refused: plan?.refused ?? null,
-    refusal_codes: plan?.refusal_codes ?? [],
-    paths: [
-      path.relative(ROOT, planMdPath),
-      ...(fs.existsSync(refusalMdPath) ? [path.relative(ROOT, refusalMdPath)] : []),
-    ].filter((p) => fs.existsSync(path.join(ROOT, p))),
+    source: 'EVENTBUS',
+    epoch_name: epochName ?? null,
+    run_id: apRunId,
+    mode: apMode,
+    apply_allowed: !!applyAllowed,
+    apply_executed: !!applyExecuted,
+    refusal_n: refusals.length,
+    refusal_codes: refusals.map((e) => e.reason_code),
+    status: apStatus,
+    reason_code: apReasonCode,
+    paths,
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Collect EventBus section
+// ---------------------------------------------------------------------------
+function collectEventBus() {
+  if (!latestBusJsonl) return { present: false, status: 'NO_EPOCH', events_n: 0, components: [] };
+  const components = [...new Set(allEvents.map((e) => e.component))].sort();
+  return {
+    present: true,
+    source: 'EVENTBUS',
+    jsonl_path: path.relative(ROOT, latestBusJsonl),
+    events_n: allEvents.length,
+    components,
+    status: 'PASS',
   };
 }
 
@@ -103,7 +187,6 @@ function collectFastGate() {
   const gateDir = path.join(EXECUTOR_DIR, 'gates', 'manual');
   if (!fs.existsSync(gateDir)) return { status: 'NO_RECEIPTS', gates: [], failed: [] };
 
-  // Read known fast gates
   const gateFiles = [
     'repo_byte_audit_x2.json',
     'regression_node_truth_alignment.json',
@@ -123,7 +206,6 @@ function collectFastGate() {
 
   const failed = gates.filter((g) => g.status !== 'PASS');
   const overallStatus = failed.length === 0 && gates.length > 0 ? 'PASS' : (gates.length === 0 ? 'NO_DATA' : 'FAIL');
-
   return { status: overallStatus, gates_checked: gates.length, failed_n: failed.length, gates, failed };
 }
 
@@ -168,6 +250,7 @@ function collectWowGates() {
 // ---------------------------------------------------------------------------
 const tm = collectTimemachine();
 const ap = collectAutopilot();
+const eb = collectEventBus();
 const fg = collectFastGate();
 const pr1 = collectPR01();
 const wow = collectWowGates();
@@ -181,6 +264,13 @@ const overallFailed = [
 const hudStatus = overallFailed.length === 0 ? 'PASS' : 'BLOCKED';
 const hudReasonCode = overallFailed.length === 0 ? 'NONE' : overallFailed.join('+');
 
+// Collect all evidence paths from HUD sections (for RG_COCKPIT05)
+const evidencePaths = [
+  ...tm.paths ?? [],
+  ...ap.paths ?? [],
+  ...(eb.jsonl_path ? [eb.jsonl_path] : []),
+].filter(Boolean);
+
 // ---------------------------------------------------------------------------
 // Write HUD.json
 // ---------------------------------------------------------------------------
@@ -190,13 +280,16 @@ const hudJson = {
   run_id: RUN_ID,
   status: hudStatus,
   reason_code: hudReasonCode,
+  eventbus_source: true,
   sections: {
     timemachine: tm,
     autopilot: ap,
+    eventbus: eb,
     fast_gate: fg,
     pr01: pr1,
     wow_gates: wow,
   },
+  evidence_paths: evidencePaths,
   overall_failed: overallFailed,
   next_action: 'npm run -s verify:fast',
 };
@@ -206,10 +299,10 @@ writeJsonDeterministic(path.join(EPOCH_DIR, 'HUD.json'), hudJson);
 // ---------------------------------------------------------------------------
 // Write HUD.md
 // ---------------------------------------------------------------------------
-function statusIcon(s) { return s === 'PASS' ? 'PASS' : (s === 'NO_DATA' || s === 'NO_EPOCH' || s === 'NO_RECEIPTS' ? 'NO_DATA' : 'FAIL'); }
+function statusIcon(s) { return s === 'PASS' ? 'PASS' : (s === 'NO_DATA' || s === 'NO_EPOCH' || s === 'NO_RECEIPTS' || s === 'NONE' ? 'NO_DATA' : 'FAIL'); }
 
-const tmRows = tm.paths.map((p) => `  - ${p}`).join('\n') || '  - NONE';
-const apRows = ap.paths.map((p) => `  - ${p}`).join('\n') || '  - NONE';
+const tmRows = tm.paths?.map((p) => `  - ${p}`).join('\n') || '  - NONE';
+const apRows = ap.paths?.map((p) => `  - ${p}`).join('\n') || '  - NONE';
 const fgRows = fg.gates.map((g) => `  | ${g.gate} | ${g.status} | ${g.reason_code} |`).join('\n') || '  | - | NO_DATA | - |';
 const wowRows = wow.gates.map((g) => `  | ${g.gate} | ${g.status} | ${g.reason_code} |`).join('\n') || '  | - | NO_DATA | - |';
 
@@ -219,12 +312,14 @@ const hudMd = [
   `STATUS: ${hudStatus}`,
   `REASON_CODE: ${hudReasonCode}`,
   `RUN_ID: ${RUN_ID}`,
+  `EVENTBUS_SOURCE: true`,
   '',
   '---',
   '',
   '## [1] TIMEMACHINE',
   '',
   `STATUS: ${statusIcon(tm.status)}`,
+  `SOURCE: ${tm.source ?? 'NONE'}`,
   `EPOCH: ${tm.epoch_name ?? 'NONE'}`,
   `RUN_ID: ${tm.run_id ?? 'NONE'}`,
   `TICKS_TOTAL: ${tm.ticks_total ?? 'NONE'}`,
@@ -238,12 +333,13 @@ const hudMd = [
   '## [2] AUTOPILOT COURT V2',
   '',
   `STATUS: ${statusIcon(ap.status)}`,
+  `SOURCE: ${ap.source ?? 'NONE'}`,
   `EPOCH: ${ap.epoch_name ?? 'NONE'}`,
   `RUN_ID: ${ap.run_id ?? 'NONE'}`,
   `MODE: ${ap.mode ?? 'NONE'}`,
-  `APPLY_FLAG: ${ap.apply_flag ?? 'NONE'}`,
-  `APPLY_UNLOCKED: ${ap.apply_unlocked ?? 'NONE'}`,
-  `REFUSED: ${ap.refused ?? 'NONE'}`,
+  `APPLY_ALLOWED: ${ap.apply_allowed ?? 'NONE'}`,
+  `APPLY_EXECUTED: ${ap.apply_executed ?? 'NONE'}`,
+  `REFUSAL_N: ${ap.refusal_n ?? 0}`,
   `REASON_CODE: ${ap.reason_code ?? 'NONE'}`,
   `REFUSAL_CODES: ${ap.refusal_codes?.join(',') || 'NONE'}`,
   'PATHS:',
@@ -251,7 +347,16 @@ const hudMd = [
   '',
   '---',
   '',
-  '## [3] FAST GATE',
+  '## [3] EVENTBUS',
+  '',
+  `STATUS: ${eb.status}`,
+  `EVENTS_N: ${eb.events_n}`,
+  `COMPONENTS: ${eb.components?.join(', ') || 'NONE'}`,
+  `JSONL: ${eb.jsonl_path ?? 'NONE'}`,
+  '',
+  '---',
+  '',
+  '## [4] FAST GATE',
   '',
   `STATUS: ${fg.status}`,
   `GATES_CHECKED: ${fg.gates_checked}`,
@@ -263,14 +368,14 @@ const hudMd = [
   '',
   '---',
   '',
-  '## [4] PR01 CLEANROOM',
+  '## [5] PR01 CLEANROOM',
   '',
   `STATUS: ${pr1.status}`,
   `REASON_CODE: ${pr1.reason_code}`,
   '',
   '---',
   '',
-  '## [5] WOW6–WOW8 GATES',
+  '## [6] WOW6–WOW8 GATES',
   '',
   `GATES_CHECKED: ${wow.gates_checked}`,
   `FAILED_N: ${wow.failed_n}`,
@@ -293,8 +398,9 @@ writeMd(path.join(EPOCH_DIR, 'HUD.md'), hudMd);
 console.log(`[${hudStatus}] ops:cockpit — ${hudReasonCode}`);
 console.log(`  HUD:      ${path.relative(ROOT, path.join(EPOCH_DIR, 'HUD.md'))}`);
 console.log(`  HUD_JSON: ${path.relative(ROOT, path.join(EPOCH_DIR, 'HUD.json'))}`);
-console.log(`  timemachine: ${tm.status} ticks=${tm.ticks_total ?? '?'} epoch=${tm.epoch_name ?? 'NONE'}`);
-console.log(`  autopilot:   ${ap.status} mode=${ap.mode ?? '?'} refused=${ap.refused ?? '?'}`);
+console.log(`  timemachine: ${tm.status} ticks=${tm.ticks_total ?? '?'} source=${tm.source ?? 'NONE'}`);
+console.log(`  autopilot:   ${ap.status} mode=${ap.mode ?? '?'} source=${ap.source ?? 'NONE'}`);
+console.log(`  eventbus:    ${eb.status} events=${eb.events_n}`);
 console.log(`  fast_gate:   ${fg.status} (${fg.gates_checked} gates, ${fg.failed_n} failed)`);
 console.log(`  pr01:        ${pr1.status}`);
 console.log(`  wow_gates:   ${wow.gates_checked} checked, ${wow.failed_n} failed`);

@@ -2,11 +2,11 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 3c4ec9aafacb
+RUN_ID: aead54a15263
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 32
+- changed_evidence_files_n: 40
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
@@ -17,7 +17,11 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_auto02_no_cert_in_research.json
 - reports/evidence/EXECUTOR/gates/manual/regression_auto03_pr_cleanroom_applied.json
 - reports/evidence/EXECUTOR/gates/manual/regression_auto04_apply_unlock_required.json
+- reports/evidence/EXECUTOR/gates/manual/regression_bus01_determinism_x2.json
+- reports/evidence/EXECUTOR/gates/manual/regression_bus02_write_scope.json
 - reports/evidence/EXECUTOR/gates/manual/regression_ec01_reason_context_contract.json
+- reports/evidence/EXECUTOR/gates/manual/regression_evt01_schema_lock.json
+- reports/evidence/EXECUTOR/gates/manual/regression_evt02_no_time_fields.json
 - reports/evidence/EXECUTOR/gates/manual/regression_netkill_ledger_enforcement.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
 - reports/evidence/EXECUTOR/gates/manual/regression_reg01_schema_lock.json
@@ -33,7 +37,11 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_AUTO02_NO_CERT_IN_RESEARCH.md
 - reports/evidence/EXECUTOR/REGRESSION_AUTO03_PR_CLEANROOM_APPLIED.md
 - reports/evidence/EXECUTOR/REGRESSION_AUTO04_APPLY_UNLOCK_REQUIRED.md
+- reports/evidence/EXECUTOR/REGRESSION_BUS01_DETERMINISM_X2.md
+- reports/evidence/EXECUTOR/REGRESSION_BUS02_WRITE_SCOPE.md
 - reports/evidence/EXECUTOR/REGRESSION_EC01_REASON_CONTEXT_CONTRACT.md
+- reports/evidence/EXECUTOR/REGRESSION_EVT01_SCHEMA_LOCK.md
+- reports/evidence/EXECUTOR/REGRESSION_EVT02_NO_TIME_FIELDS.md
 - reports/evidence/EXECUTOR/REGRESSION_NETKILL_LEDGER_ENFORCEMENT.md
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
 - reports/evidence/EXECUTOR/REGRESSION_REG01_SCHEMA_LOCK.md

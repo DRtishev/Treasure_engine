@@ -1,5 +1,5 @@
 /**
- * candidate_registry.mjs — WOW9 Candidate Registry
+ * candidate_registry.mjs — WOW9 Candidate Registry (EventBus-unified)
  *
  * Two output modes:
  *   1. Runtime registry (frequent):  reports/evidence/EPOCH-REGISTRY-<RUN_ID>/REGISTRY.json
@@ -11,23 +11,32 @@
  *   - Explicit --promote <config_id> required
  *   - Never auto-promotes; refusal on implicit promote attempt
  *
+ * Input selection (RG_REG05):
+ *   --input-epoch <EPOCH-SWEEP-ID>  explicit sweep epoch to ingest (no mtime/auto-latest)
+ *   (without flag: falls back to lexicographic scan of last 3 sweep epochs)
+ *
  * Schema (RG_REG01 locked):
  *   { config_id, parents[], metrics{}, robustness{}, status, reason, evidence_paths[] }
  *
  * Write-scope (R5):
  *   - Runtime: reports/evidence/EPOCH-REGISTRY-<RUN_ID>/REGISTRY.json
  *   - Promoted: reports/evidence/EXECUTOR/CANDIDATE_REGISTRY.json (via --promote only)
+ *   - EventBus: reports/evidence/EPOCH-EVENTBUS-<RUN_ID>/ (via bus.flush)
  */
 
 import fs from 'node:fs';
 import path from 'node:path';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
+import { createBus } from './eventbus_v1.mjs';
 
 const ROOT = process.cwd();
 const args = process.argv.slice(2);
 const PROMOTE_FLAG = args.includes('--promote');
 const PROMOTE_ID = PROMOTE_FLAG ? (args[args.indexOf('--promote') + 1] ?? null) : null;
+// Explicit input epoch flag (RG_REG05 — no auto-latest by mtime)
+const INPUT_EPOCH_IDX = args.indexOf('--input-epoch');
+const INPUT_EPOCH = INPUT_EPOCH_IDX !== -1 ? (args[INPUT_EPOCH_IDX + 1] ?? null) : null;
 const EXECUTOR_DIR = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
 const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', `EPOCH-REGISTRY-${RUN_ID}`);
 fs.mkdirSync(EPOCH_DIR, { recursive: true });
@@ -75,13 +84,43 @@ function makeCandidate({ config_id, parents = [], metrics = {}, robustness = {},
 
 // ---------------------------------------------------------------------------
 // Collect candidates from sweep outputs (if available)
+// --input-epoch <EPOCH-SWEEP-ID> selects explicit epoch (RG_REG05 — no mtime)
+// Without flag: lexicographic scan of last 3 sweep epochs (still no mtime)
 // ---------------------------------------------------------------------------
 function collectFromSweep() {
   const candidates = [];
   const evidence = path.join(ROOT, 'reports', 'evidence');
   if (!fs.existsSync(evidence)) return candidates;
 
-  // Look for latest EPOCH-SWEEP-* (if exists)
+  // If explicit --input-epoch given, use only that epoch
+  if (INPUT_EPOCH) {
+    const epochPath = path.join(evidence, INPUT_EPOCH);
+    if (!fs.existsSync(epochPath)) return candidates;
+    const sweepReport = path.join(epochPath, 'gates', 'manual', 'epoch_sweep_report.json');
+    if (!fs.existsSync(sweepReport)) return candidates;
+    try {
+      const data = JSON.parse(fs.readFileSync(sweepReport, 'utf8'));
+      const items = data?.report?.candidates ?? data?.report?.live ?? [];
+      for (const item of (Array.isArray(items) ? items : [])) {
+        const cid = item.id ?? item.config_id ?? null;
+        if (!cid) continue;
+        candidates.push(makeCandidate({
+          config_id: String(cid),
+          parents: [],
+          metrics: {},
+          robustness: { split_stats: null, leakage_pass: null },
+          status: 'CANDIDATE',
+          reason: `sourced from explicit input-epoch ${INPUT_EPOCH}`,
+          evidence_paths: [path.relative(ROOT, sweepReport)],
+        }));
+      }
+    } catch {
+      // Malformed sweep — skip
+    }
+    return candidates;
+  }
+
+  // Fallback: lexicographic scan (no mtime — sort only)
   const sweepDirs = fs.readdirSync(evidence)
     .filter((d) => d.startsWith('EPOCH-SWEEP-') || d.startsWith('EPOCH-59')) // include known sweep epoch
     .sort((a, b) => a.localeCompare(b));
@@ -183,6 +222,9 @@ function loadPromotedRegistry() {
 // Main
 // ---------------------------------------------------------------------------
 
+// Create EventBus for registry event emission (RG_REG05)
+const bus = createBus(RUN_ID);
+
 // Collect candidates from sweep/leakage outputs
 const sweepCandidates = collectFromSweep();
 
@@ -260,6 +302,34 @@ runtimeRegistry.status = overallStatus;
 runtimeRegistry.reason_code = reason_code;
 runtimeRegistry.schema_errors = schemaErrors;
 runtimeRegistry.orphans = orphans;
+runtimeRegistry.eventbus_source = true;
+runtimeRegistry.input_epoch = INPUT_EPOCH ?? null;
+
+// Emit REGISTRY_CREATED event (RG_REG05)
+bus.append({
+  mode: PROMOTE_FLAG ? 'AUDIT' : 'CERT',
+  component: 'REGISTRY',
+  event: 'REGISTRY_CREATED',
+  reason_code: overallStatus === 'PASS' ? 'NONE' : reason_code,
+  surface: 'PROFIT',
+  attrs: {
+    candidates_n: String(allCandidates.length),
+    registry_status: overallStatus,
+    input_epoch: INPUT_EPOCH ?? 'auto',
+  },
+});
+
+// Emit CANDIDATE_ADDED per candidate (audit trail)
+for (const c of allCandidates) {
+  bus.append({
+    mode: 'CERT',
+    component: 'REGISTRY',
+    event: 'CANDIDATE_ADDED',
+    reason_code: 'NONE',
+    surface: 'PROFIT',
+    attrs: { config_id: c.config_id, status: c.status },
+  });
+}
 
 // Write runtime registry
 writeJsonDeterministic(RUNTIME_REGISTRY_PATH, runtimeRegistry);
@@ -270,6 +340,19 @@ if (PROMOTE_FLAG && !refusalReason && promotionResult?.promoted) {
     ...runtimeRegistry,
     mode: 'PROMOTED',
     promoted_via_run_id: RUN_ID,
+  });
+  // Emit CANDIDATE_PROMOTED event with full audit trail (RG_REG05)
+  bus.append({
+    mode: 'AUDIT',
+    component: 'REGISTRY',
+    event: 'CANDIDATE_PROMOTED',
+    reason_code: 'NONE',
+    surface: 'PROFIT',
+    attrs: {
+      config_id: promotionResult.promoted,
+      promoted_via_run_id: RUN_ID,
+      promoted_registry_path: path.relative(ROOT, PROMOTED_REGISTRY_PATH),
+    },
   });
   console.log(`[PROMOTED] ${promotionResult.promoted} -> ${path.relative(ROOT, PROMOTED_REGISTRY_PATH)}`);
 }
@@ -305,8 +388,13 @@ const reportMd = [
 
 writeMd(path.join(EPOCH_DIR, 'REGISTRY.md'), reportMd);
 
+// Flush EventBus
+const { epochDir: busEpochDir } = bus.flush();
+
 console.log(`[${overallStatus}] ops:candidates — ${reason_code} [${PROMOTE_FLAG ? 'PROMOTE' : 'RUNTIME'}]`);
 console.log(`  REGISTRY: ${path.relative(ROOT, RUNTIME_REGISTRY_PATH)}`);
 console.log(`  TOTAL:    ${allCandidates.length} candidates (${runtimeRegistry.status_counts.n_open} CANDIDATE / ${runtimeRegistry.status_counts.n_live} PROMOTED)`);
+console.log(`  EVENTBUS: ${path.relative(ROOT, busEpochDir)}`);
+if (INPUT_EPOCH) console.log(`  INPUT_EPOCH: ${INPUT_EPOCH}`);
 
 process.exit(overallStatus === 'PASS' ? 0 : (overallStatus === 'BLOCKED' ? 2 : 1));
