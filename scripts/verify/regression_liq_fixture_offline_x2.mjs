@@ -19,7 +19,8 @@ const runId = 'RG_DATA04_FIXTURE';
 const dir = path.join(process.cwd(), 'artifacts/incoming/liquidations/bybit_ws_v5', runId);
 fs.mkdirSync(dir, { recursive: true });
 const raw = fixtureRows.map((r) => JSON.stringify(r)).join('\n') + '\n';
-const normalized = { provider_id: 'bybit_ws_v5', schema_version: 'liquidations.bybit_ws_v5.v2', time_unit_sentinel: 'ms', rows: fixtureRows.map((r) => ({ provider_id: r.provider_id, symbol: r.symbol, side: r.side, ts: Number(r.ts), p: String(r.p), v: String(r.v), topic: r.topic || '' })) };
+// liq_side included in normalized rows (Sabotage fix #2: RG_LIQ_LOCK01)
+const normalized = { provider_id: 'bybit_ws_v5', schema_version: 'liquidations.bybit_ws_v5.v2', time_unit_sentinel: 'ms', rows: fixtureRows.map((r) => ({ liq_side: r.liq_side, provider_id: r.provider_id, symbol: r.symbol, side: r.side, ts: Number(r.ts), p: String(r.p), v: String(r.v), topic: r.topic || '' })) };
 const lock = { provider_id: 'bybit_ws_v5', schema_version: 'liquidations.bybit_ws_v5.v2', time_unit_sentinel: 'ms', raw_capture_sha256: sha(raw), normalized_schema_sha256: sha(JSON.stringify(canon(normalized))), captured_at_utc: 'VOLATILE' };
 fs.writeFileSync(path.join(dir, 'raw.jsonl'), raw);
 fs.writeFileSync(path.join(dir, 'lock.json'), JSON.stringify(lock, null, 2) + '\n');

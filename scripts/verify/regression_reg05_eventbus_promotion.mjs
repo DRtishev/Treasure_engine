@@ -73,11 +73,14 @@ if (scriptExists) {
   });
 
   if (ranOk) {
-    // Find latest EPOCH-EVENTBUS-*
-    const busDirs = fs.existsSync(EVIDENCE_DIR)
+    // Find latest EPOCH-EVENTBUS-REGISTRY-* (component-keyed, consistent with auto05 pattern)
+    // Using REGISTRY-keyed filter to avoid lexicographic collision with TIMEMACHINE
+    const allBusDirs = fs.existsSync(EVIDENCE_DIR)
       ? fs.readdirSync(EVIDENCE_DIR).filter((d) => d.startsWith('EPOCH-EVENTBUS-')).sort()
       : [];
-    const latestBus = busDirs.length > 0 ? busDirs[busDirs.length - 1] : null;
+    const registryBusDirs = allBusDirs.filter((d) => d.includes('REGISTRY'));
+    const candidateDirs = registryBusDirs.length > 0 ? registryBusDirs : allBusDirs;
+    const latestBus = candidateDirs.length > 0 ? candidateDirs[candidateDirs.length - 1] : null;
     const busJsonlPath = latestBus ? path.join(EVIDENCE_DIR, latestBus, 'EVENTS.jsonl') : null;
     const busExists = busJsonlPath ? fs.existsSync(busJsonlPath) : false;
 
