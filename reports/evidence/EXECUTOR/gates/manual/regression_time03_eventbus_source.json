@@ -37,12 +37,12 @@
     },
     {
       "check": "timemachine_runs_ok",
-      "detail": "exit code=0: [PASS] ops:timemachine — NONE\n  TIMELINE: reports/evidence/EPOCH-TIMEMACHINE-aead54a15263/TIMELINE.jsonl\n  SUMMARY:  rep",
+      "detail": "exit code=0: [PASS] ops:timemachine — NONE\n  TIMELINE: reports/evidence/EPOCH-TIMEMACHINE-0d8a4b652bff/TIMELINE.jsonl\n  SUMMARY:  rep",
       "pass": true
     },
     {
       "check": "eventbus_jsonl_produced",
-      "detail": "reports/evidence/EPOCH-EVENTBUS-aead54a15263/EVENTS.jsonl",
+      "detail": "reports/evidence/EPOCH-EVENTBUS-TIMEMACHINE-56bb4849f721/EVENTS.jsonl",
       "pass": true
     },
     {
@@ -75,7 +75,7 @@
   "gate_id": "RG_TIME03_EVENTBUS_SOURCE",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
-  "run_id": "aead54a15263",
+  "run_id": "0d8a4b652bff",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: aead54a15263
+RUN_ID: 0d8a4b652bff
 NEXT_ACTION: npm run -s verify:fast
 
 ## CHECKS
@@ -15,10 +15,10 @@ NEXT_ACTION: npm run -s verify:fast
 - [PASS] calls_bus_flush: bus.flush() required
 - [PASS] declares_eventbus_source: eventbus_source: true required in PLAN.json
 - [PASS] autopilot_runs_without_crash: exit code=0: [PASS] ops:autopilot — NONE [DRY_RUN] mode=CERT
-  PLAN:      reports/evidence/EPOCH-AUTOPILOTV2-aead54a15263/PLAN.md
+  PLAN:      reports/evidence/EPOCH-AUTOPILOTV2-0d8a4b652bff/PLAN.md
   P
-- [PASS] eventbus_jsonl_produced: reports/evidence/EPOCH-EVENTBUS-aead54a15263/EVENTS.jsonl
-- [PASS] eventbus_has_autopilot_events: 1 AUTOPILOT events found
+- [PASS] eventbus_jsonl_produced: reports/evidence/EPOCH-EVENTBUS-AUTOPILOT-56bb4849f721/EVENTS.jsonl
+- [PASS] eventbus_has_autopilot_events: 3 AUTOPILOT events found
 - [PASS] plan_created_event_in_bus: PLAN_CREATED event found in bus
 - [PASS] events_tick_ordered: ticks strictly increasing — OK
 - [PASS] apply_run_succeeds_with_token: --apply with valid token: exit code=0

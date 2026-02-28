@@ -12,7 +12,7 @@
     },
     {
       "check": "cockpit_runs_without_crash",
-      "detail": "exit code=1: [BLOCKED] ops:cockpit — FAST_GATE\n  HUD:      reports/evidence/EPOCH-COCKPIT-aea",
+      "detail": "exit code=1: [BLOCKED] ops:cockpit — FAST_GATE\n  HUD:      reports/evidence/EPOCH-COCKPIT-0d8",
       "pass": true
     },
     {
@@ -50,7 +50,7 @@
   "gate_id": "RG_COCKPIT05_LINKS_EXIST",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
-  "run_id": "aead54a15263",
+  "run_id": "0d8a4b652bff",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

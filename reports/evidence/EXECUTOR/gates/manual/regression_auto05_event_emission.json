@@ -42,17 +42,17 @@
     },
     {
       "check": "autopilot_runs_without_crash",
-      "detail": "exit code=0: [PASS] ops:autopilot — NONE [DRY_RUN] mode=CERT\n  PLAN:      reports/evidence/EPOCH-AUTOPILOTV2-aead54a15263/PLAN.md\n  P",
+      "detail": "exit code=0: [PASS] ops:autopilot — NONE [DRY_RUN] mode=CERT\n  PLAN:      reports/evidence/EPOCH-AUTOPILOTV2-0d8a4b652bff/PLAN.md\n  P",
       "pass": true
     },
     {
       "check": "eventbus_jsonl_produced",
-      "detail": "reports/evidence/EPOCH-EVENTBUS-aead54a15263/EVENTS.jsonl",
+      "detail": "reports/evidence/EPOCH-EVENTBUS-AUTOPILOT-56bb4849f721/EVENTS.jsonl",
       "pass": true
     },
     {
       "check": "eventbus_has_autopilot_events",
-      "detail": "1 AUTOPILOT events found",
+      "detail": "3 AUTOPILOT events found",
       "pass": true
     },
     {
@@ -85,7 +85,7 @@
   "gate_id": "RG_AUTO05_EVENT_EMISSION",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
-  "run_id": "aead54a15263",
+  "run_id": "0d8a4b652bff",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

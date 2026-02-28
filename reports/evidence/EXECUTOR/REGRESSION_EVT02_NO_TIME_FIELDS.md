@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 3c4ec9aafacb
+RUN_ID: 0d8a4b652bff
 NEXT_ACTION: npm run -s verify:fast
 
 ## CHECKS
@@ -29,6 +29,13 @@ NEXT_ACTION: npm run -s verify:fast
 - [PASS] forbidden_re_run_id: key="run_id" matched=false expected=false
 - [PASS] forbidden_re_ticks_total: key="ticks_total" matched=false expected=false
 - [PASS] forbidden_re_event_count: key="event_count" matched=false expected=false
+- [PASS] existing_bus_file_valid:EPOCH-EVENTBUS-3c4ec9aafacb: 5 events valid
+- [PASS] existing_bus_file_valid:EPOCH-EVENTBUS-56bb4849f721: 5 events valid
+- [PASS] existing_bus_file_valid:EPOCH-EVENTBUS-AUTOPILOT-56bb4849f721: 3 events valid
+- [PASS] existing_bus_file_valid:EPOCH-EVENTBUS-LIFE-56bb4849f721: 4 events valid
+- [PASS] existing_bus_file_valid:EPOCH-EVENTBUS-REGISTRY-56bb4849f721: 1 events valid
+- [PASS] existing_bus_file_valid:EPOCH-EVENTBUS-TIMEMACHINE-56bb4849f721: 8 events valid
+- [PASS] existing_bus_file_valid:EPOCH-EVENTBUS-aead54a15263: 1 events valid
 
 ## FAILED
 - NONE

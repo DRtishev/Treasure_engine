@@ -7,27 +7,27 @@
     },
     {
       "check": "run1_ok",
-      "detail": "lines=5",
+      "detail": "lines=1",
       "pass": true
     },
     {
       "check": "run2_ok",
-      "detail": "lines=5",
+      "detail": "lines=1",
       "pass": true
     },
     {
       "check": "events_jsonl_byte_stable_x2",
-      "detail": "hash=60b0fbd24ce5c29b",
+      "detail": "hash=1b51431e0f8850e6",
       "pass": true
     },
     {
       "check": "events_count_stable",
-      "detail": "r1=5 r2=5",
+      "detail": "r1=1 r2=1",
       "pass": true
     },
     {
       "check": "events_tick_ordered",
-      "detail": "ticks=[1,2,3,4,5]",
+      "detail": "ticks=[1]",
       "pass": true
     },
     {
@@ -40,7 +40,7 @@
   "gate_id": "RG_BUS01_DETERMINISM_X2",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
-  "run_id": "3c4ec9aafacb",
+  "run_id": "0d8a4b652bff",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

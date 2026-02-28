@@ -42,7 +42,7 @@
     },
     {
       "check": "registry_runs_without_crash",
-      "detail": "exit code=0: [PASS] ops:candidates — NONE [RUNTIME]\n  REGISTRY: reports/evidence/EPOCH-REGISTRY-aead54a15263/REGISTRY.json\n  TOTAL:  ",
+      "detail": "exit code=0: [PASS] ops:candidates — NONE [RUNTIME]\n  REGISTRY: reports/evidence/EPOCH-REGISTRY-0d8a4b652bff/REGISTRY.json\n  TOTAL:  ",
       "pass": true
     },
     {
@@ -67,7 +67,7 @@
     },
     {
       "check": "registry_json_has_input_epoch_field",
-      "detail": "input_epoch=null",
+      "detail": "input_epoch=EPOCH-SWEEP-NONEXISTENT",
       "pass": true
     },
     {
@@ -80,7 +80,7 @@
   "gate_id": "RG_REG05_EVENTBUS_PROMOTION",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
-  "run_id": "aead54a15263",
+  "run_id": "0d8a4b652bff",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

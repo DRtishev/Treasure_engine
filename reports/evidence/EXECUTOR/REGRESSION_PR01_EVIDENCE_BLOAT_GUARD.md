@@ -2,11 +2,11 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: aead54a15263
+RUN_ID: 0d8a4b652bff
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 40
+- changed_evidence_files_n: 52
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
@@ -17,8 +17,12 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_auto02_no_cert_in_research.json
 - reports/evidence/EXECUTOR/gates/manual/regression_auto03_pr_cleanroom_applied.json
 - reports/evidence/EXECUTOR/gates/manual/regression_auto04_apply_unlock_required.json
+- reports/evidence/EXECUTOR/gates/manual/regression_auto05_event_emission.json
 - reports/evidence/EXECUTOR/gates/manual/regression_bus01_determinism_x2.json
 - reports/evidence/EXECUTOR/gates/manual/regression_bus02_write_scope.json
+- reports/evidence/EXECUTOR/gates/manual/regression_cockpit03_integration.json
+- reports/evidence/EXECUTOR/gates/manual/regression_cockpit04_eventbus_source.json
+- reports/evidence/EXECUTOR/gates/manual/regression_cockpit05_links_exist.json
 - reports/evidence/EXECUTOR/gates/manual/regression_ec01_reason_context_contract.json
 - reports/evidence/EXECUTOR/gates/manual/regression_evt01_schema_lock.json
 - reports/evidence/EXECUTOR/gates/manual/regression_evt02_no_time_fields.json
@@ -28,8 +32,10 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_reg02_no_orphans.json
 - reports/evidence/EXECUTOR/gates/manual/regression_reg03_promotion_only.json
 - reports/evidence/EXECUTOR/gates/manual/regression_reg04_determinism_x2.json
+- reports/evidence/EXECUTOR/gates/manual/regression_reg05_eventbus_promotion.json
 - reports/evidence/EXECUTOR/gates/manual/regression_time01_stable_tick_order.json
 - reports/evidence/EXECUTOR/gates/manual/regression_time02_no_time_fields.json
+- reports/evidence/EXECUTOR/gates/manual/regression_time03_eventbus_source.json
 - reports/evidence/EXECUTOR/gates/manual/regression_victory_fast_no_heavy.json
 - reports/evidence/EXECUTOR/REGRESSION_AGENT01_AGENTS_PRESENT.md
 - reports/evidence/EXECUTOR/REGRESSION_AGENT02_CLAUDE_MD_DRIFT.md
@@ -37,8 +43,12 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_AUTO02_NO_CERT_IN_RESEARCH.md
 - reports/evidence/EXECUTOR/REGRESSION_AUTO03_PR_CLEANROOM_APPLIED.md
 - reports/evidence/EXECUTOR/REGRESSION_AUTO04_APPLY_UNLOCK_REQUIRED.md
+- reports/evidence/EXECUTOR/REGRESSION_AUTO05_EVENT_EMISSION.md
 - reports/evidence/EXECUTOR/REGRESSION_BUS01_DETERMINISM_X2.md
 - reports/evidence/EXECUTOR/REGRESSION_BUS02_WRITE_SCOPE.md
+- reports/evidence/EXECUTOR/REGRESSION_COCKPIT03_INTEGRATION.md
+- reports/evidence/EXECUTOR/REGRESSION_COCKPIT04_EVENTBUS_SOURCE.md
+- reports/evidence/EXECUTOR/REGRESSION_COCKPIT05_LINKS_EXIST.md
 - reports/evidence/EXECUTOR/REGRESSION_EC01_REASON_CONTEXT_CONTRACT.md
 - reports/evidence/EXECUTOR/REGRESSION_EVT01_SCHEMA_LOCK.md
 - reports/evidence/EXECUTOR/REGRESSION_EVT02_NO_TIME_FIELDS.md
@@ -48,6 +58,8 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_REG02_NO_ORPHANS.md
 - reports/evidence/EXECUTOR/REGRESSION_REG03_PROMOTION_ONLY.md
 - reports/evidence/EXECUTOR/REGRESSION_REG04_DETERMINISM_X2.md
+- reports/evidence/EXECUTOR/REGRESSION_REG05_EVENTBUS_PROMOTION.md
 - reports/evidence/EXECUTOR/REGRESSION_TIME01_STABLE_TICK_ORDER.md
 - reports/evidence/EXECUTOR/REGRESSION_TIME02_NO_TIME_FIELDS.md
+- reports/evidence/EXECUTOR/REGRESSION_TIME03_EVENTBUS_SOURCE.md
 - reports/evidence/EXECUTOR/REGRESSION_VICTORY_FAST_NO_HEAVY.md

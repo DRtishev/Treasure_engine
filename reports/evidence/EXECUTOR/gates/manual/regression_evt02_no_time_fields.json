@@ -1,5 +1,13 @@
 {
-  "bus_files_checked": [],
+  "bus_files_checked": [
+    "reports/evidence/EPOCH-EVENTBUS-3c4ec9aafacb/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-56bb4849f721/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-AUTOPILOT-56bb4849f721/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-LIFE-56bb4849f721/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-REGISTRY-56bb4849f721/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-TIMEMACHINE-56bb4849f721/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-aead54a15263/EVENTS.jsonl"
+  ],
   "checks": [
     {
       "check": "rejects_root_started_at",
@@ -115,13 +123,48 @@
       "check": "forbidden_re_event_count",
       "detail": "key=\"event_count\" matched=false expected=false",
       "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-3c4ec9aafacb",
+      "detail": "5 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-56bb4849f721",
+      "detail": "5 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-AUTOPILOT-56bb4849f721",
+      "detail": "3 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-LIFE-56bb4849f721",
+      "detail": "4 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-REGISTRY-56bb4849f721",
+      "detail": "1 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-TIMEMACHINE-56bb4849f721",
+      "detail": "8 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-aead54a15263",
+      "detail": "1 events valid",
+      "pass": true
     }
   ],
   "failed_checks": [],
   "gate_id": "RG_EVT02_NO_TIME_FIELDS",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
-  "run_id": "3c4ec9aafacb",
+  "run_id": "0d8a4b652bff",
   "schema_version": "1.0.0",
   "status": "PASS"
 }
