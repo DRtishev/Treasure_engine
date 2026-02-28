@@ -222,7 +222,9 @@ const researchCertCheck = checkResearchNoCert(mode);
 const cleanroom = checkPRCleanroom();
 
 // Create EventBus for state machine event emission (RG_AUTO05)
-const bus = createBus(RUN_ID);
+// Uses component-keyed dir so ops:life can aggregate all component buses.
+const busDir = path.join(ROOT, 'reports', 'evidence', `EPOCH-EVENTBUS-AUTOPILOT-${RUN_ID}`);
+const bus = createBus(RUN_ID, busDir);
 
 // Determine overall status and reason
 let overallStatus = 'PASS';

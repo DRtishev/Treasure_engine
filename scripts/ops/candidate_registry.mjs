@@ -223,7 +223,9 @@ function loadPromotedRegistry() {
 // ---------------------------------------------------------------------------
 
 // Create EventBus for registry event emission (RG_REG05)
-const bus = createBus(RUN_ID);
+// Uses component-keyed dir so ops:life can aggregate all component buses.
+const busDir = path.join(ROOT, 'reports', 'evidence', `EPOCH-EVENTBUS-REGISTRY-${RUN_ID}`);
+const bus = createBus(RUN_ID, busDir);
 
 // Collect candidates from sweep/leakage outputs
 const sweepCandidates = collectFromSweep();

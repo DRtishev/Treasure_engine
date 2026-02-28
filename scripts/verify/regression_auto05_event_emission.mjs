@@ -77,18 +77,21 @@ if (scriptExists) {
   });
 
   if (ranOk) {
-    // Find latest EPOCH-EVENTBUS-* after run
-    const bussAfter = fs.existsSync(EVIDENCE_DIR)
+    // Find EPOCH-EVENTBUS-AUTOPILOT-* (component-keyed) or fallback to latest bus with AUTOPILOT events
+    const allBusDirs = fs.existsSync(EVIDENCE_DIR)
       ? fs.readdirSync(EVIDENCE_DIR).filter((d) => d.startsWith('EPOCH-EVENTBUS-')).sort()
       : [];
-    const latestBus = bussAfter.length > 0 ? bussAfter[bussAfter.length - 1] : null;
+    // Prefer AUTOPILOT-keyed dir
+    const apBusDirs = allBusDirs.filter((d) => d.includes('AUTOPILOT'));
+    const candidateDirs = apBusDirs.length > 0 ? apBusDirs : allBusDirs;
+    const latestBus = candidateDirs.length > 0 ? candidateDirs[candidateDirs.length - 1] : null;
 
     const busJsonlPath = latestBus ? path.join(EVIDENCE_DIR, latestBus, 'EVENTS.jsonl') : null;
     const busExists = busJsonlPath ? fs.existsSync(busJsonlPath) : false;
     checks.push({
       check: 'eventbus_jsonl_produced',
       pass: busExists,
-      detail: busExists ? path.relative(ROOT, busJsonlPath) : 'No EPOCH-EVENTBUS-*/EVENTS.jsonl found',
+      detail: busExists ? path.relative(ROOT, busJsonlPath) : 'No EPOCH-EVENTBUS-AUTOPILOT-*/EVENTS.jsonl found',
     });
 
     if (busExists) {
@@ -148,9 +151,9 @@ if (scriptExists) {
   });
 
   if (applyRanOk) {
-    // Find latest bus after apply run
+    // Find AUTOPILOT-keyed bus after apply run
     const bussApply = fs.existsSync(EVIDENCE_DIR)
-      ? fs.readdirSync(EVIDENCE_DIR).filter((d) => d.startsWith('EPOCH-EVENTBUS-')).sort()
+      ? fs.readdirSync(EVIDENCE_DIR).filter((d) => d.startsWith('EPOCH-EVENTBUS-') && d.includes('AUTOPILOT')).sort()
       : [];
     const latestApplyBus = bussApply.length > 0 ? bussApply[bussApply.length - 1] : null;
     const applyBusPath = latestApplyBus ? path.join(EVIDENCE_DIR, latestApplyBus, 'EVENTS.jsonl') : null;

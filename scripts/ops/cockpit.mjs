@@ -18,7 +18,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
-import { readBus, findLatestBusJsonl } from './eventbus_v1.mjs';
+import { readBus, findLatestBusJsonl, findAllBusJsonls } from './eventbus_v1.mjs';
 
 const ROOT = process.cwd();
 const EVIDENCE_DIR = path.join(ROOT, 'reports', 'evidence');
@@ -41,11 +41,14 @@ function findLatestEpoch(prefix) {
 }
 
 // ---------------------------------------------------------------------------
-// Load latest EventBus
+// Load ALL EventBuses — aggregate events from all EPOCH-EVENTBUS-* dirs
+// (ops:life pattern: each component writes to its own keyed bus dir)
+// No mtime: findAllBusJsonls uses lexicographic sort only
 // ---------------------------------------------------------------------------
+const allBusJsonls = findAllBusJsonls(EVIDENCE_DIR);
+const allEvents = allBusJsonls.flatMap((jsonlPath) => readBus(jsonlPath).events());
+// Also keep single-bus interface for eventbus section stats
 const latestBusJsonl = findLatestBusJsonl(EVIDENCE_DIR);
-const bus = latestBusJsonl ? readBus(latestBusJsonl) : { events: () => [], reduce: (fn, init) => init };
-const allEvents = bus.events();
 
 // ---------------------------------------------------------------------------
 // Collect TimeMachine section — from EventBus reducer (RG_COCKPIT04)
@@ -165,15 +168,16 @@ function collectAutopilot() {
 }
 
 // ---------------------------------------------------------------------------
-// Collect EventBus section
+// Collect EventBus section — aggregate from all component buses
 // ---------------------------------------------------------------------------
 function collectEventBus() {
-  if (!latestBusJsonl) return { present: false, status: 'NO_EPOCH', events_n: 0, components: [] };
+  if (allBusJsonls.length === 0) return { present: false, status: 'NO_EPOCH', events_n: 0, components: [] };
   const components = [...new Set(allEvents.map((e) => e.component))].sort();
   return {
     present: true,
     source: 'EVENTBUS',
-    jsonl_path: path.relative(ROOT, latestBusJsonl),
+    bus_count: allBusJsonls.length,
+    jsonl_paths: allBusJsonls.map((p) => path.relative(ROOT, p)),
     events_n: allEvents.length,
     components,
     status: 'PASS',
@@ -181,11 +185,32 @@ function collectEventBus() {
 }
 
 // ---------------------------------------------------------------------------
-// Collect fast gate section (from EXECUTOR manual receipts)
+// Collect fast gate section
+// Primary: check LIFE EventBus for STEP_COMPLETE verify_fast event (ops:life run)
+// Fallback: read EXECUTOR manual receipts (current run_id only — stale = NO_DATA)
 // ---------------------------------------------------------------------------
 function collectFastGate() {
+  // Check LIFE EventBus: if a LIFE bus ran verify_fast and it passed, trust it
+  const lifeEvents = allEvents.filter((e) => e.component === 'LIFE');
+  const verifyFastLifeEvent = lifeEvents.find(
+    (e) => e.event === 'STEP_COMPLETE' && e.attrs?.step_name === 'verify_fast'
+  );
+  if (verifyFastLifeEvent) {
+    const lifeStatus = verifyFastLifeEvent.attrs?.step_status ?? 'UNKNOWN';
+    return {
+      status: lifeStatus,
+      source: 'LIFE_EVENTBUS',
+      step_status: lifeStatus,
+      gates_checked: 1,
+      failed_n: lifeStatus === 'PASS' ? 0 : 1,
+      gates: [{ gate: 'verify_fast_via_life', status: lifeStatus, reason_code: 'NONE' }],
+      failed: lifeStatus === 'PASS' ? [] : [{ gate: 'verify_fast_via_life', status: lifeStatus }],
+    };
+  }
+
+  // Fallback: read EXECUTOR receipts — skip receipts with stale run_id
   const gateDir = path.join(EXECUTOR_DIR, 'gates', 'manual');
-  if (!fs.existsSync(gateDir)) return { status: 'NO_RECEIPTS', gates: [], failed: [] };
+  if (!fs.existsSync(gateDir)) return { status: 'NO_RECEIPTS', source: 'EXECUTOR', gates: [], failed: [] };
 
   const gateFiles = [
     'repo_byte_audit_x2.json',
@@ -200,13 +225,15 @@ function collectFastGate() {
   for (const f of gateFiles) {
     const data = readJson(path.join(gateDir, f));
     if (data) {
+      // Skip stale receipts (different run_id) — treat as NO_DATA
+      if (data.run_id && data.run_id !== RUN_ID) continue;
       gates.push({ gate: f.replace('.json', ''), status: data.status ?? 'UNKNOWN', reason_code: data.reason_code ?? 'UNKNOWN' });
     }
   }
 
   const failed = gates.filter((g) => g.status !== 'PASS');
   const overallStatus = failed.length === 0 && gates.length > 0 ? 'PASS' : (gates.length === 0 ? 'NO_DATA' : 'FAIL');
-  return { status: overallStatus, gates_checked: gates.length, failed_n: failed.length, gates, failed };
+  return { status: overallStatus, source: 'EXECUTOR', gates_checked: gates.length, failed_n: failed.length, gates, failed };
 }
 
 // ---------------------------------------------------------------------------
@@ -351,8 +378,9 @@ const hudMd = [
   '',
   `STATUS: ${eb.status}`,
   `EVENTS_N: ${eb.events_n}`,
+  `BUS_COUNT: ${eb.bus_count ?? 0}`,
   `COMPONENTS: ${eb.components?.join(', ') || 'NONE'}`,
-  `JSONL: ${eb.jsonl_path ?? 'NONE'}`,
+  `JSONLS: ${eb.jsonl_paths?.join(', ') ?? eb.jsonl_path ?? 'NONE'}`,
   '',
   '---',
   '',

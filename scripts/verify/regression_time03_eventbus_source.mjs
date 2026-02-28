@@ -65,18 +65,21 @@ if (scriptExists) {
   checks.push({ check: 'timemachine_runs_ok', pass: ranOk, detail: `exit code=${r.status ?? 'null'}: ${(r.stdout || '').trim().slice(0, 120)}` });
 
   if (ranOk) {
-    // Find latest EPOCH-EVENTBUS-* created by timemachine run
-    const busDirs = fs.existsSync(EVIDENCE_DIR)
+    // Find EPOCH-EVENTBUS-TIMEMACHINE-* (component-keyed bus dir) or any EPOCH-EVENTBUS-* with TIMEMACHINE events
+    const allBusDirs = fs.existsSync(EVIDENCE_DIR)
       ? fs.readdirSync(EVIDENCE_DIR).filter((d) => d.startsWith('EPOCH-EVENTBUS-')).sort()
       : [];
-    const latestBus = busDirs.length > 0 ? busDirs[busDirs.length - 1] : null;
+    // Prefer TIMEMACHINE-keyed dir; fallback to any bus dir
+    const tmBusDirs = allBusDirs.filter((d) => d.includes('TIMEMACHINE'));
+    const candidateDirs = tmBusDirs.length > 0 ? tmBusDirs : allBusDirs;
+    const latestBus = candidateDirs.length > 0 ? candidateDirs[candidateDirs.length - 1] : null;
 
     const busJsonlPath = latestBus ? path.join(EVIDENCE_DIR, latestBus, 'EVENTS.jsonl') : null;
     const busExists = busJsonlPath ? fs.existsSync(busJsonlPath) : false;
     checks.push({
       check: 'eventbus_jsonl_produced',
       pass: busExists,
-      detail: busExists ? path.relative(ROOT, busJsonlPath) : 'No EPOCH-EVENTBUS-*/EVENTS.jsonl found',
+      detail: busExists ? path.relative(ROOT, busJsonlPath) : 'No EPOCH-EVENTBUS-TIMEMACHINE-*/EVENTS.jsonl found',
     });
 
     if (busExists) {

@@ -140,6 +140,20 @@ export function findLatestBusJsonl(evidenceDir = path.join(ROOT, 'reports', 'evi
 }
 
 // ---------------------------------------------------------------------------
+// findAllBusJsonls(evidenceDir) — find ALL EPOCH-EVENTBUS-* EVENTS.jsonl files
+// Returns array sorted lexicographically (stable — no mtime).
+// Use when aggregating events from multiple component buses (ops:life pattern).
+// ---------------------------------------------------------------------------
+export function findAllBusJsonls(evidenceDir = path.join(ROOT, 'reports', 'evidence')) {
+  if (!fs.existsSync(evidenceDir)) return [];
+  return fs.readdirSync(evidenceDir)
+    .filter((d) => d.startsWith('EPOCH-EVENTBUS-'))
+    .sort((a, b) => a.localeCompare(b))
+    .map((d) => path.join(evidenceDir, d, 'EVENTS.jsonl'))
+    .filter((p) => fs.existsSync(p));
+}
+
+// ---------------------------------------------------------------------------
 // CLI smoke (invoked via: npm run -s ops:eventbus:smoke)
 // ---------------------------------------------------------------------------
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve(import.meta.url.replace('file://', ''))) {

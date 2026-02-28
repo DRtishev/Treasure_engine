@@ -54,10 +54,12 @@ function runChecks() {
 
 // ---------------------------------------------------------------------------
 // Emit all heartbeat events into the EventBus
-// Returns: { timeline, bus }
+// Uses a component-keyed dir so ops:life can aggregate all component buses.
+// EPOCH-EVENTBUS-TIMEMACHINE-<RUN_ID> (distinct from EPOCH-EVENTBUS-<RUN_ID>)
 // ---------------------------------------------------------------------------
 function emitHeartbeats(checks) {
-  const bus = createBus(RUN_ID);
+  const busDir = path.join(ROOT, 'reports', 'evidence', `EPOCH-EVENTBUS-TIMEMACHINE-${RUN_ID}`);
+  const bus = createBus(RUN_ID, busDir);
 
   const checkValues = [
     true, // LEDGER_BOOT always succeeds
