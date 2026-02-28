@@ -101,6 +101,14 @@ reports/evidence/EPOCH-*/**
 artifacts/outgoing/*.tar.gz
 artifacts/outgoing/*.zip
 artifacts/outgoing/*.gz
+# A5: RG_GIT_OUT01 — computed features/sim outputs are transient, never committed
+artifacts/outgoing/*.jsonl
+artifacts/outgoing/*.lock.json
+artifacts/outgoing/microlive_decision.json
+# B1: price bar incoming runs are transient (analogous to liquidation runs)
+artifacts/incoming/price_bars/
+# C1: microlive unlock is transient (analogous to ALLOW_NETWORK)
+artifacts/incoming/MICROLIVE_UNLOCK
 
 tools/node/
 
@@ -116,6 +124,7 @@ artifacts/incoming/*.raw.json
 artifacts/incoming/liquidations/
 
 artifacts/incoming/ALLOW_NETWORK
+artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 
 # node toolchains (vendored runtime backend)
 artifacts/toolchains/node/

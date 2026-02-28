@@ -1,0 +1,101 @@
+{
+  "audit_id": "profit-epoch-baseline-9mUSA",
+  "generated_at": "2026-02-27T00:00:00Z",
+  "branch": "claude/profit-epoch-baseline-9mUSA",
+  "head_sha": "4ec372a",
+  "node_version": "v22.22.0",
+  "node_ssot": "22.22.0",
+  "node_match": true,
+  "gate_matrix": [
+    {"gate": "verify:fast", "status": "PASS", "reason_code": "NONE", "surface": "CI"},
+    {"gate": "epoch:victory:seal", "status": "BLOCKED", "reason_code": "CHURN01+RG_TEST01", "surface": "CERT"},
+    {"gate": "epoch:mega:proof:x2", "status": "FAIL", "reason_code": "ND01_SEM01", "surface": "CERT"},
+    {"gate": "epoch:foundation:seal", "status": "BLOCKED", "reason_code": "EC01", "surface": "CERT"},
+    {"gate": "PROFIT_FOUNDATION_FREEZE_GATE", "status": "NEEDS_DATA", "reason_code": "PFZ01_NEEDS_DATA", "surface": "PROFIT"},
+    {"gate": "EDGE_PROFIT_00.lane_a", "status": "PASS", "reason_code": "NONE", "surface": "PROFIT"},
+    {"gate": "EDGE_PROFIT_00.lane_b", "status": "NEEDS_DATA", "reason_code": "DRY_RUN", "surface": "PROFIT"},
+    {"gate": "EDGE_PROFIT_00.promotion", "status": "NOT_ELIGIBLE", "reason_code": "EP02_REAL_REQUIRED", "surface": "PROFIT"},
+    {"gate": "regression_no_unbounded_spawnsync", "status": "MISSING", "reason_code": "ARTIFACT_NOT_FOUND", "surface": "REGRESSION"},
+    {"gate": "edge:profit:02:DRY_RUN", "status": "FAIL", "reason_code": "ec=1", "surface": "PROFIT"},
+    {"gate": "RG_SIG01", "status": "PENDING", "reason_code": "NO_DATA", "surface": "P2_MVP"},
+    {"gate": "RG_SIG02", "status": "PENDING", "reason_code": "NO_DATA", "surface": "P2_MVP"},
+    {"gate": "RG_PAPER01", "status": "PENDING", "reason_code": "NO_DATA", "surface": "P2_MVP"},
+    {"gate": "RG_PAPER02", "status": "PENDING", "reason_code": "NO_DATA", "surface": "P2_MVP"},
+    {"gate": "RG_LIVE01", "status": "PENDING", "reason_code": "NO_DATA", "surface": "P2_MVP"},
+    {"gate": "RG_LIVE02", "status": "PENDING", "reason_code": "NO_DATA", "surface": "P2_MVP"}
+  ],
+  "root_causes": [
+    {
+      "id": "ROOT-01",
+      "code": "ND01_SEM01",
+      "surface": "epoch:mega:proof:x2",
+      "file": "reports/evidence/EXECUTOR/COMMANDS_RUN.md",
+      "cascade": ["epoch:foundation:seal", "PROFIT_FOUNDATION_FREEZE_GATE"],
+      "evidence": "reports/evidence/EXECUTOR/MEGA_PROOF_X2.md",
+      "fingerprint_run1": "8d89c3f05a86471b4ba7c3e00a921342edc695cb7145b12e51e6e9fc1cfe63e8",
+      "fingerprint_run2": "b0cdc36f11905f5a3ed992e3d1ab9a4c937bdd0e9a81ae4196952ef19bd9ec02"
+    },
+    {
+      "id": "ROOT-02",
+      "code": "CHURN01",
+      "surface": "epoch:victory:seal",
+      "offenders_n": 9,
+      "offenders": [
+        "package.json",
+        "reports/evidence/EXECUTOR/gates/manual/node_toolchain_acquire.json",
+        "reports/evidence/EXECUTOR/NODE_TOOLCHAIN_ACQUIRE.md",
+        "reports/evidence/RG_NODEAUTH_DONE_03/logs/epoch_victory_seal.log",
+        "reports/evidence/RG_NODEAUTH_DONE_03/logs/node_toolchain_acquire.log",
+        "scripts/executor/executor_epoch_victory_seal.mjs",
+        "scripts/ops/node_authority_run.sh",
+        "scripts/verify/regression_churn_write_scope_guard.mjs",
+        "scripts/verify/regression_node_churn_receipt_routing.mjs"
+      ],
+      "evidence": "reports/evidence/EXECUTOR/VICTORY_PRECHECK.md"
+    },
+    {
+      "id": "ROOT-03",
+      "code": "MISSING_REGRESSION",
+      "surface": "PROFIT_FOUNDATION_FREEZE_GATE",
+      "missing_artifact": "reports/evidence/EXECUTOR/gates/manual/regression_no_unbounded_spawnsync.json",
+      "evidence": "reports/evidence/EXECUTOR/PROFIT_FOUNDATION_FREEZE_GATE.md"
+    },
+    {
+      "id": "ROOT-04",
+      "code": "DRY_RUN_FAIL",
+      "surface": "edge:profit:02:*",
+      "failing_cmds": [
+        "EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:expectancy-proof",
+        "EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:pbo",
+        "EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:risk",
+        "EDGE_PROFIT_DRY_RUN=1 npm run -s edge:profit:02:proof:index"
+      ],
+      "evidence": "reports/evidence/EXECUTOR/NETKILL_LEDGER_SUMMARY.json"
+    }
+  ],
+  "working_tree": {
+    "status": "CLEAN_IN_AUDIT_SCOPE",
+    "modified_allowed": [
+      "reports/evidence/EXECUTOR/REGRESSION_EC01_REASON_CONTEXT_CONTRACT.md",
+      "reports/evidence/EXECUTOR/REGRESSION_NETKILL_LEDGER_ENFORCEMENT.md",
+      "reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md",
+      "reports/evidence/EXECUTOR/gates/manual/regression_ec01_reason_context_contract.json",
+      "reports/evidence/EXECUTOR/gates/manual/regression_netkill_ledger_enforcement.json",
+      "reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json"
+    ]
+  },
+  "profit_p2_mvp": {
+    "signals_lane": "PENDING",
+    "paper_lane": {"active_profile": "stub", "promotion_eligible": false},
+    "microlive": "LOCKED_MUST_FAIL"
+  },
+  "infrastructure": {
+    "node_authority": "PASS",
+    "network": "LOCKED",
+    "netkill_semantic_hash": "8c258871e596a094dd925832906125ea553efb25d13f8cd5ec499ae9da4b3674",
+    "final_validated_present": true
+  },
+  "verdict": "BLOCKED",
+  "one_next_action": "npm run -s verify:fast",
+  "schema_version": "1.0.0"
+}

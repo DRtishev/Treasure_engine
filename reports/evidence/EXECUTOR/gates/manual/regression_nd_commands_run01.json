@@ -1,0 +1,12 @@
+{
+  "has_final_receipt_filter": true,
+  "has_fix_comment": true,
+  "has_scope_manifest_filter": true,
+  "message": "ND01_SEM01 fix filters present in normalizeForMega.",
+  "mode_noise_preserved": true,
+  "next_action": "npm run -s verify:regression:nd-commands-run01",
+  "reason_code": "NONE",
+  "run_id": "64c21e9516d4",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

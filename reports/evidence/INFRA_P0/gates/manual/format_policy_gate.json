@@ -16,7 +16,7 @@
       "check": "machine_json_schema_version",
       "legacy_count": 15,
       "result": "CHECKED",
-      "strict_count": 7
+      "strict_count": 8
     }
   ],
   "legacy_warnings": [
@@ -99,13 +99,13 @@
     }
   ],
   "legacy_warnings_count": 11,
-  "message": "Format policy satisfied (strict scope). 7 new JSON file(s) verified. 11 legacy file(s) queued for schema_version migration.",
+  "message": "Format policy satisfied (strict scope). 8 new JSON file(s) verified. 11 legacy file(s) queued for schema_version migration.",
   "next_action": "Migrate 11 legacy EDGE_LAB gate JSON files to schema_version in a follow-up PR.",
   "policy_present": true,
   "reason_code": "NONE",
-  "run_id": "aad548e5e739",
+  "run_id": "4d08f3b36857",
   "schema_version": "1.0.0",
   "status": "PASS",
-  "strict_json_checked": 7,
+  "strict_json_checked": 8,
   "violations": []
 }

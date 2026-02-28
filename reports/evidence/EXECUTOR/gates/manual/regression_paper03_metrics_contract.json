@@ -1,0 +1,16 @@
+{
+  "fails": [],
+  "lock_schema_version": "paper_sim.v2",
+  "metrics": {
+    "closed_n": 2,
+    "decisions_n": 2,
+    "max_drawdown": 45.182483,
+    "profit_factor": 0,
+    "total_pnl_net": -45.182483,
+    "win_rate": 0
+  },
+  "reason_code": "NONE",
+  "run_id": "5b35ac334736",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

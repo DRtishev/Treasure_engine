@@ -1,0 +1,19 @@
+{
+  "ci95_low": 0.16420765,
+  "evidence_source": "REAL_SANDBOX",
+  "execution_reality_status": "PASS",
+  "expectancy_status": "PASS",
+  "ingest_status": "PASS",
+  "message": "Expectancy proof requires REAL/REAL_PUBLIC telemetry; got evidence_source=REAL_SANDBOX.",
+  "min_n_trades": 200,
+  "min_trl": 2,
+  "min_trl_trades": 3.6,
+  "next_action": "npm run -s edge:profit:00:import:csv",
+  "psr0": 1,
+  "psr_min": 0.95,
+  "reason_code": "EP02_REAL_REQUIRED",
+  "run_id": "0785c8986d3d",
+  "schema_version": "1.0.0",
+  "status": "NEEDS_DATA",
+  "trades_n": 360
+}

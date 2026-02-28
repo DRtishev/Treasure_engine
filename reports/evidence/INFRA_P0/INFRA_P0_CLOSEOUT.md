@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: aad548e5e739
+RUN_ID: 4d08f3b36857
 ELIGIBLE_FOR_MICRO_LIVE: true
 ELIGIBLE_FOR_EXECUTION: true
 ELIGIBILITY_REASON: No blocking codes detected (DEP/FG01/ZW01/NET01 all clear)
@@ -36,14 +36,14 @@ See: EDGE_LAB/DEP_POLICY.md (R12 fail-closed propagation rule).
 
 | Evidence Path | sha256_raw (prefix) | sha256_norm (prefix) |
 |--------------|--------------------|--------------------|
-| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `db874cd31a583e29…` | `db874cd31a583e29…` |
-| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `a620e18909d5943b…` | `a620e18909d5943b…` |
-| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `fcadb9e2677f1ec3…` | `fcadb9e2677f1ec3…` |
-| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `84f0f9642cf2523d…` | `84f0f9642cf2523d…` |
-| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `71202263b52ca52d…` | `71202263b52ca52d…` |
-| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `c2ce392090969f90…` | `c2ce392090969f90…` |
-| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `a61407e92ee31a31…` | `a61407e92ee31a31…` |
-| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `e4a8d991397f9968…` | `e4a8d991397f9968…` |
+| `reports/evidence/INFRA_P0/NET_ISOLATION_PROOF.md` | `808359610619d2cc…` | `808359610619d2cc…` |
+| `reports/evidence/INFRA_P0/NODE_TRUTH_GATE.md` | `45da62b974227875…` | `45da62b974227875…` |
+| `reports/evidence/INFRA_P0/VERIFY_MODE_GATE.md` | `3ed89475e5c7f003…` | `3ed89475e5c7f003…` |
+| `reports/evidence/INFRA_P0/DEPS_OFFLINE_INSTALL_CONTRACT.md` | `f6f850a62c5efa0d…` | `f6f850a62c5efa0d…` |
+| `reports/evidence/INFRA_P0/GOLDENS_APPLY_GATE.md` | `c69f14b52e263cf3…` | `c69f14b52e263cf3…` |
+| `reports/evidence/INFRA_P0/FORMAT_POLICY_GATE.md` | `80da63ed435fa3d6…` | `80da63ed435fa3d6…` |
+| `reports/evidence/INFRA_P0/FIXTURE_GUARD_GATE.md` | `545d44be1a6c557e…` | `545d44be1a6c557e…` |
+| `reports/evidence/SAFETY/ZERO_WAR_PROBE.md` | `3c8a65cf0c557275…` | `3c8a65cf0c557275…` |
 
 ## What Changed (v1.5.3 patchset)
 

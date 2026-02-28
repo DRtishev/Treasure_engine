@@ -51,6 +51,11 @@ export function normalizeForMega(content, rel, mode) {
     .filter((line) => !/\b(STARTED_AT_MS|COMPLETED_AT_MS|ELAPSED_MS):\s*/.test(line))
     .filter((line) => !/sha256=/.test(line))
     .filter((line) => !/\bRUN_ID=/.test(line))
+    // ND01_SEM01 fix: evidence-scope hashes inside COMMANDS_RUN.md code blocks are
+    // volatile (COMMANDS_RUN.md itself is part of the evidence scope, so its hash
+    // changes between run1 and run2). Filter these hash-carrying lines.
+    .filter((line) => !/SCOPE_MANIFEST_SHA=[0-9a-f]+/.test(line))
+    .filter((line) => !/,\s*final=[0-9a-f]{16,}/.test(line))
     .join('\n');
 }
 

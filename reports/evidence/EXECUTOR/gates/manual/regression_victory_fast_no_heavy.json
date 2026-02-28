@@ -1,0 +1,24 @@
+{
+  "fast_steps": [
+    "npm run -s verify:regression:determinism-audit",
+    "npm run -s verify:regression:node-truth-alignment",
+    "npm run -s verify:regression:node-wrap-contract",
+    "npm run -s verify:regression:node-vendored-backend-must-win",
+    "npm run -s verify:regression:node-nvm-ban",
+    "npm run -s verify:regression:churn-contract01",
+    "npm run -s verify:regression:ec01-reason-context-contract",
+    "npm run -s verify:regression:netkill-ledger-enforcement"
+  ],
+  "forbidden_matchers": [
+    "epoch:foundation:seal",
+    "epoch:mega:proof:x2",
+    "export:evidence-bundle",
+    "verify:public:data:readiness"
+  ],
+  "next_action": "npm run -s verify:fast",
+  "offenders": [],
+  "reason_code": "NONE",
+  "run_id": "8dee5fa57fb4",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -1,0 +1,10 @@
+{
+  "decision_schema_version": "microlive_decision.v2",
+  "fails": [],
+  "reason_code": "NONE",
+  "run_id": "5b35ac334736",
+  "schema_version": "1.0.0",
+  "stable": true,
+  "status": "PASS",
+  "verdict": "PROCEED"
+}

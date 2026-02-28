@@ -1,0 +1,15 @@
+{
+  "has_deterministic_gzip": true,
+  "has_dual_hash_fields": true,
+  "has_mismatch_classification": true,
+  "has_nd01_diff_hint": true,
+  "has_run_id_equals_filter": true,
+  "has_targeted_code_block_filter": true,
+  "message": "Mega-proof x2 stability contract checks passed.",
+  "next_action": "npm run -s epoch:mega:proof:x2",
+  "reason_code": "NONE",
+  "run_id": "4d08f3b36857",
+  "schema_version": "1.0.0",
+  "semantic_not_global": true,
+  "status": "PASS"
+}

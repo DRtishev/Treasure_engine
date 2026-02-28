@@ -1,0 +1,20 @@
+{
+  "fails": [],
+  "reason_code": "NONE",
+  "run_id": "5b35ac334736",
+  "runs": [
+    {
+      "decisions_n": 2,
+      "run": 1,
+      "sha256": "ff0c0412d421732afbe278530325e9c6ebeba0e40373295def62607960e7c448"
+    },
+    {
+      "decisions_n": 2,
+      "run": 2,
+      "sha256": "ff0c0412d421732afbe278530325e9c6ebeba0e40373295def62607960e7c448"
+    }
+  ],
+  "schema_version": "1.0.0",
+  "sha_match": true,
+  "status": "PASS"
+}

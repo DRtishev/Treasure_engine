@@ -1,0 +1,23 @@
+{
+  "fails": [],
+  "liq": {
+    "rows_n": 20,
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT"
+    ]
+  },
+  "price": {
+    "rows_n": 14,
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "SOLUSDT"
+    ]
+  },
+  "reason_code": "NONE",
+  "run_id": "5b35ac334736",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

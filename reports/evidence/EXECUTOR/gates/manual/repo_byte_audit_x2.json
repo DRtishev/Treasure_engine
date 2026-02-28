@@ -1,0 +1,11 @@
+{
+  "manifest_diff_paths": [],
+  "manifest_sha256_run1": null,
+  "manifest_sha256_run2": null,
+  "reason_code": "ND_BYTE01",
+  "run1_ec": 1,
+  "run2_ec": 1,
+  "run_id": "5b35ac334736",
+  "schema_version": "1.0.0",
+  "status": "FAIL"
+}

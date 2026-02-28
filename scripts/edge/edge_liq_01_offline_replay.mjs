@@ -4,7 +4,7 @@ import crypto from 'node:crypto';
 import process from 'node:process';
 
 const PROVIDERS = {
-  bybit_ws_v5: { schema: 'liquidations.bybit_ws_v5.v1', dir: 'bybit_ws_v5' },
+  bybit_ws_v5: { schema: 'liquidations.bybit_ws_v5.v2', dir: 'bybit_ws_v5' },
   okx_ws_v5: { schema: 'liquidations.okx_ws_v5.v1', dir: 'okx_ws_v5' },
   binance_forceorder_ws: { schema: 'liquidations.binance_forceorder_ws.v1', dir: 'binance_forceorder_ws' },
 };

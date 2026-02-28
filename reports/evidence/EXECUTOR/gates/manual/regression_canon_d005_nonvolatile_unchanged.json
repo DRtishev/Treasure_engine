@@ -1,0 +1,15 @@
+{
+  "checks": {
+    "nonvolatile_semantic_line_unchanged": true,
+    "volatile_ms_markers_removed": true,
+    "volatile_ms_normalized_to_run_ms": true
+  },
+  "next_action": "npm run -s epoch:mega:proof:x2",
+  "normalized": "# D005 SAMPLE\nRUN_MS: RUN_MS\nrisk_threshold: 0.0200\n",
+  "reason_code": "NONE",
+  "run_id": "4d08f3b36857",
+  "sample": "# D005 SAMPLE\nSTARTED_AT_MS: 1710000000000 | COMPLETED_AT_MS: 1710000004321 | ELAPSED_MS: 4321\nrisk_threshold: 0.0200",
+  "schema_version": "1.0.0",
+  "semantic_line": "risk_threshold: 0.0200",
+  "status": "PASS"
+}

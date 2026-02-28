@@ -1,0 +1,15 @@
+{
+  "captured_at_utc": "FIXTURE",
+  "normalized_schema_sha256": "08c8b12338e12da3262bd74970b1d891753c4a009f21154a4edfc61dd8f60a32",
+  "provider_id": "bybit_ws_v5",
+  "raw_capture_sha256": "e145126af8946baa22ee88651043a114a3ac30d27549f58d6a0269f3f0ee3a87",
+  "rows_n": 20,
+  "run_id": "GOLDEN_V1",
+  "schema_version": "liquidations.bybit_ws_v5.v2",
+  "symbols": [
+    "BTCUSDT",
+    "ETHUSDT",
+    "SOLUSDT"
+  ],
+  "time_unit_sentinel": "ms"
+}

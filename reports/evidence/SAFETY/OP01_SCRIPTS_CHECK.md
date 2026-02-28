@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: aad548e5e739
+RUN_ID: 4d08f3b36857
 NEXT_ACTION: All NEXT_ACTION references are valid. No phantom commands.
 
 ## OP01 Policy
@@ -36,7 +36,7 @@ Missing script => BLOCKED OP01.
 | Found | 13 |
 | Missing | 0 |
 
-## All Available Scripts (818 total, sorted)
+## All Available Scripts (834 total, sorted)
 
 - `_epoch:edge:profit:03`
 - `_epoch:foundation:seal`
@@ -145,6 +145,10 @@ Missing script => BLOCKED OP01.
 - `epoch:profit:foundation:seal`
 - `epoch:profit:real:00`
 - `epoch:run`
+- `epoch:victory:audit`
+- `epoch:victory:close`
+- `epoch:victory:fast`
+- `epoch:victory:full`
 - `epoch:victory:seal`
 - `epoch:victory:seal:accept-restore`
 - `epoch:victory:triage`
@@ -173,6 +177,7 @@ Missing script => BLOCKED OP01.
 - `labs:adversarial`
 - `labs:godtier`
 - `labs:live`
+- `ops:baseline:restore`
 - `ops:node:backend:check`
 - `ops:node:toolchain:acquire`
 - `ops:node:truth`
@@ -662,8 +667,10 @@ Missing script => BLOCKED OP01.
 - `verify:executor:commands:guard`
 - `verify:export:contract`
 - `verify:export:receipt`
+- `verify:fast`
 - `verify:fixture:guard`
 - `verify:format:policy`
+- `verify:full`
 - `verify:golden`
 - `verify:goldens:apply`
 - `verify:goldens:update`
@@ -709,6 +716,7 @@ Missing script => BLOCKED OP01.
 - `verify:regression:accept-restore-propagates-exitcode`
 - `verify:regression:acq-network-unreachable-classification`
 - `verify:regression:acq-unlock-contract`
+- `verify:regression:audit01-exporters-only-in-audit`
 - `verify:regression:baseline-clean-no-tracked-drift`
 - `verify:regression:baseline-preserve-critical-receipts`
 - `verify:regression:baseline-telemetry-semantic-volatile-split`
@@ -719,6 +727,8 @@ Missing script => BLOCKED OP01.
 - `verify:regression:canon-ms-timestamps-normalized`
 - `verify:regression:churn-contract01`
 - `verify:regression:churn-write-scope-guard`
+- `verify:regression:close01-no-exporters-in-close`
+- `verify:regression:closeout-not-before-victory`
 - `verify:regression:commands-run-header-ssot`
 - `verify:regression:data-readiness-ssot`
 - `verify:regression:determinism-audit`
@@ -751,6 +761,7 @@ Missing script => BLOCKED OP01.
 - `verify:regression:mega-proof-x2-semantic-mismatch-classification`
 - `verify:regression:mega-proof-x2-stability-contract`
 - `verify:regression:mini-chain-mode-guard`
+- `verify:regression:nd-commands-run01`
 - `verify:regression:net-diag-rootcause-none-on-pass`
 - `verify:regression:net-kill-preload-hard`
 - `verify:regression:net-kill-preload-path-safe`
@@ -763,6 +774,7 @@ Missing script => BLOCKED OP01.
 - `verify:regression:no-sandbox-promotion`
 - `verify:regression:no-stub-promotion`
 - `verify:regression:no-unbounded-spawn`
+- `verify:regression:no-unbounded-spawnsync`
 - `verify:regression:node-backend-receipt-contract`
 - `verify:regression:node-churn-receipt-routing`
 - `verify:regression:node-nvm-ban`
@@ -784,6 +796,7 @@ Missing script => BLOCKED OP01.
 - `verify:regression:operator-single-action-ssot`
 - `verify:regression:portable-manifest-env-byte-free-strict`
 - `verify:regression:portable-proof-pack-recipe-ssot`
+- `verify:regression:pr01-evidence-bloat-guard`
 - `verify:regression:profile-source`
 - `verify:regression:profit-foundation-freeze-gate-autogen`
 - `verify:regression:profit-foundation-freeze-ssot`
@@ -807,10 +820,13 @@ Missing script => BLOCKED OP01.
 - `verify:regression:smoke-is-first`
 - `verify:regression:step7-foundation-writescope-contract`
 - `verify:regression:tmp01-no-temp-outside-allowed-roots`
+- `verify:regression:to01-timeout-triage-contract`
+- `verify:regression:to01-victory-wrapper-budget`
 - `verify:regression:truth-separation-no-foundation-readiness-claim`
 - `verify:regression:tsu01-mixed-units`
 - `verify:regression:verify-netkill-enforced`
 - `verify:regression:victory-evidence-seal-ssot`
+- `verify:regression:victory-fast-no-heavy`
 - `verify:regression:victory-foundation-reason-propagation`
 - `verify:regression:victory-precheck-clean-tree-contract`
 - `verify:regression:victory-precheck-offenders-contract`

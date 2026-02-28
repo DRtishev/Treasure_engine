@@ -1,0 +1,11 @@
+# REGRESSION_VICTORY_FAST_NO_HEAVY.md
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: 8dee5fa57fb4
+NEXT_ACTION: npm run -s verify:fast
+
+- fast_steps_n: 8
+
+## OFFENDERS
+- NONE

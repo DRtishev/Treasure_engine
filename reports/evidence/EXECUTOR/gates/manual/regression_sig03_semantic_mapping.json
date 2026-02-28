@@ -1,0 +1,39 @@
+{
+  "actual": {
+    "BTCUSDT": {
+      "liq_pressure": 0.25,
+      "long_liq_vol": 4,
+      "regime_flag": "BULL_LIQ",
+      "short_liq_vol": 12
+    },
+    "ETHUSDT": {
+      "liq_pressure": 0,
+      "long_liq_vol": 0,
+      "regime_flag": "BULL_LIQ",
+      "short_liq_vol": 20
+    }
+  },
+  "expected": {
+    "BTCUSDT": {
+      "liq_pressure": 0.25,
+      "long_liq_vol": 4,
+      "regime_flag": "BULL_LIQ",
+      "short_liq_vol": 12,
+      "total_vol": 16
+    },
+    "ETHUSDT": {
+      "liq_pressure": 0,
+      "long_liq_vol": 0,
+      "regime_flag": "BULL_LIQ",
+      "short_liq_vol": 20,
+      "total_vol": 20
+    }
+  },
+  "fails": [],
+  "fixture": "RG_DATA04_FIXTURE",
+  "provider": "bybit_ws_v5",
+  "reason_code": "NONE",
+  "run_id": "ef4898489c4d",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

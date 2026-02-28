@@ -1,0 +1,24 @@
+{
+  "fails": [],
+  "reason_code": "NONE",
+  "run_id": "5b35ac334736",
+  "runs": [
+    {
+      "liq_lock_sha": "e145126af8946baa22ee88651043a114a3ac30d27549f58d6a0269f3f0ee3a87",
+      "liq_raw_sha": "e145126af8946baa22ee88651043a114a3ac30d27549f58d6a0269f3f0ee3a87",
+      "price_lock_sha": "6e4254275becbae61271ba18373de7c45fe45d05d5a6bcea41152e975b7e2cb5",
+      "price_raw_sha": "6e4254275becbae61271ba18373de7c45fe45d05d5a6bcea41152e975b7e2cb5",
+      "run": 1
+    },
+    {
+      "liq_lock_sha": "e145126af8946baa22ee88651043a114a3ac30d27549f58d6a0269f3f0ee3a87",
+      "liq_raw_sha": "e145126af8946baa22ee88651043a114a3ac30d27549f58d6a0269f3f0ee3a87",
+      "price_lock_sha": "6e4254275becbae61271ba18373de7c45fe45d05d5a6bcea41152e975b7e2cb5",
+      "price_raw_sha": "6e4254275becbae61271ba18373de7c45fe45d05d5a6bcea41152e975b7e2cb5",
+      "run": 2
+    }
+  ],
+  "schema_version": "1.0.0",
+  "sha_match": true,
+  "status": "PASS"
+}
