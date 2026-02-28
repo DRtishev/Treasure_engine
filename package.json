@@ -862,7 +862,23 @@
     "verify:regression:close01-no-exporters-in-close": "node scripts/verify/regression_close01_no_exporters_in_close.mjs",
     "verify:regression:audit01-exporters-only-in-audit": "node scripts/verify/regression_audit01_exporters_only_in_audit.mjs",
     "verify:regression:nd-commands-run01": "node scripts/verify/regression_nd_commands_run01.mjs",
-    "verify:regression:no-unbounded-spawnsync": "node scripts/verify/regression_no_unbounded_spawnsync.mjs"
+    "verify:regression:no-unbounded-spawnsync": "node scripts/verify/regression_no_unbounded_spawnsync.mjs",
+    "ops:timemachine": "node scripts/ops/timemachine_ledger.mjs",
+    "ops:autopilot": "node scripts/ops/autopilot_court_v2.mjs",
+    "ops:cockpit": "npm run -s verify:fast && npm run -s ops:timemachine",
+    "verify:regression:agent01-agents-present": "node scripts/verify/regression_agent01_agents_present.mjs",
+    "verify:regression:agent02-claude-md-drift": "node scripts/verify/regression_agent02_claude_md_drift.mjs",
+    "verify:regression:time01-stable-tick-order": "node scripts/verify/regression_time01_stable_tick_order.mjs",
+    "verify:regression:time02-no-time-fields": "node scripts/verify/regression_time02_no_time_fields.mjs",
+    "verify:regression:auto01-mode-router": "node scripts/verify/regression_auto01_mode_router.mjs",
+    "verify:regression:auto02-no-cert-in-research": "node scripts/verify/regression_auto02_no_cert_in_research.mjs",
+    "verify:regression:auto03-pr-cleanroom-applied": "node scripts/verify/regression_auto03_pr_cleanroom_applied.mjs",
+    "verify:regression:cert-executor-write-forbidden": "node scripts/verify/regression_no_rg_writes_during_cert.mjs",
+    "verify:regression:audit-no-cert": "node scripts/verify/regression_audit01_exporters_only_in_audit.mjs",
+    "verify:wow6": "npm run -s verify:regression:agent01-agents-present && npm run -s verify:regression:agent02-claude-md-drift",
+    "verify:wow7": "npm run -s verify:regression:time01-stable-tick-order && npm run -s verify:regression:time02-no-time-fields",
+    "verify:wow8": "npm run -s verify:regression:auto01-mode-router && npm run -s verify:regression:auto02-no-cert-in-research && npm run -s verify:regression:auto03-pr-cleanroom-applied",
+    "verify:wow6-8": "npm run -s verify:wow6 && npm run -s verify:wow7 && npm run -s verify:wow8"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

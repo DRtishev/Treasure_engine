@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "gate_id": "RG_EXAMPLE",
+  "status": "PASS",
+  "reason_code": "NONE",
+  "run_id": "REPLACE_WITH_RUN_ID",
+  "next_action": "npm run -s verify:fast",
+  "checks": []
+}

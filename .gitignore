@@ -124,6 +124,7 @@ artifacts/incoming/*.raw.json
 artifacts/incoming/liquidations/
 
 artifacts/incoming/ALLOW_NETWORK
+artifacts/incoming/APPLY_AUTOPILOT
 artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 
 # node toolchains (vendored runtime backend)
