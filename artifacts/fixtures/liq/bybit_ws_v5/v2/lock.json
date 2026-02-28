@@ -1,6 +1,6 @@
 {
   "captured_at_utc": "FIXTURE",
-  "normalized_schema_sha256": "08c8b12338e12da3262bd74970b1d891753c4a009f21154a4edfc61dd8f60a32",
+  "normalized_schema_sha256": "5c05b54961c3deff4d7296e71139ad89b3ffd8a8c4e51a0e194230012608d5bd",
   "provider_id": "bybit_ws_v5",
   "raw_capture_sha256": "e145126af8946baa22ee88651043a114a3ac30d27549f58d6a0269f3f0ee3a87",
   "rows_n": 20,

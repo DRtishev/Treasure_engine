@@ -852,7 +852,7 @@
     "verify:regression:closeout-not-before-victory": "node scripts/verify/regression_closeout_not_before_victory.mjs",
     "epoch:victory:fast": "VICTORY_PROFILE=FAST bash scripts/ops/node_authority_run.sh npm run -s _epoch:victory:seal",
     "epoch:victory:full": "npm run -s epoch:victory:audit",
-    "verify:fast": "npm run -s ops:node:toolchain:acquire && npm run -s verify:repo:byte-audit:x2 && npm run -s verify:regression:node-truth-alignment && npm run -s verify:regression:node-wrap-contract && npm run -s verify:regression:node-vendored-backend-must-win && npm run -s verify:regression:node-nvm-ban && npm run -s verify:regression:churn-contract01 && npm run -s verify:regression:ec01-reason-context-contract && npm run -s verify:regression:netkill-ledger-enforcement && npm run -s verify:regression:pr01-evidence-bloat-guard && npm run -s verify:regression:victory-fast-no-heavy",
+    "verify:fast": "npm run -s ops:node:toolchain:ensure && npm run -s verify:repo:byte-audit:x2 && npm run -s verify:regression:node-truth-alignment && npm run -s verify:regression:node-wrap-contract && npm run -s verify:regression:node-vendored-backend-must-win && npm run -s verify:regression:node-nvm-ban && npm run -s verify:regression:churn-contract01 && npm run -s verify:regression:ec01-reason-context-contract && npm run -s verify:regression:netkill-ledger-enforcement && npm run -s verify:regression:pr01-evidence-bloat-guard && npm run -s verify:regression:victory-fast-no-heavy",
     "verify:full": "npm run -s epoch:mega:proof:x2 && npm run -s epoch:foundation:seal && npm run -s epoch:victory:full",
     "verify:regression:pr01-evidence-bloat-guard": "node scripts/verify/regression_pr01_evidence_bloat_guard.mjs",
     "ops:baseline:restore": "bash scripts/ops/baseline_restore.sh",
@@ -896,7 +896,17 @@
     "verify:regression:life01-no-net": "node scripts/verify/regression_life01_no_net.mjs",
     "verify:regression:life02-stable-output": "node scripts/verify/regression_life02_stable_output.mjs",
     "verify:regression:life03-write-scope": "node scripts/verify/regression_life03_write_scope.mjs",
-    "verify:wow-organism": "npm run -s verify:regression:evt01-schema-lock && npm run -s verify:regression:evt02-no-time-fields && npm run -s verify:regression:bus01-determinism-x2 && npm run -s verify:regression:bus02-write-scope && npm run -s verify:regression:time03-eventbus-source && npm run -s verify:regression:auto05-event-emission && npm run -s verify:regression:cockpit04-eventbus-source && npm run -s verify:regression:cockpit05-links-exist && npm run -s verify:regression:reg05-eventbus-promotion && npm run -s verify:regression:life01-no-net && npm run -s verify:regression:life03-write-scope"
+    "verify:wow-organism": "npm run -s verify:regression:evt01-schema-lock && npm run -s verify:regression:evt02-no-time-fields && npm run -s verify:regression:bus01-determinism-x2 && npm run -s verify:regression:bus02-write-scope && npm run -s verify:regression:time03-eventbus-source && npm run -s verify:regression:auto05-event-emission && npm run -s verify:regression:cockpit04-eventbus-source && npm run -s verify:regression:cockpit05-links-exist && npm run -s verify:regression:reg05-eventbus-promotion && npm run -s verify:regression:life01-no-net && npm run -s verify:regression:life03-write-scope",
+    "ops:node:toolchain:ensure": "node scripts/ops/node_toolchain_ensure.mjs",
+    "verify:regression:net-toolchain01-no-net-in-verify-fast": "node scripts/verify/regression_net_toolchain01_no_net_in_verify_fast.mjs",
+    "verify:regression:liq-lock01-normalized-hash-match": "node scripts/verify/regression_liq_lock01_normalized_hash_match.mjs",
+    "verify:regression:liq-ssot01-schema-alignment": "node scripts/verify/regression_liq_ssot01_schema_alignment.mjs",
+    "verify:regression:agent03-no-legacy-contradictions": "node scripts/verify/regression_agent03_no_legacy_contradictions.mjs",
+    "verify:regression:data-evt01-event-emission": "node scripts/verify/regression_data_evt01_event_emission.mjs",
+    "verify:regression:evt01-schema-lock": "node scripts/verify/regression_evt01_schema_lock.mjs",
+    "verify:regression:evt02-no-time-fields": "node scripts/verify/regression_evt02_no_time_fields.mjs",
+    "verify:regression:bus01-determinism-x2": "node scripts/verify/regression_bus01_determinism_x2.mjs",
+    "verify:regression:bus02-write-scope": "node scripts/verify/regression_bus02_write_scope.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

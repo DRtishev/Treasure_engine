@@ -3,6 +3,7 @@
  *
  * Validates a price-bar run dir against its lock.json (schema + SHA contract).
  * Also checks bar monotonicity and completeness per symbol.
+ * Emits Data-Organ events into EventBus (Phase 5: WOW Organism solder).
  *
  * Usage:
  *   TREASURE_NET_KILL=1 node scripts/edge/edge_price_01_offline_replay.mjs \
@@ -16,6 +17,14 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import {
+  createReplayBus,
+  emitReplayBoot,
+  emitReplayApply,
+  emitReplayDedup,
+  emitReplayReorder,
+  emitReplaySeal,
+} from './data_organ/event_emitter.mjs';
 
 const PROVIDERS = {
   offline_fixture: { schema: 'price_bars.offline_fixture.v1', dir: 'offline_fixture' },
@@ -60,6 +69,11 @@ if (!fs.existsSync(rawPath) || !fs.existsSync(lockPath)) {
   process.exit(2);
 }
 
+// EventBus for Data-Organ replay (Phase 5: solder to WOW Organism)
+const busRunId = `REPLAY-PB-${args.provider}-${runId}`;
+const busEpochDir = path.join(process.cwd(), 'reports', 'evidence', `EPOCH-EVENTBUS-REPLAY-${busRunId}`);
+const bus = createReplayBus(busRunId, busEpochDir);
+
 const rawContent = fs.readFileSync(rawPath, 'utf8');
 const lock = JSON.parse(fs.readFileSync(lockPath, 'utf8'));
 
@@ -67,9 +81,15 @@ if (lock.provider_id !== args.provider) fail('PB_RDY02', 'provider_id mismatch')
 if (lock.schema_version !== cfg.schema) fail('PB_RDY02', 'schema_version mismatch');
 if (sha(rawContent) !== lock.raw_sha256) fail('PB_RDY02', 'raw_sha256 mismatch');
 
+// REPLAY_BOOT — provider + schema validated
+emitReplayBoot(bus, { provider: args.provider, schema_version: cfg.schema });
+
 const rows = rawContent.split('\n').filter(Boolean).map(JSON.parse);
 if (rows.length === 0) fail('PB_RDY02', 'empty raw rows');
 if (rows.length !== lock.rows_n) fail('PB_RDY02', `rows_n mismatch: lock=${lock.rows_n} actual=${rows.length}`);
+
+// REPLAY_APPLY — raw rows loaded + SHA verified
+emitReplayApply(bus, { provider: args.provider, rows_n: rows.length, raw_sha256: lock.raw_sha256 });
 
 // Validate each bar
 for (const row of rows) {
@@ -81,6 +101,21 @@ for (const row of rows) {
   if (!Number.isFinite(row.volume) || row.volume < 0) fail('PB_RDY02', `invalid volume at bar_ts=${row.bar_ts_ms}`);
 }
 
+// REPLAY_DEDUP — unique bars by symbol+ts
+const uniqueKeys = new Set(rows.map((r) => `${r.symbol}:${r.bar_ts_ms}`));
+emitReplayDedup(bus, { provider: args.provider, rows_n: rows.length, unique_n: uniqueKeys.size });
+
+// REPLAY_REORDER — check bar_ts_ms monotonicity per symbol
+const bySymbol = {};
+for (const row of rows) {
+  if (!bySymbol[row.symbol]) bySymbol[row.symbol] = [];
+  bySymbol[row.symbol].push(row.bar_ts_ms);
+}
+const ordered = Object.values(bySymbol).every((tsList) =>
+  tsList.every((ts, i) => i === 0 || ts > tsList[i - 1])
+);
+emitReplayReorder(bus, { provider: args.provider, ordered, rows_n: rows.length });
+
 // Check normalized sha
 const normalizedRows = rows.map((r) => ({
   bar_ms: r.bar_ms, bar_ts_ms: r.bar_ts_ms, close: r.close,
@@ -90,6 +125,16 @@ const normalizedRows = rows.map((r) => ({
 const normalized = { provider_id: args.provider, schema_version: cfg.schema, rows: normalizedRows };
 if (sha(JSON.stringify(canon(normalized))) !== lock.normalized_sha256)
   fail('PB_RDY02', 'normalized_sha256 mismatch');
+
+// REPLAY_SEAL — normalized hash verified, replay complete
+emitReplaySeal(bus, {
+  provider: args.provider,
+  schema_version: cfg.schema,
+  rows_n: rows.length,
+  normalized_hash_prefix: lock.normalized_sha256.slice(0, 16),
+});
+
+bus.flush();
 
 const symbols = [...new Set(rows.map((r) => r.symbol))].sort();
 console.log(`[PASS] OFFLINE_REPLAY_PRICE_BARS provider=${args.provider} run_id=${runId} rows=${rows.length} symbols=${symbols.join(',')}`);
