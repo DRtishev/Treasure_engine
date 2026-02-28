@@ -1,0 +1,83 @@
+{
+  "checks": [
+    {
+      "check": "autopilot_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/autopilot_court_v2.mjs",
+      "pass": true
+    },
+    {
+      "check": "mode_declared_CERT",
+      "detail": "mode CERT must be in VALID_MODES",
+      "pass": true
+    },
+    {
+      "check": "mode_declared_CLOSE",
+      "detail": "mode CLOSE must be in VALID_MODES",
+      "pass": true
+    },
+    {
+      "check": "mode_declared_AUDIT",
+      "detail": "mode AUDIT must be in VALID_MODES",
+      "pass": true
+    },
+    {
+      "check": "mode_declared_RESEARCH",
+      "detail": "mode RESEARCH must be in VALID_MODES",
+      "pass": true
+    },
+    {
+      "check": "mode_declared_ACCEL",
+      "detail": "mode ACCEL must be in VALID_MODES",
+      "pass": true
+    },
+    {
+      "check": "has_mode_detection",
+      "detail": "detectMode function required",
+      "pass": true
+    },
+    {
+      "check": "has_mode_routing",
+      "detail": "routing logic required (routeMode/modeViolations)",
+      "pass": true
+    },
+    {
+      "check": "cert_enforces_offline_netv01",
+      "detail": "CERT mode must emit NETV01 on network",
+      "pass": true
+    },
+    {
+      "check": "outputs_plan_json",
+      "detail": "PLAN.json output required",
+      "pass": true
+    },
+    {
+      "check": "outputs_plan_md",
+      "detail": "PLAN.md output required",
+      "pass": true
+    },
+    {
+      "check": "outputs_refusal_md",
+      "detail": "REFUSAL.md output required",
+      "pass": true
+    },
+    {
+      "check": "epoch_dir_autopilotv2_pattern",
+      "detail": "output under EPOCH-AUTOPILOTV2-<RUN_ID>",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_AUTO01_MODE_ROUTER",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "required_modes": [
+    "CERT",
+    "CLOSE",
+    "AUDIT",
+    "RESEARCH",
+    "ACCEL"
+  ],
+  "run_id": "468e39233712",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "check": "autopilot_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/autopilot_court_v2.mjs",
+      "pass": true
+    },
+    {
+      "check": "has_apply_flag_check",
+      "detail": "--apply flag check required",
+      "pass": true
+    },
+    {
+      "check": "has_apply_token_file_check",
+      "detail": "APPLY_AUTOPILOT token file check required",
+      "pass": true
+    },
+    {
+      "check": "double_key_unlock_implemented",
+      "detail": "both flag AND token file required for apply",
+      "pass": true
+    },
+    {
+      "check": "auto04_refusal_code_present",
+      "detail": "AUTO04_APPLY_UNLOCK_REQUIRED refusal code required",
+      "pass": true
+    },
+    {
+      "check": "refusal_md_written_on_failure",
+      "detail": "REFUSAL.md must be written when apply is refused",
+      "pass": true
+    },
+    {
+      "check": "gitignore_exists",
+      "detail": ".gitignore required for PR cleanroom",
+      "pass": true
+    },
+    {
+      "check": "gitignore_covers_epoch_dirs",
+      "detail": ".gitignore must cover EPOCH-* dirs under reports/evidence/",
+      "pass": true
+    },
+    {
+      "check": "gitignore_covers_apply_token",
+      "detail": ".gitignore should cover artifacts/incoming/APPLY_AUTOPILOT",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_AUTO03_PR_CLEANROOM_APPLIED",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "468e39233712",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

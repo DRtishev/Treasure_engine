@@ -1,0 +1,141 @@
+{
+  "checks": [
+    {
+      "check": "registry_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/candidate_registry.mjs",
+      "pass": true
+    },
+    {
+      "check": "schema_version_1_0_0_declared",
+      "detail": "SCHEMA_VERSION = \"1.0.0\" required",
+      "pass": true
+    },
+    {
+      "check": "required_field_config_id",
+      "detail": "item field \"config_id\" must be declared",
+      "pass": true
+    },
+    {
+      "check": "required_field_parents",
+      "detail": "item field \"parents\" must be declared",
+      "pass": true
+    },
+    {
+      "check": "required_field_metrics",
+      "detail": "item field \"metrics\" must be declared",
+      "pass": true
+    },
+    {
+      "check": "required_field_robustness",
+      "detail": "item field \"robustness\" must be declared",
+      "pass": true
+    },
+    {
+      "check": "required_field_status",
+      "detail": "item field \"status\" must be declared",
+      "pass": true
+    },
+    {
+      "check": "required_field_evidence_paths",
+      "detail": "item field \"evidence_paths\" must be declared",
+      "pass": true
+    },
+    {
+      "check": "metric_field_profit_factor",
+      "detail": "metric field \"profit_factor\" required",
+      "pass": true
+    },
+    {
+      "check": "metric_field_max_dd",
+      "detail": "metric field \"max_dd\" required",
+      "pass": true
+    },
+    {
+      "check": "metric_field_expectancy",
+      "detail": "metric field \"expectancy\" required",
+      "pass": true
+    },
+    {
+      "check": "metric_field_trades_n",
+      "detail": "metric field \"trades_n\" required",
+      "pass": true
+    },
+    {
+      "check": "metric_field_slippage_sensitivity",
+      "detail": "metric field \"slippage_sensitivity\" required",
+      "pass": true
+    },
+    {
+      "check": "robustness_field_split_stats",
+      "detail": "robustness field \"split_stats\" required",
+      "pass": true
+    },
+    {
+      "check": "robustness_field_leakage_pass",
+      "detail": "robustness field \"leakage_pass\" required",
+      "pass": true
+    },
+    {
+      "check": "status_CANDIDATE_declared",
+      "detail": "status value \"CANDIDATE\" required",
+      "pass": true
+    },
+    {
+      "check": "status_REJECTED_declared",
+      "detail": "status value \"REJECTED\" required",
+      "pass": true
+    },
+    {
+      "check": "status_PROMOTED_declared",
+      "detail": "status value \"PROMOTED\" required",
+      "pass": true
+    },
+    {
+      "check": "has_schema_validation",
+      "detail": "validateSchema or SCHEMA_VERSION check required",
+      "pass": true
+    },
+    {
+      "check": "runtime_registry_epoch_pattern",
+      "detail": "output under EPOCH-REGISTRY-<RUN_ID>",
+      "pass": true
+    },
+    {
+      "check": "registry_runs_without_crash",
+      "detail": "exit code=0: [PASS] ops:candidates — NONE [RUNTIME]\n  REGISTRY: reports/evidence/EPOCH-REGISTRY-468e39233712/REGISTRY.json\n  TOTAL:  ",
+      "pass": true
+    },
+    {
+      "check": "registry_json_produced",
+      "detail": "reports/evidence/EPOCH-REGISTRY-468e39233712/REGISTRY.json",
+      "pass": true
+    },
+    {
+      "check": "registry_schema_version",
+      "detail": "schema_version=1.0.0",
+      "pass": true
+    },
+    {
+      "check": "registry_has_candidates_array",
+      "detail": "candidates must be array",
+      "pass": true
+    },
+    {
+      "check": "registry_has_gate_id",
+      "detail": "gate_id=WOW9_CANDIDATE_REGISTRY",
+      "pass": true
+    },
+    {
+      "check": "all_items_have_required_fields",
+      "detail": "OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REG01_SCHEMA_LOCK",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "468e39233712",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

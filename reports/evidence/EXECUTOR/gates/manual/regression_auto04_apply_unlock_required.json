@@ -1,0 +1,52 @@
+{
+  "cases_tested": [
+    "case1_no_token",
+    "case2_wrong_content",
+    "case3_correct_content",
+    "case4_dry_run"
+  ],
+  "checks": [
+    {
+      "check": "autopilot_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/autopilot_court_v2.mjs",
+      "pass": true
+    },
+    {
+      "check": "case1_apply_no_token_ec2",
+      "detail": "--apply + no token => expect EC=2, got EC=2",
+      "pass": true
+    },
+    {
+      "check": "case1_apply_no_token_auto04_code",
+      "detail": "--apply + no token => AUTO04 code in output (got: [BLOCKED] ops:autopilot — AUTO04_APPLY_UNLOCK_REQUIRED [DRY_RUN(apply_blocked)] mode=CERT\n  PLAN:      reports/evidence/)",
+      "pass": true
+    },
+    {
+      "check": "case2_apply_wrong_token_ec2",
+      "detail": "--apply + wrong token content => expect EC=2, got EC=2",
+      "pass": true
+    },
+    {
+      "check": "case2_apply_wrong_token_auto04_code",
+      "detail": "--apply + wrong token => AUTO04 code in output",
+      "pass": true
+    },
+    {
+      "check": "case3_apply_correct_token_not_blocked",
+      "detail": "--apply + correct token => expect EC != 2, got EC=0",
+      "pass": true
+    },
+    {
+      "check": "case4_dry_run_no_apply_ec0",
+      "detail": "no --apply => expect EC=0 (dry-run), got EC=0",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_AUTO04_APPLY_UNLOCK_REQUIRED",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "468e39233712",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
