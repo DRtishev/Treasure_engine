@@ -1,0 +1,121 @@
+{
+  "checks": [
+    {
+      "check": "ssot_doc_exists",
+      "detail": "/home/user/Treasure_engine/docs/SSOT_EVENT_SCHEMA_V1.md",
+      "pass": true
+    },
+    {
+      "check": "ssot_has_version_1_0_0",
+      "detail": "SSOT must declare version 1.0.0",
+      "pass": true
+    },
+    {
+      "check": "ssot_has_forbidden_fields_section",
+      "detail": "SSOT must document forbidden fields",
+      "pass": true
+    },
+    {
+      "check": "ssot_has_tick_field",
+      "detail": "SSOT must declare tick field",
+      "pass": true
+    },
+    {
+      "check": "schema_version_is_1_0_0",
+      "detail": "EVENT_SCHEMA_VERSION=1.0.0",
+      "pass": true
+    },
+    {
+      "check": "validator_rejects_missing_fields",
+      "detail": "errors: missing required field: schema_version; missing required field: run_id",
+      "pass": true
+    },
+    {
+      "check": "validator_accepts_correct_event",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "canonicalize_sorts_paths",
+      "detail": "got: [\"reports/a.md\",\"reports/b.md\"]",
+      "pass": true
+    },
+    {
+      "check": "canonicalize_sorts_attrs",
+      "detail": "got: [\"a\",\"z\"]",
+      "pass": true
+    },
+    {
+      "check": "make_event_factory_works",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "mode_CERT_declared",
+      "detail": "mode CERT in VALID_MODES",
+      "pass": true
+    },
+    {
+      "check": "mode_CLOSE_declared",
+      "detail": "mode CLOSE in VALID_MODES",
+      "pass": true
+    },
+    {
+      "check": "mode_AUDIT_declared",
+      "detail": "mode AUDIT in VALID_MODES",
+      "pass": true
+    },
+    {
+      "check": "mode_RESEARCH_declared",
+      "detail": "mode RESEARCH in VALID_MODES",
+      "pass": true
+    },
+    {
+      "check": "mode_ACCEL_declared",
+      "detail": "mode ACCEL in VALID_MODES",
+      "pass": true
+    },
+    {
+      "check": "mode_LIFE_declared",
+      "detail": "mode LIFE in VALID_MODES",
+      "pass": true
+    },
+    {
+      "check": "component_TIMEMACHINE_declared",
+      "detail": "component TIMEMACHINE in VALID_COMPONENTS",
+      "pass": true
+    },
+    {
+      "check": "component_AUTOPILOT_declared",
+      "detail": "component AUTOPILOT in VALID_COMPONENTS",
+      "pass": true
+    },
+    {
+      "check": "component_COCKPIT_declared",
+      "detail": "component COCKPIT in VALID_COMPONENTS",
+      "pass": true
+    },
+    {
+      "check": "component_REGISTRY_declared",
+      "detail": "component REGISTRY in VALID_COMPONENTS",
+      "pass": true
+    },
+    {
+      "check": "component_EVENTBUS_declared",
+      "detail": "component EVENTBUS in VALID_COMPONENTS",
+      "pass": true
+    },
+    {
+      "check": "component_LIFE_declared",
+      "detail": "component LIFE in VALID_COMPONENTS",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_EVT01_SCHEMA_LOCK",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "3c4ec9aafacb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

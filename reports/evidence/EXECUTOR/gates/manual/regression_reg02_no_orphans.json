@@ -17,7 +17,7 @@
     },
     {
       "check": "no_orphan_parents_in_registries",
-      "detail": "checked 1 registry file(s), 0 orphans",
+      "detail": "checked 2 registry file(s), 0 orphans",
       "pass": true
     }
   ],
@@ -27,9 +27,10 @@
   "orphan_findings": [],
   "reason_code": "NONE",
   "registries_scanned": [
+    "reports/evidence/EPOCH-REGISTRY-3c4ec9aafacb/REGISTRY.json",
     "reports/evidence/EPOCH-REGISTRY-468e39233712/REGISTRY.json"
   ],
-  "run_id": "468e39233712",
+  "run_id": "3c4ec9aafacb",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

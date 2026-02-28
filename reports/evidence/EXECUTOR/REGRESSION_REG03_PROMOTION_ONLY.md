@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 468e39233712
+RUN_ID: 3c4ec9aafacb
 NEXT_ACTION: npm run -s verify:fast
 
 ## CHECKS
@@ -13,7 +13,7 @@ NEXT_ACTION: npm run -s verify:fast
 - [PASS] executor_write_guarded_by_promote_flag: EXECUTOR write must be inside PROMOTE_FLAG block
 - [PASS] dry_run_does_not_modify_executor_registry: EXECUTOR registry unchanged after dry-run (hash=NOT_EXISTS)
 - [PASS] dry_run_exits_cleanly: dry-run exit code=0: [PASS] ops:candidates — NONE [RUNTIME]
-  REGISTRY: reports/evidence/EPOCH-REGISTRY-468e39233712/REGI
+  REGISTRY: reports/evidence/EPOCH-REGISTRY-3c4ec9aafacb/REGI
 - [PASS] promote_without_id_returns_blocked: --promote (no id) => expect EC=2, got EC=2
 
 ## FAILED

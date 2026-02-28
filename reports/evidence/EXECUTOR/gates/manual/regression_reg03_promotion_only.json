@@ -32,7 +32,7 @@
     },
     {
       "check": "dry_run_exits_cleanly",
-      "detail": "dry-run exit code=0: [PASS] ops:candidates — NONE [RUNTIME]\n  REGISTRY: reports/evidence/EPOCH-REGISTRY-468e39233712/REGI",
+      "detail": "dry-run exit code=0: [PASS] ops:candidates — NONE [RUNTIME]\n  REGISTRY: reports/evidence/EPOCH-REGISTRY-3c4ec9aafacb/REGI",
       "pass": true
     },
     {
@@ -45,7 +45,7 @@
   "gate_id": "RG_REG03_PROMOTION_ONLY",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
-  "run_id": "468e39233712",
+  "run_id": "3c4ec9aafacb",
   "schema_version": "1.0.0",
   "status": "PASS"
 }
