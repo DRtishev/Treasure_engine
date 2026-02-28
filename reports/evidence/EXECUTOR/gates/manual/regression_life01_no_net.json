@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "check": "life_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/life.mjs",
+      "pass": true
+    },
+    {
+      "check": "no_fetch_call",
+      "detail": "no fetch — OK",
+      "pass": true
+    },
+    {
+      "check": "no_http_https_import",
+      "detail": "no http/https — OK",
+      "pass": true
+    },
+    {
+      "check": "no_enable_network_flag",
+      "detail": "no enable-network — OK",
+      "pass": true
+    },
+    {
+      "check": "no_xhr_or_axios",
+      "detail": "no XHR — OK",
+      "pass": true
+    },
+    {
+      "check": "only_local_and_builtin_imports",
+      "detail": "all imports are local/builtin",
+      "pass": true
+    },
+    {
+      "check": "steps_no_network_flag",
+      "detail": "steps are offline — OK",
+      "pass": true
+    },
+    {
+      "check": "life_summary_json_exists",
+      "detail": "reports/evidence/EPOCH-LIFE-56bb4849f721/LIFE_SUMMARY.json",
+      "pass": true
+    },
+    {
+      "check": "life_ran_6_steps",
+      "detail": "steps_total=6",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_LIFE01_NO_NET",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "0d8a4b652bff",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

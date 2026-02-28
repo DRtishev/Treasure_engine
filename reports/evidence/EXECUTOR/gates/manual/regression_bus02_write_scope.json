@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "eventbus_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/eventbus_v1.mjs",
+      "pass": true
+    },
+    {
+      "check": "output_uses_epoch_eventbus_pattern",
+      "detail": "output path must include EPOCH-EVENTBUS-",
+      "pass": true
+    },
+    {
+      "check": "no_executor_writes_in_bus",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "uses_write_json_deterministic",
+      "detail": "deterministic JSON required",
+      "pass": true
+    },
+    {
+      "check": "no_wall_clock_in_bus",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "ticks_not_random",
+      "detail": "tick counter is deterministic",
+      "pass": true
+    },
+    {
+      "check": "latest_epoch_by_lex_not_mtime",
+      "detail": "lexicographic sort used",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_BUS02_WRITE_SCOPE",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "0d8a4b652bff",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

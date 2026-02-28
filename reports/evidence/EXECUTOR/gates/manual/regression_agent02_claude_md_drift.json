@@ -1,0 +1,42 @@
+{
+  "checks": [
+    {
+      "check": "agents_md_exists_prereq",
+      "detail": "AGENTS.md required for drift check",
+      "pass": true
+    },
+    {
+      "check": "claude_md_exists_prereq",
+      "detail": "CLAUDE.md required for drift check",
+      "pass": true
+    },
+    {
+      "check": "claude_links_to_agents",
+      "detail": "CLAUDE.md must reference/link to AGENTS.md",
+      "pass": true
+    },
+    {
+      "check": "claude_shorter_than_agents",
+      "detail": "claude_lines=45 agents_lines=182 (CLAUDE.md must be exec summary)",
+      "pass": true
+    },
+    {
+      "check": "claude_no_full_rule_duplication",
+      "detail": "duplicated_rule_lines=0 (max=3)",
+      "pass": true
+    },
+    {
+      "check": "claude_has_next_action",
+      "detail": "CLAUDE.md must include ONE_NEXT_ACTION",
+      "pass": true
+    }
+  ],
+  "drift_signals": [],
+  "failed_checks": [],
+  "gate_id": "RG_AGENT02_CLAUDE_MD_DRIFT",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "3c4ec9aafacb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

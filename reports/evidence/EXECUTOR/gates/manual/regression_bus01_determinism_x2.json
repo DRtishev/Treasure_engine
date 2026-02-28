@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "eventbus_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/eventbus_v1.mjs",
+      "pass": true
+    },
+    {
+      "check": "run1_ok",
+      "detail": "lines=1",
+      "pass": true
+    },
+    {
+      "check": "run2_ok",
+      "detail": "lines=1",
+      "pass": true
+    },
+    {
+      "check": "events_jsonl_byte_stable_x2",
+      "detail": "hash=1b51431e0f8850e6",
+      "pass": true
+    },
+    {
+      "check": "events_count_stable",
+      "detail": "r1=1 r2=1",
+      "pass": true
+    },
+    {
+      "check": "events_tick_ordered",
+      "detail": "ticks=[1]",
+      "pass": true
+    },
+    {
+      "check": "events_ticks_positive",
+      "detail": "min=1",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_BUS01_DETERMINISM_X2",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "0d8a4b652bff",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

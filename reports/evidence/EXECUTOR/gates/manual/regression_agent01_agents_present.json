@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "check": "agents_md_exists",
+      "detail": "/home/user/Treasure_engine/AGENTS.md",
+      "pass": true
+    },
+    {
+      "check": "agents_md_has_ssot_marker",
+      "detail": "SSOT or Agent OS SSOT marker required",
+      "pass": true
+    },
+    {
+      "check": "claude_md_exists",
+      "detail": "/home/user/Treasure_engine/CLAUDE.md",
+      "pass": true
+    },
+    {
+      "check": "claude_md_links_to_agents",
+      "detail": "CLAUDE.md must reference AGENTS.md",
+      "pass": true
+    },
+    {
+      "check": "ai_runbook_exists",
+      "detail": "/home/user/Treasure_engine/docs/AI_RUNBOOK.md",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_AGENT01_AGENTS_PRESENT",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "3c4ec9aafacb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

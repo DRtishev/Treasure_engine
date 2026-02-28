@@ -1,0 +1,51 @@
+{
+  "checks": [
+    {
+      "check": "registry_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/candidate_registry.mjs",
+      "pass": true
+    },
+    {
+      "check": "script_requires_promote_flag",
+      "detail": "--promote flag required for EXECUTOR registry writes",
+      "pass": true
+    },
+    {
+      "check": "reg03_reason_code_declared",
+      "detail": "REG03_PROMOTION_ONLY reason code required",
+      "pass": true
+    },
+    {
+      "check": "has_promote_refusal_logic",
+      "detail": "refusal logic required when promote config_id missing/invalid",
+      "pass": true
+    },
+    {
+      "check": "executor_write_guarded_by_promote_flag",
+      "detail": "EXECUTOR write must be inside PROMOTE_FLAG block",
+      "pass": true
+    },
+    {
+      "check": "dry_run_does_not_modify_executor_registry",
+      "detail": "EXECUTOR registry unchanged after dry-run (hash=NOT_EXISTS)",
+      "pass": true
+    },
+    {
+      "check": "dry_run_exits_cleanly",
+      "detail": "dry-run exit code=0: [PASS] ops:candidates — NONE [RUNTIME]\n  REGISTRY: reports/evidence/EPOCH-REGISTRY-3c4ec9aafacb/REGI",
+      "pass": true
+    },
+    {
+      "check": "promote_without_id_returns_blocked",
+      "detail": "--promote (no id) => expect EC=2, got EC=2",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REG03_PROMOTION_ONLY",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "3c4ec9aafacb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "timemachine_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/timemachine_ledger.mjs",
+      "pass": true
+    },
+    {
+      "check": "script_uses_tick_field",
+      "detail": "tick field required for tick-only ordering",
+      "pass": true
+    },
+    {
+      "check": "script_no_wall_clock_time",
+      "detail": "no wall-clock time usage",
+      "pass": true
+    },
+    {
+      "check": "script_has_declared_events",
+      "detail": "DECLARED_EVENTS required for stable tick order",
+      "pass": true
+    },
+    {
+      "check": "script_writes_timeline_jsonl",
+      "detail": "TIMELINE.jsonl output required",
+      "pass": true
+    },
+    {
+      "check": "script_writes_timeline_md",
+      "detail": "TIMELINE.md output required",
+      "pass": true
+    },
+    {
+      "check": "script_epoch_dir_pattern",
+      "detail": "output must be under EPOCH-TIMEMACHINE-<RUN_ID>",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_TIME01_STABLE_TICK_ORDER",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "aead54a15263",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "check": "autopilot_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/autopilot_court_v2.mjs",
+      "pass": true
+    },
+    {
+      "check": "script_has_research_mode",
+      "detail": "RESEARCH mode must be declared",
+      "pass": true
+    },
+    {
+      "check": "script_has_cert_in_research_guard",
+      "detail": "AUTO02_CERT_IN_RESEARCH guard or RESEARCH_MODE_CERT_SCRIPTS_FORBIDDEN check required",
+      "pass": true
+    },
+    {
+      "check": "has_research_cert_check_fn",
+      "detail": "checkResearchNoCert or equivalent function required",
+      "pass": true
+    },
+    {
+      "check": "script_has_audit_mode",
+      "detail": "AUDIT mode must be declared alongside RESEARCH",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_AUTO02_NO_CERT_IN_RESEARCH",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "3c4ec9aafacb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

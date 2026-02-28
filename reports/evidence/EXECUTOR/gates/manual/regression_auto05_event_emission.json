@@ -1,0 +1,91 @@
+{
+  "checks": [
+    {
+      "check": "autopilot_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/autopilot_court_v2.mjs",
+      "pass": true
+    },
+    {
+      "check": "imports_eventbus_v1",
+      "detail": "createBus/eventbus_v1 import required",
+      "pass": true
+    },
+    {
+      "check": "emits_plan_created",
+      "detail": "PLAN_CREATED event required",
+      "pass": true
+    },
+    {
+      "check": "emits_refusal_event",
+      "detail": "REFUSAL event required per refusal",
+      "pass": true
+    },
+    {
+      "check": "emits_apply_allowed",
+      "detail": "APPLY_ALLOWED event required",
+      "pass": true
+    },
+    {
+      "check": "emits_apply_executed",
+      "detail": "APPLY_EXECUTED event required",
+      "pass": true
+    },
+    {
+      "check": "calls_bus_flush",
+      "detail": "bus.flush() required",
+      "pass": true
+    },
+    {
+      "check": "declares_eventbus_source",
+      "detail": "eventbus_source: true required in PLAN.json",
+      "pass": true
+    },
+    {
+      "check": "autopilot_runs_without_crash",
+      "detail": "exit code=0: [PASS] ops:autopilot — NONE [DRY_RUN] mode=CERT\n  PLAN:      reports/evidence/EPOCH-AUTOPILOTV2-0d8a4b652bff/PLAN.md\n  P",
+      "pass": true
+    },
+    {
+      "check": "eventbus_jsonl_produced",
+      "detail": "reports/evidence/EPOCH-EVENTBUS-AUTOPILOT-56bb4849f721/EVENTS.jsonl",
+      "pass": true
+    },
+    {
+      "check": "eventbus_has_autopilot_events",
+      "detail": "3 AUTOPILOT events found",
+      "pass": true
+    },
+    {
+      "check": "plan_created_event_in_bus",
+      "detail": "PLAN_CREATED event found in bus",
+      "pass": true
+    },
+    {
+      "check": "events_tick_ordered",
+      "detail": "ticks strictly increasing — OK",
+      "pass": true
+    },
+    {
+      "check": "apply_run_succeeds_with_token",
+      "detail": "--apply with valid token: exit code=0",
+      "pass": true
+    },
+    {
+      "check": "apply_allowed_event_in_bus",
+      "detail": "APPLY_ALLOWED in bus",
+      "pass": true
+    },
+    {
+      "check": "apply_executed_event_in_bus",
+      "detail": "APPLY_EXECUTED in bus",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_AUTO05_EVENT_EMISSION",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "0d8a4b652bff",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

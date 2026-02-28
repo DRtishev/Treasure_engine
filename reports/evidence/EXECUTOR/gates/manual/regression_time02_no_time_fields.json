@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "timemachine_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/timemachine_ledger.mjs",
+      "pass": true
+    },
+    {
+      "check": "no_timestamp_json_keys",
+      "detail": "no timestamp JSON keys found",
+      "pass": true
+    },
+    {
+      "check": "no_iso_date_strings",
+      "detail": "no ISO date string emission",
+      "pass": true
+    },
+    {
+      "check": "uses_write_json_deterministic",
+      "detail": "writeJsonDeterministic enforces no-timestamp field policy",
+      "pass": true
+    },
+    {
+      "check": "timeline_uses_approved_fields",
+      "detail": "timeline entries must use: tick, event, context, result",
+      "pass": true
+    }
+  ],
+  "existing_timelines_checked": [
+    "reports/evidence/EPOCH-TIMEMACHINE-7a084c09cbae/TIMELINE.jsonl",
+    "reports/evidence/EPOCH-TIMEMACHINE-aead54a15263/TIMELINE.jsonl",
+    "reports/evidence/EPOCH-TIMEMACHINE-c3a8c7ea12c4/TIMELINE.jsonl"
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_TIME02_NO_TIME_FIELDS",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "aead54a15263",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

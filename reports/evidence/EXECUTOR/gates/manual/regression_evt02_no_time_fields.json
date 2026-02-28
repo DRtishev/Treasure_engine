@@ -1,0 +1,170 @@
+{
+  "bus_files_checked": [
+    "reports/evidence/EPOCH-EVENTBUS-3c4ec9aafacb/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-56bb4849f721/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-AUTOPILOT-56bb4849f721/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-LIFE-56bb4849f721/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-REGISTRY-56bb4849f721/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-TIMEMACHINE-56bb4849f721/EVENTS.jsonl",
+    "reports/evidence/EPOCH-EVENTBUS-aead54a15263/EVENTS.jsonl"
+  ],
+  "checks": [
+    {
+      "check": "rejects_root_started_at",
+      "detail": "correctly rejected: forbidden field name at root: \"started_at\" (matches timestamp pattern)",
+      "pass": true
+    },
+    {
+      "check": "rejects_root_completed_at",
+      "detail": "correctly rejected: forbidden field name at root: \"completed_at\" (matches timestamp pattern)",
+      "pass": true
+    },
+    {
+      "check": "rejects_root_elapsed_ms",
+      "detail": "correctly rejected: forbidden field name at root: \"elapsed_ms\" (matches timestamp pattern)",
+      "pass": true
+    },
+    {
+      "check": "rejects_root_timestamp",
+      "detail": "correctly rejected: forbidden field name at root: \"timestamp\" (matches timestamp pattern)",
+      "pass": true
+    },
+    {
+      "check": "rejects_root_wall_clock",
+      "detail": "correctly rejected: forbidden field name at root: \"wall_clock\" (matches timestamp pattern)",
+      "pass": true
+    },
+    {
+      "check": "rejects_root_event_ts",
+      "detail": "correctly rejected: forbidden field name at root: \"event_ts\" (matches timestamp pattern)",
+      "pass": true
+    },
+    {
+      "check": "rejects_attrs_started_at",
+      "detail": "correctly rejected: forbidden field name: \"attrs.started_at\" (matches timestamp pattern)",
+      "pass": true
+    },
+    {
+      "check": "rejects_attrs_elapsed_ms",
+      "detail": "correctly rejected: forbidden field name: \"attrs.elapsed_ms\" (matches timestamp pattern)",
+      "pass": true
+    },
+    {
+      "check": "rejects_attrs_wall_ts",
+      "detail": "correctly rejected: forbidden field name: \"attrs.wall_ts\" (matches timestamp pattern)",
+      "pass": true
+    },
+    {
+      "check": "rejects_iso_value_in_attrs",
+      "detail": "correctly rejected: forbidden ISO timestamp value at \"attrs.info\": \"2026-02-28T10:00:00Z\"",
+      "pass": true
+    },
+    {
+      "check": "accepts_attrs_with_count",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "accepts_attrs_with_status",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "accepts_attrs_with_tick_info",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "accepts_empty_attrs",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "forbidden_re_started_at",
+      "detail": "key=\"started_at\" matched=true expected=true",
+      "pass": true
+    },
+    {
+      "check": "forbidden_re_elapsed_ms",
+      "detail": "key=\"elapsed_ms\" matched=true expected=true",
+      "pass": true
+    },
+    {
+      "check": "forbidden_re_timestamp",
+      "detail": "key=\"timestamp\" matched=true expected=true",
+      "pass": true
+    },
+    {
+      "check": "forbidden_re_wall_clock",
+      "detail": "key=\"wall_clock\" matched=true expected=true",
+      "pass": true
+    },
+    {
+      "check": "forbidden_re_event_ts",
+      "detail": "key=\"event_ts\" matched=true expected=true",
+      "pass": true
+    },
+    {
+      "check": "forbidden_re_status",
+      "detail": "key=\"status\" matched=false expected=false",
+      "pass": true
+    },
+    {
+      "check": "forbidden_re_run_id",
+      "detail": "key=\"run_id\" matched=false expected=false",
+      "pass": true
+    },
+    {
+      "check": "forbidden_re_ticks_total",
+      "detail": "key=\"ticks_total\" matched=false expected=false",
+      "pass": true
+    },
+    {
+      "check": "forbidden_re_event_count",
+      "detail": "key=\"event_count\" matched=false expected=false",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-3c4ec9aafacb",
+      "detail": "5 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-56bb4849f721",
+      "detail": "5 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-AUTOPILOT-56bb4849f721",
+      "detail": "3 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-LIFE-56bb4849f721",
+      "detail": "4 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-REGISTRY-56bb4849f721",
+      "detail": "1 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-TIMEMACHINE-56bb4849f721",
+      "detail": "8 events valid",
+      "pass": true
+    },
+    {
+      "check": "existing_bus_file_valid:EPOCH-EVENTBUS-aead54a15263",
+      "detail": "1 events valid",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_EVT02_NO_TIME_FIELDS",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "0d8a4b652bff",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

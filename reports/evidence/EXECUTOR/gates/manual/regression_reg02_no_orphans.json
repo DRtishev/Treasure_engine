@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "check": "registry_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/candidate_registry.mjs",
+      "pass": true
+    },
+    {
+      "check": "has_orphan_check_fn",
+      "detail": "checkOrphans or equivalent required",
+      "pass": true
+    },
+    {
+      "check": "reg02_reason_code_declared",
+      "detail": "REG02_ORPHAN_CANDIDATE reason code required",
+      "pass": true
+    },
+    {
+      "check": "no_orphan_parents_in_registries",
+      "detail": "checked 2 registry file(s), 0 orphans",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REG02_NO_ORPHANS",
+  "next_action": "npm run -s verify:fast",
+  "orphan_findings": [],
+  "reason_code": "NONE",
+  "registries_scanned": [
+    "reports/evidence/EPOCH-REGISTRY-3c4ec9aafacb/REGISTRY.json",
+    "reports/evidence/EPOCH-REGISTRY-468e39233712/REGISTRY.json"
+  ],
+  "run_id": "3c4ec9aafacb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

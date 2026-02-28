@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "registry_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/candidate_registry.mjs",
+      "pass": true
+    },
+    {
+      "check": "run1_succeeded",
+      "detail": "run1 EC=0",
+      "pass": true
+    },
+    {
+      "check": "run2_succeeded",
+      "detail": "run2 EC=0",
+      "pass": true
+    },
+    {
+      "check": "run1_produced_registry",
+      "detail": "epoch=EPOCH-REGISTRY-468e39233712",
+      "pass": true
+    },
+    {
+      "check": "run2_produced_registry",
+      "detail": "epoch=EPOCH-REGISTRY-468e39233712",
+      "pass": true
+    },
+    {
+      "check": "registry_byte_stable_x2",
+      "detail": "normalized hash stable: f4c92433d2d481c1...",
+      "pass": true
+    },
+    {
+      "check": "candidates_sorted_deterministically",
+      "detail": "candidates[] sorted by config_id",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REG04_DETERMINISM_X2",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "3c4ec9aafacb",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

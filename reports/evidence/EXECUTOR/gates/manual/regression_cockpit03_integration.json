@@ -1,0 +1,81 @@
+{
+  "checks": [
+    {
+      "check": "cockpit_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/cockpit.mjs",
+      "pass": true
+    },
+    {
+      "check": "script_has_timemachine_section",
+      "detail": "timemachine section required in cockpit",
+      "pass": true
+    },
+    {
+      "check": "script_has_autopilot_section",
+      "detail": "autopilot section required in cockpit",
+      "pass": true
+    },
+    {
+      "check": "no_wall_clock_time",
+      "detail": "no wall-clock time",
+      "pass": true
+    },
+    {
+      "check": "outputs_hud_json",
+      "detail": "HUD.json output required",
+      "pass": true
+    },
+    {
+      "check": "outputs_hud_md",
+      "detail": "HUD.md output required",
+      "pass": true
+    },
+    {
+      "check": "epoch_dir_cockpit_pattern",
+      "detail": "output under EPOCH-COCKPIT-<RUN_ID>",
+      "pass": true
+    },
+    {
+      "check": "cockpit_runs_without_crash",
+      "detail": "cockpit exit code=1: [BLOCKED] ops:cockpit — FAST_GATE\n  HUD:      reports/evidence/EPOCH-COCKPIT-aead54a15263/HUD.md\n  H",
+      "pass": true
+    },
+    {
+      "check": "hud_json_produced",
+      "detail": "reports/evidence/EPOCH-COCKPIT-aead54a15263/HUD.json",
+      "pass": true
+    },
+    {
+      "check": "hud_md_produced",
+      "detail": "reports/evidence/EPOCH-COCKPIT-aead54a15263/HUD.md",
+      "pass": true
+    },
+    {
+      "check": "hud_json_has_timemachine",
+      "detail": "HUD.json.sections.timemachine required",
+      "pass": true
+    },
+    {
+      "check": "hud_json_has_autopilot",
+      "detail": "HUD.json.sections.autopilot required",
+      "pass": true
+    },
+    {
+      "check": "hud_md_has_timemachine_section",
+      "detail": "HUD.md must contain TIMEMACHINE section",
+      "pass": true
+    },
+    {
+      "check": "hud_md_has_autopilot_section",
+      "detail": "HUD.md must contain AUTOPILOT section",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_COCKPIT03_INTEGRATION",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "aead54a15263",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

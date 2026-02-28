@@ -1,0 +1,81 @@
+{
+  "checks": [
+    {
+      "check": "timemachine_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/timemachine_ledger.mjs",
+      "pass": true
+    },
+    {
+      "check": "imports_eventbus_v1",
+      "detail": "createBus/eventbus_v1 import required",
+      "pass": true
+    },
+    {
+      "check": "uses_create_bus",
+      "detail": "createBus() call required",
+      "pass": true
+    },
+    {
+      "check": "calls_bus_flush",
+      "detail": "bus.flush() required to persist events",
+      "pass": true
+    },
+    {
+      "check": "uses_bus_reducer",
+      "detail": "timeline must be derived via bus.reduce/events()",
+      "pass": true
+    },
+    {
+      "check": "no_mtime_ordering",
+      "detail": "no mtime — OK",
+      "pass": true
+    },
+    {
+      "check": "declares_eventbus_source_flag",
+      "detail": "eventbus_source: true required in SUMMARY.json",
+      "pass": true
+    },
+    {
+      "check": "timemachine_runs_ok",
+      "detail": "exit code=0: [PASS] ops:timemachine — NONE\n  TIMELINE: reports/evidence/EPOCH-TIMEMACHINE-0d8a4b652bff/TIMELINE.jsonl\n  SUMMARY:  rep",
+      "pass": true
+    },
+    {
+      "check": "eventbus_jsonl_produced",
+      "detail": "reports/evidence/EPOCH-EVENTBUS-TIMEMACHINE-56bb4849f721/EVENTS.jsonl",
+      "pass": true
+    },
+    {
+      "check": "eventbus_has_timemachine_events",
+      "detail": "8 TIMEMACHINE events found",
+      "pass": true
+    },
+    {
+      "check": "events_tick_ordered",
+      "detail": "ticks strictly increasing — OK",
+      "pass": true
+    },
+    {
+      "check": "has_ledger_boot_event",
+      "detail": "LEDGER_BOOT event required in bus",
+      "pass": true
+    },
+    {
+      "check": "has_ledger_seal_event",
+      "detail": "LEDGER_SEAL event required in bus",
+      "pass": true
+    },
+    {
+      "check": "timeline_count_matches_bus",
+      "detail": "TIMELINE has 8 entries, EVENTBUS TIMEMACHINE has 8 events",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_TIME03_EVENTBUS_SOURCE",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "0d8a4b652bff",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

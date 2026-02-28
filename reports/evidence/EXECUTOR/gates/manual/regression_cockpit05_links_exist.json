@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "check": "cockpit_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/cockpit.mjs",
+      "pass": true
+    },
+    {
+      "check": "declares_evidence_paths",
+      "detail": "evidence_paths array required in HUD.json",
+      "pass": true
+    },
+    {
+      "check": "cockpit_runs_without_crash",
+      "detail": "exit code=1: [BLOCKED] ops:cockpit — FAST_GATE\n  HUD:      reports/evidence/EPOCH-COCKPIT-0d8",
+      "pass": true
+    },
+    {
+      "check": "evidence_paths_is_array",
+      "detail": "2 paths declared",
+      "pass": true
+    },
+    {
+      "check": "all_evidence_paths_exist",
+      "detail": "all 2 evidence_paths exist",
+      "pass": true
+    },
+    {
+      "check": "hud_md_exists",
+      "detail": "reports/evidence/EPOCH-COCKPIT-aead54a15263/HUD.md",
+      "pass": true
+    },
+    {
+      "check": "hud_has_schema_version",
+      "detail": "schema_version=1.0.0",
+      "pass": true
+    },
+    {
+      "check": "hud_has_timemachine_section",
+      "detail": "timemachine section present",
+      "pass": true
+    },
+    {
+      "check": "hud_has_autopilot_section",
+      "detail": "autopilot section present",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_COCKPIT05_LINKS_EXIST",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "0d8a4b652bff",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
