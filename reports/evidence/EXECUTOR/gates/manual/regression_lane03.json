@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "registry_exists",
+      "detail": "/home/user/Treasure_engine/specs/data_lanes.json",
+      "pass": true
+    },
+    {
+      "check": "no_duplicate_schema_versions",
+      "detail": "all 4 schema_versions unique — OK",
+      "pass": true
+    },
+    {
+      "check": "schema_version_format_valid",
+      "detail": "all schema_versions match <category>.<provider>.v<N> — OK",
+      "pass": true
+    },
+    {
+      "check": "liq_binance_forceorder_ws_schema_version_in_script",
+      "detail": "\"liquidations.binance_forceorder_ws.v1\" found in scripts/edge/edge_liq_01_offline_replay.mjs — OK",
+      "pass": true
+    },
+    {
+      "check": "liq_bybit_ws_v5_schema_version_in_script",
+      "detail": "\"liquidations.bybit_ws_v5.v2\" found in scripts/edge/edge_liq_01_offline_replay.mjs — OK",
+      "pass": true
+    },
+    {
+      "check": "liq_okx_ws_v5_schema_version_in_script",
+      "detail": "\"liquidations.okx_ws_v5.v1\" found in scripts/edge/edge_liq_01_offline_replay.mjs — OK",
+      "pass": true
+    },
+    {
+      "check": "price_offline_fixture_schema_version_in_script",
+      "detail": "\"price_bars.offline_fixture.v1\" found in scripts/edge/edge_price_01_offline_replay.mjs — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_LANE03_NO_DUP_SCHEMA_VERSION",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "39e1005c74fc",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

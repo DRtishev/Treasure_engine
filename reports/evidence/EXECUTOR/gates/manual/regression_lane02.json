@@ -1,0 +1,76 @@
+{
+  "checks": [
+    {
+      "check": "registry_exists",
+      "detail": "/home/user/Treasure_engine/specs/data_lanes.json",
+      "pass": true
+    },
+    {
+      "check": "liq_binance_forceorder_ws_replay_script_exists",
+      "detail": "scripts/edge/edge_liq_01_offline_replay.mjs",
+      "pass": true
+    },
+    {
+      "check": "liq_binance_forceorder_ws_replay_cmd_has_netkill",
+      "detail": "TREASURE_NET_KILL=1 present — OK",
+      "pass": true
+    },
+    {
+      "check": "liq_binance_forceorder_ws_replay_script_no_network",
+      "detail": "no network calls in replay — OK",
+      "pass": true
+    },
+    {
+      "check": "liq_bybit_ws_v5_replay_script_exists",
+      "detail": "scripts/edge/edge_liq_01_offline_replay.mjs",
+      "pass": true
+    },
+    {
+      "check": "liq_bybit_ws_v5_replay_cmd_has_netkill",
+      "detail": "TREASURE_NET_KILL=1 present — OK",
+      "pass": true
+    },
+    {
+      "check": "liq_bybit_ws_v5_replay_script_no_network",
+      "detail": "no network calls in replay — OK",
+      "pass": true
+    },
+    {
+      "check": "liq_okx_ws_v5_replay_script_exists",
+      "detail": "scripts/edge/edge_liq_01_offline_replay.mjs",
+      "pass": true
+    },
+    {
+      "check": "liq_okx_ws_v5_replay_cmd_has_netkill",
+      "detail": "TREASURE_NET_KILL=1 present — OK",
+      "pass": true
+    },
+    {
+      "check": "liq_okx_ws_v5_replay_script_no_network",
+      "detail": "no network calls in replay — OK",
+      "pass": true
+    },
+    {
+      "check": "price_offline_fixture_replay_script_exists",
+      "detail": "scripts/edge/edge_price_01_offline_replay.mjs",
+      "pass": true
+    },
+    {
+      "check": "price_offline_fixture_replay_cmd_has_netkill",
+      "detail": "TREASURE_NET_KILL=1 present — OK",
+      "pass": true
+    },
+    {
+      "check": "price_offline_fixture_replay_script_no_network",
+      "detail": "no network calls in replay — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_LANE02_CODE_MATCHES_REGISTRY",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "39e1005c74fc",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

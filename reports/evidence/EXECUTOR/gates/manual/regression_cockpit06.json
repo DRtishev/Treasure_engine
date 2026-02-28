@@ -1,0 +1,71 @@
+{
+  "checks": [
+    {
+      "check": "cockpit_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/cockpit.mjs",
+      "pass": true
+    },
+    {
+      "check": "cockpit_has_collect_readiness",
+      "detail": "collectReadiness function present — OK",
+      "pass": true
+    },
+    {
+      "check": "cockpit_has_readiness_section",
+      "detail": "DATA READINESS section in HUD.md — OK",
+      "pass": true
+    },
+    {
+      "check": "cockpit_has_per_lane_output",
+      "detail": "per_lane field in readiness section — OK",
+      "pass": true
+    },
+    {
+      "check": "cockpit_runs_ok",
+      "detail": "cockpit exits 0 — OK",
+      "pass": true
+    },
+    {
+      "check": "hud_json_written",
+      "detail": "reports/evidence/EPOCH-COCKPIT-39e1005c74fc/HUD.json",
+      "pass": true
+    },
+    {
+      "check": "hud_json_parseable",
+      "detail": "JSON parse OK",
+      "pass": true
+    },
+    {
+      "check": "hud_has_readiness_section",
+      "detail": "sections.readiness present — OK",
+      "pass": true
+    },
+    {
+      "check": "readiness_has_status",
+      "detail": "readiness.status=PASS",
+      "pass": true
+    },
+    {
+      "check": "readiness_has_per_lane_array",
+      "detail": "per_lane_n=4",
+      "pass": true
+    },
+    {
+      "check": "per_lane_entries_have_required_fields",
+      "detail": "all 4 lane entries valid — OK",
+      "pass": true
+    },
+    {
+      "check": "per_lane_sorted_by_lane_id",
+      "detail": "per_lane sorted — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_COCKPIT06_READINESS_SCORECARD_PRESENT",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "39e1005c74fc",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

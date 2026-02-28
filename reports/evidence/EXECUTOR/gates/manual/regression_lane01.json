@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "check": "registry_file_exists",
+      "detail": "/home/user/Treasure_engine/specs/data_lanes.json",
+      "pass": true
+    },
+    {
+      "check": "schema_file_exists",
+      "detail": "/home/user/Treasure_engine/specs/data_lanes.schema.json",
+      "pass": true
+    },
+    {
+      "check": "registry_parseable",
+      "detail": "JSON parse OK",
+      "pass": true
+    },
+    {
+      "check": "has_registry_schema_version",
+      "detail": "registry_schema_version=1.0.0",
+      "pass": true
+    },
+    {
+      "check": "has_lanes_array",
+      "detail": "lanes_n=4",
+      "pass": true
+    },
+    {
+      "check": "lane_ids_unique",
+      "detail": "4 unique ids — OK",
+      "pass": true
+    },
+    {
+      "check": "lanes_sorted_by_lane_id",
+      "detail": "sorted — OK",
+      "pass": true
+    },
+    {
+      "check": "all_lanes_structurally_valid",
+      "detail": "all 4 lanes valid — OK",
+      "pass": true
+    },
+    {
+      "check": "at_least_one_truth_lane",
+      "detail": "truth_lanes_n=1",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_LANE01_REGISTRY_PRESENT",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "39e1005c74fc",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

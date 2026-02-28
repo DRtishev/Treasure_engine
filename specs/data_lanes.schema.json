@@ -1,0 +1,91 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "specs/data_lanes.schema.json",
+  "title": "DataLaneRegistry",
+  "description": "SSOT schema for Data Lane Registry (specs/data_lanes.json). AJV-compatible.",
+  "type": "object",
+  "required": ["registry_schema_version", "lanes"],
+  "additionalProperties": false,
+  "properties": {
+    "registry_schema_version": {
+      "type": "string",
+      "description": "Semver schema version for this registry file.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "lanes": {
+      "type": "array",
+      "description": "All data lanes, sorted by lane_id (unique). lane_ids must be unique.",
+      "items": { "$ref": "#/definitions/Lane" },
+      "minItems": 0
+    }
+  },
+  "definitions": {
+    "Lane": {
+      "type": "object",
+      "required": [
+        "lane_id",
+        "lane_kind",
+        "truth_level",
+        "providers",
+        "schema_version",
+        "required_artifacts",
+        "required_lock_fields",
+        "replay_command",
+        "readiness_rules"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "lane_id": {
+          "type": "string",
+          "description": "Unique identifier for this lane (snake_case).",
+          "pattern": "^[a-z][a-z0-9_]*$"
+        },
+        "lane_kind": {
+          "type": "string",
+          "enum": ["WS", "REST", "FIXTURE", "DERIVED"],
+          "description": "Data transport type."
+        },
+        "truth_level": {
+          "type": "string",
+          "enum": ["TRUTH", "HINT", "RISK_ONLY"],
+          "description": "TRUTH lanes must PASS for readiness; HINT lanes may WARN; RISK_ONLY never blocks."
+        },
+        "providers": {
+          "type": "array",
+          "items": { "type": "string" },
+          "minItems": 1,
+          "description": "Provider IDs served by this lane."
+        },
+        "schema_version": {
+          "type": "string",
+          "description": "Canonical schema_version string for this lane (must match code constant)."
+        },
+        "required_artifacts": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Artifact paths required for this lane (may use <RUN_ID> placeholder)."
+        },
+        "required_lock_fields": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Fields that must be present in the lane's lock.json."
+        },
+        "replay_command": {
+          "type": "string",
+          "description": "SSOT offline replay command (must be executable offline under TREASURE_NET_KILL=1)."
+        },
+        "readiness_rules": {
+          "type": "object",
+          "description": "Named rules: RDY01 (missing), RDY02 (mismatch/error), PASS (all clear).",
+          "required": ["RDY01", "RDY02", "PASS"],
+          "additionalProperties": false,
+          "properties": {
+            "RDY01": { "type": "string" },
+            "RDY02": { "type": "string" },
+            "PASS":  { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

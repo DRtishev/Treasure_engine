@@ -1,16 +1,52 @@
 {
-  "missing": [
-    "artifacts/incoming/bybit_liq.lock.json",
-    "artifacts/incoming/bybit_liq.raw.json"
-  ],
+  "hint_lanes_n": 3,
+  "lanes_total": 4,
   "next_action": "npm run -s verify:public:data:readiness",
-  "reason_code": "RDY01",
-  "replay_ec": 0,
-  "required": [
-    "artifacts/incoming/bybit_liq.lock.json",
-    "artifacts/incoming/bybit_liq.raw.json"
+  "per_lane": [
+    {
+      "detail": "no run in artifacts/incoming/liquidations/binance_forceorder_ws",
+      "lane_id": "liq_binance_forceorder_ws",
+      "reason_code": "RDY01",
+      "replay_ec": 2,
+      "run_id": "NONE",
+      "status": "NEEDS_DATA",
+      "truth_level": "HINT"
+    },
+    {
+      "detail": "replay PASS",
+      "lane_id": "liq_bybit_ws_v5",
+      "reason_code": "NONE",
+      "replay_ec": 0,
+      "run_id": "RG_LIQ_LOCK01_FIXTURE",
+      "schema_version": "liquidations.bybit_ws_v5.v2",
+      "status": "PASS",
+      "truth_level": "TRUTH"
+    },
+    {
+      "detail": "no run in artifacts/incoming/liquidations/okx_ws_v5",
+      "lane_id": "liq_okx_ws_v5",
+      "reason_code": "RDY01",
+      "replay_ec": 2,
+      "run_id": "NONE",
+      "status": "NEEDS_DATA",
+      "truth_level": "HINT"
+    },
+    {
+      "detail": "no run in artifacts/incoming/price_bars/offline_fixture",
+      "lane_id": "price_offline_fixture",
+      "reason_code": "RDY01",
+      "replay_ec": 2,
+      "run_id": "NONE",
+      "status": "NEEDS_DATA",
+      "truth_level": "HINT"
+    }
   ],
-  "run_id": "da818a2b701a",
+  "reason_code": "NONE",
+  "registry_schema_version": "1.0.0",
+  "risk_only_lanes_n": 0,
+  "run_id": "39e1005c74fc",
   "schema_version": "1.0.0",
-  "status": "NEEDS_DATA"
+  "status": "PASS",
+  "truth_lanes_n": 1,
+  "warn_lanes_n": 0
 }
