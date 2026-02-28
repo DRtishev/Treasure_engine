@@ -7,17 +7,17 @@
     },
     {
       "check": "cockpit_run1_ok",
-      "detail": "path=reports/evidence/EPOCH-COCKPIT-40c3f98677b5/HUD.json",
+      "detail": "path=reports/evidence/EPOCH-COCKPIT-692d9de68bc6/HUD.json",
       "pass": true
     },
     {
       "check": "cockpit_run2_ok",
-      "detail": "path=reports/evidence/EPOCH-COCKPIT-40c3f98677b5/HUD.json",
+      "detail": "path=reports/evidence/EPOCH-COCKPIT-692d9de68bc6/HUD.json",
       "pass": true
     },
     {
       "check": "hud_json_byte_identical_x2",
-      "detail": "hash=7745fede5beb56a7… — OK",
+      "detail": "hash=873b8d21ce39d584… — OK",
       "pass": true
     },
     {
@@ -40,7 +40,7 @@
   "gate_id": "RG_BUS03_AGGREGATOR_STABLE_ORDER",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
-  "run_id": "39e1005c74fc",
+  "run_id": "692d9de68bc6",
   "schema_version": "1.0.0",
   "status": "PASS"
 }
