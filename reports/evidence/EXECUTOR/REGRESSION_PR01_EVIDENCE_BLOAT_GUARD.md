@@ -2,66 +2,56 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: c86c05d745a5
+RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 54
+- changed_evidence_files_n: 44
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
 ## OFFENDERS
-- reports/evidence/EXECUTOR/gates/manual/regression_cap01.json
-- reports/evidence/EXECUTOR/gates/manual/regression_cap02.json
-- reports/evidence/EXECUTOR/gates/manual/regression_cap03.json
-- reports/evidence/EXECUTOR/gates/manual/regression_cap05.json
-- reports/evidence/EXECUTOR/gates/manual/regression_dec01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_ec01_reason_context_contract.json
-- reports/evidence/EXECUTOR/gates/manual/regression_lane04.json
+- reports/evidence/EXECUTOR/gates/manual/regression_epoch_skip01_respects_tracked_state.json
 - reports/evidence/EXECUTOR/gates/manual/regression_netkill_ledger_enforcement.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx01.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx02.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx03.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx04.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx05.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx06.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx08.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx09.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx10.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx12.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx13.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx14.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx15.json
-- reports/evidence/EXECUTOR/gates/manual/regression_ob_okx16.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr05_executor_ssot_stable_set.json
-- reports/evidence/EXECUTOR/gates/manual/regression_r2_01.json
-- reports/evidence/EXECUTOR/gates/manual/regression_r2_02_fixtures_readonly.json
+- reports/evidence/EXECUTOR/gates/manual/regression_pr07_executor_runid_immutable.json
+- reports/evidence/EXECUTOR/gates/manual/regression_pr08_executor_stable_only.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_cap_mean01_keys_have_meaning.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_deliv01_delivery_doc_present.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_deliv02_delivery_doc_coherence.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_lane05_static_readiness.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_life04_next_action_surfacing.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_net_unlock01_file_contract.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_net_unlock02_no_allow_file_after_lock.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_net_unlock03_cert_refuses_with_allow_file.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_rdy_select01_forces_run_id.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_rdy_select02_selector_absent_in_daily.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_reason01_token_purity.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_reason02_in_taxonomy.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_trust01_trust_doc_present.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_trust02_cockpit_truthlevel_column.json
 - reports/evidence/EXECUTOR/gates/manual/regression_victory_fast_no_heavy.json
-- reports/evidence/EXECUTOR/REGRESSION_CAP01.md
-- reports/evidence/EXECUTOR/REGRESSION_CAP02.md
-- reports/evidence/EXECUTOR/REGRESSION_CAP03.md
-- reports/evidence/EXECUTOR/REGRESSION_CAP05.md
-- reports/evidence/EXECUTOR/REGRESSION_DEC01.md
 - reports/evidence/EXECUTOR/REGRESSION_EC01_REASON_CONTEXT_CONTRACT.md
-- reports/evidence/EXECUTOR/REGRESSION_LANE04.md
+- reports/evidence/EXECUTOR/REGRESSION_EPOCH_SKIP01_RESPECTS_TRACKED_STATE.md
 - reports/evidence/EXECUTOR/REGRESSION_NETKILL_LEDGER_ENFORCEMENT.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX01.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX02.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX03.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX04.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX05.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX06.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX08.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX09.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX10.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX12.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX13.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX14.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX15.md
-- reports/evidence/EXECUTOR/REGRESSION_OB_OKX16.md
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
 - reports/evidence/EXECUTOR/REGRESSION_PR05_EXECUTOR_SSOT_STABLE_SET.md
-- reports/evidence/EXECUTOR/REGRESSION_R2_01.md
-- reports/evidence/EXECUTOR/REGRESSION_R2_02_FIXTURES_READONLY.md
+- reports/evidence/EXECUTOR/REGRESSION_PR07_EXECUTOR_RUNID_IMMUTABLE.md
+- reports/evidence/EXECUTOR/REGRESSION_PR08_EXECUTOR_STABLE_ONLY.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_CAP_MEAN01.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_DELIV01.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_DELIV02.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_LANE05.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_LIFE04_NEXT_ACTION_SURFACING.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_NET_UNLOCK01.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_NET_UNLOCK02.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_NET_UNLOCK03.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_RDY_SELECT01.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_RDY_SELECT02.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_REASON01.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_REASON02.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_TRUST01.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_TRUST02.md
 - reports/evidence/EXECUTOR/REGRESSION_VICTORY_FAST_NO_HEAVY.md

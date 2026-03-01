@@ -1,0 +1,37 @@
+{
+  "checks": [
+    {
+      "check": "tracked_epoch_files_total",
+      "detail": "2999 tracked EPOCH-* files",
+      "pass": true
+    },
+    {
+      "check": "tracked_epoch_gate_receipts",
+      "detail": "113 tracked gate receipts in EPOCH-* dirs",
+      "pass": true
+    },
+    {
+      "check": "tracked_receipts_with_reason_code",
+      "detail": "0 have reason_code, 0 would be masked violations",
+      "pass": true
+    },
+    {
+      "check": "files_scanned_determinism_x2",
+      "detail": "FILES_SCANNED=290 stable x2",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "files_scanned_run1": 290,
+  "files_scanned_run2": 290,
+  "gate_id": "RG_EPOCH_SKIP01_RESPECTS_TRACKED_STATE",
+  "masked_violations_n": 0,
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "receipts_with_reason_code": 0,
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "tracked_epoch_files_total": 2999,
+  "tracked_gate_receipts": 113
+}

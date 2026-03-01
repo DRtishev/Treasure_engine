@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "check": "static_lane_detection",
+      "detail": "isStatic detection via <RUN_ID> placeholder — OK",
+      "pass": true
+    },
+    {
+      "check": "static_lane_mode_field",
+      "detail": "lane_mode='STATIC' present — OK",
+      "pass": true
+    },
+    {
+      "check": "static_pass_path",
+      "detail": "static PASS path present — OK",
+      "pass": true
+    },
+    {
+      "check": "static_needs_data_path",
+      "detail": "static NEEDS_DATA path (missing file) present — OK",
+      "pass": true
+    },
+    {
+      "check": "static_no_run_dir_enumeration",
+      "detail": "static path skips run-dir enumeration — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_LANE05_STATIC_READINESS",
+  "next_action": "npm run -s verify:public:data:readiness",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

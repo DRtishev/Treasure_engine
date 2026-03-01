@@ -1,0 +1,51 @@
+{
+  "checks": [
+    {
+      "check": "doc_exists",
+      "detail": "docs/TRUST_SCORE_DOCTRINE.md present — OK",
+      "pass": true
+    },
+    {
+      "check": "section_present__1_truthlevel_vs_trust_score",
+      "detail": "\"## 1. TRUTHLEVEL vs TRUST SCORE\" present — OK",
+      "pass": true
+    },
+    {
+      "check": "section_present__2_cockpit_column_name_policy",
+      "detail": "\"## 2. COCKPIT COLUMN NAME POLICY\" present — OK",
+      "pass": true
+    },
+    {
+      "check": "section_present__3_truthlevel_semantics",
+      "detail": "\"## 3. TRUTHLEVEL SEMANTICS\" present — OK",
+      "pass": true
+    },
+    {
+      "check": "section_present__4_trust_score",
+      "detail": "\"## 4. TRUST SCORE\" present — OK",
+      "pass": true
+    },
+    {
+      "check": "section_present__5_anti_fabrication_rule",
+      "detail": "\"## 5. ANTI-FABRICATION RULE\" present — OK",
+      "pass": true
+    },
+    {
+      "check": "trust_score_not_implemented_flag",
+      "detail": "trust_score_data_implemented: false present — OK",
+      "pass": true
+    },
+    {
+      "check": "truthlevel_concept_documented",
+      "detail": "TruthLevel concept documented — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_TRUST01_TRUST_DOC_PRESENT",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

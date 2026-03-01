@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "unlock_creates_exact_content",
+      "detail": "creates \"ALLOW_NETWORK: YES\" — OK",
+      "pass": true
+    },
+    {
+      "check": "unlock_tamper_detection",
+      "detail": "tamper detection present — OK",
+      "pass": true
+    },
+    {
+      "check": "unlock_idempotent",
+      "detail": "idempotent already_unlocked path present — OK",
+      "pass": true
+    },
+    {
+      "check": "lock_removes_file",
+      "detail": "unlinkSync present — OK",
+      "pass": true
+    },
+    {
+      "check": "lock_fail_closed_if_absent",
+      "detail": "lock_without_unlock fail-closed — OK",
+      "pass": true
+    },
+    {
+      "check": "lock_fail_closed_if_wrong_content",
+      "detail": "tamper_detected fail-closed — OK",
+      "pass": true
+    },
+    {
+      "check": "allow_network_absent_daily",
+      "detail": "ALLOW_NETWORK absent — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_NET_UNLOCK01_FILE_CONTRACT",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

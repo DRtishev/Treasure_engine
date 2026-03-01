@@ -1,0 +1,318 @@
+{
+  "checks": [
+    {
+      "check": "binance.rate_limits._field_meta_present",
+      "detail": "_field_meta present — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.rate_limits._field_meta.connections_per_ip_present",
+      "detail": "_field_meta.connections_per_ip present",
+      "pass": true
+    },
+    {
+      "check": "binance.rate_limits._field_meta.connections_per_ip.meaning",
+      "detail": "meaning=\"Maximum concurrent WebSocket connections\" — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.rate_limits._field_meta.connections_per_ip.unit_hint",
+      "detail": "unit_hint=\"count\" — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.rate_limits._field_meta.connections_per_ip.window_kind",
+      "detail": "window_kind=\"static_limit\" — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.rate_limits._field_meta.messages_per_connection_present",
+      "detail": "_field_meta.messages_per_connection present",
+      "pass": true
+    },
+    {
+      "check": "binance.rate_limits._field_meta.messages_per_connection.meaning",
+      "detail": "meaning=\"Maximum subscribe/unsubscribe messages p\" — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.rate_limits._field_meta.messages_per_connection.unit_hint",
+      "detail": "unit_hint=\"count\" — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.rate_limits._field_meta.messages_per_connection.window_kind",
+      "detail": "window_kind=\"rolling\" — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.orderbook._field_meta_present",
+      "detail": "_field_meta present — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.orderbook._field_meta.depth_levels_present",
+      "detail": "_field_meta.depth_levels present",
+      "pass": true
+    },
+    {
+      "check": "binance.orderbook._field_meta.depth_levels.meaning",
+      "detail": "meaning=\"Available order book depth snapshot leve\" — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.orderbook._field_meta.depth_levels.unit_hint",
+      "detail": "unit_hint=\"levels\" — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.orderbook._field_meta.depth_levels.window_kind",
+      "detail": "window_kind=\"snapshot\" — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.academy.stream_limits].rate_limits._field_meta_present",
+      "detail": "_field_meta present — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.academy.stream_limits].rate_limits._field_meta.connections_per_ip.meaning",
+      "detail": "meaning OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.academy.stream_limits].rate_limits._field_meta.connections_per_ip.unit_hint",
+      "detail": "unit_hint OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.academy.stream_limits].rate_limits._field_meta.connections_per_ip.window_kind",
+      "detail": "window_kind OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.academy.stream_limits].rate_limits._field_meta.streams_per_connection.meaning",
+      "detail": "meaning OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.academy.stream_limits].rate_limits._field_meta.streams_per_connection.unit_hint",
+      "detail": "unit_hint OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.academy.stream_limits].rate_limits._field_meta.streams_per_connection.window_kind",
+      "detail": "window_kind OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.delivery_testnet.market_streams].rate_limits._field_meta_present",
+      "detail": "_field_meta present — OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.delivery_testnet.market_streams].rate_limits._field_meta.connections_per_ip.meaning",
+      "detail": "meaning OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.delivery_testnet.market_streams].rate_limits._field_meta.connections_per_ip.unit_hint",
+      "detail": "unit_hint OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.delivery_testnet.market_streams].rate_limits._field_meta.connections_per_ip.window_kind",
+      "detail": "window_kind OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.delivery_testnet.market_streams].rate_limits._field_meta.streams_per_connection.meaning",
+      "detail": "meaning OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.delivery_testnet.market_streams].rate_limits._field_meta.streams_per_connection.unit_hint",
+      "detail": "unit_hint OK",
+      "pass": true
+    },
+    {
+      "check": "binance.scopes[binance.delivery_testnet.market_streams].rate_limits._field_meta.streams_per_connection.window_kind",
+      "detail": "window_kind OK",
+      "pass": true
+    },
+    {
+      "check": "bybit.rate_limits._field_meta_present",
+      "detail": "_field_meta present — OK",
+      "pass": true
+    },
+    {
+      "check": "bybit.rate_limits._field_meta.connections_per_ip_present",
+      "detail": "_field_meta.connections_per_ip present",
+      "pass": true
+    },
+    {
+      "check": "bybit.rate_limits._field_meta.connections_per_ip.meaning",
+      "detail": "meaning=\"Maximum concurrent WebSocket connections\" — OK",
+      "pass": true
+    },
+    {
+      "check": "bybit.rate_limits._field_meta.connections_per_ip.unit_hint",
+      "detail": "unit_hint=\"count\" — OK",
+      "pass": true
+    },
+    {
+      "check": "bybit.rate_limits._field_meta.connections_per_ip.window_kind",
+      "detail": "window_kind=\"static_limit\" — OK",
+      "pass": true
+    },
+    {
+      "check": "bybit.rate_limits._field_meta.messages_per_connection_present",
+      "detail": "_field_meta.messages_per_connection present",
+      "pass": true
+    },
+    {
+      "check": "bybit.rate_limits._field_meta.messages_per_connection.meaning",
+      "detail": "meaning=\"Maximum subscribe/unsubscribe messages p\" — OK",
+      "pass": true
+    },
+    {
+      "check": "bybit.rate_limits._field_meta.messages_per_connection.unit_hint",
+      "detail": "unit_hint=\"count\" — OK",
+      "pass": true
+    },
+    {
+      "check": "bybit.rate_limits._field_meta.messages_per_connection.window_kind",
+      "detail": "window_kind=\"rolling\" — OK",
+      "pass": true
+    },
+    {
+      "check": "bybit.orderbook._field_meta_present",
+      "detail": "_field_meta present — OK",
+      "pass": true
+    },
+    {
+      "check": "bybit.orderbook._field_meta.depth_levels_present",
+      "detail": "_field_meta.depth_levels present",
+      "pass": true
+    },
+    {
+      "check": "bybit.orderbook._field_meta.depth_levels.meaning",
+      "detail": "meaning=\"Available order book depth snapshot leve\" — OK",
+      "pass": true
+    },
+    {
+      "check": "bybit.orderbook._field_meta.depth_levels.unit_hint",
+      "detail": "unit_hint=\"levels\" — OK",
+      "pass": true
+    },
+    {
+      "check": "bybit.orderbook._field_meta.depth_levels.window_kind",
+      "detail": "window_kind=\"snapshot\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.rate_limits._field_meta_present",
+      "detail": "_field_meta present — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.rate_limits._field_meta.connections_per_ip_present",
+      "detail": "_field_meta.connections_per_ip present",
+      "pass": true
+    },
+    {
+      "check": "okx.rate_limits._field_meta.connections_per_ip.meaning",
+      "detail": "meaning=\"Maximum concurrent WebSocket connections\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.rate_limits._field_meta.connections_per_ip.unit_hint",
+      "detail": "unit_hint=\"count\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.rate_limits._field_meta.connections_per_ip.window_kind",
+      "detail": "window_kind=\"static_limit\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.rate_limits._field_meta.messages_per_connection_present",
+      "detail": "_field_meta.messages_per_connection present",
+      "pass": true
+    },
+    {
+      "check": "okx.rate_limits._field_meta.messages_per_connection.meaning",
+      "detail": "meaning=\"Maximum subscribe/unsubscribe messages p\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.rate_limits._field_meta.messages_per_connection.unit_hint",
+      "detail": "unit_hint=\"count\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.rate_limits._field_meta.messages_per_connection.window_kind",
+      "detail": "window_kind=\"rolling\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta_present",
+      "detail": "_field_meta present — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta.depth_levels_present",
+      "detail": "_field_meta.depth_levels present",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta.depth_levels.meaning",
+      "detail": "meaning=\"Available order book depth snapshot leve\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta.depth_levels.unit_hint",
+      "detail": "unit_hint=\"levels\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta.depth_levels.window_kind",
+      "detail": "window_kind=\"snapshot\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta.reorder_window_max_items_present",
+      "detail": "_field_meta.reorder_window_max_items present",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta.reorder_window_max_items.meaning",
+      "detail": "meaning=\"Maximum number of out-of-order messages \" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta.reorder_window_max_items.unit_hint",
+      "detail": "unit_hint=\"count\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta.reorder_window_max_items.window_kind",
+      "detail": "window_kind=\"reorder_buffer\" — OK",
+      "pass": true
+    },
+    {
+      "check": "confidence_map_covers_field_meta",
+      "detail": "confidence_map has 6 _field_meta entries — OK",
+      "pass": true
+    }
+  ],
+  "checks_total": 61,
+  "failed_checks": [],
+  "gate_id": "RG_CAP_MEAN01_KEYS_HAVE_MEANING",
+  "next_action": "npm run -s verify:regression:rg-cap-mean01-keys-have-meaning",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

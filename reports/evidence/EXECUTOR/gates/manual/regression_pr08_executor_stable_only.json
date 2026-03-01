@@ -1,0 +1,11 @@
+{
+  "executor_spot_check": "PASS",
+  "gate_id": "RG_PR08_EXECUTOR_STABLE_ONLY",
+  "next_action": "npm run -s verify:fast",
+  "non_executor_files_scanned": 121,
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": []
+}

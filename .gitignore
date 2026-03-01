@@ -123,6 +123,9 @@ artifacts/incoming/*.raw.json
 # P1 liquidations lane run artifacts
 artifacts/incoming/liquidations/
 
+# R3 OKX acquire lane run artifacts
+artifacts/incoming/okx/
+
 artifacts/incoming/ALLOW_NETWORK
 artifacts/incoming/APPLY_AUTOPILOT
 artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE

@@ -22,15 +22,17 @@ const NEXT_ACTION = 'npm run -s verify:fast';
 const TOKEN_RE = /^[A-Z0-9_]+$/;
 const EVIDENCE_DIR = path.join(ROOT, 'reports/evidence');
 
-// Collect all gate JSON files to scan
+// Collect all gate JSON files to scan (skip run-scoped EPOCH-* dirs — gitignored, ephemeral)
 function collectJsonFiles(dir) {
   const results = [];
   if (!fs.existsSync(dir)) return results;
   function walk(d) {
     for (const ent of fs.readdirSync(d, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       const full = path.join(d, ent.name);
-      if (ent.isDirectory()) { walk(full); }
-      else if (ent.isFile() && ent.name.endsWith('.json') &&
+      if (ent.isDirectory()) {
+        if (d === dir && ent.name.startsWith('EPOCH-')) continue;
+        walk(full);
+      } else if (ent.isFile() && ent.name.endsWith('.json') &&
                (d.includes('gates/manual') || ent.name === 'receipt.json')) {
         results.push(full);
       }

@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "check": "seal_supports_select_run_id",
+      "detail": "SELECT_RUN_ID logic present — OK",
+      "pass": true
+    },
+    {
+      "check": "seal_fail_closed_invalid_run_id",
+      "detail": "RDY_SELECT01_INVALID present — OK",
+      "pass": true
+    },
+    {
+      "check": "seal_reads_select_path",
+      "detail": "SELECT_RUN_ID path reference present — OK",
+      "pass": true
+    },
+    {
+      "check": "select_run_id_absent_in_daily",
+      "detail": "SELECT_RUN_ID absent — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_RDY_SELECT01_FORCES_RUN_ID",
+  "next_action": "npm run -s verify:public:data:readiness",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

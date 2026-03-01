@@ -1,0 +1,18 @@
+{
+  "allow_select_run_id_present": false,
+  "checks": [
+    {
+      "check": "select_run_id_file",
+      "detail": "SELECT_RUN_ID absent — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_RDY_SELECT02_SELECTOR_MUST_BE_ABSENT_IN_DAILY",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "select_run_id_present": false,
+  "status": "PASS"
+}
