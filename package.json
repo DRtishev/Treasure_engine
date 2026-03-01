@@ -877,6 +877,8 @@
     "verify:regression:pr05-executor-ssot-stable-set": "node scripts/verify/regression_pr05_executor_ssot_stable_set.mjs",
     "verify:regression:r2-02-fixtures-readonly": "node scripts/verify/regression_r2_02_fixtures_readonly.mjs",
     "ops:baseline:restore": "bash scripts/ops/baseline_restore.sh",
+    "verify:merge-court": "node scripts/verify/merge_court.mjs",
+    "verify:r3:preflight": "node scripts/verify/r3_preflight.mjs",
     "verify:regression:victory-fast-no-heavy": "node scripts/verify/regression_victory_fast_no_heavy.mjs",
     "epoch:victory:close": "VICTORY_PROFILE=CLOSE bash scripts/ops/node_authority_run.sh npm run -s _epoch:victory:seal",
     "epoch:victory:audit": "VICTORY_PROFILE=AUDIT bash scripts/ops/node_authority_run.sh npm run -s _epoch:victory:seal",

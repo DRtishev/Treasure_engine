@@ -90,7 +90,9 @@
     "RG_TEST01",
     "RG_EC01_01",
     "LIFE_STEP_FAIL",
-    "RG_LIFE_NET01_VIOLATION"
+    "RG_LIFE_NET01_VIOLATION",
+    "R3_PREFLIGHT_BLOCKED",
+    "MERGE_COURT_BLOCKED"
   ],
   "patterns": [
     "^STEP_EC_[0-9]+$",
