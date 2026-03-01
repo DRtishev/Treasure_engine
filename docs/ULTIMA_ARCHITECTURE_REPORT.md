@@ -1,100 +1,170 @@
 # TREASURE ENGINE — ULTIMA FIRMWARE REPORT (LEAD MODE)
 
-STATUS: ACTIVE | VERSION: 1.0.0 | ROLE: PROJECT LEAD
+STATUS: ACTIVE
+VERSION: 1.0.0
+ROLE: PROJECT LEAD
 
 ---
 
 ## SNAPSHOT
 
-- **Система**: Treasure Engine — offline-first exchange-grade data engine + profit factory
-- **Node SSOT**: 22.22.0 (capsule-verified)
-- **Epochs**: 142+ | **npm scripts**: 500+ | **Regression gates**: 154+
-- **Data lanes**: 5 (1 TRUTH_READY, 1 PREFLIGHT, 3 EXPERIMENTAL)
-- **Providers**: Bybit (CORE), OKX (R2), Binance (EXPERIMENTAL)
-- **WOW Items**: 12 SHIPPED/STAGED | **Modes**: CERT, CLOSE, AUDIT, RESEARCH, ACCEL
+**Система**: Treasure Engine — offline-first exchange-grade data engine + profit factory
+**Node SSOT**: 22.22.0 (capsule-verified)
+**Epochs**: 142+ (E01–E142m MEGA)
+**npm scripts**: 500+
+**Regression gates**: 154+
+**Data lanes**: 5 (1 TRUTH_READY, 1 PREFLIGHT, 3 EXPERIMENTAL)
+**Providers**: Bybit (CORE), OKX (R2), Binance (EXPERIMENTAL)
+**WOW Items**: 12 SHIPPED/STAGED (WOW-01..WOW-35)
+**Modes**: CERT, CLOSE, AUDIT, RESEARCH, ACCEL
+
+**Evidence paths**:
+- `AGENTS.md` — AI OS SSOT (R1–R14)
+- `specs/data_lanes.json` — lane registry
+- `specs/data_capabilities.json` — provider capabilities
+- `docs/OKX_ORDERBOOK_DIGEST_SPEC.md` — digest canon
+- `docs/OKX_ORDERBOOK_R2_PROCEDURE.md` — R2 exception policy
+- `scripts/ops/life.mjs` — WOW Organism orchestrator
+- `scripts/ops/eventbus_v1.mjs` — EventBus v1
+- `scripts/ops/cockpit.mjs` — Cockpit HUD
+- `scripts/ops/autopilot_court_v2.mjs` — Autopilot Court V2
 
 ---
 
 ## ARCHITECTURE MAP
 
 ```
-┌──────────────────────────────────────────────────────────┐
-│              OPERATOR (npm run -s ops:life)               │
-│                      ┌────────┐                          │
-│                      │  LIFE  │ S01..S06 deterministic   │
-│                      └───┬────┘                          │
-│         ┌────┬────┬──┼──┬─────┬─────┐                   │
-│         ▼    ▼    ▼  ▼  ▼     ▼     │                   │
-│      verify event time auto cockpit cand                 │
-│      :fast  bus   mach pilot HUD    reg                  │
-│       (S01) (S02) (S03)(S04)(S05)  (S06)                │
-│         └────┴────┴──┴──┴─────┘                         │
-│                   │                                      │
-│              ┌────▼────┐                                 │
-│              │EVENTBUS │ tick-only, append-only           │
-│              │   V1    │                                  │
-│              └────┬────┘                                 │
-│    ┌──────────────┼──────────────┐                       │
-│    ▼              ▼              ▼                        │
-│ TRUTH          DATA ORGAN     PROFIT                     │
-│ ENGINE         (5 lanes)      FACTORY                    │
-│ ALLOW/DEGRAD   bybit/okx/    paper/canary               │
-│ /HALT          binance       /micro-live                 │
-│    │              │              │                        │
-│    ▼              ▼              ▼                        │
-│ GOVERNANCE    PROVIDERS      EXECUTION                   │
-│ FSM           WS feeds       paper/live/demo             │
-│ DRY→PAPER→    lock+sha256    kill matrix                 │
-│ LIVE_S→LIVE                                              │
-│                                                          │
-│ GATES: 154+ | COURTS: v1/v2 | EVIDENCE: EPOCH-*         │
-└──────────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                    OPERATOR (npm run -s ops:life)                │
+│                         ┌─────────┐                             │
+│                         │  LIFE   │ ← S01..S06 deterministic    │
+│                         └────┬────┘                             │
+│            ┌─────┬─────┬────┼────┬──────┬──────┐               │
+│            ▼     ▼     ▼    ▼    ▼      ▼      │               │
+│        verify  event  time  auto cockpit cand   │               │
+│        :fast   bus    mach  pilot HUD    reg    │               │
+│         (S01)  (S02)  (S03) (S04)(S05)  (S06)  │               │
+│            └─────┴─────┴────┴────┴──────┘       │               │
+│                         │                        │               │
+│                    ┌────▼────┐                   │               │
+│                    │EVENTBUS │  tick-only,        │               │
+│                    │   V1    │  append-only       │               │
+│                    └────┬────┘                   │               │
+│       ┌─────────────────┼─────────────────┐      │               │
+│       ▼                 ▼                 ▼      │               │
+│   TRUTH ENGINE     DATA ORGAN       PROFIT       │               │
+│   ALLOW/DEGRAD     5 lanes          FACTORY      │               │
+│   /HALT            bybit/okx/       paper/canary │               │
+│                    binance          /micro-live   │               │
+│       │                 │                │        │               │
+│       ▼                 ▼                ▼        │               │
+│   GOVERNANCE       PROVIDERS        EXECUTION    │               │
+│   FSM              WS feeds         paper/live   │               │
+│   DRY→PAPER→       lock+sha256      /demo        │               │
+│   LIVE_S→LIVE                       kill matrix  │               │
+│                                                   │               │
+│   GATES: 154+ │ COURTS: v1/v2 │ EVIDENCE: EPOCH-*              │
+└─────────────────────────────────────────────────────────────────┘
 ```
 
 **Ключевые потоки**:
-1. **DAILY**: ops:life → verify:fast → eventbus → timemachine → autopilot → cockpit → candidates
-2. **DATA**: acquire (double-key) → raw.jsonl+lock.json → offline replay → dedup → reorder → digest
-3. **R2**: OKX orderbook → buffer → snapshot → discard → align → STRICT → digest proof
+1. **DAILY**: `ops:life` → verify:fast → eventbus → timemachine → autopilot → cockpit → candidates
+2. **DATA**: acquire (double-key net) → raw.jsonl+lock.json → offline replay → dedup → reorder → digest
+3. **R2**: OKX orderbook → buffer → REST snapshot → discard → align → STRICT sequential → digest proof
 4. **PROFIT**: edge:paper:sim → canary → micro-live → kill matrix → profit ledger
+
+---
+
+## CRITICAL PATH TRACES (x4)
+
+### TRACE 1: DAILY (ops:life)
+
+```
+npm run -s ops:life
+  → S01 verify:fast (HARD_STOP on fail)
+    → ops:node:toolchain:ensure
+    → verify:regression (unlock01, byte-audit x2, node-truth, node-wrap, nvm-ban, churn, etc.)
+  → S02 eventbus:smoke
+  → S03 timemachine (8 ticks, tick-only)
+  → S04 autopilot (mode routing + refusal)
+  → S05 cockpit (HUD: 7 секций)
+  → S06 candidates (registry scan)
+  → LIFE_SEAL → EPOCH-LIFE-<RUN_ID>/LIFE_SUMMARY.json
+```
+
+### TRACE 2: DATA (Liquidation Acquire → Replay)
+
+```
+edge:liq:acquire:bybit (REQUIRES: double-key network unlock)
+  → ws connect → raw.jsonl + lock.json (sha256, schema, time_unit=ms)
+edge:liq:replay (REQUIRES: TREASURE_NET_KILL=1)
+  → load raw.jsonl → verify sha256 vs lock → normalize → dedup → reorder → seal
+```
+
+### TRACE 3: R2 (OKX Orderbook Align)
+
+```
+edge_okx_orderbook_02_align_offline.mjs
+  → Load buffer.jsonl + snapshot.json + lock.json
+  → State machine: DISCARD → ALIGN_FIRST_EVENT → STRICT
+  → Canonical digest: sha256(JSON.stringify({asks: ASC, bids: DESC}))
+  → compareDecimalStr (no parseFloat)
+```
+
+### TRACE 4: PROFIT (Edge → Canary → Micro-Live)
+
+```
+edge:paper:sim → OpportunityDetector → ProfitCalculator → Court V2 verdict
+edge:microlive → MUST-FAIL default → file unlock → kill matrix
+Governance FSM: DRY_RUN → PAPER_TRADING → LIVE_SMALL → LIVE
+```
 
 ---
 
 ## SYSTEM LEVEL SET (L1–L12)
 
-| L | Описание | Балл | Upgrade |
-|---|----------|------|---------|
-| L1 | single-command life | **5** | — |
-| L2 | deterministic cockpit | **4** | freshness gate на EPOCH_FALLBACK |
-| L3 | no time truth (tick-only) | **5** | — |
-| L4 | no hidden net in CERT | **4** | net-kill probe в каждом spawnSync child |
-| L5 | write-scope discipline | **5** | — |
-| L6 | delivery semantics SSOT | **3** | specs/DELIVERY_SEMANTICS.md per lane |
-| L7 | lane registry + lifecycle | **4** | lane_state court |
-| L8 | capabilities scope-aware | **4** | bybit.scopes + heartbeat_interval_ms |
-| L9 | digest canon (no float) | **5** | — |
+| Level | Описание | Оценка | Upgrade |
+|-------|----------|--------|---------|
+| L1 | Single-command life (ops:life) | **5** | — |
+| L2 | Deterministic cockpit | **4** | Freshness gate на EPOCH_FALLBACK |
+| L3 | No time truth (tick-only) | **5** | — |
+| L4 | No hidden net in CERT/daily | **4** | Net-kill probe в каждом spawnSync child |
+| L5 | Write-scope discipline | **5** | — |
+| L6 | Delivery semantics SSOT | **3** | specs/DELIVERY_SEMANTICS.md per lane |
+| L7 | Lane registry + lifecycle | **4** | lane_state court |
+| L8 | Capabilities scope-aware | **4** | bybit.scopes + heartbeat |
+| L9 | Digest canon (no float) | **5** | — |
 | L10 | R2 isolation from daily | **4** | R2_DAILY_ISOLATION court |
-| L11 | profit safety covenant | **4** | specs/KILL_MATRIX.json |
-| L12 | courts cover failures | **3** | 8 formal courts |
+| L11 | Profit safety covenant | **4** | specs/KILL_MATRIX.json |
+| L12 | Courts cover failures | **3** | 8 formal courts |
 
-**Итого: 50/60 (83%) — NEAR-EXCHANGE-GRADE**
-
+**Суммарный балл**: 50/60 (83%) — NEAR-EXCHANGE-GRADE
 
 ---
 
 ## OFFICIAL RESEARCH: PROVIDER DELTAS
 
-### OKX Checksum Deprecation (источник: OKX API changelog)
+### OKX Checksum Deprecation
+
+**Источник**: OKX API Changelog
+
 - Demo env: **early May 2026**, Production: **early August 2026**
 - Новая процедура: seqId/prevSeqId validation вместо checksum
 - **Наша реализация совпадает** (6-step align, checksum_deprecated: true)
 - **DELTA-01**: Live acquire нужен update (шаг 2: игнорировать первый snapshot)
 - **DELTA-02**: REST endpoint параметр `source` — 5 марта 2026
 
-### Bybit WS Heartbeat (источник: Bybit V5 docs)
+### Bybit WS Heartbeat
+
+**Источник**: Bybit V5 docs
+
 - Ping interval = **20 секунд**, disconnect после 10 минут
 - **DELTA-03**: heartbeat_interval_ms отсутствует в capabilities.bybit.policy
 
-### Binance Depth Sync (источник: Binance Spot/Futures docs)
+### Binance Depth Sync
+
+**Источник**: Binance Spot/Futures docs
+
 - Spot: `U <= lastUpdateId <= u`; Futures: + `pu === prev.u`
 - **DELTA-04**: sync_field_mapping не специфицирован в capabilities
 
@@ -117,7 +187,7 @@ STATUS: ACTIVE | VERSION: 1.0.0 | ROLE: PROJECT LEAD
 
 ---
 
-## SABOTAGE RADAR (Top 15)
+## SABOTAGE RADAR (Top 25)
 
 | # | Vector | Killing Gate |
 |---|--------|-------------|
@@ -133,10 +203,19 @@ STATUS: ACTIVE | VERSION: 1.0.0 | ROLE: PROJECT LEAD
 | S10 | CERT writes to EXECUTOR | RG_CERT_EXECUTOR_WRITE01 |
 | S11 | nvm overrides pinned node | regression_node_nvm_ban |
 | S12 | Live enabled by default | regression_microlive01_must_fail |
-| S13 | AGENTS.md deleted | RG_AGENT01_AGENTS_PRESENT |
-| S14 | seqId gap undetected | RG_OB_OKX06_GAP_DETECTION |
-| S15 | Lock sha256 mismatch | RG_LIQ_LOCK01 |
-
+| S13 | Kill switch bypass | regression_microlive02_kill_switch |
+| S14 | AGENTS.md deleted | RG_AGENT01_AGENTS_PRESENT |
+| S15 | CLAUDE.md drifts from AGENTS.md | RG_AGENT02_CLAUDE_MD_DRIFT |
+| S16 | RESEARCH runs CERT scripts | RG_AUTO02_NO_CERT_IN_RESEARCH |
+| S17 | Tracked EPOCH files in git | RG_AUTO03_PR_CLEANROOM_APPLIED |
+| S18 | Unbounded spawnSync | regression_no_unbounded_spawnsync |
+| S19 | OKX seqId gap undetected | RG_OB_OKX06_GAP_DETECTION |
+| S20 | Digest spec drift vs implementation | RG_OB_OKX16_DIGEST_MATCHES_SPEC |
+| S21 | Lock.json sha256 mismatch | RG_LIQ_LOCK01 |
+| S22 | Schema version mismatch | RG_LIQ_SSOT01 |
+| S23 | Write outside allowed roots | regression_churn_contract01 |
+| S24 | Temp files outside roots | regression_tmp01 |
+| S25 | Secret/token committed | verify:e99:contracts |
 
 ---
 
@@ -146,7 +225,7 @@ STATUS: ACTIVE | VERSION: 1.0.0 | ROLE: PROJECT LEAD
 - **Triggers**: diff output при повторном запуске
 - **Verdicts**: ND01 (byte mismatch), ND02 (ordering), ND03 (volatile leak)
 - **Gates**: RG_TIME01, RG_BUS01_DETERMINISM_X2, RG_OB_OKX14
-- **Status**: PARTIALLY_IMPLEMENTED — x2 gates есть, нет Court orchestrator
+- **Status**: PARTIALLY_IMPLEMENTED
 
 ### Court 2: Network Court (NETV01)
 - **Triggers**: сетевая активность в CERT/CLOSE/daily
@@ -162,19 +241,19 @@ STATUS: ACTIVE | VERSION: 1.0.0 | ROLE: PROJECT LEAD
 
 ### Court 4: Truth Court (Lineage/Locks/Digest)
 - **Triggers**: sha256 mismatch, schema drift, lock field missing
-- **Verdicts**: RDY01 (missing data), RDY02 (mismatch), TRUTH01 (digest drift)
+- **Verdicts**: RDY01, RDY02, TRUTH01
 - **Gates**: RG_LIQ_LOCK01, RG_LIQ_SSOT01, RG_OB_OKX04/15/16
 - **Status**: PARTIALLY_IMPLEMENTED
 
 ### Court 5: Leakage Court (Future Reads)
 - **Triggers**: lookahead в backtest/paper/edge
-- **Verdicts**: LEAK01 (timestamp), LEAK02 (future price), LEAK03 (cross-fold)
-- **Gates**: epoch29 (leakage sentinel), e108_no_lookahead_contract
+- **Verdicts**: LEAK01, LEAK02, LEAK03
+- **Gates**: epoch29, e108_no_lookahead_contract
 - **Status**: PARTIALLY_IMPLEMENTED
 
 ### Court 6: Provider Physics Court
 - **Triggers**: rate limit exceeded, heartbeat timeout, align failure
-- **Verdicts**: PHYS01 (rate), PHYS02 (heartbeat), PHYS03 (align gap)
+- **Verdicts**: PHYS01, PHYS02, PHYS03
 - **Gates**: RG_CAP01-05, RG_OB_OKX12
 - **Status**: SPEC_ONLY
 
@@ -182,18 +261,17 @@ STATUS: ACTIVE | VERSION: 1.0.0 | ROLE: PROJECT LEAD
 - **Triggers**: live без unlock, drawdown/loss breach
 - **Verdicts**: PROFIT01, HALT_MAX_DRAWDOWN, HALT_DAILY_LOSS, HALT_KILL_SWITCH
 - **Gates**: regression_microlive01, regression_microlive02
-- **Status**: PARTIALLY_IMPLEMENTED — thresholds hardcoded
+- **Status**: PARTIALLY_IMPLEMENTED
 
 ### Court 8: UX/Product Court
 - **Triggers**: cockpit stale data, broken links, ordering drift
-- **Verdicts**: UX01 (stale), UX02 (broken link), UX03 (ordering drift)
+- **Verdicts**: UX01, UX02, UX03
 - **Gates**: RG_COCKPIT03-06
 - **Status**: PARTIALLY_IMPLEMENTED
 
-
 ---
 
-## WOW PORTFOLIO (G1-G4)
+## WOW PORTFOLIO (G1–G4)
 
 ### Top-15 by Score
 
@@ -219,15 +297,15 @@ STATUS: ACTIVE | VERSION: 1.0.0 | ROLE: PROJECT LEAD
 
 **WOW3-A: Kill Matrix SSOT + Profit Court**
 - specs/KILL_MATRIX.json + Court 7 orchestrator + RG gate
-- Migration: PREVIEW (spec) → SHADOW (compare) → CANARY → FULL
+- Migration: PREVIEW → SHADOW → CANARY → FULL
 
 **WOW3-B: Delivery Semantics Spec per Lane**
 - specs/DELIVERY_SEMANTICS.md + per-lane contract + RG gate
-- Migration: PREVIEW (doc) → SHADOW (validate) → FULL
+- Migration: PREVIEW → SHADOW → FULL
 
 **WOW3-C: Lane State Promotion Court**
 - Court + gate verifying promotion preconditions
-- Migration: PREVIEW (spec) → CANARY (auto-refuse) → FULL
+- Migration: PREVIEW → CANARY → FULL
 
 ---
 
@@ -247,7 +325,6 @@ STATUS: ACTIVE | VERSION: 1.0.0 | ROLE: PROJECT LEAD
 - R2 exceptions: no_update(SKIP), seq_reset(RESET), empty_updates(IGNORE)
 - align: 6-step DISCARD→ALIGN_FIRST_EVENT→STRICT
 - digest: canonical sha256 (compareDecimalStr, no parseFloat)
-
 
 ---
 
@@ -280,7 +357,7 @@ STATUS: ACTIVE | VERSION: 1.0.0 | ROLE: PROJECT LEAD
 - **ONE_NEXT_ACTION**: `npm run -s verify:fast`
 
 ### P1: SAFETY SSOT
-- specs/KILL_MATRIX.json + specs/DELIVERY_SEMANTICS.md + Provider Physics update
+- specs/KILL_MATRIX.json + specs/DELIVERY_SEMANTICS.md + Provider Physics
 - L6→4, L11→5
 - **ONE_NEXT_ACTION**: Create specs/KILL_MATRIX.json
 
@@ -290,7 +367,7 @@ STATUS: ACTIVE | VERSION: 1.0.0 | ROLE: PROJECT LEAD
 - **ONE_NEXT_ACTION**: Implement Court orchestrator
 
 ### P3: EXCHANGE-GRADE
-- OKX live acquire update + Binance sync spec + all MEDIUM→HIGH
+- OKX live acquire + Binance sync spec + all MEDIUM→HIGH
 - All L1–L12 = 5
 - **ONE_NEXT_ACTION**: Update OKX live acquire
 
