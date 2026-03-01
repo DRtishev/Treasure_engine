@@ -80,7 +80,7 @@
   "gate_id": "RG_OB_OKX15_DIGEST_SPEC_PRESENT",
   "next_action": "npm run -s verify:regression:ob-okx15-digest-spec-present",
   "reason_code": "NONE",
-  "run_id": "c86c05d745a5",
+  "run_id": "0210149097e8",
   "schema_version": "1.0.0",
   "status": "PASS"
 }
