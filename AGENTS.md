@@ -128,6 +128,8 @@ To enable destructive/apply actions, both must be present:
 | RG_LIQ_SSOT01_SCHEMA_ALIGNMENT | `verify:regression:liq-ssot01-schema-alignment` |
 | RG_AGENT03_NO_LEGACY_CONTRADICTIONS | `verify:regression:agent03-no-legacy-contradictions` |
 | RG_DATA_EVT01_EVENT_EMISSION | `verify:regression:data-evt01-event-emission` |
+| RG_PR05_EXECUTOR_SSOT_STABLE_SET | `verify:regression:pr05-executor-ssot-stable-set` |
+| RG_R2_02_FIXTURES_READONLY | `verify:regression:r2-02-fixtures-readonly` |
 
 ---
 
