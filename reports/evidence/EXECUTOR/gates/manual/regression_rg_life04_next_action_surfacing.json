@@ -1,0 +1,57 @@
+{
+  "checks": [
+    {
+      "check": "one_next_action_variable_present",
+      "detail": "oneNextAction variable declared — OK",
+      "pass": true
+    },
+    {
+      "check": "reads_toolchain_ensure_json",
+      "detail": "reads node_toolchain_ensure.json receipt — OK",
+      "pass": true
+    },
+    {
+      "check": "extracts_detail_next_action",
+      "detail": "extracts receipt.detail.next_action — OK",
+      "pass": true
+    },
+    {
+      "check": "fallback_to_bootstrap_command",
+      "detail": "fallback \"npm run -s ops:node:toolchain:bootstrap\" present — OK",
+      "pass": true
+    },
+    {
+      "check": "console_prints_one_next_action_line",
+      "detail": "console.log ONE_NEXT_ACTION: line present — OK",
+      "pass": true
+    },
+    {
+      "check": "life_summary_json_has_one_next_action_field",
+      "detail": "one_next_action field in LIFE_SUMMARY.json — OK",
+      "pass": true
+    },
+    {
+      "check": "life_summary_md_uses_one_next_action_var",
+      "detail": "LIFE_SUMMARY.md uses oneNextAction var — OK",
+      "pass": true
+    },
+    {
+      "check": "extraction_restricted_to_s01_blocked",
+      "detail": "extraction restricted to S01 BLOCKED — OK",
+      "pass": true
+    },
+    {
+      "check": "fail_soft_catch_present",
+      "detail": "fail-soft catch on receipt read — OK",
+      "pass": true
+    }
+  ],
+  "expected_console_line": "ONE_NEXT_ACTION: npm run -s ops:node:toolchain:bootstrap",
+  "failed_checks": [],
+  "gate_id": "RG_LIFE04_NEXT_ACTION_SURFACING",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "56a2e14b06e7",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
