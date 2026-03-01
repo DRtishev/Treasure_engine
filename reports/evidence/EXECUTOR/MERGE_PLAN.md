@@ -167,7 +167,49 @@ Phase 1 complete. Branch is ready for Phase 2 fixes (Perplexity delta + mine swe
 
 ---
 
-## 9. ONE_NEXT_ACTION
+## 9. PROOF_OF_CONTAINMENT
+
+Exact git commands proving the claimed branch relationships.
+
+### Proof A: scale contains sabotage-fix entirely
+
+```
+# Commits in sabotage-fix NOT in scale — must be empty for containment
+git log --oneline origin/claude/data-organ-r1-sabotage-fix-H3pBX \
+    ^origin/claude/data-organ-scale-H3pBX
+OUTPUT: (empty) — confirmed
+```
+
+```
+# Merge-base equals HEAD of sabotage-fix
+git merge-base origin/claude/data-organ-r1-sabotage-fix-H3pBX \
+               origin/claude/data-organ-scale-H3pBX
+OUTPUT: 39e1005c74fc754f1221df6cd54a9234d0214445
+EQUALS: origin/claude/data-organ-r1-sabotage-fix-H3pBX HEAD
+CONCLUSION: merge-base == sabotage-fix HEAD → scale is strict superset
+```
+
+### Proof B: agent-os is in main (PR 82)
+
+```
+git log --oneline origin/main | grep "agent-os-timemachine"
+OUTPUT: 40c3f98 Merge pull request #82 from DRtishev/claude/agent-os-timemachine-yo06o
+```
+
+### Proof C: fast-forward merge — linear history
+
+```
+git log --oneline origin/claude/merge-staging-wow-data-organ-3ymaK ^origin/main
+OUTPUT:
+  215e13a chore(evidence): MERGE_PLAN + EXECUTOR gate receipts
+  692d9de feat: Scale the Organism — BUS03 + Lane Registry + Cockpit Readiness Scorecard
+  39e1005 chore: update EXECUTOR evidence receipts from gate runs
+  44c771e fix: data-organ-r1 sabotage fixes + eventbus solder
+```
+
+---
+
+## 10. ONE_NEXT_ACTION
 
 ```bash
 npm run -s verify:fast

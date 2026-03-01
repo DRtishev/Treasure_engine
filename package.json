@@ -852,7 +852,7 @@
     "verify:regression:closeout-not-before-victory": "node scripts/verify/regression_closeout_not_before_victory.mjs",
     "epoch:victory:fast": "VICTORY_PROFILE=FAST bash scripts/ops/node_authority_run.sh npm run -s _epoch:victory:seal",
     "epoch:victory:full": "npm run -s epoch:victory:audit",
-    "verify:fast": "npm run -s ops:node:toolchain:ensure && npm run -s verify:repo:byte-audit:x2 && npm run -s verify:regression:node-truth-alignment && npm run -s verify:regression:node-wrap-contract && npm run -s verify:regression:node-vendored-backend-must-win && npm run -s verify:regression:node-nvm-ban && npm run -s verify:regression:churn-contract01 && npm run -s verify:regression:ec01-reason-context-contract && npm run -s verify:regression:netkill-ledger-enforcement && npm run -s verify:regression:pr01-evidence-bloat-guard && npm run -s verify:regression:victory-fast-no-heavy",
+    "verify:fast": "npm run -s ops:node:toolchain:ensure && npm run -s verify:regression:unlock01-no-incoming-unlock-files && npm run -s verify:repo:byte-audit:x2 && npm run -s verify:regression:node-truth-alignment && npm run -s verify:regression:node-wrap-contract && npm run -s verify:regression:node-vendored-backend-must-win && npm run -s verify:regression:node-nvm-ban && npm run -s verify:regression:churn-contract01 && npm run -s verify:regression:ec01-reason-context-contract && npm run -s verify:regression:netkill-ledger-enforcement && npm run -s verify:regression:pr01-evidence-bloat-guard && npm run -s verify:regression:victory-fast-no-heavy",
     "verify:full": "npm run -s epoch:mega:proof:x2 && npm run -s epoch:foundation:seal && npm run -s epoch:victory:full",
     "verify:regression:pr01-evidence-bloat-guard": "node scripts/verify/regression_pr01_evidence_bloat_guard.mjs",
     "ops:baseline:restore": "bash scripts/ops/baseline_restore.sh",
@@ -911,7 +911,13 @@
     "verify:regression:lane01-registry-present": "node scripts/verify/regression_lane01_registry_present.mjs",
     "verify:regression:lane02-code-matches-registry": "node scripts/verify/regression_lane02_code_matches_registry.mjs",
     "verify:regression:lane03-no-dup-schema-version": "node scripts/verify/regression_lane03_no_dup_schema_version.mjs",
-    "verify:regression:cockpit06-readiness-scorecard-present": "node scripts/verify/regression_cockpit06_readiness_scorecard_present.mjs"
+    "verify:regression:cockpit06-readiness-scorecard-present": "node scripts/verify/regression_cockpit06_readiness_scorecard_present.mjs",
+    "verify:regression:unlock01-no-incoming-unlock-files": "node scripts/verify/regression_unlock01_no_incoming_unlock_files.mjs",
+    "verify:regression:cap01-capabilities-present": "node scripts/verify/regression_cap01_capabilities_present.mjs",
+    "verify:regression:cap02-capabilities-coverage": "node scripts/verify/regression_cap02_capabilities_coverage.mjs",
+    "verify:regression:cap03-exceptions-accounted": "node scripts/verify/regression_cap03_exceptions_accounted.mjs",
+    "verify:regression:cap04-no-wallclock-policy-fields": "node scripts/verify/regression_cap04_no_wallclock_policy_fields.mjs",
+    "verify:regression:ws05-limiter-active-binance": "node scripts/verify/regression_ws05_limiter_active_binance.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

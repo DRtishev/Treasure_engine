@@ -5,7 +5,9 @@
       "lane_id": "liq_binance_forceorder_ws",
       "lane_kind": "WS",
       "truth_level": "HINT",
-      "providers": ["binance_forceorder_ws"],
+      "providers": [
+        "binance_forceorder_ws"
+      ],
       "readiness_rules": {
         "PASS": "all checks pass",
         "RDY01": "missing artifacts",
@@ -29,7 +31,9 @@
       "lane_id": "liq_bybit_ws_v5",
       "lane_kind": "WS",
       "truth_level": "TRUTH",
-      "providers": ["bybit_ws_v5"],
+      "providers": [
+        "bybit_ws_v5"
+      ],
       "readiness_rules": {
         "PASS": "all checks pass",
         "RDY01": "missing artifacts",
@@ -53,7 +57,9 @@
       "lane_id": "liq_okx_ws_v5",
       "lane_kind": "WS",
       "truth_level": "HINT",
-      "providers": ["okx_ws_v5"],
+      "providers": [
+        "okx_ws_v5"
+      ],
       "readiness_rules": {
         "PASS": "all checks pass",
         "RDY01": "missing artifacts",
@@ -77,7 +83,9 @@
       "lane_id": "price_offline_fixture",
       "lane_kind": "FIXTURE",
       "truth_level": "HINT",
-      "providers": ["offline_fixture"],
+      "providers": [
+        "offline_fixture"
+      ],
       "readiness_rules": {
         "PASS": "all checks pass",
         "RDY01": "missing artifacts",
@@ -96,6 +104,32 @@
         "schema_version"
       ],
       "schema_version": "price_bars.offline_fixture.v1"
+    },
+    {
+      "lane_id": "price_okx_orderbook_ws",
+      "lane_kind": "WS",
+      "truth_level": "HINT",
+      "providers": [
+        "okx_orderbook_ws"
+      ],
+      "readiness_rules": {
+        "PASS": "all R2 exception fixtures present and valid",
+        "RDY01": "missing fixture dirs (no_update / seq_reset / empty_updates)",
+        "RDY02": "fixture schema error or empty dir"
+      },
+      "replay_command": "TREASURE_NET_KILL=1 node scripts/edge/edge_okx_orderbook_00_preflight_replay.mjs --provider okx_orderbook_ws",
+      "required_artifacts": [
+        "artifacts/fixtures/okx/orderbook/no_update/",
+        "artifacts/fixtures/okx/orderbook/seq_reset/",
+        "artifacts/fixtures/okx/orderbook/empty_updates/"
+      ],
+      "required_lock_fields": [],
+      "r2_exception_policy_refs": [
+        "docs/OKX_ORDERBOOK_R2_PROCEDURE.md#no-update",
+        "docs/OKX_ORDERBOOK_R2_PROCEDURE.md#seq-reset",
+        "docs/OKX_ORDERBOOK_R2_PROCEDURE.md#empty-updates"
+      ],
+      "schema_version": "okx_orderbook_ws.r2_preflight.v1"
     }
   ]
 }
