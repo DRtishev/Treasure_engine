@@ -20,9 +20,10 @@ import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 
 const ROOT = process.cwd();
-const EXEC = path.join(ROOT, 'reports/evidence/EXECUTOR');
-const MANUAL = path.join(EXEC, 'gates/manual');
-fs.mkdirSync(MANUAL, { recursive: true });
+// R3 evidence writes to EPOCH-R3-* directories (not EXECUTOR)
+// to avoid PR05/PR01 allowlist violations. EXECUTOR is for daily-chain only.
+const R3_EVIDENCE = path.join(ROOT, 'reports/evidence', `EPOCH-R3-OKX-ACQUIRE-${RUN_ID}`);
+fs.mkdirSync(R3_EVIDENCE, { recursive: true });
 
 const NEXT_ACTION = 'npm run -s verify:r3:okx-acquire-contract';
 const sha256Hex = (x) => crypto.createHash('sha256').update(x).digest('hex');
@@ -297,6 +298,204 @@ const NET_KILL_PRELOAD = path.join(ROOT, 'scripts/safety/net_kill_preload.cjs');
 }
 
 // ---------------------------------------------------------------------------
+// RG_R3_OKX05_LOCK_ATOMIC_FINAL — lock_state=FINAL, written once at SEAL
+// ---------------------------------------------------------------------------
+{
+  const fixtureExists = fs.existsSync(FIXTURE_RAW) && fs.existsSync(FIXTURE_LOCK);
+  if (fixtureExists) {
+    const lock = JSON.parse(fs.readFileSync(FIXTURE_LOCK, 'utf8'));
+
+    // lock_state must be FINAL
+    const hasFinalState = lock.lock_state === 'FINAL';
+    checks.push({
+      check: 'RG_R3_OKX05_LOCK_ATOMIC_lock_state_final',
+      pass: hasFinalState,
+      detail: hasFinalState
+        ? 'lock_state=FINAL'
+        : `lock_state=${lock.lock_state || 'MISSING'}`,
+    });
+
+    // Source: acquire script must NOT write lock before raw (seal-only)
+    const acqSrc = fs.existsSync(ACQ_SCRIPT) ? fs.readFileSync(ACQ_SCRIPT, 'utf8') : '';
+    // Lock must be written AFTER raw.jsonl (raw appears first in source order)
+    const rawWriteIdx = acqSrc.indexOf("writeFileSync(path.join(outDir, 'raw.jsonl')");
+    const lockWriteIdx = acqSrc.indexOf("writeFileSync(path.join(outDir, 'lock.json')");
+    const sealOrder = rawWriteIdx >= 0 && lockWriteIdx >= 0 && rawWriteIdx < lockWriteIdx;
+    checks.push({
+      check: 'RG_R3_OKX05_LOCK_ATOMIC_seal_order',
+      pass: sealOrder,
+      detail: sealOrder
+        ? 'raw.jsonl written before lock.json (seal-only order)'
+        : `WRONG ORDER: raw@${rawWriteIdx} lock@${lockWriteIdx}`,
+    });
+
+    // No DRAFT lock_state assignment in acquire source
+    // (comments mentioning DRAFT are ok; actual lock_state:'DRAFT' is not)
+    const hasDraftAssign = /lock_state\s*[:=]\s*['"]DRAFT['"]/.test(acqSrc);
+    checks.push({
+      check: 'RG_R3_OKX05_LOCK_ATOMIC_no_draft_state',
+      pass: !hasDraftAssign,
+      detail: !hasDraftAssign ? 'no lock_state=DRAFT assignment' : 'lock_state=DRAFT found',
+    });
+  }
+}
+
+// ---------------------------------------------------------------------------
+// RG_EVT_DATA01_R3_EVENTS_SCHEMA_COMPAT — EventBus events are schema-valid
+// ---------------------------------------------------------------------------
+{
+  const busDir = path.join(ROOT, 'reports/evidence/EPOCH-EVENTBUS-REPLAY-ACQ-OB-okx_orderbook_ws');
+  const eventsFile = path.join(busDir, 'EVENTS.jsonl');
+
+  if (fs.existsSync(eventsFile)) {
+    const lines = fs.readFileSync(eventsFile, 'utf8').trim().split('\n').filter(Boolean);
+    const events = lines.map((l) => { try { return JSON.parse(l); } catch { return null; } }).filter(Boolean);
+
+    // No wall-clock fields in any event
+    const FORBIDDEN_RE = /(_at|_ts|_ms|timestamp|elapsed|wall_clock)($|[^a-z])/i;
+    const wallClockViolations = [];
+    for (const ev of events) {
+      for (const key of Object.keys(ev)) {
+        if (FORBIDDEN_RE.test(key)) wallClockViolations.push(`root.${key}`);
+      }
+      if (ev.attrs && typeof ev.attrs === 'object') {
+        for (const key of Object.keys(ev.attrs)) {
+          if (FORBIDDEN_RE.test(key)) wallClockViolations.push(`attrs.${key}`);
+        }
+      }
+    }
+    checks.push({
+      check: 'RG_EVT_DATA01_no_wallclock_fields',
+      pass: wallClockViolations.length === 0,
+      detail: wallClockViolations.length === 0
+        ? 'no wall-clock fields in events'
+        : `VIOLATIONS: ${wallClockViolations.join(', ')}`,
+    });
+
+    // Required schema keys on every event
+    const REQUIRED_KEYS = ['schema_version', 'tick', 'run_id', 'mode', 'component', 'event', 'reason_code', 'surface', 'evidence_paths', 'attrs'];
+    const missingKeys = [];
+    for (let i = 0; i < events.length; i++) {
+      for (const k of REQUIRED_KEYS) {
+        if (!(k in events[i])) missingKeys.push(`event[${i}].${k}`);
+      }
+    }
+    checks.push({
+      check: 'RG_EVT_DATA01_required_schema_keys',
+      pass: missingKeys.length === 0,
+      detail: missingKeys.length === 0
+        ? `all ${events.length} events have required keys`
+        : `MISSING: ${missingKeys.slice(0, 5).join(', ')}`,
+    });
+
+    // Tick ordering: ascending + component/event lex for same tick
+    const tickAsc = events.every((e, i) => i === 0 || e.tick >= events[i - 1].tick);
+    checks.push({
+      check: 'RG_EVT_DATA01_tick_ascending',
+      pass: tickAsc,
+      detail: tickAsc ? 'ticks ascending' : 'ticks NOT ascending',
+    });
+  }
+}
+
+// ---------------------------------------------------------------------------
+// RG_PR06_R3_NO_EXECUTOR_RUNTIME_CHURN — R3 gates don't touch EXECUTOR
+// ---------------------------------------------------------------------------
+{
+  // Source inspection: r3_preflight and r3_okx_acquire_contract must NOT
+  // reference EXECUTOR path for writing evidence
+  const prefSrc = fs.existsSync(path.join(ROOT, 'scripts/verify/r3_preflight.mjs'))
+    ? fs.readFileSync(path.join(ROOT, 'scripts/verify/r3_preflight.mjs'), 'utf8')
+    : '';
+  const acqContractSrc = fs.readFileSync(path.join(ROOT, 'scripts/verify/r3_okx_acquire_contract.mjs'), 'utf8');
+
+  // Check: preflight does not write to EXECUTOR
+  const prefNoExec = !prefSrc.includes("'reports/evidence/EXECUTOR'") &&
+    !prefSrc.includes('"reports/evidence/EXECUTOR"');
+  checks.push({
+    check: 'RG_PR06_preflight_no_executor_write',
+    pass: prefNoExec,
+    detail: prefNoExec ? 'preflight writes to EPOCH-R3-* only' : 'EXECUTOR ref found in preflight',
+  });
+
+  // Check: acquire contract uses EPOCH-R3-* for evidence (not EXECUTOR writeMd/writeJson)
+  // We check that the evidence output variable is R3_EVIDENCE, not EXEC/MANUAL
+  const usesR3Evidence = acqContractSrc.includes('R3_EVIDENCE') &&
+    acqContractSrc.includes('EPOCH-R3-');
+  checks.push({
+    check: 'RG_PR06_contract_uses_epoch_r3',
+    pass: usesR3Evidence,
+    detail: usesR3Evidence ? 'contract writes to EPOCH-R3-* evidence dir' : 'EPOCH-R3 pattern not found',
+  });
+
+  // Check: no R3_*.md or r3_*.json on disk in EXECUTOR
+  const execDirParts = ['reports', 'evidence', 'EXECUTOR'];
+  const execDir = path.join(ROOT, ...execDirParts);
+  const r3InExec = fs.existsSync(execDir) ?
+    fs.readdirSync(execDir).filter((f) => /^R3_/i.test(f)) : [];
+  const manualDir = path.join(execDir, 'gates', 'manual');
+  const r3InManual = fs.existsSync(manualDir) ?
+    fs.readdirSync(manualDir).filter((f) => /^r3_/i.test(f)) : [];
+  const noR3OnDisk = r3InExec.length === 0 && r3InManual.length === 0;
+  checks.push({
+    check: 'RG_PR06_no_r3_in_executor_on_disk',
+    pass: noR3OnDisk,
+    detail: noR3OnDisk
+      ? 'no R3 files in EXECUTOR'
+      : `FOUND: ${[...r3InExec, ...r3InManual].join(', ')}`,
+  });
+}
+
+// ---------------------------------------------------------------------------
+// RG_CAP05_R3_POLICY_FROM_CAPABILITIES — acquire sources from capabilities
+// ---------------------------------------------------------------------------
+{
+  const acqSrc = fs.existsSync(ACQ_SCRIPT) ? fs.readFileSync(ACQ_SCRIPT, 'utf8') : '';
+
+  // Source must import/read data_capabilities.json
+  const readsCapabilities = acqSrc.includes('data_capabilities.json');
+  checks.push({
+    check: 'RG_CAP05_reads_capabilities',
+    pass: readsCapabilities,
+    detail: `reads_capabilities=${readsCapabilities}`,
+  });
+
+  // Source must reference okx caps for depth_levels
+  const usesDepthLevels = acqSrc.includes('depth_levels');
+  checks.push({
+    check: 'RG_CAP05_uses_depth_levels',
+    pass: usesDepthLevels,
+    detail: `uses_depth_levels=${usesDepthLevels}`,
+  });
+
+  // Source must reference topic_format from capabilities
+  const usesTopicFormat = acqSrc.includes('topic_format');
+  checks.push({
+    check: 'RG_CAP05_uses_topic_format',
+    pass: usesTopicFormat,
+    detail: `uses_topic_format=${usesTopicFormat}`,
+  });
+
+  // Verify capabilities file is parseable and has okx section
+  const capsPath = path.join(ROOT, 'specs/data_capabilities.json');
+  let capsValid = false;
+  if (fs.existsSync(capsPath)) {
+    try {
+      const caps = JSON.parse(fs.readFileSync(capsPath, 'utf8'));
+      capsValid = !!caps.capabilities?.okx?.orderbook?.depth_levels &&
+        !!caps.capabilities?.okx?.policy?.topic_format;
+    } catch {}
+  }
+  checks.push({
+    check: 'RG_CAP05_capabilities_valid',
+    pass: capsValid,
+    detail: capsValid
+      ? 'okx capabilities present with depth_levels + topic_format'
+      : 'MISSING or invalid okx capabilities',
+  });
+}
+
+// ---------------------------------------------------------------------------
 // Check: NOT wired into verify:fast or ops:life
 // ---------------------------------------------------------------------------
 {
@@ -321,7 +520,7 @@ const failed = checks.filter((c) => !c.pass);
 const status = failed.length === 0 ? 'PASS' : 'FAIL';
 const reason_code = failed.length === 0 ? 'NONE' : 'R3_OKX_ACQUIRE_BLOCKED';
 
-writeMd(path.join(EXEC, 'R3_OKX_ACQUIRE_CONTRACT.md'), [
+writeMd(path.join(R3_EVIDENCE, 'R3_OKX_ACQUIRE_CONTRACT.md'), [
   '# R3_OKX_ACQUIRE_CONTRACT.md — EPOCH-67 OKX Acquire Kernel Gates', '',
   `STATUS: ${status}`,
   `REASON_CODE: ${reason_code}`,
@@ -333,7 +532,7 @@ writeMd(path.join(EXEC, 'R3_OKX_ACQUIRE_CONTRACT.md'), [
   failed.length === 0 ? '- NONE' : failed.map((c) => `- ${c.check}: ${c.detail}`).join('\n'),
 ].join('\n'));
 
-writeJsonDeterministic(path.join(MANUAL, 'r3_okx_acquire_contract.json'), {
+writeJsonDeterministic(path.join(R3_EVIDENCE, 'r3_okx_acquire_contract.json'), {
   schema_version: '1.0.0',
   gate_id: 'R3_OKX_ACQUIRE_CONTRACT',
   status,

@@ -23,9 +23,10 @@ import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 
 const ROOT = process.cwd();
-const EXEC = path.join(ROOT, 'reports/evidence/EXECUTOR');
-const MANUAL = path.join(EXEC, 'gates/manual');
-fs.mkdirSync(MANUAL, { recursive: true });
+// R3 evidence writes to EPOCH-R3-* directories (not EXECUTOR)
+// to avoid PR05/PR01 allowlist violations. EXECUTOR is for daily-chain only.
+const R3_EVIDENCE = path.join(ROOT, 'reports/evidence', `EPOCH-R3-PREFLIGHT-${RUN_ID}`);
+fs.mkdirSync(R3_EVIDENCE, { recursive: true });
 
 const NEXT_ACTION = 'npm run -s verify:r3:preflight';
 const ALLOW_FILE = path.join(ROOT, 'artifacts/incoming/ALLOW_NETWORK');
@@ -152,7 +153,7 @@ const failed = checks.filter((c) => !c.pass);
 const status = failed.length === 0 ? 'PASS' : 'FAIL';
 const reason_code = failed.length === 0 ? 'NONE' : 'R3_PREFLIGHT_BLOCKED';
 
-writeMd(path.join(EXEC, 'R3_PREFLIGHT.md'), [
+writeMd(path.join(R3_EVIDENCE, 'R3_PREFLIGHT.md'), [
   '# R3_PREFLIGHT.md — R3 OKX Live Acquire Preflight v2', '',
   `STATUS: ${status}`,
   `REASON_CODE: ${reason_code}`,
@@ -164,7 +165,7 @@ writeMd(path.join(EXEC, 'R3_PREFLIGHT.md'), [
   failed.length === 0 ? '- NONE' : failed.map((c) => `- ${c.check}: ${c.detail}`).join('\n'),
 ].join('\n'));
 
-writeJsonDeterministic(path.join(MANUAL, 'r3_preflight.json'), {
+writeJsonDeterministic(path.join(R3_EVIDENCE, 'r3_preflight.json'), {
   schema_version: '1.0.0',
   gate_id: 'R3_PREFLIGHT',
   status,

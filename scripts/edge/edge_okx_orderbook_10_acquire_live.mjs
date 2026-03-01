@@ -1,7 +1,7 @@
 /**
  * edge_okx_orderbook_10_acquire_live.mjs — EPOCH-67 OKX Live Orderbook Acquire
  *
- * Connects to OKX WS v5 books5 channel and captures raw orderbook messages.
+ * Connects to OKX WS v5 books channel and captures raw orderbook messages.
  * Produces:
  *   artifacts/incoming/okx/orderbook/<RUN_ID>/raw.jsonl
  *   artifacts/incoming/okx/orderbook/<RUN_ID>/lock.json
@@ -16,8 +16,16 @@
  * EventBus emissions (tick-only, no wallclock):
  *   ACQ_BOOT, ACQ_CONNECT, ACQ_SUB, ACQ_MSG, ACQ_SEAL, ACQ_ERROR
  *
+ * Lock lifecycle: SEAL-ONLY (Option 1)
+ *   - While capturing: raw.jsonl grows, no lock exists
+ *   - On seal: compute sha256 + line_count, write lock.json atomically
+ *   - lock_state is always FINAL (no DRAFT states)
+ *
  * lock.json fields (no timestamps as truth):
- *   provider_id, lane_id, schema_version, raw_capture_sha256, line_count
+ *   provider_id, lane_id, schema_version, raw_capture_sha256, line_count,
+ *   lock_state (always "FINAL")
+ *
+ * Policy constants sourced from specs/data_capabilities.json (RG_CAP05).
  *
  * NOT wired into verify:fast or ops:life.
  */
@@ -28,9 +36,19 @@ import crypto from 'node:crypto';
 import WebSocket from 'ws';
 import { createBus } from '../ops/eventbus_v1.mjs';
 
+// ---------------------------------------------------------------------------
+// Policy constants sourced from specs/data_capabilities.json (RG_CAP05)
+// ---------------------------------------------------------------------------
+const CAPABILITIES_PATH = path.join(process.cwd(), 'specs/data_capabilities.json');
+const capabilities = JSON.parse(fs.readFileSync(CAPABILITIES_PATH, 'utf8'));
+const okxCaps = capabilities.capabilities.okx;
+
 const PROVIDER_ID = 'okx_orderbook_ws';
 const LANE_ID = 'okx_orderbook_acquire';
 const SCHEMA_VERSION = 'okx_orderbook_ws.acquire_live.v1';
+const DEPTH_LEVEL = okxCaps.orderbook.depth_levels[1]; // 5 — from capabilities
+const WS_CHANNEL = `books${DEPTH_LEVEL}`;
+const TOPIC_FORMAT = okxCaps.policy.topic_format; // "channel"
 const ENDPOINT = 'wss://ws.okx.com:8443/ws/v5/public';
 const ALLOW_NETWORK_FILE = path.join(process.cwd(), 'artifacts/incoming/ALLOW_NETWORK');
 
@@ -113,7 +131,7 @@ try {
 
       ws.send(JSON.stringify({
         op: 'subscribe',
-        args: [{ channel: 'books5', instId }],
+        args: [{ channel: WS_CHANNEL, instId }],
       }));
 
       subscribed = true;
@@ -124,7 +142,7 @@ try {
         reason_code: 'NONE',
         surface: 'DATA',
         evidence_paths: [],
-        attrs: { provider: PROVIDER_ID, channel: 'books5', inst_id: instId },
+        attrs: { provider: PROVIDER_ID, channel: WS_CHANNEL, inst_id: instId, topic_format: TOPIC_FORMAT },
       });
     });
 
@@ -198,18 +216,20 @@ fs.mkdirSync(outDir, { recursive: true });
 const rawContent = rows.join('\n') + '\n';
 fs.writeFileSync(path.join(outDir, 'raw.jsonl'), rawContent);
 
-// --- Write lock.json (lock-first: no timestamps as truth) ---
+// --- Write lock.json atomically at SEAL (no DRAFT, always FINAL) ---
 const rawSha256 = sha256Hex(rawContent);
 const lockData = {
   schema_version: SCHEMA_VERSION,
   provider_id: PROVIDER_ID,
   lane_id: LANE_ID,
+  lock_state: 'FINAL',
   inst_id: instId,
+  depth_level: DEPTH_LEVEL,
   raw_capture_sha256: rawSha256,
   line_count: rows.length,
 };
-// Write lock manually (writeJsonDeterministic forbids _at fields, but we
-// also avoid it to keep lock writing self-contained for acquire lane)
+// Write lock with sorted keys (self-contained, no writeJsonDeterministic
+// to avoid _at field validation on acquire lane runtime path)
 const sortedLock = {};
 for (const k of Object.keys(lockData).sort()) sortedLock[k] = lockData[k];
 fs.writeFileSync(path.join(outDir, 'lock.json'), JSON.stringify(sortedLock, null, 2) + '\n');

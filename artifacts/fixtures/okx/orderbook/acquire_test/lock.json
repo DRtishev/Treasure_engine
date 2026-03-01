@@ -1,7 +1,9 @@
 {
+  "depth_level": 5,
   "inst_id": "BTC-USDT",
   "lane_id": "okx_orderbook_acquire",
   "line_count": 3,
+  "lock_state": "FINAL",
   "provider_id": "okx_orderbook_ws",
   "raw_capture_sha256": "9e31f9cbb490c8d1bff63f927e09e4bb11d15ba1a27951a4c5224344b517723f",
   "schema_version": "okx_orderbook_ws.acquire_live.v1"
