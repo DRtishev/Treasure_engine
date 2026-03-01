@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 3053d6c7678c
+RUN_ID: c7c93c538a8c
 NEXT_ACTION: npm run -s verify:regression:ob-okx12-align-invariants
 
 ## ALIGN_INVARIANTS
@@ -21,7 +21,7 @@ NEXT_ACTION: npm run -s verify:regression:ob-okx12-align-invariants
 - [PASS] strict_apply_chain_valid: all 2 STRICT apply steps have prevSeqId==lastSeqId — OK
 - [PASS] align_script_exit_zero: align script EC=0 — PASS
 - [PASS] align_script_stdout_pass: stdout=[PASS] — OK
-- [PASS] epoch_output_created: EPOCH dir exists: EPOCH-R2-ALIGN-9d74e821a426 — OK
+- [PASS] epoch_output_created: EPOCH dir exists: EPOCH-R2-ALIGN-c7c93c538a8c — OK
 - [PASS] epoch_align_json_exists: ALIGN.json present — OK
 - [PASS] epoch_align_md_exists: ALIGN.md present — OK
 - [PASS] epoch_align_json_final_seqId: ALIGN.json final_seqId=103 matches lock — OK

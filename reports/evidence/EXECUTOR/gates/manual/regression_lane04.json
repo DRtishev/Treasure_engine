@@ -61,7 +61,7 @@
   "gate_id": "RG_LANE04_TRUTH_REQUIRES_TRUTH_READY",
   "next_action": "npm run -s verify:regression:lane04-truth-requires-truth-ready",
   "reason_code": "NONE",
-  "run_id": "3053d6c7678c",
+  "run_id": "c7c93c538a8c",
   "schema_version": "1.0.0",
   "status": "PASS"
 }
