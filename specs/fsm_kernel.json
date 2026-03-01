@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0.0",
+  "description": "EPOCH-69 Organism Brain — FSM kernel definition. 7 states, 7 transitions, 5 forbidden pairs. SSOT for organism lifecycle state machine.",
+  "initial_state": "BOOT",
+  "max_cycles": 3,
+
+  "states": {
+    "BOOT": {
+      "mode": "LIFE",
+      "description": "System started, unverified. No gates have been run."
+    },
+    "CERTIFYING": {
+      "mode": "CERT",
+      "description": "Verification pipeline running. verify:fast is executing."
+    },
+    "CERTIFIED": {
+      "mode": "CERT",
+      "description": "All gates pass. verify:fast x2 PASS confirmed."
+    },
+    "RESEARCHING": {
+      "mode": "RESEARCH",
+      "description": "Network enabled, data acquisition work. ALLOW_NETWORK token present."
+    },
+    "EDGE_READY": {
+      "mode": "CERT",
+      "description": "Candidates promoted. CANDIDATE_REGISTRY has promoted entries."
+    },
+    "DEGRADED": {
+      "mode": "AUDIT",
+      "description": "Probe failure detected. At least one gate/probe FAIL."
+    },
+    "HEALING": {
+      "mode": "LIFE",
+      "description": "Self-heal in progress. healAll() executing."
+    }
+  },
+
+  "transitions": {
+    "T01_BOOT_TO_CERTIFYING": {
+      "from": "BOOT",
+      "to": "CERTIFYING",
+      "guard": "guard_deps_ready",
+      "action": "npm run -s ops:baseline:restore",
+      "on_fail": "stay",
+      "compensation": null,
+      "description": "Begin certification — restore baseline and start verification pipeline."
+    },
+    "T02_CERTIFYING_TO_CERTIFIED": {
+      "from": "CERTIFYING",
+      "to": "CERTIFIED",
+      "guard": "guard_verify_fast_x2",
+      "action": null,
+      "on_fail": "DEGRADED",
+      "compensation": null,
+      "description": "Certification complete — guard runs verify:fast x2, action is null (guard IS the test)."
+    },
+    "T03_CERTIFIED_TO_RESEARCHING": {
+      "from": "CERTIFIED",
+      "to": "RESEARCHING",
+      "guard": "guard_network_token",
+      "action": "npm run -s ops:life",
+      "on_fail": "CERTIFIED",
+      "compensation": "compensate_revoke_network",
+      "description": "Enter research mode — network token present, run organism lifecycle."
+    },
+    "T04_RESEARCHING_TO_EDGE_READY": {
+      "from": "RESEARCHING",
+      "to": "EDGE_READY",
+      "guard": "guard_data_ready",
+      "action": null,
+      "on_fail": "CERTIFIED",
+      "compensation": "compensate_invalidate_registry",
+      "description": "Data acquired and candidates promoted — verify data readiness."
+    },
+    "T05_ANY_TO_DEGRADED": {
+      "from": "*",
+      "to": "DEGRADED",
+      "guard": "guard_probe_failure",
+      "action": null,
+      "on_fail": "stay",
+      "compensation": null,
+      "description": "Probe failure detected — any non-BOOT state transitions to DEGRADED."
+    },
+    "T06_DEGRADED_TO_HEALING": {
+      "from": "DEGRADED",
+      "to": "HEALING",
+      "guard": "guard_healable",
+      "action": null,
+      "on_fail": "stay",
+      "compensation": null,
+      "description": "Begin self-heal — at least one healable condition exists."
+    },
+    "T07_HEALING_TO_BOOT": {
+      "from": "HEALING",
+      "to": "BOOT",
+      "guard": "guard_heal_complete",
+      "action": null,
+      "on_fail": "DEGRADED",
+      "compensation": null,
+      "description": "Heal complete — reset to BOOT for re-certification."
+    }
+  },
+
+  "forbidden_transitions": [
+    { "from": "BOOT", "to": "RESEARCHING", "reason": "Must certify first" },
+    { "from": "BOOT", "to": "EDGE_READY", "reason": "Must certify and research first" },
+    { "from": "CERTIFYING", "to": "RESEARCHING", "reason": "Must fully certify first" },
+    { "from": "DEGRADED", "to": "EDGE_READY", "reason": "Must heal then boot then certify first" },
+    { "from": "HEALING", "to": "CERTIFIED", "reason": "Must go through BOOT then CERTIFYING" }
+  ]
+}
