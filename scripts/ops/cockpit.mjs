@@ -230,7 +230,8 @@ function collectFastGate() {
     const data = readJson(path.join(gateDir, f));
     if (data) {
       // Skip stale receipts (different run_id) — treat as NO_DATA
-      if (data.run_id && data.run_id !== RUN_ID) continue;
+      // PR07: STABLE is always current (EXECUTOR receipts use stable run_id)
+      if (data.run_id && data.run_id !== RUN_ID && data.run_id !== 'STABLE') continue;
       gates.push({ gate: f.replace('.json', ''), status: data.status ?? 'UNKNOWN', reason_code: data.reason_code ?? 'UNKNOWN' });
     }
   }

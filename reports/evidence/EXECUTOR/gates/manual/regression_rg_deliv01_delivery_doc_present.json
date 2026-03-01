@@ -40,7 +40,7 @@
   "gate_id": "RG_DELIV01_DELIVERY_DOC_PRESENT",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
-  "run_id": "ee6fe7096b5f",
+  "run_id": "STABLE",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

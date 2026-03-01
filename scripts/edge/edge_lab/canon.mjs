@@ -108,6 +108,11 @@ function resolveRunId() {
 export const RUN_ID = resolveRunId();
 
 // ---------------------------------------------------------------------------
+// PR07: Stable run_id for EXECUTOR receipts (prevents churn on every commit)
+// ---------------------------------------------------------------------------
+export const EXECUTOR_RUN_ID = 'STABLE';
+
+// ---------------------------------------------------------------------------
 // Path helpers
 // ---------------------------------------------------------------------------
 export function canonRelPath(root, p) {
@@ -153,7 +158,12 @@ export function canonTable(rows) {
 // File writer
 // ---------------------------------------------------------------------------
 export function writeMd(file, content) {
-  fs.writeFileSync(file, canonLines(content));
+  let text = canonLines(content);
+  // PR07: normalize RUN_ID in EXECUTOR receipts to prevent churn
+  if (file.includes('reports/evidence/EXECUTOR')) {
+    text = text.replace(/^(RUN_ID: ).+$/m, `$1${EXECUTOR_RUN_ID}`);
+  }
+  fs.writeFileSync(file, text);
 }
 
 // ---------------------------------------------------------------------------
