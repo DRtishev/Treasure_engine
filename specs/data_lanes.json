@@ -1,0 +1,101 @@
+{
+  "registry_schema_version": "1.0.0",
+  "lanes": [
+    {
+      "lane_id": "liq_binance_forceorder_ws",
+      "lane_kind": "WS",
+      "truth_level": "HINT",
+      "providers": ["binance_forceorder_ws"],
+      "readiness_rules": {
+        "PASS": "all checks pass",
+        "RDY01": "missing artifacts",
+        "RDY02": "hash mismatch or schema error"
+      },
+      "replay_command": "TREASURE_NET_KILL=1 node scripts/edge/edge_liq_01_offline_replay.mjs --provider binance_forceorder_ws",
+      "required_artifacts": [
+        "artifacts/incoming/liquidations/binance_forceorder_ws/<RUN_ID>/raw.jsonl",
+        "artifacts/incoming/liquidations/binance_forceorder_ws/<RUN_ID>/lock.json"
+      ],
+      "required_lock_fields": [
+        "normalized_schema_sha256",
+        "provider_id",
+        "raw_capture_sha256",
+        "schema_version",
+        "time_unit_sentinel"
+      ],
+      "schema_version": "liquidations.binance_forceorder_ws.v1"
+    },
+    {
+      "lane_id": "liq_bybit_ws_v5",
+      "lane_kind": "WS",
+      "truth_level": "TRUTH",
+      "providers": ["bybit_ws_v5"],
+      "readiness_rules": {
+        "PASS": "all checks pass",
+        "RDY01": "missing artifacts",
+        "RDY02": "hash mismatch or schema error"
+      },
+      "replay_command": "TREASURE_NET_KILL=1 node scripts/edge/edge_liq_01_offline_replay.mjs --provider bybit_ws_v5",
+      "required_artifacts": [
+        "artifacts/incoming/liquidations/bybit_ws_v5/<RUN_ID>/raw.jsonl",
+        "artifacts/incoming/liquidations/bybit_ws_v5/<RUN_ID>/lock.json"
+      ],
+      "required_lock_fields": [
+        "normalized_schema_sha256",
+        "provider_id",
+        "raw_capture_sha256",
+        "schema_version",
+        "time_unit_sentinel"
+      ],
+      "schema_version": "liquidations.bybit_ws_v5.v2"
+    },
+    {
+      "lane_id": "liq_okx_ws_v5",
+      "lane_kind": "WS",
+      "truth_level": "HINT",
+      "providers": ["okx_ws_v5"],
+      "readiness_rules": {
+        "PASS": "all checks pass",
+        "RDY01": "missing artifacts",
+        "RDY02": "hash mismatch or schema error"
+      },
+      "replay_command": "TREASURE_NET_KILL=1 node scripts/edge/edge_liq_01_offline_replay.mjs --provider okx_ws_v5",
+      "required_artifacts": [
+        "artifacts/incoming/liquidations/okx_ws_v5/<RUN_ID>/raw.jsonl",
+        "artifacts/incoming/liquidations/okx_ws_v5/<RUN_ID>/lock.json"
+      ],
+      "required_lock_fields": [
+        "normalized_schema_sha256",
+        "provider_id",
+        "raw_capture_sha256",
+        "schema_version",
+        "time_unit_sentinel"
+      ],
+      "schema_version": "liquidations.okx_ws_v5.v1"
+    },
+    {
+      "lane_id": "price_offline_fixture",
+      "lane_kind": "FIXTURE",
+      "truth_level": "HINT",
+      "providers": ["offline_fixture"],
+      "readiness_rules": {
+        "PASS": "all checks pass",
+        "RDY01": "missing artifacts",
+        "RDY02": "hash mismatch or schema error"
+      },
+      "replay_command": "TREASURE_NET_KILL=1 node scripts/edge/edge_price_01_offline_replay.mjs --provider offline_fixture",
+      "required_artifacts": [
+        "artifacts/incoming/price_bars/offline_fixture/<RUN_ID>/raw.jsonl",
+        "artifacts/incoming/price_bars/offline_fixture/<RUN_ID>/lock.json"
+      ],
+      "required_lock_fields": [
+        "normalized_sha256",
+        "provider_id",
+        "raw_sha256",
+        "rows_n",
+        "schema_version"
+      ],
+      "schema_version": "price_bars.offline_fixture.v1"
+    }
+  ]
+}

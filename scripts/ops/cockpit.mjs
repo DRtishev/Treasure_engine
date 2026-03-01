@@ -18,7 +18,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
-import { readBus, findLatestBusJsonl, findAllBusJsonls } from './eventbus_v1.mjs';
+import { readBus, findLatestBusJsonl, findAllBusJsonls, mergeAndSortEvents } from './eventbus_v1.mjs';
 
 const ROOT = process.cwd();
 const EVIDENCE_DIR = path.join(ROOT, 'reports', 'evidence');
@@ -46,7 +46,9 @@ function findLatestEpoch(prefix) {
 // No mtime: findAllBusJsonls uses lexicographic sort only
 // ---------------------------------------------------------------------------
 const allBusJsonls = findAllBusJsonls(EVIDENCE_DIR);
-const allEvents = allBusJsonls.flatMap((jsonlPath) => readBus(jsonlPath).events());
+// BUS03: merge events with deterministic compound sort (tick, component, event, run_id)
+// Never uses mtime; stable across repeated cockpit runs in same tree
+const allEvents = mergeAndSortEvents(allBusJsonls.map((jsonlPath) => readBus(jsonlPath).events()));
 // Also keep single-bus interface for eventbus section stats
 const latestBusJsonl = findLatestBusJsonl(EVIDENCE_DIR);
 
@@ -173,11 +175,13 @@ function collectAutopilot() {
 function collectEventBus() {
   if (allBusJsonls.length === 0) return { present: false, status: 'NO_EPOCH', events_n: 0, components: [] };
   const components = [...new Set(allEvents.map((e) => e.component))].sort();
+  // BUS03: repo-relative POSIX paths sorted lex — stable canonical output
+  const jsonl_paths = allBusJsonls.map((p) => path.relative(ROOT, p).split(path.sep).join('/')).sort((a, b) => a.localeCompare(b));
   return {
     present: true,
     source: 'EVENTBUS',
     bus_count: allBusJsonls.length,
-    jsonl_paths: allBusJsonls.map((p) => path.relative(ROOT, p)),
+    jsonl_paths,
     events_n: allEvents.length,
     components,
     status: 'PASS',
@@ -273,6 +277,33 @@ function collectWowGates() {
 }
 
 // ---------------------------------------------------------------------------
+// Collect Readiness Scorecard — from public_data_readiness_seal.json (Phase C)
+// Reads the machine-readable output of verify:public:data:readiness.
+// Never uses mtime; reads deterministic EXECUTOR receipt only.
+// ---------------------------------------------------------------------------
+function collectReadiness() {
+  const receipt = readJson(path.join(EXECUTOR_DIR, 'gates', 'manual', 'public_data_readiness_seal.json'));
+  if (!receipt) return { status: 'NO_RECEIPT', reason_code: 'NO_DATA', per_lane: [], lanes_total: 0, truth_lanes_n: 0 };
+  return {
+    status: receipt.status ?? 'UNKNOWN',
+    reason_code: receipt.reason_code ?? 'UNKNOWN',
+    registry_schema_version: receipt.registry_schema_version ?? 'UNKNOWN',
+    lanes_total: receipt.lanes_total ?? 0,
+    truth_lanes_n: receipt.truth_lanes_n ?? 0,
+    hint_lanes_n: receipt.hint_lanes_n ?? 0,
+    warn_lanes_n: receipt.warn_lanes_n ?? 0,
+    // Per-lane scorecard: lane_id, truth_level, status, reason_code, schema_version
+    per_lane: (receipt.per_lane ?? []).map((r) => ({
+      lane_id: r.lane_id,
+      truth_level: r.truth_level,
+      status: r.status,
+      reason_code: r.reason_code,
+      schema_version: r.schema_version ?? null,
+    })).sort((a, b) => a.lane_id.localeCompare(b.lane_id)),
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Build HUD
 // ---------------------------------------------------------------------------
 const tm = collectTimemachine();
@@ -281,6 +312,7 @@ const eb = collectEventBus();
 const fg = collectFastGate();
 const pr1 = collectPR01();
 const wow = collectWowGates();
+const readiness = collectReadiness();
 
 const overallFailed = [
   fg.status !== 'PASS' && fg.status !== 'NO_DATA' ? 'FAST_GATE' : null,
@@ -313,6 +345,7 @@ const hudJson = {
     autopilot: ap,
     eventbus: eb,
     fast_gate: fg,
+    readiness: readiness,
     pr01: pr1,
     wow_gates: wow,
   },
@@ -332,6 +365,10 @@ const tmRows = tm.paths?.map((p) => `  - ${p}`).join('\n') || '  - NONE';
 const apRows = ap.paths?.map((p) => `  - ${p}`).join('\n') || '  - NONE';
 const fgRows = fg.gates.map((g) => `  | ${g.gate} | ${g.status} | ${g.reason_code} |`).join('\n') || '  | - | NO_DATA | - |';
 const wowRows = wow.gates.map((g) => `  | ${g.gate} | ${g.status} | ${g.reason_code} |`).join('\n') || '  | - | NO_DATA | - |';
+// Phase C: readiness scorecard rows (per-lane sorted by lane_id)
+const readinessRows = readiness.per_lane.length > 0
+  ? readiness.per_lane.map((r) => `  | ${r.lane_id} | ${r.truth_level} | ${r.status} | ${r.reason_code} | ${r.schema_version ?? '-'} |`).join('\n')
+  : '  | - | - | NO_DATA | - | - |';
 
 const hudMd = [
   `# COCKPIT HUD — EPOCH-COCKPIT-${RUN_ID}`,
@@ -414,6 +451,21 @@ const hudMd = [
   '',
   '---',
   '',
+  '## [7] DATA READINESS SCORECARD',
+  '',
+  `STATUS: ${readiness.status}`,
+  `REASON_CODE: ${readiness.reason_code}`,
+  `LANES_TOTAL: ${readiness.lanes_total}`,
+  `TRUTH_LANES_N: ${readiness.truth_lanes_n}`,
+  `HINT_LANES_N: ${readiness.hint_lanes_n ?? 0}`,
+  `WARN_LANES_N: ${readiness.warn_lanes_n ?? 0}`,
+  '',
+  '  | Lane | Trust | Status | Reason | Schema |',
+  '  |------|-------|--------|--------|--------|',
+  readinessRows,
+  '',
+  '---',
+  '',
   '## NEXT_ACTION',
   '',
   'npm run -s verify:fast',
@@ -432,5 +484,6 @@ console.log(`  eventbus:    ${eb.status} events=${eb.events_n}`);
 console.log(`  fast_gate:   ${fg.status} (${fg.gates_checked} gates, ${fg.failed_n} failed)`);
 console.log(`  pr01:        ${pr1.status}`);
 console.log(`  wow_gates:   ${wow.gates_checked} checked, ${wow.failed_n} failed`);
+console.log(`  readiness:   ${readiness.status} lanes=${readiness.lanes_total} truth=${readiness.truth_lanes_n}`);
 
 process.exit(hudStatus === 'PASS' ? 0 : 1);

@@ -906,7 +906,12 @@
     "verify:regression:evt01-schema-lock": "node scripts/verify/regression_evt01_schema_lock.mjs",
     "verify:regression:evt02-no-time-fields": "node scripts/verify/regression_evt02_no_time_fields.mjs",
     "verify:regression:bus01-determinism-x2": "node scripts/verify/regression_bus01_determinism_x2.mjs",
-    "verify:regression:bus02-write-scope": "node scripts/verify/regression_bus02_write_scope.mjs"
+    "verify:regression:bus02-write-scope": "node scripts/verify/regression_bus02_write_scope.mjs",
+    "verify:regression:bus03-aggregator-stable-order": "node scripts/verify/regression_bus03_aggregator_stable_order.mjs",
+    "verify:regression:lane01-registry-present": "node scripts/verify/regression_lane01_registry_present.mjs",
+    "verify:regression:lane02-code-matches-registry": "node scripts/verify/regression_lane02_code_matches_registry.mjs",
+    "verify:regression:lane03-no-dup-schema-version": "node scripts/verify/regression_lane03_no_dup_schema_version.mjs",
+    "verify:regression:cockpit06-readiness-scorecard-present": "node scripts/verify/regression_cockpit06_readiness_scorecard_present.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"
