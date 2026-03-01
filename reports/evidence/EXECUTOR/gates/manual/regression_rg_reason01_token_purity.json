@@ -1,9 +1,9 @@
 {
-  "files_scanned": 414,
+  "files_scanned": 416,
   "gate_id": "RG_REASON01_TOKEN_PURITY",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
-  "run_id": "ce74ca2de8ca",
+  "run_id": "6eaee2d79360",
   "schema_version": "1.0.0",
   "status": "PASS",
   "violations": []
