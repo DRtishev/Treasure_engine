@@ -129,6 +129,7 @@ bus.append({ mode: 'CERT', component: 'LIFE', event: 'LIFE_BOOT', reason_code: '
 const stepResults = [];
 let aborted = false;
 let abortReason = null;
+let oneNextAction = null;
 
 for (const step of STEPS) {
   process.stdout.write(`  [${step.id}] ${step.label} ... `);
@@ -150,6 +151,21 @@ for (const step of STEPS) {
   if (step.hard_stop && result.status !== 'PASS') {
     aborted = true;
     abortReason = `hard_stop on step ${step.id} (${step.label}) — exit_code=${result.exit_code}`;
+
+    // Surface actionable next_action from gate receipt (RG_LIFE04)
+    if (step.id === 'S01' && result.status === 'BLOCKED') {
+      try {
+        const ensureJson = path.join(ROOT, 'reports/evidence/EXECUTOR/gates/manual/node_toolchain_ensure.json');
+        if (fs.existsSync(ensureJson)) {
+          const receipt = JSON.parse(fs.readFileSync(ensureJson, 'utf8'));
+          if (receipt.detail && typeof receipt.detail === 'object' && receipt.detail.next_action) {
+            oneNextAction = receipt.detail.next_action;
+          }
+        }
+      } catch { /* fail-soft: oneNextAction stays null */ }
+      if (!oneNextAction) oneNextAction = 'npm run -s ops:node:toolchain:bootstrap';
+    }
+
     bus.append({ mode: 'CERT', component: 'LIFE', event: 'LIFE_ABORT', reason_code: 'LIFE_HARD_STOP',
       surface: 'UX', attrs: { step_id: result.step_id, reason: abortReason } });
     break;
@@ -195,7 +211,8 @@ writeJsonDeterministic(path.join(EPOCH_DIR, 'LIFE_SUMMARY.json'), {
   aborted,
   abort_reason: abortReason ?? null,
   step_results: stepResults.map((s) => ({ step_id: s.step_id, name: s.name, status: s.status, exit_code: s.exit_code })),
-  next_action: 'npm run -s verify:fast',
+  next_action: oneNextAction ?? 'npm run -s verify:fast',
+  one_next_action: oneNextAction ?? null,
 });
 
 // ---------------------------------------------------------------------------
@@ -219,7 +236,7 @@ writeMd(path.join(EPOCH_DIR, 'LIFE_SUMMARY.md'), [
   stepRows,
   '',
   '## NEXT_ACTION',
-  'npm run -s verify:fast',
+  oneNextAction ?? 'npm run -s verify:fast',
   '',
 ].filter((l) => l !== null).join('\n'));
 
@@ -232,5 +249,6 @@ console.log(`  EPOCH:   ${path.relative(ROOT, EPOCH_DIR)}`);
 console.log(`  EVENTS:  ${path.relative(ROOT, busJsonlPath)}`);
 console.log(`  STEPS:   ${stepResults.length}/${STEPS.length} run, ${stepResults.filter((s) => s.status === 'PASS').length} PASS, ${failed.length} FAIL`);
 if (aborted) console.log(`  ABORT:   ${abortReason}`);
+if (oneNextAction) console.log(`  ONE_NEXT_ACTION: ${oneNextAction}`);
 
 process.exit(lifeStatus === 'PASS' ? 0 : (lifeStatus === 'ABORT' ? 2 : 1));

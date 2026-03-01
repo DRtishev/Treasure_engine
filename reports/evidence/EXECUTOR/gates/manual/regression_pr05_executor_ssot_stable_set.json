@@ -1,0 +1,14 @@
+{
+  "checks": {
+    "forbidden_ext_files_n": 0,
+    "new_non_allowlisted_n": 0,
+    "origin_main_present": true
+  },
+  "gate_id": "RG_PR05_EXECUTOR_SSOT_STABLE_SET",
+  "next_action": "npm run -s verify:fast",
+  "offenders": [],
+  "reason_code": "NONE",
+  "run_id": "c86c05d745a5",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

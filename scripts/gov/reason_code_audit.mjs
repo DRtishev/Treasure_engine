@@ -79,6 +79,10 @@ const VALID_REASON_CODES = new Set([
   'IM05',
   'OF01',
   'RK01',
+  'ACQ_LOCK01',     // Toolchain lock schema/version/binary mismatch (node_toolchain_ensure)
+  'RDY01',          // Readiness: missing artifacts
+  'RDY02',          // Readiness: hash mismatch or schema error
+  'RDY_SELECT01_INVALID', // SELECT_RUN_ID specified but run dir not found
 ]);
 
 // Codes that must NEVER appear in readiness gates

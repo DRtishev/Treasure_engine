@@ -45,7 +45,7 @@
   "gate_id": "RG_OB_OKX13_BUFFER_DISCARD_RULES",
   "next_action": "npm run -s verify:regression:ob-okx13-buffer-discard-rules",
   "reason_code": "NONE",
-  "run_id": "3053d6c7678c",
+  "run_id": "c7c93c538a8c",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

@@ -2,11 +2,11 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 8491af67e7a2
+RUN_ID: c86c05d745a5
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 50
+- changed_evidence_files_n: 54
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
@@ -34,7 +34,9 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_ob_okx15.json
 - reports/evidence/EXECUTOR/gates/manual/regression_ob_okx16.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
+- reports/evidence/EXECUTOR/gates/manual/regression_pr05_executor_ssot_stable_set.json
 - reports/evidence/EXECUTOR/gates/manual/regression_r2_01.json
+- reports/evidence/EXECUTOR/gates/manual/regression_r2_02_fixtures_readonly.json
 - reports/evidence/EXECUTOR/gates/manual/regression_victory_fast_no_heavy.json
 - reports/evidence/EXECUTOR/REGRESSION_CAP01.md
 - reports/evidence/EXECUTOR/REGRESSION_CAP02.md
@@ -59,5 +61,7 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_OB_OKX15.md
 - reports/evidence/EXECUTOR/REGRESSION_OB_OKX16.md
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
+- reports/evidence/EXECUTOR/REGRESSION_PR05_EXECUTOR_SSOT_STABLE_SET.md
 - reports/evidence/EXECUTOR/REGRESSION_R2_01.md
+- reports/evidence/EXECUTOR/REGRESSION_R2_02_FIXTURES_READONLY.md
 - reports/evidence/EXECUTOR/REGRESSION_VICTORY_FAST_NO_HEAVY.md
