@@ -880,6 +880,8 @@
     "verify:merge-court": "node scripts/verify/merge_court.mjs",
     "verify:r3:preflight": "node scripts/verify/r3_preflight.mjs",
     "verify:r3:okx-acquire-contract": "node scripts/verify/r3_okx_acquire_contract.mjs",
+    "edge:okx:acquire": "node scripts/edge/edge_okx_orderbook_10_acquire_live.mjs",
+    "edge:okx:replay-captured": "TREASURE_NET_KILL=1 node scripts/edge/edge_okx_orderbook_11_replay_captured.mjs",
     "verify:regression:rg-r3-unlock01-refusal-contract": "node scripts/verify/regression_rg_r3_unlock01_refusal_contract.mjs",
     "verify:regression:victory-fast-no-heavy": "node scripts/verify/regression_victory_fast_no_heavy.mjs",
     "epoch:victory:close": "VICTORY_PROFILE=CLOSE bash scripts/ops/node_authority_run.sh npm run -s _epoch:victory:seal",

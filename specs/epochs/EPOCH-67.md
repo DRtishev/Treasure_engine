@@ -37,12 +37,43 @@ npm run -s verify:fast                    # daily still green
 
 ## Lock-First Contract
 Every acquire run MUST produce `lock.json` with:
-- `provider_id`, `schema_version`, `time_unit_sentinel`
+- `provider_id`, `lane_id`, `schema_version`
 - `raw_capture_sha256` (SHA-256 of `raw.jsonl`)
-- `captured_at_utc` (ISO 8601)
+- `line_count`
+- No timestamps as truth in lock (ticks OK in EventBus).
 
 Replay gate: reads `raw.jsonl` + `lock.json`, verifies SHA-256 match,
 runs under `TREASURE_NET_KILL=1`.
+
+## EventBus Emissions (tick-only)
+Acquire emits: `ACQ_BOOT`, `ACQ_CONNECT`, `ACQ_SUB`, `ACQ_MSG`, `ACQ_SEAL`, `ACQ_ERROR`
+Replay emits: `REPLAY_BOOT`, `REPLAY_APPLY`, `REPLAY_SEAL`
+
+## Scripts
+| Script | Command |
+|--------|---------|
+| Acquire (live, needs double-key) | `npm run -s edge:okx:acquire -- --enable-network` |
+| Replay (offline) | `npm run -s edge:okx:replay-captured` |
+| R3 preflight | `npm run -s verify:r3:preflight` |
+| R3 acquire contract | `npm run -s verify:r3:okx-acquire-contract` |
+
+## DoD (Definition of Done)
+- [x] `verify:r3:preflight` PASS
+- [x] `verify:r3:okx-acquire-contract` PASS (offline proof with fixture)
+- [x] `verify:fast` remains PASS (daily loop untouched)
+- [x] R3 scripts NOT wired into `verify:fast` or `ops:life`
+- [x] Acquire refuses under `TREASURE_NET_KILL=1` (EC=1 CONTRACT)
+- [x] Acquire refuses without double-key (EC=2 ACQ_NET00)
+- [x] Fixture `artifacts/fixtures/okx/orderbook/acquire_test/` with raw+lock
+- [x] Replay validates SHA + line_count under NET_KILL
+- [x] EventBus events emitted in deterministic tick order
+- [x] No tracked EPOCH files, PR01 guard remains PASS
+
+## R3 Regression Gates
+- `RG_R3_OKX01_WRITE_SCOPE`: acquire writes only under `artifacts/incoming/okx/orderbook/**`
+- `RG_R3_OKX02_LOCK_FIRST`: lock fields present + SHA matches raw fixture
+- `RG_R3_OKX03_EVENTBUS`: replay emits required events in deterministic order
+- `RG_R3_OKX04_ALLOWFILE`: double-key guard + hygiene checks
 
 ## NOT Wired Into Daily
 R3 scripts MUST NOT appear in `verify:fast` or `ops:life`.
