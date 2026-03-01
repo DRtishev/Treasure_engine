@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: c7c93c538a8c
+RUN_ID: 4eecd5118e0e
 NEXT_ACTION: npm run -s verify:r2:okx-orderbook
 
 ## GUARDED PATHS
@@ -20,9 +20,6 @@ NEXT_ACTION: npm run -s verify:r2:okx-orderbook
 
 ## INNER GATE OUTPUT
 ```
-[PASS] regression_r2_02_fixtures_readonly — NONE
-  inner_gate_exit_code: 0
-  mutations_detected_n: 0
 [PASS] regression_r2_01_no_daily_wiring — NONE
 [PASS] regression_ob_okx01_fixture_integrity — NONE
 [PASS] regression_ob_okx02_lock_integrity — NONE
