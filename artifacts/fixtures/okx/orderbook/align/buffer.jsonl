@@ -1,0 +1,5 @@
+{"action":"update","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[],"bids":[["48800","0.3","0","1"]],"seqId":98,"prevSeqId":97}],"_fixture_note":"DISCARD: seqId=98 <= snapshot.seqId=100"}
+{"action":"update","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[["50050","0.2","0","1"]],"bids":[],"seqId":99,"prevSeqId":98}],"_fixture_note":"DISCARD: seqId=99 <= snapshot.seqId=100"}
+{"action":"update","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[["50200","0.3","0","1"]],"bids":[],"seqId":101,"prevSeqId":100}],"_fixture_note":"ALIGN_FIRST_EVENT: prevSeqId=100 <= snapshot.seqId=100 < seqId=101"}
+{"action":"update","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[["50000","0.8","0","1"]],"bids":[["49000","0","0","1"]],"seqId":102,"prevSeqId":101}],"_fixture_note":"STRICT APPLY: seqId=102"}
+{"action":"update","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[],"bids":[["48950","0.7","0","1"]],"seqId":103,"prevSeqId":102}],"_fixture_note":"STRICT APPLY: seqId=103"}

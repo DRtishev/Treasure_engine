@@ -13,10 +13,12 @@
  *   prevSeqId > lastSeqId           → BOOK_GAP → RDY02 FATAL
  *
  * Canonical book digest:
- *   Bids sorted descending by price (float), asks ascending by price (float).
+ *   Bids sorted descending by price (decimal string total order, no float).
+ *   Asks sorted ascending by price (decimal string total order, no float).
  *   Only [price, size] tuples included (no checksum/count/ts/update_id).
  *   Zero-size entries are removed.
  *   sha256(JSON.stringify({ asks: [...], bids: [...] }))
+ *   Sort algorithm: decimal_sort.mjs compareDecimalStr (see RG_DEC01)
  *
  * Exit codes:
  *   0 = PASS
@@ -30,6 +32,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { createReplayBus } from './data_organ/event_emitter.mjs';
+import { compareDecimalStr } from './data_organ/decimal_sort.mjs';
 
 const ROOT = process.cwd();
 const FIXTURE_BASE = path.join(ROOT, 'artifacts', 'fixtures', 'okx', 'orderbook', 'main');
@@ -255,15 +258,16 @@ if (!booted) {
 }
 
 // Compute canonical book digest
-// Bids: descending by price (float), asks: ascending by price (float)
+// Bids: descending by price (decimal string total order, compareDecimalStr)
+// Asks: ascending by price (decimal string total order, compareDecimalStr)
 // Only [price, size] tuples, no checksum/count/ts/update_id
 const canonBids = [...bids.entries()]
   .filter(([, s]) => s !== '0')
-  .sort((a, b) => parseFloat(b[0]) - parseFloat(a[0]))
+  .sort((a, b) => compareDecimalStr(b[0], a[0]))
   .map(([p, s]) => [p, s]);
 const canonAsks = [...asks.entries()]
   .filter(([, s]) => s !== '0')
-  .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))
+  .sort((a, b) => compareDecimalStr(a[0], b[0]))
   .map(([p, s]) => [p, s]);
 
 const canonObj = { asks: canonAsks, bids: canonBids };

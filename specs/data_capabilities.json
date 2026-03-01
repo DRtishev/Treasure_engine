@@ -18,7 +18,27 @@
         "connections_per_ip": 300,
         "messages_per_connection": 5,
         "unit": "LOGICAL_TICKS"
-      }
+      },
+      "scopes": [
+        {
+          "scope_id": "binance.academy.stream_limits",
+          "description": "Binance spot testnet stream limits",
+          "rate_limits": {
+            "connections_per_ip": 300,
+            "streams_per_connection": 1024,
+            "unit": "LOGICAL_TICKS"
+          }
+        },
+        {
+          "scope_id": "binance.delivery_testnet.market_streams",
+          "description": "Binance delivery testnet market streams",
+          "rate_limits": {
+            "connections_per_ip": 60,
+            "streams_per_connection": 200,
+            "unit": "LOGICAL_TICKS"
+          }
+        }
+      ]
     },
     "bybit": {
       "orderbook": {
@@ -41,7 +61,9 @@
     "okx": {
       "orderbook": {
         "checksum_deprecated": true,
+        "dedup_key": "seqId",
         "depth_levels": [1, 5, 400],
+        "reorder_window_max_items": 5,
         "seq_no_update_supported": true,
         "seq_reset_possible": true,
         "snapshot_on_connect": true
@@ -63,6 +85,7 @@
       "capabilities.binance.orderbook": "HIGH",
       "capabilities.binance.policy": "HIGH",
       "capabilities.binance.rate_limits": "HIGH",
+      "capabilities.binance.scopes": "HIGH",
       "capabilities.bybit.orderbook": "HIGH",
       "capabilities.bybit.policy": "HIGH",
       "capabilities.bybit.rate_limits": "MEDIUM",
@@ -74,7 +97,8 @@
     "required_path_patterns": [
       "capabilities.*.orderbook.*",
       "capabilities.*.policy.*",
-      "capabilities.*.rate_limits.*"
+      "capabilities.*.rate_limits.*",
+      "capabilities.*.scopes[*].scope_id"
     ]
   }
 }

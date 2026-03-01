@@ -928,8 +928,19 @@
     "verify:regression:ob-okx04-book-digest": "node scripts/verify/regression_ob_okx04_book_digest.mjs",
     "verify:regression:ob-okx05-eventbus-events": "node scripts/verify/regression_ob_okx05_eventbus_events.mjs",
     "verify:regression:ob-okx06-gap-detection": "node scripts/verify/regression_ob_okx06_gap_detection.mjs",
-    "verify:r2:preflight": "npm run -s verify:regression:cap01-capabilities-present && npm run -s verify:regression:cap02-capabilities-coverage && npm run -s verify:regression:cap03-exceptions-accounted && npm run -s verify:regression:lane04-truth-requires-truth-ready",
-    "verify:r2:okx-orderbook": "npm run -s verify:regression:r2-01-no-daily-wiring && npm run -s verify:regression:ob-okx01-fixture-integrity && npm run -s verify:regression:ob-okx02-lock-integrity && npm run -s verify:regression:ob-okx03-seq-state-machine && npm run -s verify:regression:ob-okx04-book-digest && npm run -s verify:regression:ob-okx05-eventbus-events && npm run -s verify:regression:ob-okx06-gap-detection"
+    "verify:regression:dec01-decimal-sort-total-order": "node scripts/verify/regression_dec01_decimal_sort_total_order.mjs",
+    "verify:regression:ob-okx08-multi-level-sort-canon": "node scripts/verify/regression_ob_okx08_multi_level_sort_canon.mjs",
+    "verify:regression:ob-okx09-duplicate-idempotent": "node scripts/verify/regression_ob_okx09_duplicate_idempotent.mjs",
+    "verify:regression:ob-okx10-reorder-window-policy": "node scripts/verify/regression_ob_okx10_reorder_window_policy.mjs",
+    "verify:regression:ob-okx12-align-invariants": "TREASURE_NET_KILL=1 node scripts/verify/regression_ob_okx12_align_invariants.mjs",
+    "verify:regression:ob-okx13-buffer-discard-rules": "node scripts/verify/regression_ob_okx13_buffer_discard_rules.mjs",
+    "verify:regression:ob-okx14-align-determinism-x2": "TREASURE_NET_KILL=1 node scripts/verify/regression_ob_okx14_align_determinism_x2.mjs",
+    "verify:regression:ob-okx15-digest-spec-present": "node scripts/verify/regression_ob_okx15_digest_spec_present.mjs",
+    "verify:regression:ob-okx16-digest-matches-spec": "node scripts/verify/regression_ob_okx16_digest_matches_spec.mjs",
+    "verify:regression:cap05-scope-aware-limits": "node scripts/verify/regression_cap05_scope_aware_limits.mjs",
+    "verify:r2:preflight": "npm run -s verify:regression:cap01-capabilities-present && npm run -s verify:regression:cap02-capabilities-coverage && npm run -s verify:regression:cap03-exceptions-accounted && npm run -s verify:regression:cap05-scope-aware-limits && npm run -s verify:regression:lane04-truth-requires-truth-ready",
+    "verify:r2:okx-orderbook": "npm run -s verify:regression:r2-01-no-daily-wiring && npm run -s verify:regression:ob-okx01-fixture-integrity && npm run -s verify:regression:ob-okx02-lock-integrity && npm run -s verify:regression:ob-okx03-seq-state-machine && npm run -s verify:regression:ob-okx04-book-digest && npm run -s verify:regression:ob-okx05-eventbus-events && npm run -s verify:regression:ob-okx06-gap-detection && npm run -s verify:regression:dec01-decimal-sort-total-order && npm run -s verify:regression:ob-okx08-multi-level-sort-canon && npm run -s verify:regression:ob-okx09-duplicate-idempotent && npm run -s verify:regression:ob-okx10-reorder-window-policy && npm run -s verify:regression:ob-okx15-digest-spec-present && npm run -s verify:regression:ob-okx16-digest-matches-spec",
+    "verify:r2:okx-align": "TREASURE_NET_KILL=1 npm run -s verify:regression:ob-okx12-align-invariants && TREASURE_NET_KILL=1 npm run -s verify:regression:ob-okx13-buffer-discard-rules && TREASURE_NET_KILL=1 npm run -s verify:regression:ob-okx14-align-determinism-x2"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

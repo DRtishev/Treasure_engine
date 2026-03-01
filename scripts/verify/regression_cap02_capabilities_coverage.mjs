@@ -24,6 +24,7 @@ fs.mkdirSync(MANUAL, { recursive: true });
 const NEXT_ACTION = 'npm run -s verify:regression:cap02-capabilities-coverage';
 const CAP_PATH = path.join(ROOT, 'specs', 'data_capabilities.json');
 const REQUIRED_ZONES = ['policy', 'rate_limits', 'orderbook'];
+const OPTIONAL_ZONES = ['scopes']; // valid but not required for every provider
 const VALID_CONFIDENCE = ['HIGH', 'MEDIUM', 'LOW', 'UNKNOWN'];
 const checks = [];
 
@@ -44,7 +45,10 @@ if (!fs.existsSync(CAP_PATH)) {
     const coverage = cap.confidence_map.coverage;
     checks.push({ check: 'providers_present', pass: providers.length > 0, detail: `providers=${providers.join(',')}` });
 
+    const ALL_VALID_ZONES = [...REQUIRED_ZONES, ...OPTIONAL_ZONES];
+
     for (const provider of providers) {
+      const provCaps = cap.capabilities[provider] || {};
       for (const zone of REQUIRED_ZONES) {
         const key = `capabilities.${provider}.${zone}`;
         const hasEntry = Object.keys(coverage).some((k) => k === key || k.startsWith(`${key}.`));
@@ -58,16 +62,31 @@ if (!fs.existsSync(CAP_PATH)) {
             : `MISSING: no coverage entry for ${key}`,
         });
       }
+      // Optional zones: only required if the provider has the field
+      for (const zone of OPTIONAL_ZONES) {
+        if (!(zone in provCaps)) continue; // skip if provider doesn't have this zone
+        const key = `capabilities.${provider}.${zone}`;
+        const hasEntry = Object.keys(coverage).some((k) => k === key || k.startsWith(`${key}.`));
+        const confLevel = coverage[key];
+        const validLevel = !confLevel || VALID_CONFIDENCE.includes(confLevel);
+        checks.push({
+          check: `coverage_${provider}_${zone}`,
+          pass: hasEntry && validLevel,
+          detail: hasEntry
+            ? `key=${key} level=${confLevel} — OK`
+            : `MISSING: no coverage entry for ${key} (provider has ${zone} field)`,
+        });
+      }
     }
 
-    // All coverage keys must reference known providers and zones
+    // All coverage keys must reference known providers and zones (required + optional)
     const allKeys = Object.keys(coverage);
     const badKeys = allKeys.filter((k) => {
       const parts = k.split('.');
       // Expected format: capabilities.<provider>.<zone> or capabilities.<provider>.<zone>.<field>
       if (parts.length < 3 || parts[0] !== 'capabilities') return true;
       if (!providers.includes(parts[1])) return true;
-      if (!REQUIRED_ZONES.includes(parts[2])) return true;
+      if (!ALL_VALID_ZONES.includes(parts[2])) return true;
       return false;
     });
     checks.push({
@@ -76,7 +95,7 @@ if (!fs.existsSync(CAP_PATH)) {
       detail: badKeys.length === 0 ? `all ${allKeys.length} keys valid — OK` : `UNKNOWN_KEYS: ${badKeys.join(',')}`,
     });
 
-    // required_path_patterns must include all three zones
+    // required_path_patterns must include all three required zones
     const patterns = cap.confidence_map.required_path_patterns || [];
     for (const zone of REQUIRED_ZONES) {
       const pattern = `capabilities.*.${zone}.*`;

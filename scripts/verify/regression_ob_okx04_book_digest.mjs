@@ -7,8 +7,8 @@
  * Canonical digest algorithm:
  *   - Process all messages through the seq-state machine
  *   - Final book state: Map<price_str, size_str>
- *   - Bids: sorted descending by price (parseFloat)
- *   - Asks: sorted ascending by price (parseFloat)
+ *   - Bids: sorted descending by price (compareDecimalStr, no parseFloat)
+ *   - Asks: sorted ascending by price (compareDecimalStr, no parseFloat)
  *   - Zero-size entries excluded
  *   - Only [price, size] tuples (no checksum/count/ts/update_id)
  *   - sha256(JSON.stringify({ asks: [...], bids: [...] }))
@@ -21,6 +21,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
+import { compareDecimalStr } from '../edge/data_organ/decimal_sort.mjs';
 
 const ROOT = process.cwd();
 const EXEC = path.join(ROOT, 'reports/evidence/EXECUTOR');
@@ -72,11 +73,11 @@ function computeCanonicalDigest(msgs) {
 
   const canonBids = [...bids.entries()]
     .filter(([, s]) => s !== '0')
-    .sort((a, b) => parseFloat(b[0]) - parseFloat(a[0]))
+    .sort((a, b) => compareDecimalStr(b[0], a[0]))
     .map(([p, s]) => [p, s]);
   const canonAsks = [...asks.entries()]
     .filter(([, s]) => s !== '0')
-    .sort((a, b) => parseFloat(a[0]) - parseFloat(b[0]))
+    .sort((a, b) => compareDecimalStr(a[0], b[0]))
     .map(([p, s]) => [p, s]);
 
   const canonObj = { asks: canonAsks, bids: canonBids };

@@ -1,0 +1,8 @@
+{
+  "provider_id": "okx_orderbook_ws",
+  "schema_version": "okx_orderbook_ws.r2_align.v1",
+  "instId": "BTC-USDT",
+  "seqId": 100,
+  "bids": [["49000","1.0","0","1"],["48900","0.5","0","1"]],
+  "asks": [["50000","1.0","0","1"],["50100","0.5","0","1"]]
+}
