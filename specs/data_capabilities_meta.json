@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Physics vs policy annotations for data_capabilities.json fields. Sim reads policy_translation, never physics directly.",
+  "annotations": {
+    "binance.rate_limits.connections_per_ip": {
+      "layer": "PHYSICS",
+      "physics_meaning": "Maximum concurrent WebSocket connections per IP",
+      "physics_unit": "concurrent_count",
+      "physics_window": "static_limit",
+      "source": "https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams",
+      "confidence": "HIGH",
+      "policy_translation": { "sim_check": "concurrent_ws_connections <= 300", "enforcement": "planned" }
+    },
+    "binance.rate_limits.messages_per_connection": {
+      "layer": "PHYSICS",
+      "physics_meaning": "Max subscribe/unsubscribe ops per connection per rate window",
+      "physics_unit": "operations_per_window",
+      "physics_window": "rolling",
+      "source": "https://developers.binance.com/docs/binance-spot-api-docs/web-socket-streams",
+      "confidence": "HIGH",
+      "policy_translation": { "sim_unit": "LOGICAL_TICKS", "sim_budget_per_tick": 5, "enforcement": "planned" }
+    },
+    "bybit.rate_limits.connections_per_ip": {
+      "layer": "PHYSICS",
+      "physics_meaning": "Maximum concurrent WebSocket connections per IP",
+      "physics_unit": "concurrent_count",
+      "physics_window": "static_limit",
+      "source": "https://bybit-exchange.github.io/docs/v5/ws/connect",
+      "confidence": "MEDIUM",
+      "policy_translation": { "sim_check": "concurrent_ws_connections <= 500", "enforcement": "planned" }
+    },
+    "bybit.rate_limits.messages_per_connection": {
+      "layer": "PHYSICS",
+      "physics_meaning": "Max subscribe/unsubscribe ops per connection per rate window",
+      "physics_unit": "operations_per_window",
+      "physics_window": "rolling",
+      "source": "https://bybit-exchange.github.io/docs/v5/ws/connect",
+      "confidence": "MEDIUM",
+      "policy_translation": { "sim_unit": "LOGICAL_TICKS", "sim_budget_per_tick": 50, "enforcement": "planned" }
+    },
+    "okx.rate_limits.connections_per_ip": {
+      "layer": "PHYSICS",
+      "physics_meaning": "Maximum concurrent WebSocket connections per IP",
+      "physics_unit": "concurrent_count",
+      "physics_window": "static_limit",
+      "source": "https://www.okx.com/docs-v5/en/#overview-websocket",
+      "confidence": "HIGH",
+      "policy_translation": { "sim_check": "concurrent_ws_connections <= 3", "enforcement": "planned" }
+    },
+    "okx.rate_limits.messages_per_connection": {
+      "layer": "PHYSICS",
+      "physics_meaning": "Max subscribe/unsubscribe ops per connection per rate window",
+      "physics_unit": "operations_per_window",
+      "physics_window": "rolling",
+      "source": "https://www.okx.com/docs-v5/en/#overview-websocket",
+      "confidence": "MEDIUM",
+      "policy_translation": { "sim_unit": "LOGICAL_TICKS", "sim_budget_per_tick": 100, "enforcement": "planned" }
+    },
+    "okx.orderbook.reorder_window_max_items": {
+      "layer": "PHYSICS",
+      "physics_meaning": "Max out-of-order messages buffered before forced sequence reset",
+      "physics_unit": "message_count",
+      "physics_window": "reorder_buffer",
+      "source": "empirical from OKX WS behavior",
+      "confidence": "MEDIUM",
+      "policy_translation": { "sim_check": "reorder_buffer_size <= 5", "enforcement": "core/edge/seq_state_machine.mjs" }
+    }
+  }
+}

@@ -19,6 +19,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { writeMd, EXECUTOR_RUN_ID, RUN_ID } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
+import os from 'node:os';
 
 const ROOT = process.cwd();
 const EXEC = path.join(ROOT, 'reports/evidence/EXECUTOR');
@@ -95,10 +96,14 @@ checks.push({
 });
 
 // --- Check 6: Non-EXECUTOR path must NOT be normalized (safety check) ---
-const epochTmp = path.join(ROOT, 'reports/evidence/_PR07_NON_EXECUTOR_PROBE.md');
-writeMd(epochTmp, sampleA);
-const nonExecOut = fs.readFileSync(epochTmp, 'utf8');
-fs.unlinkSync(epochTmp);
+const epochTmp = path.join(os.tmpdir(), `_PR07_PROBE_${RUN_ID}.md`);
+let nonExecOut;
+try {
+  writeMd(epochTmp, sampleA);
+  nonExecOut = fs.readFileSync(epochTmp, 'utf8');
+} finally {
+  try { fs.unlinkSync(epochTmp); } catch { /* OS cleans tmpdir */ }
+}
 const nonExecPreserved = nonExecOut.includes('RUN_ID: aaaa11112222');
 checks.push({
   check: 'non_executor_not_normalized',

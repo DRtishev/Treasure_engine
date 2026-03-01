@@ -1,7 +1,6 @@
 {
-  "files_scanned": 297,
-  "gate_id": "RG_REASON01_TOKEN_PURITY",
-  "next_action": "npm run -s verify:fast",
+  "gate_id": "RG_POLICY02",
+  "next_action": "npm run -s verify:doctor:policy",
   "reason_code": "NONE",
   "run_id": "STABLE",
   "schema_version": "1.0.0",

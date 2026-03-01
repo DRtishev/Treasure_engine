@@ -130,5 +130,11 @@ artifacts/incoming/ALLOW_NETWORK
 artifacts/incoming/APPLY_AUTOPILOT
 artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 
+# Doctor immune memory (runtime state, per-machine)
+artifacts/doctor/
+
+# Quarantine (self-heal runtime output)
+artifacts/quarantine/
+
 # node toolchains (vendored runtime backend)
 artifacts/toolchains/node/

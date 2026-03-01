@@ -5,6 +5,8 @@
  *
  * ALLOWLIST (new commits may only add these):
  *   reports/evidence/EXECUTOR/REGRESSION_*.md
+ *   reports/evidence/EXECUTOR/SAN_*.md
+ *   reports/evidence/EXECUTOR/CHAOS_*.md
  *   reports/evidence/EXECUTOR/gates/manual/*.json
  *   reports/evidence/EXECUTOR/MERGE_PLAN.md
  *
@@ -65,6 +67,8 @@ function isAllowlisted(relPath) {
   const tail = relPath.slice(execPrefix.length);
 
   if (/^REGRESSION_[^/]+\.md$/.test(tail)) return true;
+  if (/^SAN_[^/]+\.md$/.test(tail)) return true;
+  if (/^CHAOS_[^/]+\.md$/.test(tail)) return true;
   if (/^gates\/manual\/[^/]+\.json$/.test(tail)) return true;
   if (tail === 'MERGE_PLAN.md') return true;
   // Directories themselves (no extension) are not file entries — skip
@@ -114,6 +118,8 @@ writeMd(path.join(EXEC, 'REGRESSION_PR05_EXECUTOR_SSOT_STABLE_SET.md'), [
   `NEXT_ACTION: ${NEXT_ACTION}`, '',
   '## ALLOWLIST',
   '- REGRESSION_*.md',
+  '- SAN_*.md',
+  '- CHAOS_*.md',
   '- gates/manual/*.json',
   '- MERGE_PLAN.md', '',
   '## FORBIDDEN (static scan)',
