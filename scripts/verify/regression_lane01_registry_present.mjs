@@ -22,9 +22,10 @@ const SCHEMA_PATH = path.join(ROOT, 'specs/data_lanes.schema.json');
 const checks = [];
 
 // Required lane fields (mirrors schema required list)
-const LANE_REQUIRED = ['lane_id', 'lane_kind', 'truth_level', 'providers', 'schema_version', 'required_artifacts', 'required_lock_fields', 'replay_command', 'readiness_rules'];
+const LANE_REQUIRED = ['lane_id', 'lane_kind', 'truth_level', 'providers', 'schema_version', 'required_artifacts', 'required_lock_fields', 'replay_command', 'readiness_rules', 'lane_state'];
 const VALID_LANE_KINDS = ['WS', 'REST', 'FIXTURE', 'DERIVED'];
 const VALID_TRUTH_LEVELS = ['TRUTH', 'HINT', 'RISK_ONLY'];
+const VALID_LANE_STATES = ['PLANNED', 'PREFLIGHT', 'EXPERIMENTAL', 'TRUTH_READY', 'DEPRECATED'];
 
 checks.push({ check: 'registry_file_exists', pass: fs.existsSync(REGISTRY_PATH), detail: REGISTRY_PATH });
 checks.push({ check: 'schema_file_exists', pass: fs.existsSync(SCHEMA_PATH), detail: SCHEMA_PATH });
@@ -62,6 +63,7 @@ if (fs.existsSync(REGISTRY_PATH)) {
         if (missing.length) { allLanesValid = false; laneErrors.push(`${lane.lane_id || '?'}: missing ${missing.join(',')}`); }
         if (!VALID_LANE_KINDS.includes(lane.lane_kind)) { allLanesValid = false; laneErrors.push(`${lane.lane_id}: invalid lane_kind=${lane.lane_kind}`); }
         if (!VALID_TRUTH_LEVELS.includes(lane.truth_level)) { allLanesValid = false; laneErrors.push(`${lane.lane_id}: invalid truth_level=${lane.truth_level}`); }
+        if (lane.lane_state !== undefined && !VALID_LANE_STATES.includes(lane.lane_state)) { allLanesValid = false; laneErrors.push(`${lane.lane_id}: invalid lane_state=${lane.lane_state}`); }
         if (!Array.isArray(lane.providers) || lane.providers.length === 0) { allLanesValid = false; laneErrors.push(`${lane.lane_id}: providers must be non-empty array`); }
         if (lane.readiness_rules && !('RDY01' in lane.readiness_rules && 'RDY02' in lane.readiness_rules && 'PASS' in lane.readiness_rules)) {
           allLanesValid = false; laneErrors.push(`${lane.lane_id}: readiness_rules missing RDY01/RDY02/PASS`);

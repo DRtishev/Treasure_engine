@@ -917,7 +917,10 @@
     "verify:regression:cap02-capabilities-coverage": "node scripts/verify/regression_cap02_capabilities_coverage.mjs",
     "verify:regression:cap03-exceptions-accounted": "node scripts/verify/regression_cap03_exceptions_accounted.mjs",
     "verify:regression:cap04-no-wallclock-policy-fields": "node scripts/verify/regression_cap04_no_wallclock_policy_fields.mjs",
-    "verify:regression:ws05-limiter-active-binance": "node scripts/verify/regression_ws05_limiter_active_binance.mjs"
+    "verify:regression:ws05-limiter-active-binance": "node scripts/verify/regression_ws05_limiter_active_binance.mjs",
+    "verify:regression:san01-global-forbidden-apis": "node scripts/verify/regression_san01_global_forbidden_apis.mjs",
+    "verify:regression:lane04-truth-requires-truth-ready": "node scripts/verify/regression_lane04_truth_requires_truth_ready.mjs",
+    "verify:r2:preflight": "npm run -s verify:regression:cap01-capabilities-present && npm run -s verify:regression:cap02-capabilities-coverage && npm run -s verify:regression:cap03-exceptions-accounted && npm run -s verify:regression:lane04-truth-requires-truth-ready"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

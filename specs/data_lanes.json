@@ -25,7 +25,8 @@
         "schema_version",
         "time_unit_sentinel"
       ],
-      "schema_version": "liquidations.binance_forceorder_ws.v1"
+      "schema_version": "liquidations.binance_forceorder_ws.v1",
+      "lane_state": "EXPERIMENTAL"
     },
     {
       "lane_id": "liq_bybit_ws_v5",
@@ -51,7 +52,8 @@
         "schema_version",
         "time_unit_sentinel"
       ],
-      "schema_version": "liquidations.bybit_ws_v5.v2"
+      "schema_version": "liquidations.bybit_ws_v5.v2",
+      "lane_state": "TRUTH_READY"
     },
     {
       "lane_id": "liq_okx_ws_v5",
@@ -77,7 +79,8 @@
         "schema_version",
         "time_unit_sentinel"
       ],
-      "schema_version": "liquidations.okx_ws_v5.v1"
+      "schema_version": "liquidations.okx_ws_v5.v1",
+      "lane_state": "EXPERIMENTAL"
     },
     {
       "lane_id": "price_offline_fixture",
@@ -103,7 +106,8 @@
         "rows_n",
         "schema_version"
       ],
-      "schema_version": "price_bars.offline_fixture.v1"
+      "schema_version": "price_bars.offline_fixture.v1",
+      "lane_state": "EXPERIMENTAL"
     },
     {
       "lane_id": "price_okx_orderbook_ws",
@@ -129,7 +133,8 @@
         "docs/OKX_ORDERBOOK_R2_PROCEDURE.md#seq-reset",
         "docs/OKX_ORDERBOOK_R2_PROCEDURE.md#empty-updates"
       ],
-      "schema_version": "okx_orderbook_ws.r2_preflight.v1"
+      "schema_version": "okx_orderbook_ws.r2_preflight.v1",
+      "lane_state": "PREFLIGHT"
     }
   ]
 }

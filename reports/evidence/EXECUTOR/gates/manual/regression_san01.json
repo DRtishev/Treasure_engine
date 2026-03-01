@@ -1,0 +1,101 @@
+{
+  "allowlisted": [
+    "scripts/ops/node_toolchain_acquire.mjs"
+  ],
+  "checks": [
+    {
+      "check": "clean_autopilot_court_v2_mjs",
+      "detail": "scripts/ops/autopilot_court_v2.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_build_final_validated_mjs",
+      "detail": "scripts/ops/build_final_validated.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_candidate_registry_mjs",
+      "detail": "scripts/ops/candidate_registry.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_clean_clone_bootstrap_mjs",
+      "detail": "scripts/ops/clean_clone_bootstrap.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_cockpit_mjs",
+      "detail": "scripts/ops/cockpit.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_event_schema_v1_mjs",
+      "detail": "scripts/ops/event_schema_v1.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_eventbus_v1_mjs",
+      "detail": "scripts/ops/eventbus_v1.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_evidence_helpers_mjs",
+      "detail": "scripts/ops/evidence_helpers.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_life_mjs",
+      "detail": "scripts/ops/life.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "allowlisted_node_toolchain_acquire.mjs",
+      "detail": "allowlisted (double-key acquire) — skip",
+      "pass": true
+    },
+    {
+      "check": "clean_node_toolchain_ensure_mjs",
+      "detail": "scripts/ops/node_toolchain_ensure.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_node_truth_doctor_mjs",
+      "detail": "scripts/ops/node_truth_doctor.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_regen_manifests_mjs",
+      "detail": "scripts/ops/regen_manifests.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_timemachine_ledger_mjs",
+      "detail": "scripts/ops/timemachine_ledger.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_event_emitter_mjs",
+      "detail": "scripts/edge/data_organ/event_emitter.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "total_violations_zero",
+      "detail": "0 forbidden API usages across CERT-backbone",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_SAN01_GLOBAL_FORBIDDEN_APIS",
+  "net_violations_n": 0,
+  "next_action": "npm run -s verify:regression:san01-global-forbidden-apis",
+  "reason_code": "NONE",
+  "run_id": "7b26add1c824",
+  "scan_paths": [
+    "scripts/ops",
+    "scripts/edge/data_organ"
+  ],
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "time_violations_n": 0,
+  "violations": []
+}

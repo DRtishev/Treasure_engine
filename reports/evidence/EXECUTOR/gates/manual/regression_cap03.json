@@ -1,0 +1,111 @@
+{
+  "checks": [
+    {
+      "check": "okx_flag_checksum_deprecated",
+      "detail": "checksum_deprecated=true — OK",
+      "pass": true
+    },
+    {
+      "check": "okx_flag_seq_no_update_supported",
+      "detail": "seq_no_update_supported=true — OK",
+      "pass": true
+    },
+    {
+      "check": "okx_flag_seq_reset_possible",
+      "detail": "seq_reset_possible=true — OK",
+      "pass": true
+    },
+    {
+      "check": "okx_orderbook_lane_present",
+      "detail": "price_okx_orderbook_ws — OK",
+      "pass": true
+    },
+    {
+      "check": "okx_lane_has_r2_exception_refs",
+      "detail": "refs_n=3",
+      "pass": true
+    },
+    {
+      "check": "ref_anchor_no-update",
+      "detail": "ref with #no-update found — OK",
+      "pass": true
+    },
+    {
+      "check": "ref_anchor_seq-reset",
+      "detail": "ref with #seq-reset found — OK",
+      "pass": true
+    },
+    {
+      "check": "ref_anchor_empty-updates",
+      "detail": "ref with #empty-updates found — OK",
+      "pass": true
+    },
+    {
+      "check": "ref_doc_exists_no-update",
+      "detail": "docs/OKX_ORDERBOOK_R2_PROCEDURE.md",
+      "pass": true
+    },
+    {
+      "check": "ref_anchor_resolved_no-update",
+      "detail": "#no-update found in docs/OKX_ORDERBOOK_R2_PROCEDURE.md — OK",
+      "pass": true
+    },
+    {
+      "check": "ref_doc_exists_seq-reset",
+      "detail": "docs/OKX_ORDERBOOK_R2_PROCEDURE.md",
+      "pass": true
+    },
+    {
+      "check": "ref_anchor_resolved_seq-reset",
+      "detail": "#seq-reset found in docs/OKX_ORDERBOOK_R2_PROCEDURE.md — OK",
+      "pass": true
+    },
+    {
+      "check": "ref_doc_exists_empty-updates",
+      "detail": "docs/OKX_ORDERBOOK_R2_PROCEDURE.md",
+      "pass": true
+    },
+    {
+      "check": "ref_anchor_resolved_empty-updates",
+      "detail": "#empty-updates found in docs/OKX_ORDERBOOK_R2_PROCEDURE.md — OK",
+      "pass": true
+    },
+    {
+      "check": "fixture_dir_no_update_exists",
+      "detail": "artifacts/fixtures/okx/orderbook/no_update",
+      "pass": true
+    },
+    {
+      "check": "fixture_dir_no_update_nonempty",
+      "detail": "files_n=1",
+      "pass": true
+    },
+    {
+      "check": "fixture_dir_seq_reset_exists",
+      "detail": "artifacts/fixtures/okx/orderbook/seq_reset",
+      "pass": true
+    },
+    {
+      "check": "fixture_dir_seq_reset_nonempty",
+      "detail": "files_n=1",
+      "pass": true
+    },
+    {
+      "check": "fixture_dir_empty_updates_exists",
+      "detail": "artifacts/fixtures/okx/orderbook/empty_updates",
+      "pass": true
+    },
+    {
+      "check": "fixture_dir_empty_updates_nonempty",
+      "detail": "files_n=1",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_CAP03_EXCEPTIONS_ACCOUNTED",
+  "next_action": "npm run -s verify:regression:cap03-exceptions-accounted",
+  "reason_code": "NONE",
+  "run_id": "7b26add1c824",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

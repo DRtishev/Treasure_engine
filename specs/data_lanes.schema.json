@@ -36,7 +36,8 @@
         "required_artifacts",
         "required_lock_fields",
         "replay_command",
-        "readiness_rules"
+        "readiness_rules",
+        "lane_state"
       ],
       "additionalProperties": false,
       "properties": {
@@ -122,6 +123,17 @@
           },
           "description": "Optional R2 exception policy anchors (doc_path#anchor). Enables RG_CAP03 anchor resolution.",
           "minItems": 1
+        },
+        "lane_state": {
+          "type": "string",
+          "enum": [
+            "PLANNED",
+            "PREFLIGHT",
+            "EXPERIMENTAL",
+            "TRUTH_READY",
+            "DEPRECATED"
+          ],
+          "description": "Lifecycle state of this lane. Only TRUTH_READY lanes may have truth_level=TRUTH."
         }
       }
     }
