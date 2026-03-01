@@ -10,6 +10,15 @@
  *
  * Phase B: Lane Registry SSOT integration.
  * Gates: RG_LANE01, RG_LANE02, RG_LANE03
+ *
+ * Phase R1.2: SELECT_RUN_ID operator selector.
+ * If artifacts/incoming/SELECT_RUN_ID exists, its first non-empty line is the
+ * forced RUN_ID for all artifact resolution. Fail-closed (RDY_SELECT01_INVALID)
+ * if the specified run dir does not exist.
+ *
+ * Phase R1.2: STATIC lane support.
+ * If required_artifacts path does NOT include <RUN_ID> placeholder => lane_mode=STATIC,
+ * check file existence directly (no run dir enumeration needed).
  */
 
 import fs from 'node:fs';
@@ -22,7 +31,18 @@ const ROOT = path.resolve(process.cwd());
 const EXEC_DIR = path.join(ROOT, 'reports/evidence/EXECUTOR');
 const MANUAL = path.join(EXEC_DIR, 'gates/manual');
 const NEXT_ACTION = 'npm run -s verify:public:data:readiness';
+const SELECT_RUN_ID_PATH = path.join(ROOT, 'artifacts/incoming/SELECT_RUN_ID');
 fs.mkdirSync(MANUAL, { recursive: true });
+
+// ---------------------------------------------------------------------------
+// Operator selector: read SELECT_RUN_ID if present
+// ---------------------------------------------------------------------------
+let forcedRunId = null;
+if (fs.existsSync(SELECT_RUN_ID_PATH)) {
+  const raw = fs.readFileSync(SELECT_RUN_ID_PATH, 'utf8').trim();
+  const firstLine = raw.split('\n')[0].trim();
+  if (firstLine) forcedRunId = firstLine;
+}
 
 // Load lane registry (SSOT)
 const REGISTRY_PATH = path.join(ROOT, 'specs/data_lanes.json');
@@ -51,25 +71,48 @@ function findLatestRunDir(baseDir) {
 }
 
 function evaluateLane(lane) {
-  // Determine base artifact directory from first required_artifact path
-  // Pattern: artifacts/incoming/<category>/<provider_id>/<RUN_ID>/...
   const firstArtifact = lane.required_artifacts[0] || '';
+
+  // STATIC lane: no <RUN_ID> placeholder in any artifact path
+  const isStatic = lane.required_artifacts.every((a) => !a.includes('<RUN_ID>'));
+  if (isStatic) {
+    for (const artifact of lane.required_artifacts) {
+      if (!fs.existsSync(path.join(ROOT, artifact))) {
+        return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'NEEDS_DATA', reason_code: 'RDY01', replay_ec: 2, run_id: 'STATIC', lane_mode: 'STATIC', detail: `static missing: ${artifact}` };
+      }
+    }
+    return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'PASS', reason_code: 'NONE', replay_ec: 0, run_id: 'STATIC', lane_mode: 'STATIC', detail: 'static files present' };
+  }
+
+  // Dynamic lane: determine base dir from first artifact
+  // Pattern: artifacts/incoming/<category>/<provider_id>/<RUN_ID>/...
   const baseDirRel = firstArtifact.split('/<RUN_ID>/')[0];
   if (!baseDirRel) {
-    return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'NEEDS_DATA', reason_code: 'RDY01', replay_ec: 2, run_id: 'NONE', detail: 'no artifact template' };
+    return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'NEEDS_DATA', reason_code: 'RDY01', replay_ec: 2, run_id: 'NONE', lane_mode: 'DYNAMIC', detail: 'no artifact template' };
   }
   const baseDir = path.join(ROOT, baseDirRel);
-  const run = findLatestRunDir(baseDir);
+
+  // SELECT_RUN_ID: operator forces a specific run id
+  let run;
+  if (forcedRunId) {
+    const forcedDir = path.join(baseDir, forcedRunId);
+    if (!fs.existsSync(forcedDir)) {
+      return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'FAIL', reason_code: 'RDY_SELECT01_INVALID', replay_ec: 1, run_id: forcedRunId, lane_mode: 'DYNAMIC', detail: `SELECT_RUN_ID=${forcedRunId} not found in ${path.relative(ROOT, baseDir)}` };
+    }
+    run = { runId: forcedRunId, dir: forcedDir };
+  } else {
+    run = findLatestRunDir(baseDir);
+  }
 
   if (!run) {
-    return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'NEEDS_DATA', reason_code: 'RDY01', replay_ec: 2, run_id: 'NONE', detail: `no run in ${path.relative(ROOT, baseDir)}` };
+    return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'NEEDS_DATA', reason_code: 'RDY01', replay_ec: 2, run_id: 'NONE', lane_mode: 'DYNAMIC', detail: `no run in ${path.relative(ROOT, baseDir)}` };
   }
 
   // Check required artifacts exist
   for (const artifact of lane.required_artifacts) {
     const resolved = artifact.replace('/<RUN_ID>/', `/${run.runId}/`);
     if (!fs.existsSync(path.join(ROOT, resolved))) {
-      return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'NEEDS_DATA', reason_code: 'RDY01', replay_ec: 2, run_id: run.runId, detail: `missing: ${resolved}` };
+      return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'NEEDS_DATA', reason_code: 'RDY01', replay_ec: 2, run_id: run.runId, lane_mode: 'DYNAMIC', detail: `missing: ${resolved}` };
     }
   }
 
@@ -81,10 +124,10 @@ function evaluateLane(lane) {
       const lock = JSON.parse(fs.readFileSync(resolvedLock, 'utf8'));
       const missingFields = lane.required_lock_fields.filter((f) => !(f in lock));
       if (missingFields.length > 0) {
-        return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'FAIL', reason_code: 'RDY02', replay_ec: 1, run_id: run.runId, detail: `lock missing fields: ${missingFields.join(',')}` };
+        return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'FAIL', reason_code: 'RDY02', replay_ec: 1, run_id: run.runId, lane_mode: 'DYNAMIC', detail: `lock missing fields: ${missingFields.join(',')}` };
       }
     } catch (e) {
-      return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'FAIL', reason_code: 'RDY02', replay_ec: 1, run_id: run.runId, detail: `lock parse error: ${e.message}` };
+      return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'FAIL', reason_code: 'RDY02', replay_ec: 1, run_id: run.runId, lane_mode: 'DYNAMIC', detail: `lock parse error: ${e.message}` };
     }
   }
 
@@ -99,6 +142,7 @@ function evaluateLane(lane) {
     reason_code: replay.ec === 0 ? 'NONE' : (replay.ec === 2 ? 'RDY01' : 'RDY02'),
     replay_ec: replay.ec,
     run_id: run.runId,
+    lane_mode: 'DYNAMIC',
     detail: replay.ec === 0 ? 'replay PASS' : `replay exit=${replay.ec}`,
     schema_version: lane.schema_version,
   };
@@ -128,6 +172,7 @@ writeMd(path.join(EXEC_DIR, 'PUBLIC_DATA_READINESS_SEAL.md'), [
   `STATUS: ${status}`,
   `REASON_CODE: ${reason_code}`,
   `RUN_ID: ${RUN_ID}`,
+  `SELECT_RUN_ID: ${forcedRunId ?? 'NONE'}`,
   `NEXT_ACTION: ${NEXT_ACTION}`,
   `REGISTRY: specs/data_lanes.json (${lanes.length} lanes)`, '',
   '## PER-LANE MATRIX', '',
@@ -145,6 +190,7 @@ writeJsonDeterministic(path.join(MANUAL, 'public_data_readiness_seal.json'), {
   status,
   reason_code,
   run_id: RUN_ID,
+  select_run_id: forcedRunId ?? null,
   next_action: NEXT_ACTION,
   registry_schema_version: registry.registry_schema_version,
   lanes_total: lanes.length,

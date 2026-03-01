@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 340" width="700" height="340" font-family="monospace,sans-serif">
+  <!-- Background -->
+  <rect width="700" height="340" rx="10" fill="#0d1117"/>
+
+  <!-- Title -->
+  <text x="350" y="28" text-anchor="middle" fill="#e6edf3" font-size="14" font-weight="bold">R2 OKX Orderbook — Pre-flight to Offline Proof</text>
+
+  <!-- Pre-flight gate -->
+  <rect x="20" y="50" width="180" height="80" rx="6" fill="#21262d" stroke="#388bfd" stroke-width="1.5"/>
+  <text x="110" y="68" text-anchor="middle" fill="#79c0ff" font-size="11" font-weight="bold">RG_DATA_R3_ACQUIRE</text>
+  <text x="110" y="82" text-anchor="middle" fill="#79c0ff" font-size="9">_CONTRACT (pre-flight)</text>
+  <text x="110" y="97" text-anchor="middle" fill="#8b949e" font-size="8">✓ DIGEST_SPEC anchors</text>
+  <text x="110" y="109" text-anchor="middle" fill="#8b949e" font-size="8">✓ R2_PROCEDURE anchors</text>
+  <text x="110" y="120" text-anchor="middle" fill="#8b949e" font-size="8">✓ fixture dirs (5 types)</text>
+
+  <!-- Arrow -->
+  <line x1="200" y1="90" x2="240" y2="90" stroke="#388bfd" stroke-width="1.5" marker-end="url(#ba2)"/>
+
+  <!-- Fixture dirs -->
+  <rect x="240" y="50" width="165" height="80" rx="6" fill="#21262d" stroke="#e3b341" stroke-width="1.5"/>
+  <text x="322" y="68" text-anchor="middle" fill="#e3b341" font-size="11" font-weight="bold">Fixture Coverage</text>
+  <text x="322" y="83" text-anchor="middle" fill="#8b949e" font-size="8">artifacts/fixtures/okx/orderbook/</text>
+  <text x="322" y="95" text-anchor="middle" fill="#8b949e" font-size="8">no_update — seq_no_update</text>
+  <text x="322" y="107" text-anchor="middle" fill="#8b949e" font-size="8">seq_reset — full snapshot</text>
+  <text x="322" y="119" text-anchor="middle" fill="#8b949e" font-size="8">empty_updates / align / main</text>
+
+  <!-- Arrow -->
+  <line x1="405" y1="90" x2="445" y2="90" stroke="#e3b341" stroke-width="1.5" marker-end="url(#ya2)"/>
+
+  <!-- Digest spec -->
+  <rect x="445" y="50" width="230" height="80" rx="6" fill="#21262d" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="560" y="68" text-anchor="middle" fill="#56d364" font-size="11" font-weight="bold">OKX_ORDERBOOK_DIGEST_SPEC</text>
+  <text x="560" y="83" text-anchor="middle" fill="#8b949e" font-size="8">sha256(JSON.stringify({asks,bids}))</text>
+  <text x="560" y="95" text-anchor="middle" fill="#8b949e" font-size="8">compareDecimalStr (no parseFloat)</text>
+  <text x="560" y="107" text-anchor="middle" fill="#8b949e" font-size="8">zero entries excluded</text>
+  <text x="560" y="119" text-anchor="middle" fill="#8b949e" font-size="8">asks ASC, bids DESC</text>
+
+  <!-- Vertical arrow to R2 procedure -->
+  <line x1="322" y1="130" x2="322" y2="165" stroke="#e3b341" stroke-width="1.5" marker-end="url(#ya2)"/>
+
+  <!-- R2 Procedure -->
+  <rect x="20" y="165" width="610" height="72" rx="6" fill="#161b22" stroke="#d2a8ff" stroke-width="1.5"/>
+  <text x="325" y="183" text-anchor="middle" fill="#d2a8ff" font-size="11" font-weight="bold">OKX_ORDERBOOK_R2_PROCEDURE — Exception Matrix</text>
+
+  <rect x="35" y="192" width="130" height="34" rx="4" fill="#21262d" stroke="#d2a8ff" stroke-width="1"/>
+  <text x="100" y="208" text-anchor="middle" fill="#d2a8ff" font-size="9" font-weight="bold">seq_no_update</text>
+  <text x="100" y="220" text-anchor="middle" fill="#8b949e" font-size="8">SKIP, no counter++</text>
+
+  <rect x="180" y="192" width="130" height="34" rx="4" fill="#21262d" stroke="#d2a8ff" stroke-width="1"/>
+  <text x="245" y="208" text-anchor="middle" fill="#d2a8ff" font-size="9" font-weight="bold">seq_reset</text>
+  <text x="245" y="220" text-anchor="middle" fill="#8b949e" font-size="8">RESET, apply snapshot</text>
+
+  <rect x="325" y="192" width="130" height="34" rx="4" fill="#21262d" stroke="#d2a8ff" stroke-width="1"/>
+  <text x="390" y="208" text-anchor="middle" fill="#d2a8ff" font-size="9" font-weight="bold">empty_updates</text>
+  <text x="390" y="220" text-anchor="middle" fill="#8b949e" font-size="8">IGNORE, seqId advance</text>
+
+  <rect x="470" y="192" width="150" height="34" rx="4" fill="#21262d" stroke="#d2a8ff" stroke-width="1"/>
+  <text x="545" y="208" text-anchor="middle" fill="#d2a8ff" font-size="9" font-weight="bold">seq_gap_detect</text>
+  <text x="545" y="220" text-anchor="middle" fill="#8b949e" font-size="8">RESYNC, refetch snap</text>
+
+  <!-- Final verification -->
+  <line x1="325" y1="237" x2="325" y2="268" stroke="#3fb950" stroke-width="1.5" marker-end="url(#ga2)"/>
+
+  <rect x="20" y="268" width="650" height="52" rx="6" fill="#21262d" stroke="#3fb950" stroke-width="1.5"/>
+  <text x="345" y="288" text-anchor="middle" fill="#56d364" font-size="11" font-weight="bold">Offline Verification (CERT mode, TREASURE_NET_KILL=1)</text>
+  <text x="345" y="304" text-anchor="middle" fill="#8b949e" font-size="9">recompute digest → compare stored → RDY01/PASS per lane → verify:fast BLOCKED ACQ_LOCK01 (not NETV01)</text>
+
+  <!-- Arrowhead markers -->
+  <defs>
+    <marker id="ba2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#388bfd"/>
+    </marker>
+    <marker id="ya2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#e3b341"/>
+    </marker>
+    <marker id="ga2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#3fb950"/>
+    </marker>
+  </defs>
+</svg>
