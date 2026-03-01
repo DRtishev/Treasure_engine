@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "check": "json_structure_asks_bids_order",
+      "detail": "JSON keys=[asks,bids] — asks first, exactly 2 keys — OK",
+      "pass": true
+    },
+    {
+      "check": "bids_sorted_desc",
+      "detail": "bids sorted DESC: 49500>49000>48900 — OK",
+      "pass": true
+    },
+    {
+      "check": "asks_sorted_asc",
+      "detail": "asks sorted ASC: 50000<50100<50200 — OK",
+      "pass": true
+    },
+    {
+      "check": "zero_size_excluded_bids",
+      "detail": "bids zero excluded: only 48900 remains — OK",
+      "pass": true
+    },
+    {
+      "check": "zero_size_excluded_asks",
+      "detail": "asks zero excluded: only 50000 remains — OK",
+      "pass": true
+    },
+    {
+      "check": "determinism_x2",
+      "detail": "digest x2 identical — OK",
+      "pass": true
+    },
+    {
+      "check": "digest_sensitive_to_size_change",
+      "detail": "digest changes on size mutation — OK",
+      "pass": true
+    },
+    {
+      "check": "decimal_sort_distinguishes_large_ints",
+      "detail": "compareDecimalStr(9007199254740993,9007199254740992)=1>0 — float64 would give 0 — OK",
+      "pass": true
+    },
+    {
+      "check": "digest_is_sha256_hex",
+      "detail": "digest is 64-char hex SHA-256 — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_OB_OKX16_DIGEST_MATCHES_SPEC",
+  "next_action": "npm run -s verify:regression:ob-okx16-digest-matches-spec",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

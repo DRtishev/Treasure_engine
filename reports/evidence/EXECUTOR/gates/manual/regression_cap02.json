@@ -1,0 +1,91 @@
+{
+  "checks": [
+    {
+      "check": "capabilities_parseable",
+      "detail": "JSON parse OK",
+      "pass": true
+    },
+    {
+      "check": "providers_present",
+      "detail": "providers=binance,bybit,okx",
+      "pass": true
+    },
+    {
+      "check": "coverage_binance_policy",
+      "detail": "key=capabilities.binance.policy level=HIGH — OK",
+      "pass": true
+    },
+    {
+      "check": "coverage_binance_rate_limits",
+      "detail": "key=capabilities.binance.rate_limits level=HIGH — OK",
+      "pass": true
+    },
+    {
+      "check": "coverage_binance_orderbook",
+      "detail": "key=capabilities.binance.orderbook level=HIGH — OK",
+      "pass": true
+    },
+    {
+      "check": "coverage_binance_scopes",
+      "detail": "key=capabilities.binance.scopes level=HIGH — OK",
+      "pass": true
+    },
+    {
+      "check": "coverage_bybit_policy",
+      "detail": "key=capabilities.bybit.policy level=HIGH — OK",
+      "pass": true
+    },
+    {
+      "check": "coverage_bybit_rate_limits",
+      "detail": "key=capabilities.bybit.rate_limits level=MEDIUM — OK",
+      "pass": true
+    },
+    {
+      "check": "coverage_bybit_orderbook",
+      "detail": "key=capabilities.bybit.orderbook level=HIGH — OK",
+      "pass": true
+    },
+    {
+      "check": "coverage_okx_policy",
+      "detail": "key=capabilities.okx.policy level=HIGH — OK",
+      "pass": true
+    },
+    {
+      "check": "coverage_okx_rate_limits",
+      "detail": "key=capabilities.okx.rate_limits level=MEDIUM — OK",
+      "pass": true
+    },
+    {
+      "check": "coverage_okx_orderbook",
+      "detail": "key=capabilities.okx.orderbook level=HIGH — OK",
+      "pass": true
+    },
+    {
+      "check": "no_unknown_coverage_keys",
+      "detail": "all 10 keys valid — OK",
+      "pass": true
+    },
+    {
+      "check": "required_pattern_policy",
+      "detail": "capabilities.*.policy.* — OK",
+      "pass": true
+    },
+    {
+      "check": "required_pattern_rate_limits",
+      "detail": "capabilities.*.rate_limits.* — OK",
+      "pass": true
+    },
+    {
+      "check": "required_pattern_orderbook",
+      "detail": "capabilities.*.orderbook.* — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_CAP02_CAPABILITIES_COVERAGE",
+  "next_action": "npm run -s verify:regression:cap02-capabilities-coverage",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

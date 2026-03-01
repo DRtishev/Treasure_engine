@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "align_script_exists",
+      "detail": "align script present — OK",
+      "pass": true
+    },
+    {
+      "check": "align_run1_exit_zero",
+      "detail": "run1 EC=0 — OK",
+      "pass": true
+    },
+    {
+      "check": "align_run2_exit_zero",
+      "detail": "run2 EC=0 — OK",
+      "pass": true
+    },
+    {
+      "check": "align_output_deterministic_x2",
+      "detail": "ALIGN.json hash run1===run2=408414da7d550e67... — deterministic OK",
+      "pass": true
+    },
+    {
+      "check": "align_stdout_pass_line_identical",
+      "detail": "stdout [PASS] line identical — OK",
+      "pass": true
+    },
+    {
+      "check": "align_json_no_time_fields",
+      "detail": "ALIGN.json has no ts/timestamp/time fields — tick-only OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_OB_OKX14_ALIGN_DETERMINISM_X2",
+  "next_action": "npm run -s verify:regression:ob-okx14-align-determinism-x2",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

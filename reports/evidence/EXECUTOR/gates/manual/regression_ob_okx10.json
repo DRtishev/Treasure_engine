@@ -1,0 +1,37 @@
+{
+  "checks": [
+    {
+      "check": "window_size_from_capabilities",
+      "detail": "reorder_window_max_items=5 — OK",
+      "pass": true
+    },
+    {
+      "check": "adjacent_swap_digest_equal",
+      "detail": "adjacent swap fixed by window: clean==reorder digest — OK",
+      "pass": true
+    },
+    {
+      "check": "in_order_digest_unchanged_by_window",
+      "detail": "in-order: window does not alter digest — OK",
+      "pass": true
+    },
+    {
+      "check": "window_size_handles_full_reversal",
+      "detail": "full reversal of 4 updates (window=5) resolved — OK",
+      "pass": true
+    },
+    {
+      "check": "reorder_determinism_x2",
+      "detail": "reorder determinism x2: r1==r2 digest — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_OB_OKX10_REORDER_WINDOW_POLICY",
+  "next_action": "npm run -s verify:regression:ob-okx10-reorder-window-policy",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "window_size": 5
+}

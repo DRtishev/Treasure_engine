@@ -1,0 +1,81 @@
+{
+  "checks": [
+    {
+      "check": "capabilities_parseable",
+      "detail": "JSON parse OK",
+      "pass": true
+    },
+    {
+      "check": "binance_scopes_array_present",
+      "detail": "binance.scopes is array — OK",
+      "pass": true
+    },
+    {
+      "check": "binance_scopes_min_2_entries",
+      "detail": "binance.scopes has 2 entries — OK",
+      "pass": true
+    },
+    {
+      "check": "scope_0_has_scope_id",
+      "detail": "scope[0].scope_id=\"binance.academy.stream_limits\" — OK",
+      "pass": true
+    },
+    {
+      "check": "scope_0_unit_logical_ticks",
+      "detail": "scope[0].rate_limits.unit=LOGICAL_TICKS — OK",
+      "pass": true
+    },
+    {
+      "check": "scope_1_has_scope_id",
+      "detail": "scope[1].scope_id=\"binance.delivery_testnet.market_streams\" — OK",
+      "pass": true
+    },
+    {
+      "check": "scope_1_unit_logical_ticks",
+      "detail": "scope[1].rate_limits.unit=LOGICAL_TICKS — OK",
+      "pass": true
+    },
+    {
+      "check": "scope_id_binance_academy_stream_limits",
+      "detail": "scope_id=binance.academy.stream_limits present — OK",
+      "pass": true
+    },
+    {
+      "check": "scope_id_binance_delivery_testnet_market_streams",
+      "detail": "scope_id=binance.delivery_testnet.market_streams present — OK",
+      "pass": true
+    },
+    {
+      "check": "binance_scopes_no_wallclock_fields",
+      "detail": "no wallclock fields in scope rate_limits — OK",
+      "pass": true
+    },
+    {
+      "check": "okx_orderbook_dedup_key",
+      "detail": "okx.orderbook.dedup_key=seqId — OK",
+      "pass": true
+    },
+    {
+      "check": "okx_orderbook_reorder_window_max_items",
+      "detail": "okx.orderbook.reorder_window_max_items=5 — OK",
+      "pass": true
+    },
+    {
+      "check": "confidence_covers_binance_scopes",
+      "detail": "capabilities.binance.scopes coverage=HIGH — OK",
+      "pass": true
+    },
+    {
+      "check": "required_pattern_scopes_scope_id",
+      "detail": "capabilities.*.scopes[*].scope_id in required_path_patterns — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_CAP05_SCOPE_AWARE_LIMITS",
+  "next_action": "npm run -s verify:regression:cap05-scope-aware-limits",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

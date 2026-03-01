@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "scenario_normal_chain_no_gap",
+      "detail": "normal chain completed: [BOOK_BOOT, BOOK_APPLY, BOOK_APPLY] — OK",
+      "pass": true
+    },
+    {
+      "check": "scenario_gap_detected_as_fatal",
+      "detail": "GAP correctly detected as fatal: GAP: prevSeqId=101 > lastSeqId=100 — OK",
+      "pass": true
+    },
+    {
+      "check": "scenario_no_update_skip_not_fatal",
+      "detail": "no-update SKIP handled correctly, chain continues: [BOOK_BOOT, SKIP, BOOK_APPLY] — OK",
+      "pass": true
+    },
+    {
+      "check": "scenario_seq_reset_triggers_book_reset",
+      "detail": "seq-reset correctly triggers BOOK_RESET: [BOOK_BOOT, BOOK_APPLY, BOOK_RESET, BOOK_APPLY] — OK",
+      "pass": true
+    },
+    {
+      "check": "scenario_empty_update_not_fatal",
+      "detail": "empty update treated as BOOK_APPLY (chain valid): [BOOK_BOOT, BOOK_APPLY, BOOK_APPLY] — OK",
+      "pass": true
+    },
+    {
+      "check": "scenario_gap_size_correct",
+      "detail": "GAP detected with gap=3 (expected 3) — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_OB_OKX06_GAP_DETECTION",
+  "next_action": "npm run -s verify:regression:ob-okx06-gap-detection",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

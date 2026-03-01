@@ -1,0 +1,51 @@
+{
+  "checks": [
+    {
+      "check": "fixture_file_exists",
+      "detail": "fixture.jsonl present — OK",
+      "pass": true
+    },
+    {
+      "check": "lock_file_exists",
+      "detail": "lock.json present — OK",
+      "pass": true
+    },
+    {
+      "check": "lock_parseable",
+      "detail": "lock.json parse OK",
+      "pass": true
+    },
+    {
+      "check": "fixture_non_empty",
+      "detail": "fixture has 6 line(s)",
+      "pass": true
+    },
+    {
+      "check": "all_lines_parseable",
+      "detail": "all 6 lines are valid JSON",
+      "pass": true
+    },
+    {
+      "check": "messages_n_matches_lock",
+      "detail": "messages_n=6 — OK",
+      "pass": true
+    },
+    {
+      "check": "all_messages_have_required_fields",
+      "detail": "all 6 messages have action, data[0].seqId/prevSeqId/bids/asks — OK",
+      "pass": true
+    },
+    {
+      "check": "fixture_has_boot_snapshot",
+      "detail": "2 snapshot(s) with prevSeqId=-1 found — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_OB_OKX01_FIXTURE_INTEGRITY",
+  "next_action": "npm run -s verify:regression:ob-okx01-fixture-integrity",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

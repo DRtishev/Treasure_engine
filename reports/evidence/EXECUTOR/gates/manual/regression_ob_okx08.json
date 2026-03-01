@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "check": "multi_level_bids_sorted_desc",
+      "detail": "bids DESC: [50000,49900,49800,49700,49600,49500] — OK",
+      "pass": true
+    },
+    {
+      "check": "multi_level_asks_sorted_asc",
+      "detail": "asks ASC: [50050,50100,50200,50300,50400,50500] — OK",
+      "pass": true
+    },
+    {
+      "check": "mixed_decimal_bids_sorted_desc",
+      "detail": "mixed bids DESC: [50001,50000.25,49999.75,49999.5,49998.99] — OK",
+      "pass": true
+    },
+    {
+      "check": "digest_deterministic_x2",
+      "detail": "digest run1===run2=386fd915028828b5... — deterministic OK",
+      "pass": true
+    },
+    {
+      "check": "canon_json_has_asks_bids_keys",
+      "detail": "canon JSON has exactly asks+bids keys — OK",
+      "pass": true
+    },
+    {
+      "check": "canon_bids_descending",
+      "detail": "canon bids are descending — OK",
+      "pass": true
+    },
+    {
+      "check": "canon_asks_ascending",
+      "detail": "canon asks are ascending — OK",
+      "pass": true
+    },
+    {
+      "check": "digest_sensitive_to_sort_order",
+      "detail": "digest differs for mis-sorted book (correct≠wrong) — OK",
+      "pass": true
+    },
+    {
+      "check": "zero_size_excluded_from_digest",
+      "detail": "zero-size entry excluded — digests match — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_OB_OKX08_MULTI_LEVEL_SORT_CANON",
+  "next_action": "npm run -s verify:regression:ob-okx08-multi-level-sort-canon",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

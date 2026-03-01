@@ -1,0 +1,81 @@
+{
+  "checks": [
+    {
+      "check": "align_script_exists",
+      "detail": "align_script present — OK",
+      "pass": true
+    },
+    {
+      "check": "buffer_exists",
+      "detail": "buffer present — OK",
+      "pass": true
+    },
+    {
+      "check": "snapshot_exists",
+      "detail": "snapshot present — OK",
+      "pass": true
+    },
+    {
+      "check": "lock_exists",
+      "detail": "lock present — OK",
+      "pass": true
+    },
+    {
+      "check": "align_first_event_condition",
+      "detail": "prevSeqId=100 <= snapshot.seqId=100 < seqId=101 — OK",
+      "pass": true
+    },
+    {
+      "check": "align_first_event_seqId_matches_lock",
+      "detail": "align_first_event_seqId=101 matches lock — OK",
+      "pass": true
+    },
+    {
+      "check": "discard_count_matches_lock",
+      "detail": "discarded_n=2 matches lock — OK",
+      "pass": true
+    },
+    {
+      "check": "strict_apply_chain_valid",
+      "detail": "all 2 STRICT apply steps have prevSeqId==lastSeqId — OK",
+      "pass": true
+    },
+    {
+      "check": "align_script_exit_zero",
+      "detail": "align script EC=0 — PASS",
+      "pass": true
+    },
+    {
+      "check": "align_script_stdout_pass",
+      "detail": "stdout=[PASS] — OK",
+      "pass": true
+    },
+    {
+      "check": "epoch_output_created",
+      "detail": "EPOCH dir exists: EPOCH-R2-ALIGN-9d74e821a426 — OK",
+      "pass": true
+    },
+    {
+      "check": "epoch_align_json_exists",
+      "detail": "ALIGN.json present — OK",
+      "pass": true
+    },
+    {
+      "check": "epoch_align_md_exists",
+      "detail": "ALIGN.md present — OK",
+      "pass": true
+    },
+    {
+      "check": "epoch_align_json_final_seqId",
+      "detail": "ALIGN.json final_seqId=103 matches lock — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_OB_OKX12_ALIGN_INVARIANTS",
+  "next_action": "npm run -s verify:regression:ob-okx12-align-invariants",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
