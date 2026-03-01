@@ -920,7 +920,16 @@
     "verify:regression:ws05-limiter-active-binance": "node scripts/verify/regression_ws05_limiter_active_binance.mjs",
     "verify:regression:san01-global-forbidden-apis": "node scripts/verify/regression_san01_global_forbidden_apis.mjs",
     "verify:regression:lane04-truth-requires-truth-ready": "node scripts/verify/regression_lane04_truth_requires_truth_ready.mjs",
-    "verify:r2:preflight": "npm run -s verify:regression:cap01-capabilities-present && npm run -s verify:regression:cap02-capabilities-coverage && npm run -s verify:regression:cap03-exceptions-accounted && npm run -s verify:regression:lane04-truth-requires-truth-ready"
+    "verify:regression:r2-01-no-daily-wiring": "node scripts/verify/regression_r2_01_no_daily_wiring.mjs",
+    "verify:regression:san02-cert-coverage": "node scripts/verify/regression_san02_cert_coverage.mjs",
+    "verify:regression:ob-okx01-fixture-integrity": "node scripts/verify/regression_ob_okx01_fixture_integrity.mjs",
+    "verify:regression:ob-okx02-lock-integrity": "node scripts/verify/regression_ob_okx02_lock_integrity.mjs",
+    "verify:regression:ob-okx03-seq-state-machine": "node scripts/verify/regression_ob_okx03_seq_state_machine.mjs",
+    "verify:regression:ob-okx04-book-digest": "node scripts/verify/regression_ob_okx04_book_digest.mjs",
+    "verify:regression:ob-okx05-eventbus-events": "node scripts/verify/regression_ob_okx05_eventbus_events.mjs",
+    "verify:regression:ob-okx06-gap-detection": "node scripts/verify/regression_ob_okx06_gap_detection.mjs",
+    "verify:r2:preflight": "npm run -s verify:regression:cap01-capabilities-present && npm run -s verify:regression:cap02-capabilities-coverage && npm run -s verify:regression:cap03-exceptions-accounted && npm run -s verify:regression:lane04-truth-requires-truth-ready",
+    "verify:r2:okx-orderbook": "npm run -s verify:regression:r2-01-no-daily-wiring && npm run -s verify:regression:ob-okx01-fixture-integrity && npm run -s verify:regression:ob-okx02-lock-integrity && npm run -s verify:regression:ob-okx03-seq-state-machine && npm run -s verify:regression:ob-okx04-book-digest && npm run -s verify:regression:ob-okx05-eventbus-events && npm run -s verify:regression:ob-okx06-gap-detection"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

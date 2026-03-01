@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 7b26add1c824
+RUN_ID: 85923462b561
 NEXT_ACTION: npm run -s verify:regression:cap02-capabilities-coverage
 
 ## CHECKS

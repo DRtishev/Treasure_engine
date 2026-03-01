@@ -40,7 +40,7 @@
   "gate_id": "RG_CAP01_CAPABILITIES_PRESENT",
   "next_action": "npm run -s verify:regression:cap01-capabilities-present",
   "reason_code": "NONE",
-  "run_id": "7b26add1c824",
+  "run_id": "85923462b561",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "seq_machine_no_fatal",
+      "detail": "seq-state machine completed without fatal error — OK",
+      "pass": true
+    },
+    {
+      "check": "book_boot_occurred",
+      "detail": "BOOK_BOOT triggered — OK",
+      "pass": true
+    },
+    {
+      "check": "final_seqId_matches_lock",
+      "detail": "final_seqId=2002 — OK",
+      "pass": true
+    },
+    {
+      "check": "event_log_matches_expected",
+      "detail": "event_log=[BOOK_BOOT, BOOK_APPLY, BOOK_APPLY, BOOK_RESET, BOOK_APPLY, BOOK_APPLY] matches lock.events_expected — OK",
+      "pass": true
+    },
+    {
+      "check": "at_least_one_book_apply",
+      "detail": "BOOK_APPLY count=4 — OK",
+      "pass": true
+    },
+    {
+      "check": "at_least_one_book_reset",
+      "detail": "BOOK_RESET count=1 — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_OB_OKX03_SEQ_STATE_MACHINE",
+  "next_action": "npm run -s verify:regression:ob-okx03-seq-state-machine",
+  "reason_code": "NONE",
+  "run_id": "85923462b561",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

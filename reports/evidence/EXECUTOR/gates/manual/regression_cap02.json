@@ -80,7 +80,7 @@
   "gate_id": "RG_CAP02_CAPABILITIES_COVERAGE",
   "next_action": "npm run -s verify:regression:cap02-capabilities-coverage",
   "reason_code": "NONE",
-  "run_id": "7b26add1c824",
+  "run_id": "85923462b561",
   "schema_version": "1.0.0",
   "status": "PASS"
 }
