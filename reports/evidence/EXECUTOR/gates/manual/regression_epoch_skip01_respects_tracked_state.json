@@ -17,13 +17,13 @@
     },
     {
       "check": "files_scanned_determinism_x2",
-      "detail": "FILES_SCANNED=291 stable x2",
+      "detail": "FILES_SCANNED=297 stable x2",
       "pass": true
     }
   ],
   "failed_checks": [],
-  "files_scanned_run1": 291,
-  "files_scanned_run2": 291,
+  "files_scanned_run1": 297,
+  "files_scanned_run2": 297,
   "gate_id": "RG_EPOCH_SKIP01_RESPECTS_TRACKED_STATE",
   "masked_violations_n": 0,
   "next_action": "npm run -s verify:fast",

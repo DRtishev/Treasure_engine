@@ -1,5 +1,5 @@
 {
-  "files_scanned": 291,
+  "files_scanned": 297,
   "gate_id": "RG_REASON02_IN_TAXONOMY",
   "next_action": "npm run -s verify:fast",
   "observed_tokens": [
