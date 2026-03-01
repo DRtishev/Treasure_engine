@@ -29,6 +29,15 @@ import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { createBus } from './eventbus_v1.mjs';
 
 const ROOT = process.cwd();
+
+// FIX-01: self-harden net-kill for ALL child runs
+process.env.TREASURE_NET_KILL = '1';
+const preloadAbs = path.join(ROOT, 'scripts', 'safety', 'net_kill_preload.cjs');
+const reqFlag = `--require ${preloadAbs}`;
+if (!(process.env.NODE_OPTIONS || '').includes(reqFlag)) {
+  process.env.NODE_OPTIONS = ((process.env.NODE_OPTIONS || '') + ' ' + reqFlag).trim();
+}
+
 const EPOCH_DIR = path.join(ROOT, 'reports', 'evidence', `EPOCH-LIFE-${RUN_ID}`);
 fs.mkdirSync(EPOCH_DIR, { recursive: true });
 
@@ -113,7 +122,13 @@ function runStep(step) {
   const stdout = (result.stdout ?? '').trim().slice(0, 300);
   const stderr = (result.stderr ?? '').trim().slice(0, 200);
 
-  return { step_id: step.id, name: step.name, label: step.label, exit_code: exitCode, status: stepStatus, stdout, stderr };
+  return {
+    step_id: step.id, name: step.name, label: step.label,
+    exit_code: exitCode, status: stepStatus, stdout, stderr,
+    netkill_enforced: true,
+    node_options_contains_preload: (process.env.NODE_OPTIONS || '').includes('net_kill_preload.cjs'),
+    preload_path_rel: 'scripts/safety/net_kill_preload.cjs',
+  };
 }
 
 // ---------------------------------------------------------------------------
@@ -210,7 +225,12 @@ writeJsonDeterministic(path.join(EPOCH_DIR, 'LIFE_SUMMARY.json'), {
   steps_blocked: blocked.length,
   aborted,
   abort_reason: abortReason ?? null,
-  step_results: stepResults.map((s) => ({ step_id: s.step_id, name: s.name, status: s.status, exit_code: s.exit_code })),
+  step_results: stepResults.map((s) => ({
+    step_id: s.step_id, name: s.name, status: s.status, exit_code: s.exit_code,
+    netkill_enforced: s.netkill_enforced,
+    node_options_contains_preload: s.node_options_contains_preload,
+    preload_path_rel: s.preload_path_rel,
+  })),
   next_action: oneNextAction ?? 'npm run -s verify:fast',
   one_next_action: oneNextAction ?? null,
 });
