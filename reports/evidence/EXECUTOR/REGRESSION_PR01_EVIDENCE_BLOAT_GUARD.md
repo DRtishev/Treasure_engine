@@ -6,16 +6,18 @@ RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 40
+- changed_evidence_files_n: 44
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
 ## OFFENDERS
 - reports/evidence/EXECUTOR/gates/manual/regression_ec01_reason_context_contract.json
+- reports/evidence/EXECUTOR/gates/manual/regression_epoch_skip01_respects_tracked_state.json
 - reports/evidence/EXECUTOR/gates/manual/regression_netkill_ledger_enforcement.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr05_executor_ssot_stable_set.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr07_executor_runid_immutable.json
+- reports/evidence/EXECUTOR/gates/manual/regression_pr08_executor_stable_only.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_cap_mean01_keys_have_meaning.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_deliv01_delivery_doc_present.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_deliv02_delivery_doc_coherence.json
@@ -32,10 +34,12 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_trust02_cockpit_truthlevel_column.json
 - reports/evidence/EXECUTOR/gates/manual/regression_victory_fast_no_heavy.json
 - reports/evidence/EXECUTOR/REGRESSION_EC01_REASON_CONTEXT_CONTRACT.md
+- reports/evidence/EXECUTOR/REGRESSION_EPOCH_SKIP01_RESPECTS_TRACKED_STATE.md
 - reports/evidence/EXECUTOR/REGRESSION_NETKILL_LEDGER_ENFORCEMENT.md
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
 - reports/evidence/EXECUTOR/REGRESSION_PR05_EXECUTOR_SSOT_STABLE_SET.md
 - reports/evidence/EXECUTOR/REGRESSION_PR07_EXECUTOR_RUNID_IMMUTABLE.md
+- reports/evidence/EXECUTOR/REGRESSION_PR08_EXECUTOR_STABLE_ONLY.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_CAP_MEAN01.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_DELIV01.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_DELIV02.md
