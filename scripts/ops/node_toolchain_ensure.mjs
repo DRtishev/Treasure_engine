@@ -34,16 +34,19 @@ const EXPECTED_VERSION = 'v22.22.0';
 fs.mkdirSync(MANUAL, { recursive: true });
 
 let status = 'PASS';
-let reason = 'NONE';
+let reason_code = 'NONE';
+let detail = 'toolchain ready';
 let nodeRuntime = 'UNKNOWN';
 
 // No network allowed — fail-closed if toolchain not present
 if (!fs.existsSync(LOCK_PATH)) {
   status = 'BLOCKED';
-  reason = 'NETV01: lock file missing — run ops:node:toolchain:acquire with double-key unlock';
+  reason_code = 'NETV01';
+  detail = 'lock file missing — run ops:node:toolchain:acquire with double-key unlock';
 } else if (!fs.existsSync(NODE_BIN)) {
   status = 'BLOCKED';
-  reason = 'NETV01: node binary missing — run ops:node:toolchain:acquire with double-key unlock';
+  reason_code = 'NETV01';
+  detail = 'node binary missing — run ops:node:toolchain:acquire with double-key unlock';
 } else {
   // Verify lock schema
   let lock;
@@ -51,23 +54,27 @@ if (!fs.existsSync(LOCK_PATH)) {
     lock = JSON.parse(fs.readFileSync(LOCK_PATH, 'utf8'));
   } catch (e) {
     status = 'BLOCKED';
-    reason = `ACQ_LOCK01: lock.json parse error — ${e.message}`;
+    reason_code = 'ACQ_LOCK01';
+    detail = `lock.json parse error — ${e.message}`;
   }
 
   if (status === 'PASS') {
     if (lock.status !== 'READY') {
       status = 'BLOCKED';
-      reason = `ACQ_LOCK01: lock.status=${lock.status} expected READY`;
+      reason_code = 'ACQ_LOCK01';
+      detail = `lock.status=${lock.status} expected READY`;
     } else if (lock.node_version !== '22.22.0') {
       status = 'BLOCKED';
-      reason = `ACQ_LOCK01: lock.node_version=${lock.node_version} expected 22.22.0`;
+      reason_code = 'ACQ_LOCK01';
+      detail = `lock.node_version=${lock.node_version} expected 22.22.0`;
     } else {
       // Verify binary runs and returns correct version
       const r = spawnSync(NODE_BIN, ['-v'], { encoding: 'utf8' });
       nodeRuntime = (r.stdout || '').trim() || 'UNKNOWN';
       if (r.status !== 0 || nodeRuntime !== EXPECTED_VERSION) {
         status = 'BLOCKED';
-        reason = `ACQ_LOCK01: node runtime=${nodeRuntime} expected ${EXPECTED_VERSION}`;
+        reason_code = 'ACQ_LOCK01';
+        detail = `node runtime=${nodeRuntime} expected ${EXPECTED_VERSION}`;
       }
     }
   }
@@ -76,7 +83,8 @@ if (!fs.existsSync(LOCK_PATH)) {
 writeMd(path.join(EXEC, 'NODE_TOOLCHAIN_ENSURE.md'), [
   '# NODE_TOOLCHAIN_ENSURE.md', '',
   `STATUS: ${status}`,
-  `REASON_CODE: ${reason}`,
+  `REASON_CODE: ${reason_code}`,
+  `DETAIL: ${detail}`,
   `RUN_ID: ${RUN_ID}`,
   `NEXT_ACTION: npm run -s verify:fast`, '',
   `- lock_path: ${LOCK_PATH}`,
@@ -89,7 +97,8 @@ writeJsonDeterministic(path.join(MANUAL, 'node_toolchain_ensure.json'), {
   schema_version: '1.0.0',
   gate_id: 'RG_NET_TOOLCHAIN01',
   status,
-  reason_code: reason,
+  reason_code,
+  detail,
   run_id: RUN_ID,
   node_bin: path.relative(ROOT, NODE_BIN),
   node_runtime: nodeRuntime,
@@ -97,5 +106,5 @@ writeJsonDeterministic(path.join(MANUAL, 'node_toolchain_ensure.json'), {
   network_used: false,
 });
 
-console.log(`[${status}] node_toolchain_ensure — ${reason}`);
+console.log(`[${status}] node_toolchain_ensure — ${reason_code}`);
 process.exit(status === 'PASS' ? 0 : 2);

@@ -7,7 +7,14 @@
         "depth_levels": [5, 10, 20],
         "seq_no_update_supported": true,
         "snapshot_on_connect": true,
-        "update_speed_options": ["100ms", "1000ms"]
+        "update_speed_options": ["100ms", "1000ms"],
+        "_field_meta": {
+          "depth_levels": {
+            "meaning": "Available order book depth snapshot levels (number of price levels returned per side)",
+            "unit_hint": "levels",
+            "window_kind": "snapshot"
+          }
+        }
       },
       "policy": {
         "auth_required": false,
@@ -17,7 +24,19 @@
       "rate_limits": {
         "connections_per_ip": 300,
         "messages_per_connection": 5,
-        "unit": "LOGICAL_TICKS"
+        "unit": "LOGICAL_TICKS",
+        "_field_meta": {
+          "connections_per_ip": {
+            "meaning": "Maximum concurrent WebSocket connections allowed per IP address",
+            "unit_hint": "count",
+            "window_kind": "static_limit"
+          },
+          "messages_per_connection": {
+            "meaning": "Maximum subscribe/unsubscribe messages per connection within the rate window",
+            "unit_hint": "count",
+            "window_kind": "rolling"
+          }
+        }
       },
       "scopes": [
         {
@@ -26,7 +45,19 @@
           "rate_limits": {
             "connections_per_ip": 300,
             "streams_per_connection": 1024,
-            "unit": "LOGICAL_TICKS"
+            "unit": "LOGICAL_TICKS",
+            "_field_meta": {
+              "connections_per_ip": {
+                "meaning": "Maximum concurrent WebSocket connections per IP on academy/testnet",
+                "unit_hint": "count",
+                "window_kind": "static_limit"
+              },
+              "streams_per_connection": {
+                "meaning": "Maximum subscribed streams per WebSocket connection",
+                "unit_hint": "count",
+                "window_kind": "static_limit"
+              }
+            }
           }
         },
         {
@@ -35,7 +66,19 @@
           "rate_limits": {
             "connections_per_ip": 60,
             "streams_per_connection": 200,
-            "unit": "LOGICAL_TICKS"
+            "unit": "LOGICAL_TICKS",
+            "_field_meta": {
+              "connections_per_ip": {
+                "meaning": "Maximum concurrent WebSocket connections per IP on delivery testnet",
+                "unit_hint": "count",
+                "window_kind": "static_limit"
+              },
+              "streams_per_connection": {
+                "meaning": "Maximum subscribed market streams per WebSocket connection",
+                "unit_hint": "count",
+                "window_kind": "static_limit"
+              }
+            }
           }
         }
       ]
@@ -45,7 +88,14 @@
         "checksum_supported": true,
         "depth_levels": [1, 25, 50, 200, 500],
         "seq_no_update_supported": true,
-        "snapshot_on_connect": true
+        "snapshot_on_connect": true,
+        "_field_meta": {
+          "depth_levels": {
+            "meaning": "Available order book depth snapshot levels (number of price levels returned per side)",
+            "unit_hint": "levels",
+            "window_kind": "snapshot"
+          }
+        }
       },
       "policy": {
         "auth_required": false,
@@ -55,7 +105,19 @@
       "rate_limits": {
         "connections_per_ip": 500,
         "messages_per_connection": 50,
-        "unit": "LOGICAL_TICKS"
+        "unit": "LOGICAL_TICKS",
+        "_field_meta": {
+          "connections_per_ip": {
+            "meaning": "Maximum concurrent WebSocket connections allowed per IP address",
+            "unit_hint": "count",
+            "window_kind": "static_limit"
+          },
+          "messages_per_connection": {
+            "meaning": "Maximum subscribe/unsubscribe messages per connection within the rate window",
+            "unit_hint": "count",
+            "window_kind": "rolling"
+          }
+        }
       }
     },
     "okx": {
@@ -66,7 +128,19 @@
         "reorder_window_max_items": 5,
         "seq_no_update_supported": true,
         "seq_reset_possible": true,
-        "snapshot_on_connect": true
+        "snapshot_on_connect": true,
+        "_field_meta": {
+          "depth_levels": {
+            "meaning": "Available order book depth snapshot levels (number of price levels returned per side)",
+            "unit_hint": "levels",
+            "window_kind": "snapshot"
+          },
+          "reorder_window_max_items": {
+            "meaning": "Maximum number of out-of-order messages buffered before forced sequence reset",
+            "unit_hint": "count",
+            "window_kind": "reorder_buffer"
+          }
+        }
       },
       "policy": {
         "auth_required": false,
@@ -76,28 +150,48 @@
       "rate_limits": {
         "connections_per_ip": 3,
         "messages_per_connection": 100,
-        "unit": "LOGICAL_TICKS"
+        "unit": "LOGICAL_TICKS",
+        "_field_meta": {
+          "connections_per_ip": {
+            "meaning": "Maximum concurrent WebSocket connections allowed per IP address",
+            "unit_hint": "count",
+            "window_kind": "static_limit"
+          },
+          "messages_per_connection": {
+            "meaning": "Maximum subscribe/unsubscribe messages per connection within the rate window",
+            "unit_hint": "count",
+            "window_kind": "rolling"
+          }
+        }
       }
     }
   },
   "confidence_map": {
     "coverage": {
       "capabilities.binance.orderbook": "HIGH",
+      "capabilities.binance.orderbook._field_meta": "HIGH",
       "capabilities.binance.policy": "HIGH",
       "capabilities.binance.rate_limits": "HIGH",
+      "capabilities.binance.rate_limits._field_meta": "HIGH",
       "capabilities.binance.scopes": "HIGH",
       "capabilities.bybit.orderbook": "HIGH",
+      "capabilities.bybit.orderbook._field_meta": "HIGH",
       "capabilities.bybit.policy": "HIGH",
       "capabilities.bybit.rate_limits": "MEDIUM",
+      "capabilities.bybit.rate_limits._field_meta": "MEDIUM",
       "capabilities.okx.orderbook": "HIGH",
+      "capabilities.okx.orderbook._field_meta": "HIGH",
       "capabilities.okx.policy": "HIGH",
-      "capabilities.okx.rate_limits": "MEDIUM"
+      "capabilities.okx.rate_limits": "MEDIUM",
+      "capabilities.okx.rate_limits._field_meta": "MEDIUM"
     },
     "coverage_version": "1.0.0",
     "required_path_patterns": [
       "capabilities.*.orderbook.*",
+      "capabilities.*.orderbook._field_meta.*",
       "capabilities.*.policy.*",
       "capabilities.*.rate_limits.*",
+      "capabilities.*.rate_limits._field_meta.*",
       "capabilities.*.scopes[*].scope_id"
     ]
   }
