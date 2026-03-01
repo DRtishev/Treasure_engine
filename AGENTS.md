@@ -123,6 +123,11 @@ To enable destructive/apply actions, both must be present:
 | RG_AUTO03_PR_CLEANROOM_APPLIED | `verify:regression:auto03-pr-cleanroom-applied` |
 | RG_CERT_EXECUTOR_WRITE01 | `verify:regression:cert-executor-write-forbidden` |
 | RG_AUDIT_NO_CERT01 | `verify:regression:audit-no-cert` |
+| RG_NET_TOOLCHAIN01_NO_NET_IN_VERIFY_FAST | `verify:regression:net-toolchain01-no-net-in-verify-fast` |
+| RG_LIQ_LOCK01_NORMALIZED_HASH_MATCH | `verify:regression:liq-lock01-normalized-hash-match` |
+| RG_LIQ_SSOT01_SCHEMA_ALIGNMENT | `verify:regression:liq-ssot01-schema-alignment` |
+| RG_AGENT03_NO_LEGACY_CONTRADICTIONS | `verify:regression:agent03-no-legacy-contradictions` |
+| RG_DATA_EVT01_EVENT_EMISSION | `verify:regression:data-evt01-event-emission` |
 
 ---
 
@@ -149,7 +154,7 @@ docs/AI_TEMPLATES/ <- report/evidence templates
 This policy defines autonomous closeout behavior for TREASURE ENGINE with Truth Layer enforcement.
 
 # SAFETY & OFFLINE POLICY
-- Offline-first by default; network operations are opt-in only via `ENABLE_NETWORK_TESTS=1`.
+- Offline-first by default; network operations require double-key unlock (flag `--enable-network` + file `artifacts/incoming/ALLOW_NETWORK`).
 - Never commit secrets, tokens, or live-trading credentials.
 - Live trading must remain disabled by default.
 - Never commit `node_modules/`; binary archives must be written to `artifacts/incoming/` and kept gitignored.

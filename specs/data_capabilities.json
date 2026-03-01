@@ -1,0 +1,104 @@
+{
+  "schema_version": "1.0.0",
+  "capabilities": {
+    "binance": {
+      "orderbook": {
+        "checksum_supported": false,
+        "depth_levels": [5, 10, 20],
+        "seq_no_update_supported": true,
+        "snapshot_on_connect": true,
+        "update_speed_options": ["100ms", "1000ms"]
+      },
+      "policy": {
+        "auth_required": false,
+        "stream_type": "websocket",
+        "topic_format": "stream"
+      },
+      "rate_limits": {
+        "connections_per_ip": 300,
+        "messages_per_connection": 5,
+        "unit": "LOGICAL_TICKS"
+      },
+      "scopes": [
+        {
+          "scope_id": "binance.academy.stream_limits",
+          "description": "Binance spot testnet stream limits",
+          "rate_limits": {
+            "connections_per_ip": 300,
+            "streams_per_connection": 1024,
+            "unit": "LOGICAL_TICKS"
+          }
+        },
+        {
+          "scope_id": "binance.delivery_testnet.market_streams",
+          "description": "Binance delivery testnet market streams",
+          "rate_limits": {
+            "connections_per_ip": 60,
+            "streams_per_connection": 200,
+            "unit": "LOGICAL_TICKS"
+          }
+        }
+      ]
+    },
+    "bybit": {
+      "orderbook": {
+        "checksum_supported": true,
+        "depth_levels": [1, 25, 50, 200, 500],
+        "seq_no_update_supported": true,
+        "snapshot_on_connect": true
+      },
+      "policy": {
+        "auth_required": false,
+        "stream_type": "websocket",
+        "topic_format": "topic"
+      },
+      "rate_limits": {
+        "connections_per_ip": 500,
+        "messages_per_connection": 50,
+        "unit": "LOGICAL_TICKS"
+      }
+    },
+    "okx": {
+      "orderbook": {
+        "checksum_deprecated": true,
+        "dedup_key": "seqId",
+        "depth_levels": [1, 5, 400],
+        "reorder_window_max_items": 5,
+        "seq_no_update_supported": true,
+        "seq_reset_possible": true,
+        "snapshot_on_connect": true
+      },
+      "policy": {
+        "auth_required": false,
+        "stream_type": "websocket",
+        "topic_format": "channel"
+      },
+      "rate_limits": {
+        "connections_per_ip": 3,
+        "messages_per_connection": 100,
+        "unit": "LOGICAL_TICKS"
+      }
+    }
+  },
+  "confidence_map": {
+    "coverage": {
+      "capabilities.binance.orderbook": "HIGH",
+      "capabilities.binance.policy": "HIGH",
+      "capabilities.binance.rate_limits": "HIGH",
+      "capabilities.binance.scopes": "HIGH",
+      "capabilities.bybit.orderbook": "HIGH",
+      "capabilities.bybit.policy": "HIGH",
+      "capabilities.bybit.rate_limits": "MEDIUM",
+      "capabilities.okx.orderbook": "HIGH",
+      "capabilities.okx.policy": "HIGH",
+      "capabilities.okx.rate_limits": "MEDIUM"
+    },
+    "coverage_version": "1.0.0",
+    "required_path_patterns": [
+      "capabilities.*.orderbook.*",
+      "capabilities.*.policy.*",
+      "capabilities.*.rate_limits.*",
+      "capabilities.*.scopes[*].scope_id"
+    ]
+  }
+}

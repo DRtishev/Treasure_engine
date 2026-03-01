@@ -9,7 +9,7 @@ const required = [
   'time_unit_sentinel',
   'raw_capture_sha256',
   'normalized_schema_sha256',
-  'liquidations.bybit_ws_v5.v1',
+  'liquidations.bybit_ws_v5.v2',
   'artifacts/incoming/liquidations/bybit_ws_v5/<RUN_ID>/lock.json',
 ];
 const missing = required.filter((x) => !doc.includes(x));

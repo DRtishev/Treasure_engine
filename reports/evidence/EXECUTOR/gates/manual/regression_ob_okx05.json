@@ -1,0 +1,61 @@
+{
+  "checks": [
+    {
+      "check": "replay_script_exists",
+      "detail": "edge_okx_orderbook_01_offline_replay.mjs present — OK",
+      "pass": true
+    },
+    {
+      "check": "fixture_exists",
+      "detail": "fixture.jsonl present — OK",
+      "pass": true
+    },
+    {
+      "check": "replay_exit_code_zero",
+      "detail": "replay exited with EC=0 — PASS",
+      "pass": true
+    },
+    {
+      "check": "replay_stdout_contains_pass",
+      "detail": "stdout contains [PASS] — OK",
+      "pass": true
+    },
+    {
+      "check": "eventbus_epoch_dir_created",
+      "detail": "EPOCH dir exists: reports/evidence/EPOCH-EVENTBUS-REPLAY-REPLAY-OKX-ORDERBOOK-okx_orderbook_ws — OK",
+      "pass": true
+    },
+    {
+      "check": "eventbus_log_has_book_boot",
+      "detail": "BOOK_BOOT event present in eventbus log — OK",
+      "pass": true
+    },
+    {
+      "check": "eventbus_log_has_book_seal",
+      "detail": "BOOK_SEAL event present in eventbus log — OK",
+      "pass": true
+    },
+    {
+      "check": "eventbus_log_has_book_reset",
+      "detail": "BOOK_RESET event present in eventbus log — OK",
+      "pass": true
+    },
+    {
+      "check": "all_events_are_cert_mode",
+      "detail": "all 8 events have mode=CERT — OK",
+      "pass": true
+    },
+    {
+      "check": "all_events_have_no_time_fields",
+      "detail": "all events are tick-only (no ts/timestamp/time) — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_OB_OKX05_EVENTBUS_EVENTS",
+  "next_action": "npm run -s verify:regression:ob-okx05-eventbus-events",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

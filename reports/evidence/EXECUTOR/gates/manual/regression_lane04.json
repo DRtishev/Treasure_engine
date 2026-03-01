@@ -1,0 +1,67 @@
+{
+  "blocked": false,
+  "checks": [
+    {
+      "check": "lanes_parseable",
+      "detail": "JSON parse OK",
+      "pass": true
+    },
+    {
+      "check": "lanes_present",
+      "detail": "lanes_n=5",
+      "pass": true
+    },
+    {
+      "check": "all_lanes_have_lane_state",
+      "detail": "all 5 lanes have lane_state — OK",
+      "pass": true
+    },
+    {
+      "check": "truth_lanes_are_truth_ready",
+      "detail": "all 1 TRUTH lane(s) have lane_state=TRUTH_READY — OK",
+      "pass": true
+    },
+    {
+      "check": "preflight_planned_not_truth",
+      "detail": "no PREFLIGHT/PLANNED/EXPERIMENTAL/DEPRECATED lane has truth_level=TRUTH — OK",
+      "pass": true
+    },
+    {
+      "check": "at_least_one_truth_ready_lane",
+      "detail": "truth_ready_lanes=liq_bybit_ws_v5",
+      "pass": true
+    },
+    {
+      "check": "lane_liq_binance_forceorder_ws_state_ok",
+      "detail": "liq_binance_forceorder_ws: truth_level=HINT lane_state=EXPERIMENTAL",
+      "pass": true
+    },
+    {
+      "check": "lane_liq_bybit_ws_v5_state_ok",
+      "detail": "liq_bybit_ws_v5: truth_level=TRUTH lane_state=TRUTH_READY",
+      "pass": true
+    },
+    {
+      "check": "lane_liq_okx_ws_v5_state_ok",
+      "detail": "liq_okx_ws_v5: truth_level=HINT lane_state=EXPERIMENTAL",
+      "pass": true
+    },
+    {
+      "check": "lane_price_offline_fixture_state_ok",
+      "detail": "price_offline_fixture: truth_level=HINT lane_state=EXPERIMENTAL",
+      "pass": true
+    },
+    {
+      "check": "lane_price_okx_orderbook_ws_state_ok",
+      "detail": "price_okx_orderbook_ws: truth_level=HINT lane_state=PREFLIGHT",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_LANE04_TRUTH_REQUIRES_TRUTH_READY",
+  "next_action": "npm run -s verify:regression:lane04-truth-requires-truth-ready",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

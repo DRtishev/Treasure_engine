@@ -1,0 +1,11 @@
+{
+  "provider_id": "okx_orderbook_ws",
+  "schema_version": "okx_orderbook_ws.r2_preflight.v1",
+  "instId": "BTC-USDT",
+  "raw_sha256": "8f46bcf41433b40a04eddfe16f05f210e5e010121d74d2b565c668a1f4acad87",
+  "canonical_book_digest_sha256": "9805f4ad64e69e1ef71ce42a39c4d9556cf9b33c62274e36ed3c14fe048c29ef",
+  "messages_n": 6,
+  "final_seqId": 2002,
+  "events_expected": ["BOOK_BOOT", "BOOK_APPLY", "BOOK_APPLY", "BOOK_RESET", "BOOK_APPLY", "BOOK_APPLY"],
+  "canon_book_json": "{\"asks\":[[\"50050\",\"1.8\"],[\"50150\",\"1.0\"]],\"bids\":[[\"50000\",\"0.3\"],[\"49950\",\"1.5\"],[\"49850\",\"0.5\"]]}"
+}

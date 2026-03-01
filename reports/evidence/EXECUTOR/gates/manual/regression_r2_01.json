@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "package_json_parseable",
+      "detail": "JSON parse OK",
+      "pass": true
+    },
+    {
+      "check": "verify_fast_no_r2_wiring",
+      "detail": "verify:fast has no verify:r2:* — OK",
+      "pass": true
+    },
+    {
+      "check": "ops_life_script_no_r2_wiring",
+      "detail": "ops:life script has no verify:r2:* — OK",
+      "pass": true
+    },
+    {
+      "check": "life_mjs_no_r2_wiring",
+      "detail": "scripts/ops/life.mjs has no verify:r2:* — OK",
+      "pass": true
+    },
+    {
+      "check": "verify_r2_okx_orderbook_script_exists",
+      "detail": "verify:r2:okx-orderbook script present — OK",
+      "pass": true
+    },
+    {
+      "check": "verify_r2_preflight_script_exists",
+      "detail": "verify:r2:preflight script present — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_R2_01_NO_DAILY_WIRING",
+  "next_action": "npm run -s verify:regression:r2-01-no-daily-wiring",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -1,0 +1,203 @@
+{
+  "checks": [
+    {
+      "check": "equal_integers",
+      "detail": "compareDecimalStr(\"50000\",\"50000\") → 0 (expected 0) OK",
+      "pass": true
+    },
+    {
+      "check": "equal_decimals",
+      "detail": "compareDecimalStr(\"1.5\",\"1.5\") → 0 (expected 0) OK",
+      "pass": true
+    },
+    {
+      "check": "trailing_zeros_equal",
+      "detail": "compareDecimalStr(\"50000.00\",\"50000\") → 0 (expected 0) OK",
+      "pass": true
+    },
+    {
+      "check": "equal_small_decimal",
+      "detail": "compareDecimalStr(\"0.001\",\"0.001\") → 0 (expected 0) OK",
+      "pass": true
+    },
+    {
+      "check": "int_50000_gt_49900",
+      "detail": "compareDecimalStr(\"50000\",\"49900\") → 1 (expected 1) OK",
+      "pass": true
+    },
+    {
+      "check": "int_49900_lt_50000",
+      "detail": "compareDecimalStr(\"49900\",\"50000\") → -1 (expected -1) OK",
+      "pass": true
+    },
+    {
+      "check": "int_9_lt_10",
+      "detail": "compareDecimalStr(\"9\",\"10\") → -1 (expected -1) OK",
+      "pass": true
+    },
+    {
+      "check": "int_10_gt_9",
+      "detail": "compareDecimalStr(\"10\",\"9\") → 1 (expected 1) OK",
+      "pass": true
+    },
+    {
+      "check": "int_100_gt_99",
+      "detail": "compareDecimalStr(\"100\",\"99\") → 1 (expected 1) OK",
+      "pass": true
+    },
+    {
+      "check": "int_1M_gt_999999",
+      "detail": "compareDecimalStr(\"1000000\",\"999999\") → 1 (expected 1) OK",
+      "pass": true
+    },
+    {
+      "check": "int_999999_lt_1M",
+      "detail": "compareDecimalStr(\"999999\",\"1000000\") → -1 (expected -1) OK",
+      "pass": true
+    },
+    {
+      "check": "dec_50050.5_gt_50050.25",
+      "detail": "compareDecimalStr(\"50050.5\",\"50050.25\") → 1 (expected 1) OK",
+      "pass": true
+    },
+    {
+      "check": "dec_50050.25_lt_50050.5",
+      "detail": "compareDecimalStr(\"50050.25\",\"50050.5\") → -1 (expected -1) OK",
+      "pass": true
+    },
+    {
+      "check": "dec_1.9_gt_1.10",
+      "detail": "compareDecimalStr(\"1.9\",\"1.10\") → 1 (expected 1) OK",
+      "pass": true
+    },
+    {
+      "check": "dec_1.10_lt_1.9",
+      "detail": "compareDecimalStr(\"1.10\",\"1.9\") → -1 (expected -1) OK",
+      "pass": true
+    },
+    {
+      "check": "dec_0.001_lt_0.01",
+      "detail": "compareDecimalStr(\"0.001\",\"0.01\") → -1 (expected -1) OK",
+      "pass": true
+    },
+    {
+      "check": "dec_0.01_gt_0.001",
+      "detail": "compareDecimalStr(\"0.01\",\"0.001\") → 1 (expected 1) OK",
+      "pass": true
+    },
+    {
+      "check": "dec_0.1_eq_0.10",
+      "detail": "compareDecimalStr(\"0.1\",\"0.10\") → 0 (expected 0) OK",
+      "pass": true
+    },
+    {
+      "check": "dec_1.000_eq_1",
+      "detail": "compareDecimalStr(\"1.000\",\"1\") → 0 (expected 0) OK",
+      "pass": true
+    },
+    {
+      "check": "neg_minus1_lt_0",
+      "detail": "compareDecimalStr(\"-1\",\"0\") → -1 (expected -1) OK",
+      "pass": true
+    },
+    {
+      "check": "pos_0_gt_minus1",
+      "detail": "compareDecimalStr(\"0\",\"-1\") → 1 (expected 1) OK",
+      "pass": true
+    },
+    {
+      "check": "neg_minus5_lt_minus3",
+      "detail": "compareDecimalStr(\"-5\",\"-3\") → -1 (expected -1) OK",
+      "pass": true
+    },
+    {
+      "check": "neg_minus3_gt_minus5",
+      "detail": "compareDecimalStr(\"-3\",\"-5\") → 1 (expected 1) OK",
+      "pass": true
+    },
+    {
+      "check": "neg_dec_minus1.5_lt_minus1.2",
+      "detail": "compareDecimalStr(\"-1.5\",\"-1.2\") → -1 (expected -1) OK",
+      "pass": true
+    },
+    {
+      "check": "antisym_int_pair",
+      "detail": "antisymmetry (\"50000\",\"49900\"): cmp(a,b)=1 cmp(b,a)=-1 OK",
+      "pass": true
+    },
+    {
+      "check": "antisym_dec_pair",
+      "detail": "antisymmetry (\"1.9\",\"1.10\"): cmp(a,b)=1 cmp(b,a)=-1 OK",
+      "pass": true
+    },
+    {
+      "check": "antisym_neg_pair",
+      "detail": "antisymmetry (\"-5\",\"-3\"): cmp(a,b)=-1 cmp(b,a)=1 OK",
+      "pass": true
+    },
+    {
+      "check": "antisym_single_digit_vs_two",
+      "detail": "antisymmetry (\"9\",\"10\"): cmp(a,b)=-1 cmp(b,a)=1 OK",
+      "pass": true
+    },
+    {
+      "check": "antisym_dec_frac_pair",
+      "detail": "antisymmetry (\"50050.5\",\"50050.25\"): cmp(a,b)=1 cmp(b,a)=-1 OK",
+      "pass": true
+    },
+    {
+      "check": "antisym_equal_antisym",
+      "detail": "antisymmetry (\"50000\",\"50000\"): cmp(a,b)=0 cmp(b,a)=0 OK",
+      "pass": true
+    },
+    {
+      "check": "transitive_int_ascending",
+      "detail": "transitivity (\"49800\"≤\"49900\"≤\"50000\"): cmp(a,b)=-1 cmp(b,c)=-1 cmp(a,c)=-1 OK",
+      "pass": true
+    },
+    {
+      "check": "transitive_int_descending",
+      "detail": "transitivity (\"50200\"≤\"50100\"≤\"50000\"): cmp(a,b)=1 cmp(b,c)=1 cmp(a,c)=1 OK",
+      "pass": true
+    },
+    {
+      "check": "transitive_dec_mixed",
+      "detail": "transitivity (\"1.10\"≤\"1.9\"≤\"2.0\"): cmp(a,b)=-1 cmp(b,c)=-1 cmp(a,c)=-1 OK",
+      "pass": true
+    },
+    {
+      "check": "transitive_small_decimals",
+      "detail": "transitivity (\"0.001\"≤\"0.01\"≤\"0.1\"): cmp(a,b)=-1 cmp(b,c)=-1 cmp(a,c)=-1 OK",
+      "pass": true
+    },
+    {
+      "check": "transitive_neg_to_pos",
+      "detail": "transitivity (\"-10\"≤\"-5\"≤\"5\"): cmp(a,b)=-1 cmp(b,c)=-1 cmp(a,c)=-1 OK",
+      "pass": true
+    },
+    {
+      "check": "bids_sorted_desc",
+      "detail": "bids DESC: 50000,49950,49850 — OK",
+      "pass": true
+    },
+    {
+      "check": "asks_sorted_asc",
+      "detail": "asks ASC: 50050,50150 — OK",
+      "pass": true
+    },
+    {
+      "check": "decimal_bids_sorted_desc",
+      "detail": "decimal bids DESC: 50000.25,49999.75,49999.5 — OK",
+      "pass": true
+    }
+  ],
+  "checks_n": 38,
+  "failed_checks": [],
+  "failed_n": 0,
+  "gate_id": "RG_DEC01_DECIMAL_SORT_TOTAL_ORDER",
+  "next_action": "npm run -s verify:regression:dec01-decimal-sort-total-order",
+  "reason_code": "NONE",
+  "run_id": "3053d6c7678c",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

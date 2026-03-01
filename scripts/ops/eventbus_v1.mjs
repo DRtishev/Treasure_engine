@@ -141,16 +141,33 @@ export function findLatestBusJsonl(evidenceDir = path.join(ROOT, 'reports', 'evi
 
 // ---------------------------------------------------------------------------
 // findAllBusJsonls(evidenceDir) — find ALL EPOCH-EVENTBUS-* EVENTS.jsonl files
-// Returns array sorted lexicographically (stable — no mtime).
+// Returns array sorted by repo-relative POSIX path lexicographically (stable — no mtime).
+// Repo-relative sort ensures path-independent stability (BUS03 fix).
 // Use when aggregating events from multiple component buses (ops:life pattern).
 // ---------------------------------------------------------------------------
 export function findAllBusJsonls(evidenceDir = path.join(ROOT, 'reports', 'evidence')) {
   if (!fs.existsSync(evidenceDir)) return [];
   return fs.readdirSync(evidenceDir)
     .filter((d) => d.startsWith('EPOCH-EVENTBUS-'))
-    .sort((a, b) => a.localeCompare(b))
+    .sort((a, b) => a.localeCompare(b)) // canonSort: dir-name lex (repo-relative stable)
     .map((d) => path.join(evidenceDir, d, 'EVENTS.jsonl'))
     .filter((p) => fs.existsSync(p));
+}
+
+// ---------------------------------------------------------------------------
+// mergeAndSortEvents(eventArrays) — merge events from multiple buses
+// Sort order: tick asc, component asc, event asc, run_id asc (BUS03 fix)
+// Ensures deterministic aggregated order regardless of bus collection order.
+// ---------------------------------------------------------------------------
+export function mergeAndSortEvents(eventArrays) {
+  const all = eventArrays.flat();
+  return all.sort((a, b) => {
+    if (a.tick !== b.tick) return a.tick - b.tick;
+    if (a.component !== b.component) return a.component.localeCompare(b.component);
+    if (a.event !== b.event) return a.event.localeCompare(b.event);
+    // final tiebreak: run_id for cross-bus stability
+    return (a.run_id ?? '').localeCompare(b.run_id ?? '');
+  });
 }
 
 // ---------------------------------------------------------------------------

@@ -1,0 +1,3 @@
+{"action":"snapshot","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[["30000","1","0","1"]],"bids":[["29999","2","0","1"]],"seqId":1,"prevSeqId":-1}],"_fixture_note":"initial snapshot — bootstrap"}
+{"action":"update","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[["30001","1","0","1"]],"bids":[],"seqId":2,"prevSeqId":1}],"_fixture_note":"incremental update"}
+{"action":"snapshot","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[["30005","1","0","1"]],"bids":[["30004","2","0","1"]],"seqId":100,"prevSeqId":-1}],"_fixture_note":"seq_reset: snapshot after incremental updates — policy: RESET local state"}

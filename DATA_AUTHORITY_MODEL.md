@@ -21,7 +21,7 @@ If either key is missing, acquire MUST return EC=2 with `NET_REQUIRED`.
 ## Provider contracts
 
 ### bybit_ws_v5
-- schema_version: `liquidations.bybit_ws_v5.v1`
+- schema_version: `liquidations.bybit_ws_v5.v2`
 - required_artifacts:
   - `artifacts/incoming/liquidations/bybit_ws_v5/<RUN_ID>/raw.jsonl`
   - `artifacts/incoming/liquidations/bybit_ws_v5/<RUN_ID>/lock.json`
