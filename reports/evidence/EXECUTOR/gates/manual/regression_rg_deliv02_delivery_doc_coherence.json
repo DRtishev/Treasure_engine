@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "check": "both_files_exist",
+      "detail": "both files present — OK",
+      "pass": true
+    },
+    {
+      "check": "truth_level_HINT_documented",
+      "detail": "truth_level=HINT mentioned — OK",
+      "pass": true
+    },
+    {
+      "check": "truth_level_TRUTH_documented",
+      "detail": "truth_level=TRUTH mentioned — OK",
+      "pass": true
+    },
+    {
+      "check": "reason_code_RDY01_documented",
+      "detail": "RDY01 documented — OK",
+      "pass": true
+    },
+    {
+      "check": "reason_code_RDY02_documented",
+      "detail": "RDY02 documented — OK",
+      "pass": true
+    },
+    {
+      "check": "reason_code_RDY_SELECT01_INVALID_documented",
+      "detail": "RDY_SELECT01_INVALID documented — OK",
+      "pass": true
+    },
+    {
+      "check": "static_lane_mode_documented",
+      "detail": "STATIC lane mode documented — OK",
+      "pass": true
+    },
+    {
+      "check": "dynamic_lane_mode_documented",
+      "detail": "DYNAMIC lane mode documented — OK",
+      "pass": true
+    },
+    {
+      "check": "select_run_id_documented",
+      "detail": "SELECT_RUN_ID documented — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_DELIV02_DELIVERY_DOC_COHERENCE",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "87a85d3c62f3",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

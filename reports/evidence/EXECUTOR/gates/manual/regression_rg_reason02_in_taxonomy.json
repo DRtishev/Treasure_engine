@@ -1,0 +1,33 @@
+{
+  "files_scanned": 390,
+  "gate_id": "RG_REASON02_IN_TAXONOMY",
+  "next_action": "npm run -s verify:fast",
+  "observed_tokens": [
+    "ACQ02",
+    "CHURN01",
+    "DC90",
+    "DEP02",
+    "EC01",
+    "EP00",
+    "EP02_REAL_REQUIRED",
+    "NDA02",
+    "ND_BYTE01",
+    "NONE",
+    "NT02",
+    "OF90",
+    "OP_SAFE01",
+    "PFZ01_NEEDS_DATA",
+    "RDROP01",
+    "RDY01",
+    "RG_BYTE_UNTRACKED",
+    "SNAP01",
+    "STEP_EC_7"
+  ],
+  "reason_code": "NONE",
+  "run_id": "87a85d3c62f3",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "taxonomy_path": "specs/reason_code_taxonomy.json",
+  "taxonomy_version": "1.0.0",
+  "violations": []
+}
