@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: c7c93c538a8c
+RUN_ID: 62541b39a279
 NEXT_ACTION: npm run -s verify:regression:ob-okx02-lock-integrity
 
 ## POLICY
