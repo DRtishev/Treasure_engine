@@ -1,5 +1,5 @@
 {
-  "files_scanned": 423,
+  "files_scanned": 288,
   "gate_id": "RG_REASON01_TOKEN_PURITY",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
