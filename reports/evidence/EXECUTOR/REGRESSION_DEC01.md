@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 62541b39a279
+RUN_ID: c86c05d745a5
 NEXT_ACTION: npm run -s verify:regression:dec01-decimal-sort-total-order
 
 ## TOTAL_ORDER_PROPERTIES
