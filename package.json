@@ -882,7 +882,7 @@
     "ops:baseline:restore": "bash scripts/ops/baseline_restore.sh",
     "verify:merge-court": "node scripts/verify/merge_court.mjs",
     "verify:r3:preflight": "node scripts/verify/r3_preflight.mjs",
-    "verify:r3:okx-acquire-contract": "node scripts/verify/r3_okx_acquire_contract.mjs",
+    "verify:r3:okx-acquire-contract": "node scripts/verify/r3_okx_acquire_contract.mjs && npm run -s verify:regression:rg-r3-mode01-acquire-not-cert",
     "edge:okx:acquire": "node scripts/edge/edge_okx_orderbook_10_acquire_live.mjs",
     "edge:okx:replay-captured": "TREASURE_NET_KILL=1 node scripts/edge/edge_okx_orderbook_11_replay_captured.mjs",
     "verify:regression:rg-r3-unlock01-refusal-contract": "node scripts/verify/regression_rg_r3_unlock01_refusal_contract.mjs",
@@ -970,7 +970,21 @@
     "verify:regression:cap05-scope-aware-limits": "node scripts/verify/regression_cap05_scope_aware_limits.mjs",
     "verify:r2:preflight": "npm run -s verify:regression:cap01-capabilities-present && npm run -s verify:regression:cap02-capabilities-coverage && npm run -s verify:regression:cap03-exceptions-accounted && npm run -s verify:regression:cap05-scope-aware-limits && npm run -s verify:regression:lane04-truth-requires-truth-ready",
     "verify:r2:okx-orderbook": "npm run -s verify:regression:r2-01-no-daily-wiring && npm run -s verify:regression:ob-okx01-fixture-integrity && npm run -s verify:regression:ob-okx02-lock-integrity && npm run -s verify:regression:ob-okx03-seq-state-machine && npm run -s verify:regression:ob-okx04-book-digest && npm run -s verify:regression:ob-okx05-eventbus-events && npm run -s verify:regression:ob-okx06-gap-detection && npm run -s verify:regression:dec01-decimal-sort-total-order && npm run -s verify:regression:ob-okx08-multi-level-sort-canon && npm run -s verify:regression:ob-okx09-duplicate-idempotent && npm run -s verify:regression:ob-okx10-reorder-window-policy && npm run -s verify:regression:ob-okx15-digest-spec-present && npm run -s verify:regression:ob-okx16-digest-matches-spec",
-    "verify:r2:okx-align": "TREASURE_NET_KILL=1 npm run -s verify:regression:ob-okx12-align-invariants && TREASURE_NET_KILL=1 npm run -s verify:regression:ob-okx13-buffer-discard-rules && TREASURE_NET_KILL=1 npm run -s verify:regression:ob-okx14-align-determinism-x2"
+    "verify:r2:okx-align": "TREASURE_NET_KILL=1 npm run -s verify:regression:ob-okx12-align-invariants && TREASURE_NET_KILL=1 npm run -s verify:regression:ob-okx13-buffer-discard-rules && TREASURE_NET_KILL=1 npm run -s verify:regression:ob-okx14-align-determinism-x2",
+    "verify:regression:rg-r3-mode01-acquire-not-cert": "node scripts/verify/regression_rg_r3_mode01_acquire_not_cert.mjs",
+    "verify:regression:rg-lane06-static-nonempty": "node scripts/verify/regression_rg_lane06_static_nonempty.mjs",
+    "verify:regression:rg-cap06-physics-policy-split": "node scripts/verify/regression_rg_cap06_physics_policy_split.mjs",
+    "verify:regression:policy01-kernel-valid": "node scripts/verify/regression_policy01_kernel_valid.mjs",
+    "verify:regression:policy02-mode-truth": "node scripts/verify/regression_policy02_mode_truth.mjs",
+    "verify:regression:policy03-write-scope": "node scripts/verify/regression_policy03_write_scope.mjs",
+    "verify:doctor:policy": "npm run -s verify:regression:policy01-kernel-valid && npm run -s verify:regression:policy02-mode-truth && npm run -s verify:regression:policy03-write-scope && npm run -s verify:san:cert-offline && npm run -s verify:san:research-net && npm run -s verify:san:mutation",
+    "verify:san:cert-offline": "node scripts/verify/san_cert_offline.mjs",
+    "verify:san:research-net": "node scripts/verify/san_research_net.mjs",
+    "verify:san:mutation": "node scripts/verify/san_mutation.mjs",
+    "ops:doctor": "node scripts/ops/doctor.mjs",
+    "ops:doctor:deep": "node scripts/ops/doctor.mjs --deep",
+    "verify:regression:doctor01-output-stable-x2": "node scripts/verify/regression_doctor01_output_stable_x2.mjs",
+    "verify:regression:doctor02-no-net": "node scripts/verify/regression_doctor02_no_net.mjs"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

@@ -1,0 +1,11 @@
+# SAN_RESEARCH_NET.md — Mode truth scan
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: STABLE
+NEXT_ACTION: npm run -s verify:doctor:policy
+FILES_SCANNED: 72
+VIOLATIONS: 0
+
+## VIOLATIONS
+- NONE

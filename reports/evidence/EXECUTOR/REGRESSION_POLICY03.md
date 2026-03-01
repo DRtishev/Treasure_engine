@@ -1,0 +1,10 @@
+# REGRESSION_POLICY03.md — Write scope
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: STABLE
+NEXT_ACTION: npm run -s verify:doctor:policy
+VIOLATIONS: 0
+
+## VIOLATIONS
+- NONE

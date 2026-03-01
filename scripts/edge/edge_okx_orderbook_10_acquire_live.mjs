@@ -90,7 +90,7 @@ const epochDir = path.join(process.cwd(), 'reports', 'evidence', `EPOCH-EVENTBUS
 const bus = createBus(runId, epochDir);
 
 bus.append({
-  mode: 'CERT',
+  mode: 'RESEARCH',
   component: 'DATA_ORGAN',
   event: 'ACQ_BOOT',
   reason_code: 'NONE',
@@ -120,7 +120,7 @@ try {
     ws.once('open', () => {
       connected = true;
       bus.append({
-        mode: 'CERT',
+        mode: 'RESEARCH',
         component: 'DATA_ORGAN',
         event: 'ACQ_CONNECT',
         reason_code: 'NONE',
@@ -136,7 +136,7 @@ try {
 
       subscribed = true;
       bus.append({
-        mode: 'CERT',
+        mode: 'RESEARCH',
         component: 'DATA_ORGAN',
         event: 'ACQ_SUB',
         reason_code: 'NONE',
@@ -153,7 +153,7 @@ try {
         if (msg.data && Array.isArray(msg.data)) {
           rows.push(String(raw));
           bus.append({
-            mode: 'CERT',
+            mode: 'RESEARCH',
             component: 'DATA_ORGAN',
             event: 'ACQ_MSG',
             reason_code: 'NONE',
@@ -167,7 +167,7 @@ try {
 
     ws.once('error', (err) => {
       bus.append({
-        mode: 'CERT',
+        mode: 'RESEARCH',
         component: 'DATA_ORGAN',
         event: 'ACQ_ERROR',
         reason_code: 'WS_ERROR',
@@ -181,7 +181,7 @@ try {
   });
 } catch (err) {
   bus.append({
-    mode: 'CERT',
+    mode: 'RESEARCH',
     component: 'DATA_ORGAN',
     event: 'ACQ_ERROR',
     reason_code: 'CONNECT_FAIL',
@@ -196,7 +196,7 @@ try {
 
 if (rows.length === 0) {
   bus.append({
-    mode: 'CERT',
+    mode: 'RESEARCH',
     component: 'DATA_ORGAN',
     event: 'ACQ_ERROR',
     reason_code: 'NO_DATA',
@@ -236,7 +236,7 @@ fs.writeFileSync(path.join(outDir, 'lock.json'), JSON.stringify(sortedLock, null
 
 // --- ACQ_SEAL ---
 bus.append({
-  mode: 'CERT',
+  mode: 'RESEARCH',
   component: 'DATA_ORGAN',
   event: 'ACQ_SEAL',
   reason_code: 'NONE',

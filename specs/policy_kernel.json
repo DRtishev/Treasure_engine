@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Treasure Engine Policy Kernel — machine-enforced rules",
+
+  "modes": {
+    "CERT":     { "network": "FORBIDDEN", "wall_clock": "FORBIDDEN", "description": "Offline certification" },
+    "CLOSE":    { "network": "FORBIDDEN", "wall_clock": "FORBIDDEN", "description": "Subset CERT for fast close" },
+    "AUDIT":    { "network": "FORBIDDEN", "wall_clock": "FORBIDDEN", "description": "SSOT docs audit" },
+    "RESEARCH": {
+      "network": "DOUBLE_KEY_REQUIRED",
+      "wall_clock": "ALLOWED_FOR_TIMEOUT_ONLY",
+      "description": "Data acquisition and research",
+      "sub_zones": {
+        "ACQUIRE": { "network": "DOUBLE_KEY_REQUIRED", "write_scope": ["artifacts/incoming/**"], "event_mode": "RESEARCH", "cert_emit": "FORBIDDEN" },
+        "REPLAY":  { "network": "FORBIDDEN", "write_scope": ["reports/evidence/EPOCH-*/**"], "event_mode": "CERT" }
+      }
+    },
+    "ACCEL":    { "network": "FORBIDDEN", "wall_clock": "FORBIDDEN", "description": "Accelerated pipeline" },
+    "LIFE":     { "network": "FORBIDDEN", "wall_clock": "FORBIDDEN", "description": "Organism lifecycle" }
+  },
+
+  "zone_map": {
+    "CERT_OFFLINE": {
+      "description": "Fully offline scripts — no network imports allowed",
+      "include_globs": [
+        "scripts/verify/**/*.mjs",
+        "scripts/ops/**/*.mjs",
+        "scripts/gov/**/*.mjs",
+        "scripts/edge/edge_lab/**/*.mjs",
+        "scripts/edge/edge_okx_orderbook_01_*.mjs",
+        "scripts/edge/edge_okx_orderbook_02_*.mjs",
+        "scripts/edge/edge_okx_orderbook_11_*.mjs",
+        "core/sim/**/*.mjs",
+        "core/edge/**/*.mjs",
+        "core/court/**/*.mjs"
+      ],
+      "exclude_globs": ["scripts/data/**", "scripts/verify/e1*_diag.mjs", "scripts/verify/e1*_transport_harness.mjs"],
+      "forbidden_imports": ["ws", "undici"],
+      "forbidden_requires": ["ws", "undici", "node:http", "node:https", "node:net", "node:dgram", "node:tls"]
+    },
+    "RESEARCH_NET": {
+      "description": "Network I/O scripts — must emit mode RESEARCH",
+      "include_globs": [
+        "scripts/data/**/*.mjs",
+        "scripts/edge/edge_okx_orderbook_10_*.mjs",
+        "core/net/**/*.mjs"
+      ],
+      "required_event_mode": "RESEARCH",
+      "forbidden_event_mode": "CERT"
+    }
+  },
+
+  "write_scope": {
+    "gates": "reports/evidence/EXECUTOR/gates/manual/",
+    "ops": "reports/evidence/EPOCH-*-<RUN_ID>/",
+    "acquire": "artifacts/incoming/",
+    "forbidden_root": "reports/evidence/",
+    "allowed_under_root": ["EXECUTOR/", "EPOCH-*/"],
+    "legacy_exemptions": {
+      "patterns": ["^E\\d+(_MEGA)?$", "^CHAIN-", "^CLOSEOUT-", "^BOOTSTRAP$", "^EDGE_LAB$", "^EDGE_PROFIT_", "^FINAL_MEGA$", "^GOV$", "^INFRA_P0$", "^RG_", "^SAFETY$", "^SPEC_REFACTOR$"],
+      "count": 95,
+      "expiry_epoch": "EPOCH-72"
+    }
+  },
+
+  "scoreboard_weights": {
+    "verify_fast_pass": 30,
+    "ops_life_pass": 20,
+    "kernel_valid": 15,
+    "mode_truth_clean": 15,
+    "write_scope_clean": 10,
+    "san_cert_offline_pass": 5,
+    "san_research_net_pass": 5
+  }
+}
