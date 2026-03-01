@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "unlock01_checks_allow_network",
+      "detail": "regression_unlock01 checks ALLOW_NETWORK — OK",
+      "pass": true
+    },
+    {
+      "check": "unlock01_fails_if_allow_present",
+      "detail": "unlock01 fails if ALLOW_NETWORK present — OK",
+      "pass": true
+    },
+    {
+      "check": "verify_fast_includes_unlock01",
+      "detail": "unlock01 in verify:fast — OK",
+      "pass": true
+    },
+    {
+      "check": "unlock01_before_heavy_gates",
+      "detail": "unlock01 positioned before byte-audit — OK",
+      "pass": true
+    },
+    {
+      "check": "life_hard_stops_on_verify_fast_fail",
+      "detail": "hard_stop on verify_fast in life.mjs — OK",
+      "pass": true
+    },
+    {
+      "check": "allow_network_absent_in_cert",
+      "detail": "ALLOW_NETWORK absent — CERT state clean — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_NET_UNLOCK03_CERT_REFUSES_WITH_ALLOW_FILE",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "4759f93b77e2",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

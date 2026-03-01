@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "check": "lock_script_removes_allow_file",
+      "detail": "unlinkSync in lock script — OK",
+      "pass": true
+    },
+    {
+      "check": "lock_script_records_file_removed",
+      "detail": "file_removed field in receipt — OK",
+      "pass": true
+    },
+    {
+      "check": "bootstrap_always_runs_lock",
+      "detail": "bootstrap always-runs net:lock comment present — OK",
+      "pass": true
+    },
+    {
+      "check": "bootstrap_lock_in_failure_path",
+      "detail": "lock cleanup in failure path — OK",
+      "pass": true
+    },
+    {
+      "check": "allow_network_absent_now",
+      "detail": "ALLOW_NETWORK absent — lock applied correctly — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_NET_UNLOCK02_NO_ALLOW_FILE_AFTER_LOCK",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "4759f93b77e2",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "doc_exists",
+      "detail": "docs/DATA_DELIVERY_SEMANTICS.md present — OK",
+      "pass": true
+    },
+    {
+      "check": "section__1_delivery_model",
+      "detail": "\"## 1. DELIVERY MODEL\" present — OK",
+      "pass": true
+    },
+    {
+      "check": "section__2_truth_levels",
+      "detail": "\"## 2. TRUTH LEVELS\" present — OK",
+      "pass": true
+    },
+    {
+      "check": "section__3_static_vs_dynamic_lanes",
+      "detail": "\"## 3. STATIC vs DYNAMIC LANES\" present — OK",
+      "pass": true
+    },
+    {
+      "check": "section__4_readiness_states",
+      "detail": "\"## 4. READINESS STATES\" present — OK",
+      "pass": true
+    },
+    {
+      "check": "section__5_operator_selector",
+      "detail": "\"## 5. OPERATOR SELECTOR\" present — OK",
+      "pass": true
+    },
+    {
+      "check": "has_schema_version",
+      "detail": "schema_version present — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_DELIV01_DELIVERY_DOC_PRESENT",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "4759f93b77e2",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

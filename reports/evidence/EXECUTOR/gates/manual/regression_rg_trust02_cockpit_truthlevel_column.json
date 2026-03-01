@@ -1,0 +1,27 @@
+{
+  "checks": [
+    {
+      "check": "cockpit_uses_truthlevel_not_trust",
+      "detail": "cockpit uses TruthLevel column — OK",
+      "pass": true
+    },
+    {
+      "check": "trust_score_not_implemented",
+      "detail": "trust_score_data_implemented=false confirmed — OK",
+      "pass": true
+    },
+    {
+      "check": "no_trust_score_data_files",
+      "detail": "no trust_score_data.json found — TruthLevel column is correct — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_TRUST02_COCKPIT_TRUTHLEVEL_COLUMN",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "4759f93b77e2",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "trust_score_files_found": []
+}

@@ -327,7 +327,7 @@ const hudReasonCode = overallFailed.length === 0 ? 'NONE' : overallFailed.join('
 const evidencePaths = [
   ...tm.paths ?? [],
   ...ap.paths ?? [],
-  ...(eb.jsonl_path ? [eb.jsonl_path] : []),
+  ...(eb.jsonl_paths ?? []),
 ].filter(Boolean);
 
 // ---------------------------------------------------------------------------
