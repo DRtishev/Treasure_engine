@@ -1,0 +1,2 @@
+{"action":"update","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[],"bids":[],"seqId":500,"prevSeqId":499}],"_fixture_note":"empty_update: bids=[] asks=[] with advancing seqId — policy: IGNORE update, advance seqId"}
+{"action":"update","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[],"bids":[],"seqId":501,"prevSeqId":500}],"_fixture_note":"empty_update: consecutive empty updates — policy: IGNORE, advance seqId each time"}

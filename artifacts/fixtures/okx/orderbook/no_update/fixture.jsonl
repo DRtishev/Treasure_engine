@@ -1,0 +1,2 @@
+{"action":"update","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[],"bids":[],"seqId":1001,"prevSeqId":1000}],"_fixture_note":"seq_no_update: seqId unchanged from prevSeqId — policy: SKIP"}
+{"action":"update","arg":{"channel":"books","instId":"BTC-USDT"},"data":[{"asks":[],"bids":[],"seqId":1001,"prevSeqId":1001}],"_fixture_note":"seq_no_update: seqId == prevSeqId — policy: SKIP"}
