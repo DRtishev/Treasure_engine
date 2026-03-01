@@ -133,6 +133,9 @@ artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 # Doctor immune memory (runtime state, per-machine)
 artifacts/doctor/
 
+# FSM watermark (runtime crash recovery checkpoint)
+artifacts/fsm/
+
 # Quarantine (self-heal runtime output)
 artifacts/quarantine/
 

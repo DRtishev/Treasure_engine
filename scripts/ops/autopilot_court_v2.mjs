@@ -24,9 +24,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
-import { createBus } from './eventbus_v1.mjs';
+import { createBus, findAllBusJsonls, readBus, mergeAndSortEvents } from './eventbus_v1.mjs';
 
 const ROOT = process.cwd();
+const EVIDENCE_DIR = path.join(ROOT, 'reports', 'evidence');
 const args = process.argv.slice(2);
 const APPLY_FLAG = args.includes('--apply');
 const MODE_ARG = args.find((a) => a.startsWith('--mode='))?.split('=')[1] ?? null;
@@ -43,8 +44,30 @@ const ALLOW_NETWORK_PATH = path.join(ROOT, 'artifacts', 'incoming', 'ALLOW_NETWO
 const VALID_MODES = ['CERT', 'CLOSE', 'AUDIT', 'RESEARCH', 'ACCEL'];
 
 function detectMode() {
+  // Priority 1: explicit CLI override (operator knows best)
   if (MODE_ARG && VALID_MODES.includes(MODE_ARG)) return MODE_ARG;
-  return 'CERT'; // Default: CERT (offline-safe)
+
+  // Priority 2: FSM-derived mode (EPOCH-69 G4 — nervous system)
+  try {
+    const fsmKernelPath = path.join(ROOT, 'specs', 'fsm_kernel.json');
+    if (fs.existsSync(fsmKernelPath)) {
+      const kernel = JSON.parse(fs.readFileSync(fsmKernelPath, 'utf8'));
+      // Replay FSM state from all EventBus events
+      const allBuses = findAllBusJsonls(EVIDENCE_DIR);
+      const allEvts = mergeAndSortEvents(allBuses.map((p) => readBus(p).events()));
+      let fsmState = kernel.initial_state ?? 'BOOT';
+      for (const ev of allEvts) {
+        if (ev.event === 'STATE_TRANSITION' && ev.component === 'FSM' && ev.attrs?.to_state) {
+          fsmState = ev.attrs.to_state;
+        }
+      }
+      const fsmMode = kernel.states?.[fsmState]?.mode;
+      if (fsmMode && VALID_MODES.includes(fsmMode)) return fsmMode;
+    }
+  } catch { /* fallback to default */ }
+
+  // Priority 3: default (backward-compat)
+  return 'CERT';
 }
 
 // ---------------------------------------------------------------------------

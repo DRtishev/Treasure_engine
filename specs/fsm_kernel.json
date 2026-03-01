@@ -1,8 +1,9 @@
 {
   "schema_version": "1.0.0",
-  "description": "EPOCH-69 Organism Brain — FSM kernel definition. 7 states, 7 transitions, 5 forbidden pairs. SSOT for organism lifecycle state machine.",
+  "description": "Treasure Engine Organism FSM — Nervous System Kernel. 7 states, 7 transitions, 5 forbidden pairs, 2 goal states.",
   "initial_state": "BOOT",
-  "max_cycles": 3,
+  "goal_states": ["CERTIFIED", "EDGE_READY"],
+  "max_goal_attempts": 10,
 
   "states": {
     "BOOT": {
@@ -43,25 +44,29 @@
       "action": "npm run -s ops:baseline:restore",
       "on_fail": "stay",
       "compensation": null,
+      "timeout_ms": 10000,
       "description": "Begin certification — restore baseline and start verification pipeline."
     },
     "T02_CERTIFYING_TO_CERTIFIED": {
       "from": "CERTIFYING",
       "to": "CERTIFIED",
       "guard": "guard_verify_fast_x2",
-      "action": null,
+      "action": "npm run -s verify:fast",
+      "action_x2": true,
       "on_fail": "DEGRADED",
       "compensation": null,
-      "description": "Certification complete — guard runs verify:fast x2, action is null (guard IS the test)."
+      "timeout_ms": 300000,
+      "description": "Certification complete — run verify:fast x2 for determinism proof."
     },
     "T03_CERTIFIED_TO_RESEARCHING": {
       "from": "CERTIFIED",
       "to": "RESEARCHING",
       "guard": "guard_network_token",
-      "action": "npm run -s ops:life",
-      "on_fail": "CERTIFIED",
+      "action": null,
+      "on_fail": "stay",
       "compensation": "compensate_revoke_network",
-      "description": "Enter research mode — network token present, run organism lifecycle."
+      "timeout_ms": 5000,
+      "description": "Enable network for data acquisition — network token present."
     },
     "T04_RESEARCHING_TO_EDGE_READY": {
       "from": "RESEARCHING",
@@ -70,7 +75,8 @@
       "action": null,
       "on_fail": "CERTIFIED",
       "compensation": "compensate_invalidate_registry",
-      "description": "Data acquired and candidates promoted — verify data readiness."
+      "timeout_ms": 5000,
+      "description": "Promote candidates — verify data readiness."
     },
     "T05_ANY_TO_DEGRADED": {
       "from": "*",
@@ -79,7 +85,8 @@
       "action": null,
       "on_fail": "stay",
       "compensation": null,
-      "description": "Probe failure detected — any non-BOOT state transitions to DEGRADED."
+      "timeout_ms": 0,
+      "description": "Safety transition on probe failure — any non-BOOT state transitions to DEGRADED."
     },
     "T06_DEGRADED_TO_HEALING": {
       "from": "DEGRADED",
@@ -88,7 +95,8 @@
       "action": null,
       "on_fail": "stay",
       "compensation": null,
-      "description": "Begin self-heal — at least one healable condition exists."
+      "timeout_ms": 60000,
+      "description": "Initiate self-heal — at least one healable condition exists."
     },
     "T07_HEALING_TO_BOOT": {
       "from": "HEALING",
@@ -97,7 +105,8 @@
       "action": null,
       "on_fail": "DEGRADED",
       "compensation": null,
-      "description": "Heal complete — reset to BOOT for re-certification."
+      "timeout_ms": 5000,
+      "description": "Reset to BOOT after successful heal."
     }
   },
 
@@ -107,5 +116,12 @@
     { "from": "CERTIFYING", "to": "RESEARCHING", "reason": "Must fully certify first" },
     { "from": "DEGRADED", "to": "EDGE_READY", "reason": "Must heal then boot then certify first" },
     { "from": "HEALING", "to": "CERTIFIED", "reason": "Must go through BOOT then CERTIFYING" }
-  ]
+  ],
+
+  "circuit_breaker": {
+    "threshold": 3,
+    "applies_to": ["T01", "T02", "T03", "T04", "T06", "T07"]
+  },
+
+  "max_cycles": 3
 }

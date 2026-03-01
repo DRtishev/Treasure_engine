@@ -3,11 +3,12 @@
  *
  * Structural integrity gate for EPOCH-69 FSM kernel.
  *
- * 4 structural tests:
+ * 5 structural tests:
  *   1. Forbidden leak — forbidden transitions must NOT appear in getAvailableTransitions()
  *   2. No dead ends — every non-initial state has ≥1 outgoing transition
  *   3. Valid initial — initial_state exists in states
  *   4. No orphan targets — all from/to reference defined states (or '*' wildcard)
+ *   5. Goal reachability — BOOT can reach every goal_state via BFS (EPOCH-69 G1)
  *
  * Write-scope: reports/evidence/EXECUTOR/gates/manual/regression_fsm01_no_skip_states.json
  */
@@ -16,7 +17,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
-import { loadFsmKernel, getAvailableTransitions } from '../ops/state_manager.mjs';
+import { loadFsmKernel, getAvailableTransitions, findPathToGoal } from '../ops/state_manager.mjs';
 
 const ROOT = process.cwd();
 const EXEC = path.join(ROOT, 'reports/evidence/EXECUTOR');
@@ -135,6 +136,40 @@ if (kernel) {
     pass: forbidden.length === 5,
     detail: `forbidden_transitions=${forbidden.length} (expected 5)`,
   });
+
+  // -------------------------------------------------------------------------
+  // Test 5: Goal reachability — BOOT can reach every goal_state via BFS (G1)
+  // Proves the organism CAN reach its goals from initial state.
+  // -------------------------------------------------------------------------
+  const goalStates = kernel.goal_states ?? [];
+  checks.push({
+    check: 'goal_states_defined',
+    pass: goalStates.length >= 2,
+    detail: `goal_states count=${goalStates.length} (expected ≥2): ${goalStates.join(', ') || 'NONE'}`,
+  });
+
+  for (const goal of goalStates) {
+    const goalInStates = goal in kernel.states;
+    checks.push({
+      check: `goal_in_states_${goal}`,
+      pass: goalInStates,
+      detail: goalInStates
+        ? `OK: goal "${goal}" exists in states`
+        : `FAIL: goal "${goal}" not defined in states`,
+    });
+
+    if (goalInStates) {
+      const pathFromBoot = findPathToGoal(kernel.initial_state, goal);
+      const reachable = pathFromBoot.length > 0;
+      checks.push({
+        check: `goal_reachable_from_BOOT_to_${goal}`,
+        pass: reachable,
+        detail: reachable
+          ? `OK: ${kernel.initial_state} → ${goal} via ${pathFromBoot.map((t) => t.id).join(' → ')}`
+          : `FAIL: no path from ${kernel.initial_state} to ${goal}`,
+      });
+    }
+  }
 }
 
 const failed = checks.filter((c) => !c.pass);

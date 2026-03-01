@@ -24,8 +24,13 @@ import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { healAll } from '../lib/self_heal.mjs';
 import { sealProvenance } from '../lib/provenance.mjs';
 import { loadMemory, updateMemory, getRecurring, getPriorityGates } from '../lib/immune_memory.mjs';
+import { createBus } from './eventbus_v1.mjs';
 
 const ROOT = process.cwd();
+
+// EPOCH-69: Doctor EventBus for FSM health subsystem (G5)
+const doctorBusDir = path.join(ROOT, 'reports', 'evidence', `EPOCH-EVENTBUS-DOCTOR-${RUN_ID}`);
+const doctorBus = createBus(RUN_ID, doctorBusDir);
 
 // Self-harden: no network
 process.env.TREASURE_NET_KILL = '1';
@@ -123,6 +128,18 @@ let livenessVerdict = 'DEAD';
 if (livenessAlive && x2Identical) livenessVerdict = 'ALIVE_DETERMINISTIC';
 else if (livenessAlive && !x2Identical) livenessVerdict = 'ALIVE_FLAKY';
 console.log(`  LIVENESS: ${livenessVerdict} (x2_identical=${x2Identical})`);
+
+// EPOCH-69 G5: emit probe result for FSM consumption
+if (!livenessAlive) {
+  doctorBus.append({
+    mode: 'CERT',
+    component: 'LIFE',
+    event: 'PROBE_FAIL',
+    reason_code: 'LIVENESS_FAIL',
+    surface: 'CONTRACT',
+    attrs: { probe: 'liveness', detail: livenessVerdict },
+  });
+}
 console.log('');
 
 // ── Phase 3: READINESS PROBE ────────────────────────────────────────
@@ -209,6 +226,17 @@ else if (!x2Identical) { verdict = 'SICK'; verdictReason = 'NON_DETERMINISTIC'; 
 else if (!readiness.policy.ok) { verdict = 'DEGRADED'; verdictReason = 'POLICY_FAIL'; }
 else if (!chaosAllPass) { verdict = 'DEGRADED'; verdictReason = 'CHAOS_VULNERABILITY'; }
 else if (!provenanceSealed) { verdict = 'DEGRADED'; verdictReason = 'PROVENANCE_FAIL'; }
+
+// EPOCH-69 G5: emit doctor verdict for FSM consumption
+doctorBus.append({
+  mode: 'CERT',
+  component: 'LIFE',
+  event: 'DOCTOR_VERDICT',
+  reason_code: verdict === 'HEALTHY' ? 'NONE' : verdictReason,
+  surface: 'UX',
+  attrs: { verdict, score: String(totalScore) },
+});
+doctorBus.flush();
 
 // ── Phase 8: IMMUNE MEMORY UPDATE ───────────────────────────────────
 const currentFailures = Object.entries(board).filter(([, v]) => !v.pass).map(([k]) => k);

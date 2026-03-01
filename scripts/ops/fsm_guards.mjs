@@ -126,16 +126,34 @@ function guard_data_ready(_context) {
 
 // ---------------------------------------------------------------------------
 // guard_probe_failure — T05: * → DEGRADED
-// Checks: context contains failed_gate or failed_probe
+// Checks: context contains failed_gate, failed_probe, OR recentEvents with
+// PROBE_FAIL / DOCTOR_VERDICT (non-HEALTHY) — EPOCH-69 G5 integration.
 // ---------------------------------------------------------------------------
 function guard_probe_failure(context) {
   if (!context) {
     return { pass: false, detail: 'no context provided — cannot detect probe failure' };
   }
+
+  // Direct context triggers (manual / programmatic)
   if (context.failed_gate || context.failed_probe) {
     return { pass: true, detail: `probe failure detected: ${context.failed_gate || context.failed_probe}` };
   }
-  return { pass: false, detail: 'no failed_gate or failed_probe in context' };
+
+  // EventBus-derived triggers (G5: doctor emits PROBE_FAIL / DOCTOR_VERDICT)
+  if (Array.isArray(context.recentEvents)) {
+    const probeFailEvents = context.recentEvents.filter(
+      (e) => e.event === 'PROBE_FAIL' ||
+             (e.event === 'DOCTOR_VERDICT' && e.attrs?.verdict && e.attrs.verdict !== 'HEALTHY')
+    );
+    if (probeFailEvents.length > 0) {
+      const details = probeFailEvents.map(
+        (e) => e.attrs?.probe ?? e.attrs?.verdict ?? e.event
+      ).join(', ');
+      return { pass: true, detail: `probe failures from EventBus: ${details}` };
+    }
+  }
+
+  return { pass: false, detail: 'no probe failures detected (no failed_gate, failed_probe, or bus PROBE_FAIL events)' };
 }
 
 // ---------------------------------------------------------------------------

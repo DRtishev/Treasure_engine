@@ -305,6 +305,89 @@ function collectReadiness() {
 }
 
 // ---------------------------------------------------------------------------
+// Collect FSM State — EPOCH-69 G6 FSM Dashboard
+// ---------------------------------------------------------------------------
+function collectFsmState() {
+  try {
+    const fsmKernelPath = path.join(ROOT, 'specs', 'fsm_kernel.json');
+    if (!fs.existsSync(fsmKernelPath)) {
+      return { present: false, state: 'UNKNOWN', note: 'FSM kernel not installed' };
+    }
+    const kernel = JSON.parse(fs.readFileSync(fsmKernelPath, 'utf8'));
+
+    // Replay FSM state from aggregated events
+    let fsmState = kernel.initial_state ?? 'BOOT';
+    let transitionCount = 0;
+    const transitionHistory = [];
+    for (const ev of allEvents) {
+      if (ev.event === 'STATE_TRANSITION' && ev.component === 'FSM' && ev.attrs?.to_state) {
+        transitionHistory.push({
+          tick: ev.tick,
+          from: ev.attrs.from_state ?? fsmState,
+          to: ev.attrs.to_state,
+          transition_id: ev.attrs.transition_id ?? 'unknown',
+        });
+        fsmState = ev.attrs.to_state;
+        transitionCount++;
+      }
+    }
+
+    const mode = kernel.states?.[fsmState]?.mode ?? 'UNKNOWN';
+    const goalStates = kernel.goal_states ?? ['CERTIFIED'];
+    const defaultGoal = goalStates[0] ?? 'CERTIFIED';
+
+    // Compute available transitions (inline — no circular import)
+    const forbidden = kernel.forbidden_transitions ?? [];
+    const isForbidden = (from, to) => forbidden.some((f) => f.from === from && f.to === to);
+    const availableTransitions = [];
+    for (const [id, trans] of Object.entries(kernel.transitions)) {
+      if (trans.from !== '*' && trans.from !== fsmState) continue;
+      if (trans.from === '*' && fsmState === 'BOOT') continue;
+      if (isForbidden(fsmState, trans.to)) continue;
+      if (trans.to === fsmState && trans.from !== '*') continue;
+      availableTransitions.push(id);
+    }
+
+    // BFS path to goal (inline — lightweight, no state_manager import)
+    const pathToGoal = [];
+    if (fsmState !== defaultGoal) {
+      const queue = [{ state: fsmState, path: [] }];
+      const visited = new Set([fsmState]);
+      while (queue.length > 0) {
+        const { state: cur, path: curPath } = queue.shift();
+        for (const [id, trans] of Object.entries(kernel.transitions)) {
+          if (trans.from !== '*' && trans.from !== cur) continue;
+          if (trans.from === '*' && cur === 'BOOT') continue;
+          if (isForbidden(cur, trans.to)) continue;
+          if (visited.has(trans.to)) continue;
+          const newPath = [...curPath, id];
+          if (trans.to === defaultGoal) {
+            pathToGoal.push(...newPath);
+            queue.length = 0;
+            break;
+          }
+          visited.add(trans.to);
+          queue.push({ state: trans.to, path: newPath });
+        }
+      }
+    }
+
+    return {
+      present: true,
+      state: fsmState,
+      mode,
+      goal: defaultGoal,
+      path_to_goal: pathToGoal,
+      available_transitions: availableTransitions,
+      transitions_seen: transitionCount,
+      transition_history: transitionHistory.slice(-10),
+    };
+  } catch {
+    return { present: false, state: 'UNKNOWN', note: 'FSM kernel load error' };
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Build HUD
 // ---------------------------------------------------------------------------
 const tm = collectTimemachine();
@@ -314,6 +397,7 @@ const fg = collectFastGate();
 const pr1 = collectPR01();
 const wow = collectWowGates();
 const readiness = collectReadiness();
+const fsm = collectFsmState();
 
 const overallFailed = [
   fg.status !== 'PASS' && fg.status !== 'NO_DATA' ? 'FAST_GATE' : null,
@@ -349,6 +433,7 @@ const hudJson = {
     readiness: readiness,
     pr01: pr1,
     wow_gates: wow,
+    fsm: fsm,
   },
   evidence_paths: evidencePaths,
   overall_failed: overallFailed,
@@ -467,6 +552,26 @@ const hudMd = [
   '',
   '---',
   '',
+  '## [8] FSM STATE',
+  '',
+  `STATE: ${fsm.state}`,
+  `MODE: ${fsm.mode ?? 'UNKNOWN'}`,
+  `GOAL: ${fsm.goal ?? 'UNKNOWN'}`,
+  `PATH_TO_GOAL: ${fsm.path_to_goal?.join(' → ') || 'NONE'}`,
+  `AVAILABLE: ${fsm.available_transitions?.join(', ') || 'NONE'}`,
+  `TRANSITIONS_SEEN: ${fsm.transitions_seen ?? 0}`,
+  ...(fsm.note ? [`NOTE: ${fsm.note}`] : []),
+  '',
+  fsm.transition_history?.length > 0
+    ? ['### Transition History (last 10)', '',
+       '  | Tick | From | To | Transition |',
+       '  |------|------|----|------------|',
+       ...fsm.transition_history.map((t) => `  | ${t.tick} | ${t.from} | ${t.to} | ${t.transition_id} |`),
+      ].join('\n')
+    : '',
+  '',
+  '---',
+  '',
   '## NEXT_ACTION',
   '',
   'npm run -s verify:fast',
@@ -486,5 +591,6 @@ console.log(`  fast_gate:   ${fg.status} (${fg.gates_checked} gates, ${fg.failed
 console.log(`  pr01:        ${pr1.status}`);
 console.log(`  wow_gates:   ${wow.gates_checked} checked, ${wow.failed_n} failed`);
 console.log(`  readiness:   ${readiness.status} lanes=${readiness.lanes_total} truth=${readiness.truth_lanes_n}`);
+console.log(`  fsm:         ${fsm.state} mode=${fsm.mode ?? '?'} goal=${fsm.goal ?? '?'}`);
 
 process.exit(hudStatus === 'PASS' ? 0 : 1);

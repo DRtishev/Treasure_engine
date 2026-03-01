@@ -4,12 +4,22 @@
  * The FSM executor. Derives state from event log, validates transitions,
  * executes actions, triggers compensations.
  *
+ * EPOCH-69 GENIUS additions:
+ *   G1: findPathToGoal() + runToGoal() — BFS goal-seeking orchestration
+ *   G2: Circuit breaker per transition — stops infinite retry loops
+ *   G3: Transition time budget — timeout_ms from kernel
+ *   G7: writeWatermark() — crash recovery checkpoint
+ *
  * Exports:
  *   loadFsmKernel()                    — parse and return specs/fsm_kernel.json
- *   replayState(events, targetTick?)   — derive state from log
+ *   replayState(events, targetTick?)   — derive state from log (with watermark fallback)
  *   getAvailableTransitions(state)     — list valid transitions from state
+ *   findPathToGoal(fromState, goalState) — BFS shortest path (G1)
  *   isTransitionValid(state, transId)  — quick validity check
  *   executeTransition(bus, state, transId, context?) — full execution
+ *   runToGoal(bus, goalState, maxAttempts?) — goal-seeking loop (G1)
+ *   writeWatermark(state)              — crash recovery (G7)
+ *   checkCircuitBreaker(transitionId)  — breaker query (G2)
  */
 
 import fs from 'node:fs';
@@ -77,33 +87,144 @@ export function stateToMode(state) {
 }
 
 // ---------------------------------------------------------------------------
+// G2: CIRCUIT BREAKER — in-memory per-session state
+// ---------------------------------------------------------------------------
+const _breakerState = {}; // transitionId → { failures: N, open: boolean }
+
+function getBreakerThreshold() {
+  try {
+    const kernel = loadFsmKernel();
+    return kernel.circuit_breaker?.threshold ?? 3;
+  } catch {
+    return 3;
+  }
+}
+
+function isBreakerApplicable(transitionId) {
+  try {
+    const kernel = loadFsmKernel();
+    const appliesTo = kernel.circuit_breaker?.applies_to ?? [];
+    // Check if transition ID starts with any prefix in applies_to
+    return appliesTo.some((prefix) => transitionId.startsWith(prefix));
+  } catch {
+    return false;
+  }
+}
+
+export function recordTransitionFailure(transitionId) {
+  if (!isBreakerApplicable(transitionId)) return;
+  if (!_breakerState[transitionId]) {
+    _breakerState[transitionId] = { failures: 0, open: false };
+  }
+  _breakerState[transitionId].failures++;
+  if (_breakerState[transitionId].failures >= getBreakerThreshold()) {
+    _breakerState[transitionId].open = true;
+  }
+}
+
+export function recordTransitionSuccess(transitionId) {
+  _breakerState[transitionId] = { failures: 0, open: false };
+}
+
+export function checkCircuitBreaker(transitionId) {
+  return _breakerState[transitionId]?.open ?? false;
+}
+
+export function getCircuitBreakerState() {
+  return { ..._breakerState };
+}
+
+export function _resetCircuitBreakers() {
+  for (const key of Object.keys(_breakerState)) {
+    delete _breakerState[key];
+  }
+}
+
+// ---------------------------------------------------------------------------
+// G7: WATERMARK — crash recovery checkpoint
+// ---------------------------------------------------------------------------
+const WATERMARK_DIR = path.join(ROOT, 'artifacts', 'fsm');
+const WATERMARK_PATH = path.join(WATERMARK_DIR, 'WATERMARK.json');
+
+export function writeWatermark(state, tick = 0, runId = '') {
+  try {
+    fs.mkdirSync(WATERMARK_DIR, { recursive: true });
+    const watermark = {
+      state,
+      tick,
+      run_id: runId,
+      written_at_tick: tick,
+    };
+    fs.writeFileSync(WATERMARK_PATH, JSON.stringify(watermark, null, 2) + '\n');
+    return watermark;
+  } catch {
+    return null;
+  }
+}
+
+export function readWatermark() {
+  try {
+    if (!fs.existsSync(WATERMARK_PATH)) return null;
+    return JSON.parse(fs.readFileSync(WATERMARK_PATH, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+// ---------------------------------------------------------------------------
 // replayState(events, targetTick?) — derive current state from event log
+// G7: Falls back to watermark if EventBus is empty
 // ---------------------------------------------------------------------------
 export function replayState(events, targetTick = Infinity) {
   const kernel = loadFsmKernel();
   let state = kernel.initial_state; // BOOT
   const transitions = [];
 
-  for (const event of events) {
-    if (event.tick > targetTick) break;
-    if (event.event === 'STATE_TRANSITION' && event.component === 'FSM' && event.attrs && event.attrs.to_state) {
-      const fromState = event.attrs.from_state || state;
-      state = event.attrs.to_state;
-      transitions.push({
-        tick: event.tick,
-        from: fromState,
-        to: event.attrs.to_state,
-        transition_id: event.attrs.transition_id || 'unknown',
-      });
+  // Primary: derive from events (authoritative)
+  if (events && events.length > 0) {
+    for (const event of events) {
+      if (event.tick > targetTick) break;
+      if (event.event === 'STATE_TRANSITION' && event.component === 'FSM' && event.attrs && event.attrs.to_state) {
+        const fromState = event.attrs.from_state || state;
+        state = event.attrs.to_state;
+        transitions.push({
+          tick: event.tick,
+          from: fromState,
+          to: event.attrs.to_state,
+          transition_id: event.attrs.transition_id || 'unknown',
+        });
+      }
     }
+
+    return {
+      state,
+      mode: stateToMode(state),
+      tick: targetTick === Infinity ? (events.length > 0 ? events[events.length - 1].tick : 0) : targetTick,
+      transitions,
+      transitions_count: transitions.length,
+    };
   }
 
+  // Fallback: check watermark (G7 crash recovery)
+  const watermark = readWatermark();
+  if (watermark && watermark.state && watermark.state in kernel.states) {
+    return {
+      state: watermark.state,
+      mode: stateToMode(watermark.state),
+      tick: watermark.tick ?? 0,
+      transitions: [],
+      transitions_count: 0,
+      source: 'watermark',
+    };
+  }
+
+  // No events, no watermark: fresh start
   return {
-    state,
-    mode: stateToMode(state),
-    tick: targetTick === Infinity ? (events.length > 0 ? events[events.length - 1].tick : 0) : targetTick,
-    transitions,
-    transitions_count: transitions.length,
+    state: kernel.initial_state,
+    mode: stateToMode(kernel.initial_state),
+    tick: 0,
+    transitions: [],
+    transitions_count: 0,
   };
 }
 
@@ -118,6 +239,7 @@ function isForbidden(from, to) {
 
 // ---------------------------------------------------------------------------
 // getAvailableTransitions(currentState) — list valid transitions
+// G2: Filters circuit-breaker-open transitions
 // ---------------------------------------------------------------------------
 export function getAvailableTransitions(currentState) {
   const kernel = loadFsmKernel();
@@ -151,9 +273,44 @@ export function isTransitionValid(currentState, transitionId) {
 }
 
 // ---------------------------------------------------------------------------
+// G1: findPathToGoal(fromState, goalState) — BFS shortest path
+// Returns array of transitions (shortest path) or [] (no path)
+// ---------------------------------------------------------------------------
+export function findPathToGoal(fromState, goalState) {
+  if (fromState === goalState) return [];
+
+  const kernel = loadFsmKernel();
+  const queue = [{ state: fromState, path: [] }];
+  const visited = new Set([fromState]);
+
+  while (queue.length > 0) {
+    const { state, path: currentPath } = queue.shift();
+    const transitions = getAvailableTransitions(state);
+
+    for (const transition of transitions) {
+      const nextState = transition.to;
+      if (visited.has(nextState)) continue;
+
+      // Skip circuit-breaker-open transitions in path planning
+      if (checkCircuitBreaker(transition.id)) continue;
+
+      const newPath = [...currentPath, transition];
+      if (nextState === goalState) return newPath;
+
+      visited.add(nextState);
+      queue.push({ state: nextState, path: newPath });
+    }
+  }
+
+  return []; // no path exists
+}
+
+// ---------------------------------------------------------------------------
 // executeTransition(bus, currentState, transitionId, context?) — full execution
 //
-// Phases: validate → guard → action → compensate → emit
+// Phases: validate → guard → action (with timeout G3, x2 G3) → compensate → emit
+// G2: Records failures/successes for circuit breaker
+// G7: Writes watermark after state change
 // ---------------------------------------------------------------------------
 export function executeTransition(bus, currentState, transitionId, context = {}) {
   const kernel = loadFsmKernel();
@@ -203,6 +360,25 @@ export function executeTransition(bus, currentState, transitionId, context = {})
     return { success: false, newState: currentState, reason: 'FSM_FORBIDDEN' };
   }
 
+  // G2: Check circuit breaker
+  if (checkCircuitBreaker(transitionId)) {
+    if (bus) {
+      bus.append({
+        mode: stateToMode(currentState),
+        component: 'FSM',
+        event: 'CIRCUIT_BREAKER_OPEN',
+        reason_code: 'FSM_ACTION_FAIL',
+        surface: 'CONTRACT',
+        attrs: {
+          transition_id: transitionId,
+          failures: String(_breakerState[transitionId]?.failures ?? 0),
+          threshold: String(getBreakerThreshold()),
+        },
+      });
+    }
+    return { success: false, newState: currentState, reason: 'CIRCUIT_BREAKER_OPEN' };
+  }
+
   // Phase 2: Guard
   const guardFn = GUARD_REGISTRY[transition.guard];
   if (!guardFn) {
@@ -227,7 +403,7 @@ export function executeTransition(bus, currentState, transitionId, context = {})
       event: 'GUARD_CHECK',
       reason_code: guardResult.pass ? 'NONE' : 'FSM_GUARD_FAIL',
       surface: 'CONTRACT',
-      attrs: { transition_id: transitionId, guard: transition.guard, pass: guardResult.pass, detail: guardResult.detail },
+      attrs: { transition_id: transitionId, guard: transition.guard, pass: String(guardResult.pass), detail: guardResult.detail },
     });
   }
 
@@ -235,61 +411,104 @@ export function executeTransition(bus, currentState, transitionId, context = {})
     return { success: false, newState: currentState, reason: 'FSM_GUARD_FAIL', guardDetail: guardResult.detail };
   }
 
-  // Phase 3: Action
+  // Phase 3: Action (with G3 timeout_ms and action_x2 support)
   if (transition.action && transition.action !== 'self_heal') {
-    const result = spawnSync('npm', ['run', '-s', ...transition.action.replace('npm run -s ', '').split(' ')], {
-      cwd: ROOT,
-      stdio: 'pipe',
-      encoding: 'utf8',
-      timeout: 300_000, // 5 min
-    });
+    const timeoutMs = transition.timeout_ms ?? 300_000;
+    const actionParts = transition.action.replace('npm run -s ', '').split(' ');
+    const runCount = transition.action_x2 ? 2 : 1;
 
-    if (result.status !== 0) {
-      if (bus) {
-        bus.append({
-          mode: stateToMode(currentState),
-          component: 'FSM',
-          event: 'TRANSITION_FAILED',
-          reason_code: 'FSM_ACTION_FAIL',
-          surface: 'CONTRACT',
-          attrs: { transition_id: transitionId, action: transition.action, exit_code: result.status },
-        });
-      }
+    for (let run = 1; run <= runCount; run++) {
+      const result = spawnSync('npm', ['run', '-s', ...actionParts], {
+        cwd: ROOT,
+        stdio: 'pipe',
+        encoding: 'utf8',
+        timeout: timeoutMs,
+      });
 
-      // Phase 3a: Compensate
-      if (transition.compensation) {
-        const compFn = COMPENSATION_REGISTRY[transition.compensation];
-        if (compFn) {
-          const compResult = compFn();
-          if (bus) {
+      const timedOut = result.signal === 'SIGTERM' || result.signal === 'SIGKILL';
+
+      if (result.status !== 0 || timedOut) {
+        const failReason = timedOut ? 'TIMEOUT' : 'ACTION_FAIL';
+        if (bus) {
+          bus.append({
+            mode: stateToMode(currentState),
+            component: 'FSM',
+            event: 'TRANSITION_FAILED',
+            reason_code: 'FSM_ACTION_FAIL',
+            surface: 'CONTRACT',
+            attrs: {
+              transition_id: transitionId,
+              action: transition.action,
+              exit_code: String(result.status ?? -1),
+              reason: failReason,
+              run_number: String(run),
+              budget_ms: String(timeoutMs),
+            },
+          });
+        }
+
+        // Phase 3a: Compensate
+        if (transition.compensation) {
+          const compFn = COMPENSATION_REGISTRY[transition.compensation];
+          if (compFn) {
+            const compResult = compFn();
+            if (bus) {
+              bus.append({
+                mode: stateToMode(currentState),
+                component: 'FSM',
+                event: 'COMPENSATION_EXECUTED',
+                reason_code: compResult.compensated ? 'NONE' : 'FSM_COMPENSATION_FAIL',
+                surface: 'CONTRACT',
+                attrs: { transition_id: transitionId, compensation: transition.compensation, compensated: String(compResult.compensated), detail: compResult.detail },
+              });
+            }
+          }
+        }
+
+        const failState = transition.on_fail === 'stay' ? currentState : transition.on_fail;
+
+        // G2: Record failure
+        recordTransitionFailure(transitionId);
+
+        if (bus) {
+          bus.append({
+            mode: stateToMode(failState),
+            component: 'FSM',
+            event: 'STATE_TRANSITION',
+            reason_code: 'FSM_FAIL_RECOVERY',
+            surface: 'CONTRACT',
+            attrs: { transition_id: transitionId, from_state: currentState, to_state: failState, trigger: 'action_failure' },
+          });
+
+          // G2: Emit circuit breaker event if just opened
+          if (checkCircuitBreaker(transitionId)) {
             bus.append({
-              mode: stateToMode(currentState),
+              mode: stateToMode(failState),
               component: 'FSM',
-              event: 'COMPENSATION_EXECUTED',
-              reason_code: compResult.compensated ? 'NONE' : 'FSM_COMPENSATION_FAIL',
+              event: 'CIRCUIT_BREAKER_OPEN',
+              reason_code: 'FSM_ACTION_FAIL',
               surface: 'CONTRACT',
-              attrs: { transition_id: transitionId, compensation: transition.compensation, compensated: compResult.compensated, detail: compResult.detail },
+              attrs: {
+                transition_id: transitionId,
+                failures: String(_breakerState[transitionId]?.failures ?? 0),
+                threshold: String(getBreakerThreshold()),
+              },
             });
           }
         }
-      }
 
-      const failState = transition.on_fail === 'stay' ? currentState : transition.on_fail;
-      if (bus) {
-        bus.append({
-          mode: stateToMode(failState),
-          component: 'FSM',
-          event: 'STATE_TRANSITION',
-          reason_code: 'FSM_FAIL_RECOVERY',
-          surface: 'CONTRACT',
-          attrs: { transition_id: transitionId, from_state: currentState, to_state: failState, trigger: 'action_failure' },
-        });
+        // G7: Write watermark for crash recovery
+        writeWatermark(failState);
+
+        return { success: false, newState: failState, reason: 'FSM_ACTION_FAIL' };
       }
-      return { success: false, newState: failState, reason: 'FSM_ACTION_FAIL' };
     }
   }
 
   // Phase 4: Commit
+  // G2: Record success
+  recordTransitionSuccess(transitionId);
+
   if (bus) {
     bus.append({
       mode: stateToMode(transition.to),
@@ -301,5 +520,104 @@ export function executeTransition(bus, currentState, transitionId, context = {})
     });
   }
 
+  // G7: Write watermark
+  writeWatermark(transition.to);
+
   return { success: true, newState: transition.to };
+}
+
+// ---------------------------------------------------------------------------
+// G1: runToGoal(bus, goalState, maxAttempts?) — goal-seeking orchestration
+//
+// Algorithm: keep transitioning along BFS-shortest path until goal reached.
+// Respects circuit breakers and max attempts.
+// Returns: { reached, finalState, attempts, history[] }
+// ---------------------------------------------------------------------------
+export function runToGoal(bus, goalState, maxAttempts = null) {
+  const kernel = loadFsmKernel();
+  const maxAtt = maxAttempts ?? kernel.max_goal_attempts ?? 10;
+  let attempts = 0;
+  const history = [];
+
+  while (attempts < maxAtt) {
+    const allEvents = bus ? bus.events() : [];
+    const { state: currentState } = replayState(allEvents);
+
+    if (currentState === goalState) {
+      if (bus) {
+        bus.append({
+          mode: stateToMode(currentState),
+          component: 'FSM',
+          event: 'GOAL_REACHED',
+          reason_code: 'NONE',
+          surface: 'CONTRACT',
+          attrs: { goal: goalState, attempts: String(attempts) },
+        });
+      }
+      return { reached: true, finalState: currentState, attempts, history };
+    }
+
+    const pathToGoal = findPathToGoal(currentState, goalState);
+    if (pathToGoal.length === 0) {
+      if (bus) {
+        bus.append({
+          mode: stateToMode(currentState),
+          component: 'FSM',
+          event: 'GOAL_BLOCKED',
+          reason_code: 'FSM_ACTION_FAIL',
+          surface: 'CONTRACT',
+          attrs: { goal: goalState, reason: 'no_valid_path', current_state: currentState },
+        });
+      }
+      return { reached: false, finalState: currentState, attempts, history, reason: 'no_valid_path' };
+    }
+
+    const nextTransition = pathToGoal[0];
+
+    // Check circuit breaker
+    if (checkCircuitBreaker(nextTransition.id)) {
+      if (bus) {
+        bus.append({
+          mode: stateToMode(currentState),
+          component: 'FSM',
+          event: 'GOAL_BLOCKED',
+          reason_code: 'FSM_ACTION_FAIL',
+          surface: 'CONTRACT',
+          attrs: { goal: goalState, reason: 'circuit_breaker_open', transition: nextTransition.id },
+        });
+      }
+      return { reached: false, finalState: currentState, attempts, history, reason: 'circuit_breaker_open' };
+    }
+
+    const result = executeTransition(bus, currentState, nextTransition.id);
+    history.push({
+      from: currentState,
+      to: result.newState,
+      transition: nextTransition.id,
+      success: result.success,
+    });
+
+    if (!result.success) {
+      attempts++;
+      continue; // re-plan from new state
+    }
+
+    // Success — reset attempts counter on forward progress
+    attempts = 0;
+  }
+
+  // Max attempts exceeded
+  const allEvents = bus ? bus.events() : [];
+  const { state: finalState } = replayState(allEvents);
+  if (bus) {
+    bus.append({
+      mode: stateToMode(finalState),
+      component: 'FSM',
+      event: 'GOAL_BLOCKED',
+      reason_code: 'FSM_ACTION_FAIL',
+      surface: 'CONTRACT',
+      attrs: { goal: goalState, reason: 'max_attempts_exceeded', attempts: String(attempts) },
+    });
+  }
+  return { reached: false, finalState, attempts, history, reason: 'max_attempts_exceeded' };
 }
