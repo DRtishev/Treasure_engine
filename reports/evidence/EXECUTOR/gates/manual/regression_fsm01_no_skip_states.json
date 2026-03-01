@@ -101,11 +101,6 @@
       "pass": true
     },
     {
-      "check": "no_orphan_on_fail_T03_CERTIFIED_TO_RESEARCHING",
-      "detail": "OK: T03_CERTIFIED_TO_RESEARCHING.on_fail=\"CERTIFIED\" is valid",
-      "pass": true
-    },
-    {
       "check": "no_orphan_from_T04_RESEARCHING_TO_EDGE_READY",
       "detail": "OK: T04_RESEARCHING_TO_EDGE_READY.from=\"RESEARCHING\" is valid",
       "pass": true
@@ -169,9 +164,34 @@
       "check": "forbidden_count",
       "detail": "forbidden_transitions=5 (expected 5)",
       "pass": true
+    },
+    {
+      "check": "goal_states_defined",
+      "detail": "goal_states count=2 (expected ≥2): CERTIFIED, EDGE_READY",
+      "pass": true
+    },
+    {
+      "check": "goal_in_states_CERTIFIED",
+      "detail": "OK: goal \"CERTIFIED\" exists in states",
+      "pass": true
+    },
+    {
+      "check": "goal_reachable_from_BOOT_to_CERTIFIED",
+      "detail": "OK: BOOT → CERTIFIED via T01_BOOT_TO_CERTIFYING → T02_CERTIFYING_TO_CERTIFIED",
+      "pass": true
+    },
+    {
+      "check": "goal_in_states_EDGE_READY",
+      "detail": "OK: goal \"EDGE_READY\" exists in states",
+      "pass": true
+    },
+    {
+      "check": "goal_reachable_from_BOOT_to_EDGE_READY",
+      "detail": "OK: BOOT → EDGE_READY via T01_BOOT_TO_CERTIFYING → T02_CERTIFYING_TO_CERTIFIED → T03_CERTIFIED_TO_RESEARCHING → T04_RESEARCHING_TO_EDGE_READY",
+      "pass": true
     }
   ],
-  "checks_total": 34,
+  "checks_total": 38,
   "failed_checks": [],
   "gate_id": "RG_FSM01_NO_SKIP_STATES",
   "next_action": "npm run -s verify:regression:fsm01-no-skip-states",
