@@ -157,7 +157,7 @@ function examBehavioralAudit(candidateId, data, _policy) {
 // ---------------------------------------------------------------------------
 // evaluate — Run all 5 exams, produce CourtVerdict
 // ---------------------------------------------------------------------------
-export function evaluate(candidateId, candidateData, policy) {
+export function evaluate(candidateId, candidateData, policy, timestamp) {
   const exams = [
     examEvidenceCompleteness(candidateId, candidateData),
     examPerformanceThreshold(candidateId, candidateData, policy),
@@ -178,6 +178,6 @@ export function evaluate(candidateId, candidateData, policy) {
     exams_failed: failed.length,
     exams,
     policy_version: policy.schema_version ?? '1.0.0',
-    evaluated_at: new Date().toISOString(),
+    evaluated_at: timestamp ?? 'UNKNOWN',
   });
 }

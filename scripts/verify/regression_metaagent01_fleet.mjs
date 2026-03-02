@@ -209,6 +209,124 @@ if (summary && summary.schema_version === '4.0.0') {
   });
 }
 
+// ---------------------------------------------------------------------------
+// Test 9: behavioral_candidate_fsm — CandidateFSM instantiates and transitions
+// ---------------------------------------------------------------------------
+try {
+  const { CandidateFSM, loadCandidateKernel } = await import('../ops/candidate_fsm.mjs');
+  const { loadFleetPolicy } = await import('../ops/metaagent.mjs');
+  const kernel = loadCandidateKernel();
+  const policy = loadFleetPolicy();
+  const candidate = {
+    id: 'test_behavioral',
+    fsm_state: 'DRAFT',
+    fsm_history: [],
+    metrics: { backtest_sharpe: 1.2 },
+    risk: { score: 0.1 },
+  };
+  const fsm = new CandidateFSM(candidate, kernel, policy, 'TEST_TS');
+  // Verify initial state
+  const isInitial = fsm.state === 'DRAFT' && fsm.id === 'test_behavioral';
+  // Attempt valid transition
+  const t1 = fsm.transition('CT01_DRAFT_TO_BACKTESTED');
+  const transitioned = t1.success && fsm.state === 'BACKTESTED';
+  // Verify deterministic timestamp
+  const hasDeterministicTs = fsm.history.length > 0 && fsm.history[0].at === 'TEST_TS';
+  // Verify risk fallback is fail-safe (1.0)
+  const fsm2 = new CandidateFSM({ id: 'no_risk', fsm_state: 'DRAFT' }, kernel, policy, 'T');
+  const riskFailSafe = fsm2.riskScore() === 1.0;
+  const pass = isInitial && transitioned && hasDeterministicTs && riskFailSafe;
+  checks.push({
+    check: 'behavioral_candidate_fsm',
+    pass,
+    detail: pass
+      ? 'OK: CandidateFSM instantiates, transitions, uses deterministic timestamps, fail-safe risk'
+      : `FAIL: init=${isInitial} transitioned=${transitioned} detTs=${hasDeterministicTs} riskFS=${riskFailSafe}`,
+  });
+} catch (e) {
+  checks.push({ check: 'behavioral_candidate_fsm', pass: false, detail: `FAIL: ${e.message}` });
+}
+
+// ---------------------------------------------------------------------------
+// Test 10: behavioral_graduation_court — evaluate() returns frozen verdict
+// ---------------------------------------------------------------------------
+try {
+  const { evaluate } = await import('../ops/graduation_court.mjs');
+  const { loadFleetPolicy } = await import('../ops/metaagent.mjs');
+  const policy = loadFleetPolicy();
+  const candidateData = {
+    metrics: { backtest_sharpe: 1.5, paper_sharpe: 1.3, canary_sharpe: 1.2, total_trades: 200, max_drawdown_pct: 10, profit_factor: 1.8, win_rate: 0.55 },
+    risk: { score: 0.1, circuit_breaker_trips: 0 },
+  };
+  const verdict = evaluate('test_court', candidateData, policy, 'TEST_TS');
+  const isFrozen = Object.isFrozen(verdict);
+  const hasFields = verdict.candidate_id === 'test_court' && verdict.exams_passed >= 0 && verdict.evaluated_at === 'TEST_TS';
+  const noNewDate = verdict.evaluated_at !== undefined && !verdict.evaluated_at.includes('T');
+  const pass = isFrozen && hasFields;
+  checks.push({
+    check: 'behavioral_graduation_court',
+    pass,
+    detail: pass
+      ? `OK: evaluate() returns frozen verdict, score=${verdict.overall_score}, exams=${verdict.exams_passed}/5, deterministic ts`
+      : `FAIL: frozen=${isFrozen} hasFields=${hasFields}`,
+  });
+} catch (e) {
+  checks.push({ check: 'behavioral_graduation_court', pass: false, detail: `FAIL: ${e.message}` });
+}
+
+// ---------------------------------------------------------------------------
+// Test 11: behavioral_metaagent_scan — MetaAgent.scan() returns frozen context
+// ---------------------------------------------------------------------------
+try {
+  const { MetaAgent } = await import('../ops/metaagent.mjs');
+  const candidates = [
+    { id: 'c1', fsm_state: 'DRAFT', metrics: {}, risk: { score: 0.1 } },
+    { id: 'c2', fsm_state: 'GRADUATED', metrics: {}, risk: { score: 0.05 } },
+  ];
+  // bus=null is safe for scan-only
+  const agent = new MetaAgent(candidates, null, 'TEST_TS', 'CERT');
+  const ctx = agent.scan();
+  const isFrozen = Object.isFrozen(ctx);
+  const hasTotal = ctx.total_candidates === 2;
+  const hasHealth = typeof ctx.fleet_health === 'number';
+  const hasExploration = typeof ctx.exploration_ratio === 'number';
+  const pass = isFrozen && hasTotal && hasHealth && hasExploration;
+  checks.push({
+    check: 'behavioral_metaagent_scan',
+    pass,
+    detail: pass
+      ? `OK: scan() frozen ctx, total=${ctx.total_candidates}, health=${ctx.fleet_health}, exploration=${ctx.exploration_ratio}`
+      : `FAIL: frozen=${isFrozen} total=${hasTotal} health=${hasHealth} exploration=${hasExploration}`,
+  });
+} catch (e) {
+  checks.push({ check: 'behavioral_metaagent_scan', pass: false, detail: `FAIL: ${e.message}` });
+}
+
+// ---------------------------------------------------------------------------
+// Test 12: behavioral_metaagent_writeback — getCandidatesData() returns updated data
+// ---------------------------------------------------------------------------
+try {
+  const { MetaAgent } = await import('../ops/metaagent.mjs');
+  const candidates = [
+    { id: 'wb1', fsm_state: 'DRAFT', metrics: { backtest_sharpe: 1.0 }, risk: { score: 0.1 } },
+  ];
+  const agent = new MetaAgent(candidates, null, 'TEST_TS', 'CERT');
+  const data = agent.getCandidatesData();
+  const hasData = Array.isArray(data) && data.length === 1;
+  const hasId = hasData && (data[0].id === 'wb1' || data[0].config_id === 'wb1');
+  const hasFsmState = hasData && typeof data[0].fsm_state === 'string';
+  const pass = hasData && hasId && hasFsmState;
+  checks.push({
+    check: 'behavioral_metaagent_writeback',
+    pass,
+    detail: pass
+      ? `OK: getCandidatesData() returns serializable array with fsm_state`
+      : `FAIL: hasData=${hasData} hasId=${hasId} hasFsmState=${hasFsmState}`,
+  });
+} catch (e) {
+  checks.push({ check: 'behavioral_metaagent_writeback', pass: false, detail: `FAIL: ${e.message}` });
+}
+
 const failed = checks.filter((c) => !c.pass);
 const status = failed.length === 0 ? 'PASS' : 'FAIL';
 const reason_code = failed.length === 0 ? 'NONE' : 'FSM_STRUCTURAL_VIOLATION';

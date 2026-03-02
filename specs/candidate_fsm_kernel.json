@@ -106,6 +106,7 @@
     { "from": "DRAFT", "to": "CANARY_DEPLOYED", "reason": "Must pass backtest and paper trading first" },
     { "from": "DRAFT", "to": "GRADUATED", "reason": "Must traverse full pipeline" },
     { "from": "REJECTED", "to": "DRAFT", "reason": "Rejection is permanent" },
-    { "from": "REJECTED", "to": "GRADUATED", "reason": "Rejection is permanent" }
+    { "from": "REJECTED", "to": "GRADUATED", "reason": "Rejection is permanent" },
+    { "from": "GRADUATED", "to": "PARKED", "reason": "Graduated candidates require explicit demotion process" }
   ]
 }

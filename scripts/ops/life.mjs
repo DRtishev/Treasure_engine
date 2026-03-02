@@ -644,8 +644,15 @@ let fleetResult = null;
       candidatesData = reg.candidates ?? [];
     }
 
-    const agent = new MetaAgent(candidatesData, bus);
+    const agent = new MetaAgent(candidatesData, bus, RUN_ID, stateToMode(currentState));
     fleetResult = agent.tick();
+
+    // CRIT-02 FIX: Write back updated candidate states to registry
+    if (fs.existsSync(regPath)) {
+      const reg = JSON.parse(fs.readFileSync(regPath, 'utf8'));
+      reg.candidates = agent.getCandidatesData();
+      writeJsonDeterministic(regPath, reg);
+    }
 
     if (fleetResult.decisions.length > 0) {
       console.log(`[ops:life] METAAGENT: ${fleetResult.decisions.length} fleet decision(s)`);

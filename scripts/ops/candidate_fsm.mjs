@@ -8,7 +8,8 @@
  *         PARKED, REJECTED, QUARANTINED (safety / lifecycle management)
  *
  * Guards are pure functions returning { pass, detail }.
- * Transitions produce immutable history entries.
+ * Transitions produce immutable history entries with deterministic timestamps.
+ * Risk fallback is fail-safe: unknown risk = 1.0 (highest risk).
  *
  * Exports:
  *   CandidateFSM        — class
@@ -47,9 +48,9 @@ function guard_paper_metrics(_candidate, _policy) {
   const trades = m.total_trades ?? 0;
   const sharpe = m.paper_sharpe ?? 0;
   const dd = m.max_drawdown_pct ?? 100;
-  const minTrades = 100;
-  const minSharpe = 0.5;
-  const maxDD = 15;
+  const minTrades = gc.min_canary_trades ?? 100;
+  const minSharpe = gc.min_sharpe ?? 0.5;
+  const maxDD = gc.max_drawdown_pct ?? 15;
   if (trades < minTrades) return { pass: false, detail: `trades=${trades} < ${minTrades}` };
   if (sharpe < minSharpe) return { pass: false, detail: `paper_sharpe=${sharpe} < ${minSharpe}` };
   if (dd > maxDD) return { pass: false, detail: `max_drawdown=${dd} > ${maxDD}%` };
@@ -74,6 +75,7 @@ function guard_graduation_court(_candidate, _policy) {
 function guard_parkable(_candidate, _policy) {
   if (_candidate.fsm_state === 'PARKED') return { pass: false, detail: 'already PARKED' };
   if (_candidate.fsm_state === 'REJECTED') return { pass: false, detail: 'REJECTED cannot park' };
+  if (_candidate.fsm_state === 'GRADUATED') return { pass: false, detail: 'GRADUATED cannot be parked' };
   return { pass: true, detail: `parkable from ${_candidate.fsm_state}` };
 }
 
@@ -85,7 +87,7 @@ function guard_unpark(_candidate, _policy) {
 function guard_rejection_criteria(_candidate, _policy) {
   if (_candidate.fsm_state === 'REJECTED') return { pass: false, detail: 'already REJECTED' };
   // Reject on fatal risk or explicit rejection flag
-  const risk = _candidate.risk?.score ?? 0;
+  const risk = _candidate.risk?.score ?? 1.0;
   if (risk > 0.95) return { pass: true, detail: `fatal risk_score=${risk}` };
   if (_candidate.reject_flag) return { pass: true, detail: 'explicit rejection flag' };
   return { pass: false, detail: 'no rejection criteria met' };
@@ -93,7 +95,7 @@ function guard_rejection_criteria(_candidate, _policy) {
 
 function guard_quarantine_trigger(_candidate, policy) {
   if (_candidate.fsm_state === 'QUARANTINED') return { pass: false, detail: 'already QUARANTINED' };
-  const risk = _candidate.risk?.score ?? 0;
+  const risk = _candidate.risk?.score ?? 1.0;
   const threshold = policy.quarantine_triggers?.risk_score_threshold ?? 0.8;
   if (risk > threshold) return { pass: true, detail: `risk_score=${risk} > ${threshold}` };
   return { pass: false, detail: `risk_score=${risk} <= ${threshold}` };
@@ -109,7 +111,7 @@ function guard_quarantine_review(_candidate, _policy) {
 
 function guard_quarantine_fatal(_candidate, _policy) {
   if (_candidate.fsm_state !== 'QUARANTINED') return { pass: false, detail: 'not QUARANTINED' };
-  const risk = _candidate.risk?.score ?? 0;
+  const risk = _candidate.risk?.score ?? 1.0;
   if (risk > 0.95) return { pass: true, detail: `risk_score=${risk} > 0.95 — fatal` };
   if (_candidate.reject_flag) return { pass: true, detail: 'explicit rejection during quarantine' };
   return { pass: false, detail: 'no fatal criteria during quarantine' };
@@ -132,18 +134,19 @@ export const CANDIDATE_GUARDS = {
 // CandidateFSM — per-candidate state machine
 // ---------------------------------------------------------------------------
 export class CandidateFSM {
-  constructor(candidateData, kernel, policy) {
+  constructor(candidateData, kernel, policy, tickTs) {
     this.id = candidateData.id ?? candidateData.config_id;
     this.data = candidateData;
     this.kernel = kernel;
     this.policy = policy;
+    this.tickTs = tickTs ?? 'UNKNOWN';
     this.state = candidateData.fsm_state ?? kernel.initial_state;
     this.history = [...(candidateData.fsm_history ?? [])];
   }
 
   /** Get current risk score */
   riskScore() {
-    return this.data.risk?.score ?? 0;
+    return this.data.risk?.score ?? 1.0;
   }
 
   /** Compute performance score (higher = better) */
@@ -196,7 +199,7 @@ export class CandidateFSM {
       from,
       to: tDef.to,
       transition: transitionId,
-      at: new Date().toISOString(),
+      at: this.tickTs,
       guard_detail: guardResult.detail,
     };
     this.history.push(entry);

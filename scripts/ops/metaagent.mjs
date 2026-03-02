@@ -18,6 +18,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { CandidateFSM, loadCandidateKernel } from './candidate_fsm.mjs';
+import { evaluate as courtEvaluate } from './graduation_court.mjs';
 
 const ROOT = process.cwd();
 
@@ -47,8 +48,10 @@ export function loadFleetPolicy() {
 // MetaAgent — Fleet Consciousness
 // ---------------------------------------------------------------------------
 export class MetaAgent {
-  constructor(candidatesData, bus) {
+  constructor(candidatesData, bus, tickTs, mode) {
     this.bus = bus;
+    this.mode = mode ?? 'CERT';
+    this.tickTs = tickTs ?? 'UNKNOWN';
     this.policy = loadFleetPolicy();
     this.kernel = loadCandidateKernel();
     this.candidateFSMs = new Map();
@@ -59,7 +62,7 @@ export class MetaAgent {
       if (!id) continue;
       // Default missing fsm_state to DRAFT (AC-14: backward compat)
       if (!c.fsm_state) c.fsm_state = this.kernel.initial_state;
-      this.candidateFSMs.set(id, new CandidateFSM(c, this.kernel, this.policy));
+      this.candidateFSMs.set(id, new CandidateFSM(c, this.kernel, this.policy, this.tickTs));
     }
   }
 
@@ -142,12 +145,13 @@ export class MetaAgent {
 
   /** One MetaAgent decision cycle */
   tick() {
-    const ctx = this.scan();
     const decisions = [];
 
-    // 1. Auto-quarantine: risk_score > threshold
+    // 1. Auto-quarantine: risk_score > threshold (ARCH-08: enforce max_quarantined)
     const qThreshold = this.policy.quarantine_triggers?.risk_score_threshold ?? 0.8;
+    const maxQuarantined = this.policy.max_quarantined ?? 5;
     for (const [id, fsm] of this.candidateFSMs) {
+      if (this.countQuarantined() >= maxQuarantined) break;
       if (fsm.riskScore() > qThreshold && fsm.state !== 'QUARANTINED' && fsm.state !== 'REJECTED') {
         const result = fsm.transition('CT08_ANY_TO_QUARANTINED');
         decisions.push({
@@ -160,17 +164,33 @@ export class MetaAgent {
       }
     }
 
-    // 2. Graduation readiness
+    // 2. Graduation: run GraduationCourt for CANARY_DEPLOYED candidates (CRIT-03)
     for (const [id, fsm] of this.candidateFSMs) {
-      if (fsm.state === 'CANARY_DEPLOYED' && fsm.canGraduate()) {
-        const result = fsm.transition('CT04_CANARY_DEPLOYED_TO_GRADUATED');
-        decisions.push({
-          action: 'GRADUATE',
-          candidate: id,
-          reason: 'graduation_criteria_met',
-          success: result.success,
-          detail: result.detail,
-        });
+      if (fsm.state === 'CANARY_DEPLOYED') {
+        // Run 5-exam court evaluation
+        const verdict = courtEvaluate(id, fsm.data, this.policy, this.tickTs);
+        // Store verdict on candidate data for guard_graduation_court
+        if (!fsm.data.court_verdicts) fsm.data.court_verdicts = [];
+        fsm.data.court_verdicts.push(verdict);
+
+        if (verdict.verdict === 'GRADUATED') {
+          const result = fsm.transition('CT04_CANARY_DEPLOYED_TO_GRADUATED');
+          decisions.push({
+            action: 'GRADUATE',
+            candidate: id,
+            reason: 'graduation_court_passed',
+            success: result.success,
+            detail: `court_score=${verdict.overall_score} ${result.detail}`,
+          });
+        } else {
+          decisions.push({
+            action: 'DEFER_GRADUATION',
+            candidate: id,
+            reason: `court_deferred: ${verdict.exams_failed} exam(s) failed`,
+            success: true,
+            detail: verdict.exams.filter(e => !e.pass).map(e => e.exam).join(', '),
+          });
+        }
       }
     }
 
@@ -192,15 +212,19 @@ export class MetaAgent {
       }
     }
 
-    // 4. Exploration trigger: pipeline dry
+    // ARCH-07: Refresh scan AFTER all mutations for accurate context
+    const ctx = this.scan();
+
+    // 4. Exploration trigger: pipeline dry (PV-05: use exploration_ratio)
     const minPipeline = this.policy.exploration_policy?.min_pipeline_candidates ?? 3;
-    if ((ctx.graduation_pipeline.draft + ctx.graduation_pipeline.backtested) < minPipeline) {
+    const earlyPipeline = ctx.graduation_pipeline.draft + ctx.graduation_pipeline.backtested;
+    if (earlyPipeline < minPipeline) {
       decisions.push({
         action: 'EXPLORE',
         candidate: 'fleet',
         reason: 'pipeline_dry',
         success: true,
-        detail: `draft+backtested < ${minPipeline}`,
+        detail: `draft+backtested=${earlyPipeline} < ${minPipeline}, exploration_ratio=${ctx.exploration_ratio}`,
       });
     }
 
@@ -208,7 +232,7 @@ export class MetaAgent {
     if (this.bus) {
       for (const d of decisions) {
         this.bus.append({
-          mode: 'CERT',
+          mode: this.mode,
           component: 'METAAGENT',
           event: 'FLEET_DECISION',
           reason_code: 'METAAGENT_FLEET_DECISION',
@@ -224,7 +248,7 @@ export class MetaAgent {
 
       // Emit METAAGENT_TICK summary
       this.bus.append({
-        mode: 'CERT',
+        mode: this.mode,
         component: 'METAAGENT',
         event: 'METAAGENT_TICK',
         reason_code: 'METAAGENT_FLEET_DECISION',
@@ -235,6 +259,7 @@ export class MetaAgent {
           risk_budget_used: String(ctx.risk_budget_used),
           decisions_count: String(decisions.length),
           quarantine_count: String(ctx.quarantine_count),
+          exploration_ratio: String(ctx.exploration_ratio),
         },
       });
     }

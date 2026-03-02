@@ -43,9 +43,29 @@
       "check": "life_summary_fleet_field",
       "detail": "skip-safe PASS — LIFE_SUMMARY schema=2.0.0 (pre-v4)",
       "pass": true
+    },
+    {
+      "check": "behavioral_candidate_fsm",
+      "detail": "OK: CandidateFSM instantiates, transitions, uses deterministic timestamps, fail-safe risk",
+      "pass": true
+    },
+    {
+      "check": "behavioral_graduation_court",
+      "detail": "OK: evaluate() returns frozen verdict, score=100, exams=5/5, deterministic ts",
+      "pass": true
+    },
+    {
+      "check": "behavioral_metaagent_scan",
+      "detail": "OK: scan() frozen ctx, total=2, health=1, exploration=0.5",
+      "pass": true
+    },
+    {
+      "check": "behavioral_metaagent_writeback",
+      "detail": "OK: getCandidatesData() returns serializable array with fsm_state",
+      "pass": true
     }
   ],
-  "checks_total": 8,
+  "checks_total": 12,
   "failed_checks": [],
   "gate_id": "RG_METAAGENT01_FLEET",
   "next_action": "npm run -s verify:regression:metaagent01-fleet",

@@ -9,6 +9,7 @@
   "graduation_criteria": {
     "min_canary_days": 7,
     "min_canary_trades": 50,
+    "min_sharpe": 0.5,
     "live_to_paper_sharpe_ratio": 0.7,
     "max_drawdown_pct": 20,
     "max_circuit_breaker_trips": 0
