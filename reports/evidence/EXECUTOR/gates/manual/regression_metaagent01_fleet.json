@@ -1,0 +1,57 @@
+{
+  "checks": [
+    {
+      "check": "candidate_fsm_kernel_valid",
+      "detail": "OK: 8 states, 10 transitions, schema=1.0.0",
+      "pass": true
+    },
+    {
+      "check": "candidate_fsm_states_complete",
+      "detail": "OK: all 8 states present with valid budget_ms",
+      "pass": true
+    },
+    {
+      "check": "candidate_fsm_transitions_valid",
+      "detail": "OK: 10 transitions, all have guards",
+      "pass": true
+    },
+    {
+      "check": "metaagent_class_present",
+      "detail": "OK: MetaAgent class with scan() and tick() methods",
+      "pass": true
+    },
+    {
+      "check": "fleet_policy_valid",
+      "detail": "OK: fleet_policy.json v1.0.0 — max_active=10",
+      "pass": {
+        "consecutive_losses": 10,
+        "max_daily_loss_pct": 5,
+        "risk_score_threshold": 0.8
+      }
+    },
+    {
+      "check": "graduation_court_present",
+      "detail": "OK: graduation_court.mjs with evaluate() and 5 exams",
+      "pass": true
+    },
+    {
+      "check": "registry_v2_compat",
+      "detail": "OK: candidate_registry.mjs supports fsm_state + fsm_history",
+      "pass": true
+    },
+    {
+      "check": "life_summary_fleet_field",
+      "detail": "skip-safe PASS — LIFE_SUMMARY schema=2.0.0 (pre-v4)",
+      "pass": true
+    }
+  ],
+  "checks_total": 8,
+  "failed_checks": [],
+  "gate_id": "RG_METAAGENT01_FLEET",
+  "next_action": "npm run -s verify:regression:metaagent01-fleet",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

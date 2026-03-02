@@ -117,7 +117,7 @@ if (kernel) {
     // Test 1: life_summary_v2_schema
     // -----------------------------------------------------------------------
     if (summary) {
-      const isV2 = summary.schema_version === '2.0.0' || summary.schema_version === '3.0.0';
+      const isV2 = ['2.0.0', '3.0.0', '4.0.0'].includes(summary.schema_version);
       checks.push({
         check: 'life_summary_v2_schema',
         pass: isV2,

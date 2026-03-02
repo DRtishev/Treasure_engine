@@ -108,7 +108,7 @@ function findLatestLifeSummary() {
 }
 
 const summary = findLatestLifeSummary();
-if (summary && summary.schema_version === '3.0.0') {
+if (summary && (summary.schema_version === '3.0.0' || summary.schema_version === '4.0.0')) {
   const hasImmune = summary.immune && typeof summary.immune === 'object' &&
     typeof summary.immune.doctor_ran === 'boolean';
   checks.push({

@@ -1,17 +1,21 @@
 /**
- * life.mjs v3 — ops:life — THE IMMUNE ORGANISM
+ * life.mjs v4 — ops:life — THE METAAGENT ORGANISM
  *
- * EPOCH-71 IMMUNE AWAKENING: immune + nervous system = one organism.
+ * EPOCH-72 THE METAAGENT: organism gains swarm-level intelligence.
+ * Each candidate has its own CandidateFSM lifecycle.
+ * MetaAgent manages the fleet: quarantine, graduation, rebalancing.
  *
  * BC: verify_fast hard_stop is now enforced by FSM (runToGoal ABORT on failure).
  *
- * 5+1 Phases:
+ * 6+1 Phases:
  *   Phase 1:   PROPRIOCEPTION  — scan self (state, environment, trajectory)
  *   Phase 2:   CONSCIOUSNESS   — runToGoal('CERTIFIED') — FSM executes transitions
  *   Phase 3:   TELEMETRY       — organ pipeline (eventbus, timemachine, autopilot,
  *                                 cockpit, candidates, doctor)
+ *   Phase 3.5: DOCTOR VERDICT  — ingest doctor receipt, emit DOCTOR_VERDICT_FAIL
  *   Phase 4:   REFLEX SCAN     — auto-degrade on critical telemetry/doctor failures
  *   Phase 4.5: IMMUNE RESPONSE — healing loop when DEGRADED
+ *   Phase 4.7: METAAGENT TICK  — fleet consciousness: scan + decisions
  *   Phase 5:   SEAL            — evidence + watermark + exit
  *
  * EPOCH-69 ABSORPTION:
@@ -23,6 +27,12 @@
  *   immune_reflex: DOCTOR_VERDICT_FAIL → T05 degradation
  *   Phase 4.5: T06 → healAll() → T07 → BOOT
  *
+ * EPOCH-72 ADDITIONS:
+ *   G12: MetaAgent fleet consciousness (scan, tick, auto-quarantine)
+ *   G13: GraduationCourt (5 formal exams per candidate)
+ *   Phase 4.7: MetaAgent.tick() — fleet-level decisions emitted to bus
+ *   LIFE_SUMMARY v4 with fleet section
+ *
  * Network: FORBIDDEN (TREASURE_NET_KILL=1)
  * Write-scope: reports/evidence/EPOCH-LIFE-<RUN_ID>/
  *
@@ -31,6 +41,8 @@
  *   G9:  REFLEXES — automatic interrupt-driven degradation
  *   G10: IMMUNE REFLEXES — doctor-driven degradation
  *   G11: HEALING LOOP — FSM-driven DEGRADED → HEALING → BOOT
+ *   G12: METAAGENT — fleet consciousness (scan, tick, quarantine, graduation)
+ *   G13: GRADUATION COURT — 5 formal exams for candidate promotion
  */
 
 import fs from 'node:fs';
@@ -44,6 +56,7 @@ import {
   executeTransition, writeWatermark, getCircuitBreakerState,
 } from './state_manager.mjs';
 import { scan as proprioScan } from './proprioception.mjs';
+import { MetaAgent } from './metaagent.mjs';
 
 const ROOT = process.cwd();
 
@@ -232,7 +245,7 @@ function runStep(step) {
 // PHASE 1: PROPRIOCEPTION
 // =========================================================================
 console.log(`[ops:life] BOOT — RUN_ID=${RUN_ID}`);
-console.log('[ops:life] EPOCH-70: THE ORGANISM AWAKENS');
+console.log('[ops:life] THE IMMUNE ORGANISM');
 console.log('');
 
 let proprio;
@@ -475,47 +488,67 @@ let doctorScore = 100;
       .filter((d) => d.startsWith('EPOCH-DOCTOR-')).sort();
     if (doctorDirs.length > 0) {
       const latest = doctorDirs[doctorDirs.length - 1];
-      const receiptPath = path.join(evidDir, latest, 'DOCTOR.json');
-      if (fs.existsSync(receiptPath)) {
-        const receipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
-        latestDoctorVerdict = receipt.status ?? null;
-        doctorScore = receipt.score ?? 100;
-
-        if (latestDoctorVerdict && latestDoctorVerdict !== 'HEALTHY') {
-          const doctorFailEvent = {
-            event: 'DOCTOR_VERDICT_FAIL',
-            component: 'LIFE',
-            attrs: {
-              verdict: latestDoctorVerdict,
-              score: String(doctorScore),
-            },
-          };
-
-          bus.append({
-            mode: stateToMode(currentState),
-            component: 'LIFE',
-            event: 'DOCTOR_VERDICT_FAIL',
-            reason_code: 'DOCTOR_VERDICT_FAIL',
-            surface: 'CONTRACT',
-            attrs: {
-              verdict: latestDoctorVerdict,
-              score: String(doctorScore),
-            },
-          });
-
-          // Check immune reflex
-          const reflexResult = checkReflexes(currentState, doctorFailEvent);
-          if (reflexResult.fired) {
-            const prevState = currentState;
-            currentState = reflexResult.newState;
-            reflexesFired.push({
-              reflex: reflexResult.reflex,
-              trigger_step: 'T6',
-              from_state: prevState,
-              to_state: reflexResult.newState,
-            });
-            console.log(`[ops:life] IMMUNE: ${reflexResult.reflex} fired → ${reflexResult.newState}`);
+      // BUG-H FIX: robust multi-filename scan for doctor receipt
+      for (const fname of ['DOCTOR.json', 'receipt.json']) {
+        const rp = path.join(evidDir, latest, fname);
+        if (fs.existsSync(rp)) {
+          const receipt = JSON.parse(fs.readFileSync(rp, 'utf8'));
+          if (receipt.status || receipt.verdict) {
+            latestDoctorVerdict = receipt.status ?? receipt.verdict ?? null;
+            doctorScore = receipt.score ?? receipt.total_score ?? 100;
+            break;
           }
+        }
+      }
+      // Fallback: first .json in dir with status/verdict field
+      if (!latestDoctorVerdict) {
+        const files = fs.readdirSync(path.join(evidDir, latest)).filter(f => f.endsWith('.json'));
+        for (const f of files) {
+          try {
+            const receipt = JSON.parse(fs.readFileSync(path.join(evidDir, latest, f), 'utf8'));
+            if (receipt.status || receipt.verdict) {
+              latestDoctorVerdict = receipt.status ?? receipt.verdict ?? null;
+              doctorScore = receipt.score ?? receipt.total_score ?? 100;
+              break;
+            }
+          } catch { /* skip malformed */ }
+        }
+      }
+
+      if (latestDoctorVerdict && latestDoctorVerdict !== 'HEALTHY') {
+        const doctorFailEvent = {
+          event: 'DOCTOR_VERDICT_FAIL',
+          component: 'LIFE',
+          attrs: {
+            verdict: latestDoctorVerdict,
+            score: String(doctorScore),
+          },
+        };
+
+        bus.append({
+          mode: stateToMode(currentState),
+          component: 'LIFE',
+          event: 'DOCTOR_VERDICT_FAIL',
+          reason_code: 'LIFE_IMMUNE_RESPONSE',
+          surface: 'CONTRACT',
+          attrs: {
+            verdict: latestDoctorVerdict,
+            score: String(doctorScore),
+          },
+        });
+
+        // Check immune reflex
+        const reflexResult = checkReflexes(currentState, doctorFailEvent);
+        if (reflexResult.fired) {
+          const prevState = currentState;
+          currentState = reflexResult.newState;
+          reflexesFired.push({
+            reflex: reflexResult.reflex,
+            trigger_step: 'T6',
+            from_state: prevState,
+            to_state: reflexResult.newState,
+          });
+          console.log(`[ops:life] IMMUNE: ${reflexResult.reflex} fired → ${reflexResult.newState}`);
         }
       }
     }
@@ -592,6 +625,39 @@ if (currentState === 'DEGRADED') {
     }
   } else {
     console.log('[ops:life] IMMUNE: not healable — staying DEGRADED (manual intervention needed)');
+  }
+}
+
+console.log('');
+
+// =========================================================================
+// PHASE 4.7: METAAGENT TICK — Fleet Consciousness (G12)
+// =========================================================================
+let fleetResult = null;
+{
+  try {
+    // Load candidates from registry
+    const regPath = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR', 'CANDIDATE_REGISTRY.json');
+    let candidatesData = [];
+    if (fs.existsSync(regPath)) {
+      const reg = JSON.parse(fs.readFileSync(regPath, 'utf8'));
+      candidatesData = reg.candidates ?? [];
+    }
+
+    const agent = new MetaAgent(candidatesData, bus);
+    fleetResult = agent.tick();
+
+    if (fleetResult.decisions.length > 0) {
+      console.log(`[ops:life] METAAGENT: ${fleetResult.decisions.length} fleet decision(s)`);
+      for (const d of fleetResult.decisions) {
+        console.log(`         ${d.action}: ${d.candidate} — ${d.reason}`);
+      }
+    } else {
+      console.log('[ops:life] METAAGENT: fleet scan complete — no decisions');
+    }
+  } catch (e) {
+    console.log(`[ops:life] METAAGENT: tick failed — ${e.message}`);
+    fleetResult = { decisions: [], fleet_context: { total_candidates: 0 } };
   }
 }
 
@@ -698,10 +764,10 @@ if (!consciousnessResult.reached) {
 }
 
 // ---------------------------------------------------------------------------
-// Write LIFE_SUMMARY.json v2
+// Write LIFE_SUMMARY.json v4
 // ---------------------------------------------------------------------------
 writeJsonDeterministic(path.join(EPOCH_DIR, 'LIFE_SUMMARY.json'), {
-  schema_version: '3.0.0',
+  schema_version: '4.0.0',
   gate_id: 'WOW_ORGANISM_LIFE',
   run_id: RUN_ID,
   status: lifeStatus,
@@ -732,6 +798,17 @@ writeJsonDeterministic(path.join(EPOCH_DIR, 'LIFE_SUMMARY.json'), {
     healing_actions: healingActions,
   },
 
+  // EPOCH-72: FLEET DATA
+  fleet: fleetResult ? {
+    total_candidates: fleetResult.fleet_context.total_candidates,
+    by_state: fleetResult.fleet_context.by_state ?? {},
+    fleet_health: fleetResult.fleet_context.fleet_health ?? 1.0,
+    decisions: fleetResult.decisions.map(d => ({
+      action: d.action, candidate: d.candidate, reason: d.reason,
+    })),
+    risk_budget_used: fleetResult.fleet_context.risk_budget_used ?? 0,
+  } : null,
+
   // COMPAT: EPOCH-69 fields preserved
   steps_total: TELEMETRY_STEPS.length,
   steps_run: stepResults.length,
@@ -753,7 +830,7 @@ writeJsonDeterministic(path.join(EPOCH_DIR, 'LIFE_SUMMARY.json'), {
 });
 
 // ---------------------------------------------------------------------------
-// Write LIFE_SUMMARY.md v2
+// Write LIFE_SUMMARY.md v4
 // ---------------------------------------------------------------------------
 const stepRows = stepResults.map((s) =>
   `| ${s.step_id} | ${s.label} | ${s.status} | ${s.exit_code} |`
@@ -802,6 +879,14 @@ writeMd(path.join(EPOCH_DIR, 'LIFE_SUMMARY.md'), [
     ? healingActions.map((a) => `- ${a.action}: ${a.healed ? 'HEALED' : 'SKIP'} — ${a.detail}`).join('\n')
     : '- No healing actions',
   '',
+  '## FLEET',
+  fleetResult ? `TOTAL_CANDIDATES: ${fleetResult.fleet_context.total_candidates}` : 'N/A',
+  fleetResult ? `FLEET_HEALTH: ${fleetResult.fleet_context.fleet_health}` : '',
+  fleetResult ? `RISK_BUDGET_USED: ${fleetResult.fleet_context.risk_budget_used}` : '',
+  fleetResult && fleetResult.decisions.length > 0
+    ? fleetResult.decisions.map(d => `- ${d.action}: ${d.candidate} — ${d.reason}`).join('\n')
+    : '- No fleet decisions',
+  '',
   '## NEXT_ACTION',
   oneNextAction ?? 'npm run -s verify:fast',
   '',
@@ -824,6 +909,7 @@ console.log(`  TELEMETRY: ${stepResults.length}/${TELEMETRY_STEPS.length} run, $
 if (reflexesFired.length > 0) console.log(`  REFLEXES: ${reflexesFired.length} fired`);
 if (latestDoctorVerdict) console.log(`  DOCTOR: ${latestDoctorVerdict} score=${doctorScore}`);
 if (healingAttempted) console.log(`  HEALING: attempted=${healingAttempted} succeeded=${healingSucceeded}`);
+if (fleetResult) console.log(`  FLEET: ${fleetResult.fleet_context.total_candidates} candidates, health=${fleetResult.fleet_context.fleet_health}, decisions=${fleetResult.decisions.length}`);
 if (oneNextAction) console.log(`  ONE_NEXT_ACTION: ${oneNextAction}`);
 
 // Exit code based on FSM final state

@@ -1,0 +1,24 @@
+{
+  "schema_version": "1.0.0",
+  "description": "FleetPolicy — MetaAgent configuration thresholds for fleet management.",
+  "max_active_candidates": 10,
+  "max_quarantined": 5,
+  "max_graduated": 5,
+  "risk_budget_total": 1.0,
+  "risk_per_candidate_max": 0.3,
+  "graduation_criteria": {
+    "min_canary_days": 7,
+    "min_canary_trades": 50,
+    "live_to_paper_sharpe_ratio": 0.7,
+    "max_drawdown_pct": 20,
+    "max_circuit_breaker_trips": 0
+  },
+  "quarantine_triggers": {
+    "risk_score_threshold": 0.8,
+    "consecutive_losses": 10,
+    "max_daily_loss_pct": 5
+  },
+  "exploration_policy": {
+    "min_pipeline_candidates": 3
+  }
+}

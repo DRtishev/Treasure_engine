@@ -35,9 +35,10 @@ checks.push({ check: 'registry_script_exists', pass: scriptExists, detail: REG_S
 if (scriptExists) {
   const content = fs.readFileSync(REG_SCRIPT, 'utf8');
 
-  // Check 2: Schema version 1.0.0 declared
-  const hasSchemaV = content.includes("'1.0.0'") || content.includes('"1.0.0"');
-  checks.push({ check: 'schema_version_1_0_0_declared', pass: hasSchemaV, detail: 'SCHEMA_VERSION = "1.0.0" required' });
+  // Check 2: Schema version declared (1.0.0 or 2.0.0)
+  const hasSchemaV = content.includes("'1.0.0'") || content.includes('"1.0.0"') ||
+    content.includes("'2.0.0'") || content.includes('"2.0.0"');
+  checks.push({ check: 'schema_version_declared', pass: hasSchemaV, detail: 'SCHEMA_VERSION declared (1.0.0 or 2.0.0)' });
 
   // Check field presence: accept bare identifier, quoted, or dotted access patterns
   function fieldPresent(c, f) {
@@ -96,7 +97,7 @@ if (scriptExists) {
       if (regExists) {
         try {
           const reg = JSON.parse(fs.readFileSync(regPath, 'utf8'));
-          checks.push({ check: 'registry_schema_version', pass: reg.schema_version === '1.0.0', detail: `schema_version=${reg.schema_version}` });
+          checks.push({ check: 'registry_schema_version', pass: reg.schema_version === '1.0.0' || reg.schema_version === '2.0.0', detail: `schema_version=${reg.schema_version}` });
           checks.push({ check: 'registry_has_candidates_array', pass: Array.isArray(reg.candidates), detail: 'candidates must be array' });
           checks.push({ check: 'registry_has_gate_id', pass: reg.gate_id === 'WOW9_CANDIDATE_REGISTRY', detail: `gate_id=${reg.gate_id}` });
 

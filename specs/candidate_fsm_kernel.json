@@ -1,0 +1,111 @@
+{
+  "schema_version": "1.0.0",
+  "description": "CandidateFSM — per-candidate lifecycle state machine. 8 states, 10 transitions. Each trading strategy candidate traverses this FSM from DRAFT to GRADUATED.",
+  "initial_state": "DRAFT",
+  "goal_states": ["GRADUATED"],
+
+  "states": {
+    "DRAFT": {
+      "budget_ms": 0,
+      "description": "Newly registered. No evidence yet."
+    },
+    "BACKTESTED": {
+      "budget_ms": 300000,
+      "description": "Passed deterministic backtest with seed replay x2."
+    },
+    "PAPER_PROVEN": {
+      "budget_ms": 600000,
+      "description": "Passed paper trading. Proven non-random."
+    },
+    "CANARY_DEPLOYED": {
+      "budget_ms": 86400000,
+      "description": "Running on minimal real capital. Live metrics collected."
+    },
+    "GRADUATED": {
+      "budget_ms": 0,
+      "description": "Fully promoted to production fleet."
+    },
+    "PARKED": {
+      "budget_ms": 0,
+      "description": "Suspended. Evidence retained."
+    },
+    "REJECTED": {
+      "budget_ms": 0,
+      "description": "Permanently failed. Evidence preserved for forensics."
+    },
+    "QUARANTINED": {
+      "budget_ms": 3600000,
+      "description": "Emergency isolation. Safety reflex triggered."
+    }
+  },
+
+  "transitions": {
+    "CT01_DRAFT_TO_BACKTESTED": {
+      "from": "DRAFT",
+      "to": "BACKTESTED",
+      "guard": "guard_backtest_pass",
+      "description": "Candidate passed deterministic backtest x2."
+    },
+    "CT02_BACKTESTED_TO_PAPER_PROVEN": {
+      "from": "BACKTESTED",
+      "to": "PAPER_PROVEN",
+      "guard": "guard_paper_metrics",
+      "description": "Min 100 paper trades, Sharpe > 0.5, max_drawdown < 15%."
+    },
+    "CT03_PAPER_PROVEN_TO_CANARY_DEPLOYED": {
+      "from": "PAPER_PROVEN",
+      "to": "CANARY_DEPLOYED",
+      "guard": "guard_canary_ready",
+      "description": "Risk score < 0.3, approval flag set."
+    },
+    "CT04_CANARY_DEPLOYED_TO_GRADUATED": {
+      "from": "CANARY_DEPLOYED",
+      "to": "GRADUATED",
+      "guard": "guard_graduation_court",
+      "description": "ALL 5 court exams PASS."
+    },
+    "CT05_ANY_TO_PARKED": {
+      "from": "*",
+      "to": "PARKED",
+      "guard": "guard_parkable",
+      "description": "Suspend candidate. Evidence retained."
+    },
+    "CT06_PARKED_TO_DRAFT": {
+      "from": "PARKED",
+      "to": "DRAFT",
+      "guard": "guard_unpark",
+      "description": "Reactivate parked candidate for re-evaluation."
+    },
+    "CT07_ANY_TO_REJECTED": {
+      "from": "*",
+      "to": "REJECTED",
+      "guard": "guard_rejection_criteria",
+      "description": "Permanent rejection on fatal criteria."
+    },
+    "CT08_ANY_TO_QUARANTINED": {
+      "from": "*",
+      "to": "QUARANTINED",
+      "guard": "guard_quarantine_trigger",
+      "description": "Emergency isolation on risk_score > 0.8."
+    },
+    "CT09_QUARANTINED_TO_PARKED": {
+      "from": "QUARANTINED",
+      "to": "PARKED",
+      "guard": "guard_quarantine_review",
+      "description": "Quarantine reviewed — park for manual inspection."
+    },
+    "CT10_QUARANTINED_TO_REJECTED": {
+      "from": "QUARANTINED",
+      "to": "REJECTED",
+      "guard": "guard_quarantine_fatal",
+      "description": "Quarantine review determined fatal — permanent rejection."
+    }
+  },
+
+  "forbidden_transitions": [
+    { "from": "DRAFT", "to": "CANARY_DEPLOYED", "reason": "Must pass backtest and paper trading first" },
+    { "from": "DRAFT", "to": "GRADUATED", "reason": "Must traverse full pipeline" },
+    { "from": "REJECTED", "to": "DRAFT", "reason": "Rejection is permanent" },
+    { "from": "REJECTED", "to": "GRADUATED", "reason": "Rejection is permanent" }
+  ]
+}
