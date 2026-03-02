@@ -335,6 +335,18 @@ function collectFsmState() {
     // BUG-11 FIX: circuit breaker full manifest
     const circuitBreakers = getCircuitBreakerState();
 
+    // EPOCH-70: Extract life_outcome from LIFE EventBus
+    const lifeOutcomeEvent = allEvents.find(
+      (e) => e.component === 'LIFE' && e.event === 'LIFE_OUTCOME'
+    );
+    const lifeOutcome = lifeOutcomeEvent?.attrs?.life_outcome ?? null;
+
+    // EPOCH-70: Extract consciousness result
+    const consciousnessEvent = allEvents.find(
+      (e) => e.component === 'LIFE' && e.event === 'CONSCIOUSNESS_RESULT'
+    );
+    const consciousnessReached = consciousnessEvent?.attrs?.reached ?? null;
+
     return {
       present: true,
       state: result.state,
@@ -344,6 +356,8 @@ function collectFsmState() {
       circuit_breakers: circuitBreakers,
       transitions_seen: result.transitions_count,
       transition_history: result.transitions.slice(-10),
+      life_outcome: lifeOutcome,
+      consciousness_reached: consciousnessReached,
     };
   } catch {
     return { present: false, state: 'UNKNOWN', note: 'FSM kernel load error' };
@@ -519,6 +533,8 @@ const hudMd = [
   '',
   `STATE: ${fsm.state}`,
   `MODE: ${fsm.mode ?? 'UNKNOWN'}`,
+  `LIFE_OUTCOME: ${fsm.life_outcome ?? 'UNKNOWN'}`,
+  `CONSCIOUSNESS_REACHED: ${fsm.consciousness_reached ?? 'UNKNOWN'}`,
   `AVAILABLE: ${fsm.available_transitions?.join(', ') || 'NONE'}`,
   `TRANSITIONS_SEEN: ${fsm.transitions_seen ?? 0}`,
   ...(fsm.note ? [`NOTE: ${fsm.note}`] : []),
@@ -564,6 +580,6 @@ console.log(`  fast_gate:   ${fg.status} (${fg.gates_checked} gates, ${fg.failed
 console.log(`  pr01:        ${pr1.status}`);
 console.log(`  wow_gates:   ${wow.gates_checked} checked, ${wow.failed_n} failed`);
 console.log(`  readiness:   ${readiness.status} lanes=${readiness.lanes_total} truth=${readiness.truth_lanes_n}`);
-console.log(`  fsm:         ${fsm.state} mode=${fsm.mode ?? '?'} goals=${Object.keys(fsm.goal_paths ?? {}).join(',') || '?'}`);
+console.log(`  fsm:         ${fsm.state} mode=${fsm.mode ?? '?'} outcome=${fsm.life_outcome ?? '?'} goals=${Object.keys(fsm.goal_paths ?? {}).join(',') || '?'}`);
 
 process.exit(hudStatus === 'PASS' ? 0 : 1);

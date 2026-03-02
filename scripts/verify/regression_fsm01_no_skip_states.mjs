@@ -239,6 +239,21 @@ if (kernel) {
       });
     }
   }
+
+  // -------------------------------------------------------------------------
+  // Test 10: Budget ms sanity — all states have budget_ms >= 0 (EPOCH-70)
+  // -------------------------------------------------------------------------
+  for (const state of stateNames) {
+    const stateObj = kernel.states[state];
+    const hasBudget = typeof stateObj.budget_ms === 'number' && stateObj.budget_ms >= 0;
+    checks.push({
+      check: `budget_ms_sane_${state}`,
+      pass: hasBudget,
+      detail: hasBudget
+        ? `OK: ${state}.budget_ms=${stateObj.budget_ms}`
+        : `FAIL: ${state} missing or invalid budget_ms (got ${stateObj.budget_ms})`,
+    });
+  }
 }
 
 const failed = checks.filter((c) => !c.pass);

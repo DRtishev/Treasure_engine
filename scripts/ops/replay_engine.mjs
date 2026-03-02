@@ -1,5 +1,5 @@
 /**
- * replay_engine.mjs — EPOCH-69 Organism Brain FSM Replay Engine
+ * replay_engine.mjs — EPOCH-70 Organism Brain FSM Replay Engine
  *
  * CLI tool for state reconstruction from event log.
  *
@@ -10,6 +10,7 @@
  *
  * Reads all EPOCH-EVENTBUS-* /EVENTS.jsonl files, derives FSM state.
  * EPOCH-69 GENIUS: shows goal path, circuit breakers, goal reachability.
+ * EPOCH-70: shows proprioception, consciousness result, reflexes.
  * Output: reports/evidence/EPOCH-REPLAY-<RUN_ID>/REPLAY.{json,md}
  */
 
@@ -108,13 +109,37 @@ if (showTimeline) {
 }
 
 // ---------------------------------------------------------------------------
+// EPOCH-70: Proprioception + Consciousness from LIFE EventBus
+// ---------------------------------------------------------------------------
+const lifeEvents = allEvents.filter((e) => e.component === 'LIFE');
+const proprioEvent = lifeEvents.find((e) => e.event === 'PROPRIO_SCAN');
+const consciousnessEvent = lifeEvents.find((e) => e.event === 'CONSCIOUSNESS_RESULT');
+const reflexEvents = lifeEvents.filter((e) => e.event === 'REFLEX_FIRED');
+const outcomeEvent = lifeEvents.find((e) => e.event === 'LIFE_OUTCOME');
+
+if (proprioEvent) {
+  console.log(`[ops:replay] Proprioception: state=${proprioEvent.attrs?.fsm_state ?? '?'} mode=${proprioEvent.attrs?.fsm_mode ?? '?'} source=${proprioEvent.attrs?.fsm_source ?? '?'}`);
+}
+if (consciousnessEvent) {
+  console.log(`[ops:replay] Consciousness: goal=${consciousnessEvent.attrs?.goal ?? '?'} reached=${consciousnessEvent.attrs?.reached ?? '?'} final=${consciousnessEvent.attrs?.final_state ?? '?'}`);
+}
+if (reflexEvents.length > 0) {
+  for (const re of reflexEvents) {
+    console.log(`[ops:replay] Reflex: ${re.attrs?.reflex_name ?? '?'} ${re.attrs?.from_state ?? '?'} → ${re.attrs?.to_state ?? '?'}`);
+  }
+}
+if (outcomeEvent) {
+  console.log(`[ops:replay] Life outcome: ${outcomeEvent.attrs?.life_outcome ?? '?'}`);
+}
+
+// ---------------------------------------------------------------------------
 // Write evidence
 // ---------------------------------------------------------------------------
 const epochDir = path.join(EVIDENCE_DIR, `EPOCH-REPLAY-${RUN_ID}`);
 fs.mkdirSync(epochDir, { recursive: true });
 
 writeJsonDeterministic(path.join(epochDir, 'REPLAY.json'), {
-  schema_version: '1.0.0',
+  schema_version: '2.0.0',
   gate_id: 'FSM_REPLAY',
   run_id: RUN_ID,
   events_loaded: allEvents.length,
@@ -129,6 +154,11 @@ writeJsonDeterministic(path.join(epochDir, 'REPLAY.json'), {
   goal_reachability: goalReachability,
   circuit_breakers: breakerState,
   timeline: showTimeline ? timeline : [],
+  // EPOCH-70: proprioception + consciousness
+  proprioception: proprioEvent?.attrs ?? null,
+  consciousness_result: consciousnessEvent?.attrs ?? null,
+  reflexes_fired: reflexEvents.map((e) => e.attrs ?? {}),
+  life_outcome: outcomeEvent?.attrs?.life_outcome ?? null,
 });
 
 writeMd(path.join(epochDir, 'REPLAY.md'), [
@@ -150,6 +180,35 @@ writeMd(path.join(epochDir, 'REPLAY.md'), [
   breakerEntries.length === 0
     ? '- All closed'
     : breakerEntries.map(([tid, bs]) => `- ${tid}: failures=${bs.failures} open=${bs.open}`).join('\n'),
+  '',
+  '## PROPRIOCEPTION (EPOCH-70)',
+  proprioEvent
+    ? [
+        `- FSM_STATE: ${proprioEvent.attrs?.fsm_state ?? '?'}`,
+        `- FSM_MODE: ${proprioEvent.attrs?.fsm_mode ?? '?'}`,
+        `- FSM_SOURCE: ${proprioEvent.attrs?.fsm_source ?? '?'}`,
+        `- PREVIOUS_STATE: ${proprioEvent.attrs?.previous_state ?? 'null'}`,
+        `- RUN_NUMBER: ${proprioEvent.attrs?.run_number ?? '0'}`,
+      ].join('\n')
+    : '- No proprioception data',
+  '',
+  '## CONSCIOUSNESS (EPOCH-70)',
+  consciousnessEvent
+    ? [
+        `- GOAL: ${consciousnessEvent.attrs?.goal ?? '?'}`,
+        `- REACHED: ${consciousnessEvent.attrs?.reached ?? '?'}`,
+        `- FINAL_STATE: ${consciousnessEvent.attrs?.final_state ?? '?'}`,
+        `- TOTAL_FAILURES: ${consciousnessEvent.attrs?.total_failures ?? '0'}`,
+        `- TRANSITIONS_EXECUTED: ${consciousnessEvent.attrs?.transitions_executed ?? '0'}`,
+      ].join('\n')
+    : '- No consciousness data',
+  '',
+  '## REFLEXES (EPOCH-70)',
+  reflexEvents.length === 0
+    ? '- No reflexes fired'
+    : reflexEvents.map((e) => `- ${e.attrs?.reflex_name ?? '?'}: ${e.attrs?.from_state ?? '?'} → ${e.attrs?.to_state ?? '?'} via ${e.attrs?.transition ?? '?'}`).join('\n'),
+  '',
+  outcomeEvent ? `## LIFE OUTCOME: ${outcomeEvent.attrs?.life_outcome ?? '?'}` : '',
   '',
   '## TRANSITION HISTORY',
   result.transitions.length === 0

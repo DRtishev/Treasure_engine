@@ -8,31 +8,38 @@
   "states": {
     "BOOT": {
       "mode": "LIFE",
-      "description": "System started, unverified. No gates have been run."
+      "description": "System started, unverified. No gates have been run.",
+      "budget_ms": 30000
     },
     "CERTIFYING": {
       "mode": "CERT",
-      "description": "Verification pipeline running. verify:fast is executing."
+      "description": "Verification pipeline running. verify:fast is executing.",
+      "budget_ms": 600000
     },
     "CERTIFIED": {
       "mode": "CERT",
-      "description": "All gates pass. verify:fast x2 PASS confirmed."
+      "description": "All gates pass. verify:fast x2 PASS confirmed.",
+      "budget_ms": 0
     },
     "RESEARCHING": {
       "mode": "RESEARCH",
-      "description": "Network enabled, data acquisition work. ALLOW_NETWORK token present."
+      "description": "Network enabled, data acquisition work. ALLOW_NETWORK token present.",
+      "budget_ms": 300000
     },
     "EDGE_READY": {
       "mode": "CERT",
-      "description": "Candidates promoted. CANDIDATE_REGISTRY has promoted entries."
+      "description": "Candidates promoted. CANDIDATE_REGISTRY has promoted entries.",
+      "budget_ms": 0
     },
     "DEGRADED": {
       "mode": "AUDIT",
-      "description": "Probe failure detected. At least one gate/probe FAIL."
+      "description": "Probe failure detected. At least one gate/probe FAIL.",
+      "budget_ms": 60000
     },
     "HEALING": {
       "mode": "LIFE",
-      "description": "Self-heal in progress. healAll() executing."
+      "description": "Self-heal in progress. healAll() executing.",
+      "budget_ms": 60000
     }
   },
 
