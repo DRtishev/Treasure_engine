@@ -4,7 +4,7 @@ STATUS: PASS
 REASON_CODE: NONE
 RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:regression:fsm01-no-skip-states
-CHECKS_TOTAL: 54
+CHECKS_TOTAL: 61
 VIOLATIONS: 0
 
 ## CHECKS
@@ -60,8 +60,15 @@ VIOLATIONS: 0
 - [PASS] timeout_sane_T03_CERTIFIED_TO_RESEARCHING: OK: T03_CERTIFIED_TO_RESEARCHING.timeout_ms=5000
 - [PASS] timeout_sane_T04_RESEARCHING_TO_EDGE_READY: OK: T04_RESEARCHING_TO_EDGE_READY.timeout_ms=5000
 - [PASS] timeout_sane_T05_ANY_TO_DEGRADED: OK: T05_ANY_TO_DEGRADED.timeout_ms=0
-- [PASS] timeout_sane_T06_DEGRADED_TO_HEALING: OK: T06_DEGRADED_TO_HEALING.timeout_ms=60000
+- [PASS] timeout_sane_T06_DEGRADED_TO_HEALING: OK: T06_DEGRADED_TO_HEALING.timeout_ms=120000
 - [PASS] timeout_sane_T07_HEALING_TO_BOOT: OK: T07_HEALING_TO_BOOT.timeout_ms=5000
+- [PASS] budget_ms_sane_BOOT: OK: BOOT.budget_ms=30000
+- [PASS] budget_ms_sane_CERTIFYING: OK: CERTIFYING.budget_ms=600000
+- [PASS] budget_ms_sane_CERTIFIED: OK: CERTIFIED.budget_ms=0
+- [PASS] budget_ms_sane_RESEARCHING: OK: RESEARCHING.budget_ms=300000
+- [PASS] budget_ms_sane_EDGE_READY: OK: EDGE_READY.budget_ms=0
+- [PASS] budget_ms_sane_DEGRADED: OK: DEGRADED.budget_ms=60000
+- [PASS] budget_ms_sane_HEALING: OK: HEALING.budget_ms=60000
 
 ## FAILED
 - NONE

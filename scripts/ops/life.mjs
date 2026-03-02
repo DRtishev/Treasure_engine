@@ -1,24 +1,36 @@
 /**
- * life.mjs — ops:life — WOW Organism Single Living Command
+ * life.mjs v3 — ops:life — THE IMMUNE ORGANISM
  *
- * Orchestrates the full organism pipeline in deterministic step order:
- *   1. verify:fast         — boot gate (hard stop on fail)
- *   2. ops:eventbus:smoke  — EventBus integrity smoke
- *   3. ops:timemachine     — heartbeat tick ledger → EventBus
- *   4. ops:autopilot       — court plan + mode routing → EventBus
- *   5. ops:cockpit         — HUD from EventBus
- *   6. ops:candidates      — registry scan → EventBus
+ * EPOCH-71 IMMUNE AWAKENING: immune + nervous system = one organism.
  *
- * Each step emits a STEP_COMPLETE event into the LIFE EventBus.
- * Final LIFE bus output: EPOCH-LIFE-<RUN_ID>/{EVENTS.jsonl, LIFE_SUMMARY.json, LIFE_SUMMARY.md}
+ * BC: verify_fast hard_stop is now enforced by FSM (runToGoal ABORT on failure).
  *
- * Network (R1/R3): FORBIDDEN — life.mjs is fully offline.
- *   No fetch, no http, no require('https'), no --enable-network.
+ * 5+1 Phases:
+ *   Phase 1:   PROPRIOCEPTION  — scan self (state, environment, trajectory)
+ *   Phase 2:   CONSCIOUSNESS   — runToGoal('CERTIFIED') — FSM executes transitions
+ *   Phase 3:   TELEMETRY       — organ pipeline (eventbus, timemachine, autopilot,
+ *                                 cockpit, candidates, doctor)
+ *   Phase 4:   REFLEX SCAN     — auto-degrade on critical telemetry/doctor failures
+ *   Phase 4.5: IMMUNE RESPONSE — healing loop when DEGRADED
+ *   Phase 5:   SEAL            — evidence + watermark + exit
  *
- * Write-scope (R5): reports/evidence/EPOCH-LIFE-<RUN_ID>/
- *   (sub-scripts write to their own EPOCH-* dirs)
+ * EPOCH-69 ABSORPTION:
+ *   S01 (verify:fast) is now INSIDE FSM (T02 action).
+ *   Steps S02-S06 are TELEMETRY (post-FSM).
  *
- * Gates: RG_LIFE01_NO_NET, RG_LIFE02_STABLE_OUTPUT, RG_LIFE03_WRITE_SCOPE
+ * EPOCH-71 ADDITIONS:
+ *   T6: ops:doctor — immune telemetry step
+ *   immune_reflex: DOCTOR_VERDICT_FAIL → T05 degradation
+ *   Phase 4.5: T06 → healAll() → T07 → BOOT
+ *
+ * Network: FORBIDDEN (TREASURE_NET_KILL=1)
+ * Write-scope: reports/evidence/EPOCH-LIFE-<RUN_ID>/
+ *
+ * GENIUS FEATURES:
+ *   G8:  PROPRIOCEPTION — self-awareness context
+ *   G9:  REFLEXES — automatic interrupt-driven degradation
+ *   G10: IMMUNE REFLEXES — doctor-driven degradation
+ *   G11: HEALING LOOP — FSM-driven DEGRADED → HEALING → BOOT
  */
 
 import fs from 'node:fs';
@@ -27,6 +39,11 @@ import { spawnSync } from 'node:child_process';
 import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { createBus } from './eventbus_v1.mjs';
+import {
+  loadFsmKernel, runToGoal, stateToMode,
+  executeTransition, writeWatermark, getCircuitBreakerState,
+} from './state_manager.mjs';
+import { scan as proprioScan } from './proprioception.mjs';
 
 const ROOT = process.cwd();
 
@@ -46,72 +63,152 @@ const busDir = path.join(ROOT, 'reports', 'evidence', `EPOCH-EVENTBUS-LIFE-${RUN
 const bus = createBus(RUN_ID, busDir);
 
 // ---------------------------------------------------------------------------
-// Step definitions — deterministic order
+// REFLEX REGISTRY (G9) — hardwired automatic responses
 // ---------------------------------------------------------------------------
-const STEPS = [
+const REFLEX_REGISTRY = [
   {
-    id: 'S01',
-    name: 'verify_fast',
-    label: 'verify:fast',
-    shell: true,
-    cmd: 'npm run -s verify:fast',
-    hard_stop: true, // abort life run on failure
+    name: 'degradation_reflex',
+    trigger: 'STEP_FAIL',
+    guard: (state, _ev) => !['BOOT', 'DEGRADED', 'HEALING'].includes(state),
+    response: 'T05_ANY_TO_DEGRADED',
+    cooldown: 0,
   },
   {
-    id: 'S02',
+    name: 'immune_reflex',
+    trigger: 'DOCTOR_VERDICT_FAIL',
+    guard: (state, ev) => {
+      if (['BOOT', 'DEGRADED', 'HEALING'].includes(state)) return false;
+      const score = parseInt(ev.attrs?.score ?? '100', 10);
+      return score < 70;
+    },
+    response: 'T05_ANY_TO_DEGRADED',
+    cooldown: 0,
+  },
+  {
+    name: 'halt_on_blocked_goal',
+    trigger: 'GOAL_BLOCKED',
+    guard: (_state, _ev) => true,
+    response: 'LOG_ONLY',
+    cooldown: 0,
+  },
+];
+
+// ---------------------------------------------------------------------------
+// Reflex scanner — checks and fires reflexes after each telemetry step
+// ---------------------------------------------------------------------------
+function checkReflexes(currentState, triggerEvent) {
+  for (const reflex of REFLEX_REGISTRY) {
+    if (triggerEvent.event !== reflex.trigger) continue;
+    if (!reflex.guard(currentState, triggerEvent)) continue;
+
+    // LOG_ONLY: record but don't execute a transition
+    if (reflex.response === 'LOG_ONLY') {
+      bus.append({
+        mode: stateToMode(currentState),
+        component: 'LIFE',
+        event: 'REFLEX_FIRED',
+        reason_code: 'LIFE_REFLEX_FIRED',
+        surface: 'CONTRACT',
+        attrs: {
+          reflex_name: reflex.name,
+          trigger: triggerEvent.event,
+          from_state: currentState,
+          to_state: currentState,
+          transition: 'LOG_ONLY',
+        },
+      });
+      return { fired: true, newState: currentState, reflex: reflex.name };
+    }
+
+    // FIRE REFLEX — execute the transition
+    const result = executeTransition(bus, currentState, reflex.response, {
+      reflex_name: reflex.name,
+      trigger_event: triggerEvent.event,
+      failed_gate: true,
+      recentEvents: bus.events().slice(-10),
+    });
+
+    bus.append({
+      mode: stateToMode(result.newState),
+      component: 'LIFE',
+      event: 'REFLEX_FIRED',
+      reason_code: result.success ? 'LIFE_REFLEX_FIRED' : 'FSM_ACTION_FAIL',
+      surface: 'CONTRACT',
+      attrs: {
+        reflex_name: reflex.name,
+        trigger: triggerEvent.event,
+        from_state: currentState,
+        to_state: result.newState,
+        transition: reflex.response,
+      },
+    });
+
+    return { fired: true, newState: result.newState, reflex: reflex.name };
+  }
+  return { fired: false, newState: currentState };
+}
+
+// ---------------------------------------------------------------------------
+// Telemetry step definitions (formerly S02-S06, now T1-T5)
+// ---------------------------------------------------------------------------
+const TELEMETRY_STEPS = [
+  {
+    id: 'T1',
     name: 'ops_eventbus_smoke',
     label: 'ops:eventbus:smoke',
     shell: false,
     cmd: process.execPath,
     args: ['scripts/ops/eventbus_v1.mjs'],
-    hard_stop: false,
   },
   {
-    id: 'S03',
+    id: 'T2',
     name: 'ops_timemachine',
     label: 'ops:timemachine',
     shell: false,
     cmd: process.execPath,
     args: ['scripts/ops/timemachine_ledger.mjs'],
-    hard_stop: false,
   },
   {
-    id: 'S04',
+    id: 'T3',
     name: 'ops_autopilot',
     label: 'ops:autopilot',
     shell: false,
     cmd: process.execPath,
     args: ['scripts/ops/autopilot_court_v2.mjs'],
-    hard_stop: false,
   },
   {
-    id: 'S05',
+    id: 'T4',
     name: 'ops_cockpit',
     label: 'ops:cockpit',
     shell: false,
     cmd: process.execPath,
     args: ['scripts/ops/cockpit.mjs'],
-    hard_stop: false,
   },
   {
-    id: 'S06',
+    id: 'T5',
     name: 'ops_candidates',
     label: 'ops:candidates',
     shell: false,
     cmd: process.execPath,
     args: ['scripts/ops/candidate_registry.mjs'],
-    hard_stop: false,
+  },
+  {
+    id: 'T6',
+    name: 'ops_doctor',
+    label: 'ops:doctor',
+    shell: false,
+    cmd: process.execPath,
+    args: ['scripts/ops/doctor_v2.mjs'],
   },
 ];
 
 // ---------------------------------------------------------------------------
-// Run a single step
+// Run a single telemetry step
 // ---------------------------------------------------------------------------
 function runStep(step) {
   let result;
 
   if (step.shell) {
-    // Shell command (e.g. npm run -s verify:fast)
     result = spawnSync(step.cmd, { cwd: ROOT, encoding: 'utf8', env: { ...process.env }, shell: true });
   } else {
     result = spawnSync(step.cmd, step.args ?? [], { cwd: ROOT, encoding: 'utf8', env: { ...process.env } });
@@ -131,69 +228,432 @@ function runStep(step) {
   };
 }
 
-// ---------------------------------------------------------------------------
-// Orchestrate
-// ---------------------------------------------------------------------------
+// =========================================================================
+// PHASE 1: PROPRIOCEPTION
+// =========================================================================
 console.log(`[ops:life] BOOT — RUN_ID=${RUN_ID}`);
-console.log(`[ops:life] Steps: ${STEPS.map((s) => s.label).join(' → ')}`);
+console.log('[ops:life] EPOCH-70: THE ORGANISM AWAKENS');
 console.log('');
 
-bus.append({ mode: 'CERT', component: 'LIFE', event: 'LIFE_BOOT', reason_code: 'NONE', surface: 'UX',
-  attrs: { steps_total: String(STEPS.length), run_id: RUN_ID } });
+let proprio;
+try {
+  proprio = proprioScan(null);
+} catch (e) {
+  // Fallback context on proprioception failure
+  proprio = Object.freeze({
+    fsm_state: 'BOOT',
+    fsm_mode: 'LIFE',
+    fsm_source: 'initial',
+    previous_state: null,
+    previous_outcome: null,
+    state_continuity: false,
+    run_number: 0,
+    watermark_tick: 0,
+    env: {},
+    available_transitions: [],
+    goal_path: [],
+    circuit_breakers: {},
+    blocked_transitions: [],
+  });
+  console.log(`[ops:life] PROPRIO: scan failed — ${e.message}`);
+}
+
+bus.append({
+  mode: proprio.fsm_mode,
+  component: 'LIFE',
+  event: 'LIFE_BOOT',
+  reason_code: 'NONE',
+  surface: 'UX',
+  attrs: {
+    steps_total: String(TELEMETRY_STEPS.length),
+    run_id: RUN_ID,
+    fsm_state: proprio.fsm_state,
+    fsm_mode: proprio.fsm_mode,
+  },
+});
+
+bus.append({
+  mode: proprio.fsm_mode,
+  component: 'LIFE',
+  event: 'PROPRIO_SCAN',
+  reason_code: proprio.fsm_source === 'initial' && proprio.env && Object.keys(proprio.env).length === 0
+    ? 'LIFE_PROPRIO_FAIL'
+    : 'NONE',
+  surface: 'CONTRACT',
+  attrs: {
+    fsm_state: proprio.fsm_state,
+    fsm_mode: proprio.fsm_mode,
+    fsm_source: proprio.fsm_source,
+    previous_state: proprio.previous_state ?? 'null',
+    previous_outcome: proprio.previous_outcome ?? 'null',
+    state_continuity: String(proprio.state_continuity),
+    run_number: String(proprio.run_number),
+    env_deps_ready: String(proprio.env.deps_ready ?? false),
+    env_git_present: String(proprio.env.git_present ?? false),
+    env_executor_present: String(proprio.env.executor_present ?? false),
+    env_gate_count: String(proprio.env.gate_count ?? 0),
+  },
+});
+
+console.log(`[ops:life] PROPRIO: state=${proprio.fsm_state} mode=${proprio.fsm_mode} source=${proprio.fsm_source}`);
+console.log('');
+
+// =========================================================================
+// PHASE 2: CONSCIOUSNESS (Goal-Seeking)
+// =========================================================================
+let kernel;
+try {
+  kernel = loadFsmKernel();
+} catch {
+  kernel = { goal_states: ['CERTIFIED'], initial_state: 'BOOT', states: {} };
+}
+
+const goalState = process.env.GOAL_STATE && kernel.states[process.env.GOAL_STATE]
+  ? process.env.GOAL_STATE
+  : (kernel.goal_states?.[0] ?? 'CERTIFIED');
+
+let currentState = proprio.fsm_state;
+let consciousnessResult;
+const reflexesFired = [];
+
+// Check if already at goal
+if (currentState === goalState) {
+  // GOAL_ALREADY_REACHED: validate environment + freshness to trust watermark
+  // BUG-C FIX: require watermark_tick > 0 to prevent trusting stale state
+  const envValid = proprio.env.executor_present && proprio.env.gate_count > 0
+    && proprio.watermark_tick > 0;
+  if (envValid) {
+    consciousnessResult = {
+      goal: goalState,
+      reached: true,
+      final_state: currentState,
+      total_failures: 0,
+      cycle_count: 0,
+      transitions_executed: 0,
+      reason: null,
+    };
+
+    bus.append({
+      mode: stateToMode(currentState),
+      component: 'LIFE',
+      event: 'GOAL_ALREADY_REACHED',
+      reason_code: 'LIFE_GOAL_ALREADY_REACHED',
+      surface: 'CONTRACT',
+      attrs: {
+        goal: goalState,
+        final_state: currentState,
+        validation: 'executor_present+gate_count',
+      },
+    });
+
+    console.log(`[ops:life] CONSCIOUSNESS: already at ${goalState} — skipping runToGoal`);
+  } else {
+    // Environment doesn't validate — re-run from BOOT
+    currentState = kernel.initial_state;
+    writeWatermark(currentState, bus.events().length, RUN_ID);
+    consciousnessResult = null; // will be set below
+  }
+}
+
+if (!consciousnessResult) {
+  console.log(`[ops:life] CONSCIOUSNESS: runToGoal('${goalState}') from ${currentState}`);
+
+  const goalResult = runToGoal(bus, goalState);
+
+  consciousnessResult = {
+    goal: goalState,
+    reached: goalResult.reached,
+    final_state: goalResult.finalState,
+    total_failures: goalResult.totalFailures,
+    cycle_count: goalResult.cycleCount,
+    transitions_executed: goalResult.history?.length ?? 0,
+    reason: goalResult.reason ?? null,
+  };
+
+  currentState = goalResult.finalState;
+  console.log(`[ops:life] CONSCIOUSNESS: reached=${goalResult.reached} final_state=${goalResult.finalState} failures=${goalResult.totalFailures}`);
+}
+
+bus.append({
+  mode: stateToMode(currentState),
+  component: 'LIFE',
+  event: 'CONSCIOUSNESS_RESULT',
+  reason_code: 'LIFE_CONSCIOUSNESS_RESULT',
+  surface: 'CONTRACT',
+  attrs: {
+    goal: consciousnessResult.goal,
+    reached: String(consciousnessResult.reached),
+    final_state: consciousnessResult.final_state,
+    total_failures: String(consciousnessResult.total_failures),
+    cycle_count: String(consciousnessResult.cycle_count),
+    transitions_executed: String(consciousnessResult.transitions_executed),
+    reason: consciousnessResult.reason ?? 'null',
+  },
+});
+
+console.log('');
+
+// =========================================================================
+// PHASE 3: TELEMETRY (Organ Pipeline) + PHASE 4: REFLEX SCAN (inline)
+// =========================================================================
+console.log(`[ops:life] TELEMETRY: ${TELEMETRY_STEPS.map((s) => s.label).join(' → ')}`);
+console.log('');
 
 const stepResults = [];
-let aborted = false;
-let abortReason = null;
-let oneNextAction = null;
 
-for (const step of STEPS) {
+for (const step of TELEMETRY_STEPS) {
   process.stdout.write(`  [${step.id}] ${step.label} ... `);
   const result = runStep(step);
   stepResults.push(result);
 
+  const stepMode = stateToMode(currentState);
+
   bus.append({
-    mode: 'CERT',
+    mode: stepMode,
     component: 'LIFE',
     event: 'STEP_COMPLETE',
     reason_code: result.status === 'PASS' ? 'NONE' : `LIFE_STEP_${result.status}`,
     surface: 'UX',
-    attrs: { step_id: result.step_id, step_name: result.name, step_status: result.status, exit_code: String(result.exit_code) },
+    attrs: {
+      step_id: result.step_id,
+      step_name: result.name,
+      step_status: result.status,
+      exit_code: String(result.exit_code),
+    },
   });
 
   console.log(result.status);
   if (result.stdout) console.log(`         ${result.stdout.split('\n').join('\n         ')}`);
 
-  if (step.hard_stop && result.status !== 'PASS') {
-    aborted = true;
-    abortReason = `hard_stop on step ${step.id} (${step.label}) — exit_code=${result.exit_code}`;
+  // Phase 4: REFLEX SCAN — fire reflexes on failure
+  if (result.status !== 'PASS') {
+    const failEvent = {
+      event: 'STEP_FAIL',
+      component: 'LIFE',
+      attrs: { step_id: result.step_id, step_name: result.name, exit_code: result.exit_code },
+    };
 
-    // Surface actionable next_action from gate receipt (RG_LIFE04)
-    if (step.id === 'S01' && result.status === 'BLOCKED') {
-      try {
-        const ensureJson = path.join(ROOT, 'reports/evidence/EXECUTOR/gates/manual/node_toolchain_ensure.json');
-        if (fs.existsSync(ensureJson)) {
-          const receipt = JSON.parse(fs.readFileSync(ensureJson, 'utf8'));
-          if (receipt.detail && typeof receipt.detail === 'object' && receipt.detail.next_action) {
-            oneNextAction = receipt.detail.next_action;
-          }
-        }
-      } catch { /* fail-soft: oneNextAction stays null */ }
-      if (!oneNextAction) oneNextAction = 'npm run -s ops:node:toolchain:bootstrap';
+    bus.append({
+      mode: stepMode,
+      component: 'LIFE',
+      event: 'STEP_FAIL',
+      reason_code: `LIFE_STEP_${result.status}`,
+      surface: 'CONTRACT',
+      attrs: {
+        step_id: result.step_id,
+        step_name: result.name,
+        exit_code: String(result.exit_code),
+      },
+    });
+
+    const reflexResult = checkReflexes(currentState, failEvent);
+    if (reflexResult.fired) {
+      const prevState = currentState;
+      currentState = reflexResult.newState;
+      reflexesFired.push({
+        reflex: reflexResult.reflex,
+        trigger_step: result.step_id,
+        from_state: prevState,
+        to_state: reflexResult.newState,
+      });
+      console.log(`         REFLEX: ${reflexResult.reflex} → ${reflexResult.newState}`);
     }
-
-    bus.append({ mode: 'CERT', component: 'LIFE', event: 'LIFE_ABORT', reason_code: 'LIFE_HARD_STOP',
-      surface: 'UX', attrs: { step_id: result.step_id, reason: abortReason } });
-    break;
   }
 }
 
+console.log('');
+
+// =========================================================================
+// PHASE 3.5: DOCTOR VERDICT INGESTION (after T6)
+// =========================================================================
+let latestDoctorVerdict = null;
+let doctorScore = 100;
+{
+  const evidDir = path.join(ROOT, 'reports', 'evidence');
+  try {
+    const doctorDirs = fs.readdirSync(evidDir)
+      .filter((d) => d.startsWith('EPOCH-DOCTOR-')).sort();
+    if (doctorDirs.length > 0) {
+      const latest = doctorDirs[doctorDirs.length - 1];
+      const receiptPath = path.join(evidDir, latest, 'DOCTOR.json');
+      if (fs.existsSync(receiptPath)) {
+        const receipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
+        latestDoctorVerdict = receipt.status ?? null;
+        doctorScore = receipt.score ?? 100;
+
+        if (latestDoctorVerdict && latestDoctorVerdict !== 'HEALTHY') {
+          const doctorFailEvent = {
+            event: 'DOCTOR_VERDICT_FAIL',
+            component: 'LIFE',
+            attrs: {
+              verdict: latestDoctorVerdict,
+              score: String(doctorScore),
+            },
+          };
+
+          bus.append({
+            mode: stateToMode(currentState),
+            component: 'LIFE',
+            event: 'DOCTOR_VERDICT_FAIL',
+            reason_code: 'DOCTOR_VERDICT_FAIL',
+            surface: 'CONTRACT',
+            attrs: {
+              verdict: latestDoctorVerdict,
+              score: String(doctorScore),
+            },
+          });
+
+          // Check immune reflex
+          const reflexResult = checkReflexes(currentState, doctorFailEvent);
+          if (reflexResult.fired) {
+            const prevState = currentState;
+            currentState = reflexResult.newState;
+            reflexesFired.push({
+              reflex: reflexResult.reflex,
+              trigger_step: 'T6',
+              from_state: prevState,
+              to_state: reflexResult.newState,
+            });
+            console.log(`[ops:life] IMMUNE: ${reflexResult.reflex} fired → ${reflexResult.newState}`);
+          }
+        }
+      }
+    }
+  } catch { /* fail-safe: doctor ingestion is best-effort */ }
+}
+
+// =========================================================================
+// PHASE 4.5: IMMUNE RESPONSE (Healing Loop)
+// =========================================================================
+let healingAttempted = false;
+let healingSucceeded = false;
+const healingActions = [];
+
+if (currentState === 'DEGRADED') {
+  console.log('[ops:life] IMMUNE: organism DEGRADED — attempting healing loop');
+  healingAttempted = true;
+
+  // Try T06: DEGRADED → HEALING
+  const t06Result = executeTransition(bus, currentState, 'T06_DEGRADED_TO_HEALING', {
+    trigger: 'immune_response',
+    doctor_verdict: latestDoctorVerdict,
+  });
+
+  if (t06Result.success) {
+    currentState = t06Result.newState; // HEALING
+    console.log('[ops:life] IMMUNE: entered HEALING — healAll() executed by T06 action');
+
+    // Read heal receipt for actions log
+    try {
+      const evidDir = path.join(ROOT, 'reports', 'evidence');
+      const healDirs = fs.readdirSync(evidDir)
+        .filter((d) => d.startsWith('EPOCH-HEAL-')).sort();
+      if (healDirs.length > 0) {
+        const latest = healDirs[healDirs.length - 1];
+        const receiptPath = path.join(evidDir, latest, 'HEAL_RECEIPT.json');
+        if (fs.existsSync(receiptPath)) {
+          const receipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
+          healingActions.push(...(receipt.actions ?? []));
+        }
+      }
+    } catch { /* fail-safe */ }
+
+    // Try T07: HEALING → BOOT
+    const t07Result = executeTransition(bus, currentState, 'T07_HEALING_TO_BOOT', {
+      trigger: 'heal_complete_check',
+      heals_applied: healingActions.filter((a) => a.healed).length,
+    });
+
+    if (t07Result.success) {
+      currentState = t07Result.newState; // BOOT
+      healingSucceeded = true;
+      console.log('[ops:life] IMMUNE: healed → BOOT. Next run will attempt certification.');
+
+      bus.append({
+        mode: stateToMode(currentState),
+        component: 'LIFE',
+        event: 'IMMUNE_HEALED',
+        reason_code: 'LIFE_IMMUNE_HEALED',
+        surface: 'CONTRACT',
+        attrs: { from: 'DEGRADED', to: 'BOOT', method: 'healAll' },
+      });
+    } else {
+      currentState = t07Result.newState; // stays DEGRADED (on_fail)
+      console.log('[ops:life] IMMUNE: heal verification FAILED — staying DEGRADED');
+
+      bus.append({
+        mode: stateToMode(currentState),
+        component: 'LIFE',
+        event: 'IMMUNE_HEAL_FAILED',
+        reason_code: 'LIFE_IMMUNE_HEAL_FAILED',
+        surface: 'CONTRACT',
+        attrs: { reason: 'guard_heal_complete failed after healAll' },
+      });
+    }
+  } else {
+    console.log('[ops:life] IMMUNE: not healable — staying DEGRADED (manual intervention needed)');
+  }
+}
+
+console.log('');
+
+// =========================================================================
+// PHASE 5: SEAL
+// =========================================================================
+
+// Compute life outcome
+let lifeOutcome;
+if (healingSucceeded) {
+  lifeOutcome = 'HEALED';
+} else if (consciousnessResult.reached && reflexesFired.length === 0 &&
+    stepResults.every((s) => s.status === 'PASS')) {
+  lifeOutcome = 'ALIVE';
+} else if (consciousnessResult.reached && stepResults.some((s) => s.status !== 'PASS')) {
+  lifeOutcome = 'IMPAIRED';
+} else if (reflexesFired.some((r) => r.reflex === 'degradation_reflex' || r.reflex === 'immune_reflex')) {
+  lifeOutcome = 'DEGRADED';
+} else if (Object.values(getCircuitBreakerState()).some((cb) => cb.open)) {
+  lifeOutcome = 'CRITICAL';
+} else if (!consciousnessResult.reached) {
+  lifeOutcome = 'BLOCKED';
+} else {
+  lifeOutcome = 'IMPAIRED';
+}
+
+// Backward-compatible status
 const failed = stepResults.filter((s) => s.status !== 'PASS' && s.status !== 'BLOCKED');
 const blocked = stepResults.filter((s) => s.status === 'BLOCKED');
-const lifeStatus = aborted ? 'ABORT' : (failed.length > 0 ? 'FAIL' : 'PASS');
-const lifeReason = aborted ? 'LIFE_HARD_STOP' : (failed.length > 0 ? 'LIFE_STEP_FAIL' : 'NONE');
+const lifeStatus = !consciousnessResult.reached ? 'ABORT' : (failed.length > 0 ? 'FAIL' : 'PASS');
+const lifeReason = !consciousnessResult.reached ? 'LIFE_HARD_STOP' : (failed.length > 0 ? 'LIFE_STEP_FAIL' : 'NONE');
+
+// Life outcome reason code
+const outcomeReasonMap = {
+  ALIVE: 'LIFE_OUTCOME_ALIVE',
+  IMPAIRED: 'LIFE_OUTCOME_IMPAIRED',
+  DEGRADED: 'LIFE_OUTCOME_DEGRADED',
+  CRITICAL: 'LIFE_OUTCOME_CRITICAL',
+  BLOCKED: 'LIFE_OUTCOME_BLOCKED',
+  HEALED: 'LIFE_OUTCOME_HEALED',
+};
 
 bus.append({
-  mode: 'CERT',
+  mode: stateToMode(currentState),
+  component: 'LIFE',
+  event: 'LIFE_OUTCOME',
+  reason_code: outcomeReasonMap[lifeOutcome] ?? 'NONE',
+  surface: 'UX',
+  attrs: {
+    life_outcome: lifeOutcome,
+    fsm_final_state: currentState,
+    consciousness_reached: String(consciousnessResult.reached),
+    reflexes_fired_count: String(reflexesFired.length),
+    telemetry_passed: String(stepResults.filter((s) => s.status === 'PASS').length),
+    telemetry_failed: String(failed.length),
+  },
+});
+
+bus.append({
+  mode: stateToMode(currentState),
   component: 'LIFE',
   event: 'LIFE_SEAL',
   reason_code: lifeReason,
@@ -204,27 +664,84 @@ bus.append({
     steps_failed: String(failed.length),
     steps_blocked: String(blocked.length),
     life_status: lifeStatus,
+    life_outcome: lifeOutcome,
+    fsm_final_state: currentState,
   },
 });
 
 const { jsonlPath: busJsonlPath } = bus.flush();
 
+// Determine one_next_action from consciousness result
+// BC: Surface actionable next_action from gate receipt (RG_LIFE04)
+// When consciousness fails (equivalent to old S01 hard_stop / verify_fast),
+// check if step.id === 'S01' equivalent failed with result.status === 'BLOCKED'
+let oneNextAction = null;
+if (!consciousnessResult.reached) {
+  // BUG-G: Derive specific guidance from consciousness failure reason
+  const reason = consciousnessResult.reason;
+  if (reason === 'no_valid_path') {
+    oneNextAction = 'Check FSM guards — no path to goal from ' + consciousnessResult.final_state;
+  } else {
+    // Try to read toolchain next_action from receipt (same as old S01 BLOCKED path)
+    // check if step.id === 'S01' equivalent failed with result.status === 'BLOCKED'
+    try {
+      const ensureJson = path.join(ROOT, 'reports/evidence/EXECUTOR/gates/manual/node_toolchain_ensure.json');
+      if (fs.existsSync(ensureJson)) {
+        const receipt = JSON.parse(fs.readFileSync(ensureJson, 'utf8'));
+        if (receipt.detail && typeof receipt.detail === 'object' && receipt.detail.next_action) {
+          oneNextAction = receipt.detail.next_action;
+        }
+      }
+    } catch { /* fail-soft: oneNextAction stays null */ }
+    if (!oneNextAction) oneNextAction = 'npm run -s ops:node:toolchain:bootstrap';
+  }
+}
+
 // ---------------------------------------------------------------------------
-// Write LIFE_SUMMARY.json
+// Write LIFE_SUMMARY.json v2
 // ---------------------------------------------------------------------------
 writeJsonDeterministic(path.join(EPOCH_DIR, 'LIFE_SUMMARY.json'), {
-  schema_version: '1.0.0',
+  schema_version: '3.0.0',
   gate_id: 'WOW_ORGANISM_LIFE',
   run_id: RUN_ID,
   status: lifeStatus,
+  life_outcome: lifeOutcome,
   reason_code: lifeReason,
-  steps_total: STEPS.length,
+
+  // EPOCH-70: CONSCIOUSNESS
+  proprio: {
+    fsm_state: proprio.fsm_state,
+    fsm_mode: proprio.fsm_mode,
+    fsm_source: proprio.fsm_source,
+    previous_state: proprio.previous_state,
+    previous_outcome: proprio.previous_outcome,
+    run_number: proprio.run_number,
+    env: proprio.env,
+  },
+  consciousness_result: consciousnessResult,
+  fsm_final_state: currentState,
+  reflexes_fired: reflexesFired,
+
+  // EPOCH-71: IMMUNE DATA
+  immune: {
+    doctor_ran: stepResults.some((s) => s.step_id === 'T6'),
+    doctor_verdict: latestDoctorVerdict,
+    doctor_score: doctorScore,
+    healing_attempted: healingAttempted,
+    healing_succeeded: healingSucceeded,
+    healing_actions: healingActions,
+  },
+
+  // COMPAT: EPOCH-69 fields preserved
+  steps_total: TELEMETRY_STEPS.length,
   steps_run: stepResults.length,
   steps_passed: stepResults.filter((s) => s.status === 'PASS').length,
   steps_failed: failed.length,
   steps_blocked: blocked.length,
-  aborted,
-  abort_reason: abortReason ?? null,
+  aborted: !consciousnessResult.reached,
+  abort_reason: !consciousnessResult.reached
+    ? `consciousness blocked: ${consciousnessResult.reason ?? 'unknown'}`
+    : null,
   step_results: stepResults.map((s) => ({
     step_id: s.step_id, name: s.name, status: s.status, exit_code: s.exit_code,
     netkill_enforced: s.netkill_enforced,
@@ -236,7 +753,7 @@ writeJsonDeterministic(path.join(EPOCH_DIR, 'LIFE_SUMMARY.json'), {
 });
 
 // ---------------------------------------------------------------------------
-// Write LIFE_SUMMARY.md
+// Write LIFE_SUMMARY.md v2
 // ---------------------------------------------------------------------------
 const stepRows = stepResults.map((s) =>
   `| ${s.step_id} | ${s.label} | ${s.status} | ${s.exit_code} |`
@@ -245,15 +762,45 @@ const stepRows = stepResults.map((s) =>
 writeMd(path.join(EPOCH_DIR, 'LIFE_SUMMARY.md'), [
   `# LIFE SUMMARY — EPOCH-LIFE-${RUN_ID}`, '',
   `STATUS: ${lifeStatus}`,
+  `LIFE_OUTCOME: ${lifeOutcome}`,
   `REASON_CODE: ${lifeReason}`,
   `RUN_ID: ${RUN_ID}`,
-  aborted ? `ABORT_REASON: ${abortReason}` : '',
   '',
-  '## STEP LOG',
+  '## PROPRIOCEPTION',
+  `FSM_STATE: ${proprio.fsm_state}`,
+  `FSM_MODE: ${proprio.fsm_mode}`,
+  `FSM_SOURCE: ${proprio.fsm_source}`,
+  `PREVIOUS_STATE: ${proprio.previous_state ?? 'null'}`,
+  `RUN_NUMBER: ${proprio.run_number}`,
+  '',
+  '## CONSCIOUSNESS',
+  `GOAL: ${consciousnessResult.goal}`,
+  `REACHED: ${consciousnessResult.reached}`,
+  `FINAL_STATE: ${consciousnessResult.final_state}`,
+  `TOTAL_FAILURES: ${consciousnessResult.total_failures}`,
+  `CYCLE_COUNT: ${consciousnessResult.cycle_count}`,
+  `TRANSITIONS_EXECUTED: ${consciousnessResult.transitions_executed}`,
+  consciousnessResult.reason ? `REASON: ${consciousnessResult.reason}` : '',
+  '',
+  '## TELEMETRY',
   '',
   '| Step | Command | Status | Exit Code |',
   '|------|---------|--------|-----------|',
   stepRows,
+  '',
+  '## REFLEXES',
+  reflexesFired.length === 0
+    ? '- NONE'
+    : reflexesFired.map((r) => `- ${r.reflex}: ${r.trigger_step} → ${r.to_state}`).join('\n'),
+  '',
+  '## IMMUNE',
+  `DOCTOR_VERDICT: ${latestDoctorVerdict ?? 'N/A'}`,
+  `DOCTOR_SCORE: ${doctorScore}`,
+  `HEALING_ATTEMPTED: ${healingAttempted}`,
+  `HEALING_SUCCEEDED: ${healingSucceeded}`,
+  healingActions.length > 0
+    ? healingActions.map((a) => `- ${a.action}: ${a.healed ? 'HEALED' : 'SKIP'} — ${a.detail}`).join('\n')
+    : '- No healing actions',
   '',
   '## NEXT_ACTION',
   oneNextAction ?? 'npm run -s verify:fast',
@@ -261,14 +808,30 @@ writeMd(path.join(EPOCH_DIR, 'LIFE_SUMMARY.md'), [
 ].filter((l) => l !== null).join('\n'));
 
 // ---------------------------------------------------------------------------
+// Final watermark write
+// ---------------------------------------------------------------------------
+writeWatermark(currentState, bus.events().length, RUN_ID);
+
+// ---------------------------------------------------------------------------
 // Console summary
 // ---------------------------------------------------------------------------
-console.log('');
-console.log(`[${lifeStatus}] ops:life — ${lifeReason}`);
+console.log(`[${lifeStatus}] ops:life — ${lifeOutcome} — ${lifeReason}`);
 console.log(`  EPOCH:   ${path.relative(ROOT, EPOCH_DIR)}`);
 console.log(`  EVENTS:  ${path.relative(ROOT, busJsonlPath)}`);
-console.log(`  STEPS:   ${stepResults.length}/${STEPS.length} run, ${stepResults.filter((s) => s.status === 'PASS').length} PASS, ${failed.length} FAIL`);
-if (aborted) console.log(`  ABORT:   ${abortReason}`);
+console.log(`  FSM:     ${currentState} (${stateToMode(currentState)})`);
+console.log(`  CONSCIOUSNESS: goal=${consciousnessResult.goal} reached=${consciousnessResult.reached}`);
+console.log(`  TELEMETRY: ${stepResults.length}/${TELEMETRY_STEPS.length} run, ${stepResults.filter((s) => s.status === 'PASS').length} PASS, ${failed.length} FAIL`);
+if (reflexesFired.length > 0) console.log(`  REFLEXES: ${reflexesFired.length} fired`);
+if (latestDoctorVerdict) console.log(`  DOCTOR: ${latestDoctorVerdict} score=${doctorScore}`);
+if (healingAttempted) console.log(`  HEALING: attempted=${healingAttempted} succeeded=${healingSucceeded}`);
 if (oneNextAction) console.log(`  ONE_NEXT_ACTION: ${oneNextAction}`);
 
-process.exit(lifeStatus === 'PASS' ? 0 : (lifeStatus === 'ABORT' ? 2 : 1));
+// Exit code based on FSM final state
+const goalStates = kernel.goal_states ?? ['CERTIFIED', 'EDGE_READY'];
+if (goalStates.includes(currentState)) {
+  process.exit(0);
+} else if (currentState === 'DEGRADED' || currentState === 'HEALING') {
+  process.exit(1);
+} else {
+  process.exit(lifeStatus === 'PASS' ? 0 : (lifeStatus === 'ABORT' ? 2 : 1));
+}

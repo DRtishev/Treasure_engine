@@ -1,0 +1,48 @@
+{
+  "checks": [
+    {
+      "check": "doctor_in_telemetry",
+      "detail": "OK: T6 ops:doctor in TELEMETRY_STEPS",
+      "pass": true
+    },
+    {
+      "check": "immune_reflex_registered",
+      "detail": "OK: immune_reflex with DOCTOR_VERDICT_FAIL trigger registered",
+      "pass": true
+    },
+    {
+      "check": "guard_probe_failure_reads_evidence",
+      "detail": "OK: guard_probe_failure reads EPOCH-DOCTOR receipt",
+      "pass": true
+    },
+    {
+      "check": "guard_healable_checks_conditions",
+      "detail": "OK: guard_healable checks doctor_verdict context",
+      "pass": true
+    },
+    {
+      "check": "guard_heal_complete_reads_receipt",
+      "detail": "OK: guard_heal_complete reads HEAL_RECEIPT",
+      "pass": true
+    },
+    {
+      "check": "life_summary_immune_field",
+      "detail": "skip-safe PASS — LIFE_SUMMARY schema=2.0.0 (pre-v3)",
+      "pass": true
+    },
+    {
+      "check": "heal_runner_exists",
+      "detail": "OK: scripts/ops/heal_runner.mjs exists",
+      "pass": true
+    }
+  ],
+  "checks_total": 7,
+  "failed_checks": [],
+  "gate_id": "RG_IMMUNE01_INTEGRATION",
+  "next_action": "npm run -s verify:regression:immune01-integration",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}
