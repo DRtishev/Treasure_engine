@@ -4,7 +4,7 @@ STATUS: PASS
 REASON_CODE: NONE
 RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:regression:fsm01-no-skip-states
-CHECKS_TOTAL: 38
+CHECKS_TOTAL: 54
 VIOLATIONS: 0
 
 ## CHECKS
@@ -46,6 +46,22 @@ VIOLATIONS: 0
 - [PASS] goal_reachable_from_BOOT_to_CERTIFIED: OK: BOOT → CERTIFIED via T01_BOOT_TO_CERTIFYING → T02_CERTIFYING_TO_CERTIFIED
 - [PASS] goal_in_states_EDGE_READY: OK: goal "EDGE_READY" exists in states
 - [PASS] goal_reachable_from_BOOT_to_EDGE_READY: OK: BOOT → EDGE_READY via T01_BOOT_TO_CERTIFYING → T02_CERTIFYING_TO_CERTIFIED → T03_CERTIFIED_TO_RESEARCHING → T04_RESEARCHING_TO_EDGE_READY
+- [PASS] breaker_valid_tid_T01_BOOT_TO_CERTIFYING: OK: circuit_breaker applies_to "T01_BOOT_TO_CERTIFYING" is a valid transition
+- [PASS] breaker_valid_tid_T02_CERTIFYING_TO_CERTIFIED: OK: circuit_breaker applies_to "T02_CERTIFYING_TO_CERTIFIED" is a valid transition
+- [PASS] breaker_valid_tid_T03_CERTIFIED_TO_RESEARCHING: OK: circuit_breaker applies_to "T03_CERTIFIED_TO_RESEARCHING" is a valid transition
+- [PASS] breaker_valid_tid_T04_RESEARCHING_TO_EDGE_READY: OK: circuit_breaker applies_to "T04_RESEARCHING_TO_EDGE_READY" is a valid transition
+- [PASS] breaker_valid_tid_T06_DEGRADED_TO_HEALING: OK: circuit_breaker applies_to "T06_DEGRADED_TO_HEALING" is a valid transition
+- [PASS] breaker_valid_tid_T07_HEALING_TO_BOOT: OK: circuit_breaker applies_to "T07_HEALING_TO_BOOT" is a valid transition
+- [PASS] max_cycles_sanity: OK: max_cycles=3 < max_goal_attempts=10
+- [PASS] goal_mode_defined_CERTIFIED: OK: goal "CERTIFIED" has mode="CERT"
+- [PASS] goal_mode_defined_EDGE_READY: OK: goal "EDGE_READY" has mode="CERT"
+- [PASS] timeout_sane_T01_BOOT_TO_CERTIFYING: OK: T01_BOOT_TO_CERTIFYING.timeout_ms=10000
+- [PASS] timeout_sane_T02_CERTIFYING_TO_CERTIFIED: OK: T02_CERTIFYING_TO_CERTIFIED.timeout_ms=300000
+- [PASS] timeout_sane_T03_CERTIFIED_TO_RESEARCHING: OK: T03_CERTIFIED_TO_RESEARCHING.timeout_ms=5000
+- [PASS] timeout_sane_T04_RESEARCHING_TO_EDGE_READY: OK: T04_RESEARCHING_TO_EDGE_READY.timeout_ms=5000
+- [PASS] timeout_sane_T05_ANY_TO_DEGRADED: OK: T05_ANY_TO_DEGRADED.timeout_ms=0
+- [PASS] timeout_sane_T06_DEGRADED_TO_HEALING: OK: T06_DEGRADED_TO_HEALING.timeout_ms=60000
+- [PASS] timeout_sane_T07_HEALING_TO_BOOT: OK: T07_HEALING_TO_BOOT.timeout_ms=5000
 
 ## FAILED
 - NONE

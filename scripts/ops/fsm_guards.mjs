@@ -45,18 +45,13 @@ function guard_deps_ready(_context) {
 
 // ---------------------------------------------------------------------------
 // guard_verify_fast_x2 — T02: CERTIFYING → CERTIFIED
-// Guard IS the verification — runs verify:fast twice consecutively.
-// Per §9.1: guard runs the heavy work, action is null.
+// Precondition check: EXECUTOR evidence directory exists with gate receipts.
+// The actual verification is run by the transition action (verify:fast x2).
 // ---------------------------------------------------------------------------
 function guard_verify_fast_x2(_context) {
-  // NOTE: This guard is heavyweight — it runs verify:fast x2.
-  // In structural-only mode (no runtime FSM execution in EPOCH-69),
-  // this guard definition exists for completeness but is NOT called
-  // by the regression gate. It will be invoked when life.mjs
-  // integrates with the FSM in EPOCH-70.
-  //
-  // For now, return a structural placeholder that checks prior
-  // certification evidence exists.
+  // Lightweight precondition: verify EXECUTOR evidence directory has gate
+  // receipts from prior certification. The heavy lifting (verify:fast x2)
+  // is handled by the transition action with action_x2: true.
   const execDir = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
   if (!fs.existsSync(execDir)) {
     return { pass: false, detail: 'EXECUTOR evidence directory missing — no prior certification' };

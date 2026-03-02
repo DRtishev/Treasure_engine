@@ -32,6 +32,21 @@ const ROOT = process.cwd();
 const doctorBusDir = path.join(ROOT, 'reports', 'evidence', `EPOCH-EVENTBUS-DOCTOR-${RUN_ID}`);
 const doctorBus = createBus(RUN_ID, doctorBusDir);
 
+// BUG-08 FIX: derive current mode from latest autopilot receipt (not hardcoded CERT)
+let doctorCurrentMode = 'CERT';
+try {
+  const evidDir = path.join(ROOT, 'reports', 'evidence');
+  const apDirs = fs.readdirSync(evidDir)
+    .filter((d) => d.startsWith('EPOCH-AUTOPILOTV2-')).sort();
+  if (apDirs.length > 0) {
+    const planPath = path.join(evidDir, apDirs.at(-1), 'PLAN.json');
+    if (fs.existsSync(planPath)) {
+      const plan = JSON.parse(fs.readFileSync(planPath, 'utf8'));
+      if (plan.mode) doctorCurrentMode = plan.mode;
+    }
+  }
+} catch { /* fallback to CERT */ }
+
 // Self-harden: no network
 process.env.TREASURE_NET_KILL = '1';
 const preloadAbs = path.join(ROOT, 'scripts', 'safety', 'net_kill_preload.cjs');
@@ -132,7 +147,7 @@ console.log(`  LIVENESS: ${livenessVerdict} (x2_identical=${x2Identical})`);
 // EPOCH-69 G5: emit probe result for FSM consumption
 if (!livenessAlive) {
   doctorBus.append({
-    mode: 'CERT',
+    mode: doctorCurrentMode,
     component: 'LIFE',
     event: 'PROBE_FAIL',
     reason_code: 'LIVENESS_FAIL',
@@ -229,7 +244,7 @@ else if (!provenanceSealed) { verdict = 'DEGRADED'; verdictReason = 'PROVENANCE_
 
 // EPOCH-69 G5: emit doctor verdict for FSM consumption
 doctorBus.append({
-  mode: 'CERT',
+  mode: doctorCurrentMode,
   component: 'LIFE',
   event: 'DOCTOR_VERDICT',
   reason_code: verdict === 'HEALTHY' ? 'NONE' : verdictReason,

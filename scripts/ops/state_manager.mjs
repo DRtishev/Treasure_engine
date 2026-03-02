@@ -104,8 +104,7 @@ function isBreakerApplicable(transitionId) {
   try {
     const kernel = loadFsmKernel();
     const appliesTo = kernel.circuit_breaker?.applies_to ?? [];
-    // Check if transition ID starts with any prefix in applies_to
-    return appliesTo.some((prefix) => transitionId.startsWith(prefix));
+    return appliesTo.includes(transitionId);
   } catch {
     return false;
   }
@@ -131,7 +130,23 @@ export function checkCircuitBreaker(transitionId) {
 }
 
 export function getCircuitBreakerState() {
-  return { ..._breakerState };
+  try {
+    const kernel = loadFsmKernel();
+    const cb = kernel.circuit_breaker;
+    if (!cb) return {};
+    const result = {};
+    for (const tid of cb.applies_to ?? []) {
+      const s = _breakerState[tid];
+      result[tid] = {
+        failures: s?.failures ?? 0,
+        threshold: cb.threshold ?? 3,
+        open: s?.open ?? false,
+      };
+    }
+    return result;
+  } catch {
+    return { ..._breakerState };
+  }
 }
 
 export function _resetCircuitBreakers() {
@@ -156,9 +171,9 @@ export function writeWatermark(state, tick = 0, runId = '') {
       written_at_tick: tick,
     };
     fs.writeFileSync(WATERMARK_PATH, JSON.stringify(watermark, null, 2) + '\n');
-    return watermark;
+    return { state, tick, written: true };
   } catch {
-    return null;
+    return { state, tick, written: false };
   }
 }
 
@@ -497,8 +512,20 @@ export function executeTransition(bus, currentState, transitionId, context = {})
           }
         }
 
-        // G7: Write watermark for crash recovery
-        writeWatermark(failState);
+        // G7: Write watermark for crash recovery (BUG-12: pass tick/runId)
+        const failTick = bus ? bus.events().length : 0;
+        const failRunId = bus?.runId ?? '';
+        const failWm = writeWatermark(failState, failTick, failRunId);
+        if (bus && failWm.written) {
+          bus.append({
+            mode: stateToMode(failState),
+            component: 'FSM',
+            event: 'WATERMARK_WRITTEN',
+            reason_code: 'NONE',
+            surface: 'CONTRACT',
+            attrs: { state: failState, tick: String(failTick) },
+          });
+        }
 
         return { success: false, newState: failState, reason: 'FSM_ACTION_FAIL' };
       }
@@ -520,8 +547,20 @@ export function executeTransition(bus, currentState, transitionId, context = {})
     });
   }
 
-  // G7: Write watermark
-  writeWatermark(transition.to);
+  // G7: Write watermark (BUG-12: pass tick/runId, BUG-13: emit event)
+  const successTick = bus ? bus.events().length : 0;
+  const successRunId = bus?.runId ?? '';
+  const successWm = writeWatermark(transition.to, successTick, successRunId);
+  if (bus && successWm.written) {
+    bus.append({
+      mode: stateToMode(transition.to),
+      component: 'FSM',
+      event: 'WATERMARK_WRITTEN',
+      reason_code: 'NONE',
+      surface: 'CONTRACT',
+      attrs: { state: transition.to, tick: String(successTick) },
+    });
+  }
 
   return { success: true, newState: transition.to };
 }
@@ -530,16 +569,22 @@ export function executeTransition(bus, currentState, transitionId, context = {})
 // G1: runToGoal(bus, goalState, maxAttempts?) — goal-seeking orchestration
 //
 // Algorithm: keep transitioning along BFS-shortest path until goal reached.
-// Respects circuit breakers and max attempts.
-// Returns: { reached, finalState, attempts, history[] }
+// Respects circuit breakers, max attempts, and max cycles.
+//
+// BUG-01 FIX: totalFailures is monotonic (never reset on success).
+// BUG-02 FIX: cycleCount tracks returns to initial_state, enforces max_cycles.
+//
+// Returns: { reached, finalState, totalFailures, cycleCount, history[], reason? }
 // ---------------------------------------------------------------------------
 export function runToGoal(bus, goalState, maxAttempts = null) {
   const kernel = loadFsmKernel();
   const maxAtt = maxAttempts ?? kernel.max_goal_attempts ?? 10;
-  let attempts = 0;
+  const maxCycles = kernel.max_cycles ?? 3;
+  let totalFailures = 0;
+  let cycleCount = 0;
   const history = [];
 
-  while (attempts < maxAtt) {
+  while (totalFailures < maxAtt) {
     const allEvents = bus ? bus.events() : [];
     const { state: currentState } = replayState(allEvents);
 
@@ -551,10 +596,10 @@ export function runToGoal(bus, goalState, maxAttempts = null) {
           event: 'GOAL_REACHED',
           reason_code: 'NONE',
           surface: 'CONTRACT',
-          attrs: { goal: goalState, attempts: String(attempts) },
+          attrs: { goal: goalState, total_failures: String(totalFailures), cycle_count: String(cycleCount) },
         });
       }
-      return { reached: true, finalState: currentState, attempts, history };
+      return { reached: true, finalState: currentState, totalFailures, cycleCount, history };
     }
 
     const pathToGoal = findPathToGoal(currentState, goalState);
@@ -569,7 +614,7 @@ export function runToGoal(bus, goalState, maxAttempts = null) {
           attrs: { goal: goalState, reason: 'no_valid_path', current_state: currentState },
         });
       }
-      return { reached: false, finalState: currentState, attempts, history, reason: 'no_valid_path' };
+      return { reached: false, finalState: currentState, totalFailures, cycleCount, history, reason: 'no_valid_path' };
     }
 
     const nextTransition = pathToGoal[0];
@@ -586,7 +631,7 @@ export function runToGoal(bus, goalState, maxAttempts = null) {
           attrs: { goal: goalState, reason: 'circuit_breaker_open', transition: nextTransition.id },
         });
       }
-      return { reached: false, finalState: currentState, attempts, history, reason: 'circuit_breaker_open' };
+      return { reached: false, finalState: currentState, totalFailures, cycleCount, history, reason: 'circuit_breaker_open' };
     }
 
     const result = executeTransition(bus, currentState, nextTransition.id);
@@ -598,12 +643,27 @@ export function runToGoal(bus, goalState, maxAttempts = null) {
     });
 
     if (!result.success) {
-      attempts++;
+      totalFailures++; // BUG-01 FIX: monotonic, never reset
       continue; // re-plan from new state
     }
 
-    // Success — reset attempts counter on forward progress
-    attempts = 0;
+    // BUG-02 FIX: track cycles — if we returned to initial_state, increment cycle counter
+    if (result.newState === kernel.initial_state && history.length > 1) {
+      cycleCount++;
+      if (cycleCount >= maxCycles) {
+        if (bus) {
+          bus.append({
+            mode: stateToMode(result.newState),
+            component: 'FSM',
+            event: 'GOAL_BLOCKED',
+            reason_code: 'FSM_ACTION_FAIL',
+            surface: 'CONTRACT',
+            attrs: { goal: goalState, reason: 'max_cycles_exceeded', cycle_count: String(cycleCount), max_cycles: String(maxCycles) },
+          });
+        }
+        return { reached: false, finalState: result.newState, totalFailures, cycleCount, history, reason: 'max_cycles_exceeded' };
+      }
+    }
   }
 
   // Max attempts exceeded
@@ -616,8 +676,8 @@ export function runToGoal(bus, goalState, maxAttempts = null) {
       event: 'GOAL_BLOCKED',
       reason_code: 'FSM_ACTION_FAIL',
       surface: 'CONTRACT',
-      attrs: { goal: goalState, reason: 'max_attempts_exceeded', attempts: String(attempts) },
+      attrs: { goal: goalState, reason: 'max_attempts_exceeded', total_failures: String(totalFailures) },
     });
   }
-  return { reached: false, finalState, attempts, history, reason: 'max_attempts_exceeded' };
+  return { reached: false, finalState, totalFailures, cycleCount, history, reason: 'max_attempts_exceeded' };
 }

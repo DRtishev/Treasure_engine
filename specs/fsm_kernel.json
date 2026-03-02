@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0.0",
+  "schema_version": "2.0.0",
   "description": "Treasure Engine Organism FSM — Nervous System Kernel. 7 states, 7 transitions, 5 forbidden pairs, 2 goal states.",
   "initial_state": "BOOT",
   "goal_states": ["CERTIFIED", "EDGE_READY"],
@@ -120,7 +120,7 @@
 
   "circuit_breaker": {
     "threshold": 3,
-    "applies_to": ["T01", "T02", "T03", "T04", "T06", "T07"]
+    "applies_to": ["T01_BOOT_TO_CERTIFYING", "T02_CERTIFYING_TO_CERTIFIED", "T03_CERTIFIED_TO_RESEARCHING", "T04_RESEARCHING_TO_EDGE_READY", "T06_DEGRADED_TO_HEALING", "T07_HEALING_TO_BOOT"]
   },
 
   "max_cycles": 3

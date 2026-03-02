@@ -189,9 +189,89 @@
       "check": "goal_reachable_from_BOOT_to_EDGE_READY",
       "detail": "OK: BOOT → EDGE_READY via T01_BOOT_TO_CERTIFYING → T02_CERTIFYING_TO_CERTIFIED → T03_CERTIFIED_TO_RESEARCHING → T04_RESEARCHING_TO_EDGE_READY",
       "pass": true
+    },
+    {
+      "check": "breaker_valid_tid_T01_BOOT_TO_CERTIFYING",
+      "detail": "OK: circuit_breaker applies_to \"T01_BOOT_TO_CERTIFYING\" is a valid transition",
+      "pass": true
+    },
+    {
+      "check": "breaker_valid_tid_T02_CERTIFYING_TO_CERTIFIED",
+      "detail": "OK: circuit_breaker applies_to \"T02_CERTIFYING_TO_CERTIFIED\" is a valid transition",
+      "pass": true
+    },
+    {
+      "check": "breaker_valid_tid_T03_CERTIFIED_TO_RESEARCHING",
+      "detail": "OK: circuit_breaker applies_to \"T03_CERTIFIED_TO_RESEARCHING\" is a valid transition",
+      "pass": true
+    },
+    {
+      "check": "breaker_valid_tid_T04_RESEARCHING_TO_EDGE_READY",
+      "detail": "OK: circuit_breaker applies_to \"T04_RESEARCHING_TO_EDGE_READY\" is a valid transition",
+      "pass": true
+    },
+    {
+      "check": "breaker_valid_tid_T06_DEGRADED_TO_HEALING",
+      "detail": "OK: circuit_breaker applies_to \"T06_DEGRADED_TO_HEALING\" is a valid transition",
+      "pass": true
+    },
+    {
+      "check": "breaker_valid_tid_T07_HEALING_TO_BOOT",
+      "detail": "OK: circuit_breaker applies_to \"T07_HEALING_TO_BOOT\" is a valid transition",
+      "pass": true
+    },
+    {
+      "check": "max_cycles_sanity",
+      "detail": "OK: max_cycles=3 < max_goal_attempts=10",
+      "pass": true
+    },
+    {
+      "check": "goal_mode_defined_CERTIFIED",
+      "detail": "OK: goal \"CERTIFIED\" has mode=\"CERT\"",
+      "pass": true
+    },
+    {
+      "check": "goal_mode_defined_EDGE_READY",
+      "detail": "OK: goal \"EDGE_READY\" has mode=\"CERT\"",
+      "pass": true
+    },
+    {
+      "check": "timeout_sane_T01_BOOT_TO_CERTIFYING",
+      "detail": "OK: T01_BOOT_TO_CERTIFYING.timeout_ms=10000",
+      "pass": true
+    },
+    {
+      "check": "timeout_sane_T02_CERTIFYING_TO_CERTIFIED",
+      "detail": "OK: T02_CERTIFYING_TO_CERTIFIED.timeout_ms=300000",
+      "pass": true
+    },
+    {
+      "check": "timeout_sane_T03_CERTIFIED_TO_RESEARCHING",
+      "detail": "OK: T03_CERTIFIED_TO_RESEARCHING.timeout_ms=5000",
+      "pass": true
+    },
+    {
+      "check": "timeout_sane_T04_RESEARCHING_TO_EDGE_READY",
+      "detail": "OK: T04_RESEARCHING_TO_EDGE_READY.timeout_ms=5000",
+      "pass": true
+    },
+    {
+      "check": "timeout_sane_T05_ANY_TO_DEGRADED",
+      "detail": "OK: T05_ANY_TO_DEGRADED.timeout_ms=0",
+      "pass": true
+    },
+    {
+      "check": "timeout_sane_T06_DEGRADED_TO_HEALING",
+      "detail": "OK: T06_DEGRADED_TO_HEALING.timeout_ms=60000",
+      "pass": true
+    },
+    {
+      "check": "timeout_sane_T07_HEALING_TO_BOOT",
+      "detail": "OK: T07_HEALING_TO_BOOT.timeout_ms=5000",
+      "pass": true
     }
   ],
-  "checks_total": 38,
+  "checks_total": 54,
   "failed_checks": [],
   "gate_id": "RG_FSM01_NO_SKIP_STATES",
   "next_action": "npm run -s verify:regression:fsm01-no-skip-states",

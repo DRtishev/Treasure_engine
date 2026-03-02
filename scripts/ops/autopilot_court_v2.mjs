@@ -42,6 +42,9 @@ const ALLOW_NETWORK_PATH = path.join(ROOT, 'artifacts', 'incoming', 'ALLOW_NETWO
 // Mode detection
 // ---------------------------------------------------------------------------
 const VALID_MODES = ['CERT', 'CLOSE', 'AUDIT', 'RESEARCH', 'ACCEL'];
+// BUG-06 FIX: FSM states BOOT/HEALING use mode 'LIFE' which is not a CLI mode.
+// FSM_DERIVED_MODES is a superset that includes FSM-only modes for G4 derivation.
+const FSM_DERIVED_MODES = [...VALID_MODES, 'LIFE'];
 
 function detectMode() {
   // Priority 1: explicit CLI override (operator knows best)
@@ -62,7 +65,7 @@ function detectMode() {
         }
       }
       const fsmMode = kernel.states?.[fsmState]?.mode;
-      if (fsmMode && VALID_MODES.includes(fsmMode)) return fsmMode;
+      if (fsmMode && FSM_DERIVED_MODES.includes(fsmMode)) return fsmMode;
     }
   } catch { /* fallback to default */ }
 

@@ -3,12 +3,16 @@
  *
  * Structural integrity gate for EPOCH-69 FSM kernel.
  *
- * 5 structural tests:
+ * 9 structural test categories:
  *   1. Forbidden leak — forbidden transitions must NOT appear in getAvailableTransitions()
  *   2. No dead ends — every non-initial state has ≥1 outgoing transition
  *   3. Valid initial — initial_state exists in states
  *   4. No orphan targets — all from/to reference defined states (or '*' wildcard)
  *   5. Goal reachability — BOOT can reach every goal_state via BFS (EPOCH-69 G1)
+ *   6. Breaker config — circuit_breaker.applies_to references valid transitions
+ *   7. Max cycles sanity — 0 < max_cycles < max_goal_attempts
+ *   8. Goal mode existence — every goal_state has a mode defined
+ *   9. Timeout sanity — all transition timeout_ms >= 0
  *
  * Write-scope: reports/evidence/EXECUTOR/gates/manual/regression_fsm01_no_skip_states.json
  */
@@ -167,6 +171,71 @@ if (kernel) {
         detail: reachable
           ? `OK: ${kernel.initial_state} → ${goal} via ${pathFromBoot.map((t) => t.id).join(' → ')}`
           : `FAIL: no path from ${kernel.initial_state} to ${goal}`,
+      });
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Test 6: Circuit breaker config — applies_to must reference real transitions
+  // -------------------------------------------------------------------------
+  const cbConfig = kernel.circuit_breaker;
+  if (cbConfig) {
+    const transitionIds = Object.keys(kernel.transitions);
+    for (const cbTid of cbConfig.applies_to ?? []) {
+      const cbValid = transitionIds.includes(cbTid);
+      checks.push({
+        check: `breaker_valid_tid_${cbTid}`,
+        pass: cbValid,
+        detail: cbValid
+          ? `OK: circuit_breaker applies_to "${cbTid}" is a valid transition`
+          : `FAIL: circuit_breaker applies_to "${cbTid}" not found in transitions`,
+      });
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Test 7: max_cycles sanity — 0 < max_cycles < max_goal_attempts
+  // -------------------------------------------------------------------------
+  const maxCycles = kernel.max_cycles ?? 0;
+  const maxGoalAttempts = kernel.max_goal_attempts ?? 0;
+  const cyclesSane = maxCycles > 0 && maxGoalAttempts > 0 && maxCycles < maxGoalAttempts;
+  checks.push({
+    check: 'max_cycles_sanity',
+    pass: cyclesSane,
+    detail: cyclesSane
+      ? `OK: max_cycles=${maxCycles} < max_goal_attempts=${maxGoalAttempts}`
+      : `FAIL: max_cycles=${maxCycles}, max_goal_attempts=${maxGoalAttempts} (need 0 < max_cycles < max_goal_attempts)`,
+  });
+
+  // -------------------------------------------------------------------------
+  // Test 8: Goal state mode existence — every goal_state has a mode defined
+  // -------------------------------------------------------------------------
+  for (const goal of goalStates) {
+    if (goal in kernel.states) {
+      const goalMode = kernel.states[goal]?.mode;
+      const hasMode = typeof goalMode === 'string' && goalMode.length > 0;
+      checks.push({
+        check: `goal_mode_defined_${goal}`,
+        pass: hasMode,
+        detail: hasMode
+          ? `OK: goal "${goal}" has mode="${goalMode}"`
+          : `FAIL: goal "${goal}" has no mode defined`,
+      });
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Test 9: Timeout sanity — all transition timeout_ms >= 0
+  // -------------------------------------------------------------------------
+  for (const [id, trans] of transitionEntries) {
+    if (trans.timeout_ms !== undefined) {
+      const timeoutOk = typeof trans.timeout_ms === 'number' && trans.timeout_ms >= 0;
+      checks.push({
+        check: `timeout_sane_${id}`,
+        pass: timeoutOk,
+        detail: timeoutOk
+          ? `OK: ${id}.timeout_ms=${trans.timeout_ms}`
+          : `FAIL: ${id}.timeout_ms=${trans.timeout_ms} (must be number >= 0)`,
       });
     }
   }

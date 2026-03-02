@@ -306,81 +306,44 @@ function collectReadiness() {
 
 // ---------------------------------------------------------------------------
 // Collect FSM State — EPOCH-69 G6 FSM Dashboard
+// BUG-09 FIX: Use state_manager imports (SSOT, no DRY violation)
+// BUG-10 FIX: Show paths to ALL goal states
+// BUG-11 FIX: Include circuit breaker state
 // ---------------------------------------------------------------------------
+let _smModule = null;
+try { _smModule = await import('./state_manager.mjs'); } catch { /* graceful degradation */ }
+
 function collectFsmState() {
   try {
-    const fsmKernelPath = path.join(ROOT, 'specs', 'fsm_kernel.json');
-    if (!fs.existsSync(fsmKernelPath)) {
-      return { present: false, state: 'UNKNOWN', note: 'FSM kernel not installed' };
+    if (!_smModule) {
+      return { present: false, state: 'UNKNOWN', note: 'state_manager import failed' };
     }
-    const kernel = JSON.parse(fs.readFileSync(fsmKernelPath, 'utf8'));
+    const { loadFsmKernel, replayState, getAvailableTransitions,
+            findPathToGoal, getCircuitBreakerState } = _smModule;
 
-    // Replay FSM state from aggregated events
-    let fsmState = kernel.initial_state ?? 'BOOT';
-    let transitionCount = 0;
-    const transitionHistory = [];
-    for (const ev of allEvents) {
-      if (ev.event === 'STATE_TRANSITION' && ev.component === 'FSM' && ev.attrs?.to_state) {
-        transitionHistory.push({
-          tick: ev.tick,
-          from: ev.attrs.from_state ?? fsmState,
-          to: ev.attrs.to_state,
-          transition_id: ev.attrs.transition_id ?? 'unknown',
-        });
-        fsmState = ev.attrs.to_state;
-        transitionCount++;
-      }
-    }
-
-    const mode = kernel.states?.[fsmState]?.mode ?? 'UNKNOWN';
+    const kernel = loadFsmKernel();
+    const result = replayState(allEvents);
+    const available = getAvailableTransitions(result.state);
     const goalStates = kernel.goal_states ?? ['CERTIFIED'];
-    const defaultGoal = goalStates[0] ?? 'CERTIFIED';
 
-    // Compute available transitions (inline — no circular import)
-    const forbidden = kernel.forbidden_transitions ?? [];
-    const isForbidden = (from, to) => forbidden.some((f) => f.from === from && f.to === to);
-    const availableTransitions = [];
-    for (const [id, trans] of Object.entries(kernel.transitions)) {
-      if (trans.from !== '*' && trans.from !== fsmState) continue;
-      if (trans.from === '*' && fsmState === 'BOOT') continue;
-      if (isForbidden(fsmState, trans.to)) continue;
-      if (trans.to === fsmState && trans.from !== '*') continue;
-      availableTransitions.push(id);
+    // BUG-10 FIX: paths to ALL goal states
+    const goalPaths = {};
+    for (const goal of goalStates) {
+      goalPaths[goal] = findPathToGoal(result.state, goal).map((t) => t.id);
     }
 
-    // BFS path to goal (inline — lightweight, no state_manager import)
-    const pathToGoal = [];
-    if (fsmState !== defaultGoal) {
-      const queue = [{ state: fsmState, path: [] }];
-      const visited = new Set([fsmState]);
-      while (queue.length > 0) {
-        const { state: cur, path: curPath } = queue.shift();
-        for (const [id, trans] of Object.entries(kernel.transitions)) {
-          if (trans.from !== '*' && trans.from !== cur) continue;
-          if (trans.from === '*' && cur === 'BOOT') continue;
-          if (isForbidden(cur, trans.to)) continue;
-          if (visited.has(trans.to)) continue;
-          const newPath = [...curPath, id];
-          if (trans.to === defaultGoal) {
-            pathToGoal.push(...newPath);
-            queue.length = 0;
-            break;
-          }
-          visited.add(trans.to);
-          queue.push({ state: trans.to, path: newPath });
-        }
-      }
-    }
+    // BUG-11 FIX: circuit breaker full manifest
+    const circuitBreakers = getCircuitBreakerState();
 
     return {
       present: true,
-      state: fsmState,
-      mode,
-      goal: defaultGoal,
-      path_to_goal: pathToGoal,
-      available_transitions: availableTransitions,
-      transitions_seen: transitionCount,
-      transition_history: transitionHistory.slice(-10),
+      state: result.state,
+      mode: result.mode,
+      goal_paths: goalPaths,
+      available_transitions: available.map((t) => t.id),
+      circuit_breakers: circuitBreakers,
+      transitions_seen: result.transitions_count,
+      transition_history: result.transitions.slice(-10),
     };
   } catch {
     return { present: false, state: 'UNKNOWN', note: 'FSM kernel load error' };
@@ -556,11 +519,21 @@ const hudMd = [
   '',
   `STATE: ${fsm.state}`,
   `MODE: ${fsm.mode ?? 'UNKNOWN'}`,
-  `GOAL: ${fsm.goal ?? 'UNKNOWN'}`,
-  `PATH_TO_GOAL: ${fsm.path_to_goal?.join(' → ') || 'NONE'}`,
   `AVAILABLE: ${fsm.available_transitions?.join(', ') || 'NONE'}`,
   `TRANSITIONS_SEEN: ${fsm.transitions_seen ?? 0}`,
   ...(fsm.note ? [`NOTE: ${fsm.note}`] : []),
+  '',
+  // BUG-10 FIX: show paths to ALL goal states
+  ...(fsm.goal_paths
+    ? Object.entries(fsm.goal_paths).map(([goal, p]) =>
+        `GOAL ${goal}: ${p.length > 0 ? p.join(' → ') : '(at goal)'}`)
+    : ['GOAL: UNKNOWN']),
+  '',
+  // BUG-11 FIX: show circuit breaker manifest
+  ...(fsm.circuit_breakers
+    ? Object.entries(fsm.circuit_breakers).map(([tid, cb]) =>
+        `BREAKER ${tid}: ${cb.failures}/${cb.threshold} open=${cb.open}`)
+    : ['BREAKERS: NONE']),
   '',
   fsm.transition_history?.length > 0
     ? ['### Transition History (last 10)', '',
@@ -591,6 +564,6 @@ console.log(`  fast_gate:   ${fg.status} (${fg.gates_checked} gates, ${fg.failed
 console.log(`  pr01:        ${pr1.status}`);
 console.log(`  wow_gates:   ${wow.gates_checked} checked, ${wow.failed_n} failed`);
 console.log(`  readiness:   ${readiness.status} lanes=${readiness.lanes_total} truth=${readiness.truth_lanes_n}`);
-console.log(`  fsm:         ${fsm.state} mode=${fsm.mode ?? '?'} goal=${fsm.goal ?? '?'}`);
+console.log(`  fsm:         ${fsm.state} mode=${fsm.mode ?? '?'} goals=${Object.keys(fsm.goal_paths ?? {}).join(',') || '?'}`);
 
 process.exit(hudStatus === 'PASS' ? 0 : 1);
