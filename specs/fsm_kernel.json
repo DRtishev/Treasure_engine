@@ -99,11 +99,11 @@
       "from": "DEGRADED",
       "to": "HEALING",
       "guard": "guard_healable",
-      "action": null,
+      "action": "npm run -s ops:heal-runner",
       "on_fail": "stay",
       "compensation": null,
-      "timeout_ms": 60000,
-      "description": "Initiate self-heal — at least one healable condition exists."
+      "timeout_ms": 120000,
+      "description": "Initiate self-heal — healAll() repairs infrastructure."
     },
     "T07_HEALING_TO_BOOT": {
       "from": "HEALING",

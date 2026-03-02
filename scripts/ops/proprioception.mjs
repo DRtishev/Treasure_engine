@@ -49,13 +49,25 @@ function scanEnvironment() {
     depsReady = fs.existsSync(nodeModulesPath) &&
       fs.readdirSync(nodeModulesPath).length >= 10;
   } catch { /* fail-safe */ }
+  // BUG-D mirror: also check NODE_PATH
+  if (!depsReady && process.env.NODE_PATH) {
+    const dirs = process.env.NODE_PATH.split(path.delimiter).filter(Boolean);
+    for (const dir of dirs) {
+      try {
+        if (fs.existsSync(dir) && fs.readdirSync(dir).length >= 10) {
+          depsReady = true;
+          break;
+        }
+      } catch { /* continue */ }
+    }
+  }
 
   const gitPresent = fs.existsSync(path.join(ROOT, '.git'));
   const networkToken = fs.existsSync(path.join(ROOT, 'artifacts', 'incoming', 'ALLOW_NETWORK'));
 
   let candidatesPromoted = 0;
   try {
-    const regPath = path.join(ROOT, 'artifacts', 'CANDIDATE_REGISTRY.json');
+    const regPath = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR', 'CANDIDATE_REGISTRY.json');
     if (fs.existsSync(regPath)) {
       const reg = JSON.parse(fs.readFileSync(regPath, 'utf8'));
       const entries = reg.candidates ?? reg.entries ?? [];

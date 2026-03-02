@@ -6,9 +6,14 @@ RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 0
+- changed_evidence_files_n: 6
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
 ## OFFENDERS
-- NONE
+- reports/evidence/EXECUTOR/gates/manual/regression_fsm01_no_skip_states.json
+- reports/evidence/EXECUTOR/gates/manual/regression_fsm02_consciousness.json
+- reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
+- reports/evidence/EXECUTOR/REGRESSION_FSM01.md
+- reports/evidence/EXECUTOR/REGRESSION_FSM02.md
+- reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md

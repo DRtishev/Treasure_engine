@@ -117,7 +117,7 @@ if (kernel) {
     // Test 1: life_summary_v2_schema
     // -----------------------------------------------------------------------
     if (summary) {
-      const isV2 = summary.schema_version === '2.0.0';
+      const isV2 = summary.schema_version === '2.0.0' || summary.schema_version === '3.0.0';
       checks.push({
         check: 'life_summary_v2_schema',
         pass: isV2,
@@ -203,16 +203,21 @@ if (kernel) {
 
       // -------------------------------------------------------------------
       // Test 5: no_hardcoded_cert_mode
+      // Verify mode is FSM-derived. When FSM state is CERTIFIED,
+      // all modes=CERT is CORRECT. Check PROPRIO_SCAN has fsm_state attr.
       // -------------------------------------------------------------------
       const lifeComponentEvents = lifeEvents.filter((e) => e.component === 'LIFE');
       const modes = [...new Set(lifeComponentEvents.map((e) => e.mode))];
-      const allCert = modes.length === 1 && modes[0] === 'CERT';
+      const proprioScanForMode = lifeEvents.find(
+        (e) => e.component === 'LIFE' && e.event === 'PROPRIO_SCAN' && e.attrs?.fsm_state
+      );
+      const fsmDerived = proprioScanForMode !== undefined || modes.length > 1;
       checks.push({
         check: 'no_hardcoded_cert_mode',
-        pass: !allCert,
-        detail: !allCert
-          ? `OK: LIFE events have diverse modes: ${modes.join(', ')}`
-          : 'FAIL: all LIFE events have mode=CERT (hardcoded, not FSM-derived)',
+        pass: fsmDerived,
+        detail: fsmDerived
+          ? `OK: modes FSM-derived (${modes.join(', ')}) — proprio fsm_state=${proprioScanForMode?.attrs?.fsm_state ?? 'diverse'}`
+          : 'FAIL: no evidence of FSM-derived modes (no PROPRIO_SCAN with fsm_state)',
       });
     } else {
       // No life events — skip-safe

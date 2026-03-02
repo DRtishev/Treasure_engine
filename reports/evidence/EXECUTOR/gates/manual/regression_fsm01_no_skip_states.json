@@ -262,7 +262,7 @@
     },
     {
       "check": "timeout_sane_T06_DEGRADED_TO_HEALING",
-      "detail": "OK: T06_DEGRADED_TO_HEALING.timeout_ms=60000",
+      "detail": "OK: T06_DEGRADED_TO_HEALING.timeout_ms=120000",
       "pass": true
     },
     {

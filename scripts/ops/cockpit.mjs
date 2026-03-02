@@ -347,6 +347,14 @@ function collectFsmState() {
     );
     const consciousnessReached = consciousnessEvent?.attrs?.reached ?? null;
 
+    // EPOCH-71: Extract immune data
+    const doctorVerdictEvent = allEvents.find(
+      (e) => e.component === 'LIFE' && e.event === 'DOCTOR_VERDICT_FAIL'
+    );
+    const immuneHealedEvent = allEvents.find(
+      (e) => e.component === 'LIFE' && (e.event === 'IMMUNE_HEALED' || e.event === 'IMMUNE_HEAL_FAILED')
+    );
+
     return {
       present: true,
       state: result.state,
@@ -358,6 +366,11 @@ function collectFsmState() {
       transition_history: result.transitions.slice(-10),
       life_outcome: lifeOutcome,
       consciousness_reached: consciousnessReached,
+      doctor_verdict: doctorVerdictEvent?.attrs?.verdict ?? null,
+      doctor_score: doctorVerdictEvent?.attrs?.score ?? null,
+      healing_status: immuneHealedEvent?.event === 'IMMUNE_HEALED' ? 'HEALED'
+        : immuneHealedEvent?.event === 'IMMUNE_HEAL_FAILED' ? 'FAILED'
+        : null,
     };
   } catch {
     return { present: false, state: 'UNKNOWN', note: 'FSM kernel load error' };
@@ -550,6 +563,14 @@ const hudMd = [
     ? Object.entries(fsm.circuit_breakers).map(([tid, cb]) =>
         `BREAKER ${tid}: ${cb.failures}/${cb.threshold} open=${cb.open}`)
     : ['BREAKERS: NONE']),
+  '',
+  // EPOCH-71: Immune status
+  ...(fsm.doctor_verdict
+    ? [`DOCTOR_VERDICT: ${fsm.doctor_verdict} (score=${fsm.doctor_score ?? '?'})`]
+    : []),
+  ...(fsm.healing_status
+    ? [`HEALING: ${fsm.healing_status}`]
+    : []),
   '',
   fsm.transition_history?.length > 0
     ? ['### Transition History (last 10)', '',

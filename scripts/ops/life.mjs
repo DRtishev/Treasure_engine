@@ -1,28 +1,36 @@
 /**
- * life.mjs v2 — ops:life — THE AWAKENED ORGANISM
+ * life.mjs v3 — ops:life — THE IMMUNE ORGANISM
  *
- * EPOCH-70 AWAKENING: FSM drives the organism.
+ * EPOCH-71 IMMUNE AWAKENING: immune + nervous system = one organism.
  *
  * BC: verify_fast hard_stop is now enforced by FSM (runToGoal ABORT on failure).
  *
- * 5 Phases:
- *   Phase 1: PROPRIOCEPTION  — scan self (state, environment, trajectory)
- *   Phase 2: CONSCIOUSNESS   — runToGoal('CERTIFIED') — FSM executes transitions
- *   Phase 3: TELEMETRY       — organ pipeline (eventbus, timemachine, autopilot,
- *                               cockpit, candidates)
- *   Phase 4: REFLEX SCAN     — auto-degrade on critical telemetry failures
- *   Phase 5: SEAL            — evidence + watermark + exit
+ * 5+1 Phases:
+ *   Phase 1:   PROPRIOCEPTION  — scan self (state, environment, trajectory)
+ *   Phase 2:   CONSCIOUSNESS   — runToGoal('CERTIFIED') — FSM executes transitions
+ *   Phase 3:   TELEMETRY       — organ pipeline (eventbus, timemachine, autopilot,
+ *                                 cockpit, candidates, doctor)
+ *   Phase 4:   REFLEX SCAN     — auto-degrade on critical telemetry/doctor failures
+ *   Phase 4.5: IMMUNE RESPONSE — healing loop when DEGRADED
+ *   Phase 5:   SEAL            — evidence + watermark + exit
  *
  * EPOCH-69 ABSORPTION:
  *   S01 (verify:fast) is now INSIDE FSM (T02 action).
  *   Steps S02-S06 are TELEMETRY (post-FSM).
  *
+ * EPOCH-71 ADDITIONS:
+ *   T6: ops:doctor — immune telemetry step
+ *   immune_reflex: DOCTOR_VERDICT_FAIL → T05 degradation
+ *   Phase 4.5: T06 → healAll() → T07 → BOOT
+ *
  * Network: FORBIDDEN (TREASURE_NET_KILL=1)
  * Write-scope: reports/evidence/EPOCH-LIFE-<RUN_ID>/
  *
  * GENIUS FEATURES:
- *   G8: PROPRIOCEPTION — self-awareness context (§2)
- *   G9: REFLEXES — automatic interrupt-driven degradation (§3)
+ *   G8:  PROPRIOCEPTION — self-awareness context
+ *   G9:  REFLEXES — automatic interrupt-driven degradation
+ *   G10: IMMUNE REFLEXES — doctor-driven degradation
+ *   G11: HEALING LOOP — FSM-driven DEGRADED → HEALING → BOOT
  */
 
 import fs from 'node:fs';
@@ -32,7 +40,7 @@ import { RUN_ID, writeMd } from '../edge/edge_lab/canon.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 import { createBus } from './eventbus_v1.mjs';
 import {
-  loadFsmKernel, runToGoal, replayState, stateToMode,
+  loadFsmKernel, runToGoal, stateToMode,
   executeTransition, writeWatermark, getCircuitBreakerState,
 } from './state_manager.mjs';
 import { scan as proprioScan } from './proprioception.mjs';
@@ -62,6 +70,17 @@ const REFLEX_REGISTRY = [
     name: 'degradation_reflex',
     trigger: 'STEP_FAIL',
     guard: (state, _ev) => !['BOOT', 'DEGRADED', 'HEALING'].includes(state),
+    response: 'T05_ANY_TO_DEGRADED',
+    cooldown: 0,
+  },
+  {
+    name: 'immune_reflex',
+    trigger: 'DOCTOR_VERDICT_FAIL',
+    guard: (state, ev) => {
+      if (['BOOT', 'DEGRADED', 'HEALING'].includes(state)) return false;
+      const score = parseInt(ev.attrs?.score ?? '100', 10);
+      return score < 70;
+    },
     response: 'T05_ANY_TO_DEGRADED',
     cooldown: 0,
   },
@@ -172,6 +191,14 @@ const TELEMETRY_STEPS = [
     shell: false,
     cmd: process.execPath,
     args: ['scripts/ops/candidate_registry.mjs'],
+  },
+  {
+    id: 'T6',
+    name: 'ops_doctor',
+    label: 'ops:doctor',
+    shell: false,
+    cmd: process.execPath,
+    args: ['scripts/ops/doctor_v2.mjs'],
   },
 ];
 
@@ -291,8 +318,10 @@ const reflexesFired = [];
 
 // Check if already at goal
 if (currentState === goalState) {
-  // GOAL_ALREADY_REACHED: validate environment to trust watermark
-  const envValid = proprio.env.executor_present && proprio.env.gate_count > 0;
+  // GOAL_ALREADY_REACHED: validate environment + freshness to trust watermark
+  // BUG-C FIX: require watermark_tick > 0 to prevent trusting stale state
+  const envValid = proprio.env.executor_present && proprio.env.gate_count > 0
+    && proprio.watermark_tick > 0;
   if (envValid) {
     consciousnessResult = {
       goal: goalState,
@@ -419,15 +448,150 @@ for (const step of TELEMETRY_STEPS) {
 
     const reflexResult = checkReflexes(currentState, failEvent);
     if (reflexResult.fired) {
+      const prevState = currentState;
       currentState = reflexResult.newState;
       reflexesFired.push({
         reflex: reflexResult.reflex,
         trigger_step: result.step_id,
-        from_state: currentState,
+        from_state: prevState,
         to_state: reflexResult.newState,
       });
       console.log(`         REFLEX: ${reflexResult.reflex} → ${reflexResult.newState}`);
     }
+  }
+}
+
+console.log('');
+
+// =========================================================================
+// PHASE 3.5: DOCTOR VERDICT INGESTION (after T6)
+// =========================================================================
+let latestDoctorVerdict = null;
+let doctorScore = 100;
+{
+  const evidDir = path.join(ROOT, 'reports', 'evidence');
+  try {
+    const doctorDirs = fs.readdirSync(evidDir)
+      .filter((d) => d.startsWith('EPOCH-DOCTOR-')).sort();
+    if (doctorDirs.length > 0) {
+      const latest = doctorDirs[doctorDirs.length - 1];
+      const receiptPath = path.join(evidDir, latest, 'DOCTOR.json');
+      if (fs.existsSync(receiptPath)) {
+        const receipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
+        latestDoctorVerdict = receipt.status ?? null;
+        doctorScore = receipt.score ?? 100;
+
+        if (latestDoctorVerdict && latestDoctorVerdict !== 'HEALTHY') {
+          const doctorFailEvent = {
+            event: 'DOCTOR_VERDICT_FAIL',
+            component: 'LIFE',
+            attrs: {
+              verdict: latestDoctorVerdict,
+              score: String(doctorScore),
+            },
+          };
+
+          bus.append({
+            mode: stateToMode(currentState),
+            component: 'LIFE',
+            event: 'DOCTOR_VERDICT_FAIL',
+            reason_code: 'DOCTOR_VERDICT_FAIL',
+            surface: 'CONTRACT',
+            attrs: {
+              verdict: latestDoctorVerdict,
+              score: String(doctorScore),
+            },
+          });
+
+          // Check immune reflex
+          const reflexResult = checkReflexes(currentState, doctorFailEvent);
+          if (reflexResult.fired) {
+            const prevState = currentState;
+            currentState = reflexResult.newState;
+            reflexesFired.push({
+              reflex: reflexResult.reflex,
+              trigger_step: 'T6',
+              from_state: prevState,
+              to_state: reflexResult.newState,
+            });
+            console.log(`[ops:life] IMMUNE: ${reflexResult.reflex} fired → ${reflexResult.newState}`);
+          }
+        }
+      }
+    }
+  } catch { /* fail-safe: doctor ingestion is best-effort */ }
+}
+
+// =========================================================================
+// PHASE 4.5: IMMUNE RESPONSE (Healing Loop)
+// =========================================================================
+let healingAttempted = false;
+let healingSucceeded = false;
+const healingActions = [];
+
+if (currentState === 'DEGRADED') {
+  console.log('[ops:life] IMMUNE: organism DEGRADED — attempting healing loop');
+  healingAttempted = true;
+
+  // Try T06: DEGRADED → HEALING
+  const t06Result = executeTransition(bus, currentState, 'T06_DEGRADED_TO_HEALING', {
+    trigger: 'immune_response',
+    doctor_verdict: latestDoctorVerdict,
+  });
+
+  if (t06Result.success) {
+    currentState = t06Result.newState; // HEALING
+    console.log('[ops:life] IMMUNE: entered HEALING — healAll() executed by T06 action');
+
+    // Read heal receipt for actions log
+    try {
+      const evidDir = path.join(ROOT, 'reports', 'evidence');
+      const healDirs = fs.readdirSync(evidDir)
+        .filter((d) => d.startsWith('EPOCH-HEAL-')).sort();
+      if (healDirs.length > 0) {
+        const latest = healDirs[healDirs.length - 1];
+        const receiptPath = path.join(evidDir, latest, 'HEAL_RECEIPT.json');
+        if (fs.existsSync(receiptPath)) {
+          const receipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
+          healingActions.push(...(receipt.actions ?? []));
+        }
+      }
+    } catch { /* fail-safe */ }
+
+    // Try T07: HEALING → BOOT
+    const t07Result = executeTransition(bus, currentState, 'T07_HEALING_TO_BOOT', {
+      trigger: 'heal_complete_check',
+      heals_applied: healingActions.filter((a) => a.healed).length,
+    });
+
+    if (t07Result.success) {
+      currentState = t07Result.newState; // BOOT
+      healingSucceeded = true;
+      console.log('[ops:life] IMMUNE: healed → BOOT. Next run will attempt certification.');
+
+      bus.append({
+        mode: stateToMode(currentState),
+        component: 'LIFE',
+        event: 'IMMUNE_HEALED',
+        reason_code: 'LIFE_IMMUNE_HEALED',
+        surface: 'CONTRACT',
+        attrs: { from: 'DEGRADED', to: 'BOOT', method: 'healAll' },
+      });
+    } else {
+      currentState = t07Result.newState; // stays DEGRADED (on_fail)
+      console.log('[ops:life] IMMUNE: heal verification FAILED — staying DEGRADED');
+
+      bus.append({
+        mode: stateToMode(currentState),
+        component: 'LIFE',
+        event: 'IMMUNE_HEAL_FAILED',
+        reason_code: 'LIFE_IMMUNE_HEAL_FAILED',
+        surface: 'CONTRACT',
+        attrs: { reason: 'guard_heal_complete failed after healAll' },
+      });
+    }
+  } else {
+    console.log('[ops:life] IMMUNE: not healable — staying DEGRADED (manual intervention needed)');
   }
 }
 
@@ -439,12 +603,14 @@ console.log('');
 
 // Compute life outcome
 let lifeOutcome;
-if (consciousnessResult.reached && reflexesFired.length === 0 &&
+if (healingSucceeded) {
+  lifeOutcome = 'HEALED';
+} else if (consciousnessResult.reached && reflexesFired.length === 0 &&
     stepResults.every((s) => s.status === 'PASS')) {
   lifeOutcome = 'ALIVE';
 } else if (consciousnessResult.reached && stepResults.some((s) => s.status !== 'PASS')) {
   lifeOutcome = 'IMPAIRED';
-} else if (reflexesFired.some((r) => r.reflex === 'degradation_reflex')) {
+} else if (reflexesFired.some((r) => r.reflex === 'degradation_reflex' || r.reflex === 'immune_reflex')) {
   lifeOutcome = 'DEGRADED';
 } else if (Object.values(getCircuitBreakerState()).some((cb) => cb.open)) {
   lifeOutcome = 'CRITICAL';
@@ -467,6 +633,7 @@ const outcomeReasonMap = {
   DEGRADED: 'LIFE_OUTCOME_DEGRADED',
   CRITICAL: 'LIFE_OUTCOME_CRITICAL',
   BLOCKED: 'LIFE_OUTCOME_BLOCKED',
+  HEALED: 'LIFE_OUTCOME_HEALED',
 };
 
 bus.append({
@@ -510,24 +677,31 @@ const { jsonlPath: busJsonlPath } = bus.flush();
 // check if step.id === 'S01' equivalent failed with result.status === 'BLOCKED'
 let oneNextAction = null;
 if (!consciousnessResult.reached) {
-  // Try to read toolchain next_action from receipt (same as old S01 BLOCKED path)
-  try {
-    const ensureJson = path.join(ROOT, 'reports/evidence/EXECUTOR/gates/manual/node_toolchain_ensure.json');
-    if (fs.existsSync(ensureJson)) {
-      const receipt = JSON.parse(fs.readFileSync(ensureJson, 'utf8'));
-      if (receipt.detail && typeof receipt.detail === 'object' && receipt.detail.next_action) {
-        oneNextAction = receipt.detail.next_action;
+  // BUG-G: Derive specific guidance from consciousness failure reason
+  const reason = consciousnessResult.reason;
+  if (reason === 'no_valid_path') {
+    oneNextAction = 'Check FSM guards — no path to goal from ' + consciousnessResult.final_state;
+  } else {
+    // Try to read toolchain next_action from receipt (same as old S01 BLOCKED path)
+    // check if step.id === 'S01' equivalent failed with result.status === 'BLOCKED'
+    try {
+      const ensureJson = path.join(ROOT, 'reports/evidence/EXECUTOR/gates/manual/node_toolchain_ensure.json');
+      if (fs.existsSync(ensureJson)) {
+        const receipt = JSON.parse(fs.readFileSync(ensureJson, 'utf8'));
+        if (receipt.detail && typeof receipt.detail === 'object' && receipt.detail.next_action) {
+          oneNextAction = receipt.detail.next_action;
+        }
       }
-    }
-  } catch { /* fail-soft: oneNextAction stays null */ }
-  if (!oneNextAction) oneNextAction = 'npm run -s ops:node:toolchain:bootstrap';
+    } catch { /* fail-soft: oneNextAction stays null */ }
+    if (!oneNextAction) oneNextAction = 'npm run -s ops:node:toolchain:bootstrap';
+  }
 }
 
 // ---------------------------------------------------------------------------
 // Write LIFE_SUMMARY.json v2
 // ---------------------------------------------------------------------------
 writeJsonDeterministic(path.join(EPOCH_DIR, 'LIFE_SUMMARY.json'), {
-  schema_version: '2.0.0',
+  schema_version: '3.0.0',
   gate_id: 'WOW_ORGANISM_LIFE',
   run_id: RUN_ID,
   status: lifeStatus,
@@ -547,6 +721,16 @@ writeJsonDeterministic(path.join(EPOCH_DIR, 'LIFE_SUMMARY.json'), {
   consciousness_result: consciousnessResult,
   fsm_final_state: currentState,
   reflexes_fired: reflexesFired,
+
+  // EPOCH-71: IMMUNE DATA
+  immune: {
+    doctor_ran: stepResults.some((s) => s.step_id === 'T6'),
+    doctor_verdict: latestDoctorVerdict,
+    doctor_score: doctorScore,
+    healing_attempted: healingAttempted,
+    healing_succeeded: healingSucceeded,
+    healing_actions: healingActions,
+  },
 
   // COMPAT: EPOCH-69 fields preserved
   steps_total: TELEMETRY_STEPS.length,
@@ -609,6 +793,15 @@ writeMd(path.join(EPOCH_DIR, 'LIFE_SUMMARY.md'), [
     ? '- NONE'
     : reflexesFired.map((r) => `- ${r.reflex}: ${r.trigger_step} → ${r.to_state}`).join('\n'),
   '',
+  '## IMMUNE',
+  `DOCTOR_VERDICT: ${latestDoctorVerdict ?? 'N/A'}`,
+  `DOCTOR_SCORE: ${doctorScore}`,
+  `HEALING_ATTEMPTED: ${healingAttempted}`,
+  `HEALING_SUCCEEDED: ${healingSucceeded}`,
+  healingActions.length > 0
+    ? healingActions.map((a) => `- ${a.action}: ${a.healed ? 'HEALED' : 'SKIP'} — ${a.detail}`).join('\n')
+    : '- No healing actions',
+  '',
   '## NEXT_ACTION',
   oneNextAction ?? 'npm run -s verify:fast',
   '',
@@ -629,6 +822,8 @@ console.log(`  FSM:     ${currentState} (${stateToMode(currentState)})`);
 console.log(`  CONSCIOUSNESS: goal=${consciousnessResult.goal} reached=${consciousnessResult.reached}`);
 console.log(`  TELEMETRY: ${stepResults.length}/${TELEMETRY_STEPS.length} run, ${stepResults.filter((s) => s.status === 'PASS').length} PASS, ${failed.length} FAIL`);
 if (reflexesFired.length > 0) console.log(`  REFLEXES: ${reflexesFired.length} fired`);
+if (latestDoctorVerdict) console.log(`  DOCTOR: ${latestDoctorVerdict} score=${doctorScore}`);
+if (healingAttempted) console.log(`  HEALING: attempted=${healingAttempted} succeeded=${healingSucceeded}`);
 if (oneNextAction) console.log(`  ONE_NEXT_ACTION: ${oneNextAction}`);
 
 // Exit code based on FSM final state
