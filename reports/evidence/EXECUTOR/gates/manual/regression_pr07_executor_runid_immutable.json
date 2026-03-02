@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "executor_run_id_constant",
+      "detail": "EXECUTOR_RUN_ID=STABLE",
+      "pass": true
+    },
+    {
+      "check": "md_determinism_x2",
+      "detail": "byte-identical",
+      "pass": true
+    },
+    {
+      "check": "md_contains_stable",
+      "detail": "RUN_ID: STABLE present",
+      "pass": true
+    },
+    {
+      "check": "json_determinism_x2",
+      "detail": "byte-identical",
+      "pass": true
+    },
+    {
+      "check": "json_contains_stable",
+      "detail": "run_id=STABLE",
+      "pass": true
+    },
+    {
+      "check": "non_executor_not_normalized",
+      "detail": "non-EXECUTOR paths preserve original RUN_ID",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_PR07_EXECUTOR_RUNID_IMMUTABLE",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

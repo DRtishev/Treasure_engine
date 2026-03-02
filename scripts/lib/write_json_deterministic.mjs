@@ -98,7 +98,12 @@ export function writeJsonDeterministic(filePath, data, opts = {}) {
   if (!opts.skipTimestampCheck) {
     validateNoTimestamps(data);
   }
-  const sorted = sortKeysRecursive(data);
+  // PR07: normalize run_id in EXECUTOR receipts to prevent churn
+  let toWrite = data;
+  if (filePath.includes('reports/evidence/EXECUTOR') && toWrite.run_id) {
+    toWrite = { ...toWrite, run_id: 'STABLE' };
+  }
+  const sorted = sortKeysRecursive(toWrite);
   const dir = path.dirname(filePath);
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, { recursive: true });

@@ -1,0 +1,134 @@
+{
+  "schema_version": "2.0.0",
+  "description": "Treasure Engine Organism FSM — Nervous System Kernel. 7 states, 7 transitions, 5 forbidden pairs, 2 goal states.",
+  "initial_state": "BOOT",
+  "goal_states": ["CERTIFIED", "EDGE_READY"],
+  "max_goal_attempts": 10,
+
+  "states": {
+    "BOOT": {
+      "mode": "LIFE",
+      "description": "System started, unverified. No gates have been run.",
+      "budget_ms": 30000
+    },
+    "CERTIFYING": {
+      "mode": "CERT",
+      "description": "Verification pipeline running. verify:fast is executing.",
+      "budget_ms": 600000
+    },
+    "CERTIFIED": {
+      "mode": "CERT",
+      "description": "All gates pass. verify:fast x2 PASS confirmed.",
+      "budget_ms": 0
+    },
+    "RESEARCHING": {
+      "mode": "RESEARCH",
+      "description": "Network enabled, data acquisition work. ALLOW_NETWORK token present.",
+      "budget_ms": 300000
+    },
+    "EDGE_READY": {
+      "mode": "CERT",
+      "description": "Candidates promoted. CANDIDATE_REGISTRY has promoted entries.",
+      "budget_ms": 0
+    },
+    "DEGRADED": {
+      "mode": "AUDIT",
+      "description": "Probe failure detected. At least one gate/probe FAIL.",
+      "budget_ms": 60000
+    },
+    "HEALING": {
+      "mode": "LIFE",
+      "description": "Self-heal in progress. healAll() executing.",
+      "budget_ms": 60000
+    }
+  },
+
+  "transitions": {
+    "T01_BOOT_TO_CERTIFYING": {
+      "from": "BOOT",
+      "to": "CERTIFYING",
+      "guard": "guard_deps_ready",
+      "action": "npm run -s ops:baseline:restore",
+      "on_fail": "stay",
+      "compensation": null,
+      "timeout_ms": 10000,
+      "description": "Begin certification — restore baseline and start verification pipeline."
+    },
+    "T02_CERTIFYING_TO_CERTIFIED": {
+      "from": "CERTIFYING",
+      "to": "CERTIFIED",
+      "guard": "guard_verify_fast_x2",
+      "action": "npm run -s verify:fast",
+      "action_x2": true,
+      "on_fail": "DEGRADED",
+      "compensation": null,
+      "timeout_ms": 300000,
+      "description": "Certification complete — run verify:fast x2 for determinism proof."
+    },
+    "T03_CERTIFIED_TO_RESEARCHING": {
+      "from": "CERTIFIED",
+      "to": "RESEARCHING",
+      "guard": "guard_network_token",
+      "action": null,
+      "on_fail": "stay",
+      "compensation": "compensate_revoke_network",
+      "timeout_ms": 5000,
+      "description": "Enable network for data acquisition — network token present."
+    },
+    "T04_RESEARCHING_TO_EDGE_READY": {
+      "from": "RESEARCHING",
+      "to": "EDGE_READY",
+      "guard": "guard_data_ready",
+      "action": null,
+      "on_fail": "CERTIFIED",
+      "compensation": "compensate_invalidate_registry",
+      "timeout_ms": 5000,
+      "description": "Promote candidates — verify data readiness."
+    },
+    "T05_ANY_TO_DEGRADED": {
+      "from": "*",
+      "to": "DEGRADED",
+      "guard": "guard_probe_failure",
+      "action": null,
+      "on_fail": "stay",
+      "compensation": null,
+      "timeout_ms": 0,
+      "description": "Safety transition on probe failure — any non-BOOT state transitions to DEGRADED."
+    },
+    "T06_DEGRADED_TO_HEALING": {
+      "from": "DEGRADED",
+      "to": "HEALING",
+      "guard": "guard_healable",
+      "action": "npm run -s ops:heal-runner",
+      "on_fail": "stay",
+      "compensation": null,
+      "timeout_ms": 120000,
+      "description": "Initiate self-heal — healAll() repairs infrastructure."
+    },
+    "T07_HEALING_TO_BOOT": {
+      "from": "HEALING",
+      "to": "BOOT",
+      "guard": "guard_heal_complete",
+      "action": null,
+      "on_fail": "DEGRADED",
+      "compensation": null,
+      "timeout_ms": 5000,
+      "description": "Reset to BOOT after successful heal."
+    }
+  },
+
+  "forbidden_transitions": [
+    { "from": "BOOT", "to": "RESEARCHING", "reason": "Must certify first" },
+    { "from": "BOOT", "to": "EDGE_READY", "reason": "Must certify and research first" },
+    { "from": "CERTIFYING", "to": "RESEARCHING", "reason": "Must fully certify first" },
+    { "from": "DEGRADED", "to": "EDGE_READY", "reason": "Must heal then boot then certify first" },
+    { "from": "HEALING", "to": "CERTIFIED", "reason": "Must go through BOOT then CERTIFYING" }
+  ],
+
+  "circuit_breaker": {
+    "threshold": 3,
+    "applies_to": ["T01_BOOT_TO_CERTIFYING", "T02_CERTIFYING_TO_CERTIFIED", "T03_CERTIFIED_TO_RESEARCHING", "T04_RESEARCHING_TO_EDGE_READY", "T06_DEGRADED_TO_HEALING", "T07_HEALING_TO_BOOT"]
+  },
+
+  "max_cycles": 3
+}

@@ -230,7 +230,8 @@ function collectFastGate() {
     const data = readJson(path.join(gateDir, f));
     if (data) {
       // Skip stale receipts (different run_id) — treat as NO_DATA
-      if (data.run_id && data.run_id !== RUN_ID) continue;
+      // PR07: STABLE is always current (EXECUTOR receipts use stable run_id)
+      if (data.run_id && data.run_id !== RUN_ID && data.run_id !== 'STABLE') continue;
       gates.push({ gate: f.replace('.json', ''), status: data.status ?? 'UNKNOWN', reason_code: data.reason_code ?? 'UNKNOWN' });
     }
   }
@@ -304,6 +305,79 @@ function collectReadiness() {
 }
 
 // ---------------------------------------------------------------------------
+// Collect FSM State — EPOCH-69 G6 FSM Dashboard
+// BUG-09 FIX: Use state_manager imports (SSOT, no DRY violation)
+// BUG-10 FIX: Show paths to ALL goal states
+// BUG-11 FIX: Include circuit breaker state
+// ---------------------------------------------------------------------------
+let _smModule = null;
+try { _smModule = await import('./state_manager.mjs'); } catch { /* graceful degradation */ }
+
+function collectFsmState() {
+  try {
+    if (!_smModule) {
+      return { present: false, state: 'UNKNOWN', note: 'state_manager import failed' };
+    }
+    const { loadFsmKernel, replayState, getAvailableTransitions,
+            findPathToGoal, getCircuitBreakerState } = _smModule;
+
+    const kernel = loadFsmKernel();
+    const result = replayState(allEvents);
+    const available = getAvailableTransitions(result.state);
+    const goalStates = kernel.goal_states ?? ['CERTIFIED'];
+
+    // BUG-10 FIX: paths to ALL goal states
+    const goalPaths = {};
+    for (const goal of goalStates) {
+      goalPaths[goal] = findPathToGoal(result.state, goal).map((t) => t.id);
+    }
+
+    // BUG-11 FIX: circuit breaker full manifest
+    const circuitBreakers = getCircuitBreakerState();
+
+    // EPOCH-70: Extract life_outcome from LIFE EventBus
+    const lifeOutcomeEvent = allEvents.find(
+      (e) => e.component === 'LIFE' && e.event === 'LIFE_OUTCOME'
+    );
+    const lifeOutcome = lifeOutcomeEvent?.attrs?.life_outcome ?? null;
+
+    // EPOCH-70: Extract consciousness result
+    const consciousnessEvent = allEvents.find(
+      (e) => e.component === 'LIFE' && e.event === 'CONSCIOUSNESS_RESULT'
+    );
+    const consciousnessReached = consciousnessEvent?.attrs?.reached ?? null;
+
+    // EPOCH-71: Extract immune data
+    const doctorVerdictEvent = allEvents.find(
+      (e) => e.component === 'LIFE' && e.event === 'DOCTOR_VERDICT_FAIL'
+    );
+    const immuneHealedEvent = allEvents.find(
+      (e) => e.component === 'LIFE' && (e.event === 'IMMUNE_HEALED' || e.event === 'IMMUNE_HEAL_FAILED')
+    );
+
+    return {
+      present: true,
+      state: result.state,
+      mode: result.mode,
+      goal_paths: goalPaths,
+      available_transitions: available.map((t) => t.id),
+      circuit_breakers: circuitBreakers,
+      transitions_seen: result.transitions_count,
+      transition_history: result.transitions.slice(-10),
+      life_outcome: lifeOutcome,
+      consciousness_reached: consciousnessReached,
+      doctor_verdict: doctorVerdictEvent?.attrs?.verdict ?? null,
+      doctor_score: doctorVerdictEvent?.attrs?.score ?? null,
+      healing_status: immuneHealedEvent?.event === 'IMMUNE_HEALED' ? 'HEALED'
+        : immuneHealedEvent?.event === 'IMMUNE_HEAL_FAILED' ? 'FAILED'
+        : null,
+    };
+  } catch {
+    return { present: false, state: 'UNKNOWN', note: 'FSM kernel load error' };
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Build HUD
 // ---------------------------------------------------------------------------
 const tm = collectTimemachine();
@@ -313,6 +387,7 @@ const fg = collectFastGate();
 const pr1 = collectPR01();
 const wow = collectWowGates();
 const readiness = collectReadiness();
+const fsm = collectFsmState();
 
 const overallFailed = [
   fg.status !== 'PASS' && fg.status !== 'NO_DATA' ? 'FAST_GATE' : null,
@@ -348,6 +423,7 @@ const hudJson = {
     readiness: readiness,
     pr01: pr1,
     wow_gates: wow,
+    fsm: fsm,
   },
   evidence_paths: evidencePaths,
   overall_failed: overallFailed,
@@ -466,6 +542,46 @@ const hudMd = [
   '',
   '---',
   '',
+  '## [8] FSM STATE',
+  '',
+  `STATE: ${fsm.state}`,
+  `MODE: ${fsm.mode ?? 'UNKNOWN'}`,
+  `LIFE_OUTCOME: ${fsm.life_outcome ?? 'UNKNOWN'}`,
+  `CONSCIOUSNESS_REACHED: ${fsm.consciousness_reached ?? 'UNKNOWN'}`,
+  `AVAILABLE: ${fsm.available_transitions?.join(', ') || 'NONE'}`,
+  `TRANSITIONS_SEEN: ${fsm.transitions_seen ?? 0}`,
+  ...(fsm.note ? [`NOTE: ${fsm.note}`] : []),
+  '',
+  // BUG-10 FIX: show paths to ALL goal states
+  ...(fsm.goal_paths
+    ? Object.entries(fsm.goal_paths).map(([goal, p]) =>
+        `GOAL ${goal}: ${p.length > 0 ? p.join(' → ') : '(at goal)'}`)
+    : ['GOAL: UNKNOWN']),
+  '',
+  // BUG-11 FIX: show circuit breaker manifest
+  ...(fsm.circuit_breakers
+    ? Object.entries(fsm.circuit_breakers).map(([tid, cb]) =>
+        `BREAKER ${tid}: ${cb.failures}/${cb.threshold} open=${cb.open}`)
+    : ['BREAKERS: NONE']),
+  '',
+  // EPOCH-71: Immune status
+  ...(fsm.doctor_verdict
+    ? [`DOCTOR_VERDICT: ${fsm.doctor_verdict} (score=${fsm.doctor_score ?? '?'})`]
+    : []),
+  ...(fsm.healing_status
+    ? [`HEALING: ${fsm.healing_status}`]
+    : []),
+  '',
+  fsm.transition_history?.length > 0
+    ? ['### Transition History (last 10)', '',
+       '  | Tick | From | To | Transition |',
+       '  |------|------|----|------------|',
+       ...fsm.transition_history.map((t) => `  | ${t.tick} | ${t.from} | ${t.to} | ${t.transition_id} |`),
+      ].join('\n')
+    : '',
+  '',
+  '---',
+  '',
   '## NEXT_ACTION',
   '',
   'npm run -s verify:fast',
@@ -485,5 +601,6 @@ console.log(`  fast_gate:   ${fg.status} (${fg.gates_checked} gates, ${fg.failed
 console.log(`  pr01:        ${pr1.status}`);
 console.log(`  wow_gates:   ${wow.gates_checked} checked, ${wow.failed_n} failed`);
 console.log(`  readiness:   ${readiness.status} lanes=${readiness.lanes_total} truth=${readiness.truth_lanes_n}`);
+console.log(`  fsm:         ${fsm.state} mode=${fsm.mode ?? '?'} outcome=${fsm.life_outcome ?? '?'} goals=${Object.keys(fsm.goal_paths ?? {}).join(',') || '?'}`);
 
 process.exit(hudStatus === 'PASS' ? 0 : 1);

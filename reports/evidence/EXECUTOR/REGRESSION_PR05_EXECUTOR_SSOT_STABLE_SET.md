@@ -2,11 +2,13 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 4759f93b77e2
+RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 ## ALLOWLIST
 - REGRESSION_*.md
+- SAN_*.md
+- CHAOS_*.md
 - gates/manual/*.json
 - MERGE_PLAN.md
 

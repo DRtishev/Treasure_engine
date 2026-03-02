@@ -1,0 +1,11 @@
+# SAN_CERT_OFFLINE.md — Zone-aware network scan
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: STABLE
+NEXT_ACTION: npm run -s verify:doctor:policy
+FILES_SCANNED: 1060
+VIOLATIONS: 0
+
+## VIOLATIONS
+- NONE

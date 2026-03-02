@@ -1,0 +1,83 @@
+{
+  "checks": [
+    {
+      "check": "budget_ms_defined_BOOT",
+      "detail": "OK: BOOT.budget_ms=30000",
+      "pass": true
+    },
+    {
+      "check": "budget_ms_defined_CERTIFYING",
+      "detail": "OK: CERTIFYING.budget_ms=600000",
+      "pass": true
+    },
+    {
+      "check": "budget_ms_defined_CERTIFIED",
+      "detail": "OK: CERTIFIED.budget_ms=0",
+      "pass": true
+    },
+    {
+      "check": "budget_ms_defined_RESEARCHING",
+      "detail": "OK: RESEARCHING.budget_ms=300000",
+      "pass": true
+    },
+    {
+      "check": "budget_ms_defined_EDGE_READY",
+      "detail": "OK: EDGE_READY.budget_ms=0",
+      "pass": true
+    },
+    {
+      "check": "budget_ms_defined_DEGRADED",
+      "detail": "OK: DEGRADED.budget_ms=60000",
+      "pass": true
+    },
+    {
+      "check": "budget_ms_defined_HEALING",
+      "detail": "OK: HEALING.budget_ms=60000",
+      "pass": true
+    },
+    {
+      "check": "life_summary_v2_schema",
+      "detail": "OK: LIFE_SUMMARY.json schema_version=2.0.0",
+      "pass": true
+    },
+    {
+      "check": "consciousness_result_present",
+      "detail": "OK: consciousness_result present — reached=true final_state=CERTIFIED",
+      "pass": true
+    },
+    {
+      "check": "reflexes_field_present",
+      "detail": "OK: reflexes_fired is array (length=0)",
+      "pass": true
+    },
+    {
+      "check": "fsm_final_state_valid",
+      "detail": "OK: fsm_final_state=\"CERTIFIED\" is valid",
+      "pass": true
+    },
+    {
+      "check": "proprio_scan_event",
+      "detail": "OK: PROPRIO_SCAN event found with fsm_state=CERTIFIED",
+      "pass": true
+    },
+    {
+      "check": "consciousness_result_event",
+      "detail": "OK: CONSCIOUSNESS_RESULT event found — reached=true",
+      "pass": true
+    },
+    {
+      "check": "no_hardcoded_cert_mode",
+      "detail": "OK: modes FSM-derived (CERT) — proprio fsm_state=CERTIFIED",
+      "pass": true
+    }
+  ],
+  "checks_total": 14,
+  "failed_checks": [],
+  "gate_id": "RG_FSM02_CONSCIOUSNESS",
+  "next_action": "npm run -s verify:regression:fsm02-consciousness",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

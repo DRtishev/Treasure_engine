@@ -1,0 +1,64 @@
+{
+  "checks": [
+    {
+      "check": "verify_fast_pass",
+      "detail": "EC=0",
+      "pass": true
+    },
+    {
+      "check": "verify_fast_x2_pass",
+      "detail": "EC=0",
+      "pass": true
+    },
+    {
+      "check": "epoch_in_diff_zero",
+      "detail": "EPOCH_IN_DIFF=0",
+      "pass": true
+    },
+    {
+      "check": "source_file_count",
+      "detail": "25 source files, 69 total in diff",
+      "pass": true
+    },
+    {
+      "check": "pr01_evidence_bloat_guard",
+      "detail": "EC=0",
+      "pass": true
+    }
+  ],
+  "epoch_in_diff": 0,
+  "failed_checks": [],
+  "gate_id": "MERGE_COURT",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "source_files_in_diff": [
+    ".gitignore",
+    "artifacts/fixtures/okx/orderbook/acquire_test/lock.json",
+    "artifacts/fixtures/okx/orderbook/acquire_test/raw.jsonl",
+    "docs/EXECUTOR_STABLE_RECEIPTS.md",
+    "package-lock.json",
+    "package.json",
+    "scripts/edge/edge_lab/canon.mjs",
+    "scripts/edge/edge_okx_orderbook_10_acquire_live.mjs",
+    "scripts/edge/edge_okx_orderbook_11_replay_captured.mjs",
+    "scripts/lib/write_json_deterministic.mjs",
+    "scripts/ops/cockpit.mjs",
+    "scripts/ops/life.mjs",
+    "scripts/verify/merge_court.mjs",
+    "scripts/verify/r3_okx_acquire_contract.mjs",
+    "scripts/verify/r3_preflight.mjs",
+    "scripts/verify/regression_ec01_reason_context_contract.mjs",
+    "scripts/verify/regression_epoch_skip01_respects_tracked_state.mjs",
+    "scripts/verify/regression_pr07_executor_runid_immutable.mjs",
+    "scripts/verify/regression_pr08_executor_stable_only.mjs",
+    "scripts/verify/regression_rg_life_net01_netkill_self_hardening.mjs",
+    "scripts/verify/regression_rg_r3_unlock01_refusal_contract.mjs",
+    "scripts/verify/regression_rg_reason01_token_purity.mjs",
+    "scripts/verify/regression_rg_reason02_in_taxonomy.mjs",
+    "specs/epochs/EPOCH-67.md",
+    "specs/reason_code_taxonomy.json"
+  ],
+  "status": "PASS"
+}

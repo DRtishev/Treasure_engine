@@ -1,0 +1,10 @@
+# REGRESSION_POLICY01.md — Kernel validation
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: STABLE
+NEXT_ACTION: npm run -s verify:doctor:policy
+VIOLATIONS: 0
+
+## VIOLATIONS
+- NONE

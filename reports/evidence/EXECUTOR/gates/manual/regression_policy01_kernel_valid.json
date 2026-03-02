@@ -1,0 +1,9 @@
+{
+  "gate_id": "RG_POLICY01",
+  "next_action": "npm run -s verify:doctor:policy",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": []
+}

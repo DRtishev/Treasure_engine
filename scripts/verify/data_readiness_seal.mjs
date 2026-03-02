@@ -77,8 +77,13 @@ function evaluateLane(lane) {
   const isStatic = lane.required_artifacts.every((a) => !a.includes('<RUN_ID>'));
   if (isStatic) {
     for (const artifact of lane.required_artifacts) {
-      if (!fs.existsSync(path.join(ROOT, artifact))) {
+      const fullPath = path.join(ROOT, artifact);
+      if (!fs.existsSync(fullPath)) {
         return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'NEEDS_DATA', reason_code: 'RDY01', replay_ec: 2, run_id: 'STATIC', lane_mode: 'STATIC', detail: `static missing: ${artifact}` };
+      }
+      const stat = fs.statSync(fullPath);
+      if (stat.isDirectory() && fs.readdirSync(fullPath).length === 0) {
+        return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'NEEDS_DATA', reason_code: 'RDY01', replay_ec: 2, run_id: 'STATIC', lane_mode: 'STATIC', detail: `static dir empty: ${artifact}` };
       }
     }
     return { lane_id: lane.lane_id, truth_level: lane.truth_level, status: 'PASS', reason_code: 'NONE', replay_ec: 0, run_id: 'STATIC', lane_mode: 'STATIC', detail: 'static files present' };

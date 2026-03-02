@@ -1,0 +1,70 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Doctor OS manifest — declarative probe/chaos/heal configuration",
+
+  "probes": {
+    "startup": {
+      "commands": ["npm run -s ops:baseline:restore", "npm run -s verify:fast"],
+      "timeout_ms": 120000,
+      "failure_action": "ABORT",
+      "weight": 0
+    },
+    "liveness": {
+      "commands": ["npm run -s verify:fast", "npm run -s verify:fast", "npm run -s ops:life"],
+      "timeout_ms": 300000,
+      "failure_action": "REPORT",
+      "x2_determinism": true,
+      "weight": 50
+    },
+    "readiness": {
+      "commands": ["npm run -s verify:doctor:policy"],
+      "timeout_ms": 180000,
+      "failure_action": "REPORT",
+      "weight": 50
+    }
+  },
+
+  "chaos": {
+    "chaos_mode_lie": {
+      "description": "Inject mode:CERT into RESEARCH_NET temp file, verify SAN catches it",
+      "gate_id": "CHAOS_MODE_LIE",
+      "scanner": "san_research_net_logic",
+      "injection": { "pattern": "mode: 'CERT'", "zone": "RESEARCH_NET" },
+      "expected": "CAUGHT"
+    },
+    "chaos_orphan": {
+      "description": "Inject orphan dir into temp evidence root, verify SANM01 catches it",
+      "gate_id": "CHAOS_ORPHAN",
+      "scanner": "san_mutation_logic",
+      "injection": { "dir_name": "_CHAOS_TEST_ORPHAN_" },
+      "expected": "CAUGHT"
+    },
+    "chaos_fp01_trap": {
+      "description": "Write JSON with forbidden field, verify FP01 throws",
+      "gate_id": "CHAOS_FP01",
+      "scanner": "writeJsonDeterministic",
+      "injection": { "field": "created_at", "value": "2026-01-01T00:00:00Z" },
+      "expected": "FP01_THROWN"
+    }
+  },
+
+  "self_heal": {
+    "stale_baseline":     { "detect": "baseline_restore_needed", "fix": "npm run -s ops:baseline:restore", "scope": "INFRASTRUCTURE" },
+    "orphan_in_evidence": { "detect": "orphan_scan", "fix": "quarantine_to_artifacts", "scope": "INFRASTRUCTURE" },
+    "executor_missing":   { "detect": "executor_dir_check", "fix": "mkdir_recursive", "scope": "INFRASTRUCTURE" },
+    "git_missing":        { "detect": "git_dir_check", "fix": "git_init_commit", "scope": "INFRASTRUCTURE" },
+    "node_modules_gone":  { "detect": "node_modules_check", "fix": "npm_ci", "scope": "INFRASTRUCTURE" }
+  },
+
+  "scoreboard_v2": {
+    "startup_boot": 10,
+    "liveness_alive": 15,
+    "liveness_deterministic": 15,
+    "readiness_policy": 20,
+    "readiness_san": 10,
+    "chaos_mode_lie": 10,
+    "chaos_orphan": 10,
+    "chaos_fp01": 5,
+    "provenance_sealed": 5
+  }
+}

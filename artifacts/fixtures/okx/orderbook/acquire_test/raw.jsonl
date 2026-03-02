@@ -1,0 +1,3 @@
+{"action":"snapshot","arg":{"channel":"books5","instId":"BTC-USDT"},"data":[{"asks":[["50000","1.0","0","1"],["50100","0.5","0","1"]],"bids":[["49900","0.8","0","1"],["49800","0.3","0","1"]],"seqId":100,"prevSeqId":-1}]}
+{"action":"update","arg":{"channel":"books5","instId":"BTC-USDT"},"data":[{"asks":[["50200","0.2","0","1"]],"bids":[["49900","0","0","1"]],"seqId":101,"prevSeqId":100}]}
+{"action":"update","arg":{"channel":"books5","instId":"BTC-USDT"},"data":[{"asks":[["50000","0.7","0","1"]],"bids":[["49850","0.4","0","1"]],"seqId":102,"prevSeqId":101}]}

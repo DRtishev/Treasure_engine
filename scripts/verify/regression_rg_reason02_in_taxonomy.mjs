@@ -31,16 +31,39 @@ try {
   process.exit(1);
 }
 const validTokens = new Set(taxonomy.tokens);
+const patterns = (taxonomy.patterns || []).map((p) => new RegExp(p));
+const nonFoundationPatterns = patterns.filter((p) => !p.source.startsWith('^FOUNDATION_'));
 
-// Collect all gate JSON files
+function isValidToken(token) {
+  if (validTokens.has(token)) return true;
+  // Check patterns
+  for (const re of patterns) {
+    if (!re.test(token)) continue;
+    // FOUNDATION_* bounded: suffix must itself be valid (in tokens or matches non-FOUNDATION pattern)
+    if (/^FOUNDATION_/.test(token)) {
+      const suffix = token.replace(/^FOUNDATION_/, '');
+      if (validTokens.has(suffix)) return true;
+      for (const nfp of nonFoundationPatterns) {
+        if (nfp.test(suffix)) return true;
+      }
+      return false; // fail-closed: suffix not valid
+    }
+    return true;
+  }
+  return false;
+}
+
+// Collect all gate JSON files (skip run-scoped EPOCH-* dirs — gitignored, ephemeral)
 function collectJsonFiles(dir) {
   const results = [];
   if (!fs.existsSync(dir)) return results;
   function walk(d) {
     for (const ent of fs.readdirSync(d, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
       const full = path.join(d, ent.name);
-      if (ent.isDirectory()) { walk(full); }
-      else if (ent.isFile() && ent.name.endsWith('.json') &&
+      if (ent.isDirectory()) {
+        if (d === dir && ent.name.startsWith('EPOCH-')) continue;
+        walk(full);
+      } else if (ent.isFile() && ent.name.endsWith('.json') &&
                (d.includes('gates/manual') || ent.name === 'receipt.json')) {
         results.push(full);
       }
@@ -61,7 +84,7 @@ for (const f of files) {
   if (rc === undefined || rc === null || rc === '') continue;
   const token = String(rc);
   observedSet.add(token);
-  if (!validTokens.has(token)) {
+  if (!isValidToken(token)) {
     violations.push({ path: path.relative(ROOT, f), reason_code: token });
   }
 }
