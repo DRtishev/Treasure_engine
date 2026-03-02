@@ -995,7 +995,13 @@
     "verify:regression:fsm01-no-skip-states": "node scripts/verify/regression_fsm01_no_skip_states.mjs",
     "verify:regression:fsm02-consciousness": "node scripts/verify/regression_fsm02_consciousness.mjs",
     "verify:regression:immune01-integration": "node scripts/verify/regression_immune01_integration.mjs",
-    "verify:regression:metaagent01-fleet": "node scripts/verify/regression_metaagent01_fleet.mjs"
+    "verify:regression:metaagent01-fleet": "node scripts/verify/regression_metaagent01_fleet.mjs",
+    "ops:data:health": "node scripts/ops/data_health_doctor.mjs",
+    "ops:data:lineage": "node scripts/ops/data_lineage_explain.mjs",
+    "verify:regression:r3-01-preflight-contract": "node scripts/verify/regression_r3_01_preflight_contract.mjs",
+    "verify:regression:r3-02-acquire-lane-alignment": "node scripts/verify/regression_r3_02_acquire_lane_alignment.mjs",
+    "verify:regression:r3-03-data-health-integration": "node scripts/verify/regression_r3_03_data_health_integration.mjs",
+    "verify:r3": "npm run -s verify:regression:r3-01-preflight-contract && npm run -s verify:regression:r3-02-acquire-lane-alignment && npm run -s verify:regression:r3-03-data-health-integration"
   },
   "devDependencies": {
     "ajv": "^8.17.1"

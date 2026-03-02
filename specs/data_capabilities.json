@@ -122,23 +122,47 @@
     },
     "okx": {
       "orderbook": {
+        "channels": ["books5", "books", "books-l2-tbt", "books50-l2-tbt"],
         "checksum_deprecated": true,
         "dedup_key": "seqId",
+        "default_channel": "books5",
         "depth_levels": [1, 5, 400],
+        "heartbeat_interval_ms": 30000,
         "reorder_window_max_items": 5,
         "seq_no_update_supported": true,
         "seq_reset_possible": true,
         "snapshot_on_connect": true,
+        "ws_endpoint": "wss://ws.okx.com:8443/ws/v5/public",
         "_field_meta": {
+          "channels": {
+            "meaning": "Available WebSocket channels for OKX orderbook data with varying depth and push frequency",
+            "unit_hint": "channel_names",
+            "window_kind": "static_list"
+          },
+          "default_channel": {
+            "meaning": "Default channel used by acquire scripts (books5 = 5-level depth, ~100ms push)",
+            "unit_hint": "channel_name",
+            "window_kind": "static_default"
+          },
           "depth_levels": {
             "meaning": "Available order book depth snapshot levels (number of price levels returned per side)",
             "unit_hint": "levels",
             "window_kind": "snapshot"
           },
+          "heartbeat_interval_ms": {
+            "meaning": "Server-side ping/pong interval for OKX WebSocket keep-alive",
+            "unit_hint": "ms",
+            "window_kind": "static_limit"
+          },
           "reorder_window_max_items": {
             "meaning": "Maximum number of out-of-order messages buffered before forced sequence reset",
             "unit_hint": "count",
             "window_kind": "reorder_buffer"
+          },
+          "ws_endpoint": {
+            "meaning": "OKX public WebSocket v5 endpoint for orderbook data streams",
+            "unit_hint": "url",
+            "window_kind": "static_endpoint"
           }
         }
       },

@@ -2134,6 +2134,112 @@
         ],
         "evidence_outputs": []
       }
+    },
+    {
+      "id": "WOW-39",
+      "title": "Data Health Doctor (Lane Health Scanner)",
+      "status": "SHIPPED",
+      "tier": "P1",
+      "mechanism": "Data Health Doctor scans all data lanes, checks artifact freshness, verifies lock integrity, reports per-lane health status.",
+      "profit_hook": {
+        "affected_layer": "DATA",
+        "integration_point": {
+          "modules": [
+            "scripts/ops/data_health_doctor.mjs"
+          ],
+          "gates": [
+            "verify:r3",
+            "ops:data:health"
+          ]
+        },
+        "expected_effect": "Early detection of data corruption or staleness prevents bad signals from reaching trading decisions."
+      },
+      "acceptance": {
+        "must_improve": [
+          "data pipeline observability",
+          "lane health monitoring",
+          "lock integrity verification"
+        ],
+        "must_not_break": [
+          "determinism",
+          "offline-default",
+          "existing gate outcomes"
+        ]
+      },
+      "self_deception_risks": [
+        "Health check that always reports HEALTHY regardless of actual state",
+        "Missing coverage of new lanes added after initial implementation"
+      ],
+      "kill_criteria": [
+        "Cannot detect known-broken lock files",
+        "Reports HEALTHY when artifacts are missing"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "verify:r3",
+          "ops:data:health"
+        ],
+        "modules": [
+          "scripts/ops/data_health_doctor.mjs"
+        ],
+        "evidence_outputs": [
+          "reports/evidence/EPOCH-DATA-HEALTH-*/DATA_HEALTH.json",
+          "reports/evidence/EPOCH-DATA-HEALTH-*/DATA_HEALTH.md"
+        ]
+      }
+    },
+    {
+      "id": "WOW-40",
+      "title": "Data Lineage Explain (Full Path Tracer)",
+      "status": "SHIPPED",
+      "tier": "P1",
+      "mechanism": "Data Lineage Explain traces the full data path per lane: acquire to raw.jsonl to replay to normalize to evidence, outputting human-readable lineage graphs.",
+      "profit_hook": {
+        "affected_layer": "DATA",
+        "integration_point": {
+          "modules": [
+            "scripts/ops/data_lineage_explain.mjs"
+          ],
+          "gates": [
+            "ops:data:lineage"
+          ]
+        },
+        "expected_effect": "Full data provenance tracing ensures every trading signal can be traced back to its raw source."
+      },
+      "acceptance": {
+        "must_improve": [
+          "data provenance transparency",
+          "pipeline debugging capability",
+          "audit trail completeness"
+        ],
+        "must_not_break": [
+          "determinism",
+          "offline-default",
+          "existing gate outcomes"
+        ]
+      },
+      "self_deception_risks": [
+        "Lineage that shows connections without verifying actual data flow",
+        "Missing intermediate stages in the pipeline trace"
+      ],
+      "kill_criteria": [
+        "Cannot trace a known lane from acquire to evidence",
+        "Produces incorrect lineage for existing fixture data"
+      ],
+      "integration": {
+        "epochs": [],
+        "gates": [
+          "ops:data:lineage"
+        ],
+        "modules": [
+          "scripts/ops/data_lineage_explain.mjs"
+        ],
+        "evidence_outputs": [
+          "reports/evidence/EPOCH-LINEAGE-*/LINEAGE_*.md",
+          "reports/evidence/EPOCH-LINEAGE-*/LINEAGE_SUMMARY.json"
+        ]
+      }
     }
   ]
 }

@@ -121,7 +121,8 @@
         "RDY01": "missing fixture dirs (no_update / seq_reset / empty_updates)",
         "RDY02": "fixture schema error or empty dir"
       },
-      "replay_command": "TREASURE_NET_KILL=1 node scripts/edge/edge_okx_orderbook_00_preflight_replay.mjs --provider okx_orderbook_ws",
+      "replay_command": "TREASURE_NET_KILL=1 node scripts/edge/edge_okx_orderbook_11_replay_captured.mjs --provider okx_orderbook_ws",
+      "acquire_command": "node scripts/edge/edge_okx_orderbook_10_acquire_live.mjs --enable-network --duration-sec 30",
       "required_artifacts": [
         "artifacts/fixtures/okx/orderbook/no_update/",
         "artifacts/fixtures/okx/orderbook/seq_reset/",
@@ -134,7 +135,7 @@
         "docs/OKX_ORDERBOOK_R2_PROCEDURE.md#empty-updates"
       ],
       "schema_version": "okx_orderbook_ws.r2_preflight.v1",
-      "lane_state": "PREFLIGHT"
+      "lane_state": "EXPERIMENTAL"
     }
   ]
 }
