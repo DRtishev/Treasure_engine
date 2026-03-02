@@ -178,11 +178,15 @@ function guard_probe_failure(context) {
         .filter((d) => d.startsWith('EPOCH-DOCTOR-')).sort();
       if (doctorDirs.length > 0) {
         const latest = doctorDirs[doctorDirs.length - 1];
-        const receiptPath = path.join(evidDir, latest, 'DOCTOR.json');
-        if (fs.existsSync(receiptPath)) {
-          const receipt = JSON.parse(fs.readFileSync(receiptPath, 'utf8'));
-          if (receipt.status && receipt.status !== 'HEALTHY') {
-            return { pass: true, detail: `doctor verdict: ${receipt.status} score=${receipt.score ?? '?'}` };
+        // BUG-H mirror: robust multi-filename scan
+        for (const fname of ['DOCTOR.json', 'receipt.json']) {
+          const rp = path.join(evidDir, latest, fname);
+          if (fs.existsSync(rp)) {
+            const receipt = JSON.parse(fs.readFileSync(rp, 'utf8'));
+            const verdict = receipt.status ?? receipt.verdict;
+            if (verdict && verdict !== 'HEALTHY') {
+              return { pass: true, detail: `doctor verdict: ${verdict} score=${receipt.score ?? receipt.total_score ?? '?'}` };
+            }
           }
         }
       }
@@ -207,14 +211,49 @@ function guard_probe_failure(context) {
 }
 
 // ---------------------------------------------------------------------------
+// areDepsAvailable — shared helper: same 5-path logic as guard_deps_ready
+// ---------------------------------------------------------------------------
+function areDepsAvailable() {
+  // Path 1: local node_modules
+  const nmDir = path.join(ROOT, 'node_modules');
+  try {
+    if (fs.existsSync(nmDir) && fs.readdirSync(nmDir).length >= 10) return true;
+  } catch { /* continue */ }
+  // Path 2: NODE_PATH
+  const nodePath = process.env.NODE_PATH;
+  if (nodePath) {
+    for (const dir of nodePath.split(path.delimiter).filter(Boolean)) {
+      try {
+        if (fs.existsSync(dir) && fs.readdirSync(dir).length >= 10) return true;
+      } catch { /* continue */ }
+    }
+  }
+  // Path 3: npm global root
+  try {
+    const r = spawnSync('npm', ['root', '-g'], { encoding: 'utf8', timeout: 5000 });
+    const globalRoot = (r.stdout || '').trim();
+    if (globalRoot && fs.existsSync(globalRoot) && fs.readdirSync(globalRoot).length >= 10) return true;
+  } catch { /* continue */ }
+  // Path 4: BUNDLE mode
+  if ((process.env.VERIFY_MODE || '').toUpperCase() === 'BUNDLE') return true;
+  // Path 5: npm resolution works
+  try {
+    const r = spawnSync('npm', ['run', '-s', '--list'], { encoding: 'utf8', timeout: 5000 });
+    if (r.status === 0) return true;
+  } catch { /* continue */ }
+  return false;
+}
+
+// ---------------------------------------------------------------------------
 // guard_healable — T06: DEGRADED → HEALING
 // EPOCH-71: checks filesystem conditions + doctor diagnosis for healability
+// BUG-J FIX: uses areDepsAvailable() instead of raw node_modules check
 // ---------------------------------------------------------------------------
 function guard_healable(context) {
   const healable = [];
 
-  if (!fs.existsSync(path.join(ROOT, 'node_modules'))) {
-    healable.push('missing node_modules');
+  if (!areDepsAvailable()) {
+    healable.push('missing deps (all resolution paths failed)');
   }
   const verifyMode = (process.env.VERIFY_MODE || 'GIT').toUpperCase();
   if (verifyMode !== 'BUNDLE' && !fs.existsSync(path.join(ROOT, '.git'))) {

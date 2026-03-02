@@ -48,7 +48,7 @@ const RUNTIME_REGISTRY_PATH = path.join(EPOCH_DIR, 'REGISTRY.json');
 // ---------------------------------------------------------------------------
 // Schema version — lock for RG_REG01
 // ---------------------------------------------------------------------------
-const SCHEMA_VERSION = '1.0.0';
+const SCHEMA_VERSION = '2.0.0';
 const REQUIRED_ITEM_FIELDS = ['config_id', 'parents', 'metrics', 'robustness', 'status', 'evidence_paths'];
 const VALID_STATUSES = ['CANDIDATE', 'REJECTED', 'PROMOTED'];
 
@@ -71,6 +71,12 @@ function makeCandidate({ config_id, parents = [], metrics = {}, robustness = {},
       expectancy: metrics.expectancy ?? null,
       trades_n: metrics.trades_n ?? null,
       slippage_sensitivity: metrics.slippage_sensitivity ?? null,
+      backtest_sharpe: metrics.backtest_sharpe ?? null,
+      paper_sharpe: metrics.paper_sharpe ?? null,
+      canary_sharpe: metrics.canary_sharpe ?? null,
+      total_trades: metrics.total_trades ?? null,
+      max_drawdown_pct: metrics.max_drawdown_pct ?? null,
+      win_rate: metrics.win_rate ?? null,
     },
     robustness: {
       split_stats: robustness.split_stats ?? null,
@@ -79,6 +85,9 @@ function makeCandidate({ config_id, parents = [], metrics = {}, robustness = {},
     status,
     reason: reason ?? null,
     evidence_paths: [...evidence_paths].sort((a, b) => a.localeCompare(b)),
+    // EPOCH-72: CandidateFSM fields (default DRAFT for v1 compat — AC-14)
+    fsm_state: 'DRAFT',
+    fsm_history: [],
   };
 }
 
@@ -235,8 +244,11 @@ const existing = loadPromotedRegistry();
 const existingMap = new Map((existing?.candidates ?? []).map((c) => [c.config_id, c]));
 
 // Merge: existing promoted take precedence; new sweep candidates added if not already tracked
+// EPOCH-72: ensure fsm_state defaults for v1 compat (AC-14)
 const allCandidates = [];
 for (const [cid, c] of existingMap) {
+  if (!c.fsm_state) c.fsm_state = 'DRAFT';
+  if (!c.fsm_history) c.fsm_history = [];
   allCandidates.push(c);
 }
 for (const c of sweepCandidates) {
