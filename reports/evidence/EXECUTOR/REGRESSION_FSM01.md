@@ -4,7 +4,7 @@ STATUS: PASS
 REASON_CODE: NONE
 RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:regression:fsm01-no-skip-states
-CHECKS_TOTAL: 34
+CHECKS_TOTAL: 54
 VIOLATIONS: 0
 
 ## CHECKS
@@ -28,7 +28,6 @@ VIOLATIONS: 0
 - [PASS] no_orphan_on_fail_T02_CERTIFYING_TO_CERTIFIED: OK: T02_CERTIFYING_TO_CERTIFIED.on_fail="DEGRADED" is valid
 - [PASS] no_orphan_from_T03_CERTIFIED_TO_RESEARCHING: OK: T03_CERTIFIED_TO_RESEARCHING.from="CERTIFIED" is valid
 - [PASS] no_orphan_to_T03_CERTIFIED_TO_RESEARCHING: OK: T03_CERTIFIED_TO_RESEARCHING.to="RESEARCHING" is valid
-- [PASS] no_orphan_on_fail_T03_CERTIFIED_TO_RESEARCHING: OK: T03_CERTIFIED_TO_RESEARCHING.on_fail="CERTIFIED" is valid
 - [PASS] no_orphan_from_T04_RESEARCHING_TO_EDGE_READY: OK: T04_RESEARCHING_TO_EDGE_READY.from="RESEARCHING" is valid
 - [PASS] no_orphan_to_T04_RESEARCHING_TO_EDGE_READY: OK: T04_RESEARCHING_TO_EDGE_READY.to="EDGE_READY" is valid
 - [PASS] no_orphan_on_fail_T04_RESEARCHING_TO_EDGE_READY: OK: T04_RESEARCHING_TO_EDGE_READY.on_fail="CERTIFIED" is valid
@@ -42,6 +41,27 @@ VIOLATIONS: 0
 - [PASS] state_count: states=7 (expected 7): BOOT, CERTIFYING, CERTIFIED, RESEARCHING, EDGE_READY, DEGRADED, HEALING
 - [PASS] transition_count: transitions=7 (expected 7): T01_BOOT_TO_CERTIFYING, T02_CERTIFYING_TO_CERTIFIED, T03_CERTIFIED_TO_RESEARCHING, T04_RESEARCHING_TO_EDGE_READY, T05_ANY_TO_DEGRADED, T06_DEGRADED_TO_HEALING, T07_HEALING_TO_BOOT
 - [PASS] forbidden_count: forbidden_transitions=5 (expected 5)
+- [PASS] goal_states_defined: goal_states count=2 (expected ≥2): CERTIFIED, EDGE_READY
+- [PASS] goal_in_states_CERTIFIED: OK: goal "CERTIFIED" exists in states
+- [PASS] goal_reachable_from_BOOT_to_CERTIFIED: OK: BOOT → CERTIFIED via T01_BOOT_TO_CERTIFYING → T02_CERTIFYING_TO_CERTIFIED
+- [PASS] goal_in_states_EDGE_READY: OK: goal "EDGE_READY" exists in states
+- [PASS] goal_reachable_from_BOOT_to_EDGE_READY: OK: BOOT → EDGE_READY via T01_BOOT_TO_CERTIFYING → T02_CERTIFYING_TO_CERTIFIED → T03_CERTIFIED_TO_RESEARCHING → T04_RESEARCHING_TO_EDGE_READY
+- [PASS] breaker_valid_tid_T01_BOOT_TO_CERTIFYING: OK: circuit_breaker applies_to "T01_BOOT_TO_CERTIFYING" is a valid transition
+- [PASS] breaker_valid_tid_T02_CERTIFYING_TO_CERTIFIED: OK: circuit_breaker applies_to "T02_CERTIFYING_TO_CERTIFIED" is a valid transition
+- [PASS] breaker_valid_tid_T03_CERTIFIED_TO_RESEARCHING: OK: circuit_breaker applies_to "T03_CERTIFIED_TO_RESEARCHING" is a valid transition
+- [PASS] breaker_valid_tid_T04_RESEARCHING_TO_EDGE_READY: OK: circuit_breaker applies_to "T04_RESEARCHING_TO_EDGE_READY" is a valid transition
+- [PASS] breaker_valid_tid_T06_DEGRADED_TO_HEALING: OK: circuit_breaker applies_to "T06_DEGRADED_TO_HEALING" is a valid transition
+- [PASS] breaker_valid_tid_T07_HEALING_TO_BOOT: OK: circuit_breaker applies_to "T07_HEALING_TO_BOOT" is a valid transition
+- [PASS] max_cycles_sanity: OK: max_cycles=3 < max_goal_attempts=10
+- [PASS] goal_mode_defined_CERTIFIED: OK: goal "CERTIFIED" has mode="CERT"
+- [PASS] goal_mode_defined_EDGE_READY: OK: goal "EDGE_READY" has mode="CERT"
+- [PASS] timeout_sane_T01_BOOT_TO_CERTIFYING: OK: T01_BOOT_TO_CERTIFYING.timeout_ms=10000
+- [PASS] timeout_sane_T02_CERTIFYING_TO_CERTIFIED: OK: T02_CERTIFYING_TO_CERTIFIED.timeout_ms=300000
+- [PASS] timeout_sane_T03_CERTIFIED_TO_RESEARCHING: OK: T03_CERTIFIED_TO_RESEARCHING.timeout_ms=5000
+- [PASS] timeout_sane_T04_RESEARCHING_TO_EDGE_READY: OK: T04_RESEARCHING_TO_EDGE_READY.timeout_ms=5000
+- [PASS] timeout_sane_T05_ANY_TO_DEGRADED: OK: T05_ANY_TO_DEGRADED.timeout_ms=0
+- [PASS] timeout_sane_T06_DEGRADED_TO_HEALING: OK: T06_DEGRADED_TO_HEALING.timeout_ms=60000
+- [PASS] timeout_sane_T07_HEALING_TO_BOOT: OK: T07_HEALING_TO_BOOT.timeout_ms=5000
 
 ## FAILED
 - NONE

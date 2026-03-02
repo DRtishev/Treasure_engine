@@ -45,18 +45,13 @@ function guard_deps_ready(_context) {
 
 // ---------------------------------------------------------------------------
 // guard_verify_fast_x2 — T02: CERTIFYING → CERTIFIED
-// Guard IS the verification — runs verify:fast twice consecutively.
-// Per §9.1: guard runs the heavy work, action is null.
+// Precondition check: EXECUTOR evidence directory exists with gate receipts.
+// The actual verification is run by the transition action (verify:fast x2).
 // ---------------------------------------------------------------------------
 function guard_verify_fast_x2(_context) {
-  // NOTE: This guard is heavyweight — it runs verify:fast x2.
-  // In structural-only mode (no runtime FSM execution in EPOCH-69),
-  // this guard definition exists for completeness but is NOT called
-  // by the regression gate. It will be invoked when life.mjs
-  // integrates with the FSM in EPOCH-70.
-  //
-  // For now, return a structural placeholder that checks prior
-  // certification evidence exists.
+  // Lightweight precondition: verify EXECUTOR evidence directory has gate
+  // receipts from prior certification. The heavy lifting (verify:fast x2)
+  // is handled by the transition action with action_x2: true.
   const execDir = path.join(ROOT, 'reports', 'evidence', 'EXECUTOR');
   if (!fs.existsSync(execDir)) {
     return { pass: false, detail: 'EXECUTOR evidence directory missing — no prior certification' };
@@ -126,16 +121,34 @@ function guard_data_ready(_context) {
 
 // ---------------------------------------------------------------------------
 // guard_probe_failure — T05: * → DEGRADED
-// Checks: context contains failed_gate or failed_probe
+// Checks: context contains failed_gate, failed_probe, OR recentEvents with
+// PROBE_FAIL / DOCTOR_VERDICT (non-HEALTHY) — EPOCH-69 G5 integration.
 // ---------------------------------------------------------------------------
 function guard_probe_failure(context) {
   if (!context) {
     return { pass: false, detail: 'no context provided — cannot detect probe failure' };
   }
+
+  // Direct context triggers (manual / programmatic)
   if (context.failed_gate || context.failed_probe) {
     return { pass: true, detail: `probe failure detected: ${context.failed_gate || context.failed_probe}` };
   }
-  return { pass: false, detail: 'no failed_gate or failed_probe in context' };
+
+  // EventBus-derived triggers (G5: doctor emits PROBE_FAIL / DOCTOR_VERDICT)
+  if (Array.isArray(context.recentEvents)) {
+    const probeFailEvents = context.recentEvents.filter(
+      (e) => e.event === 'PROBE_FAIL' ||
+             (e.event === 'DOCTOR_VERDICT' && e.attrs?.verdict && e.attrs.verdict !== 'HEALTHY')
+    );
+    if (probeFailEvents.length > 0) {
+      const details = probeFailEvents.map(
+        (e) => e.attrs?.probe ?? e.attrs?.verdict ?? e.event
+      ).join(', ');
+      return { pass: true, detail: `probe failures from EventBus: ${details}` };
+    }
+  }
+
+  return { pass: false, detail: 'no probe failures detected (no failed_gate, failed_probe, or bus PROBE_FAIL events)' };
 }
 
 // ---------------------------------------------------------------------------
