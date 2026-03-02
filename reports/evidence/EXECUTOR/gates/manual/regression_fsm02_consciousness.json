@@ -37,47 +37,55 @@
     },
     {
       "check": "life_summary_v2_schema",
-      "detail": "OK: LIFE_SUMMARY.json schema_version=2.0.0",
-      "pass": true
+      "detail": "FAIL: schema_version=1.0.0 (expected 2.0.0)",
+      "pass": false
     },
     {
       "check": "consciousness_result_present",
-      "detail": "OK: consciousness_result present — reached=true final_state=CERTIFIED",
-      "pass": true
+      "detail": "FAIL: consciousness_result missing or invalid",
+      "pass": false
     },
     {
       "check": "reflexes_field_present",
-      "detail": "OK: reflexes_fired is array (length=0)",
-      "pass": true
+      "detail": "FAIL: reflexes_fired missing or not an array",
+      "pass": false
     },
     {
       "check": "fsm_final_state_valid",
-      "detail": "OK: fsm_final_state=\"CERTIFIED\" is valid",
-      "pass": true
+      "detail": "FAIL: fsm_final_state=\"undefined\" not in kernel states",
+      "pass": false
     },
     {
       "check": "proprio_scan_event",
-      "detail": "OK: PROPRIO_SCAN event found with fsm_state=CERTIFIED",
-      "pass": true
+      "detail": "FAIL: PROPRIO_SCAN event not found in LIFE EventBus",
+      "pass": false
     },
     {
       "check": "consciousness_result_event",
-      "detail": "OK: CONSCIOUSNESS_RESULT event found — reached=true",
-      "pass": true
+      "detail": "FAIL: CONSCIOUSNESS_RESULT event not found in LIFE EventBus",
+      "pass": false
     },
     {
       "check": "no_hardcoded_cert_mode",
-      "detail": "OK: modes FSM-derived (CERT) — proprio fsm_state=CERTIFIED",
-      "pass": true
+      "detail": "FAIL: no evidence of FSM-derived modes (no PROPRIO_SCAN with fsm_state)",
+      "pass": false
     }
   ],
   "checks_total": 14,
-  "failed_checks": [],
+  "failed_checks": [
+    "life_summary_v2_schema",
+    "consciousness_result_present",
+    "reflexes_field_present",
+    "fsm_final_state_valid",
+    "proprio_scan_event",
+    "consciousness_result_event",
+    "no_hardcoded_cert_mode"
+  ],
   "gate_id": "RG_FSM02_CONSCIOUSNESS",
   "next_action": "npm run -s verify:regression:fsm02-consciousness",
-  "reason_code": "NONE",
+  "reason_code": "FSM_STRUCTURAL_VIOLATION",
   "run_id": "STABLE",
   "schema_version": "1.0.0",
-  "status": "PASS",
-  "violations": 0
+  "status": "FAIL",
+  "violations": 7
 }

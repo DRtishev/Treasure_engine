@@ -4,7 +4,7 @@ STATUS: PASS
 REASON_CODE: NONE
 RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:regression:rg-cap-mean01-keys-have-meaning
-CHECKS_TOTAL: 61
+CHECKS_TOTAL: 65
 VIOLATIONS: 0
 
 ## CHECKS
@@ -64,6 +64,10 @@ VIOLATIONS: 0
 - [PASS] okx.orderbook._field_meta.depth_levels.meaning: meaning="Available order book depth snapshot leve" — OK
 - [PASS] okx.orderbook._field_meta.depth_levels.unit_hint: unit_hint="levels" — OK
 - [PASS] okx.orderbook._field_meta.depth_levels.window_kind: window_kind="snapshot" — OK
+- [PASS] okx.orderbook._field_meta.heartbeat_interval_ms_present: _field_meta.heartbeat_interval_ms present
+- [PASS] okx.orderbook._field_meta.heartbeat_interval_ms.meaning: meaning="Server-side ping/pong interval for OKX W" — OK
+- [PASS] okx.orderbook._field_meta.heartbeat_interval_ms.unit_hint: unit_hint="ms" — OK
+- [PASS] okx.orderbook._field_meta.heartbeat_interval_ms.window_kind: window_kind="static_limit" — OK
 - [PASS] okx.orderbook._field_meta.reorder_window_max_items_present: _field_meta.reorder_window_max_items present
 - [PASS] okx.orderbook._field_meta.reorder_window_max_items.meaning: meaning="Maximum number of out-of-order messages " — OK
 - [PASS] okx.orderbook._field_meta.reorder_window_max_items.unit_hint: unit_hint="count" — OK

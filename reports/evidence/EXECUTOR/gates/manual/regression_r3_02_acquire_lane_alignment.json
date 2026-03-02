@@ -1,8 +1,7 @@
 {
-  "files_scanned": 302,
-  "gate_id": "RG_REASON01_TOKEN_PURITY",
-  "next_action": "npm run -s verify:fast",
+  "gate_id": "RG_R3_ACQUIRE01",
   "reason_code": "NONE",
+  "registry_path": "specs/data_lanes.json",
   "run_id": "STABLE",
   "schema_version": "1.0.0",
   "status": "PASS",

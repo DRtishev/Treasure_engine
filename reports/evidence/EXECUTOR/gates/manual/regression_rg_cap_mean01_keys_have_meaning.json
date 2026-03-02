@@ -281,6 +281,26 @@
       "pass": true
     },
     {
+      "check": "okx.orderbook._field_meta.heartbeat_interval_ms_present",
+      "detail": "_field_meta.heartbeat_interval_ms present",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta.heartbeat_interval_ms.meaning",
+      "detail": "meaning=\"Server-side ping/pong interval for OKX W\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta.heartbeat_interval_ms.unit_hint",
+      "detail": "unit_hint=\"ms\" — OK",
+      "pass": true
+    },
+    {
+      "check": "okx.orderbook._field_meta.heartbeat_interval_ms.window_kind",
+      "detail": "window_kind=\"static_limit\" — OK",
+      "pass": true
+    },
+    {
       "check": "okx.orderbook._field_meta.reorder_window_max_items_present",
       "detail": "_field_meta.reorder_window_max_items present",
       "pass": true
@@ -306,7 +326,7 @@
       "pass": true
     }
   ],
-  "checks_total": 61,
+  "checks_total": 65,
   "failed_checks": [],
   "gate_id": "RG_CAP_MEAN01_KEYS_HAVE_MEANING",
   "next_action": "npm run -s verify:regression:rg-cap-mean01-keys-have-meaning",
