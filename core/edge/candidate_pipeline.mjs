@@ -68,7 +68,7 @@ export function runCandidatePipeline(strategy, bars, ssot, opts = {}) {
 
   // Phase 2: Edge Adapter
   const edge = backtestToEdge(r1, bars, {
-    edge_id: opts.edge_id || `pipeline_${strategy.meta().name}_${Date.now()}`,
+    edge_id: opts.edge_id || `pipeline_${strategy.meta().name}_${bars.length}bars`,
     strategy_id: strategy.meta().name,
   });
   phases.adapter = { edge_id: edge.edge_id, strategy_id: edge.strategy_id };
@@ -136,14 +136,14 @@ export function runCandidatePipeline(strategy, bars, ssot, opts = {}) {
     court_verdicts: phases.edge_lab?.verdict ? [{
       verdict: phases.edge_lab.verdict,
       courts: phases.edge_lab.courts_executed || [],
-      at: new Date().toISOString(),
+      at: opts.timestamp || new Date().toISOString(),
     }] : [],
     evidence: {
       backtest_hash: hash1,
       deterministic: true,
       bar_count: bars.length,
     },
-    created_at: new Date().toISOString(),
+    created_at: opts.timestamp || new Date().toISOString(),
   };
 
   phases.candidate = { id: candidate.id, state: candidate.fsm_state };

@@ -68,6 +68,7 @@ export function computeTimingAlpha(signals, bars) {
   let exitCount = 0;
 
   for (const sig of signals) {
+    // Support explicit entry_price/exit_price fields
     const entryPrice = Number(sig.entry_price ?? sig.entryPrice ?? sig.entry ?? 0);
     const exitPrice = Number(sig.exit_price ?? sig.exitPrice ?? sig.exit ?? 0);
 
@@ -78,6 +79,20 @@ export function computeTimingAlpha(signals, bars) {
     if (Number.isFinite(exitPrice) && exitPrice > 0) {
       exitSum += exitPrice;
       exitCount += 1;
+    }
+
+    // Support backtest engine signal shape: { signal: 'BUY'|'SELL', price }
+    if (entryPrice === 0 && exitPrice === 0 && sig.signal && sig.price) {
+      const p = Number(sig.price);
+      if (Number.isFinite(p) && p > 0) {
+        if (sig.signal === 'BUY') {
+          entrySum += p;
+          entryCount += 1;
+        } else if (sig.signal === 'SELL') {
+          exitSum += p;
+          exitCount += 1;
+        }
+      }
     }
   }
 
@@ -125,6 +140,10 @@ function extractExecutionCost(backtestResult) {
  * @returns {number}
  */
 function extractTotalReturn(backtestResult) {
+  // return_pct from engine.mjs is in percentage (e.g. 15 for 15%), convert to fraction
+  if (backtestResult.return_pct != null && Number.isFinite(Number(backtestResult.return_pct))) {
+    return Number(backtestResult.return_pct) / 100;
+  }
   const ret = Number(
     backtestResult.total_return ?? backtestResult.totalReturn ??
     backtestResult.return ?? backtestResult.pnl_pct ?? 0

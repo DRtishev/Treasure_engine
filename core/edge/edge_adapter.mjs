@@ -23,7 +23,7 @@ import { truncateTowardZero } from './deterministic_math.mjs';
  */
 export function backtestToEdge(backtestResult, bars, opts = {}) {
   const m = backtestResult.metrics;
-  const edgeId = opts.edge_id || `edge_${m.strategy}_${Date.now()}`;
+  const edgeId = opts.edge_id || `edge_${m.strategy}_${m.bars || 0}`;
   const strategyId = opts.strategy_id || m.strategy;
 
   // Build synthetic execution metrics from backtest fills

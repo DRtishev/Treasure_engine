@@ -27,7 +27,7 @@
  * @returns {number}
  */
 function truncateTowardZero(value, scale) {
-  if (!Number.isFinite(value)) return value; // NaN / ±Infinity pass through
+  if (!Number.isFinite(value)) throw new Error('Non-finite number in deterministic payload');
   const factor = 10 ** scale;
   const truncated = value < 0 ? Math.ceil(value * factor) : Math.floor(value * factor);
   return truncated / factor;

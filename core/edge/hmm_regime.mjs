@@ -539,16 +539,16 @@ export function fitHMMRegimes(bars, opts = {}) {
   let verdict, reason;
   if (profitableRegimes < 2) {
     verdict = 'FAIL';
-    reason = 'FEW_PROFITABLE_REGIMES';
+    reason = 'HMM_FEW_REGIMES';
   } else if (currentPChange > 0.3) {
     verdict = 'WARN';
-    reason = 'HIGH_REGIME_CHANGE_PROB';
+    reason = 'HMM_REGIME_CHANGE_HIGH';
   } else if (crisisFraction > 0.2) {
     verdict = 'WARN';
-    reason = 'CRISIS_REGIME_DOMINANT';
+    reason = 'HMM_CRISIS_DOMINANT';
   } else {
     verdict = 'PASS';
-    reason = '';
+    reason = 'HMM_PASS';
   }
 
   return {

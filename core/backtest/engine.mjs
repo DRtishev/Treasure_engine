@@ -99,7 +99,8 @@ export function runBacktest(strategy, bars, opts = {}) {
   const equityValues = equityCurve.map(e => e.equity);
 
   // Max drawdown from equity curve (W1.4: precision fix — uses all bars, not just fills)
-  const maxDrawdownFromCurve = drawdowns.length > 0 ? Math.max(...drawdowns) : 0;
+  let maxDrawdownFromCurve = 0;
+  for (const dd of drawdowns) { if (dd > maxDrawdownFromCurve) maxDrawdownFromCurve = dd; }
 
   // Max drawdown duration (bars underwater)
   let maxDDDuration = 0;
@@ -116,9 +117,9 @@ export function runBacktest(strategy, bars, opts = {}) {
   // Recovery factor, Sortino, Calmar, Ulcer Index, Pain Ratio
   const annualizedReturn = summary.return_pct; // simplified: already percentage
   const sortinoRatio = tradeReturns.length >= 2 ? truncateTowardZero(sortino(tradeReturns), 6) : 0;
-  const calmarRatio = maxDrawdownFromCurve > 0 ? truncateTowardZero(calmar(annualizedReturn, maxDrawdownFromCurve), 6) : 0;
+  const calmarRatio = maxDrawdownFromCurve > 0 ? truncateTowardZero(calmar(annualizedReturn / 100, maxDrawdownFromCurve), 6) : 0;
   const ulcerIdx = drawdowns.length > 0 ? truncateTowardZero(ulcerIndex(drawdowns), 6) : 0;
-  const painR = ulcerIdx > 0 ? truncateTowardZero(painRatio(annualizedReturn, ulcerIdx), 6) : 0;
+  const painR = ulcerIdx > 0 ? truncateTowardZero(painRatio(annualizedReturn / 100, ulcerIdx), 6) : 0;
   const recoveryFactor = maxDrawdownFromCurve > 0 ? truncateTowardZero(summary.return_pct / (maxDrawdownFromCurve * 100), 6) : 0;
 
   const metrics = {

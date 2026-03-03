@@ -85,6 +85,7 @@ export function calculateMetrics(trades) {
 }
 
 export function percentile(arr, p) {
+  if (!arr || arr.length === 0) return 0;
   const sorted = [...arr].sort((a, b) => a - b);
   // B03 fix: use Math.ceil - 1 for correct percentile index, clamp to valid range
   const idx = Math.min(Math.max(0, Math.ceil(sorted.length * p) - 1), sorted.length - 1);

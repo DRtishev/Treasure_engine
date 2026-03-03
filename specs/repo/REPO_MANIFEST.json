@@ -1222,7 +1222,7 @@
     },
     {
       "path": "core/backtest/engine.mjs",
-      "sha256": "f53fd2c805e2d3b7eea2be5f101aa342a90257526c5157eafcae380c6f627b76",
+      "sha256": "7b31466cf871160ecdefab09ebfad92d41bcb3b2007655ee9ba3e9b521057dad",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -1558,7 +1558,7 @@
     },
     {
       "path": "core/edge/unified_sharpe.mjs",
-      "sha256": "f7c5395cc0b6c4ef091e760e51d4ed9e2f4a84c15fa64fbc022cb1dc7549d4dd",
+      "sha256": "a6e076b7e283ad15fdce4599595817871f0c482c7c17e97c5bd5ca8247fdb517",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "W1.1+W2.4: SSOT for all Sharpe/risk-adjusted metrics."
@@ -1572,14 +1572,14 @@
     },
     {
       "path": "core/edge/monte_carlo.mjs",
-      "sha256": "d47b90edb210b0baea73a94c8e859d7300a31fd725ae69471eededc9fe8f33f2",
+      "sha256": "4138eaacf5c37fc6a013583f90f835a9b60b32d5b4463a7e6261bb5c723e0500",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "W3.2: Monte Carlo stress world generator."
     },
     {
       "path": "core/edge/alpha_attribution.mjs",
-      "sha256": "b7bd8e12848e1e5925336f126561ff7e9411544d2fcf731c5693f42cbd83f652",
+      "sha256": "630c55b41e394a3b5b1d52ebbf58ced991a04e7a65cbdaf46fdb13fd7e746013",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "W3.3: Alpha Autopsy profit attribution."
@@ -1593,7 +1593,7 @@
     },
     {
       "path": "core/edge/hmm_regime.mjs",
-      "sha256": "d99f0fbd5fc566f3016023b2fdb2c57031e7099669a8391c38953db92cac1500",
+      "sha256": "292e07e5aebbe7f00e4cb63e1ae65ed3abcee31e2d434db93c28b3fcf1d116c9",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "W4.1: HMM regime detector."
@@ -1607,14 +1607,14 @@
     },
     {
       "path": "core/edge/edge_adapter.mjs",
-      "sha256": "abdbcd53f6848398ed24996d2df5e6f202a25c0c2e875e09ace5765f7c8e7151",
+      "sha256": "dd76c46e126c2bce14ba89381a74d23ce451093e3d4095226f294e47d9ac3c9b",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "W2.1: Backtest to Edge Lab adapter."
     },
     {
       "path": "core/edge/candidate_pipeline.mjs",
-      "sha256": "e9f8701f99cb5fdbbe5e72d58c6d9c1788c80fd7f32b55f43f59f45eb8072933",
+      "sha256": "010de1abaf4a4adf0aa15e95c2b91f858396e7822936b2c52de33328eb384b5c",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "W4.4: Pipeline Surgeon orchestrator."
@@ -2545,7 +2545,7 @@
     },
     {
       "path": "core/sim/metrics.mjs",
-      "sha256": "dddf9f778fcc9f256809d9570953cdd3ec1bbe90881208ed0cb1751c4727269b",
+      "sha256": "9b007aa48465dffbb01f92820e857e1a74e6772942d35ddb0508f278b169990f",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -34780,7 +34780,7 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md",
-      "sha256": "9f1d4013877eb386e202e2103614f9194b8aa917d5f6a6ca8a54257207e2bc85",
+      "sha256": "5d8ee167ade3f41b9acf99576dd9498eb2f55542eb631d30a7d3fe84c952f13f",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -35144,7 +35144,7 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md",
-      "sha256": "7bbc6706272ebc3f32e6e89392b2fe0dffcddaca8f68615c3dedcb1018a3f461",
+      "sha256": "e02b7481a42ad2bdec71ec6b911e3f264d9eeb0852ea28dd4846dd9656d38be8",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -35158,7 +35158,7 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_X2.md",
-      "sha256": "b12797fec586f8471188c2f56f1b732d8b4caf7df9d2be49f53d2d7edea885da",
+      "sha256": "f0909707ad950e61b9ddc6c60e784fce79d92ad768113d4bc5fca2bccbd657cb",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -36075,7 +36075,7 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json",
-      "sha256": "3876c14bcaaf6411de7f9370fd9a00958362bd2094feae1aabb4df22a63760f3",
+      "sha256": "d15806d862027126dced19212dabfb3c4e352b4b48d3adc43fc6f4f9c386ac9a",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -36474,14 +36474,14 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json",
-      "sha256": "91431e28c7744e54e85f26fe88387a85c35f19a7f6bced84bc4dcdbeb6c3d277",
+      "sha256": "7f8a82cac9ad9210a0b1ddd3519c62cff1cc69825ea68fdcda19256ac8cb8af1",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
       "path": "reports/evidence/EXECUTOR/gates/manual/repo_byte_audit_x2.json",
-      "sha256": "022ceebbc6168982b327a5b8ebe65bfe1db1be5caf59b4e5dc685e935648168d",
+      "sha256": "a0f7a1b27b759858b7c1f022d829daec9b7888af6882b33267eb95615128442d",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -47758,7 +47758,7 @@
     },
     {
       "path": "specs/reason_code_taxonomy.json",
-      "sha256": "8acf96acca62ddf0d53d2fdaa0767169b043f51e51c84c2d0d8d99dd3b724377",
+      "sha256": "429f8e7ec6534943a8d40231405e377f7a0fab6c79e72399ed4a1f4cf24576e4",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."

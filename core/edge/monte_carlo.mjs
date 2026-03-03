@@ -235,7 +235,7 @@ export function monteCarloBacktest(runBacktestFn, strategy, bars, opts, mcOpts =
     reason  = 'MC_SHARPE_NEGATIVE';
   } else {
     verdict = 'PASS';
-    reason  = '';
+    reason  = 'MC_PASS';
   }
 
   return {
