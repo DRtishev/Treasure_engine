@@ -6,9 +6,60 @@ RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 0
+- changed_evidence_files_n: 52
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
 ## OFFENDERS
-- NONE
+- reports/evidence/EXECUTOR/gates/manual/node_toolchain_acquire.json
+- reports/evidence/EXECUTOR/gates/manual/node_toolchain_ensure.json
+- reports/evidence/EXECUTOR/gates/manual/regression_agent01_agents_present.json
+- reports/evidence/EXECUTOR/gates/manual/regression_agent02_claude_md_drift.json
+- reports/evidence/EXECUTOR/gates/manual/regression_auto01_mode_router.json
+- reports/evidence/EXECUTOR/gates/manual/regression_backtest01_organ_health.json
+- reports/evidence/EXECUTOR/gates/manual/regression_churn_contract01.json
+- reports/evidence/EXECUTOR/gates/manual/regression_epoch_skip01_respects_tracked_state.json
+- reports/evidence/EXECUTOR/gates/manual/regression_fsm02_consciousness.json
+- reports/evidence/EXECUTOR/gates/manual/regression_immune01_integration.json
+- reports/evidence/EXECUTOR/gates/manual/regression_liq_lock01.json
+- reports/evidence/EXECUTOR/gates/manual/regression_metaagent01_fleet.json
+- reports/evidence/EXECUTOR/gates/manual/regression_net_toolchain01.json
+- reports/evidence/EXECUTOR/gates/manual/regression_no_rg_writes_during_cert.json
+- reports/evidence/EXECUTOR/gates/manual/regression_node_truth_alignment.json
+- reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_reason01_token_purity.json
+- reports/evidence/EXECUTOR/gates/manual/regression_rg_reason02_in_taxonomy.json
+- reports/evidence/EXECUTOR/gates/manual/regression_strat01_interface.json
+- reports/evidence/EXECUTOR/gates/manual/regression_strat01_interface.md
+- reports/evidence/EXECUTOR/gates/manual/regression_strat02_determinism.json
+- reports/evidence/EXECUTOR/gates/manual/regression_strat02_determinism.md
+- reports/evidence/EXECUTOR/gates/manual/regression_strat03_court_pass.json
+- reports/evidence/EXECUTOR/gates/manual/regression_strat03_court_pass.md
+- reports/evidence/EXECUTOR/gates/manual/regression_time01_stable_tick_order.json
+- reports/evidence/EXECUTOR/gates/manual/regression_time02_no_time_fields.json
+- reports/evidence/EXECUTOR/gates/manual/repo_byte_audit_x2.json
+- reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json
+- reports/evidence/EXECUTOR/NODE_TOOLCHAIN_ACQUIRE.md
+- reports/evidence/EXECUTOR/NODE_TOOLCHAIN_ENSURE.md
+- reports/evidence/EXECUTOR/REGRESSION_AGENT01_AGENTS_PRESENT.md
+- reports/evidence/EXECUTOR/REGRESSION_AGENT02_CLAUDE_MD_DRIFT.md
+- reports/evidence/EXECUTOR/REGRESSION_AUTO01_MODE_ROUTER.md
+- reports/evidence/EXECUTOR/REGRESSION_BACKTEST01_ORGAN_HEALTH.md
+- reports/evidence/EXECUTOR/REGRESSION_CHURN_CONTRACT01.md
+- reports/evidence/EXECUTOR/REGRESSION_EPOCH_SKIP01_RESPECTS_TRACKED_STATE.md
+- reports/evidence/EXECUTOR/REGRESSION_FSM02.md
+- reports/evidence/EXECUTOR/REGRESSION_IMMUNE01.md
+- reports/evidence/EXECUTOR/REGRESSION_LIQ_LOCK01.md
+- reports/evidence/EXECUTOR/REGRESSION_METAAGENT01.md
+- reports/evidence/EXECUTOR/REGRESSION_NET_TOOLCHAIN01.md
+- reports/evidence/EXECUTOR/REGRESSION_NO_RG_WRITES_DURING_CERT.md
+- reports/evidence/EXECUTOR/REGRESSION_NODE_TRUTH_ALIGNMENT.md
+- reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_REASON01.md
+- reports/evidence/EXECUTOR/REGRESSION_RG_REASON02.md
+- reports/evidence/EXECUTOR/REGRESSION_TIME01_STABLE_TICK_ORDER.md
+- reports/evidence/EXECUTOR/REGRESSION_TIME02_NO_TIME_FIELDS.md
+- reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_SCOPE.json
+- reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_X2.md
+- reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md
+- reports/evidence/EXECUTOR/REPO_SHA256SUMS.txt

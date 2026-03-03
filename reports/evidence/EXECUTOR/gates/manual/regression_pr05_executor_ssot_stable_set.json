@@ -1,14 +1,19 @@
 {
   "checks": {
     "forbidden_ext_files_n": 0,
-    "new_non_allowlisted_n": 0,
+    "new_non_allowlisted_n": 4,
     "origin_main_present": true
   },
   "gate_id": "RG_PR05_EXECUTOR_SSOT_STABLE_SET",
   "next_action": "npm run -s verify:fast",
-  "offenders": [],
-  "reason_code": "NONE",
+  "offenders": [
+    "NEW:reports/evidence/EXECUTOR/gates/manual/regression_strat01_interface.md",
+    "NEW:reports/evidence/EXECUTOR/gates/manual/regression_strat02_determinism.md",
+    "NEW:reports/evidence/EXECUTOR/gates/manual/regression_strat03_court_pass.md",
+    "NEW:reports/evidence/EXECUTOR/NODE_TOOLCHAIN_ENSURE.md"
+  ],
+  "reason_code": "RG_PR05_NON_ALLOWLIST_ADDED",
   "run_id": "STABLE",
   "schema_version": "1.0.0",
-  "status": "PASS"
+  "status": "FAIL"
 }

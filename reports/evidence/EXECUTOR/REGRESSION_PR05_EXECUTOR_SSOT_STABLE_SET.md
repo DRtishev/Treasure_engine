@@ -1,7 +1,7 @@
 # REGRESSION_PR05_EXECUTOR_SSOT_STABLE_SET.md
 
-STATUS: PASS
-REASON_CODE: NONE
+STATUS: FAIL
+REASON_CODE: RG_PR05_NON_ALLOWLIST_ADDED
 RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
@@ -22,7 +22,10 @@ NEXT_ACTION: npm run -s verify:fast
 ## CHECKS
 - origin_main_present: true
 - forbidden_ext_files_n: 0
-- new_non_allowlisted_n: 0
+- new_non_allowlisted_n: 4
 
 ## OFFENDERS
-- NONE
+- NEW:reports/evidence/EXECUTOR/gates/manual/regression_strat01_interface.md
+- NEW:reports/evidence/EXECUTOR/gates/manual/regression_strat02_determinism.md
+- NEW:reports/evidence/EXECUTOR/gates/manual/regression_strat03_court_pass.md
+- NEW:reports/evidence/EXECUTOR/NODE_TOOLCHAIN_ENSURE.md
