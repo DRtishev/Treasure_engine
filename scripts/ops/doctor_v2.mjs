@@ -138,6 +138,29 @@ if (lifeEpochs2.length > 0) {
 
 const x2Identical = life1Summary.length > 0 && life1Summary === life2Summary;
 
+// DATA FRESHNESS CHECK (EPOCH-74)
+let dataFreshnessPass = true;
+const dataReadinessPath = path.join(ROOT, 'reports/evidence/EXECUTOR/gates/manual/public_data_readiness_seal.json');
+if (fs.existsSync(dataReadinessPath)) {
+  try {
+    const seal = JSON.parse(fs.readFileSync(dataReadinessPath, 'utf8'));
+    const perLane = seal.per_lane || [];
+    const truthPass = perLane
+      .filter((l) => l.truth_level === 'TRUTH')
+      .every((l) => l.status === 'PASS');
+    dataFreshnessPass = truthPass;
+    if (!truthPass) {
+      console.log(`  [DATA_FRESHNESS] TRUTH lanes not all PASS`);
+    } else {
+      console.log(`  [DATA_FRESHNESS] TRUTH lanes PASS`);
+    }
+  } catch {
+    console.log(`  [DATA_FRESHNESS] could not parse seal, skipping`);
+  }
+} else {
+  console.log(`  [DATA_FRESHNESS] no readiness seal found, skipping`);
+}
+
 const livenessAlive = liveness.fast1.ok && liveness.fast2.ok && liveness.life.ok;
 let livenessVerdict = 'DEAD';
 if (livenessAlive && x2Identical) livenessVerdict = 'ALIVE_DETERMINISTIC';
@@ -221,6 +244,7 @@ score('chaos_mode_lie', chaos.mode_lie.ok, 10);
 score('chaos_orphan', chaos.orphan.ok, 10);
 score('chaos_fp01', chaos.fp01.ok, 5);
 score('provenance_sealed', provenanceSealed, 5);
+score('data_freshness', dataFreshnessPass, 0);
 
 const boardLines = Object.entries(board)
   .sort(([a], [b]) => a.localeCompare(b))
