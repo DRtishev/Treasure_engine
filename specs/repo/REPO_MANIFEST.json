@@ -1,6 +1,6 @@
 {
   "schema_version": "1.0.0",
-  "generated_at": "2026-03-03T07:48:13.885Z",
+  "generated_at": "2026-03-03T10:04:54.739Z",
   "files": [
     {
       "path": ".foundation-seal/E100_APPLY_JOURNAL.json",
@@ -892,6 +892,20 @@
       "reason": "Archived/quarantined content retained for historical auditability."
     },
     {
+      "path": "artifacts/BACKTEST_ORGAN_AUDIT_SPEC_v1.0.md",
+      "sha256": "94ef8482ffde3faff1e794b9ca712cf64667fe8c2842bdefcf48286cfa3d8ddd",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "artifacts/BACKTEST_ORGAN_AUDIT_SPEC_v2.0.md",
+      "sha256": "ad864d6f87827c2774f813a458ba01a4b83ecb1c0176f09c696551e1e45b2918",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "artifacts/fixtures/liq/bybit_ws_v5/v2/lock.json",
       "sha256": "36c6d0832e6a7c8f1abdad5fd5664336614de7daaea60918597e2f70197c4b9b",
       "classification": "ACTIVE",
@@ -1291,6 +1305,13 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "core/data/bar_validator.mjs",
+      "sha256": "6743d17f442f7367dc04adea4b8e199a88398e8e45b2187be32f436aa82168a9",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "core/data/binance_ws_kline.mjs",
       "sha256": "ece0a9d645e4c698531112edd9bd8fdf36600ab2f25c2a51e7f078faec0055b1",
       "classification": "ACTIVE",
@@ -1305,6 +1326,13 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "core/data/data_organ_controller.mjs",
+      "sha256": "f2dd7b573cc2e5cec0f8b6b988686430b12b7915e9b88e2be294d95b5d0d9bad",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "core/data/dataset_io.mjs",
       "sha256": "efc8aec0aa8a7e5c08cc3c80e409ba5a4f9dc612b57a76438a11b3b9f5dfa34e",
       "classification": "ACTIVE",
@@ -1314,6 +1342,20 @@
     {
       "path": "core/data/dataset_tier_policy.mjs",
       "sha256": "55c6ecab27e7776c61937d24c8f39feef620a3b0569b1c92d528f4273630a465",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "core/data/freshness_sentinel.mjs",
+      "sha256": "0cecaa33dbfe1af552f89d134149364119a45dfbc0222f2eef13eb61e936be03",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "core/data/orderbook_alchemist.mjs",
+      "sha256": "a33db48037ad6f42d6441eae3c515d4b43b569b95970e7c89dd7638acf2b9c29",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -1412,6 +1454,13 @@
     {
       "path": "core/data/replay_engine.mjs",
       "sha256": "ff77319ad794e8eec460b612bfa429e515bc41358af511e96c1aaf5293447c49",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "core/data/vol_regime_detector.mjs",
+      "sha256": "414a3718604c49e7f5939901db4a8d5efa09691ea8d8b98dfd4e45392b4727ea",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -1796,7 +1845,7 @@
     },
     {
       "path": "core/edge/risk_fortress.mjs",
-      "sha256": "99ea07d2d62dfe71afc2541d39ad3659f20e0be8671faea0ad4dda97f4b05168",
+      "sha256": "bc99b00baf52e86ce1f70c342ca44aac0a4cd3fb2202900dc0ceabb7051e7e5d",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -3588,7 +3637,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "3ff617315b2f8a6a0b0410b1403d9c91783e92548bfd6f6496ab0a5cff4ae9c7",
+      "sha256": "7373a91f8e5cbc74e789a76b1524e44b592425ab758c083d86bbe5a84cfd1c88",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -34122,7 +34171,7 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/REGRESSION_EPOCH_SKIP01_RESPECTS_TRACKED_STATE.md",
-      "sha256": "fdb9e2c37df4c717400fe74130d15f713faf1496f216b20cd3aa3e7b2d204b2c",
+      "sha256": "00ac0063b6949c694e3cbe42514c49486b95cb1d07aab40e5e2048c7aa57943e",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -34843,14 +34892,14 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/REGRESSION_RG_REASON01.md",
-      "sha256": "6d8e2b4e23dde21bd1acb99d0358264e9b9a4785351108b499753965689c5b9f",
+      "sha256": "9b23215f930e4be1e8c1e0a0ccb68daa2992d50d78e90d0a9719fec40920a635",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
       "path": "reports/evidence/EXECUTOR/REGRESSION_RG_REASON02.md",
-      "sha256": "a8467131ff83fcc5947ab1ab2803cda6293187e6cd82d09778c4b28b278ed42e",
+      "sha256": "51823ec76a84ee5cffbb418f5b067301f9b4f80e769ff0a9b03f65cd79043e12",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -35025,7 +35074,7 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md",
-      "sha256": "e02b7481a42ad2bdec71ec6b911e3f264d9eeb0852ea28dd4846dd9656d38be8",
+      "sha256": "7bbc6706272ebc3f32e6e89392b2fe0dffcddaca8f68615c3dedcb1018a3f461",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -35039,7 +35088,7 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_X2.md",
-      "sha256": "f0909707ad950e61b9ddc6c60e784fce79d92ad768113d4bc5fca2bccbd657cb",
+      "sha256": "b12797fec586f8471188c2f56f1b732d8b4caf7df9d2be49f53d2d7edea885da",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -35417,7 +35466,7 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/gates/manual/regression_epoch_skip01_respects_tracked_state.json",
-      "sha256": "8ea2eeb84fdec2271e3ef1f33f1e5ac2978dd925dea537e1ee22383e42a1a911",
+      "sha256": "81b9e3b0f0f88ae56e2a4f344d0fa4a6f2191489b2d0db3fd29fb6a8ff28e0dc",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -36138,14 +36187,14 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/gates/manual/regression_rg_reason01_token_purity.json",
-      "sha256": "867a3904b6d8374b0ba59a1c4d60800ba44312daa448c643a125628bb86b7cbb",
+      "sha256": "b656296db47962fc0a944f561e5be5c7b22c6e04f401266cabba5421198ddeb9",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
       "path": "reports/evidence/EXECUTOR/gates/manual/regression_rg_reason02_in_taxonomy.json",
-      "sha256": "539bf859c2a2e48dc6cd103f1987d8c9bac8b38148172350efde70bcc42f2667",
+      "sha256": "71a39ae91c5771b99369e9a91a95252486cfa6b6ef4e3c58e097521fd5cd988f",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -36195,6 +36244,48 @@
     {
       "path": "reports/evidence/EXECUTOR/gates/manual/regression_step7_foundation_writescope_contract.json",
       "sha256": "7528bed8f149bd608f442995e453a9ecedd1a5b0ab23f60d7cf3068c438ce484",
+      "classification": "GENERATED",
+      "owner_epoch": "prehistory",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_strat01_interface.json",
+      "sha256": "09c35f08982273515156b6d75d099729babd26cbf41285c575efb3b651cfafed",
+      "classification": "GENERATED",
+      "owner_epoch": "prehistory",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_strat01_interface.md",
+      "sha256": "9a7752a7daebe1fcb33dbc64ba54b6cf0d54a6f959a4f75a030f31abcfc1ed20",
+      "classification": "GENERATED",
+      "owner_epoch": "prehistory",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_strat02_determinism.json",
+      "sha256": "7304b49e4d498cb229471ce07188608d169a0c41a2db292928a2c16e77858f5a",
+      "classification": "GENERATED",
+      "owner_epoch": "prehistory",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_strat02_determinism.md",
+      "sha256": "0e07dee73baa82fa7b16f8b71eba00663aeeaeb6fa8cbaa2a84f54ae4161336f",
+      "classification": "GENERATED",
+      "owner_epoch": "prehistory",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_strat03_court_pass.json",
+      "sha256": "f6f0a2f31def52e5077876d6a6c1a8883e82a0576a827a0d1b81d0a9e0a2a95c",
+      "classification": "GENERATED",
+      "owner_epoch": "prehistory",
+      "reason": "Generated verification/release artifact tracked for reproducibility."
+    },
+    {
+      "path": "reports/evidence/EXECUTOR/gates/manual/regression_strat03_court_pass.md",
+      "sha256": "245e0a46e404afb573b2d553f6499a94343162407695c7da21e4bbaeb9b2730d",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -36313,14 +36404,14 @@
     },
     {
       "path": "reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json",
-      "sha256": "7f8a82cac9ad9210a0b1ddd3519c62cff1cc69825ea68fdcda19256ac8cb8af1",
+      "sha256": "91431e28c7744e54e85f26fe88387a85c35f19a7f6bced84bc4dcdbeb6c3d277",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
     },
     {
       "path": "reports/evidence/EXECUTOR/gates/manual/repo_byte_audit_x2.json",
-      "sha256": "a0f7a1b27b759858b7c1f022d829daec9b7888af6882b33267eb95615128442d",
+      "sha256": "022ceebbc6168982b327a5b8ebe65bfe1db1be5caf59b4e5dc685e935648168d",
       "classification": "GENERATED",
       "owner_epoch": "prehistory",
       "reason": "Generated verification/release artifact tracked for reproducibility."
@@ -39343,6 +39434,13 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "scripts/edge/edge_okx_orderbook_12_to_ohlcv.mjs",
+      "sha256": "e27599201f30f5d28fc929f74d9dbaff83869e426b9677dace32061938a7a024",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "scripts/edge/edge_paper_00_sim.mjs",
       "sha256": "60de04eb035ba0145683611bc8fbe299ba69cf6fb5dc0ee3d075f8c898ed6834",
       "classification": "ACTIVE",
@@ -39666,7 +39764,7 @@
     },
     {
       "path": "scripts/lib/self_heal.mjs",
-      "sha256": "2c91866ded7309a433e28fe915fca8ea8668a18c37ea0e28fad0205114868817",
+      "sha256": "6a5f026fea75313a81a2a171306f10be0218f1e70ad24e094f1f6bb281e44711",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -39771,7 +39869,7 @@
     },
     {
       "path": "scripts/ops/doctor_v2.mjs",
-      "sha256": "b4535079990c9ae0a8e45f92f068845550ab6e20edea0fb8de0ded25798c070f",
+      "sha256": "18d4155cc382d04b3920c418d141508d384511f5f90f496bfb403f585cb87429",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -39897,7 +39995,7 @@
     },
     {
       "path": "scripts/ops/proprioception.mjs",
-      "sha256": "b51fe5ec33843f7578dcf5bf0d32791cab99dcea1677c72c47262ea832387d5c",
+      "sha256": "57fb3bbfe48fed87b416b1afa08810e0d3505d48af60b2b9bbfbeaa6bb8b0311",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -45132,6 +45230,34 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "scripts/verify/regression_data_organ01_alchemist.mjs",
+      "sha256": "5ab0391f60899071156f4a44485cb8bec1864f04e36b19756b741fce58b27705",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/verify/regression_data_organ02_bar_valid.mjs",
+      "sha256": "bebba57626761bb1bd7edcc22ef5bc8824799484ed03a322a9831c527d247bef",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/verify/regression_data_organ03_vol_regime.mjs",
+      "sha256": "d37d78f0bbe82945b8c12a71bb02c6699b2ddea1d474823c0a318fb4698086b7",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "scripts/verify/regression_data_organ04_freshness.mjs",
+      "sha256": "c2e69dc0a4614a67474ba522213fbf5c110880609d3a28bce5967fe34c1325a8",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "scripts/verify/regression_data_readiness_ssot.mjs",
       "sha256": "7fcd08786b599b71c12efc44d30ad4072c85f9766565a2ffcb7ef89fd36784d2",
       "classification": "ACTIVE",
@@ -46897,7 +47023,7 @@
     },
     {
       "path": "specs/data_lanes.json",
-      "sha256": "4ac006acb598430162d7c15b4929b24051e7d90cc180b8a762fcf2a3580df9f0",
+      "sha256": "3bb042aa8f041245f811e54155a46e05eadf36d1265dfd4640567e294578251d",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -47555,7 +47681,7 @@
     },
     {
       "path": "specs/reason_code_taxonomy.json",
-      "sha256": "fa9fddd22877d0c561611c3272ad90a32874f79b8ca86ca7d359730e6219d745",
+      "sha256": "f01f01d41a6910aab3b5844cc5e6fbfe4ff054b7163756d00d51a7238b1cbcf3",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
