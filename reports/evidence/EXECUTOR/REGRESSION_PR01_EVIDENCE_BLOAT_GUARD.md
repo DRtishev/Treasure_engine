@@ -6,7 +6,7 @@ RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 50
+- changed_evidence_files_n: 48
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
@@ -27,7 +27,6 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_no_rg_writes_during_cert.json
 - reports/evidence/EXECUTOR/gates/manual/regression_node_truth_alignment.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
-- reports/evidence/EXECUTOR/gates/manual/regression_pr05_executor_ssot_stable_set.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_reason01_token_purity.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_reason02_in_taxonomy.json
 - reports/evidence/EXECUTOR/gates/manual/regression_strat01_interface.json
@@ -52,7 +51,6 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_NO_RG_WRITES_DURING_CERT.md
 - reports/evidence/EXECUTOR/REGRESSION_NODE_TRUTH_ALIGNMENT.md
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
-- reports/evidence/EXECUTOR/REGRESSION_PR05_EXECUTOR_SSOT_STABLE_SET.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_REASON01.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_REASON02.md
 - reports/evidence/EXECUTOR/REGRESSION_TIME01_STABLE_TICK_ORDER.md
