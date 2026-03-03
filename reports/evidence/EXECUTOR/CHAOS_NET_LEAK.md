@@ -1,9 +1,9 @@
 # CHAOS_NET_LEAK.md — Chaos: network isolation proof
 
-STATUS: PASS
-REASON_CODE: NONE
+STATUS: FAIL
+REASON_CODE: CHAOS_NET_LEAK_IMMUNE_BROKEN
 RUN_ID: STABLE
 NEXT_ACTION: npm run -s ops:doctor
 
 ## RESULT
-All 3 network attempts blocked (3 NETV01 throws) — kill switch WORKS
+TREASURE_NET_KILL not set to 1 — cannot test network guard
