@@ -13,7 +13,7 @@
 //   Pure function, deterministic, backward-looking only (no lookahead).
 //   Bars with existing _liq_pressure are passed through unchanged.
 
-import { truncateTowardZero } from '../contracts.mjs';
+import { truncateTowardZero } from '../deterministic_math.mjs';
 
 const WINDOW = 20;
 

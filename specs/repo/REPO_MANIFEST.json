@@ -1222,7 +1222,7 @@
     },
     {
       "path": "core/backtest/engine.mjs",
-      "sha256": "e0ab99c93003bcdb2bc3984cc62c2f95d7f9e9ba4a095f62a9f3f911fcf43a04",
+      "sha256": "2b6ad544babc52979e4a1c6c52ebf0268f7896dce6fecf4a7a9cfdd599d4932d",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -1544,7 +1544,14 @@
     },
     {
       "path": "core/edge/contracts.mjs",
-      "sha256": "36ed34728168e3afac01100e5389eb996664d95505c686cb8d778bf12df937bf",
+      "sha256": "02e9aa652c3fc9c9a554fa9bf7657f577de8b7d4373cf31e0103c4d439dd84ec",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
+      "path": "core/edge/deterministic_math.mjs",
+      "sha256": "a3c3c31c590a08c2072942400e8bb24d8cf655d15e0c55a99b20303b30ddc8cb",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -1957,7 +1964,7 @@
     },
     {
       "path": "core/edge/strategies/strategy_bar_enricher.mjs",
-      "sha256": "35290fe4bb5605c98ca0b0b8e5d971721d6b48f409f291a85e6da2f828ff18eb",
+      "sha256": "92591b8b9781d15f386db03cae74acd4701bd55927b24e4319029942ae2de1d6",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -3637,7 +3644,7 @@
     },
     {
       "path": "package.json",
-      "sha256": "7373a91f8e5cbc74e789a76b1524e44b592425ab758c083d86bbe5a84cfd1c88",
+      "sha256": "a8e3520550c0f8526a8aa6dcbb79276a3c93f3f6d0da8d5daf30736aa9850148",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -40779,7 +40786,7 @@
     },
     {
       "path": "scripts/verify/e108_backtest_determinism_x2_contract.mjs",
-      "sha256": "69ce572299df883f1c072c94350c965ca694facd123d035c6c26b45c45ffd6bd",
+      "sha256": "3c7de3e9c49f61500b7c39aa15f34e548b3e6046f1ab6241ab61b6aad4b8a5bf",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -45258,6 +45265,13 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "scripts/verify/regression_backtest01_organ_health.mjs",
+      "sha256": "fc919aef33980bd3efa28cb50d5b7943966961d37b7874a6b5e29605bcafa11a",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "Primary source tracked by SSOT."
+    },
+    {
       "path": "scripts/verify/regression_data_readiness_ssot.mjs",
       "sha256": "7fcd08786b599b71c12efc44d30ad4072c85f9766565a2ffcb7ef89fd36784d2",
       "classification": "ACTIVE",
@@ -47681,7 +47695,7 @@
     },
     {
       "path": "specs/reason_code_taxonomy.json",
-      "sha256": "f01f01d41a6910aab3b5844cc5e6fbfe4ff054b7163756d00d51a7238b1cbcf3",
+      "sha256": "208a3db81eadd36f0257d2480a6e7296e64ae1f1ff33ba720d214b12f0a64e10",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."

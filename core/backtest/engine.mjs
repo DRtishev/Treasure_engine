@@ -5,7 +5,7 @@
 
 import { createLedger, recordFill, getLedgerSummary, serializeLedger, fillsToMarkdownTable, detectAnomalies } from '../profit/ledger.mjs';
 import { stableFormatNumber, renderMarkdownTable } from '../../scripts/verify/foundation_render.mjs';
-import { truncateTowardZero } from '../edge/contracts.mjs';
+import { truncateTowardZero } from '../edge/deterministic_math.mjs';
 
 /**
  * Run a backtest of strategy on bars

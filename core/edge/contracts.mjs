@@ -193,12 +193,8 @@ function scaleForPath(path) {
   return numberScaleByKey[path.split('.').at(-1)] ?? 8;
 }
 
-export function truncateTowardZero(value, scale) {
-  if (!Number.isFinite(value)) throw new Error('Non-finite number in deterministic payload');
-  const factor = 10 ** scale;
-  const truncated = value < 0 ? Math.ceil(value * factor) : Math.floor(value * factor);
-  return truncated / factor;
-}
+// Re-export from dependency-free module (SSOT: deterministic_math.mjs)
+export { truncateTowardZero } from './deterministic_math.mjs';
 
 function toPlainDecimal(numberValue) {
   if (!Number.isFinite(numberValue)) throw new Error('Non-finite number in deterministic payload');
