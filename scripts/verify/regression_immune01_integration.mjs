@@ -141,6 +141,19 @@ checks.push({
     : 'FAIL: scripts/ops/heal_runner.mjs missing',
 });
 
+// ---------------------------------------------------------------------------
+// Test 8: doctor_v2_has_trending — doctor_v2.mjs surfaces trending in output
+// ---------------------------------------------------------------------------
+const doctorV2Src = fs.readFileSync(path.join(ROOT, 'scripts/ops/doctor_v2.mjs'), 'utf8');
+const hasTrending = doctorV2Src.includes('trending') && doctorV2Src.includes('score_trend');
+checks.push({
+  check: 'doctor_v2_has_trending',
+  pass: hasTrending,
+  detail: hasTrending
+    ? 'OK: doctor_v2.mjs surfaces trending in DOCTOR.json'
+    : 'FAIL: doctor_v2.mjs missing trending logic',
+});
+
 const failed = checks.filter((c) => !c.pass);
 const status = failed.length === 0 ? 'PASS' : 'FAIL';
 const reason_code = failed.length === 0 ? 'NONE' : 'FSM_STRUCTURAL_VIOLATION';

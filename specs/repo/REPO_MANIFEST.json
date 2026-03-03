@@ -47758,7 +47758,7 @@
     },
     {
       "path": "specs/reason_code_taxonomy.json",
-      "sha256": "429f8e7ec6534943a8d40231405e377f7a0fab6c79e72399ed4a1f4cf24576e4",
+      "sha256": "c8428d829c4a25119a926985921fce4bbb968b2840f3ffdfd443276a511abf3e",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."

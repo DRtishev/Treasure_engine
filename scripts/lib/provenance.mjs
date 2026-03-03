@@ -4,7 +4,7 @@
  * Collects all evidence files from a Doctor run, builds merkle tree,
  * writes PROVENANCE.json with unforgeable root hash.
  *
- * Uses existing canon.mjs sha256Raw for hash consistency.
+ * v2: chain_parent, chain_depth, chain_integrity for cross-run linking (G-10).
  */
 
 import fs from 'node:fs';
@@ -47,8 +47,35 @@ function buildMerkleTree(leaves) {
   return { root: level[0], depth };
 }
 
-export function sealProvenance(epochDir, metadata = {}) {
-  const files = collectEvidenceFiles(epochDir);
+/**
+ * findPreviousDoctorRun — locate the most recent EPOCH-DOCTOR-* dir before current.
+ */
+export function findPreviousDoctorRun(evidenceDir, currentRunId) {
+  if (!fs.existsSync(evidenceDir)) return null;
+  const dirs = fs.readdirSync(evidenceDir)
+    .filter((d) => d.startsWith('EPOCH-DOCTOR-') && !d.includes(currentRunId))
+    .sort();
+  if (dirs.length === 0) return null;
+  return { dir: path.join(evidenceDir, dirs.at(-1)), runId: dirs.at(-1).replace('EPOCH-DOCTOR-', '') };
+}
+
+/**
+ * loadPreviousProvenance — read PROVENANCE.json from a previous Doctor run.
+ */
+export function loadPreviousProvenance(prevDir) {
+  if (!prevDir) return null;
+  const provPath = path.join(prevDir, 'PROVENANCE.json');
+  if (!fs.existsSync(provPath)) return null;
+  try {
+    return JSON.parse(fs.readFileSync(provPath, 'utf8'));
+  } catch {
+    return null;
+  }
+}
+
+export function sealProvenance(epochDir, metadata = {}, chainOpts = {}) {
+  // Exclude PROVENANCE.json itself to match verifyProvenance and avoid circular dependency
+  const files = collectEvidenceFiles(epochDir).filter((f) => !f.endsWith('PROVENANCE.json'));
   const leafHashes = files.map((f) => {
     const relPath = path.relative(epochDir, f);
     const content = fs.readFileSync(f, 'utf8');
@@ -57,13 +84,30 @@ export function sealProvenance(epochDir, metadata = {}) {
 
   const tree = buildMerkleTree(leafHashes);
 
+  // Chain linking (G-10)
+  const prevMerkleRoot = chainOpts.prev_merkle_root ?? 'GENESIS';
+  const prevChainDepth = chainOpts.prev_chain_depth ?? 0;
+  let chainIntegrity = 'GENESIS';
+  if (prevMerkleRoot !== 'GENESIS') {
+    // Verify the parent exists with matching root
+    if (chainOpts.prev_verified) {
+      chainIntegrity = 'INTACT';
+    } else {
+      chainIntegrity = 'BROKEN';
+    }
+  }
+
+  // Metadata spread first so structural fields can never be overridden
   const provenance = {
-    schema_version: '1.0.0',
-    merkle_root: tree.root,
-    merkle_depth: tree.depth,
-    leaf_count: files.length,
-    node_version: process.version,
     ...metadata,
+    chain_depth: prevChainDepth + 1,
+    chain_integrity: chainIntegrity,
+    chain_parent: prevMerkleRoot,
+    leaf_count: files.length,
+    merkle_depth: tree.depth,
+    merkle_root: tree.root,
+    node_version: process.version,
+    schema_version: '1.0.0',
   };
 
   // Write WITHOUT writeJsonDeterministic (which would add FP01 checks on our metadata)
