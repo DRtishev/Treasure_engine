@@ -97,6 +97,51 @@ function scanEnvironment() {
 }
 
 /**
+ * Scan data organ status (EPOCH-74).
+ * Pure read-only. Checks data lanes, enrichment, and pipeline state.
+ */
+function scanDataOrgan() {
+  // Read data lanes
+  const lanesPath = path.join(ROOT, 'specs', 'data_lanes.json');
+  let lanes = [];
+  try {
+    if (fs.existsSync(lanesPath)) {
+      lanes = JSON.parse(fs.readFileSync(lanesPath, 'utf8')).lanes || [];
+    }
+  } catch { /* fail-safe */ }
+
+  const truthLanes = lanes.filter((l) => l.truth_level === 'TRUTH');
+
+  // Check enriched bars presence
+  const enrichedBarsPath = path.join(ROOT, 'artifacts', 'outgoing', 'enriched_bars.jsonl');
+  const enrichedLockPath = path.join(ROOT, 'artifacts', 'outgoing', 'enriched_bars.lock.json');
+  const hasEnrichedBars = fs.existsSync(enrichedBarsPath) && fs.existsSync(enrichedLockPath);
+
+  // Check alchemist module presence
+  const alchemistPresent = fs.existsSync(path.join(ROOT, 'core', 'data', 'orderbook_alchemist.mjs'));
+
+  // Check ALLOW_NETWORK
+  const hasAllowNetwork = fs.existsSync(path.join(ROOT, 'artifacts', 'incoming', 'ALLOW_NETWORK'));
+
+  // Determine controller state from enrichment presence
+  let controllerState = 'DORMANT';
+  if (hasEnrichedBars) controllerState = 'NOURISHING';
+  else if (hasAllowNetwork) controllerState = 'ACQUIRING';
+
+  return Object.freeze({
+    lanes_total: lanes.length,
+    lanes_truth: truthLanes.length,
+    pipeline: {
+      acquire_ready: hasAllowNetwork,
+      enrich_ready: alchemistPresent,
+      consume_ready: hasEnrichedBars,
+      alchemist_present: alchemistPresent,
+    },
+    controller_state: controllerState,
+  });
+}
+
+/**
  * scan(bus?) → ProprioceptionContext
  *
  * Main entry point. Pure read-only scan of organism state.
@@ -162,6 +207,9 @@ export function scan(bus = null) {
     .filter(([, cb]) => cb.open)
     .map(([tid]) => tid);
 
+  // 6. Data Organ scan (EPOCH-74)
+  const dataOrgan = scanDataOrgan();
+
   return Object.freeze({
     // WHERE AM I?
     fsm_state: fsmState,
@@ -185,5 +233,8 @@ export function scan(bus = null) {
     goal_path: goalPath,
     circuit_breakers: circuitBreakers,
     blocked_transitions: blockedTransitions,
+
+    // DATA ORGAN (EPOCH-74)
+    data_organ: dataOrgan,
   });
 }

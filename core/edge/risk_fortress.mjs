@@ -1,9 +1,20 @@
 import crypto from 'node:crypto';
+import { detectVolRegime } from '../data/vol_regime_detector.mjs';
 
 function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 function round(v, s = 6) { const p = 10 ** s; return Math.round(v * p) / p; }
 
 const VOL_MULT = { LOW: 1.0, MID: 0.8, HIGH: 0.55, CRISIS: 0.25 };
+
+/**
+ * Detect vol regime from bars if available, otherwise fallback to provided or 'MID'.
+ * @param {object[]} [bars] — OHLCV bars for live vol regime detection
+ * @returns {string}
+ */
+export function resolveVolRegime(bars) {
+  if (!bars || !Array.isArray(bars) || bars.length < 2) return 'MID';
+  return detectVolRegime(bars).regime;
+}
 
 export function sizingPolicy({ dd = 0, dd_speed = 0, vol_regime = 'MID', pbo_flag = false, dsr_flag = false } = {}) {
   const ddPenalty = clamp(dd / 0.35, 0, 1); // full penalty by 35% drawdown

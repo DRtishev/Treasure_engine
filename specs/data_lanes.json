@@ -135,6 +135,33 @@
       ],
       "schema_version": "okx_orderbook_ws.r2_preflight.v1",
       "lane_state": "PREFLIGHT"
+    },
+    {
+      "lane_id": "ohlcv_okx_orderbook_derived",
+      "lane_kind": "DERIVED",
+      "truth_level": "HINT",
+      "providers": [
+        "okx_orderbook_ws"
+      ],
+      "readiness_rules": {
+        "PASS": "enriched bars present and valid",
+        "RDY01": "missing enriched_bars.jsonl",
+        "RDY02": "bar validation failed or hash mismatch"
+      },
+      "replay_command": "TREASURE_NET_KILL=1 node scripts/edge/edge_okx_orderbook_12_to_ohlcv.mjs --replay",
+      "required_artifacts": [
+        "artifacts/outgoing/enriched_bars.jsonl",
+        "artifacts/outgoing/enriched_bars.lock.json"
+      ],
+      "required_lock_fields": [
+        "schema_version",
+        "provider_id",
+        "bar_ms",
+        "bars_n",
+        "enriched_bars_sha256"
+      ],
+      "schema_version": "enriched_bars.v1",
+      "lane_state": "EXPERIMENTAL"
     }
   ]
 }
