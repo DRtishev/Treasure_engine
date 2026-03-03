@@ -98,7 +98,7 @@ const failed = checks.filter(c => !c.pass);
 const status = failed.length === 0 ? 'PASS' : 'FAIL';
 const reason_code = failed.length === 0 ? 'NONE' : 'RG_STRAT01_VIOLATION';
 
-writeMd(path.join(MANUAL, 'regression_strat01_interface.md'), [
+writeMd(path.join(EXEC, 'REGRESSION_STRAT01_INTERFACE.md'), [
   '# RG_STRAT01_INTERFACE_CONTRACT', '',
   `STATUS: ${status}`,
   `REASON_CODE: ${reason_code}`,

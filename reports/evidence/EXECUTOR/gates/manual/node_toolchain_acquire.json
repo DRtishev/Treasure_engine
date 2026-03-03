@@ -5,7 +5,7 @@
   "enable_network_flag": false,
   "lock_path": "artifacts/toolchains/node/v22.22.0/node-v22.22.0-linux-x64.lock.json",
   "node_runtime": "UNKNOWN",
-  "reason_code": "ACQ_NET01: double-key unlock required (flag --enable-network=false + file ALLOW_NETWORK=false)",
+  "reason_code": "ACQ_NET01",
   "run_id": "STABLE",
   "schema_version": "1.0.0",
   "sha256_actual": "UNKNOWN",

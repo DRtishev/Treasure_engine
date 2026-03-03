@@ -54,7 +54,7 @@ const hasFile = fs.existsSync(ALLOW_NETWORK_FILE) &&
 
 if (!hasFlag || !hasFile) {
   status = 'BLOCKED';
-  reason = `ACQ_NET01: double-key unlock required (flag --enable-network=${hasFlag} + file ALLOW_NETWORK=${hasFile})`;
+  reason = 'ACQ_NET01';
 } else {
   try {
     let r = run('curl', ['-fsSL', SHAS_URL, '-o', SHAS_PATH]);
