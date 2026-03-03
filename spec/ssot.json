@@ -60,5 +60,58 @@
     "min_confidence_allow": 0.75,
     "cooldown_on_degraded_s": 300,
     "reduce_risk_on_degraded_pct": 50
+  },
+  "edge_lab_courts": {
+    "dataset_court": {
+      "min_bar_count": 100,
+      "min_trade_count": 20,
+      "max_data_staleness_hours": 48,
+      "min_data_quality_score": 0.8
+    },
+    "execution_court": {
+      "min_fill_rate": 0.90,
+      "max_avg_slippage_bps": 10,
+      "max_p99_slippage_bps": 30,
+      "max_p99_latency_ms": 1000,
+      "max_reject_ratio": 0.05
+    },
+    "risk_court": {
+      "max_drawdown_pct": 20,
+      "max_tail_risk_pct": 30,
+      "min_sharpe": 0.0,
+      "kill_switch_compatible": true
+    },
+    "overfit_court": {
+      "min_deflated_sharpe": 0.25,
+      "max_pbo_estimate": 0.30,
+      "min_trade_count": 20
+    },
+    "red_team_court": {
+      "min_win_rate": 0.3,
+      "min_profit_factor": 0.8,
+      "max_anomalies": 3
+    },
+    "sre_court": {
+      "min_uptime_pct": 99.0,
+      "max_error_rate": 0.01,
+      "max_data_freshness_ms": 5000
+    }
+  },
+  "candidate_pipeline": {
+    "min_backtest_sharpe": 0.0,
+    "bayesian_min_p_positive": 0.70,
+    "monte_carlo_max_p_ruin": 0.10,
+    "monte_carlo_min_p_positive": 0.70,
+    "adversarial_max_accuracy": 0.65,
+    "alpha_min_ratio": -0.5
+  },
+  "graduation_criteria": {
+    "min_sharpe": 0.5,
+    "max_drawdown_pct": 20,
+    "min_canary_trades": 100,
+    "min_win_rate": 0.4,
+    "min_profit_factor": 1.0,
+    "live_to_paper_sharpe_ratio": 0.7,
+    "max_circuit_breaker_trips": 0
   }
 }

@@ -1222,7 +1222,7 @@
     },
     {
       "path": "core/backtest/engine.mjs",
-      "sha256": "2b6ad544babc52979e4a1c6c52ebf0268f7896dce6fecf4a7a9cfdd599d4932d",
+      "sha256": "f53fd2c805e2d3b7eea2be5f101aa342a90257526c5157eafcae380c6f627b76",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -1557,6 +1557,69 @@
       "reason": "Primary source tracked by SSOT."
     },
     {
+      "path": "core/edge/unified_sharpe.mjs",
+      "sha256": "f7c5395cc0b6c4ef091e760e51d4ed9e2f4a84c15fa64fbc022cb1dc7549d4dd",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "W1.1+W2.4: SSOT for all Sharpe/risk-adjusted metrics."
+    },
+    {
+      "path": "core/edge/bayesian_sharpe.mjs",
+      "sha256": "d95b07d6c61def7943354594ac1efb3d6ace0f96e91eeee5ca84ad4dbded6d99",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "W3.1: Bayesian posterior Sharpe estimation."
+    },
+    {
+      "path": "core/edge/monte_carlo.mjs",
+      "sha256": "d47b90edb210b0baea73a94c8e859d7300a31fd725ae69471eededc9fe8f33f2",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "W3.2: Monte Carlo stress world generator."
+    },
+    {
+      "path": "core/edge/alpha_attribution.mjs",
+      "sha256": "b7bd8e12848e1e5925336f126561ff7e9411544d2fcf731c5693f42cbd83f652",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "W3.3: Alpha Autopsy profit attribution."
+    },
+    {
+      "path": "core/edge/adversarial_validation.mjs",
+      "sha256": "01d7d2b508cc51a184cd0bf3bd8815b00da18f01180b9bbf37d0d6e481ce0e80",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "W3.4: Adversarial validation court."
+    },
+    {
+      "path": "core/edge/hmm_regime.mjs",
+      "sha256": "d99f0fbd5fc566f3016023b2fdb2c57031e7099669a8391c38953db92cac1500",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "W4.1: HMM regime detector."
+    },
+    {
+      "path": "core/edge/impact_model.mjs",
+      "sha256": "b495a347e0403febcd9e2b9081723f69e07afaba41c2edfbf25608cb1b77b26d",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "W4.2: Square-root market impact model."
+    },
+    {
+      "path": "core/edge/edge_adapter.mjs",
+      "sha256": "abdbcd53f6848398ed24996d2df5e6f202a25c0c2e875e09ace5765f7c8e7151",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "W2.1: Backtest to Edge Lab adapter."
+    },
+    {
+      "path": "core/edge/candidate_pipeline.mjs",
+      "sha256": "e9f8701f99cb5fdbbe5e72d58c6d9c1788c80fd7f32b55f43f59f45eb8072933",
+      "classification": "ACTIVE",
+      "owner_epoch": "prehistory",
+      "reason": "W4.4: Pipeline Surgeon orchestrator."
+    },
+    {
       "path": "core/edge/contracts/e77_canary_contract.md",
       "sha256": "978cd91fab44294f6bfc15f034397ce2534f03c7f00178dff32643739c42c23e",
       "classification": "ACTIVE",
@@ -1810,7 +1873,7 @@
     },
     {
       "path": "core/edge/overfit_defense.mjs",
-      "sha256": "12efdf74a3f4db5479e6a2207c20d6fd83b57b0743acf472757e33e2f9faf9e1",
+      "sha256": "4cf8353447fae41fa95e4c171fd157de31f06c7c71b747daf5f80bb8d7674943",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -2412,7 +2475,7 @@
     },
     {
       "path": "core/profit/ledger.mjs",
-      "sha256": "984a4e0d77a560e2a42edda751fff8020470d0eea6269f584e564241298b2f9c",
+      "sha256": "08e9acc28f3e812213cdcdf6a9985dc23e51b03ba96775e700d816e44658f77c",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -2482,7 +2545,7 @@
     },
     {
       "path": "core/sim/metrics.mjs",
-      "sha256": "64f540535a13fd12fd20df729a28a8cfa0e1572fd61b3e8e6fc45088dfa7dd5b",
+      "sha256": "dddf9f778fcc9f256809d9570953cdd3ec1bbe90881208ed0cb1751c4727269b",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -2601,7 +2664,7 @@
     },
     {
       "path": "core/wfo/walk_forward.mjs",
-      "sha256": "1814865825809ba670e94ff70560a8906bb6b5cc0511235e922bd44f1ddc8ef5",
+      "sha256": "0fe9b7eeef29ca7960d72f80d99e32751faf89b3a5dd82d824e03c7eed1d1336",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -39841,7 +39904,7 @@
     },
     {
       "path": "scripts/ops/candidate_fsm.mjs",
-      "sha256": "340f84ec5e017c4e092c757d29e45297fdfc64404d89c91d5e0dc1e289cb68ec",
+      "sha256": "348a730b3c1f45a469f8c56a6d99bf5c34ebb4a4a914eb57e3e9d7317a4861ec",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -45266,7 +45329,7 @@
     },
     {
       "path": "scripts/verify/regression_backtest01_organ_health.mjs",
-      "sha256": "fc919aef33980bd3efa28cb50d5b7943966961d37b7874a6b5e29605bcafa11a",
+      "sha256": "59596203374bc3ae74a2bad77fccc2caf89d31e36ad04658c8c7dd9b302d83b4",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -46925,7 +46988,7 @@
     },
     {
       "path": "spec/ssot.json",
-      "sha256": "96a77b7028f0849baae277b08bca7bfa5a3969d097cd3632e268542fd86516d7",
+      "sha256": "c39decec985bbdd05f9cbc9cbbdce9a37e04e97d2561f0a23dbc2afbc4e4c24b",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."
@@ -47695,7 +47758,7 @@
     },
     {
       "path": "specs/reason_code_taxonomy.json",
-      "sha256": "208a3db81eadd36f0257d2480a6e7296e64ae1f1ff33ba720d214b12f0a64e10",
+      "sha256": "8acf96acca62ddf0d53d2fdaa0767169b043f51e51c84c2d0d8d99dd3b724377",
       "classification": "ACTIVE",
       "owner_epoch": "prehistory",
       "reason": "Primary source tracked by SSOT."

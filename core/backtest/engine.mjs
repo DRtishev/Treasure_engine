@@ -2,17 +2,20 @@
 // E108 Track 2: Deterministic Backtest Engine
 // Event-driven, bar-by-bar execution with fees + slippage via ledger.
 // NO lookahead by design: strategy only sees bars[0..i].
+// W1.1: Uses unified_sharpe.mjs as SSOT for all risk-adjusted metrics.
+// W1.2: Equity Curve Surgery — frame-by-frame equity tracking.
 
-import { createLedger, recordFill, getLedgerSummary, serializeLedger, fillsToMarkdownTable, detectAnomalies } from '../profit/ledger.mjs';
+import { createLedger, recordFill, getLedgerSummary, getEquity, getUnrealizedPnL, serializeLedger, fillsToMarkdownTable, detectAnomalies } from '../profit/ledger.mjs';
 import { stableFormatNumber, renderMarkdownTable } from '../../scripts/verify/foundation_render.mjs';
 import { truncateTowardZero } from '../edge/deterministic_math.mjs';
+import { sharpeFromTrades, sortino, calmar, ulcerIndex, painRatio } from '../edge/unified_sharpe.mjs';
 
 /**
  * Run a backtest of strategy on bars
  * @param {Object} strategy - Strategy implementing { init, onBar, meta }
  * @param {Array} bars - OHLCV bars sorted by ts_open
  * @param {Object} opts - { params, initial_capital, fee_bps, slip_bps, position_size_usd }
- * @returns {Object} { ledger, signals, metrics, strategy_name }
+ * @returns {Object} { ledger, signals, metrics, equity_curve, strategy_name }
  */
 export function runBacktest(strategy, bars, opts = {}) {
   const params = { ...strategy.meta().default_params, ...(opts.params || {}) };
@@ -25,6 +28,11 @@ export function runBacktest(strategy, bars, opts = {}) {
   let state = strategy.init(params);
   const signals = [];
   let fillId = 0;
+
+  // W1.2: Equity Curve Surgery — frame-by-frame tracking
+  const equityCurve = [];
+  let hwm = initial_capital;
+  const symbol = bars[0]?.symbol || 'BTCUSDT';
 
   for (let i = 0; i < bars.length; i++) {
     const bar = bars[i];
@@ -44,7 +52,7 @@ export function runBacktest(strategy, bars, opts = {}) {
 
       fillId++;
       recordFill(ledger, {
-        symbol: bar.symbol || 'BTCUSDT',
+        symbol: bar.symbol || symbol,
         side: signal,
         qty,
         price: bar.close,
@@ -54,29 +62,64 @@ export function runBacktest(strategy, bars, opts = {}) {
         trade_id: `BT${String(fillId).padStart(6, '0')}`
       });
     }
+
+    // W1.2: Record equity snapshot at each bar
+    const prices = { [symbol]: bar.close };
+    const equity = getEquity(ledger, prices);
+    if (equity > hwm) hwm = equity;
+    const dd = hwm > 0 ? (hwm - equity) / hwm : 0;
+    const pos = ledger.positions[symbol] || { qty: 0 };
+
+    equityCurve.push({
+      bar_index: i,
+      ts: bar.ts_open,
+      equity: truncateTowardZero(equity, 4),
+      drawdown: truncateTowardZero(dd, 6),
+      position_qty: pos.qty,
+      unrealized_pnl: truncateTowardZero(getUnrealizedPnL(ledger, prices), 4)
+    });
   }
 
   const lastPrice = bars.length > 0 ? bars[bars.length - 1].close : 0;
-  const prices = { [bars[0]?.symbol || 'BTCUSDT']: lastPrice };
+  const prices = { [symbol]: lastPrice };
   const summary = getLedgerSummary(ledger, prices);
   const anomalies = detectAnomalies(ledger);
 
   const buyCount = signals.filter(s => s.signal === 'BUY').length;
   const sellCount = signals.filter(s => s.signal === 'SELL').length;
 
-  // Compute backtest_sharpe from per-trade returns (trade_return = realized_pnl / position_size_usd)
+  // W1.1: Unified Sharpe — SSOT from unified_sharpe.mjs
   const tradeReturns = ledger.fills
     .filter(f => f.realized_pnl !== 0)
     .map(f => f.realized_pnl / position_size_usd);
-  let backtest_sharpe = 0;
-  if (tradeReturns.length >= 2) {
-    const mean = tradeReturns.reduce((a, b) => a + b, 0) / tradeReturns.length;
-    const variance = tradeReturns.reduce((a, r) => a + (r - mean) ** 2, 0) / tradeReturns.length;
-    const stddev = Math.sqrt(variance);
-    if (stddev > 0) {
-      backtest_sharpe = truncateTowardZero((mean / stddev) * Math.sqrt(tradeReturns.length), 6);
+  const backtest_sharpe = sharpeFromTrades(tradeReturns, 6);
+
+  // W1.2: Compute advanced metrics from equity curve
+  const drawdowns = equityCurve.map(e => e.drawdown);
+  const equityValues = equityCurve.map(e => e.equity);
+
+  // Max drawdown from equity curve (W1.4: precision fix — uses all bars, not just fills)
+  const maxDrawdownFromCurve = drawdowns.length > 0 ? Math.max(...drawdowns) : 0;
+
+  // Max drawdown duration (bars underwater)
+  let maxDDDuration = 0;
+  let currentDDDuration = 0;
+  for (const dd of drawdowns) {
+    if (dd > 0) {
+      currentDDDuration++;
+      if (currentDDDuration > maxDDDuration) maxDDDuration = currentDDDuration;
+    } else {
+      currentDDDuration = 0;
     }
   }
+
+  // Recovery factor, Sortino, Calmar, Ulcer Index, Pain Ratio
+  const annualizedReturn = summary.return_pct; // simplified: already percentage
+  const sortinoRatio = tradeReturns.length >= 2 ? truncateTowardZero(sortino(tradeReturns), 6) : 0;
+  const calmarRatio = maxDrawdownFromCurve > 0 ? truncateTowardZero(calmar(annualizedReturn, maxDrawdownFromCurve), 6) : 0;
+  const ulcerIdx = drawdowns.length > 0 ? truncateTowardZero(ulcerIndex(drawdowns), 6) : 0;
+  const painR = ulcerIdx > 0 ? truncateTowardZero(painRatio(annualizedReturn, ulcerIdx), 6) : 0;
+  const recoveryFactor = maxDrawdownFromCurve > 0 ? truncateTowardZero(summary.return_pct / (maxDrawdownFromCurve * 100), 6) : 0;
 
   const metrics = {
     strategy: strategy.meta().name,
@@ -93,13 +136,19 @@ export function runBacktest(strategy, bars, opts = {}) {
     return_pct: summary.return_pct,
     total_fees: summary.total_fees,
     total_slippage: summary.total_slippage,
-    max_drawdown: summary.max_drawdown,
+    max_drawdown: maxDrawdownFromCurve,
+    max_drawdown_duration_bars: maxDDDuration,
     anomalies: anomalies.length,
     backtest_sharpe,
+    sortino: sortinoRatio,
+    calmar: calmarRatio,
+    ulcer_index: ulcerIdx,
+    pain_ratio: painR,
+    recovery_factor: recoveryFactor,
     trade_count: tradeReturns.length
   };
 
-  return { ledger, signals, metrics, strategy_name: strategy.meta().name };
+  return { ledger, signals, metrics, equity_curve: equityCurve, strategy_name: strategy.meta().name };
 }
 
 /**
@@ -120,6 +169,11 @@ export function backtestToMarkdown(result) {
     `- total_fees: ${stableFormatNumber(m.total_fees, 4)}`,
     `- total_slippage: ${stableFormatNumber(m.total_slippage, 4)}`,
     `- max_drawdown: ${stableFormatNumber(m.max_drawdown * 100, 4)}%`,
+    `- max_drawdown_duration: ${m.max_drawdown_duration_bars} bars`,
+    `- backtest_sharpe: ${stableFormatNumber(m.backtest_sharpe, 6)}`,
+    `- sortino: ${stableFormatNumber(m.sortino, 6)}`,
+    `- calmar: ${stableFormatNumber(m.calmar, 6)}`,
+    `- recovery_factor: ${stableFormatNumber(m.recovery_factor, 6)}`,
     `- anomalies: ${m.anomalies}`,
     ''
   ];

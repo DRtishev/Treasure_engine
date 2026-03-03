@@ -113,7 +113,7 @@ const failed = checks.filter((c) => !c.pass);
 const status = failed.length === 0 ? 'PASS' : 'FAIL';
 const reason_code = failed.length === 0 ? 'NONE' : 'RG_BACKTEST_ORGAN01_VIOLATION';
 
-writeMd(path.join(MANUAL, 'regression_backtest01_organ_health.md'), [
+writeMd(path.join(EXEC, 'REGRESSION_BACKTEST01_ORGAN_HEALTH.md'), [
   '# RG_BACKTEST_ORGAN01_HEALTH', '',
   `STATUS: ${status}`,
   `REASON_CODE: ${reason_code}`,
