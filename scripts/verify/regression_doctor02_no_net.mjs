@@ -17,19 +17,19 @@ fs.mkdirSync(MANUAL, { recursive: true });
 
 const GATE_ID = 'RG_DOCTOR02';
 const NEXT_ACTION = 'npm run -s verify:doctor:policy';
-const DOCTOR = path.join(ROOT, 'scripts/ops/doctor.mjs');
+const DOCTOR = path.join(ROOT, 'scripts/ops/doctor_v2.mjs');
 const violations = [];
 
 if (!fs.existsSync(DOCTOR)) {
-  violations.push({ path: 'scripts/ops/doctor.mjs', detail: 'FILE_NOT_FOUND' });
+  violations.push({ path: 'scripts/ops/doctor_v2.mjs', detail: 'FILE_NOT_FOUND' });
 } else {
   const src = fs.readFileSync(DOCTOR, 'utf8');
   if (!src.includes("process.env.TREASURE_NET_KILL = '1'"))
-    violations.push({ path: 'scripts/ops/doctor.mjs', detail: 'missing TREASURE_NET_KILL=1' });
+    violations.push({ path: 'scripts/ops/doctor_v2.mjs', detail: 'missing TREASURE_NET_KILL=1' });
   if (!src.includes('net_kill_preload'))
-    violations.push({ path: 'scripts/ops/doctor.mjs', detail: 'missing net_kill_preload' });
+    violations.push({ path: 'scripts/ops/doctor_v2.mjs', detail: 'missing net_kill_preload' });
   for (const p of ["from 'ws'", 'from "ws"', "from 'undici'", "from 'node:http'", "from 'node:https'", "from 'node:net'"]) {
-    if (src.includes(p)) violations.push({ path: 'scripts/ops/doctor.mjs', detail: `forbidden import: ${p}` });
+    if (src.includes(p)) violations.push({ path: 'scripts/ops/doctor_v2.mjs', detail: `forbidden import: ${p}` });
   }
 }
 

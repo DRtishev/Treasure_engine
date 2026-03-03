@@ -4,7 +4,7 @@ STATUS: PASS
 REASON_CODE: NONE
 RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:regression:immune01-integration
-CHECKS_TOTAL: 7
+CHECKS_TOTAL: 8
 VIOLATIONS: 0
 
 ## CHECKS
@@ -15,6 +15,7 @@ VIOLATIONS: 0
 - [PASS] guard_heal_complete_reads_receipt: OK: guard_heal_complete reads HEAL_RECEIPT
 - [PASS] life_summary_immune_field: no LIFE_SUMMARY.json yet — skip-safe PASS
 - [PASS] heal_runner_exists: OK: scripts/ops/heal_runner.mjs exists
+- [PASS] doctor_v2_has_trending: OK: doctor_v2.mjs surfaces trending in DOCTOR.json
 
 ## FAILED
 - NONE

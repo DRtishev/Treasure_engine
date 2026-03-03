@@ -1,0 +1,10 @@
+# REGRESSION_DOCTOR04.md — Differential 5-axis contract
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: STABLE
+NEXT_ACTION: npm run -s ops:doctor
+VIOLATIONS: 0
+
+## VIOLATIONS
+- NONE

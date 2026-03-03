@@ -17,17 +17,17 @@ fs.mkdirSync(MANUAL, { recursive: true });
 
 const GATE_ID = 'RG_DOCTOR01';
 const NEXT_ACTION = 'npm run -s verify:doctor:policy';
-const DOCTOR = path.join(ROOT, 'scripts/ops/doctor.mjs');
+const DOCTOR = path.join(ROOT, 'scripts/ops/doctor_v2.mjs');
 const violations = [];
 
 if (!fs.existsSync(DOCTOR)) {
-  violations.push({ path: 'scripts/ops/doctor.mjs', detail: 'FILE_NOT_FOUND' });
+  violations.push({ path: 'scripts/ops/doctor_v2.mjs', detail: 'FILE_NOT_FOUND' });
 } else {
   const src = fs.readFileSync(DOCTOR, 'utf8');
   if ((src.match(/ops:life/g) || []).length < 2)
-    violations.push({ path: 'scripts/ops/doctor.mjs', detail: 'must run ops:life at least twice' });
+    violations.push({ path: 'scripts/ops/doctor_v2.mjs', detail: 'must run ops:life at least twice' });
   if (!src.includes('LIFE_SUMMARY.json'))
-    violations.push({ path: 'scripts/ops/doctor.mjs', detail: 'must compare LIFE_SUMMARY.json' });
+    violations.push({ path: 'scripts/ops/doctor_v2.mjs', detail: 'must compare LIFE_SUMMARY.json' });
 }
 
 const status = violations.length === 0 ? 'PASS' : 'FAIL';
