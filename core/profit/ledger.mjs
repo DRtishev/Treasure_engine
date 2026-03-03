@@ -100,8 +100,9 @@ export function recordFill(ledger, fill) {
   ledger.total_fees += fee;
   ledger.total_slippage += slippage;
 
-  // Drawdown tracking
-  const equity = getEquity(ledger, {});
+  // W1.4: Drawdown tracking — use exec_price for unrealized PnL precision
+  const fillPrices = { [symbol]: exec_price };
+  const equity = getEquity(ledger, fillPrices);
   if (equity > ledger.high_watermark) {
     ledger.high_watermark = equity;
   }

@@ -1,5 +1,6 @@
 // core/sim/metrics.mjs
 // Calculate performance and execution metrics (E2.1 P0.5: attempts observability)
+// W1.1: Equity curve DD fix — clamp equity >= 0 to prevent DD > 100%
 
 export function calculateMetrics(trades) {
   const filledTrades = trades.filter(t => t.filled);
@@ -37,12 +38,12 @@ export function calculateMetrics(trades) {
   let peakEquity = 1.0;
   let maxDD = 0;
   for (const pnl of pnls) {
-    equity = equity * (1 + pnl);
+    equity = Math.max(0, equity * (1 + pnl)); // W1.1 B04 fix: clamp equity >= 0
     if (equity > peakEquity) peakEquity = equity;
-    const dd = (peakEquity - equity) / peakEquity;
+    const dd = peakEquity > 0 ? (peakEquity - equity) / peakEquity : 0;
     if (dd > maxDD) maxDD = dd;
   }
-  const maxDDPct = maxDD;
+  const maxDDPct = Math.min(maxDD, 1.0); // W1.1: cap DD at 100%
 
   const wins = pnls.filter(p => p > 0).length;
   const winRate = wins / pnls.length;
@@ -84,7 +85,9 @@ export function calculateMetrics(trades) {
 }
 
 export function percentile(arr, p) {
+  if (!arr || arr.length === 0) return 0;
   const sorted = [...arr].sort((a, b) => a - b);
-  const idx = Math.floor(sorted.length * p);
+  // B03 fix: use Math.ceil - 1 for correct percentile index, clamp to valid range
+  const idx = Math.min(Math.max(0, Math.ceil(sorted.length * p) - 1), sorted.length - 1);
   return sorted[idx] || 0;
 }

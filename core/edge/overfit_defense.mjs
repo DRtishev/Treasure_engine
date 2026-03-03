@@ -1,28 +1,17 @@
 import crypto from 'node:crypto';
 import { assertFiniteArray, buildOverfitDefensePayload, fingerprint } from './overfit_defense_contract.mjs';
-
-function mean(arr) { return arr.length ? arr.reduce((a, b) => a + b, 0) / arr.length : 0; }
-function variance(arr, m = mean(arr)) { return arr.length ? mean(arr.map((x) => (x - m) ** 2)) : 0; }
+// W1.1: Import unified Sharpe — SSOT for all risk-adjusted metrics
+import { mean, variance, annualizedSharpe, skewness as _skewness, kurtosisExcess as _kurtosisExcess } from './unified_sharpe.mjs';
 
 function sharpe(returns) {
   assertFiniteArray(returns, 'returns');
-  const m = mean(returns);
-  const v = variance(returns, m);
-  const s = Math.sqrt(Math.max(v, 1e-12));
-  return m / s;
+  // W1.1: Delegate to unified_sharpe.mjs — same formula everywhere
+  return annualizedSharpe(returns, returns.length);
 }
 
-function skewness(returns) {
-  const m = mean(returns);
-  const s = Math.sqrt(Math.max(variance(returns, m), 1e-12));
-  return mean(returns.map((x) => ((x - m) / s) ** 3));
-}
-
-function kurtosisExcess(returns) {
-  const m = mean(returns);
-  const s = Math.sqrt(Math.max(variance(returns, m), 1e-12));
-  return mean(returns.map((x) => ((x - m) / s) ** 4)) - 3;
-}
+// W1.1: Delegate to unified_sharpe.mjs
+function skewness(returns) { return _skewness(returns); }
+function kurtosisExcess(returns) { return _kurtosisExcess(returns); }
 
 function range(start, end) { return Array.from({ length: Math.max(0, end - start) }, (_, i) => i + start); }
 

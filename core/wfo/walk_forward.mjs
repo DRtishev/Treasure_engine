@@ -16,8 +16,13 @@ export function generateParamGrid(schema) {
   const keys = Object.keys(schema).sort();
   const ranges = keys.map(k => {
     const s = schema[k];
+    const step = s.step || 1;
     const values = [];
-    for (let v = s.min; v <= s.max; v += (s.step || 1)) {
+    // W1.3: Fix float step accumulation — use index multiplication instead of v += step
+    const count = Math.floor((s.max - s.min) / step) + 1;
+    for (let i = 0; i < count; i++) {
+      const v = s.min + i * step;
+      if (v > s.max + 1e-10) break;
       values.push(Math.round(v * 1000) / 1000);
     }
     return { key: k, values };

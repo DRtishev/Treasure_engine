@@ -1,9 +1,0 @@
-{
-  "detail": "writeJsonDeterministic correctly threw FP01 on forbidden \"created_at\" field — guard WORKS",
-  "gate_id": "CHAOS_FP01",
-  "next_action": "npm run -s ops:doctor",
-  "reason_code": "NONE",
-  "run_id": "STABLE",
-  "schema_version": "1.0.0",
-  "status": "PASS"
-}

@@ -39,7 +39,24 @@ function guard_backtest_pass(_candidate, _policy) {
   if (!_candidate.metrics) return { pass: false, detail: 'no metrics' };
   const bt = _candidate.metrics.backtest_sharpe;
   if (bt === null || bt === undefined) return { pass: false, detail: 'no backtest_sharpe' };
-  return { pass: bt > 0, detail: `backtest_sharpe=${bt}` };
+  if (!(bt > 0)) return { pass: false, detail: `backtest_sharpe=${bt} <= 0` };
+
+  // W2.2: Check Edge Lab court verdicts if present
+  const verdicts = _candidate.court_verdicts ?? [];
+  const edgeLabVerdict = verdicts.find(v => v.courts && v.courts.length > 0);
+  if (edgeLabVerdict) {
+    const blocked = ['BLOCKED', 'NOT_ELIGIBLE'];
+    if (blocked.includes(edgeLabVerdict.verdict)) {
+      return { pass: false, detail: `edge_lab_verdict=${edgeLabVerdict.verdict}` };
+    }
+  }
+
+  // W2.2: Check determinism evidence if present
+  if (_candidate.evidence?.deterministic === false) {
+    return { pass: false, detail: 'determinism check failed' };
+  }
+
+  return { pass: true, detail: `backtest_sharpe=${bt}, edge_lab=${edgeLabVerdict?.verdict ?? 'N/A'}` };
 }
 
 function guard_paper_metrics(_candidate, _policy) {

@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "check": "fixture_present",
+      "detail": "OK: 200 bars",
+      "pass": true
+    },
+    {
+      "check": "s1_sharpe_finite",
+      "detail": "OK: backtest_sharpe=0.508745",
+      "pass": true
+    },
+    {
+      "check": "s3_sharpe_finite",
+      "detail": "OK: backtest_sharpe=0.224565",
+      "pass": true
+    },
+    {
+      "check": "s1_determinism_x2",
+      "detail": "OK: hash=e026f5ccfa7b1530...",
+      "pass": true
+    },
+    {
+      "check": "s3_determinism_x2",
+      "detail": "OK: hash=d36b46847ab4a69c...",
+      "pass": true
+    },
+    {
+      "check": "short_sell_from_flat",
+      "detail": "OK: pos.qty=-1",
+      "pass": true
+    }
+  ],
+  "checks_total": 6,
+  "failed_checks": [],
+  "gate_id": "RG_BACKTEST_ORGAN01_HEALTH",
+  "next_action": "npm run -s verify:regression:backtest01-organ-health",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

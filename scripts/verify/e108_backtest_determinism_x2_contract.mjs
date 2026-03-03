@@ -10,6 +10,8 @@ import { runBacktest, backtestToMarkdown } from '../../core/backtest/engine.mjs'
 import { serializeLedger } from '../../core/profit/ledger.mjs';
 import * as s1 from '../../core/edge/strategies/s1_breakout_atr.mjs';
 import * as s2 from '../../core/edge/strategies/s2_mean_revert_rsi.mjs';
+import * as s3 from '../../core/edge/strategies/s3_liq_vol_fusion.mjs';
+import { enrichBars } from '../../core/edge/strategies/strategy_bar_enricher.mjs';
 
 const E108_ROOT = path.resolve('reports/evidence/E108');
 const update = process.env.UPDATE_E108_EVIDENCE === '1';
@@ -22,7 +24,9 @@ function test(name, fn) {
 
 const fixture = JSON.parse(fs.readFileSync(path.resolve('data/fixtures/e108/e108_ohlcv_200bar.json'), 'utf8'));
 const bars = fixture.candles;
+const enrichedBars = enrichBars(bars);
 
+// S1/S2: raw bars (no enrichment needed)
 for (const strat of [s1, s2]) {
   const name = strat.meta().name;
 
@@ -45,6 +49,43 @@ for (const strat of [s1, s2]) {
   test(`${name}_signals_determinism`, () => {
     const r1 = runBacktest(strat, bars);
     const r2 = runBacktest(strat, bars);
+    const h1 = sha256Text(JSON.stringify(r1.signals));
+    const h2 = sha256Text(JSON.stringify(r2.signals));
+    if (h1 !== h2) throw new Error(`Signals hash mismatch: ${h1} vs ${h2}`);
+  });
+}
+
+// S3: enriched bars (requires _liq_pressure, _burst_score, _regime_flag)
+{
+  const name = s3.meta().name;
+
+  test(`${name}_enrichBars_determinism`, () => {
+    const e1 = enrichBars(bars);
+    const e2 = enrichBars(bars);
+    const h1 = sha256Text(JSON.stringify(e1));
+    const h2 = sha256Text(JSON.stringify(e2));
+    if (h1 !== h2) throw new Error(`enrichBars hash mismatch: ${h1} vs ${h2}`);
+  });
+
+  test(`${name}_ledger_determinism`, () => {
+    const r1 = runBacktest(s3, enrichedBars);
+    const r2 = runBacktest(s3, enrichedBars);
+    const h1 = sha256Text(serializeLedger(r1.ledger));
+    const h2 = sha256Text(serializeLedger(r2.ledger));
+    if (h1 !== h2) throw new Error(`Ledger hash mismatch: ${h1} vs ${h2}`);
+  });
+
+  test(`${name}_report_determinism`, () => {
+    const r1 = runBacktest(s3, enrichedBars);
+    const r2 = runBacktest(s3, enrichedBars);
+    const h1 = sha256Text(backtestToMarkdown(r1));
+    const h2 = sha256Text(backtestToMarkdown(r2));
+    if (h1 !== h2) throw new Error(`Report hash mismatch: ${h1} vs ${h2}`);
+  });
+
+  test(`${name}_signals_determinism`, () => {
+    const r1 = runBacktest(s3, enrichedBars);
+    const r2 = runBacktest(s3, enrichedBars);
     const h1 = sha256Text(JSON.stringify(r1.signals));
     const h2 = sha256Text(JSON.stringify(r2.signals));
     if (h1 !== h2) throw new Error(`Signals hash mismatch: ${h1} vs ${h2}`);

@@ -1,9 +1,0 @@
-{
-  "detail": "TREASURE_NET_KILL not set to 1 — cannot test network guard",
-  "gate_id": "CHAOS_NET_LEAK",
-  "next_action": "npm run -s ops:doctor",
-  "reason_code": "CHAOS_NET_LEAK_IMMUNE_BROKEN",
-  "run_id": "STABLE",
-  "schema_version": "1.0.0",
-  "status": "FAIL"
-}
