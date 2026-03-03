@@ -593,14 +593,17 @@ for (const gate of chaosGatesDef) {
 }
 
 // Compute score for memory (before formal scoreboard for persisting)
-const preScore = Object.entries(partialBoard)
-  .reduce((sum, [k, v]) => sum + (v.pass ? (manifest.scoreboard_v2[k] || 0) : 0), 0)
-  + (differentialClean ? (manifest.scoreboard_v2.differential_clean || 5) : 0);
+// Include differential_clean in the same pass as other board entries
+const allBoardEntries = { ...partialBoard, differential_clean: { pass: differentialClean } };
+const preScore = Object.entries(allBoardEntries)
+  .reduce((sum, [k, v]) => sum + (v.pass ? (manifest.scoreboard_v2[k] || 0) : 0), 0);
 
 // BUG-01 fix: now pass totalScore to updateMemory
+// Pass existing_memory so evaluateHealEffectiveness mutations are preserved
 const updatedMemory = updateMemory(currentFailures, chaosResults, healLog, preScore, {
   max_score_history: trendingCfg.max_score_history || 200,
   max_heal_history: 50,
+  existing_memory: memory,
 });
 const recurring = getRecurring(updatedMemory);
 
@@ -628,25 +631,27 @@ const healEffRate = healEff.total > 0 ? Math.round((healEff.effective / healEff.
 console.log('-- Phase 8: SCOREBOARD + VERDICT --');
 const board = {};
 let totalScore = 0;
+const weights = manifest.scoreboard_v2; // single source of truth
 
-function score(key, pass, weight) {
+function score(key, pass) {
+  const weight = weights[key] || 0;
   const earned = pass ? weight : 0;
   board[key] = { weight, pass, earned };
   totalScore += earned;
 }
 
-score('startup_boot', startupOk, 10);
-score('liveness_alive', livenessAlive, 15);
-score('liveness_deterministic', x2Identical, 15);
-score('readiness_policy', readiness.policy.ok, 16);
-score('readiness_san', readiness.policy.ok, 8);
-score('chaos_mode_lie', chaos.mode_lie.ok, 7);
-score('chaos_orphan', chaos.orphan.ok, 7);
-score('chaos_fp01', chaos.fp01.ok, 4);
-score('chaos_evidence_tamper', chaos.evidence_tamper.ok, 6);
-score('chaos_net_leak', chaos.net_leak.ok, 4);
-score('provenance_sealed', provenanceSealed, 3);
-score('differential_clean', differentialClean, 5);
+score('startup_boot', startupOk);
+score('liveness_alive', livenessAlive);
+score('liveness_deterministic', x2Identical);
+score('readiness_policy', readiness.policy.ok);
+score('readiness_san', readiness.policy.ok);
+score('chaos_mode_lie', chaos.mode_lie.ok);
+score('chaos_orphan', chaos.orphan.ok);
+score('chaos_fp01', chaos.fp01.ok);
+score('chaos_evidence_tamper', chaos.evidence_tamper.ok);
+score('chaos_net_leak', chaos.net_leak.ok);
+score('provenance_sealed', provenanceSealed);
+score('differential_clean', differentialClean);
 
 const boardLines = Object.entries(board)
   .sort(([a], [b]) => a.localeCompare(b))

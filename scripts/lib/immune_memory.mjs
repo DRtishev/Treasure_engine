@@ -73,12 +73,13 @@ export function saveMemory(mem) {
  * @param {Object} chaosResults - { CHAOS_ID: 'PASS'|'FAIL' }
  * @param {Array} healActions - heal log entries
  * @param {number} score - total score this run (BUG-01 fix)
- * @param {Object} opts - { max_score_history: 200, max_heal_history: 50 }
+ * @param {Object} opts - { max_score_history: 200, max_heal_history: 50, existing_memory: null }
  */
 export function updateMemory(currentFailures, chaosResults, healActions, score, opts = {}) {
   const maxScoreHistory = opts.max_score_history || 200;
   const maxHealHistory = opts.max_heal_history || 50;
-  const mem = loadMemory();
+  // Accept pre-mutated memory (e.g. from evaluateHealEffectiveness) to avoid re-loading
+  const mem = opts.existing_memory || loadMemory();
   mem.runs = (mem.runs || 0) + 1;
   mem.last_failures = currentFailures;
 

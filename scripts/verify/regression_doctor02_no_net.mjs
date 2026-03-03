@@ -1,7 +1,7 @@
 /**
  * regression_doctor02_no_net.mjs — RG_DOCTOR02
  *
- * Verifies doctor.mjs self-sets TREASURE_NET_KILL=1 and has no network imports.
+ * Verifies doctor_v2.mjs self-sets TREASURE_NET_KILL=1 and has no network imports.
  * Gate ID: RG_DOCTOR02 · Wired: verify:doctor:policy
  */
 

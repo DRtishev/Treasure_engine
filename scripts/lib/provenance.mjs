@@ -74,7 +74,8 @@ export function loadPreviousProvenance(prevDir) {
 }
 
 export function sealProvenance(epochDir, metadata = {}, chainOpts = {}) {
-  const files = collectEvidenceFiles(epochDir);
+  // Exclude PROVENANCE.json itself to match verifyProvenance and avoid circular dependency
+  const files = collectEvidenceFiles(epochDir).filter((f) => !f.endsWith('PROVENANCE.json'));
   const leafHashes = files.map((f) => {
     const relPath = path.relative(epochDir, f);
     const content = fs.readFileSync(f, 'utf8');
@@ -96,7 +97,9 @@ export function sealProvenance(epochDir, metadata = {}, chainOpts = {}) {
     }
   }
 
+  // Metadata spread first so structural fields can never be overridden
   const provenance = {
+    ...metadata,
     chain_depth: prevChainDepth + 1,
     chain_integrity: chainIntegrity,
     chain_parent: prevMerkleRoot,
@@ -105,7 +108,6 @@ export function sealProvenance(epochDir, metadata = {}, chainOpts = {}) {
     merkle_root: tree.root,
     node_version: process.version,
     schema_version: '1.0.0',
-    ...metadata,
   };
 
   // Write WITHOUT writeJsonDeterministic (which would add FP01 checks on our metadata)

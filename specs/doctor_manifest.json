@@ -7,20 +7,20 @@
       "commands": ["npm run -s ops:baseline:restore", "npm run -s verify:fast"],
       "timeout_ms": 120000,
       "failure_action": "ABORT",
-      "weight": 0
+      "weight": 10
     },
     "liveness": {
       "commands": ["npm run -s verify:fast", "npm run -s verify:fast", "npm run -s ops:life"],
       "timeout_ms": 300000,
       "failure_action": "REPORT",
       "x2_determinism": true,
-      "weight": 50
+      "weight": 30
     },
     "readiness": {
       "commands": ["npm run -s verify:doctor:policy"],
       "timeout_ms": 180000,
       "failure_action": "REPORT",
-      "weight": 50
+      "weight": 24
     }
   },
 

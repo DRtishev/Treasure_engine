@@ -1,7 +1,7 @@
 /**
  * regression_doctor01_output_stable_x2.mjs — RG_DOCTOR01
  *
- * Verifies doctor.mjs contains x2 determinism logic.
+ * Verifies doctor_v2.mjs contains x2 determinism logic.
  * Gate ID: RG_DOCTOR01 · Wired: verify:doctor:policy
  */
 
