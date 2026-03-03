@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "check": "verify_fast_calls_ensure_not_acquire",
+      "detail": "verify:fast calls toolchain:ensure (offline) — OK",
+      "pass": true
+    },
+    {
+      "check": "ensure_script_exists",
+      "detail": "/home/user/Treasure_engine/scripts/ops/node_toolchain_ensure.mjs",
+      "pass": true
+    },
+    {
+      "check": "ensure_no_network_calls",
+      "detail": "no curl/wget/fetch — OK",
+      "pass": true
+    },
+    {
+      "check": "acquire_requires_double_key",
+      "detail": "acquire enforces double-key unlock — OK",
+      "pass": true
+    },
+    {
+      "check": "vendored_toolchain_binary_present",
+      "detail": "vendored node binary missing",
+      "pass": false
+    },
+    {
+      "check": "acquire_blocked_without_double_key",
+      "detail": "acquire exits 2 (BLOCKED) without double-key — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [
+    "vendored_toolchain_binary_present"
+  ],
+  "gate_id": "RG_NET_TOOLCHAIN01_NO_NET_IN_VERIFY_FAST",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NET_TOOLCHAIN01_VIOLATION",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "FAIL"
+}

@@ -2,7 +2,7 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 34ddbe4786b3
+RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:regression:no-rg-writes-during-cert
 
 - offender: NONE

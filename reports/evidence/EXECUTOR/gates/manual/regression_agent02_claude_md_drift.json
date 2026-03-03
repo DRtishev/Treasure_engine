@@ -17,7 +17,7 @@
     },
     {
       "check": "claude_shorter_than_agents",
-      "detail": "claude_lines=45 agents_lines=182 (CLAUDE.md must be exec summary)",
+      "detail": "claude_lines=45 agents_lines=189 (CLAUDE.md must be exec summary)",
       "pass": true
     },
     {
@@ -36,7 +36,7 @@
   "gate_id": "RG_AGENT02_CLAUDE_MD_DRIFT",
   "next_action": "npm run -s verify:fast",
   "reason_code": "NONE",
-  "run_id": "3c4ec9aafacb",
+  "run_id": "STABLE",
   "schema_version": "1.0.0",
   "status": "PASS"
 }

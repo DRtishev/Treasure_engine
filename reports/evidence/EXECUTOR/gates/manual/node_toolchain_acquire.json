@@ -1,12 +1,14 @@
 {
+  "allow_network_file": false,
   "archive_path": "artifacts/toolchains/node/v22.22.0/node-v22.22.0-linux-x64.tar.xz",
   "archive_url": "https://nodejs.org/dist/v22.22.0/node-v22.22.0-linux-x64.tar.xz",
+  "enable_network_flag": false,
   "lock_path": "artifacts/toolchains/node/v22.22.0/node-v22.22.0-linux-x64.lock.json",
-  "node_runtime": "v22.22.0",
-  "reason_code": "NONE",
-  "run_id": "5b35ac334736",
+  "node_runtime": "UNKNOWN",
+  "reason_code": "ACQ_NET01: double-key unlock required (flag --enable-network=false + file ALLOW_NETWORK=false)",
+  "run_id": "STABLE",
   "schema_version": "1.0.0",
-  "sha256_actual": "9aa8e9d2298ab68c600bd6fb86a6c13bce11a4eca1ba9b39d79fa021755d7c37",
-  "sha256_expected": "9aa8e9d2298ab68c600bd6fb86a6c13bce11a4eca1ba9b39d79fa021755d7c37",
-  "status": "PASS"
+  "sha256_actual": "UNKNOWN",
+  "sha256_expected": "UNKNOWN",
+  "status": "BLOCKED"
 }

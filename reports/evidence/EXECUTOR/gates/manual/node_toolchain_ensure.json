@@ -1,0 +1,16 @@
+{
+  "detail": {
+    "kind": "lock_missing",
+    "message": "toolchain lock file absent — run bootstrap to acquire vendored node",
+    "next_action": "npm run -s ops:node:toolchain:bootstrap"
+  },
+  "expected_version": "v22.22.0",
+  "gate_id": "RG_NET_TOOLCHAIN01",
+  "network_used": false,
+  "node_bin": "artifacts/toolchains/node/v22.22.0/linux-x64/node-v22.22.0-linux-x64/bin/node",
+  "node_runtime": "UNKNOWN",
+  "reason_code": "ACQ_LOCK01",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "BLOCKED"
+}

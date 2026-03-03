@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "check": "fixture_lock_exists",
+      "detail": "/home/user/Treasure_engine/artifacts/fixtures/liq/bybit_ws_v5/v2/lock.json",
+      "pass": true
+    },
+    {
+      "check": "fixture_raw_exists",
+      "detail": "/home/user/Treasure_engine/artifacts/fixtures/liq/bybit_ws_v5/v2/raw.jsonl",
+      "pass": true
+    },
+    {
+      "check": "raw_capture_sha256_matches",
+      "detail": "raw SHA matches lock — OK",
+      "pass": true
+    },
+    {
+      "check": "normalized_hash_with_liq_side_matches_lock",
+      "detail": "hash matches lock (5c05b54961c3deff…) — OK",
+      "pass": true
+    },
+    {
+      "check": "all_rows_have_valid_liq_side",
+      "detail": "all 20 rows have valid liq_side — OK",
+      "pass": true
+    },
+    {
+      "check": "schema_version_is_v2",
+      "detail": "schema_version=liquidations.bybit_ws_v5.v2",
+      "pass": true
+    },
+    {
+      "check": "replay_run_a_pass",
+      "detail": "replay A exit 0 — OK",
+      "pass": true
+    },
+    {
+      "check": "replay_run_b_pass",
+      "detail": "replay B exit 0 — OK",
+      "pass": true
+    },
+    {
+      "check": "replay_script_includes_liq_side",
+      "detail": "replay script includes liq_side — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_LIQ_LOCK01_NORMALIZED_HASH_MATCH",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
