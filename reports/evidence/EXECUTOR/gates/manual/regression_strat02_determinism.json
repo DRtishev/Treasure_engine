@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "check": "s3_determinism_x2",
+      "detail": "OK: hash=a69915816d4ab4bc (match)",
+      "pass": true
+    },
+    {
+      "check": "s3_sharpe_positive",
+      "detail": "OK: sharpe=0.224565",
+      "pass": true
+    },
+    {
+      "check": "s3_has_trades",
+      "detail": "OK: trades=14",
+      "pass": true
+    },
+    {
+      "check": "s4_determinism_x2",
+      "detail": "OK: hash=d1d32aad215700e2 (match)",
+      "pass": true
+    },
+    {
+      "check": "s4_sharpe_positive",
+      "detail": "OK: sharpe=3.239068",
+      "pass": true
+    },
+    {
+      "check": "s4_has_trades",
+      "detail": "OK: trades=2",
+      "pass": true
+    },
+    {
+      "check": "s5_determinism_x2",
+      "detail": "OK: hash=1d11dee7db744f36 (match)",
+      "pass": true
+    },
+    {
+      "check": "s5_sharpe_positive",
+      "detail": "OK: sharpe=0.357751",
+      "pass": true
+    },
+    {
+      "check": "s5_has_trades",
+      "detail": "OK: trades=5",
+      "pass": true
+    },
+    {
+      "check": "enricher_determinism_x2",
+      "detail": "OK: enricher hash=15e9c03869c80376 (match)",
+      "pass": true
+    }
+  ],
+  "checks_total": 10,
+  "failed_checks": [],
+  "gate_id": "RG_STRAT02_DETERMINISM",
+  "next_action": "npm run -s verify:regression:strat02-determinism",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

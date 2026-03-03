@@ -55,13 +55,28 @@ export function recordFill(ledger, fill) {
   const pos = ledger.positions[symbol];
 
   if (side === 'BUY') {
-    const newQty = pos.qty + qty;
-    pos.avg_price = newQty > 0 ? ((pos.avg_price * pos.qty) + (exec_price * qty)) / newQty : 0;
-    pos.qty = newQty;
+    if (pos.qty < 0) {
+      // Cover SHORT — overshoot-safe: never flip to LONG accidentally
+      const coverQty = Math.min(qty, Math.abs(pos.qty));
+      const realizedPerUnit = pos.avg_price - exec_price; // SHORT profit = entry - exit
+      entry.realized_pnl = realizedPerUnit * coverQty - fee;
+      ledger.realized_pnl += entry.realized_pnl;
+      pos.qty += coverQty;
+      if (pos.qty >= 0) {
+        pos.qty = 0;
+        pos.avg_price = 0;
+      }
+    } else {
+      // Open/add LONG
+      const newQty = pos.qty + qty;
+      pos.avg_price = newQty > 0 ? ((pos.avg_price * pos.qty) + (exec_price * qty)) / newQty : 0;
+      pos.qty = newQty;
+    }
   } else if (side === 'SELL') {
     if (pos.qty > 0) {
-      const realizedPerUnit = exec_price - pos.avg_price;
+      // Close LONG — overshoot-safe: never flip to SHORT accidentally
       const sellQty = Math.min(qty, pos.qty);
+      const realizedPerUnit = exec_price - pos.avg_price;
       entry.realized_pnl = realizedPerUnit * sellQty - fee;
       ledger.realized_pnl += entry.realized_pnl;
       pos.qty -= sellQty;
@@ -69,6 +84,16 @@ export function recordFill(ledger, fill) {
         pos.qty = 0;
         pos.avg_price = 0;
       }
+    } else if (pos.qty === 0) {
+      // Open SHORT — qty goes negative
+      pos.qty = -qty;
+      pos.avg_price = exec_price;
+    } else {
+      // Add to SHORT — average down
+      const prevNotional = Math.abs(pos.qty) * pos.avg_price;
+      const addNotional = qty * exec_price;
+      pos.qty -= qty;
+      pos.avg_price = (prevNotional + addNotional) / Math.abs(pos.qty);
     }
   }
 
@@ -99,6 +124,9 @@ export function getEquity(ledger, prices = {}) {
   for (const [symbol, pos] of Object.entries(ledger.positions)) {
     if (pos.qty > 0 && prices[symbol]) {
       unrealized += (prices[symbol] - pos.avg_price) * pos.qty;
+    } else if (pos.qty < 0 && prices[symbol]) {
+      // SHORT unrealized: profit when price drops below avg_price
+      unrealized += (pos.avg_price - prices[symbol]) * Math.abs(pos.qty);
     }
   }
   return ledger.initial_capital + ledger.realized_pnl + unrealized;
@@ -112,6 +140,8 @@ export function getUnrealizedPnL(ledger, prices = {}) {
   for (const [symbol, pos] of Object.entries(ledger.positions)) {
     if (pos.qty > 0 && prices[symbol]) {
       total += (prices[symbol] - pos.avg_price) * pos.qty;
+    } else if (pos.qty < 0 && prices[symbol]) {
+      total += (pos.avg_price - prices[symbol]) * Math.abs(pos.qty);
     }
   }
   return total;

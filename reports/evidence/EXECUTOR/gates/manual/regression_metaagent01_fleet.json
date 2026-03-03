@@ -41,7 +41,7 @@
     },
     {
       "check": "life_summary_fleet_field",
-      "detail": "skip-safe PASS — LIFE_SUMMARY schema=2.0.0 (pre-v4)",
+      "detail": "no LIFE_SUMMARY.json yet — skip-safe PASS",
       "pass": true
     },
     {

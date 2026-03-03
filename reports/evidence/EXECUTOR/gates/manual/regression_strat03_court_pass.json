@@ -1,0 +1,133 @@
+{
+  "checks": [
+    {
+      "check": "s3_court_verdict",
+      "detail": "OK: verdict=NOT_ELIGIBLE (pipeline processed, no structural failure)",
+      "pass": true
+    },
+    {
+      "check": "s3_court_DatasetCourt",
+      "detail": "verdict=PIPELINE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s3_court_ExecutionCourt",
+      "detail": "verdict=PIPELINE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s3_court_ExecutionSensitivityCourt",
+      "detail": "verdict=NOT_ELIGIBLE reasons=[FAILS_2X_SLIPPAGE]",
+      "pass": true
+    },
+    {
+      "check": "s3_court_RiskCourt",
+      "detail": "verdict=PIPELINE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s3_court_OverfitCourt",
+      "detail": "verdict=NOT_ELIGIBLE reasons=[DEFLATED_SHARPE_INSUFFICIENT,BOOTSTRAP_CI_FAIL]",
+      "pass": true
+    },
+    {
+      "check": "s3_court_RedTeamCourt",
+      "detail": "verdict=NOT_ELIGIBLE reasons=[EXECUTION_ASSUMPTION_BROKEN]",
+      "pass": true
+    },
+    {
+      "check": "s3_court_SREReliabilityCourt",
+      "detail": "verdict=LIVE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s4_court_verdict",
+      "detail": "OK: verdict=LIVE_ELIGIBLE (pipeline processed, no structural failure)",
+      "pass": true
+    },
+    {
+      "check": "s4_court_DatasetCourt",
+      "detail": "verdict=PIPELINE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s4_court_ExecutionCourt",
+      "detail": "verdict=PIPELINE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s4_court_ExecutionSensitivityCourt",
+      "detail": "verdict=PIPELINE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s4_court_RiskCourt",
+      "detail": "verdict=PIPELINE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s4_court_OverfitCourt",
+      "detail": "verdict=TESTING_SET_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s4_court_RedTeamCourt",
+      "detail": "verdict=PIPELINE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s4_court_SREReliabilityCourt",
+      "detail": "verdict=LIVE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s5_court_verdict",
+      "detail": "OK: verdict=NOT_ELIGIBLE (pipeline processed, no structural failure)",
+      "pass": true
+    },
+    {
+      "check": "s5_court_DatasetCourt",
+      "detail": "verdict=PIPELINE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s5_court_ExecutionCourt",
+      "detail": "verdict=PIPELINE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s5_court_ExecutionSensitivityCourt",
+      "detail": "verdict=NOT_ELIGIBLE reasons=[FAILS_2X_SLIPPAGE]",
+      "pass": true
+    },
+    {
+      "check": "s5_court_RiskCourt",
+      "detail": "verdict=PIPELINE_ELIGIBLE reasons=[]",
+      "pass": true
+    },
+    {
+      "check": "s5_court_OverfitCourt",
+      "detail": "verdict=NOT_ELIGIBLE reasons=[DEFLATED_SHARPE_INSUFFICIENT,BOOTSTRAP_CI_FAIL]",
+      "pass": true
+    },
+    {
+      "check": "s5_court_RedTeamCourt",
+      "detail": "verdict=NOT_ELIGIBLE reasons=[EXECUTION_ASSUMPTION_BROKEN]",
+      "pass": true
+    },
+    {
+      "check": "s5_court_SREReliabilityCourt",
+      "detail": "verdict=LIVE_ELIGIBLE reasons=[]",
+      "pass": true
+    }
+  ],
+  "checks_total": 24,
+  "failed_checks": [],
+  "gate_id": "RG_STRAT03_COURT_PASS",
+  "next_action": "npm run -s verify:regression:strat03-court-pass",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

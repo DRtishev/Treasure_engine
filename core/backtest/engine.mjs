@@ -5,6 +5,7 @@
 
 import { createLedger, recordFill, getLedgerSummary, serializeLedger, fillsToMarkdownTable, detectAnomalies } from '../profit/ledger.mjs';
 import { stableFormatNumber, renderMarkdownTable } from '../../scripts/verify/foundation_render.mjs';
+import { truncateTowardZero } from '../edge/contracts.mjs';
 
 /**
  * Run a backtest of strategy on bars
@@ -63,6 +64,20 @@ export function runBacktest(strategy, bars, opts = {}) {
   const buyCount = signals.filter(s => s.signal === 'BUY').length;
   const sellCount = signals.filter(s => s.signal === 'SELL').length;
 
+  // Compute backtest_sharpe from per-trade returns (trade_return = realized_pnl / position_size_usd)
+  const tradeReturns = ledger.fills
+    .filter(f => f.realized_pnl !== 0)
+    .map(f => f.realized_pnl / position_size_usd);
+  let backtest_sharpe = 0;
+  if (tradeReturns.length >= 2) {
+    const mean = tradeReturns.reduce((a, b) => a + b, 0) / tradeReturns.length;
+    const variance = tradeReturns.reduce((a, r) => a + (r - mean) ** 2, 0) / tradeReturns.length;
+    const stddev = Math.sqrt(variance);
+    if (stddev > 0) {
+      backtest_sharpe = truncateTowardZero((mean / stddev) * Math.sqrt(tradeReturns.length), 6);
+    }
+  }
+
   const metrics = {
     strategy: strategy.meta().name,
     params,
@@ -79,7 +94,9 @@ export function runBacktest(strategy, bars, opts = {}) {
     total_fees: summary.total_fees,
     total_slippage: summary.total_slippage,
     max_drawdown: summary.max_drawdown,
-    anomalies: anomalies.length
+    anomalies: anomalies.length,
+    backtest_sharpe,
+    trade_count: tradeReturns.length
   };
 
   return { ledger, signals, metrics, strategy_name: strategy.meta().name };

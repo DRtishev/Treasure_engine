@@ -183,6 +183,7 @@ for (const [symbol, sigs] of [...signalsBySymbol.entries()].sort((a, b) => a[0].
 
     decisions.push({
       schema_version: SCHEMA_VERSION,
+      strategy_name: sig.strategy_name ?? 'legacy_liq_signal',
       symbol,
       bar_ts_ms: sig.bar_ts_ms,
       regime_flag: sig.regime_flag,
