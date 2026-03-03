@@ -34,9 +34,14 @@
       "check": "heal_runner_exists",
       "detail": "OK: scripts/ops/heal_runner.mjs exists",
       "pass": true
+    },
+    {
+      "check": "doctor_v2_has_trending",
+      "detail": "OK: doctor_v2.mjs surfaces trending in DOCTOR.json",
+      "pass": true
     }
   ],
-  "checks_total": 7,
+  "checks_total": 8,
   "failed_checks": [],
   "gate_id": "RG_IMMUNE01_INTEGRATION",
   "next_action": "npm run -s verify:regression:immune01-integration",

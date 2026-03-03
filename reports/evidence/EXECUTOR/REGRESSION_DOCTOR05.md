@@ -1,0 +1,10 @@
+# REGRESSION_DOCTOR05.md — Provenance chain linking
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: STABLE
+NEXT_ACTION: npm run -s ops:doctor
+VIOLATIONS: 0
+
+## VIOLATIONS
+- NONE

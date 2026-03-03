@@ -1,26 +1,26 @@
 {
-  "schema_version": "1.0.0",
-  "description": "Doctor OS manifest — declarative probe/chaos/heal configuration",
+  "schema_version": "2.0.0",
+  "description": "Doctor OS manifest v2 — declarative probe/chaos/heal/intelligence configuration",
 
   "probes": {
     "startup": {
       "commands": ["npm run -s ops:baseline:restore", "npm run -s verify:fast"],
       "timeout_ms": 120000,
       "failure_action": "ABORT",
-      "weight": 0
+      "weight": 10
     },
     "liveness": {
       "commands": ["npm run -s verify:fast", "npm run -s verify:fast", "npm run -s ops:life"],
       "timeout_ms": 300000,
       "failure_action": "REPORT",
       "x2_determinism": true,
-      "weight": 50
+      "weight": 30
     },
     "readiness": {
       "commands": ["npm run -s verify:doctor:policy"],
       "timeout_ms": 180000,
       "failure_action": "REPORT",
-      "weight": 50
+      "weight": 24
     }
   },
 
@@ -45,7 +45,29 @@
       "scanner": "writeJsonDeterministic",
       "injection": { "field": "created_at", "value": "2026-01-01T00:00:00Z" },
       "expected": "FP01_THROWN"
+    },
+    "chaos_evidence_tamper": {
+      "description": "Tamper with merkle-sealed evidence, verify provenance detects it",
+      "gate_id": "CHAOS_EVIDENCE_TAMPER",
+      "scanner": "verifyProvenance",
+      "injection": { "action": "modify_sealed_file" },
+      "expected": "TAMPER_DETECTED"
+    },
+    "chaos_net_leak": {
+      "description": "Attempt network I/O under TREASURE_NET_KILL=1, verify NETV01 thrown",
+      "gate_id": "CHAOS_NET_LEAK",
+      "scanner": "net_kill_preload",
+      "injection": { "action": "http_get_attempt" },
+      "expected": "NETV01_THROWN"
     }
+  },
+
+  "taxonomy": {
+    "CHAOS_MODE_LIE":        { "scoreboard_key": "chaos_mode_lie",        "script": "scripts/verify/chaos_mode_lie.mjs" },
+    "CHAOS_ORPHAN":          { "scoreboard_key": "chaos_orphan",          "script": "scripts/verify/chaos_orphan_write.mjs" },
+    "CHAOS_FP01":            { "scoreboard_key": "chaos_fp01",            "script": "scripts/verify/chaos_fp01_trap.mjs" },
+    "CHAOS_EVIDENCE_TAMPER": { "scoreboard_key": "chaos_evidence_tamper", "script": "scripts/verify/chaos_evidence_tamper.mjs" },
+    "CHAOS_NET_LEAK":        { "scoreboard_key": "chaos_net_leak",        "script": "scripts/verify/chaos_net_leak.mjs" }
   },
 
   "self_heal": {
@@ -60,11 +82,40 @@
     "startup_boot": 10,
     "liveness_alive": 15,
     "liveness_deterministic": 15,
-    "readiness_policy": 20,
-    "readiness_san": 10,
-    "chaos_mode_lie": 10,
-    "chaos_orphan": 10,
-    "chaos_fp01": 5,
-    "provenance_sealed": 5
+    "readiness_policy": 16,
+    "readiness_san": 8,
+    "chaos_mode_lie": 7,
+    "chaos_orphan": 7,
+    "chaos_fp01": 4,
+    "chaos_evidence_tamper": 6,
+    "chaos_net_leak": 4,
+    "provenance_sealed": 3,
+    "differential_clean": 5
+  },
+
+  "trending": {
+    "window_runs": 10,
+    "pareto_k": 5,
+    "decay_min_drop": 2,
+    "improve_min_rise": 2,
+    "imperfect_threshold": 100,
+    "max_score_history": 200
+  },
+
+  "escalation": {
+    "stage_1_drops": 2,
+    "stage_2_drops": 3,
+    "stage_3_drops": 5,
+    "stage_3_min_score": 50,
+    "big_drop_threshold": 15
+  },
+
+  "predictive": {
+    "min_data_points": 5,
+    "momentum_window": 3,
+    "risk_thresholds": {
+      "medium": 20,
+      "high": 50
+    }
   }
 }
