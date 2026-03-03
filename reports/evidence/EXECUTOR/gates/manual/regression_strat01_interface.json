@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "check": "enricher_importable",
+      "detail": "OK: enrichBars() callable, returns enriched bar",
+      "pass": true
+    },
+    {
+      "check": "s3_importable",
+      "detail": "OK: dynamic import succeeded",
+      "pass": true
+    },
+    {
+      "check": "s3_meta_valid",
+      "detail": "OK: liq_vol_fusion v1.0.0",
+      "pass": true
+    },
+    {
+      "check": "s3_init_onbar",
+      "detail": "OK: signal=HOLD state=object",
+      "pass": true
+    },
+    {
+      "check": "s4_importable",
+      "detail": "OK: dynamic import succeeded",
+      "pass": true
+    },
+    {
+      "check": "s4_meta_valid",
+      "detail": "OK: post_cascade_mr v1.0.0",
+      "pass": true
+    },
+    {
+      "check": "s4_init_onbar",
+      "detail": "OK: signal=HOLD state=object",
+      "pass": true
+    },
+    {
+      "check": "s5_importable",
+      "detail": "OK: dynamic import succeeded",
+      "pass": true
+    },
+    {
+      "check": "s5_meta_valid",
+      "detail": "OK: multi_regime_adaptive v1.0.0",
+      "pass": true
+    },
+    {
+      "check": "s5_init_onbar",
+      "detail": "OK: signal=HOLD state=object",
+      "pass": true
+    }
+  ],
+  "checks_total": 10,
+  "failed_checks": [],
+  "gate_id": "RG_STRAT01_INTERFACE_CONTRACT",
+  "next_action": "npm run -s verify:regression:strat01-interface-contract",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}
