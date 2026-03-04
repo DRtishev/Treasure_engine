@@ -16,6 +16,7 @@ import { enrichBars } from '../../core/edge/strategies/strategy_bar_enricher.mjs
 import { runBacktest } from '../../core/backtest/engine.mjs';
 import { CandidateFSM, loadCandidateKernel } from '../ops/candidate_fsm.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
+import { runEdgeLabPipeline } from '../../core/edge_lab/pipeline.mjs';
 
 const ROOT = process.cwd();
 const SWEEP_EPOCH = 'EPOCH-SWEEP-73';
@@ -74,6 +75,38 @@ async function main() {
     const tradeCount = r1.metrics.trade_count;
     const maxDD = r1.metrics.max_drawdown;
 
+    // MINE-09: Run Edge Lab courts for this candidate
+    const trades = r1.ledger.fills
+      .filter(f => f.realized_pnl !== 0)
+      .map(f => ({ pnl: f.realized_pnl, pnl_pct: f.realized_pnl / 500, notional_usd: 500 }));
+    const equityCurveValues = r1.equity_curve.map(e => e.equity);
+
+    const edgeDescriptor = {
+      trades,
+      bars,
+      equity_curve: equityCurveValues,
+      now_ms: 0, // deterministic
+      seed: 12345,
+      strategies_tested: STRATEGY_PATHS.length,
+      data_sources: [{ name: 'e108_fixture', type: 'OHLCV', last_update_ms: 0, is_proxy: false }],
+      execution: { reality_gap: 0.95, slippage_p99_bps: 2, fill_rate: 1.0, latency_p99_ms: 0, reject_ratio: 0, partial_fill_rate: 0, fee_bps: 4 },
+      risk: { initial_equity_usd: 10000, kill_switch_compatible: true, correlation_with_market: 0.5 },
+      sre: { execution_latency_p99_ms: 10, fill_reliability_pct: 100, data_freshness_lag_ms: 0, error_rate_pct: 0, slippage_drift_bps: 0, monitoring_configured: true, sli_definitions_present: true },
+    };
+
+    let courtVerdicts = [];
+    let courtVerdict = 'SKIPPED';
+    try {
+      const pipelineResult = runEdgeLabPipeline(edgeDescriptor, {}, { fail_fast: false, double_run: false, edge_id: configId });
+      courtVerdicts = (pipelineResult.courts || []).map(c => ({ court: c.court, verdict: c.verdict }));
+      courtVerdict = pipelineResult.verdict;
+    } catch (e) {
+      courtVerdicts = [{ court: 'PIPELINE_ERROR', verdict: 'BLOCKED' }];
+      courtVerdict = 'BLOCKED';
+    }
+
+    console.log(`    courts: ${courtVerdicts.length} run, verdict=${courtVerdict}`);
+
     // Build candidate entry for FSM
     const candidateData = {
       id: configId,
@@ -96,6 +129,8 @@ async function main() {
         leakage_pass: deterministic,
       },
       risk: { score: 0.1 }, // low risk — backtested only
+      court_verdicts: courtVerdicts,
+      court_verdict: courtVerdict,
     };
 
     // Advance DRAFT → BACKTESTED via CT01
@@ -125,6 +160,8 @@ async function main() {
       ct01_success: ct01.success,
       ct01_detail: ct01.detail,
       fsm_state: entry.fsm_state,
+      court_verdict: courtVerdict,
+      courts_run: courtVerdicts.length,
     });
 
     console.log(`  ${configId}: sharpe=${sharpe} trades=${tradeCount} det=${deterministic ? 'PASS' : 'FAIL'} fsm=${entry.fsm_state} ct01=${ct01.success ? 'PASS' : 'FAIL'}`);

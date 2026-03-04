@@ -1,0 +1,12 @@
+# RG_CLOCK01_NO_WALLCLOCK_DEFAULT
+
+Status: **PASS**
+
+| Check | Result |
+|-------|--------|
+| CLOCK01_NO_ARGS | PASS — OK |
+| CLOCK01_NULL | PASS — OK |
+| CLOCK01_UNDEFINED | PASS — OK |
+| CLOCK01_VALID | PASS — OK |
+| CLOCK01_ZERO | PASS — OK |
+| CLOCK01_SYSCLOCK | PASS — OK |

@@ -154,8 +154,233 @@
       "pass": true
     },
     {
+      "check": "core_allowlisted_engine_mjs",
+      "detail": "core/backtest/engine.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_master_system_mjs",
+      "detail": "core/control/master_system.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_court_v2_mjs",
+      "detail": "core/court/court_v2.mjs — 2 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_truth_integration_example_mjs",
+      "detail": "core/court/truth_integration_example.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_bybit_ws_mjs",
+      "detail": "core/data/providers/bybit_ws.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_kraken_ws_mjs",
+      "detail": "core/data/providers/kraken_ws.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_websocket_feed_mjs",
+      "detail": "core/data/websocket_feed.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_candidate_pipeline_mjs",
+      "detail": "core/edge/candidate_pipeline.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_fill_record_contract_mjs",
+      "detail": "core/edge/fill_record_contract.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_adversarial_safety_mjs",
+      "detail": "core/exec/adapters/adversarial_safety.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_adversarial_tester_mjs",
+      "detail": "core/exec/adapters/adversarial_tester.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_binance_client_mjs",
+      "detail": "core/exec/adapters/binance_client.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_live_adapter_mjs",
+      "detail": "core/exec/adapters/live_adapter.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_live_adapter_dryrun_mjs",
+      "detail": "core/exec/adapters/live_adapter_dryrun.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_mock_exchange_mjs",
+      "detail": "core/exec/adapters/mock_exchange.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_paper_adapter_mjs",
+      "detail": "core/exec/adapters/paper_adapter.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_safety_gates_mjs",
+      "detail": "core/exec/adapters/safety_gates.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_master_executor_mjs",
+      "detail": "core/exec/master_executor.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_safety_integrated_executor_mjs",
+      "detail": "core/exec/safety_integrated_executor.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_e112_cost_calibration_mjs",
+      "detail": "core/execution/e112_cost_calibration.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_e122_execution_adapter_v3_mjs",
+      "detail": "core/execution/e122_execution_adapter_v3.mjs — 2 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_approval_workflow_mjs",
+      "detail": "core/governance/approval_workflow.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_governance_engine_mjs",
+      "detail": "core/governance/governance_engine.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_mode_fsm_mjs",
+      "detail": "core/governance/mode_fsm.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_exchange_interface_mjs",
+      "detail": "core/live/exchange_interface.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_bybit_rest_testnet_mjs",
+      "detail": "core/live/exchanges/bybit_rest_testnet.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_feed_mjs",
+      "detail": "core/live/feed.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_anomaly_detector_mjs",
+      "detail": "core/ml/anomaly_detector.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_safety_monitor_mjs",
+      "detail": "core/monitoring/safety_monitor.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_e129_transport_dialer_mjs",
+      "detail": "core/net/e129_transport_dialer.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_transport_mjs",
+      "detail": "core/net/transport.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_event_log_mjs",
+      "detail": "core/obs/event_log.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_event_log_v2_mjs",
+      "detail": "core/obs/event_log_v2.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_reality_gap_monitor_mjs",
+      "detail": "core/obs/reality_gap_monitor.mjs — 2 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_perf_engine_mjs",
+      "detail": "core/performance/perf_engine.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_repo_state_mjs",
+      "detail": "core/persist/repo_state.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_multi_strategy_mjs",
+      "detail": "core/portfolio/multi_strategy.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_reconcile_v1_mjs",
+      "detail": "core/recon/reconcile_v1.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_self_healing_mjs",
+      "detail": "core/resilience/self_healing.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_risk_governor_mjs",
+      "detail": "core/risk/risk_governor.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_engine_paper_mjs",
+      "detail": "core/sim/engine_paper.mjs — 2 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_clock_mjs",
+      "detail": "core/sys/clock.mjs — 2 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_chaos_engineer_mjs",
+      "detail": "core/testing/chaos_engineer.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
+      "check": "core_allowlisted_truth_engine_mjs",
+      "detail": "core/truth/truth_engine.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
       "check": "total_violations_zero",
-      "detail": "0 forbidden API usages across CERT-backbone",
+      "detail": "0 forbidden API usages across CERT-backbone + core/",
+      "pass": true
+    },
+    {
+      "check": "core_scan_complete",
+      "detail": "core/ scanned: 168 files, 44 allowlisted, 0 un-allowlisted violations",
       "pass": true
     }
   ],

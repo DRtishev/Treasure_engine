@@ -27,6 +27,12 @@ export class RunContext {
     const useDeterministic = options.deterministic !== false && this.mode !== 'live';
     
     if (useDeterministic) {
+      if (options.initial_time === undefined || options.initial_time === null) {
+        throw new Error(
+          'RunContext in deterministic mode requires explicit initial_time. ' +
+          'Pass options.initial_time or set mode to "live" (MINE-05).'
+        );
+      }
       this.clock = new DeterministicClock(options.initial_time);
       this.rng = new DeterministicRNG(this.run_seed);
     } else {

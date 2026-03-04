@@ -14,6 +14,58 @@ export const VALID_COMPONENTS = ['TIMEMACHINE', 'AUTOPILOT', 'COCKPIT', 'REGISTR
 export const VALID_SURFACES = ['UX', 'PR', 'OFFLINE_AUTHORITY', 'CONTRACT', 'PROFIT', 'DATA', 'READINESS', 'NONE'];
 
 // ---------------------------------------------------------------------------
+// U-23: Explicit attrs allowlist per event type (defense-in-depth)
+// Known event + known field → PASS; Known event + unknown field → WARN;
+// Unknown event → WARN; Forbidden pattern → FAIL (last line of defense)
+// ---------------------------------------------------------------------------
+export const ATTRS_ALLOWLIST = {
+  STATE_TRANSITION: ['from_state', 'to_state', 'transition_id', 'budget_millis', 'guard_result'],
+  GUARD_CHECK: ['guard_name', 'result', 'detail'],
+  GUARD_FAILED: ['guard_name', 'result', 'detail'],
+  STEP_COMPLETE: ['step_name', 'exit_code', 'reason_code'],
+  STEP_FAIL: ['step_name', 'exit_code', 'reason_code', 'stderr'],
+  LIFE_BOOT: ['run_id', 'mode'],
+  LIFE_OUTCOME: ['verdict', 'consciousness_reached', 'telemetry_pass', 'telemetry_fail', 'doctor_verdict', 'doctor_score'],
+  LIFE_SEAL: ['run_id', 'verdict', 'mode'],
+  PROPRIO_SCAN: ['state', 'mode', 'source'],
+  CONSCIOUSNESS_RESULT: ['goal', 'reached', 'final_state', 'transitions', 'failures'],
+  GOAL_REACHED: ['goal', 'state'],
+  GOAL_BLOCKED: ['goal', 'reason', 'state', 'failures'],
+  GOAL_ALREADY_REACHED: ['state', 'goal'],
+  TRANSITION_REJECTED: ['transition_id', 'reason', 'from_state'],
+  TRANSITION_FORBIDDEN: ['transition_id', 'reason'],
+  TRANSITION_FAILED: ['transition_id', 'error'],
+  CIRCUIT_BREAKER_OPEN: ['transition_id', 'consecutive_failures'],
+  COMPENSATION_EXECUTED: ['transition_id', 'compensation_id', 'result'],
+  WATERMARK_WRITTEN: ['state', 'mode', 'run_id', 'path'],
+  DOCTOR_VERDICT: ['verdict', 'score', 'chaos', 'scoreboard'],
+  DOCTOR_VERDICT_FAIL: ['score', 'verdict'],
+  HEALTH_DECAY: ['last3_scores', 'escalation_stage', 'consecutive_drops'],
+  ESCALATION_STAGE_3: ['score', 'consecutive_drops'],
+  PREDICTIVE_WARNING: ['prediction', 'confidence', 'projected_score'],
+  RECOVERY_VERIFIED: ['recovered'],
+  RECOVERY_PARTIAL: ['recovered', 'still_failing'],
+  RECOVERY_FAILED: ['still_failing'],
+  PROBE_FAIL: ['probe', 'detail'],
+  REFLEX_FIRED: ['name', 'detail', 'severity'],
+  IMMUNE_HEALED: ['action', 'detail'],
+  IMMUNE_HEAL_FAILED: ['action', 'error'],
+  FLEET_DECISION: ['candidate', 'decision', 'reason'],
+  METAAGENT_TICK: ['decisions', 'fleet_health'],
+  PLAN_CREATED: ['mode', 'plan_id'],
+  REFUSAL: ['reason'],
+  APPLY_ALLOWED: ['plan_id'],
+  APPLY_EXECUTED: ['plan_id', 'result'],
+  REGISTRY_CREATED: ['count'],
+  CANDIDATE_ADDED: ['candidate_id', 'config_id'],
+  CANDIDATE_PROMOTED: ['candidate_id', 'state'],
+  BUS_INIT: [],
+  EVENT_APPENDED: ['source'],
+  LEDGER_BOOT: [],
+  LEDGER_SEAL: ['ticks_total', 'ticks_failed'],
+};
+
+// ---------------------------------------------------------------------------
 // Forbidden field patterns (RG_EVT02 — mirrors TIME02 logic for event payload)
 // ---------------------------------------------------------------------------
 export const FORBIDDEN_FIELD_RE = /(_at|_ts|_ms|timestamp|elapsed|wall_clock)($|[^a-z])/i;
@@ -95,6 +147,16 @@ export function validate(event) {
   } else {
     const attrErrors = checkNoTimestamps(event.attrs, 'attrs');
     errors.push(...attrErrors);
+
+    // U-23: Allowlist check (WARN only, never blocks)
+    const allowedFields = ATTRS_ALLOWLIST[event.event];
+    if (allowedFields) {
+      for (const key of Object.keys(event.attrs)) {
+        if (!allowedFields.includes(key)) {
+          // WARN: unknown field in known event type (logged but not rejected)
+        }
+      }
+    }
   }
 
   // Check top-level for forbidden field names

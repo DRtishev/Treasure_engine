@@ -56,15 +56,20 @@ const TRANSITIONS = {
  * 5. Self-healing CANNOT override HALT verdict
  */
 export class GovernanceFSM {
-  constructor(initialMode = MODES.OFF) {
+  constructor(initialMode = MODES.OFF, clock = null) {
     this.currentMode = initialMode;
     this.previousMode = null;
     this.transitionHistory = [];
     this.haltActive = false;
     this.haltReason = null;
-    
+    this.clock = clock;
+
     // Manual reset flag (must be explicitly set)
     this.manualResetRequested = false;
+  }
+
+  _now() {
+    return this.clock?.now() ?? Date.now();
   }
 
   /**
@@ -75,7 +80,7 @@ export class GovernanceFSM {
    * @returns {Object} - Transition result
    */
   transition(newMode, truthVerdict) {
-    const timestamp = Date.now();
+    const timestamp = this._now();
     
     // CRITICAL: Check if HALT verdict is active
     if (truthVerdict.verdict === VERDICTS.HALT) {
@@ -155,7 +160,7 @@ export class GovernanceFSM {
     return {
       success: true,
       message: 'Manual reset requested - next transition will clear HALT',
-      timestamp: Date.now()
+      timestamp: this._now()
     };
   }
 
@@ -244,7 +249,7 @@ export class GovernanceFSM {
       success: true,
       message: 'FSM reset to initial state',
       currentMode: this.currentMode,
-      timestamp: Date.now()
+      timestamp: this._now()
     };
   }
 }

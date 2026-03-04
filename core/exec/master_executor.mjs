@@ -66,6 +66,11 @@ export class MasterExecutor {
     
     this.adapter = options.adapter;
     this.ctx = options.ctx || null; // RunContext (for determinism)
+
+    // MINE-05/U-24: Require clock when ctx is provided
+    if (this.ctx && !this.ctx.clock) {
+      throw new Error('MasterExecutor: ctx must have a clock (DeterministicClock or SystemClock)');
+    }
     
     // Optional components
     this.eventLog = options.eventLog || null; // EventLogV2
@@ -102,14 +107,23 @@ export class MasterExecutor {
   }
 
   /**
+   * Get current time from ctx.clock (U-24: no Date.now() fallback)
+   * @private
+   */
+  _now() {
+    if (this.ctx?.clock) return this.ctx.clock.now();
+    return Date.now(); // Fallback only when no ctx provided (non-deterministic mode)
+  }
+
+  /**
    * Execute intent (full flow)
-   * 
+   *
    * @param {Object} intent - Trading intent
    * @param {Object} executionContext - Execution context (bar, hack_id, etc.)
    * @returns {Promise<ExecutionResult>}
    */
   async executeIntent(intent, executionContext = {}) {
-    const startTime = this.ctx?.clock?.now() || Date.now();
+    const startTime = this._now();
     const result = new ExecutionResult();
     
     try {
@@ -142,11 +156,11 @@ export class MasterExecutor {
       // PHASE 2: Order Placement
       // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       
-      const orderStartTime = this.ctx?.clock?.now() || Date.now();
+      const orderStartTime = this._now();
       
       const orderResult = await this.adapter.placeOrder(intent, executionContext);
       
-      const orderLatency = (this.ctx?.clock?.now() || Date.now()) - orderStartTime;
+      const orderLatency = (this._now()) - orderStartTime;
       result.metrics.order_latency_ms = orderLatency;
       
       result.order_id = orderResult.order_id;
@@ -162,11 +176,11 @@ export class MasterExecutor {
       // PHASE 3: Order Polling + Fill Detection
       // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       
-      const fillStartTime = this.ctx?.clock?.now() || Date.now();
+      const fillStartTime = this._now();
       
       const fillResult = await this.adapter.pollOrder(result.order_id, executionContext);
       
-      const fillLatency = (this.ctx?.clock?.now() || Date.now()) - fillStartTime;
+      const fillLatency = (this._now()) - fillStartTime;
       result.metrics.fill_latency_ms = fillLatency;
       
       if (fillResult.status === 'FILLED' || fillResult.status === 'PARTIALLY_FILLED') {
@@ -191,7 +205,7 @@ export class MasterExecutor {
       // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       
       if (this.enable_reconciliation && this.reconEngine) {
-        const reconStartTime = this.ctx?.clock?.now() || Date.now();
+        const reconStartTime = this._now();
         
         // Expected vs actual comparison
         const expected = {
@@ -208,7 +222,7 @@ export class MasterExecutor {
         
         const reconResult = this.reconEngine.reconcileOrder(expected, actual);
         
-        const reconLatency = (this.ctx?.clock?.now() || Date.now()) - reconStartTime;
+        const reconLatency = (this._now()) - reconStartTime;
         result.metrics.reconciliation_latency_ms = reconLatency;
         
         result.reconciliation = reconResult.toJSON();
@@ -239,7 +253,7 @@ export class MasterExecutor {
       // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       
       if (this.enable_persistence && this.db) {
-        const persistStartTime = this.ctx?.clock?.now() || Date.now();
+        const persistStartTime = this._now();
         
         try {
           // Persist order
@@ -250,7 +264,7 @@ export class MasterExecutor {
             await this._persistFill(result.order_id, fill, executionContext);
           }
           
-          const persistLatency = (this.ctx?.clock?.now() || Date.now()) - persistStartTime;
+          const persistLatency = (this._now()) - persistStartTime;
           result.metrics.persistence_latency_ms = persistLatency;
           
           result.persisted = true;
@@ -277,7 +291,7 @@ export class MasterExecutor {
       
       result.success = result.errors.length === 0;
       
-      const totalLatency = (this.ctx?.clock?.now() || Date.now()) - startTime;
+      const totalLatency = (this._now()) - startTime;
       result.metrics.total_latency_ms = totalLatency;
       this.stats.total_latency_ms += totalLatency;
       
@@ -335,7 +349,7 @@ export class MasterExecutor {
       filled_qty: fillResult.filled_qty || 0,
       avg_fill_price: fillResult.filled_price || null,
       total_fee: fillResult.fee || 0,
-      placed_at_ms: ctx.bar?.t_ms || Date.now()
+      placed_at_ms: ctx.bar?.t_ms || this._now()
     });
   }
 
@@ -366,7 +380,7 @@ export class MasterExecutor {
     
     try {
       this.eventLog.write({
-        ts_ms: this.ctx?.clock?.now() || Date.now(),
+        ts_ms: this._now(),
         run_id: this.ctx?.run_id || 'unknown',
         category,
         event_type,
