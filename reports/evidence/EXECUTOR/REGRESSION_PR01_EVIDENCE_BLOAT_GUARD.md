@@ -6,7 +6,7 @@ RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 64
+- changed_evidence_files_n: 78
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: true
 
@@ -27,16 +27,22 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_agent02_claude_md_drift.json
 - reports/evidence/EXECUTOR/gates/manual/regression_auto01_mode_router.json
 - reports/evidence/EXECUTOR/gates/manual/regression_backtest01_organ_health.json
+- reports/evidence/EXECUTOR/gates/manual/regression_canary01_safety_controls.json
 - reports/evidence/EXECUTOR/gates/manual/regression_churn_contract01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_clock01.json
+- reports/evidence/EXECUTOR/gates/manual/regression_court_pipeline01_full_suite.json
+- reports/evidence/EXECUTOR/gates/manual/regression_data_quorum01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_epoch_skip01_respects_tracked_state.json
+- reports/evidence/EXECUTOR/gates/manual/regression_fill01_probe_contract.json
 - reports/evidence/EXECUTOR/gates/manual/regression_fsm02_consciousness.json
 - reports/evidence/EXECUTOR/gates/manual/regression_immune01_integration.json
+- reports/evidence/EXECUTOR/gates/manual/regression_impact01_determinism_x2.json
 - reports/evidence/EXECUTOR/gates/manual/regression_liq_lock01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_metaagent01_fleet.json
 - reports/evidence/EXECUTOR/gates/manual/regression_net_toolchain01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_no_rg_writes_during_cert.json
 - reports/evidence/EXECUTOR/gates/manual/regression_node_truth_alignment.json
+- reports/evidence/EXECUTOR/gates/manual/regression_paper01_evidence_chain.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_reason01_token_purity.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_reason02_in_taxonomy.json
@@ -49,21 +55,28 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/repo_byte_audit_x2.json
 - reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json
 - reports/evidence/EXECUTOR/gates/manual/san_cert_offline.json
+- reports/evidence/EXECUTOR/gates/manual/san_research_net.json
 - reports/evidence/EXECUTOR/NODE_TOOLCHAIN_ACQUIRE.md
 - reports/evidence/EXECUTOR/REGRESSION_AGENT01_AGENTS_PRESENT.md
 - reports/evidence/EXECUTOR/REGRESSION_AGENT02_CLAUDE_MD_DRIFT.md
 - reports/evidence/EXECUTOR/REGRESSION_AUTO01_MODE_ROUTER.md
 - reports/evidence/EXECUTOR/REGRESSION_BACKTEST01_ORGAN_HEALTH.md
+- reports/evidence/EXECUTOR/REGRESSION_CANARY01_SAFETY_CONTROLS.md
 - reports/evidence/EXECUTOR/REGRESSION_CHURN_CONTRACT01.md
 - reports/evidence/EXECUTOR/REGRESSION_CLOCK01.md
+- reports/evidence/EXECUTOR/REGRESSION_COURT_PIPELINE01_FULL_SUITE.md
+- reports/evidence/EXECUTOR/REGRESSION_DATA_QUORUM01.md
 - reports/evidence/EXECUTOR/REGRESSION_EPOCH_SKIP01_RESPECTS_TRACKED_STATE.md
+- reports/evidence/EXECUTOR/REGRESSION_FILL01_PROBE_CONTRACT.md
 - reports/evidence/EXECUTOR/REGRESSION_FSM02.md
 - reports/evidence/EXECUTOR/REGRESSION_IMMUNE01.md
+- reports/evidence/EXECUTOR/REGRESSION_IMPACT01_DETERMINISM_X2.md
 - reports/evidence/EXECUTOR/REGRESSION_LIQ_LOCK01.md
 - reports/evidence/EXECUTOR/REGRESSION_METAAGENT01.md
 - reports/evidence/EXECUTOR/REGRESSION_NET_TOOLCHAIN01.md
 - reports/evidence/EXECUTOR/REGRESSION_NO_RG_WRITES_DURING_CERT.md
 - reports/evidence/EXECUTOR/REGRESSION_NODE_TRUTH_ALIGNMENT.md
+- reports/evidence/EXECUTOR/REGRESSION_PAPER01_EVIDENCE_CHAIN.md
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_REASON01.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_REASON02.md
@@ -75,3 +88,4 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md
 - reports/evidence/EXECUTOR/REPO_SHA256SUMS.txt
 - reports/evidence/EXECUTOR/SAN_CERT_OFFLINE.md
+- reports/evidence/EXECUTOR/SAN_RESEARCH_NET.md
