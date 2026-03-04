@@ -120,7 +120,7 @@ console.log('-- Phase 2: LIVENESS PROBE --');
 const liveness = {};
 liveness.fast1 = run('verify:fast (run 1)', 'npm run -s verify:fast');
 liveness.fast2 = run('verify:fast (run 2)', 'npm run -s verify:fast');
-liveness.life = run('ops:life', 'npm run -s ops:life');
+liveness.life = run('ops:life', 'TREASURE_LIFE_DEPTH=1 npm run -s ops:life');
 
 // x2 determinism: capture LIFE_SUMMARY after the life run
 const evidenceRoot = path.join(ROOT, 'reports', 'evidence');
@@ -134,7 +134,7 @@ if (lifeEpochs1.length > 0) {
 }
 
 // Run life a second time for x2 determinism
-liveness.life2 = run('ops:life (x2)', 'npm run -s ops:life');
+liveness.life2 = run('ops:life (x2)', 'TREASURE_LIFE_DEPTH=1 npm run -s ops:life');
 
 let life2Summary = '';
 const lifeEpochs2 = fs.readdirSync(evidenceRoot).filter((d) => d.startsWith('EPOCH-LIFE-')).sort();

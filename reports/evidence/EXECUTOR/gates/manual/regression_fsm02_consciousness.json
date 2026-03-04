@@ -42,7 +42,7 @@
     },
     {
       "check": "consciousness_result_present",
-      "detail": "OK: consciousness_result present — reached=false final_state=DEGRADED",
+      "detail": "OK: consciousness_result present — reached=true final_state=CERTIFIED",
       "pass": true
     },
     {
@@ -52,22 +52,22 @@
     },
     {
       "check": "fsm_final_state_valid",
-      "detail": "OK: fsm_final_state=\"DEGRADED\" is valid",
+      "detail": "OK: fsm_final_state=\"CERTIFIED\" is valid",
       "pass": true
     },
     {
       "check": "proprio_scan_event",
-      "detail": "OK: PROPRIO_SCAN event found with fsm_state=DEGRADED",
+      "detail": "OK: PROPRIO_SCAN event found with fsm_state=BOOT",
       "pass": true
     },
     {
       "check": "consciousness_result_event",
-      "detail": "OK: CONSCIOUSNESS_RESULT event found — reached=false",
+      "detail": "OK: CONSCIOUSNESS_RESULT event found — reached=true",
       "pass": true
     },
     {
       "check": "no_hardcoded_cert_mode",
-      "detail": "OK: modes FSM-derived (AUDIT) — proprio fsm_state=DEGRADED",
+      "detail": "OK: modes FSM-derived (LIFE, CERT) — proprio fsm_state=BOOT",
       "pass": true
     }
   ],
