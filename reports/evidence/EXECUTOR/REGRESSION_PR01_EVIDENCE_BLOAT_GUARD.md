@@ -6,7 +6,7 @@ RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 44
+- changed_evidence_files_n: 56
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
@@ -24,11 +24,16 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/chaos_net_leak.json
 - reports/evidence/EXECUTOR/gates/manual/chaos_orphan_write.json
 - reports/evidence/EXECUTOR/gates/manual/node_toolchain_ensure.json
+- reports/evidence/EXECUTOR/gates/manual/regression_churn_contract01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_epoch_skip01_respects_tracked_state.json
 - reports/evidence/EXECUTOR/gates/manual/regression_fsm02_consciousness.json
 - reports/evidence/EXECUTOR/gates/manual/regression_immune01_integration.json
 - reports/evidence/EXECUTOR/gates/manual/regression_metaagent01_fleet.json
 - reports/evidence/EXECUTOR/gates/manual/regression_nd_core_san01.json
+- reports/evidence/EXECUTOR/gates/manual/regression_node_nvm01.json
+- reports/evidence/EXECUTOR/gates/manual/regression_node_truth_alignment.json
+- reports/evidence/EXECUTOR/gates/manual/regression_node_vendor01.json
+- reports/evidence/EXECUTOR/gates/manual/regression_node_wrap_contract.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
 - reports/evidence/EXECUTOR/gates/manual/regression_profit_wiring01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_reason01_token_purity.json
@@ -40,11 +45,16 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json
 - reports/evidence/EXECUTOR/gates/manual/san_cert_offline.json
 - reports/evidence/EXECUTOR/NODE_TOOLCHAIN_ENSURE.md
+- reports/evidence/EXECUTOR/REGRESSION_CHURN_CONTRACT01.md
 - reports/evidence/EXECUTOR/REGRESSION_EPOCH_SKIP01_RESPECTS_TRACKED_STATE.md
 - reports/evidence/EXECUTOR/REGRESSION_FSM02.md
 - reports/evidence/EXECUTOR/REGRESSION_IMMUNE01.md
 - reports/evidence/EXECUTOR/REGRESSION_METAAGENT01.md
 - reports/evidence/EXECUTOR/REGRESSION_ND_CORE_SAN01.md
+- reports/evidence/EXECUTOR/REGRESSION_NODE_NVM01.md
+- reports/evidence/EXECUTOR/REGRESSION_NODE_TRUTH_ALIGNMENT.md
+- reports/evidence/EXECUTOR/REGRESSION_NODE_VENDOR01.md
+- reports/evidence/EXECUTOR/REGRESSION_NODE_WRAP_CONTRACT.md
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
 - reports/evidence/EXECUTOR/REGRESSION_PROFIT_WIRING01.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_REASON01.md
@@ -52,6 +62,8 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_TOOLCHAIN_REASON01.md
 - reports/evidence/EXECUTOR/REGRESSION_TOOLCHAIN_REASON02.md
 - reports/evidence/EXECUTOR/REGRESSION_UNLOCK01.md
+- reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_SCOPE.json
 - reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_X2.md
 - reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md
+- reports/evidence/EXECUTOR/REPO_SHA256SUMS.txt
 - reports/evidence/EXECUTOR/SAN_CERT_OFFLINE.md
