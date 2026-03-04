@@ -1,14 +1,17 @@
 {
-  "changed_evidence_files_n": 0,
+  "changed_evidence_files_n": 2,
   "checks": {
     "baseline_origin_main_present": true,
-    "changed_evidence_files_n": 0,
+    "changed_evidence_files_n": 2,
     "override_accepted": false,
     "within_limit_or_override": true
   },
   "limit": 60,
   "next_action": "npm run -s verify:fast",
-  "offenders": [],
+  "offenders": [
+    "reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json",
+    "reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md"
+  ],
   "override_accepted": false,
   "override_path": "artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE",
   "override_required_token": "ALLOW_EVIDENCE_BLOAT_PR01",
