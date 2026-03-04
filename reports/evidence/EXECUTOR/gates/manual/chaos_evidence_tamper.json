@@ -1,5 +1,5 @@
 {
-  "detail": "Tamper detected: merkle mismatch: computed=29ae5cc2d006bbf47124307e3ebc98e9cc28b5f88ee6c2763f2db1d27048a9b7 stored=c46851bea53913ced8c6712c16bcc25be93471b99d2427bfa78c46d91f0186af — merkle seal WORKS",
+  "detail": "Tamper detected: merkle mismatch: computed=d5e71b9cf3f46ffae1a9172e2967316c3ec4dc9d8f41ba9c2b37992bb06be293 stored=8f175a5a6528ec85ae3612bdc3c9fe67fe074b3d4cd086b3524f78156784fed5 — merkle seal WORKS",
   "gate_id": "CHAOS_EVIDENCE_TAMPER",
   "next_action": "npm run -s ops:doctor",
   "reason_code": "NONE",
