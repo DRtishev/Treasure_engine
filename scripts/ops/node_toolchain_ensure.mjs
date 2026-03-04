@@ -134,8 +134,8 @@ if (status === 'PASS') {
   }
 }
 
-writeMd(path.join(EXEC, 'NODE_TOOLCHAIN_ENSURE.md'), [
-  '# NODE_TOOLCHAIN_ENSURE.md', '',
+writeMd(path.join(EXEC, 'REGRESSION_NODE_TOOLCHAIN_ENSURE.md'), [
+  '# REGRESSION_NODE_TOOLCHAIN_ENSURE.md', '',
   `STATUS: ${status}`,
   `REASON_CODE: ${reason_code}`,
   `DETAIL_KIND: ${detail.kind}`,

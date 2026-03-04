@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "check": "IMPACT01_DETERMINISM_X2",
+      "detail": "OK: hash=4415498f27b54092...",
+      "pass": true
+    },
+    {
+      "check": "IMPACT01_CONCAVITY",
+      "detail": "OK: small=0.063245bps large=0.632455bps (ratio=10.00x vs 10x sqrt)",
+      "pass": true
+    },
+    {
+      "check": "IMPACT01_ZERO_VOLUME",
+      "detail": "OK: participation_rate=Infinity, impact_bps=20",
+      "pass": true
+    },
+    {
+      "check": "IMPACT01_EXEC_PRICE_DETERMINISM",
+      "detail": "OK: hash=fd80f2299fd6118e...",
+      "pass": true
+    },
+    {
+      "check": "IMPACT01_BUY_SELL_DIRECTION",
+      "detail": "OK: mid=49750 buy=49755.725856 sell=49744.274143",
+      "pass": true
+    },
+    {
+      "check": "IMPACT01_AGGREGATE_STATS",
+      "detail": "OK: avg=3bps max=4bps total=$30",
+      "pass": true
+    }
+  ],
+  "checks_total": 6,
+  "failed_checks": [],
+  "gate_id": "RG_IMPACT01_DETERMINISM_X2",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

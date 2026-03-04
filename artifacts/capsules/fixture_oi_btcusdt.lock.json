@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "capsule_id": "fixture_oi_btcusdt",
+  "source": "e108_fixture_derived",
+  "symbol": "BTCUSDT",
+  "data_type": "open_interest",
+  "range_start": "2024-01-01T00:00:00.000Z",
+  "range_end": "2024-01-01T16:35:00.000Z",
+  "row_count": 34,
+  "sha256": "e0c005f8984f39e10f25a97eaa87157f018698bdd889897e2e71a1d37f4affdd",
+  "format": "jsonl",
+  "status": "LOCKED"
+}

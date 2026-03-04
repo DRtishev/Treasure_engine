@@ -32,16 +32,40 @@ fs.mkdirSync(MANUAL, { recursive: true });
 
 const NEXT_ACTION = 'npm run -s verify:regression:san01-global-forbidden-apis';
 
-// CERT-backbone scan dirs
+// CERT-backbone scan dirs (MINE-04: expanded to core/ in Sprint 1)
 const SCAN_PATHS = [
   { dir: path.join(ROOT, 'scripts', 'ops'), pattern: /\.mjs$/ },
   { dir: path.join(ROOT, 'scripts', 'edge', 'data_organ'), pattern: /\.mjs$/ },
 ];
 
+// MINE-04: Recursively collect .mjs from core/ subdirectories
+function collectFilesRecursive(dir, pattern) {
+  const results = [];
+  if (!fs.existsSync(dir)) return results;
+  for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, ent.name);
+    if (ent.isDirectory()) results.push(...collectFilesRecursive(full, pattern));
+    else if (pattern.test(ent.name)) results.push(full);
+  }
+  return results;
+}
+
 // Files explicitly allowlisted (double-key acquire — network is intentional)
 const ALLOWLIST = new Set([
   path.join(ROOT, 'scripts', 'ops', 'node_toolchain_acquire.mjs'),
 ]);
+
+// MINE-04: Load core/ allowlist from spec file
+let coreAllowlistSet = new Set();
+const coreAllowlistPath = path.join(ROOT, 'specs', 'san01_core_allowlist.json');
+if (fs.existsSync(coreAllowlistPath)) {
+  try {
+    const al = JSON.parse(fs.readFileSync(coreAllowlistPath, 'utf8'));
+    for (const entry of (al.entries || [])) {
+      coreAllowlistSet.add(path.join(ROOT, entry.file));
+    }
+  } catch { /* ignore parse errors */ }
+}
 
 // Forbidden time API patterns
 const FORBIDDEN_TIME = [
@@ -93,7 +117,10 @@ function collectFiles(dir, pattern) {
 
 const checks = [];
 const violations = [];
+let coreAllowlistedCount = 0;
+let coreViolationCount = 0;
 
+// Scan CERT-backbone paths (scripts/ops, scripts/edge/data_organ)
 for (const { dir, pattern } of SCAN_PATHS) {
   const files = collectFiles(dir, pattern);
   for (const filePath of files.sort()) {
@@ -124,13 +151,55 @@ for (const { dir, pattern } of SCAN_PATHS) {
   }
 }
 
-// Summary check
+// MINE-04: Scan core/ with allowlist support
+const coreFiles = collectFilesRecursive(path.join(ROOT, 'core'), /\.mjs$/);
+for (const filePath of coreFiles.sort()) {
+  const rel = path.relative(ROOT, filePath);
+  const isAllowlisted = coreAllowlistSet.has(filePath);
+  const src = fs.readFileSync(filePath, 'utf8');
+  const stripped = stripComments(src);
+  const fileViolations = [];
+
+  // Only check TIME violations for core/ (NET is legitimate for live adapters)
+  for (const { re, label, kind } of ALL_FORBIDDEN.filter((f) => f.kind === 'TIME')) {
+    if (re.test(stripped)) {
+      fileViolations.push({ label, kind });
+    }
+  }
+
+  if (fileViolations.length > 0 && isAllowlisted) {
+    coreAllowlistedCount++;
+    checks.push({
+      check: `core_allowlisted_${path.basename(filePath).replace(/\./g, '_')}`,
+      pass: true,
+      detail: `${rel} — ${fileViolations.length} TIME violation(s) (allowlisted)`,
+    });
+  } else if (fileViolations.length > 0 && !isAllowlisted) {
+    coreViolationCount += fileViolations.length;
+    for (const v of fileViolations) {
+      violations.push({ file: rel, label: v.label, kind: v.kind, scope: 'core' });
+    }
+    checks.push({
+      check: `core_violation_${path.basename(filePath).replace(/\./g, '_')}`,
+      pass: false,
+      detail: `UN-ALLOWLISTED VIOLATION in ${rel}: ${fileViolations.map((v) => `${v.kind}:${v.label}`).join(', ')}`,
+    });
+  }
+}
+
+// Summary checks
 checks.push({
   check: 'total_violations_zero',
   pass: violations.length === 0,
   detail: violations.length === 0
-    ? `0 forbidden API usages across CERT-backbone`
+    ? `0 forbidden API usages across CERT-backbone + core/`
     : `TOTAL: ${violations.length} violation(s) — ${violations.map((v) => v.file + ':' + v.label).join('; ')}`,
+});
+
+checks.push({
+  check: 'core_scan_complete',
+  pass: true,
+  detail: `core/ scanned: ${coreFiles.length} files, ${coreAllowlistedCount} allowlisted, ${coreViolationCount} un-allowlisted violations`,
 });
 
 const failed = checks.filter((c) => !c.pass);

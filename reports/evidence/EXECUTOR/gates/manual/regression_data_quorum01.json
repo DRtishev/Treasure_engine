@@ -1,0 +1,98 @@
+{
+  "capsule_count": 3,
+  "capsules": [
+    {
+      "capsule_id": "fixture_funding_btcusdt",
+      "data_type": "funding_rate",
+      "row_count": 17,
+      "sha256": "1469dcddf7210084ab28ec3abc2c1c8538b8ded2a6abb93b1d8bfc7fce691bd6",
+      "symbol": "BTCUSDT"
+    },
+    {
+      "capsule_id": "fixture_ohlcv_btcusdt_200bar",
+      "data_type": "ohlcv",
+      "row_count": 200,
+      "sha256": "0752cb5155f61629a897ed3d58d75426087f1073d3fcd14c62f54235d6f8e9e2",
+      "symbol": "BTCUSDT"
+    },
+    {
+      "capsule_id": "fixture_oi_btcusdt",
+      "data_type": "open_interest",
+      "row_count": 34,
+      "sha256": "e0c005f8984f39e10f25a97eaa87157f018698bdd889897e2e71a1d37f4affdd",
+      "symbol": "BTCUSDT"
+    }
+  ],
+  "checks": [
+    {
+      "check": "DATA_QUORUM_MIN",
+      "detail": "3 locked capsules (min=2): fixture_funding_btcusdt, fixture_ohlcv_btcusdt_200bar, fixture_oi_btcusdt",
+      "pass": true
+    },
+    {
+      "check": "INTEGRITY_fixture_funding_btcusdt",
+      "detail": "OK: sha256=1469dcddf7210084...",
+      "pass": true
+    },
+    {
+      "check": "INTEGRITY_fixture_ohlcv_btcusdt_200bar",
+      "detail": "OK: sha256=0752cb5155f61629...",
+      "pass": true
+    },
+    {
+      "check": "INTEGRITY_fixture_oi_btcusdt",
+      "detail": "OK: sha256=e0c005f8984f39e1...",
+      "pass": true
+    },
+    {
+      "check": "SCHEMA_fixture_funding_btcusdt",
+      "detail": "OK: schema_version=1.0.0",
+      "pass": true
+    },
+    {
+      "check": "SCHEMA_fixture_ohlcv_btcusdt_200bar",
+      "detail": "OK: schema_version=1.0.0",
+      "pass": true
+    },
+    {
+      "check": "SCHEMA_fixture_oi_btcusdt",
+      "detail": "OK: schema_version=1.0.0",
+      "pass": true
+    },
+    {
+      "check": "REPLAY_X2_fixture_funding_btcusdt",
+      "detail": "OK: hash=1469dcddf7210084... x2 identical",
+      "pass": true
+    },
+    {
+      "check": "REPLAY_X2_fixture_ohlcv_btcusdt_200bar",
+      "detail": "OK: hash=0752cb5155f61629... x2 identical",
+      "pass": true
+    },
+    {
+      "check": "REPLAY_X2_fixture_oi_btcusdt",
+      "detail": "OK: hash=e0c005f8984f39e1... x2 identical",
+      "pass": true
+    },
+    {
+      "check": "DATA_TYPE_DIVERSITY",
+      "detail": "3 types: funding_rate, ohlcv, open_interest",
+      "pass": true
+    }
+  ],
+  "checks_total": 11,
+  "data_types": [
+    "funding_rate",
+    "ohlcv",
+    "open_interest"
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_DATA_QUORUM01",
+  "next_action": "npm run -s verify:fast",
+  "quorum_min": 2,
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

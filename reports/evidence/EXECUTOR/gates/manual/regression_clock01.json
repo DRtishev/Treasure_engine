@@ -1,0 +1,44 @@
+{
+  "checks": [
+    {
+      "desc": "DeterministicClock() throws without initialTime",
+      "id": "CLOCK01_NO_ARGS",
+      "pass": true,
+      "reason": "OK"
+    },
+    {
+      "desc": "DeterministicClock(null) throws",
+      "id": "CLOCK01_NULL",
+      "pass": true,
+      "reason": "OK"
+    },
+    {
+      "desc": "DeterministicClock(undefined) throws",
+      "id": "CLOCK01_UNDEFINED",
+      "pass": true,
+      "reason": "OK"
+    },
+    {
+      "desc": "DeterministicClock(1000) succeeds",
+      "id": "CLOCK01_VALID",
+      "pass": true,
+      "reason": "OK"
+    },
+    {
+      "desc": "DeterministicClock(0) succeeds",
+      "id": "CLOCK01_ZERO",
+      "pass": true,
+      "reason": "OK"
+    },
+    {
+      "desc": "SystemClock works without args",
+      "id": "CLOCK01_SYSCLOCK",
+      "pass": true,
+      "reason": "OK"
+    }
+  ],
+  "gate_id": "RG_CLOCK01_NO_WALLCLOCK_DEFAULT",
+  "reason_code": "NONE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

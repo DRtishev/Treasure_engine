@@ -211,7 +211,7 @@ const failed = topLevelChecks.filter(c => !c.pass);
 const status = failed.length === 0 ? 'PASS' : 'FAIL';
 const reason_code = failed.length === 0 ? 'NONE' : 'RG_STRAT03_VIOLATION';
 
-writeMd(path.join(MANUAL, 'regression_strat03_court_pass.md'), [
+writeMd(path.join(EXEC, 'REGRESSION_STRAT03_COURT_PASS.md'), [
   '# RG_STRAT03_COURT_PASS', '',
   `STATUS: ${status}`,
   `REASON_CODE: ${reason_code}`,

@@ -1,0 +1,184 @@
+{
+  "checks": [
+    {
+      "check": "COURTS_COUNT_liq_vol_fusion",
+      "detail": "OK: 7 courts",
+      "pass": true
+    },
+    {
+      "check": "COURTS_COUNT_post_cascade_mr",
+      "detail": "OK: 7 courts",
+      "pass": true
+    },
+    {
+      "check": "COURTS_COUNT_multi_regime_adaptive",
+      "detail": "OK: 7 courts",
+      "pass": true
+    },
+    {
+      "check": "DETERMINISM_liq_vol_fusion",
+      "detail": "OK: hash=f83ab1ad8a43b19e...",
+      "pass": true
+    },
+    {
+      "check": "DETERMINISM_post_cascade_mr",
+      "detail": "OK: hash=a0b9beb7b9561c51...",
+      "pass": true
+    },
+    {
+      "check": "DETERMINISM_multi_regime_adaptive",
+      "detail": "OK: hash=ed7779ec9c71588d...",
+      "pass": true
+    },
+    {
+      "check": "CANDIDATES_EVALUATED",
+      "detail": "3 candidates: liq_vol_fusion, post_cascade_mr, multi_regime_adaptive",
+      "pass": true
+    },
+    {
+      "check": "VERDICTS_PRESENT_liq_vol_fusion",
+      "detail": "OK: DatasetCourt=NEEDS_DATA, ExecutionCourt=NOT_ELIGIBLE, ExecutionSensitivityCourt=NOT_ELIGIBLE, RiskCourt=PIPELINE_ELIGIBLE, OverfitCourt=NEEDS_DATA, RedTeamCourt=NOT_ELIGIBLE, SREReliabilityCourt=LIVE_ELIGIBLE",
+      "pass": true
+    },
+    {
+      "check": "VERDICTS_PRESENT_post_cascade_mr",
+      "detail": "OK: DatasetCourt=NEEDS_DATA, ExecutionCourt=NOT_ELIGIBLE, ExecutionSensitivityCourt=PIPELINE_ELIGIBLE, RiskCourt=PIPELINE_ELIGIBLE, OverfitCourt=NEEDS_DATA, RedTeamCourt=PIPELINE_ELIGIBLE, SREReliabilityCourt=LIVE_ELIGIBLE",
+      "pass": true
+    },
+    {
+      "check": "VERDICTS_PRESENT_multi_regime_adaptive",
+      "detail": "OK: DatasetCourt=NEEDS_DATA, ExecutionCourt=NOT_ELIGIBLE, ExecutionSensitivityCourt=PIPELINE_ELIGIBLE, RiskCourt=PIPELINE_ELIGIBLE, OverfitCourt=NEEDS_DATA, RedTeamCourt=PIPELINE_ELIGIBLE, SREReliabilityCourt=LIVE_ELIGIBLE",
+      "pass": true
+    },
+    {
+      "check": "ALL_DETERMINISTIC",
+      "detail": "OK: all candidates x2 deterministic",
+      "pass": true
+    }
+  ],
+  "checks_total": 11,
+  "failed_checks": [],
+  "gate_id": "RG_COURT_PIPE01_FULL_SUITE",
+  "next_action": "npm run -s verify:fast",
+  "pipeline_results": [
+    {
+      "courts": [
+        {
+          "court": "DatasetCourt",
+          "verdict": "NEEDS_DATA"
+        },
+        {
+          "court": "ExecutionCourt",
+          "verdict": "NOT_ELIGIBLE"
+        },
+        {
+          "court": "ExecutionSensitivityCourt",
+          "verdict": "NOT_ELIGIBLE"
+        },
+        {
+          "court": "RiskCourt",
+          "verdict": "PIPELINE_ELIGIBLE"
+        },
+        {
+          "court": "OverfitCourt",
+          "verdict": "NEEDS_DATA"
+        },
+        {
+          "court": "RedTeamCourt",
+          "verdict": "NOT_ELIGIBLE"
+        },
+        {
+          "court": "SREReliabilityCourt",
+          "verdict": "LIVE_ELIGIBLE"
+        }
+      ],
+      "courts_count": 7,
+      "deterministic": true,
+      "hash_run1": "f83ab1ad8a43b19e",
+      "hash_run2": "f83ab1ad8a43b19e",
+      "name": "liq_vol_fusion",
+      "verdict": "NOT_ELIGIBLE"
+    },
+    {
+      "courts": [
+        {
+          "court": "DatasetCourt",
+          "verdict": "NEEDS_DATA"
+        },
+        {
+          "court": "ExecutionCourt",
+          "verdict": "NOT_ELIGIBLE"
+        },
+        {
+          "court": "ExecutionSensitivityCourt",
+          "verdict": "PIPELINE_ELIGIBLE"
+        },
+        {
+          "court": "RiskCourt",
+          "verdict": "PIPELINE_ELIGIBLE"
+        },
+        {
+          "court": "OverfitCourt",
+          "verdict": "NEEDS_DATA"
+        },
+        {
+          "court": "RedTeamCourt",
+          "verdict": "PIPELINE_ELIGIBLE"
+        },
+        {
+          "court": "SREReliabilityCourt",
+          "verdict": "LIVE_ELIGIBLE"
+        }
+      ],
+      "courts_count": 7,
+      "deterministic": true,
+      "hash_run1": "a0b9beb7b9561c51",
+      "hash_run2": "a0b9beb7b9561c51",
+      "name": "post_cascade_mr",
+      "verdict": "NOT_ELIGIBLE"
+    },
+    {
+      "courts": [
+        {
+          "court": "DatasetCourt",
+          "verdict": "NEEDS_DATA"
+        },
+        {
+          "court": "ExecutionCourt",
+          "verdict": "NOT_ELIGIBLE"
+        },
+        {
+          "court": "ExecutionSensitivityCourt",
+          "verdict": "PIPELINE_ELIGIBLE"
+        },
+        {
+          "court": "RiskCourt",
+          "verdict": "PIPELINE_ELIGIBLE"
+        },
+        {
+          "court": "OverfitCourt",
+          "verdict": "NEEDS_DATA"
+        },
+        {
+          "court": "RedTeamCourt",
+          "verdict": "PIPELINE_ELIGIBLE"
+        },
+        {
+          "court": "SREReliabilityCourt",
+          "verdict": "LIVE_ELIGIBLE"
+        }
+      ],
+      "courts_count": 7,
+      "deterministic": true,
+      "hash_run1": "ed7779ec9c71588d",
+      "hash_run2": "ed7779ec9c71588d",
+      "name": "multi_regime_adaptive",
+      "verdict": "NOT_ELIGIBLE"
+    }
+  ],
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

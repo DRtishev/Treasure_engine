@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "check": "CANARY01_LIMITS_FROZEN",
+      "detail": "OK: frozen (threw: Cannot assign to read only property 'MAX_CAPITAL_USD' of object '#<Object>')",
+      "pass": true
+    },
+    {
+      "check": "CANARY01_KILL_SWITCH_BLOCKS",
+      "detail": "OK: blocked by kill switch",
+      "pass": true
+    },
+    {
+      "check": "CANARY01_OVERSIZE_BLOCKED",
+      "detail": "OK: $50 order rejected",
+      "pass": true
+    },
+    {
+      "check": "CANARY01_CIRCUIT_BREAKER",
+      "detail": "OK: CB triggered after 3 losses",
+      "pass": true
+    },
+    {
+      "check": "CANARY01_DAILY_LOSS_KILL",
+      "detail": "OK: daily loss $6 triggered kill",
+      "pass": true
+    },
+    {
+      "check": "CANARY01_TOTAL_LOSS_KILL",
+      "detail": "OK: total loss $16 triggered kill",
+      "pass": true
+    },
+    {
+      "check": "CANARY01_MANUAL_KILL",
+      "detail": "OK: manual kill active, trades blocked",
+      "pass": true
+    },
+    {
+      "check": "CANARY01_DASHBOARD",
+      "detail": "OK: trades=2 W=1 L=1 PnL=$3",
+      "pass": true
+    }
+  ],
+  "checks_total": 8,
+  "failed_checks": [],
+  "gate_id": "RG_CANARY01_SAFETY_CONTROLS",
+  "limits": {
+    "CIRCUIT_BREAKER_CONSECUTIVE_LOSSES": 3,
+    "KILL_SWITCH_ALWAYS_ENABLED": true,
+    "MAX_CAPITAL_USD": 25,
+    "MAX_CONCURRENT_POSITIONS": 1,
+    "MAX_DAILY_LOSS_USD": 5,
+    "MAX_POSITION_USD": 25,
+    "MAX_TOTAL_LOSS_USD": 15,
+    "MAX_TRADES_PER_DAY": 1
+  },
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

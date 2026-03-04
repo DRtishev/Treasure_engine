@@ -13,7 +13,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 // Forbidden timestamp field patterns (word-boundary insensitive check)
-const TIMESTAMP_FIELD_RE = /(_at|_ts|timestamp|created|updated|generated|date)$/i;
+const TIMESTAMP_FIELD_RE = /(_at|_ts|timestamp|created|updated|generated|_date|^date)$/i;
 const ISO_DATE_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
 
 /**

@@ -1,0 +1,9 @@
+{
+  "detail": "line 4: SAN regex caught mode:'CERT' — immune system WORKS",
+  "gate_id": "CHAOS_MODE_LIE",
+  "next_action": "npm run -s ops:doctor",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

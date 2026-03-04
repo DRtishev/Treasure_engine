@@ -1,9 +1,11 @@
 {
-  "files_scanned": 306,
+  "files_scanned": 321,
   "gate_id": "RG_REASON02_IN_TAXONOMY",
   "next_action": "npm run -s verify:fast",
   "observed_tokens": [
     "ACQ02",
+    "ACQ_LOCK01",
+    "ACQ_NET01",
     "CHURN01",
     "DC90",
     "DEP02",
@@ -11,7 +13,7 @@
     "EP00",
     "EP02_REAL_REQUIRED",
     "NDA02",
-    "ND_BYTE01",
+    "NET_TOOLCHAIN01_VIOLATION",
     "NONE",
     "NT02",
     "OF90",
@@ -19,7 +21,6 @@
     "PFZ01_NEEDS_DATA",
     "RDROP01",
     "RDY01",
-    "RG_BYTE_UNTRACKED",
     "SNAP01",
     "STEP_EC_7"
   ],

@@ -9,7 +9,13 @@
 
 export class DeterministicClock {
   constructor(initialTime = null) {
-    this.currentTime = initialTime || Date.now();
+    if (initialTime === undefined || initialTime === null) {
+      throw new Error(
+        'DeterministicClock requires explicit initialTime. ' +
+        'In CERT mode, wall-clock fallback is forbidden (MINE-05).'
+      );
+    }
+    this.currentTime = initialTime;
     this.frozen = false;
   }
 
