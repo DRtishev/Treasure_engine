@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "check": "evaluateKillSwitch_is_function",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "flatten_on_drawdown",
+      "detail": "OK: max_drawdown=0.1 → FLATTEN",
+      "pass": true
+    },
+    {
+      "check": "pause_on_reality_gap",
+      "detail": "OK: reality_gap=0.5 → PAUSE",
+      "pass": true
+    },
+    {
+      "check": "no_trigger_when_safe",
+      "detail": "OK: safe metrics → no trigger",
+      "pass": true
+    },
+    {
+      "check": "flatten_wins_over_pause",
+      "detail": "OK: FLATTEN priority wins",
+      "pass": true
+    },
+    {
+      "check": "matrix_has_3plus_conditions",
+      "detail": "OK: 4 conditions",
+      "pass": true
+    }
+  ],
+  "checks_total": 6,
+  "failed_checks": [],
+  "gate_id": "RG_KILL_SWITCH01",
+  "next_action": "npm run -s verify:regression:kill-switch01-triggers",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

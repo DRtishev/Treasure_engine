@@ -49,6 +49,11 @@
       "pass": true
     },
     {
+      "check": "clean_emergency_flatten_mjs",
+      "detail": "scripts/ops/emergency_flatten.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
       "check": "clean_event_schema_v1_mjs",
       "detail": "scripts/ops/event_schema_v1.mjs — no forbidden APIs",
       "pass": true

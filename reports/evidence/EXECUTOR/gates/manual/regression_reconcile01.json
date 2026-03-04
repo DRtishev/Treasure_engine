@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "check": "reconcile_is_function",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "detects_price_drift",
+      "detail": "OK: PRICE_DRIFT detected",
+      "pass": true
+    },
+    {
+      "check": "detects_size_drift",
+      "detail": "OK: SIZE_DRIFT detected",
+      "pass": true
+    },
+    {
+      "check": "detects_missing_on_exchange",
+      "detail": "OK: MISSING_ON_EXCHANGE detected",
+      "pass": true
+    },
+    {
+      "check": "detects_missing_in_ledger",
+      "detail": "OK: MISSING_IN_LEDGER detected",
+      "pass": true
+    },
+    {
+      "check": "ok_when_matching",
+      "detail": "OK: matching fills → ok=true",
+      "pass": true
+    }
+  ],
+  "checks_total": 6,
+  "failed_checks": [],
+  "gate_id": "RG_RECONCILE01",
+  "next_action": "npm run -s verify:regression:reconcile01-detects-drift",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}
