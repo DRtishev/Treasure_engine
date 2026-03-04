@@ -41,7 +41,7 @@
     },
     {
       "check": "life_summary_fleet_field",
-      "detail": "OK: fleet field present — total_candidates=0",
+      "detail": "no LIFE_SUMMARY.json yet — skip-safe PASS",
       "pass": true
     },
     {
