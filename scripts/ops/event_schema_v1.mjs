@@ -11,7 +11,7 @@ export const EVENT_SCHEMA_VERSION = '1.0.0';
 
 export const VALID_MODES = ['CERT', 'CLOSE', 'AUDIT', 'RESEARCH', 'ACCEL', 'LIFE'];
 export const VALID_COMPONENTS = ['TIMEMACHINE', 'AUTOPILOT', 'COCKPIT', 'REGISTRY', 'EVENTBUS', 'LIFE', 'DATA_ORGAN', 'FSM', 'DOCTOR', 'METAAGENT'];
-export const VALID_SURFACES = ['UX', 'PR', 'OFFLINE_AUTHORITY', 'CONTRACT', 'PROFIT', 'DATA', 'NONE'];
+export const VALID_SURFACES = ['UX', 'PR', 'OFFLINE_AUTHORITY', 'CONTRACT', 'PROFIT', 'DATA', 'READINESS', 'NONE'];
 
 // ---------------------------------------------------------------------------
 // Forbidden field patterns (RG_EVT02 — mirrors TIME02 logic for event payload)

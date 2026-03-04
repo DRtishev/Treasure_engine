@@ -105,6 +105,8 @@ if (process.env.TREASURE_INSIDE_LIFE === '1') {
   startup.baseline = run('baseline:restore', 'npm run -s ops:baseline:restore');
   startup.verify_once = run('verify:fast (boot)', 'npm run -s verify:fast');
 }
+// Re-create EPOCH_DIR in case baseline:restore cleaned it
+fs.mkdirSync(EPOCH_DIR, { recursive: true });
 const startupOk = startup.baseline.ok && startup.verify_once.ok;
 const startupVerdict = startupOk ? 'BOOT_OK' : 'BOOT_FAIL';
 console.log(`  STARTUP: ${startupVerdict}`);
@@ -152,6 +154,11 @@ if (process.env.TREASURE_INSIDE_LIFE === '1') {
     const p1 = path.join(evidenceRoot, lifeEpochs1.at(-1), 'LIFE_SUMMARY.json');
     if (fs.existsSync(p1)) life1Summary = norm(fs.readFileSync(p1, 'utf8'));
   }
+
+  // Clean evidence between runs so ops:life x2 starts from the same state.
+  // Without this, proprioception replays events from run 1 → different summary.
+  run('baseline:restore (x2 reset)', 'npm run -s ops:baseline:restore');
+  fs.mkdirSync(EPOCH_DIR, { recursive: true });
 
   // Run life a second time for x2 determinism
   liveness.life2 = run('ops:life (x2)', 'npm run -s ops:life');
@@ -286,6 +293,8 @@ if (prevProv && prevProv.merkle_root && prevProv.merkle_root !== 'GENESIS') {
 }
 
 try {
+  // Ensure EPOCH_DIR survives any prior cleanup (baseline:restore in Phase 1/2)
+  fs.mkdirSync(EPOCH_DIR, { recursive: true });
   const prov = sealProvenance(EPOCH_DIR, {
     run_id: RUN_ID,
     probes: { startup: startupVerdict, liveness: livenessVerdict, readiness: readinessVerdict },
