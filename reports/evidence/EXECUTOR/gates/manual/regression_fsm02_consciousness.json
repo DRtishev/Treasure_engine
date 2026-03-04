@@ -57,7 +57,7 @@
     },
     {
       "check": "proprio_scan_event",
-      "detail": "OK: PROPRIO_SCAN event found with fsm_state=BOOT",
+      "detail": "OK: PROPRIO_SCAN event found with fsm_state=CERTIFIED",
       "pass": true
     },
     {
@@ -67,7 +67,7 @@
     },
     {
       "check": "no_hardcoded_cert_mode",
-      "detail": "OK: modes FSM-derived (LIFE, CERT) — proprio fsm_state=BOOT",
+      "detail": "OK: modes FSM-derived (CERT) — proprio fsm_state=CERTIFIED",
       "pass": true
     }
   ],

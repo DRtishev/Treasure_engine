@@ -19,9 +19,9 @@ VIOLATIONS: 0
 - [PASS] consciousness_result_present: OK: consciousness_result present — reached=true final_state=CERTIFIED
 - [PASS] reflexes_field_present: OK: reflexes_fired is array (length=0)
 - [PASS] fsm_final_state_valid: OK: fsm_final_state="CERTIFIED" is valid
-- [PASS] proprio_scan_event: OK: PROPRIO_SCAN event found with fsm_state=BOOT
+- [PASS] proprio_scan_event: OK: PROPRIO_SCAN event found with fsm_state=CERTIFIED
 - [PASS] consciousness_result_event: OK: CONSCIOUSNESS_RESULT event found — reached=true
-- [PASS] no_hardcoded_cert_mode: OK: modes FSM-derived (LIFE, CERT) — proprio fsm_state=BOOT
+- [PASS] no_hardcoded_cert_mode: OK: modes FSM-derived (CERT) — proprio fsm_state=CERTIFIED
 
 ## FAILED
 - NONE

@@ -124,7 +124,13 @@ liveness.life = run('ops:life', 'TREASURE_LIFE_DEPTH=1 npm run -s ops:life');
 
 // x2 determinism: capture LIFE_SUMMARY after the life run
 const evidenceRoot = path.join(ROOT, 'reports', 'evidence');
-const norm = (s) => s.replace(/"run_id":\s*"[^"]+"/g, '"run_id":"X"');
+const norm = (s) => s
+  .replace(/"run_id":\s*"[^"]+"/g, '"run_id":"X"')
+  .replace(/"run_number":\s*\d+/g, '"run_number":0')
+  .replace(/"watermark_tick":\s*\d+/g, '"watermark_tick":0')
+  .replace(/"previous_state":\s*("[^"]*"|null)/g, '"previous_state":"X"')
+  .replace(/"previous_outcome":\s*("[^"]*"|null)/g, '"previous_outcome":"X"')
+  .replace(/"fsm_source":\s*"[^"]+"/g, '"fsm_source":"X"');
 
 let life1Summary = '';
 const lifeEpochs1 = fs.readdirSync(evidenceRoot).filter((d) => d.startsWith('EPOCH-LIFE-')).sort();
