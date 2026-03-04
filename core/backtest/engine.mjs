@@ -9,6 +9,7 @@ import { createLedger, recordFill, getLedgerSummary, getEquity, getUnrealizedPnL
 import { stableFormatNumber, renderMarkdownTable } from '../../scripts/verify/foundation_render.mjs';
 import { truncateTowardZero } from '../edge/deterministic_math.mjs';
 import { sharpeFromTrades, sortino, calmar, ulcerIndex, painRatio } from '../edge/unified_sharpe.mjs';
+import { estimateExecPrice } from '../edge/impact_model.mjs';
 
 /**
  * Run a backtest of strategy on bars
@@ -23,6 +24,8 @@ export function runBacktest(strategy, bars, opts = {}) {
   const fee_bps = opts.fee_bps || 4;
   const slip_bps = opts.slip_bps || 2;
   const position_size_usd = opts.position_size_usd || 500;
+  const useImpactModel = opts.use_impact_model || false;
+  const impactCoeff = opts.impact_coeff || 0.1;
 
   const ledger = createLedger({ initial_capital });
   let state = strategy.init(params);
@@ -46,8 +49,14 @@ export function runBacktest(strategy, bars, opts = {}) {
 
     if (signal === 'BUY' || signal === 'SELL') {
       const qty = position_size_usd / bar.close;
-      const slippage = bar.close * (slip_bps / 10000);
-      const execPrice = signal === 'BUY' ? bar.close + slippage : bar.close - slippage;
+      let execPrice;
+      if (useImpactModel) {
+        const impact = estimateExecPrice(bar, signal, qty, { impactCoeff });
+        execPrice = impact.exec_price;
+      } else {
+        const slippage = bar.close * (slip_bps / 10000);
+        execPrice = signal === 'BUY' ? bar.close + slippage : bar.close - slippage;
+      }
       const fee = position_size_usd * (fee_bps / 10000);
 
       fillId++;

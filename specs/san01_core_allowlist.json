@@ -47,6 +47,7 @@
     { "file": "core/backtest/engine.mjs", "justification": "new Date() for ISO string conversion in metrics", "category": "ALLOWLISTED", "target_sprint": "2" },
     { "file": "core/edge/candidate_pipeline.mjs", "justification": "Timestamp in candidate metadata", "category": "ALLOWLISTED", "target_sprint": "2" },
     { "file": "core/edge/fill_record_contract.mjs", "justification": "Fill record timestamp contract", "category": "ALLOWLISTED", "target_sprint": "2" },
-    { "file": "core/live/feed.mjs", "justification": "Live data feed — not in CERT path", "category": "EXEMPT" }
+    { "file": "core/live/feed.mjs", "justification": "Live data feed — not in CERT path", "category": "EXEMPT" },
+    { "file": "core/exec/fill_probe.mjs", "justification": "FillProbe uses clock injection — Date.now() only as fallback when no clock provided", "category": "ALLOWLISTED", "target_sprint": "3" }
   ]
 }

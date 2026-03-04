@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "capsule_id": "fixture_ohlcv_btcusdt_200bar",
+  "source": "e108_fixture",
+  "symbol": "BTCUSDT",
+  "data_type": "ohlcv",
+  "range_start": "2024-01-01T00:00:00.000Z",
+  "range_end": "2024-01-01T16:35:00.000Z",
+  "row_count": 200,
+  "sha256": "0752cb5155f61629a897ed3d58d75426087f1073d3fcd14c62f54235d6f8e9e2",
+  "format": "jsonl",
+  "status": "LOCKED"
+}

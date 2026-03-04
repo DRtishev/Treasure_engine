@@ -1,0 +1,13 @@
+{
+  "schema_version": "1.0.0",
+  "capsule_id": "fixture_funding_btcusdt",
+  "source": "e108_fixture_derived",
+  "symbol": "BTCUSDT",
+  "data_type": "funding_rate",
+  "range_start": "2024-01-01T00:00:00.000Z",
+  "range_end": "2024-01-01T16:35:00.000Z",
+  "row_count": 17,
+  "sha256": "1469dcddf7210084ab28ec3abc2c1c8538b8ded2a6abb93b1d8bfc7fce691bd6",
+  "format": "jsonl",
+  "status": "LOCKED"
+}
