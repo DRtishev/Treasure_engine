@@ -60,6 +60,10 @@ import { MetaAgent } from './metaagent.mjs';
 
 const ROOT = process.cwd();
 
+// FIX-02: prevent recursive nesting (doctor → life → doctor → life → ...)
+const NESTING_DEPTH = parseInt(process.env.TREASURE_LIFE_DEPTH || '0', 10);
+process.env.TREASURE_LIFE_DEPTH = String(NESTING_DEPTH + 1);
+
 // FIX-01: self-harden net-kill for ALL child runs
 process.env.TREASURE_NET_KILL = '1';
 const preloadAbs = path.join(ROOT, 'scripts', 'safety', 'net_kill_preload.cjs');
@@ -164,7 +168,7 @@ function checkReflexes(currentState, triggerEvent) {
 // ---------------------------------------------------------------------------
 // Telemetry step definitions (formerly S02-S06, now T1-T5)
 // ---------------------------------------------------------------------------
-const TELEMETRY_STEPS = [
+const _ALL_TELEMETRY_STEPS = [
   {
     id: 'T1',
     name: 'ops_eventbus_smoke',
@@ -214,6 +218,11 @@ const TELEMETRY_STEPS = [
     args: ['scripts/ops/doctor_v2.mjs'],
   },
 ];
+// FIX-02: skip T6 (nested doctor) when running inside doctor/life chain to prevent
+// infinite recursion: doctor → life → T6:doctor → life → T6:doctor → ...timeout
+const TELEMETRY_STEPS = NESTING_DEPTH >= 1
+  ? _ALL_TELEMETRY_STEPS.filter((s) => s.id !== 'T6')
+  : _ALL_TELEMETRY_STEPS;
 
 // ---------------------------------------------------------------------------
 // Run a single telemetry step
