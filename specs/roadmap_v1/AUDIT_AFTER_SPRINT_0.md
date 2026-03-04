@@ -9,7 +9,7 @@
 | Параметр | Значение |
 |---|---|
 | Branch | `claude/audit-harden-treasure-engine-68ZkR` |
-| HEAD sha | `56e0224` (pre-sprint-0 code commit; sprint 0 commit pending) |
+| HEAD sha | `28506d7` (sprint-0 code commit) |
 | Pre-sprint SHA | `34cdf27` |
 | Node | v22.22.0 |
 | npm | 10.9.4 |
@@ -67,6 +67,7 @@
 
 ### Регрессии (unexpected)
 - `regression_metaagent01_fleet` Test 9 потребовал обновления: тест создавал candidate без `court_verdicts`, что теперь корректно отклоняется fail-closed guard. Тест обновлён — добавлены валидные `court_verdicts`. Это ожидаемое поведение, не регрессия.
+- `regression_pr05_executor_ssot_stable_set` FAIL на Run 2: allowlist не включала файлы `regen:manifests` (SHA256SUMS.*.txt, manifests/*.log). Исправлено — allowlist расширен, manifests/ исключён из forbidden-ext scan.
 
 ### Open questions
 - Sprint 1 (Metric Parity): unified Sharpe формула может изменить court verdict thresholds — мониторить при имплементации

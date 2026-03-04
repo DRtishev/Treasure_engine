@@ -1,16 +1,26 @@
 {
-  "changed_evidence_files_n": 2,
+  "changed_evidence_files_n": 12,
   "checks": {
     "baseline_origin_main_present": true,
-    "changed_evidence_files_n": 2,
+    "changed_evidence_files_n": 12,
     "override_accepted": false,
     "within_limit_or_override": true
   },
   "limit": 60,
   "next_action": "npm run -s verify:fast",
   "offenders": [
+    "reports/evidence/EXECUTOR/gates/manual/regression_court_wiring01.json",
+    "reports/evidence/EXECUTOR/gates/manual/regression_court_wiring02.json",
     "reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json",
-    "reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md"
+    "reports/evidence/EXECUTOR/manifests/check_evidence.log",
+    "reports/evidence/EXECUTOR/manifests/check_export.log",
+    "reports/evidence/EXECUTOR/manifests/check_source.log",
+    "reports/evidence/EXECUTOR/REGRESSION_COURT_WIRING01.md",
+    "reports/evidence/EXECUTOR/REGRESSION_COURT_WIRING02.md",
+    "reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md",
+    "reports/evidence/EXECUTOR/SHA256SUMS.EVIDENCE.txt",
+    "reports/evidence/EXECUTOR/SHA256SUMS.EXPORT.txt",
+    "reports/evidence/EXECUTOR/SHA256SUMS.SOURCE.txt"
   ],
   "override_accepted": false,
   "override_path": "artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE",
