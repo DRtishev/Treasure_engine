@@ -27,7 +27,7 @@
     },
     {
       "check": "life_summary_immune_field",
-      "detail": "OK: immune field present — doctor_ran=true verdict=SICK",
+      "detail": "OK: immune field present — doctor_ran=true verdict=BLOCKED",
       "pass": true
     },
     {

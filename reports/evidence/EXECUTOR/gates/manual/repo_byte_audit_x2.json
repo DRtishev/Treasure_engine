@@ -1,11 +1,11 @@
 {
   "manifest_diff_paths": [],
-  "manifest_sha256_run1": null,
-  "manifest_sha256_run2": null,
-  "reason_code": "ND_BYTE01",
-  "run1_ec": 1,
-  "run2_ec": 1,
+  "manifest_sha256_run1": "f885262f292f7d5b4fe79a1ce583b9fa092ac87d72e0306b731089b1576d7aaa",
+  "manifest_sha256_run2": "f885262f292f7d5b4fe79a1ce583b9fa092ac87d72e0306b731089b1576d7aaa",
+  "reason_code": "NONE",
+  "run1_ec": 0,
+  "run2_ec": 0,
   "run_id": "STABLE",
   "schema_version": "1.0.0",
-  "status": "FAIL"
+  "status": "PASS"
 }
