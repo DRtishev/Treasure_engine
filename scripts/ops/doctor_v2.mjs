@@ -130,7 +130,11 @@ const norm = (s) => s
   .replace(/"watermark_tick":\s*\d+/g, '"watermark_tick":0')
   .replace(/"previous_state":\s*("[^"]*"|null)/g, '"previous_state":"X"')
   .replace(/"previous_outcome":\s*("[^"]*"|null)/g, '"previous_outcome":"X"')
-  .replace(/"fsm_source":\s*"[^"]+"/g, '"fsm_source":"X"');
+  .replace(/"fsm_source":\s*"[^"]+"/g, '"fsm_source":"X"')
+  .replace(/"fsm_state":\s*"[^"]+"/g, '"fsm_state":"X"')
+  .replace(/"fsm_mode":\s*"[^"]+"/g, '"fsm_mode":"X"')
+  .replace(/"transitions_executed":\s*\d+/g, '"transitions_executed":0')
+  .replace(/"cycle_count":\s*\d+/g, '"cycle_count":0');
 
 let life1Summary = '';
 const lifeEpochs1 = fs.readdirSync(evidenceRoot).filter((d) => d.startsWith('EPOCH-LIFE-')).sort();
