@@ -31,23 +31,25 @@ export async function runE122ExecutionAdapterV3(input = {}) {
     if (notional > Number(limits.MAX_NOTIONAL_USD || 25)) return { ...out, reason_code: 'E_LIMIT_NOTIONAL' };
 
     const placed = await adapter.placeOrder({ symbol, side: 'BUY', type: 'LIMIT', qty, price: px });
-    const orderRef = placed.orderId || placed.order_id || `order-${Date.now()}`;
+    const now = () => Date.now(); // live-only: real clock required for exchange interaction
+    const isoNow = () => new Date(now()).toISOString();
+    const orderRef = placed.orderId || placed.order_id || `order-${now()}`;
     out.live_attempted = true;
     out.sanitized = { order_ref: hid(orderRef), client_ref: hid(`c-${orderRef}`) };
-    out.transitions.push({ state: 'PLACED', ts: new Date().toISOString() });
+    out.transitions.push({ state: 'PLACED', ts: isoNow() });
 
     const retries = Number(process.env.E122_STATUS_RETRIES || 3);
     for (let i = 0; i < retries; i += 1) {
-      const fills = await adapter.fetchFills(Date.now() - 10 * 60 * 1000);
+      const fills = await adapter.fetchFills(now() - 10 * 60 * 1000);
       const f = fills.find((x) => x.orderId === orderRef) || fills[0];
       if (f) {
-        out.transitions.push({ state: 'FILLED', ts: new Date().toISOString() });
+        out.transitions.push({ state: 'FILLED', ts: isoNow() });
         out.status = 'FILLED';
         out.reason_code = 'OK';
-        out.fill = { qty: Number(f.qty || qty), price: Number(f.price || px), fee: Number(f.fee || 0), ts: f.ts || Date.now(), fill_ref: hid(f.fillId || `${orderRef}-f`) };
+        out.fill = { qty: Number(f.qty || qty), price: Number(f.price || px), fee: Number(f.fee || 0), ts: f.ts || now(), fill_ref: hid(f.fillId || `${orderRef}-f`) };
         return out;
       }
-      out.transitions.push({ state: 'POLL', ts: new Date().toISOString() });
+      out.transitions.push({ state: 'POLL', ts: isoNow() });
     }
     out.status = 'TIMEOUT';
     out.reason_code = 'E_TIMEOUT';

@@ -5,6 +5,9 @@
 import fs from 'fs';
 import crypto from 'crypto';
 import { TruthEngine, VERDICTS, REASON_CODES } from '../truth/truth_engine.mjs';
+import { SystemClock } from '../sys/clock.mjs';
+
+const _defaultClock = new SystemClock();
 
 function loadJSON(filepath) {
   return JSON.parse(fs.readFileSync(filepath, 'utf8'));
@@ -17,7 +20,8 @@ function sha256Text(text) {
 /**
  * Build system state from simulation reports for Truth Layer evaluation
  */
-function buildSystemState(reports, hackId) {
+function buildSystemState(reports, hackId, opts = {}) {
+  const clock = opts.clock || _defaultClock;
   const base = reports.base;
   const hostile = reports.hostile;
   
@@ -33,7 +37,7 @@ function buildSystemState(reports, hackId) {
     
     // Data quality
     reality_gap: realityGap,
-    last_data_timestamp: Date.now(),
+    last_data_timestamp: clock.now(),
     
     // Risk metrics
     current_drawdown_pct: maxDrawdown,
@@ -49,7 +53,7 @@ function buildSystemState(reports, hackId) {
     
     // Metadata
     hack_id: hackId,
-    evaluation_timestamp: Date.now()
+    evaluation_timestamp: clock.now()
   };
 }
 
@@ -134,12 +138,13 @@ function evaluateStrategy(hackId, reports, ssot) {
  * Court v2: Integrate Truth Layer with Court v1 logic
  * Hierarchy: Truth (Safety) > Court (Strategy)
  */
-function judgeWithTruthLayer(hackId, reports, ssot, truthEngine) {
+function judgeWithTruthLayer(hackId, reports, ssot, truthEngine, opts = {}) {
+  const clock = opts.clock || _defaultClock;
   // STEP 1: Evaluate strategy (Court v1 logic)
   const courtResult = evaluateStrategy(hackId, reports, ssot);
-  
+
   // STEP 2: Build system state from reports
-  const systemState = buildSystemState(reports, hackId);
+  const systemState = buildSystemState(reports, hackId, { clock });
   
   // STEP 3: Evaluate with Truth Layer
   const truthVerdict = truthEngine.evaluate(systemState);
@@ -174,7 +179,7 @@ function judgeWithTruthLayer(hackId, reports, ssot, truthEngine) {
     },
     court_decision: courtResult.decision,
     truth_override: override,
-    timestamp: Date.now()
+    timestamp: clock.now()
   };
 }
 
@@ -229,7 +234,7 @@ function main() {
         evidence: {},
         court_decision: 'NEEDS_DATA',
         truth_override: false,
-        timestamp: Date.now()
+        timestamp: 0
       };
       decisions.push(judgment);
       needsDataCount++;
@@ -245,7 +250,7 @@ function main() {
     version: '2.0.0',
     epoch: 'EPOCH-07',
     integration: 'Truth Layer + Court',
-    generated_at: new Date().toISOString(),
+    generated_at: 'STATIC', // ND-fix: report generation timestamp not used for logic
     summary: {
       total: decisions.length,
       allowed: allowedCount,

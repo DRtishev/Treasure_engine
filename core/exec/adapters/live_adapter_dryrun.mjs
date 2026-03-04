@@ -61,7 +61,7 @@ export class LiveAdapterDryRun extends IExecutionAdapter {
         return;
       }
       
-      const files = readdirSync(this.options.fixtures_dir);
+      const files = readdirSync(this.options.fixtures_dir).sort();
       
       for (const file of files) {
         if (file.endsWith('.json')) {

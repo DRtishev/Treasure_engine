@@ -7,6 +7,7 @@
  *   reports/evidence/EXECUTOR/REGRESSION_*.md
  *   reports/evidence/EXECUTOR/SAN_*.md
  *   reports/evidence/EXECUTOR/CHAOS_*.md
+ *   reports/evidence/EXECUTOR/NODE_*.md
  *   reports/evidence/EXECUTOR/gates/manual/*.json
  *   reports/evidence/EXECUTOR/MERGE_PLAN.md
  *   reports/evidence/EXECUTOR/SHA256SUMS.*.txt      (regen:manifests)
@@ -75,6 +76,7 @@ function isAllowlisted(relPath) {
   if (/^REGRESSION_[^/]+\.md$/.test(tail)) return true;
   if (/^SAN_[^/]+\.md$/.test(tail)) return true;
   if (/^CHAOS_[^/]+\.md$/.test(tail)) return true;
+  if (/^NODE_[^/]+\.md$/.test(tail)) return true;
   if (/^gates\/manual\/[^/]+\.json$/.test(tail)) return true;
   if (tail === 'MERGE_PLAN.md') return true;
   // Doctor history ledger (append-only JSONL)

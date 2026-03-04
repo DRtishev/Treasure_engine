@@ -15,13 +15,17 @@
  * - run_seed
  */
 
-import { createHash } from 'crypto';
+import { createHash, randomUUID } from 'crypto';
 import { DatabaseManager } from './db.mjs';
+import { SystemClock } from '../sys/clock.mjs';
+
+const _defaultClock = new SystemClock();
 
 export class RepoState {
-  constructor(dbPath) {
+  constructor(dbPath, opts = {}) {
     this.db = new DatabaseManager(dbPath);
     this.currentRunId = null;
+    this._clock = opts.clock || _defaultClock;
   }
 
   /**
@@ -45,7 +49,7 @@ export class RepoState {
   startRun(config) {
     const run = {
       run_id: config.run_id || this._generateRunId(),
-      started_at: config.started_at || Date.now(),
+      started_at: config.started_at || this._clock.now(),
       mode: config.mode || 'sim',
       dataset_sha: config.dataset_sha || null,
       ssot_sha: config.ssot_sha || null,
@@ -252,8 +256,6 @@ export class RepoState {
    * @private
    */
   _generateRunId() {
-    const timestamp = Date.now();
-    const random = Math.random().toString(36).substring(2, 8);
-    return `run_${timestamp}_${random}`;
+    return `run_${randomUUID()}`;
   }
 }

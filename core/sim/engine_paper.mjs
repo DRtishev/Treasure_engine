@@ -298,7 +298,7 @@ async function runHackSimulation(hackId, mode, dataset, ssot, hackSpec, rng, eve
 export async function runSimulation(datasetPath, ssotPath, hacksPath, runId = null) {
   // Generate run ID
   if (!runId) {
-    runId = `paper_${Date.now()}_${crypto.randomBytes(4).toString('hex')}`;
+    runId = `paper_${crypto.randomUUID()}`;
   }
   
   // Initialize EventLog (run-scoped when TREASURE_RUN_DIR is provided)
@@ -373,7 +373,7 @@ export async function runSimulation(datasetPath, ssotPath, hacksPath, runId = nu
     results.meta = {
       run_id: runId,
       dataset_sha256: sha256,
-      timestamp: new Date().toISOString(),
+      timestamp: 'DETERMINISTIC', // ND-fix: report timestamp not used for logic; run_id is the key
       adapter: 'PaperAdapter',
       event_log: eventLog.getFilepath()
     };
