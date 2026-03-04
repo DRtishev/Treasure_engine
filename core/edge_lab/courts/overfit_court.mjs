@@ -5,6 +5,13 @@
 
 import crypto from 'node:crypto';
 import { VERDICTS, REASON_CODES } from '../verdicts.mjs';
+import {
+  mean,
+  sampleVariance,
+  skewness,
+  kurtosisExcess,
+  deflatedSharpeRatio,
+} from '../../edge/unified_sharpe.mjs';
 
 const DEFAULTS = {
   min_trades: 30,
@@ -14,38 +21,6 @@ const DEFAULTS = {
   bootstrap_ci_confidence: 0.95,
   min_regime_stability: 0.5,
 };
-
-function mean(arr) {
-  if (!arr.length) return 0;
-  return arr.reduce((a, b) => a + b, 0) / arr.length;
-}
-
-function std(arr, m = mean(arr)) {
-  if (arr.length < 2) return 0;
-  return Math.sqrt(arr.reduce((a, b) => a + (b - m) ** 2, 0) / (arr.length - 1));
-}
-
-function sharpeRatio(returns) {
-  const m = mean(returns);
-  const s = std(returns);
-  return s < 1e-12 ? 0 : m / s;
-}
-
-/**
- * Deflated Sharpe Ratio (Bailey & Lopez de Prado, 2014).
- * Adjusts for number of trials and autocorrelation.
- * @param {number} sharpe - observed Sharpe
- * @param {number} T      - number of observations
- * @param {number} N      - number of independent trials (strategies tested)
- * @returns {number} deflated Sharpe
- */
-function deflatedSharpe(sharpe, T, N = 1) {
-  if (T < 2 || N < 1) return 0;
-  // Approximation: SR* = SR - sqrt((1 / (T-1)) * (1 + 0.5 * skewness^2)) * z_score_correction
-  // Simplified version for deterministic output:
-  const penalty = Math.sqrt(Math.log(N) / (T - 1));
-  return Math.max(0, sharpe - penalty);
-}
 
 /**
  * Bootstrap confidence interval for mean return (percentile method).
@@ -133,10 +108,16 @@ export function runOverfitCourt(edge, ssot) {
     evidence.wf_folds = 0;
   }
 
-  // ─── 3. Deflated Sharpe ───────────────────────────────────────────────────
+  // ─── 3. Deflated Sharpe (unified — Bailey & Lopez de Prado 2014) ─────────
   const returns = trades.map((t) => t.pnl_pct ?? (t.pnl ?? 0) / Math.max(1, Math.abs(t.notional_usd ?? 1)));
-  const rawSharpe = sharpeRatio(returns);
-  const dSharpe = deflatedSharpe(rawSharpe, trades.length, N);
+  // Per-trade Sharpe via unified primitives (mean / sampleStdDev)
+  const _m = mean(returns);
+  const _sv = sampleVariance(returns, _m);
+  const _s = Math.sqrt(Math.max(_sv, 1e-18));
+  const rawSharpe = (returns.length < 2 || _s < 1e-12) ? 0 : _m / _s;
+  const skew = skewness(returns);
+  const kurt = kurtosisExcess(returns);
+  const dSharpe = deflatedSharpeRatio(rawSharpe, returns.length, skew, kurt, N);
   evidence.raw_sharpe = Math.round(rawSharpe * 10000) / 10000;
   evidence.deflated_sharpe = Math.round(dSharpe * 10000) / 10000;
   evidence.strategies_tested = N;

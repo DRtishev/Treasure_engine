@@ -1,6 +1,27 @@
 import crypto from 'node:crypto';
 import { runCanaryController } from './canary_runner.mjs';
 
+/**
+ * HWM-based max drawdown from equity curve or fill records.
+ * @param {Array} equityOrFills — numbers (equity values) or objects with realized_pnl
+ * @returns {number} max drawdown as fraction (0..1)
+ */
+function computeMaxDrawdown(equityOrFills) {
+  if (!equityOrFills || equityOrFills.length === 0) return 0;
+  let hwm = 0;
+  let maxDD = 0;
+  let equity = 0;
+  for (const item of equityOrFills) {
+    equity = typeof item === 'number' ? item : (equity + (item.realized_pnl ?? 0));
+    if (equity > hwm) hwm = equity;
+    if (hwm > 0) {
+      const dd = (hwm - equity) / hwm;
+      if (dd > maxDD) maxDD = dd;
+    }
+  }
+  return Number(maxDD.toFixed(6));
+}
+
 const SCENARIOS = ['baseline', 'whipsaw', 'vol_expansion', 'liquidity_vacuum', 'gap_down'];
 
 function score(row) {
@@ -18,7 +39,7 @@ export function runEpoch53Fitness(baseConfig = {}) {
     const row = {
       scenario,
       paper_pnl: paper.report.metrics.paper_pnl,
-      drawdown_proxy: Number((Math.max(0, -paper.report.metrics.paper_pnl) / 10).toFixed(6)),
+      max_drawdown: computeMaxDrawdown(paper.report.metrics.equity_curve ?? paper.report.metrics.fills ?? []),
       pauses: paper.report.metrics.pause_triggers,
       risk_events: paper.report.metrics.risk_events_count,
       trade_count: paper.report.metrics.trade_count,

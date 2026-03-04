@@ -1,0 +1,28 @@
+{
+  "checks": [
+    {
+      "check": "no_drawdown_proxy",
+      "detail": "OK: drawdown_proxy not found",
+      "pass": true
+    },
+    {
+      "check": "has_max_drawdown_field",
+      "detail": "OK: max_drawdown field present",
+      "pass": true
+    },
+    {
+      "check": "has_computeMaxDrawdown",
+      "detail": "OK: computeMaxDrawdown present",
+      "pass": true
+    }
+  ],
+  "checks_total": 3,
+  "failed_checks": [],
+  "gate_id": "RG_METRIC_PARITY02",
+  "next_action": "npm run -s verify:regression:metric-parity02-canary-real-dd",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

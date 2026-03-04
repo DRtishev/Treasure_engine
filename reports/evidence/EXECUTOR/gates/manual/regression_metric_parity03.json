@@ -1,0 +1,38 @@
+{
+  "checks": [
+    {
+      "check": "metric_contract_exists",
+      "detail": "OK: metric_contract.mjs found",
+      "pass": true
+    },
+    {
+      "check": "required_keys_min_4",
+      "detail": "OK: REQUIRED_METRIC_KEYS has 4 entries",
+      "pass": true
+    },
+    {
+      "check": "validateMetrics_is_function",
+      "detail": "OK: validateMetrics is a function",
+      "pass": true
+    },
+    {
+      "check": "valid_metrics_pass",
+      "detail": "OK: valid metrics accepted",
+      "pass": true
+    },
+    {
+      "check": "incomplete_metrics_fail",
+      "detail": "OK: incomplete metrics rejected (missing: max_drawdown, total_pnl, trade_count)",
+      "pass": true
+    }
+  ],
+  "checks_total": 5,
+  "failed_checks": [],
+  "gate_id": "RG_METRIC_PARITY03",
+  "next_action": "npm run -s verify:regression:metric-parity03-required-keys",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

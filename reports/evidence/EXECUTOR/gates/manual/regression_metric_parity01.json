@@ -1,0 +1,28 @@
+{
+  "checks": [
+    {
+      "check": "imports_from_unified_sharpe",
+      "detail": "OK: imports from unified_sharpe.mjs",
+      "pass": true
+    },
+    {
+      "check": "imports_deflatedSharpeRatio",
+      "detail": "OK: deflatedSharpeRatio imported",
+      "pass": true
+    },
+    {
+      "check": "imports_skewness_and_kurtosisExcess",
+      "detail": "OK: skewness and kurtosisExcess imported",
+      "pass": true
+    }
+  ],
+  "checks_total": 3,
+  "failed_checks": [],
+  "gate_id": "RG_METRIC_PARITY01",
+  "next_action": "npm run -s verify:regression:metric-parity01-overfit-uses-unified",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}
