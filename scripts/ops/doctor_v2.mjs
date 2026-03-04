@@ -67,7 +67,7 @@ fs.mkdirSync(EPOCH_DIR, { recursive: true });
 
 function run(label, cmd) {
   process.stdout.write(`  [DOCTOR] ${label} ... `);
-  const r = spawnSync(cmd, { cwd: ROOT, encoding: 'utf8', shell: true, env: { ...process.env }, timeout: 300000 });
+  const r = spawnSync(cmd, { cwd: ROOT, encoding: 'utf8', shell: true, env: { ...process.env, TREASURE_INSIDE_DOCTOR: '1' }, timeout: 300000 });
   const ec = r.status ?? 127;
   const icon = ec === 0 ? 'PASS' : 'FAIL';
   console.log(`${icon} ec=${ec}`);
@@ -94,7 +94,14 @@ console.log('');
 // ── Phase 1: STARTUP PROBE ──────────────────────────────────────────
 console.log('-- Phase 1: STARTUP PROBE --');
 const startup = {};
-startup.baseline = run('baseline:restore', 'npm run -s ops:baseline:restore');
+// Skip baseline:restore when called from inside ops:life (TREASURE_INSIDE_LIFE=1)
+// because ops:life already did baseline:restore in T01 and created T1-T5 evidence.
+if (process.env.TREASURE_INSIDE_LIFE === '1') {
+  startup.baseline = { label: 'baseline:restore', ec: 0, ok: true, stdout: 'skipped (inside life)' };
+  console.log('  [DOCTOR] baseline:restore ... SKIP (inside life)');
+} else {
+  startup.baseline = run('baseline:restore', 'npm run -s ops:baseline:restore');
+}
 startup.verify_once = run('verify:fast (boot)', 'npm run -s verify:fast');
 const startupOk = startup.baseline.ok && startup.verify_once.ok;
 const startupVerdict = startupOk ? 'BOOT_OK' : 'BOOT_FAIL';

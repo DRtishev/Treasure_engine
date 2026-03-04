@@ -220,11 +220,13 @@ const TELEMETRY_STEPS = [
 // ---------------------------------------------------------------------------
 function runStep(step) {
   let result;
+  const stepTimeout = step.timeout ?? 600000; // default 10 min, override per step
 
+  const stepEnv = { ...process.env, TREASURE_INSIDE_LIFE: '1' };
   if (step.shell) {
-    result = spawnSync(step.cmd, { cwd: ROOT, encoding: 'utf8', env: { ...process.env }, shell: true });
+    result = spawnSync(step.cmd, { cwd: ROOT, encoding: 'utf8', env: stepEnv, shell: true, timeout: stepTimeout });
   } else {
-    result = spawnSync(step.cmd, step.args ?? [], { cwd: ROOT, encoding: 'utf8', env: { ...process.env } });
+    result = spawnSync(step.cmd, step.args ?? [], { cwd: ROOT, encoding: 'utf8', env: stepEnv, timeout: stepTimeout });
   }
 
   const exitCode = result.status ?? 127;
@@ -415,6 +417,12 @@ console.log('');
 const stepResults = [];
 
 for (const step of TELEMETRY_STEPS) {
+  // Anti-recursion: skip doctor when called from inside doctor
+  if (step.name === 'ops_doctor' && process.env.TREASURE_INSIDE_DOCTOR === '1') {
+    stepResults.push({ step_id: step.id, name: step.name, status: 'PASS', exit_code: 0, stdout: '[SKIP] doctor skipped (inside doctor — anti-recursion)' });
+    console.log(`  [${step.id}] ${step.label} ... PASS (anti-recursion skip)`);
+    continue;
+  }
   process.stdout.write(`  [${step.id}] ${step.label} ... `);
   const result = runStep(step);
   stepResults.push(result);

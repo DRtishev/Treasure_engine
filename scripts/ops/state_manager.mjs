@@ -457,7 +457,7 @@ export function executeTransition(bus, currentState, transitionId, context = {})
               exit_code: String(result.status ?? -1),
               reason: failReason,
               run_number: String(run),
-              budget_ms: String(timeoutMs),
+              budget_millis: String(timeoutMs),
             },
           });
         }
