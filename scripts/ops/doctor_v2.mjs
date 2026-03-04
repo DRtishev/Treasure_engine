@@ -26,6 +26,7 @@ import { healAll } from '../lib/self_heal.mjs';
 import { sealProvenance, findPreviousDoctorRun, loadPreviousProvenance } from '../lib/provenance.mjs';
 import { loadMemory, updateMemory, evaluateHealEffectiveness, getRecurring, getPriorityGates, saveMemory } from '../lib/immune_memory.mjs';
 import { createBus } from './eventbus_v1.mjs';
+import { appendDoctorHistory } from './doctor_history.mjs';
 
 const ROOT = process.cwd();
 
@@ -661,6 +662,11 @@ const boardLines = Object.entries(board)
 console.log(boardLines);
 console.log(`  ${'─'.repeat(40)}`);
 console.log(`  TOTAL: ${totalScore}/100`);
+
+// SPRINT-2: Confidence score (0-100) based on scoreboard totalScore
+const confidenceScore = Math.round(Math.min(100, Math.max(0, totalScore)));
+board.confidence_score = confidenceScore;
+console.log(`  CONFIDENCE: ${confidenceScore}/100`);
 console.log('');
 
 // ── VERDICT ─────────────────────────────────────────────────────────
@@ -680,14 +686,14 @@ doctorBus.append({
   event: 'DOCTOR_VERDICT',
   reason_code: verdict === 'HEALTHY' ? 'NONE' : verdictReason,
   surface: 'UX',
-  attrs: { verdict, score: String(totalScore), escalation_stage: String(escalationStage) },
+  attrs: { verdict, score: String(totalScore), confidence_score: String(confidenceScore), escalation_stage: String(escalationStage) },
 });
 doctorBus.flush();
 
 // ── Write evidence ──────────────────────────────────────────────────
 writeJsonDeterministic(path.join(EPOCH_DIR, 'DOCTOR.json'), {
   schema_version: '2.0.0', gate_id: 'DOCTOR_V2', run_id: RUN_ID,
-  status: verdict, reason_code: verdictReason, score: totalScore,
+  status: verdict, reason_code: verdictReason, score: totalScore, confidence_score: confidenceScore,
   probes: { startup: startupVerdict, liveness: livenessVerdict, readiness: readinessVerdict },
   chaos: chaosVerdict, scoreboard: board,
   life_x2_identical: x2Identical,
@@ -708,6 +714,16 @@ writeJsonDeterministic(path.join(EPOCH_DIR, 'DOCTOR.json'), {
     rate: healEffRate,
   },
   next_action: verdict === 'HEALTHY' ? 'Ready for edge work' : 'npm run -s verify:fast',
+});
+
+// SPRINT-2: Append to doctor history JSONL ledger
+appendDoctorHistory({
+  run_id: RUN_ID,
+  verdict,
+  reason_code: verdictReason,
+  score: totalScore,
+  confidence_score: confidenceScore,
+  escalation_stage: escalationStage,
 });
 
 // ── DOCTOR.md ───────────────────────────────────────────────────────

@@ -222,6 +222,11 @@ try {
     fsm_state: 'DRAFT',
     fsm_history: [],
     metrics: { backtest_sharpe: 1.2 },
+    court_verdicts: [{
+      verdict: 'PIPELINE_ELIGIBLE',
+      courts: [{ court: 'DatasetCourt', verdict: 'PIPELINE_ELIGIBLE' }],
+      evidence_manifest: {},
+    }],
     risk: { score: 0.1 },
   };
   const fsm = new CandidateFSM(candidate, kernel, policy, 'TEST_TS');

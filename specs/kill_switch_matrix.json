@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0.0",
+  "conditions": [
+    {
+      "id": "KS01_MAX_DRAWDOWN",
+      "metric": "max_drawdown",
+      "operator": ">",
+      "threshold": 0.05,
+      "action": "FLATTEN",
+      "cooldown_ms": 3600000,
+      "description": "Drawdown exceeds 5% → emergency flatten all"
+    },
+    {
+      "id": "KS02_REALITY_GAP",
+      "metric": "reality_gap",
+      "operator": ">",
+      "threshold": 0.3,
+      "action": "PAUSE",
+      "cooldown_ms": 1800000,
+      "description": "Reality gap > 30% → pause new orders"
+    },
+    {
+      "id": "KS03_ERROR_RATE",
+      "metric": "exchange_error_rate",
+      "operator": ">",
+      "threshold": 0.1,
+      "action": "PAUSE",
+      "cooldown_ms": 300000,
+      "description": "Exchange error rate > 10% → pause all activity"
+    },
+    {
+      "id": "KS04_CONSECUTIVE_LOSSES",
+      "metric": "consecutive_losses",
+      "operator": ">=",
+      "threshold": 10,
+      "action": "REDUCE",
+      "cooldown_ms": 600000,
+      "description": "10+ consecutive losses → reduce position size by 50%"
+    }
+  ],
+  "actions": {
+    "FLATTEN": { "priority": 0, "description": "Close all positions immediately" },
+    "PAUSE": { "priority": 1, "description": "Stop new orders, keep existing" },
+    "REDUCE": { "priority": 2, "description": "Reduce position size by configured %" }
+  },
+  "escalation": {
+    "REDUCE_to_PAUSE_after_ms": 1800000,
+    "PAUSE_to_FLATTEN_after_ms": 3600000
+  }
+}

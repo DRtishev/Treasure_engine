@@ -44,7 +44,9 @@ net_violations_n: 0
 - [PASS] clean_clean_clone_bootstrap_mjs: scripts/ops/clean_clone_bootstrap.mjs — no forbidden APIs
 - [PASS] clean_cockpit_mjs: scripts/ops/cockpit.mjs — no forbidden APIs
 - [PASS] clean_doctor_mjs: scripts/ops/doctor.mjs — no forbidden APIs
+- [PASS] clean_doctor_history_mjs: scripts/ops/doctor_history.mjs — no forbidden APIs
 - [PASS] clean_doctor_v2_mjs: scripts/ops/doctor_v2.mjs — no forbidden APIs
+- [PASS] clean_emergency_flatten_mjs: scripts/ops/emergency_flatten.mjs — no forbidden APIs
 - [PASS] clean_event_schema_v1_mjs: scripts/ops/event_schema_v1.mjs — no forbidden APIs
 - [PASS] clean_eventbus_v1_mjs: scripts/ops/eventbus_v1.mjs — no forbidden APIs
 - [PASS] clean_evidence_helpers_mjs: scripts/ops/evidence_helpers.mjs — no forbidden APIs

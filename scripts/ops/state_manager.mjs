@@ -580,13 +580,46 @@ export function runToGoal(bus, goalState, maxAttempts = null) {
   const kernel = loadFsmKernel();
   const maxAtt = maxAttempts ?? kernel.max_goal_attempts ?? 10;
   const maxCycles = kernel.max_cycles ?? 3;
+  const stuckThreshold = kernel.deadlock_threshold ?? maxAtt;
   let totalFailures = 0;
   let cycleCount = 0;
+  let sameStateCount = 0;
+  let lastState = null;
   const history = [];
 
   while (totalFailures < maxAtt) {
     const allEvents = bus ? bus.events() : [];
     const { state: currentState } = replayState(allEvents);
+
+    // SPRINT-2: Deadlock detection — same state repeated without forward progress
+    if (currentState === lastState) {
+      sameStateCount++;
+      if (sameStateCount >= stuckThreshold) {
+        if (bus) {
+          bus.append({
+            mode: stateToMode(currentState),
+            component: 'FSM',
+            event: 'GOAL_BLOCKED',
+            reason_code: 'FSM_DEADLOCK',
+            surface: 'CONTRACT',
+            attrs: {
+              goal: goalState,
+              reason: 'deadlock_detected',
+              stuck_state: currentState,
+              attempts: String(sameStateCount),
+              threshold: String(stuckThreshold),
+            },
+          });
+        }
+        return {
+          reached: false, finalState: currentState, totalFailures, cycleCount, history,
+          reason: 'deadlock_detected', stuck_state: currentState, stuck_count: sameStateCount,
+        };
+      }
+    } else {
+      sameStateCount = 1;
+      lastState = currentState;
+    }
 
     if (currentState === goalState) {
       if (bus) {

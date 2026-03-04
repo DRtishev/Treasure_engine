@@ -309,3 +309,41 @@ export class ReconciliationEngine {
 export function createReconciliationEngine(options = {}) {
   return new ReconciliationEngine(options);
 }
+
+/**
+ * SPRINT-3: Lightweight fill reconciliation (pure function).
+ * Compares ledger fills vs exchange fills by order_id.
+ * Detects: MISSING_ON_EXCHANGE, MISSING_IN_LEDGER, PRICE_DRIFT, SIZE_DRIFT.
+ *
+ * @param {Array<{order_id: string, price: number, size: number}>} ledgerFills
+ * @param {Array<{order_id: string, price: number, size: number}>} exchangeFills
+ * @param {number} tolerancePct — max acceptable drift fraction (e.g. 0.01 = 1%)
+ * @returns {{ ok: boolean, drifts: Object[], total_checked: number }}
+ */
+export function reconcile(ledgerFills, exchangeFills, tolerancePct = 0.01) {
+  const drifts = [];
+
+  for (const lf of ledgerFills) {
+    const ef = exchangeFills.find(e => e.order_id === lf.order_id);
+    if (!ef) {
+      drifts.push({ type: 'MISSING_ON_EXCHANGE', order_id: lf.order_id });
+      continue;
+    }
+    const priceDrift = Math.abs(lf.price - ef.price) / Math.max(lf.price, 1e-12);
+    const sizeDrift = Math.abs(lf.size - ef.size) / Math.max(lf.size, 1e-12);
+    if (priceDrift > tolerancePct) {
+      drifts.push({ type: 'PRICE_DRIFT', order_id: lf.order_id, expected: lf.price, actual: ef.price, drift: priceDrift });
+    }
+    if (sizeDrift > tolerancePct) {
+      drifts.push({ type: 'SIZE_DRIFT', order_id: lf.order_id, expected: lf.size, actual: ef.size, drift: sizeDrift });
+    }
+  }
+
+  for (const ef of exchangeFills) {
+    if (!ledgerFills.find(l => l.order_id === ef.order_id)) {
+      drifts.push({ type: 'MISSING_IN_LEDGER', order_id: ef.order_id });
+    }
+  }
+
+  return { ok: drifts.length === 0, drifts, total_checked: ledgerFills.length + exchangeFills.length };
+}

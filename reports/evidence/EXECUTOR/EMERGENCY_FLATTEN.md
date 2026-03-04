@@ -1,0 +1,13 @@
+# EMERGENCY_FLATTEN
+
+STATUS: PASS
+RUN_ID: STABLE
+POSITIONS_FOUND: 0
+CLOSE_ORDERS: 0
+ALL_CLOSED: true
+
+## POSITIONS
+- NONE (CERT mode — no active positions)
+
+## CLOSE ORDERS
+- NONE (no positions to close)

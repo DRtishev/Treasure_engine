@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "check": "rejects_empty_verdicts",
+      "detail": "OK: guard rejected — guard fail: FAIL_CLOSED: court_verdicts required but empty — run Edge Lab pipeline first",
+      "pass": true
+    },
+    {
+      "check": "rejects_missing_verdicts",
+      "detail": "OK: guard rejected — guard fail: FAIL_CLOSED: court_verdicts required but empty — run Edge Lab pipeline first",
+      "pass": true
+    },
+    {
+      "check": "rejects_no_courts_array",
+      "detail": "OK: guard rejected — guard fail: FAIL_CLOSED: no edge_lab verdict with courts in court_verdicts array",
+      "pass": true
+    },
+    {
+      "check": "passes_valid_verdicts",
+      "detail": "OK: guard passed — backtest_sharpe=1.5, edge_lab=PIPELINE_ELIGIBLE",
+      "pass": true
+    },
+    {
+      "check": "rejects_blocked_verdict",
+      "detail": "OK: guard rejected — guard fail: edge_lab_verdict=BLOCKED",
+      "pass": true
+    },
+    {
+      "check": "rejects_not_eligible_verdict",
+      "detail": "OK: guard rejected — guard fail: edge_lab_verdict=NOT_ELIGIBLE",
+      "pass": true
+    }
+  ],
+  "checks_total": 6,
+  "failed_checks": [],
+  "gate_id": "RG_COURT_WIRING02",
+  "next_action": "npm run -s verify:regression:court-wiring02-guard-rejects-empty",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

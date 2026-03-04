@@ -405,6 +405,18 @@ const evidencePaths = [
   ...(eb.jsonl_path ? [eb.jsonl_path] : []),
 ].filter(Boolean);
 
+// SPRINT-2: Dynamic ONE_NEXT_ACTION based on FSM state + doctor verdict
+function computeNextAction(fsmState, doctorVerdict) {
+  if (doctorVerdict === 'SICK') return 'npm run -s ops:doctor';
+  if (fsmState === 'DEGRADED') return 'npm run -s ops:doctor';
+  if (fsmState === 'HEALING') return 'npm run -s ops:doctor';
+  if (fsmState === 'BOOT') return 'npm run -s verify:fast';
+  if (fsmState === 'CERTIFYING') return 'npm run -s verify:fast';
+  if (fsmState === 'RESEARCHING') return 'npm run -s ops:cockpit';
+  if (fsmState === 'EDGE_READY') return 'npm run -s ops:cockpit';
+  return 'npm run -s verify:fast'; // safe default
+}
+
 // ---------------------------------------------------------------------------
 // Write HUD.json
 // ---------------------------------------------------------------------------
@@ -427,7 +439,7 @@ const hudJson = {
   },
   evidence_paths: evidencePaths,
   overall_failed: overallFailed,
-  next_action: 'npm run -s verify:fast',
+  next_action: computeNextAction(fsm.state, fsm.doctor_verdict),
 };
 
 writeJsonDeterministic(path.join(EPOCH_DIR, 'HUD.json'), hudJson);
@@ -582,9 +594,9 @@ const hudMd = [
   '',
   '---',
   '',
-  '## NEXT_ACTION',
+  '## ONE_NEXT_ACTION',
   '',
-  'npm run -s verify:fast',
+  computeNextAction(fsm.state, fsm.doctor_verdict),
   '',
 ].join('\n');
 

@@ -39,8 +39,18 @@
       "pass": true
     },
     {
+      "check": "clean_doctor_history_mjs",
+      "detail": "scripts/ops/doctor_history.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
       "check": "clean_doctor_v2_mjs",
       "detail": "scripts/ops/doctor_v2.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
+      "check": "clean_emergency_flatten_mjs",
+      "detail": "scripts/ops/emergency_flatten.mjs — no forbidden APIs",
       "pass": true
     },
     {

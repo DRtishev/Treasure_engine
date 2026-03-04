@@ -3,8 +3,11 @@
  * strategy_sweep.mjs — EPOCH-73 Strategy Sweep + Candidate Registration
  *
  * Runs enrichBars + runBacktest x2 for S3/S4/S5 on e108 fixture.
- * Verifies determinism. Registers candidates via CandidateFSM CT01.
+ * Verifies determinism. Runs Edge Lab courts. Registers candidates via CandidateFSM CT01.
  * Writes epoch_sweep_report.json for candidate_registry ingestion.
+ *
+ * SPRINT-0 FIX (FINDING-B): Courts are now wired into the sweep pipeline.
+ * Candidates cannot advance DRAFT → BACKTESTED without Edge Lab court verdicts.
  *
  * Output: reports/evidence/EPOCH-SWEEP-73/gates/manual/epoch_sweep_report.json
  */
@@ -14,6 +17,7 @@ import path from 'node:path';
 import crypto from 'node:crypto';
 import { enrichBars } from '../../core/edge/strategies/strategy_bar_enricher.mjs';
 import { runBacktest } from '../../core/backtest/engine.mjs';
+import { runEdgeLabPipeline } from '../../core/edge_lab/pipeline.mjs';
 import { CandidateFSM, loadCandidateKernel } from '../ops/candidate_fsm.mjs';
 import { writeJsonDeterministic } from '../lib/write_json_deterministic.mjs';
 
@@ -74,6 +78,73 @@ async function main() {
     const tradeCount = r1.metrics.trade_count;
     const maxDD = r1.metrics.max_drawdown;
 
+    // ── SPRINT-0: Edge Lab Courts ──────────────────────────────────────────
+    // Build edge descriptor from backtest result for court evaluation.
+    // Courts validate: dataset quality, execution realism, overfit risk,
+    // sensitivity, red-team scenarios, risk limits, SRE reliability.
+    const tradeRecords = r1.ledger.fills
+      .filter(f => f.realized_pnl !== 0)
+      .map(f => ({
+        pnl: f.realized_pnl,
+        pnl_pct: f.realized_pnl / (r1.metrics.initial_capital || 10000),
+        entry_price: f.exec_price,
+        qty: f.qty,
+        notional_usd: Math.abs(f.exec_price * f.qty),
+      }));
+
+    const edge = {
+      trades: tradeRecords,
+      bars,
+      equity_curve: r1.equity_curve ? r1.equity_curve.map(e => e.equity) : [],
+      data_sources: [{
+        name: 'e108_fixture',
+        type: 'fixture',
+        last_update_ms: 0,
+        is_proxy: false,
+      }],
+      now_ms: 0, // deterministic: fixture has no real clock
+      execution: {
+        slippage_p99_bps: 2,
+        base_slippage_bps: 2,
+        avg_fill_time_ms: 0,
+        fill_rate: tradeRecords.length > 0 ? 1.0 : 0,
+        error_rate: 0,
+      },
+      risk: {
+        max_drawdown_pct: maxDD * 100,
+        daily_var_pct: maxDD * 50,
+        max_position_usd: 500,
+        leverage: 1,
+      },
+      wfo: {}, // No WFO in sweep (dataset too small for meaningful WFO)
+      strategies_tested: STRATEGY_PATHS.length,
+      seed: 12345,
+      sre: {
+        uptime_pct: 100,
+        p99_latency_ms: 0,
+        error_rate: 0,
+        recovery_time_ms: 0,
+        backpressure_events: 0,
+      },
+      adversarial: {},
+    };
+
+    const courtResult = runEdgeLabPipeline(edge, {}, {
+      fail_fast: false,
+      double_run: true,
+      edge_id: configId,
+    });
+
+    const courtVerdicts = courtResult.courts
+      ? [{
+          verdict: courtResult.verdict,
+          courts: courtResult.courts.map(c => ({ court: c.court, verdict: c.verdict })),
+          evidence_manifest: courtResult.evidence_manifest,
+        }]
+      : [];
+
+    console.log(`    courts: verdict=${courtResult.verdict} (${courtResult.courts ? courtResult.courts.length : 0} courts run)`);
+
     // Build candidate entry for FSM
     const candidateData = {
       id: configId,
@@ -91,6 +162,7 @@ async function main() {
         slippage_sensitivity: 0.02,
         win_rate: null,
       },
+      court_verdicts: courtVerdicts,
       robustness: {
         split_stats: { determinism_hash_run1: h1, determinism_hash_run2: h2 },
         leakage_pass: deterministic,
@@ -122,12 +194,14 @@ async function main() {
       deterministic,
       hash_run1: h1,
       hash_run2: h2,
+      court_verdict: courtResult.verdict,
+      court_count: courtResult.courts ? courtResult.courts.length : 0,
       ct01_success: ct01.success,
       ct01_detail: ct01.detail,
       fsm_state: entry.fsm_state,
     });
 
-    console.log(`  ${configId}: sharpe=${sharpe} trades=${tradeCount} det=${deterministic ? 'PASS' : 'FAIL'} fsm=${entry.fsm_state} ct01=${ct01.success ? 'PASS' : 'FAIL'}`);
+    console.log(`  ${configId}: sharpe=${sharpe} trades=${tradeCount} det=${deterministic ? 'PASS' : 'FAIL'} courts=${courtResult.verdict} fsm=${entry.fsm_state} ct01=${ct01.success ? 'PASS' : 'FAIL'}`);
   }
 
   // Build sweep report
@@ -155,11 +229,18 @@ async function main() {
   }
 
   const backtested = candidates.filter(c => c.fsm_state === 'BACKTESTED').length;
-  console.log(`\n[${backtested === 3 ? 'PASS' : 'FAIL'}] Strategy sweep: ${backtested}/3 BACKTESTED`);
+  const courtProcessed = evidenceSummary.every(e => e.court_count > 0);
+
+  // SPRINT-0: Success = all deterministic + all courts processed (not necessarily all BACKTESTED).
+  // Candidates legitimately rejected by courts (NOT_ELIGIBLE) is correct behavior.
+  const sweepPass = allDeterministic && courtProcessed;
+
+  console.log(`\n[${sweepPass ? 'PASS' : 'FAIL'}] Strategy sweep: ${backtested}/${STRATEGY_PATHS.length} BACKTESTED`);
   console.log(`  determinism: ${allDeterministic ? 'ALL PASS' : 'SOME FAIL'}`);
+  console.log(`  courts_processed: ${courtProcessed ? 'ALL' : 'INCOMPLETE'}`);
   console.log(`  output: reports/evidence/${SWEEP_EPOCH}/gates/manual/epoch_sweep_report.json`);
 
-  process.exit(backtested === 3 && allDeterministic ? 0 : 1);
+  process.exit(sweepPass ? 0 : 1);
 }
 
 main().catch(err => { console.error(err); process.exit(1); });

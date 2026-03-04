@@ -9,9 +9,11 @@
  *   reports/evidence/EXECUTOR/CHAOS_*.md
  *   reports/evidence/EXECUTOR/gates/manual/*.json
  *   reports/evidence/EXECUTOR/MERGE_PLAN.md
+ *   reports/evidence/EXECUTOR/SHA256SUMS.*.txt      (regen:manifests)
+ *   reports/evidence/EXECUTOR/manifests/*.log        (regen:manifests)
  *
  * FORBIDDEN anywhere inside EXECUTOR (fail-closed, static scan):
- *   *.log  *.zip  *.tar.gz  *.tar.xz
+ *   *.log  *.zip  *.tar.gz  *.tar.xz  (except manifests/ dir)
  *   Any file added via git diff origin/main that is NOT in the allowlist above.
  *
  * Gate ID : RG_PR05_EXECUTOR_SSOT_STABLE_SET
@@ -35,12 +37,16 @@ const NEXT_ACTION = 'npm run -s verify:fast';
 // --- Forbidden-extension static scan (any file in EXECUTOR tree) ---
 const FORBIDDEN_EXTS = ['.log', '.zip', '.tar.gz', '.tar.xz', '.tar.bz2'];
 
+// Manifest check-logs are legitimate regen:manifests outputs — exempt from forbidden-ext scan
+const EXEMPT_DIRS = new Set(['manifests']);
+
 function walkForbidden(dir) {
   const hits = [];
   if (!fs.existsSync(dir)) return hits;
   for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
     const full = path.join(dir, entry.name);
     if (entry.isDirectory()) {
+      if (EXEMPT_DIRS.has(entry.name)) continue;
       hits.push(...walkForbidden(full));
     } else {
       const lower = entry.name.toLowerCase();
@@ -71,6 +77,11 @@ function isAllowlisted(relPath) {
   if (/^CHAOS_[^/]+\.md$/.test(tail)) return true;
   if (/^gates\/manual\/[^/]+\.json$/.test(tail)) return true;
   if (tail === 'MERGE_PLAN.md') return true;
+  // Doctor history ledger (append-only JSONL)
+  if (tail === 'DOCTOR_HISTORY.jsonl') return true;
+  // Manifest artifacts produced by regen:manifests
+  if (/^SHA256SUMS\.[A-Z]+\.txt$/.test(tail)) return true;
+  if (/^manifests\/[^/]+\.log$/.test(tail)) return true;
   // Directories themselves (no extension) are not file entries — skip
   return false;
 }

@@ -338,7 +338,7 @@ export async function runSimulation(datasetPath, ssotPath, hacksPath, runId = nu
       }
     }
     
-    // Compute aggregate metrics (same as engine.mjs)
+    // Compute aggregate metrics — collect per-hack metrics, then aggregate
     const allMetrics = [];
     for (const mode of MODES) {
       for (const hackId of HACK_IDS) {
@@ -347,8 +347,29 @@ export async function runSimulation(datasetPath, ssotPath, hacksPath, runId = nu
         }
       }
     }
-    
-    results.aggregate = computePenalizedMetrics(allMetrics, ssot);
+
+    // SPRINT-1 FINDING-E FIX: computePenalizedMetrics expects a single params
+    // object, NOT an array. Aggregate across hack runs, then wrap.
+    const aggExpectancy = allMetrics.length > 0
+      ? allMetrics.reduce((s, m) => s + (m.expectancy_per_trade || 0), 0) / allMetrics.length
+      : 0;
+    const aggMaxDD = allMetrics.length > 0
+      ? Math.max(...allMetrics.map(m => m.max_drawdown_pct || 0))
+      : 0;
+    // hostile_exec: worst-case execution stats across runs
+    const worstExec = allMetrics.length > 0 ? {
+      reject_ratio: Math.max(...allMetrics.map(m => m.reject_ratio || 0)),
+      slippage_p99_bps: Math.max(...allMetrics.map(m => m.slippage_p99_bps || 0)),
+      rtt_p99_ms: Math.max(...allMetrics.map(m => m.rtt_p99_ms || 0)),
+    } : null;
+
+    results.aggregate = computePenalizedMetrics({
+      expectancy_per_trade: aggExpectancy,
+      hostile_exec: worstExec,
+      hostile_maxdd: aggMaxDD,
+      reality_gap: 0,
+      ssot,
+    });
     results.meta = {
       run_id: runId,
       dataset_sha256: sha256,

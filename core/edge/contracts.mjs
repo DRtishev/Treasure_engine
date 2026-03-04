@@ -108,7 +108,11 @@ export const contractSchemas = {
       fee_model: { type: 'string' },
       latency_model: { type: 'string' },
       inputs_fingerprint: { type: 'string', pattern: '^sha256:' },
-      output_metrics: { type: 'object', minProperties: 1, additionalProperties: { type: 'number' } },
+      output_metrics: {
+        type: 'object',
+        required: ['sharpe', 'max_drawdown', 'total_pnl', 'trade_count'],
+        additionalProperties: { type: 'number' },
+      },
       deterministic_fingerprint: { type: 'string', pattern: '^[a-f0-9]{64}$' }
     }
   },

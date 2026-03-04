@@ -1,0 +1,53 @@
+{
+  "checks": [
+    {
+      "check": "flatten_exists",
+      "detail": "OK: emergency_flatten.mjs exists",
+      "pass": true
+    },
+    {
+      "check": "flatten_has_reason",
+      "detail": "OK: EMERGENCY_FLATTEN reason present",
+      "pass": true
+    },
+    {
+      "check": "flatten_no_forbidden_date",
+      "detail": "OK: no forbidden Date APIs",
+      "pass": true
+    },
+    {
+      "check": "position_sizer_is_function",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "micro_tier_limit",
+      "detail": "OK: micro max_risk=$100 size=10",
+      "pass": true
+    },
+    {
+      "check": "small_tier_limit",
+      "detail": "OK: small max_risk=$1000 size=100",
+      "pass": true
+    },
+    {
+      "check": "normal_tier_limit",
+      "detail": "OK: normal max_risk=$5000 size=500",
+      "pass": true
+    },
+    {
+      "check": "unknown_tier_returns_zero",
+      "detail": "OK: unknown tier → size=0",
+      "pass": true
+    }
+  ],
+  "checks_total": 8,
+  "failed_checks": [],
+  "gate_id": "RG_FLATTEN01",
+  "next_action": "npm run -s verify:regression:flatten01-closes-all",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

@@ -1,0 +1,28 @@
+{
+  "checks": [
+    {
+      "check": "imports_runEdgeLabPipeline",
+      "detail": "OK: runEdgeLabPipeline imported from pipeline.mjs",
+      "pass": true
+    },
+    {
+      "check": "calls_runEdgeLabPipeline",
+      "detail": "OK: runEdgeLabPipeline() called",
+      "pass": true
+    },
+    {
+      "check": "attaches_court_verdicts",
+      "detail": "OK: court_verdicts attached to candidate",
+      "pass": true
+    }
+  ],
+  "checks_total": 3,
+  "failed_checks": [],
+  "gate_id": "RG_COURT_WIRING01",
+  "next_action": "npm run -s verify:regression:court-wiring01-sweep-uses-pipeline",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}
