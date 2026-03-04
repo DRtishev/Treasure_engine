@@ -811,7 +811,7 @@ writeJsonDeterministic(path.join(EPOCH_DIR, 'LIFE_SUMMARY.json'), {
     by_state: fleetResult.fleet_context.by_state ?? {},
     fleet_health: fleetResult.fleet_context.fleet_health ?? 1.0,
     decisions: fleetResult.decisions.map(d => ({
-      action: d.action, candidate: d.candidate, reason: d.reason,
+      action: d.action, hack_id: d.candidate, reason: d.reason,
     })),
     risk_budget_used: fleetResult.fleet_context.risk_budget_used ?? 0,
   } : null,
