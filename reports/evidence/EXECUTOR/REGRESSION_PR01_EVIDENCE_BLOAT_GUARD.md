@@ -6,11 +6,21 @@ RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 60
-- changed_evidence_files_n: 48
+- changed_evidence_files_n: 64
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
-- override_accepted: false
+- override_accepted: true
 
 ## OFFENDERS
+- reports/evidence/EXECUTOR/CHAOS_EVIDENCE_TAMPER.md
+- reports/evidence/EXECUTOR/CHAOS_FP01.md
+- reports/evidence/EXECUTOR/CHAOS_MODE_LIE.md
+- reports/evidence/EXECUTOR/CHAOS_NET_LEAK.md
+- reports/evidence/EXECUTOR/CHAOS_ORPHAN.md
+- reports/evidence/EXECUTOR/gates/manual/chaos_evidence_tamper.json
+- reports/evidence/EXECUTOR/gates/manual/chaos_fp01_trap.json
+- reports/evidence/EXECUTOR/gates/manual/chaos_mode_lie.json
+- reports/evidence/EXECUTOR/gates/manual/chaos_net_leak.json
+- reports/evidence/EXECUTOR/gates/manual/chaos_orphan_write.json
 - reports/evidence/EXECUTOR/gates/manual/node_toolchain_acquire.json
 - reports/evidence/EXECUTOR/gates/manual/node_toolchain_ensure.json
 - reports/evidence/EXECUTOR/gates/manual/regression_agent01_agents_present.json
@@ -18,6 +28,7 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_auto01_mode_router.json
 - reports/evidence/EXECUTOR/gates/manual/regression_backtest01_organ_health.json
 - reports/evidence/EXECUTOR/gates/manual/regression_churn_contract01.json
+- reports/evidence/EXECUTOR/gates/manual/regression_clock01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_epoch_skip01_respects_tracked_state.json
 - reports/evidence/EXECUTOR/gates/manual/regression_fsm02_consciousness.json
 - reports/evidence/EXECUTOR/gates/manual/regression_immune01_integration.json
@@ -29,6 +40,7 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_reason01_token_purity.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_reason02_in_taxonomy.json
+- reports/evidence/EXECUTOR/gates/manual/regression_san01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_strat01_interface.json
 - reports/evidence/EXECUTOR/gates/manual/regression_strat02_determinism.json
 - reports/evidence/EXECUTOR/gates/manual/regression_strat03_court_pass.json
@@ -36,12 +48,14 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_time02_no_time_fields.json
 - reports/evidence/EXECUTOR/gates/manual/repo_byte_audit_x2.json
 - reports/evidence/EXECUTOR/gates/manual/repo_byte_audit.json
+- reports/evidence/EXECUTOR/gates/manual/san_cert_offline.json
 - reports/evidence/EXECUTOR/NODE_TOOLCHAIN_ACQUIRE.md
 - reports/evidence/EXECUTOR/REGRESSION_AGENT01_AGENTS_PRESENT.md
 - reports/evidence/EXECUTOR/REGRESSION_AGENT02_CLAUDE_MD_DRIFT.md
 - reports/evidence/EXECUTOR/REGRESSION_AUTO01_MODE_ROUTER.md
 - reports/evidence/EXECUTOR/REGRESSION_BACKTEST01_ORGAN_HEALTH.md
 - reports/evidence/EXECUTOR/REGRESSION_CHURN_CONTRACT01.md
+- reports/evidence/EXECUTOR/REGRESSION_CLOCK01.md
 - reports/evidence/EXECUTOR/REGRESSION_EPOCH_SKIP01_RESPECTS_TRACKED_STATE.md
 - reports/evidence/EXECUTOR/REGRESSION_FSM02.md
 - reports/evidence/EXECUTOR/REGRESSION_IMMUNE01.md
@@ -53,9 +67,11 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_REASON01.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_REASON02.md
+- reports/evidence/EXECUTOR/REGRESSION_SAN01.md
 - reports/evidence/EXECUTOR/REGRESSION_TIME01_STABLE_TICK_ORDER.md
 - reports/evidence/EXECUTOR/REGRESSION_TIME02_NO_TIME_FIELDS.md
 - reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_SCOPE.json
 - reports/evidence/EXECUTOR/REPO_BYTE_AUDIT_X2.md
 - reports/evidence/EXECUTOR/REPO_BYTE_AUDIT.md
 - reports/evidence/EXECUTOR/REPO_SHA256SUMS.txt
+- reports/evidence/EXECUTOR/SAN_CERT_OFFLINE.md

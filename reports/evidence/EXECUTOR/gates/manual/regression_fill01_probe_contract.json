@@ -1,0 +1,48 @@
+{
+  "checks": [
+    {
+      "check": "FILL01_CONSTRUCTOR_REJECTS_NULL",
+      "detail": "OK: FillProbe requires an adapter",
+      "pass": true
+    },
+    {
+      "check": "FILL01_PROBE_FILLED",
+      "detail": "OK: status=FILLED price=50100 qty=0.5",
+      "pass": true
+    },
+    {
+      "check": "FILL01_PROBE_CANCELLED",
+      "detail": "OK: status=CANCELLED reason=INSUFFICIENT_FUNDS",
+      "pass": true
+    },
+    {
+      "check": "FILL01_PROBE_TIMEOUT",
+      "detail": "OK: status=TIMEOUT polls=3",
+      "pass": true
+    },
+    {
+      "check": "FILL01_CIRCUIT_BREAKER",
+      "detail": "OK: circuit breaker triggered after 3 failures",
+      "pass": true
+    },
+    {
+      "check": "FILL01_SLIPPAGE_CALC",
+      "detail": "OK: buy_slip=20bps sell_slip=20bps",
+      "pass": true
+    },
+    {
+      "check": "FILL01_DIAGNOSTICS",
+      "detail": "OK: total=2 filled=2 cb=false",
+      "pass": true
+    }
+  ],
+  "checks_total": 7,
+  "failed_checks": [],
+  "gate_id": "RG_FILL01_PROBE_CONTRACT",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

@@ -239,6 +239,11 @@
       "pass": true
     },
     {
+      "check": "core_allowlisted_fill_probe_mjs",
+      "detail": "core/exec/fill_probe.mjs — 1 TIME violation(s) (allowlisted)",
+      "pass": true
+    },
+    {
       "check": "core_allowlisted_master_executor_mjs",
       "detail": "core/exec/master_executor.mjs — 1 TIME violation(s) (allowlisted)",
       "pass": true
@@ -380,7 +385,7 @@
     },
     {
       "check": "core_scan_complete",
-      "detail": "core/ scanned: 168 files, 44 allowlisted, 0 un-allowlisted violations",
+      "detail": "core/ scanned: 171 files, 45 allowlisted, 0 un-allowlisted violations",
       "pass": true
     }
   ],

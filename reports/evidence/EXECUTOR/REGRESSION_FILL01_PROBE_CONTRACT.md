@@ -1,0 +1,20 @@
+# RG_FILL01_PROBE_CONTRACT
+
+STATUS: PASS
+REASON_CODE: NONE
+RUN_ID: STABLE
+NEXT_ACTION: npm run -s verify:fast
+CHECKS_TOTAL: 7
+VIOLATIONS: 0
+
+## CHECKS
+- [PASS] FILL01_CONSTRUCTOR_REJECTS_NULL: OK: FillProbe requires an adapter
+- [PASS] FILL01_PROBE_FILLED: OK: status=FILLED price=50100 qty=0.5
+- [PASS] FILL01_PROBE_CANCELLED: OK: status=CANCELLED reason=INSUFFICIENT_FUNDS
+- [PASS] FILL01_PROBE_TIMEOUT: OK: status=TIMEOUT polls=3
+- [PASS] FILL01_CIRCUIT_BREAKER: OK: circuit breaker triggered after 3 failures
+- [PASS] FILL01_SLIPPAGE_CALC: OK: buy_slip=20bps sell_slip=20bps
+- [PASS] FILL01_DIAGNOSTICS: OK: total=2 filled=2 cb=false
+
+## FAILED
+- NONE

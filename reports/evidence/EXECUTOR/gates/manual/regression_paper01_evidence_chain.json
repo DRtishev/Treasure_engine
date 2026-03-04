@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "check": "PAPER01_GENESIS",
+      "detail": "OK: hash=39c507c01eab47cf...",
+      "pass": true
+    },
+    {
+      "check": "PAPER01_LINK",
+      "detail": "OK: linked to genesis, hash=8e9061759226b5e8...",
+      "pass": true
+    },
+    {
+      "check": "PAPER01_TAMPER_DETECTION",
+      "detail": "OK: good_chain=true tampered_chain=false breaks=1",
+      "pass": true
+    },
+    {
+      "check": "PAPER01_SHORT_CHAIN_INELIGIBLE",
+      "detail": "OK: 1-day chain ineligible: FAILED: days_sufficient, trades_sufficient",
+      "pass": true
+    },
+    {
+      "check": "PAPER01_FULL_CHAIN_ELIGIBLE",
+      "detail": "OK: 35 days, 130 trades, chain_valid=true, eligible=true",
+      "pass": true
+    },
+    {
+      "check": "PAPER01_CHAIN_INTEGRITY",
+      "detail": "OK: 36 checkpoints, 0 breaks",
+      "pass": true
+    }
+  ],
+  "checks_total": 6,
+  "failed_checks": [],
+  "gate_id": "RG_PAPER01_EVIDENCE_CHAIN",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

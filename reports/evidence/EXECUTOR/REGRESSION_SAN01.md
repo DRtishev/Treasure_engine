@@ -84,6 +84,7 @@ net_violations_n: 0
 - [PASS] core_allowlisted_mock_exchange_mjs: core/exec/adapters/mock_exchange.mjs — 1 TIME violation(s) (allowlisted)
 - [PASS] core_allowlisted_paper_adapter_mjs: core/exec/adapters/paper_adapter.mjs — 1 TIME violation(s) (allowlisted)
 - [PASS] core_allowlisted_safety_gates_mjs: core/exec/adapters/safety_gates.mjs — 1 TIME violation(s) (allowlisted)
+- [PASS] core_allowlisted_fill_probe_mjs: core/exec/fill_probe.mjs — 1 TIME violation(s) (allowlisted)
 - [PASS] core_allowlisted_master_executor_mjs: core/exec/master_executor.mjs — 1 TIME violation(s) (allowlisted)
 - [PASS] core_allowlisted_safety_integrated_executor_mjs: core/exec/safety_integrated_executor.mjs — 1 TIME violation(s) (allowlisted)
 - [PASS] core_allowlisted_e112_cost_calibration_mjs: core/execution/e112_cost_calibration.mjs — 1 TIME violation(s) (allowlisted)
@@ -112,7 +113,7 @@ net_violations_n: 0
 - [PASS] core_allowlisted_chaos_engineer_mjs: core/testing/chaos_engineer.mjs — 1 TIME violation(s) (allowlisted)
 - [PASS] core_allowlisted_truth_engine_mjs: core/truth/truth_engine.mjs — 1 TIME violation(s) (allowlisted)
 - [PASS] total_violations_zero: 0 forbidden API usages across CERT-backbone + core/
-- [PASS] core_scan_complete: core/ scanned: 168 files, 44 allowlisted, 0 un-allowlisted violations
+- [PASS] core_scan_complete: core/ scanned: 171 files, 45 allowlisted, 0 un-allowlisted violations
 
 ## FAILED
 - NONE
