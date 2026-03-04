@@ -1,0 +1,38 @@
+{
+  "checks": [
+    {
+      "check": "has_confidenceScore_var",
+      "detail": "OK: confidenceScore variable present",
+      "pass": true
+    },
+    {
+      "check": "writes_confidence_score",
+      "detail": "OK: confidence_score written to evidence",
+      "pass": true
+    },
+    {
+      "check": "emits_confidence_in_verdict",
+      "detail": "OK: confidence_score emitted in DOCTOR_VERDICT event",
+      "pass": true
+    },
+    {
+      "check": "doctor_history_exists",
+      "detail": "OK: doctor_history.mjs exists",
+      "pass": true
+    },
+    {
+      "check": "doctor_history_exports_append",
+      "detail": "OK: appendDoctorHistory exported",
+      "pass": true
+    }
+  ],
+  "checks_total": 5,
+  "failed_checks": [],
+  "gate_id": "RG_DOCTOR_SCORE01",
+  "next_action": "npm run -s verify:regression:doctor-score01-confidence",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

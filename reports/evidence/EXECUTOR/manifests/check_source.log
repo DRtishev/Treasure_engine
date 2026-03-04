@@ -4610,11 +4610,13 @@ reports/evidence/EXECUTOR/REGRESSION_CLOSEOUT_NOT_BEFORE_VICTORY.md: OK
 reports/evidence/EXECUTOR/REGRESSION_COCKPIT03_INTEGRATION.md: OK
 reports/evidence/EXECUTOR/REGRESSION_COCKPIT04_EVENTBUS_SOURCE.md: OK
 reports/evidence/EXECUTOR/REGRESSION_COCKPIT05_LINKS_EXIST.md: OK
+reports/evidence/EXECUTOR/REGRESSION_COCKPIT_DYNAMIC_NEXT01.md: OK
 reports/evidence/EXECUTOR/REGRESSION_COURT_WIRING01.md: OK
 reports/evidence/EXECUTOR/REGRESSION_COURT_WIRING02.md: OK
 reports/evidence/EXECUTOR/REGRESSION_DATA_READINESS_SSOT.md: OK
 reports/evidence/EXECUTOR/REGRESSION_DEC01.md: OK
 reports/evidence/EXECUTOR/REGRESSION_DETERMINISM_AUDIT.md: OK
+reports/evidence/EXECUTOR/REGRESSION_DOCTOR_SCORE01.md: OK
 reports/evidence/EXECUTOR/REGRESSION_EC01_REASON_CONTEXT_CONTRACT.md: OK
 reports/evidence/EXECUTOR/REGRESSION_EPOCH_EVIDENCE_CYCLE_GITIGNORE.md: OK
 reports/evidence/EXECUTOR/REGRESSION_EPOCH_SKIP01_RESPECTS_TRACKED_STATE.md: OK
@@ -4633,6 +4635,7 @@ reports/evidence/EXECUTOR/REGRESSION_FOUNDATION_SEAL_STEP_ORDER_SSOT.md: OK
 reports/evidence/EXECUTOR/REGRESSION_FOUNDATION_SUITE_X2_SEAL.md: OK
 reports/evidence/EXECUTOR/REGRESSION_FSM01.md: OK
 reports/evidence/EXECUTOR/REGRESSION_FSM02.md: OK
+reports/evidence/EXECUTOR/REGRESSION_FSM_DEADLOCK01.md: OK
 reports/evidence/EXECUTOR/REGRESSION_GATE_RECEIPT_PRESENCE_CONTRACT.md: OK
 reports/evidence/EXECUTOR/REGRESSION_GITIGNORE_ALLOW_NETWORK.md: OK
 reports/evidence/EXECUTOR/REGRESSION_GITIGNORE_INCOMING_JSON.md: OK
@@ -4802,11 +4805,13 @@ reports/evidence/EXECUTOR/gates/manual/regression_closeout_not_before_victory.js
 reports/evidence/EXECUTOR/gates/manual/regression_cockpit03_integration.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_cockpit04_eventbus_source.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_cockpit05_links_exist.json: OK
+reports/evidence/EXECUTOR/gates/manual/regression_cockpit_dynamic_next01.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_court_wiring01.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_court_wiring02.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_data_readiness_ssot.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_dec01.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_determinism_audit.json: OK
+reports/evidence/EXECUTOR/gates/manual/regression_doctor_score01.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_ec01_reason_context_contract.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_epoch_evidence_cycle_gitignore.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_epoch_skip01_respects_tracked_state.json: OK
@@ -4825,6 +4830,7 @@ reports/evidence/EXECUTOR/gates/manual/regression_foundation_seal_step_order_sso
 reports/evidence/EXECUTOR/gates/manual/regression_foundation_suite_x2_seal.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_fsm01_no_skip_states.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_fsm02_consciousness.json: OK
+reports/evidence/EXECUTOR/gates/manual/regression_fsm_deadlock01.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_gate_receipt_presence_contract.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_git_outgoing_ignore.json: OK
 reports/evidence/EXECUTOR/gates/manual/regression_gitignore_allow_network.json: OK
@@ -5423,6 +5429,7 @@ scripts/ops/candidate_registry.mjs: OK
 scripts/ops/clean_clone_bootstrap.mjs: OK
 scripts/ops/cockpit.mjs: OK
 scripts/ops/doctor.mjs: OK
+scripts/ops/doctor_history.mjs: OK
 scripts/ops/doctor_v2.mjs: OK
 scripts/ops/event_schema_v1.mjs: OK
 scripts/ops/eventbus_v1.mjs: OK
@@ -6190,6 +6197,7 @@ scripts/verify/regression_cockpit03_integration.mjs: OK
 scripts/verify/regression_cockpit04_eventbus_source.mjs: OK
 scripts/verify/regression_cockpit05_links_exist.mjs: OK
 scripts/verify/regression_cockpit06_readiness_scorecard_present.mjs: OK
+scripts/verify/regression_cockpit_dynamic_next01.mjs: OK
 scripts/verify/regression_commands_run_header_ssot.mjs: OK
 scripts/verify/regression_court_wiring01_sweep_uses_pipeline.mjs: OK
 scripts/verify/regression_court_wiring02_guard_rejects_empty.mjs: OK
@@ -6206,6 +6214,7 @@ scripts/verify/regression_doctor02_no_net.mjs: OK
 scripts/verify/regression_doctor03_scoreboard_sum.mjs: OK
 scripts/verify/regression_doctor04_differential_axes.mjs: OK
 scripts/verify/regression_doctor05_provenance_chain.mjs: OK
+scripts/verify/regression_doctor_score01_confidence.mjs: OK
 scripts/verify/regression_drift_severity_classification.mjs: OK
 scripts/verify/regression_ec01_reason_context_contract.mjs: OK
 scripts/verify/regression_epoch_evidence_cycle_gitignore.mjs: OK
@@ -6231,6 +6240,7 @@ scripts/verify/regression_foundation_suite_x2_seal.mjs: OK
 scripts/verify/regression_foundation_timeout_triage_contract.mjs: OK
 scripts/verify/regression_fsm01_no_skip_states.mjs: OK
 scripts/verify/regression_fsm02_consciousness.mjs: OK
+scripts/verify/regression_fsm_deadlock01_detection.mjs: OK
 scripts/verify/regression_gate_receipt_presence_contract.mjs: OK
 scripts/verify/regression_git_outgoing_ignore.mjs: OK
 scripts/verify/regression_gitignore_allow_network.mjs: OK

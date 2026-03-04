@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "check": "has_sameStateCount",
+      "detail": "OK: sameStateCount variable present",
+      "pass": true
+    },
+    {
+      "check": "has_deadlock_threshold",
+      "detail": "OK: deadlock threshold present",
+      "pass": true
+    },
+    {
+      "check": "returns_deadlock_detected",
+      "detail": "OK: deadlock_detected return path exists",
+      "pass": true
+    },
+    {
+      "check": "has_FSM_DEADLOCK_code",
+      "detail": "OK: FSM_DEADLOCK reason_code present",
+      "pass": true
+    }
+  ],
+  "checks_total": 4,
+  "failed_checks": [],
+  "gate_id": "RG_FSM_DEADLOCK01",
+  "next_action": "npm run -s verify:regression:fsm-deadlock01-detection",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

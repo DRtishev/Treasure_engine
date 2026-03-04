@@ -77,6 +77,8 @@ function isAllowlisted(relPath) {
   if (/^CHAOS_[^/]+\.md$/.test(tail)) return true;
   if (/^gates\/manual\/[^/]+\.json$/.test(tail)) return true;
   if (tail === 'MERGE_PLAN.md') return true;
+  // Doctor history ledger (append-only JSONL)
+  if (tail === 'DOCTOR_HISTORY.jsonl') return true;
   // Manifest artifacts produced by regen:manifests
   if (/^SHA256SUMS\.[A-Z]+\.txt$/.test(tail)) return true;
   if (/^manifests\/[^/]+\.log$/.test(tail)) return true;

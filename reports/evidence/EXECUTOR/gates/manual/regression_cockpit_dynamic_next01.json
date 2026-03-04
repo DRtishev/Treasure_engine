@@ -1,0 +1,33 @@
+{
+  "checks": [
+    {
+      "check": "has_computeNextAction",
+      "detail": "OK: computeNextAction function present",
+      "pass": true
+    },
+    {
+      "check": "hud_json_uses_dynamic",
+      "detail": "OK: HUD.json next_action uses computeNextAction()",
+      "pass": true
+    },
+    {
+      "check": "hud_md_one_next_action_header",
+      "detail": "OK: ONE_NEXT_ACTION header present",
+      "pass": true
+    },
+    {
+      "check": "hud_md_not_hardcoded",
+      "detail": "OK: HUD.md uses dynamic computeNextAction()",
+      "pass": true
+    }
+  ],
+  "checks_total": 4,
+  "failed_checks": [],
+  "gate_id": "RG_COCKPIT_DYNAMIC_NEXT01",
+  "next_action": "npm run -s verify:regression:cockpit-dynamic-next01",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}
