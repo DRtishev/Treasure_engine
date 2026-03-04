@@ -1,0 +1,49 @@
+{
+  "checks": [
+    {
+      "check": "nd_clean_engine_mjs",
+      "detail": "core/backtest/engine.mjs — no bare ND APIs",
+      "pass": true
+    },
+    {
+      "check": "nd_clean_court_v2_mjs",
+      "detail": "core/court/court_v2.mjs — no bare ND APIs",
+      "pass": true
+    },
+    {
+      "check": "nd_clean_e122_execution_adapter_v3_mjs",
+      "detail": "core/execution/e122_execution_adapter_v3.mjs — no bare ND APIs",
+      "pass": true
+    },
+    {
+      "check": "nd_clean_repo_state_mjs",
+      "detail": "core/persist/repo_state.mjs — no bare ND APIs",
+      "pass": true
+    },
+    {
+      "check": "nd_clean_engine_paper_mjs",
+      "detail": "core/sim/engine_paper.mjs — no bare ND APIs",
+      "pass": true
+    },
+    {
+      "check": "total_nd_violations_zero",
+      "detail": "0 bare ND API usages in P0 core zones",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_ND_CORE_SAN01",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "scan_files": [
+    "core/backtest/engine.mjs",
+    "core/court/court_v2.mjs",
+    "core/execution/e122_execution_adapter_v3.mjs",
+    "core/persist/repo_state.mjs",
+    "core/sim/engine_paper.mjs"
+  ],
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": []
+}

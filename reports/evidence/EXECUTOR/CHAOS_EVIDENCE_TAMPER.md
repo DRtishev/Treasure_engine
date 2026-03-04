@@ -6,4 +6,4 @@ RUN_ID: STABLE
 NEXT_ACTION: npm run -s ops:doctor
 
 ## RESULT
-Tamper detected: merkle mismatch: computed=0413d2a8923c6c0fa537b7e648c0f63b85edec4e4fa7793691355a2a084ce312 stored=ebf0c5edbfd7eceaf972cde73b2b0c5b1efffe187387122b93ae521f844bb16a — merkle seal WORKS
+Tamper detected: merkle mismatch: computed=869c4e0ca1b1f8aab80b868306efb459aa90696a358bf61917bb43a4002b243e stored=a4e1b5253e4b5b45103c3c4958d602094a1eece7c970089bf54cdf196a895fa6 — merkle seal WORKS
