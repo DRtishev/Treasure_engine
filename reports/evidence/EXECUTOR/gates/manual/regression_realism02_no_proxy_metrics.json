@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "check": "inline_fee_calc_not_legacy_guarded__engine.mjs",
+      "detail": "backtest imports computeTotalCost from cost_model",
+      "pass": true
+    },
+    {
+      "check": "cost_model_ssot_in_backtest__engine.mjs",
+      "detail": "backtest has cost_model integration path",
+      "pass": true
+    },
+    {
+      "check": "inline_fee_calc_not_legacy_guarded__master_executor.mjs",
+      "detail": "backtest imports computeTotalCost from cost_model",
+      "pass": true
+    },
+    {
+      "check": "cost_model_ssot_in_backtest__master_executor.mjs",
+      "detail": "backtest has cost_model integration path",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REALISM02_NO_PROXY_METRICS",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

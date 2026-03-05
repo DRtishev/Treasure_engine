@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "small_order_full_fill",
+      "detail": "fill_ratio=1 (expected 1.0)",
+      "pass": true
+    },
+    {
+      "check": "small_order_filled_qty",
+      "detail": "filled_qty=0.001 (expected 0.001)",
+      "pass": true
+    },
+    {
+      "check": "large_order_partial_fill",
+      "detail": "fill_ratio=0.02 (expected < 1.0)",
+      "pass": true
+    },
+    {
+      "check": "large_order_filled_qty_reduced",
+      "detail": "filled_qty=0.2 (expected < 10)",
+      "pass": true
+    },
+    {
+      "check": "no_depth_default_fill_ratio",
+      "detail": "fill_ratio=0.95 (expected 0.95)",
+      "pass": true
+    },
+    {
+      "check": "partial_fill_reduces_fee",
+      "detail": "partial_fee=4 < full_fee=200",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REALISM04_PARTIAL_FILL_E2E",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

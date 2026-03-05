@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "paper_all_met_eligible",
+      "detail": "eligible=true, verdict=PROMOTE_ELIGIBLE",
+      "pass": true
+    },
+    {
+      "check": "paper_target_micro_live",
+      "detail": "target_stage=micro_live",
+      "pass": true
+    },
+    {
+      "check": "paper_criteria_not_met_blocked",
+      "detail": "eligible=false, verdict=BLOCKED",
+      "pass": true
+    },
+    {
+      "check": "live_already_at_max",
+      "detail": "reason_code=ALREADY_AT_MAX_STAGE",
+      "pass": true
+    },
+    {
+      "check": "micro_to_small_eligible",
+      "detail": "eligible=true, target=small_live",
+      "pass": true
+    },
+    {
+      "check": "high_drawdown_blocked",
+      "detail": "eligible=false, reason=CRITERIA_NOT_MET",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_PROMO_E2E01_PAPER_TO_MICROLIVE",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

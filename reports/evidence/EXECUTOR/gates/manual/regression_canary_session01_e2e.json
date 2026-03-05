@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "session_completes",
+      "detail": "status=COMPLETED, ticks=100",
+      "pass": true
+    },
+    {
+      "check": "canary_events_fired",
+      "detail": "95 canary events",
+      "pass": true
+    },
+    {
+      "check": "canary_pause_or_flatten",
+      "detail": "95 PAUSE/FLATTEN events, first at tick 6",
+      "pass": true
+    },
+    {
+      "check": "orders_blocked_by_canary",
+      "detail": "fills=3 out of 100 ticks (canary should block most)",
+      "pass": true
+    },
+    {
+      "check": "promotion_result_present",
+      "detail": "verdict=INSUFFICIENT_DATA",
+      "pass": true
+    },
+    {
+      "check": "canary_state_tracked",
+      "detail": "ordersPaused=true",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_CANARY_SESSION01",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

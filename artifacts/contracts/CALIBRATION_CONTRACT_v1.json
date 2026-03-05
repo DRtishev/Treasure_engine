@@ -1,0 +1,21 @@
+{
+  "schema_version": "1.0.0",
+  "contract_id": "CALIBRATION_CONTRACT_v1",
+  "description": "Cost model parameter provenance tracking",
+  "params": {
+    "fee_maker_bps": { "value": 2, "source": "DEFAULT", "note": "Binance VIP0 maker fee" },
+    "fee_taker_bps": { "value": 4, "source": "DEFAULT", "note": "Binance VIP0 taker fee" },
+    "spread_default_bps": { "value": 1.5, "source": "DEFAULT", "note": "Conservative BTC/USDT spread estimate" },
+    "depth_default_usd": { "value": 1000000, "source": "DEFAULT", "note": "Conservative depth estimate" },
+    "depth_coeff": { "value": 0.5, "source": "DEFAULT", "note": "Impact coefficient" },
+    "vol_coeff": { "value": 0.1, "source": "DEFAULT", "note": "Volatility impact coefficient" },
+    "liquidity_fraction": { "value": 0.1, "source": "DEFAULT", "note": "Fraction of book depth available" },
+    "default_fill_ratio": { "value": 0.95, "source": "DEFAULT", "note": "Default partial fill ratio" },
+    "funding_default_bps": { "value": 5, "source": "DEFAULT", "note": "8h funding rate estimate" },
+    "funding_bounds_min_bps": { "value": -5, "source": "DEFAULT", "note": "Min funding bound" },
+    "funding_bounds_max_bps": { "value": 15, "source": "DEFAULT", "note": "Max funding bound (fail-closed)" },
+    "funding_period_hours": { "value": 8, "source": "DEFAULT", "note": "Standard funding period" }
+  },
+  "lock_sha256": null,
+  "calibration_status": "DEFAULTS_ONLY"
+}

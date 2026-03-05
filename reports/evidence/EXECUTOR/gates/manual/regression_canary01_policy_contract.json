@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "canary_policy_exports",
+      "detail": "evaluateCanary exported",
+      "pass": true
+    },
+    {
+      "check": "canary_result_fields",
+      "detail": "All 4 fields present",
+      "pass": true
+    },
+    {
+      "check": "action_valid",
+      "detail": "action=CONTINUE",
+      "pass": true
+    },
+    {
+      "check": "safe_metrics_continue",
+      "detail": "Safe metrics -> action=CONTINUE",
+      "pass": true
+    },
+    {
+      "check": "new_state_schema",
+      "detail": "ordersPaused=false",
+      "pass": true
+    },
+    {
+      "check": "default_limits_exported",
+      "detail": "DEFAULT_LIMITS present",
+      "pass": true
+    },
+    {
+      "check": "canary_contract_json",
+      "detail": "version=1.0.0, fail_closed=true",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_CANARY01_POLICY_CONTRACT",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

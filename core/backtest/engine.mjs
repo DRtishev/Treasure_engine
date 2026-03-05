@@ -9,6 +9,8 @@ import { createLedger, recordFill, getLedgerSummary, getEquity, getUnrealizedPnL
 import { stableFormatNumber, renderMarkdownTable } from '../../scripts/verify/foundation_render.mjs';
 import { truncateTowardZero } from '../edge/deterministic_math.mjs';
 import { sharpeFromTrades, sortino, calmar, ulcerIndex, painRatio } from '../edge/unified_sharpe.mjs';
+// Sprint 7: PARITY LAW — unified cost model (opt-in via opts.use_cost_model)
+import { computeTotalCost } from '../cost/cost_model.mjs';
 
 /**
  * Run a backtest of strategy on bars
@@ -45,16 +47,36 @@ export function runBacktest(strategy, bars, opts = {}) {
     signals.push({ index: i, ts: bar.ts_open, signal, price: bar.close });
 
     if (signal === 'BUY' || signal === 'SELL') {
-      const qty = position_size_usd / bar.close;
-      const slippage = bar.close * (slip_bps / 10000);
-      const execPrice = signal === 'BUY' ? bar.close + slippage : bar.close - slippage;
-      const fee = position_size_usd * (fee_bps / 10000);
+      const rawQty = position_size_usd / bar.close;
+      let execPrice, fee, filledQty;
+
+      if (opts.use_cost_model) {
+        // Sprint 7: PARITY LAW path — unified cost model
+        const costResult = computeTotalCost({
+          price: bar.close,
+          qty: rawQty,
+          side: signal,
+          order_type: 'TAKER',
+          mode: 'backtest',
+          market_context: opts.market_context || {},
+          config: opts.cost_config || {}
+        });
+        execPrice = costResult.exec_price;
+        fee = costResult.fee_usd;
+        filledQty = costResult.filled_qty;
+      } else {
+        // Legacy path (backward compatible)
+        const slippage = bar.close * (slip_bps / 10000);
+        execPrice = signal === 'BUY' ? bar.close + slippage : bar.close - slippage;
+        fee = position_size_usd * (fee_bps / 10000);
+        filledQty = rawQty;
+      }
 
       fillId++;
       recordFill(ledger, {
         symbol: bar.symbol || symbol,
         side: signal,
-        qty,
+        qty: filledQty,
         price: bar.close,
         exec_price: execPrice,
         fee,

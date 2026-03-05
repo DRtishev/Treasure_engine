@@ -4,6 +4,8 @@ import crypto from 'node:crypto';
 import { parseJsonl } from '../edge/data_contracts.mjs';
 import { calibrateExecutionRealismFromPrivateFills, deterministicPartialFill } from '../edge/execution_realism.mjs';
 import { applyRiskFortress } from '../edge/risk_fortress.mjs';
+// Sprint 9: SSOT cost model — PARITY LAW wiring
+import { computeTotalCost } from '../cost/cost_model.mjs';
 
 function loadMarketRows(datasetId, provider = 'binance') {
   const dir = path.resolve(`data/normalized/${provider}/${datasetId}/chunks`);
@@ -66,13 +68,25 @@ export function runPaperTradingSession(config = {}) {
     const partial = deterministicPartialFill(effectiveNotional, 20_000_000);
     const fillNotional = partial.filled_usd;
     const qty = fillNotional / m.price;
-    const slipBps = calibration.params.slip_mean_bps;
-    const execPrice = side === 'BUY'
-      ? m.price * (1 + slipBps / 10000)
-      : m.price * (1 - slipBps / 10000);
-    const fee = fillNotional * 0.0004;
 
-    slippageCost += Math.abs(execPrice - m.price) * qty;
+    // Sprint 9: use computeTotalCost() SSOT instead of legacy calibration slipBps + hardcoded fee
+    const costResult = computeTotalCost({
+      price: m.price,
+      qty,
+      side,
+      order_type: 'TAKER',
+      mode: 'paper',
+      market_context: {
+        spread_bps: calibration.params.slip_mean_bps || 1.5,
+        depth_usd: 20_000_000
+      },
+      config: config.cost_config || {}
+    });
+
+    const execPrice = costResult.exec_price;
+    const fee = costResult.fee_usd;
+
+    slippageCost += costResult.slippage_usd;
     fees += fee;
 
     if (side === 'BUY') {
@@ -88,7 +102,16 @@ export function runPaperTradingSession(config = {}) {
       dayLossPct = Math.max(dayLossPct, grossPnl < 0 ? Math.abs(grossPnl) / initial_capital : 0);
     }
 
-    fills.push({ ts_ms: m.ts_ms, side, qty, market_price: m.price, exec_price: execPrice, fee, risk_state: risk.state, hard_stop: risk.hard_stop.halt });
+    fills.push({
+      ts_ms: m.ts_ms, side, qty, market_price: m.price, exec_price: execPrice, fee,
+      risk_state: risk.state, hard_stop: risk.hard_stop.halt,
+      cost_model: {
+        fee_bps: costResult.fee_bps,
+        slippage_bps: costResult.slippage_bps,
+        total_cost_bps: costResult.total_cost_bps,
+        fill_ratio: costResult.fill_ratio
+      }
+    });
   }
 
   const netPnl = grossPnl - fees - slippageCost;

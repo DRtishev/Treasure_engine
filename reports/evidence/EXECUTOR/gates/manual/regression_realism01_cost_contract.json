@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "check": "cost_model_exports_computeTotalCost",
+      "detail": "computeTotalCost is exported function",
+      "pass": true
+    },
+    {
+      "check": "cost_result_required_fields",
+      "detail": "All 12 required fields present",
+      "pass": true
+    },
+    {
+      "check": "cost_result_field_types",
+      "detail": "All fields have correct types",
+      "pass": true
+    },
+    {
+      "check": "fill_ratio_range",
+      "detail": "fill_ratio=0.95",
+      "pass": true
+    },
+    {
+      "check": "funding_status_valid",
+      "detail": "funding_status=KNOWN",
+      "pass": true
+    },
+    {
+      "check": "fees_model_exists",
+      "detail": "computeFee exported",
+      "pass": true
+    },
+    {
+      "check": "slippage_model_exists",
+      "detail": "computeSlippage exported",
+      "pass": true
+    },
+    {
+      "check": "funding_model_exists",
+      "detail": "computeFunding exported",
+      "pass": true
+    },
+    {
+      "check": "contract_json_exists",
+      "detail": "version=2.0.0, fields=12",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REALISM01_COST_CONTRACT",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

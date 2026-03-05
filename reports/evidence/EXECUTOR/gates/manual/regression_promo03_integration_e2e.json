@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "promotion_result_exists",
+      "detail": "promotion_result returned",
+      "pass": true
+    },
+    {
+      "check": "verdict_is_valid",
+      "detail": "verdict=BLOCKED",
+      "pass": true
+    },
+    {
+      "check": "has_criteria_results",
+      "detail": "criteria_results count=5",
+      "pass": true
+    },
+    {
+      "check": "has_reason_code",
+      "detail": "reason_code=CRITERIA_NOT_MET",
+      "pass": true
+    },
+    {
+      "check": "has_evidence_summary",
+      "detail": "evidence_summary=Failed: min_trades (need 100, got 22), sharpe (need 0.5, got",
+      "pass": true
+    },
+    {
+      "check": "target_stage_is_micro_live",
+      "detail": "target_stage=micro_live",
+      "pass": true
+    },
+    {
+      "check": "loop_completed",
+      "detail": "status=COMPLETED",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_PROMO03_INTEGRATION_E2E",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

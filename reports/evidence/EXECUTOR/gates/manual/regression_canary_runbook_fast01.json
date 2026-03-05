@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "check": "runbook_has_micro_live_section",
+      "detail": "Present",
+      "pass": true
+    },
+    {
+      "check": "runbook_documents_canary_actions",
+      "detail": "PAUSE, FLATTEN, REDUCE documented",
+      "pass": true
+    },
+    {
+      "check": "runbook_documents_session_receipts",
+      "detail": "Session receipt format documented",
+      "pass": true
+    },
+    {
+      "check": "runbook_has_emergency_procedures",
+      "detail": "Present",
+      "pass": true
+    },
+    {
+      "check": "runbook_documents_canary_limits",
+      "detail": "Canary limits documented",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_CANARY_RUNBOOK_FAST01",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

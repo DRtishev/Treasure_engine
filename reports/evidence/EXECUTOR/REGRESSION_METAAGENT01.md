@@ -15,7 +15,7 @@ VIOLATIONS: 0
 - [PASS] fleet_policy_valid: OK: fleet_policy.json v1.0.0 — max_active=10
 - [PASS] graduation_court_present: OK: graduation_court.mjs with evaluate() and 5 exams
 - [PASS] registry_v2_compat: OK: candidate_registry.mjs supports fsm_state + fsm_history
-- [PASS] life_summary_fleet_field: OK: fleet field present — total_candidates=0
+- [PASS] life_summary_fleet_field: no LIFE_SUMMARY.json yet — skip-safe PASS
 - [PASS] behavioral_candidate_fsm: OK: CandidateFSM instantiates, transitions, uses deterministic timestamps, fail-safe risk
 - [PASS] behavioral_graduation_court: OK: evaluate() returns frozen verdict, score=100, exams=5/5, deterministic ts
 - [PASS] behavioral_metaagent_scan: OK: scan() frozen ctx, total=2, health=1, exploration=0.5

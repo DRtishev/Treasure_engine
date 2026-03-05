@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "daily_loss_usd_flatten",
+      "detail": "action=FLATTEN, reason=DAILY_LOSS_EXCEEDED",
+      "pass": true
+    },
+    {
+      "check": "daily_loss_orders_paused",
+      "detail": "ordersPaused=true",
+      "pass": true
+    },
+    {
+      "check": "daily_loss_pct_flatten",
+      "detail": "action=FLATTEN",
+      "pass": true
+    },
+    {
+      "check": "daily_loss_ok_continue",
+      "detail": "action=CONTINUE",
+      "pass": true
+    },
+    {
+      "check": "small_live_loss_flatten",
+      "detail": "action=FLATTEN",
+      "pass": true
+    },
+    {
+      "check": "violation_recorded",
+      "detail": "violations=1",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_CANARY_E2E01_DAILY_LOSS_TRIGGER",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

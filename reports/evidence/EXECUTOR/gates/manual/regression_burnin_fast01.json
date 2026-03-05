@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "check": "reality_gap_exists",
+      "detail": "Present",
+      "pass": true
+    },
+    {
+      "check": "reality_gap_has_sections",
+      "detail": "Required sections present",
+      "pass": true
+    },
+    {
+      "check": "ledger_reconcile_exists",
+      "detail": "Present",
+      "pass": true
+    },
+    {
+      "check": "ledger_reconcile_has_sections",
+      "detail": "Required sections present",
+      "pass": true
+    },
+    {
+      "check": "calibration_contract_intact",
+      "detail": "schema_version=1.0.0, status=DEFAULTS_ONLY",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_BURNIN_FAST01",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
