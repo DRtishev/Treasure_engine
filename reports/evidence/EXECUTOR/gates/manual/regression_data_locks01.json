@@ -1,0 +1,61 @@
+{
+  "checks": [
+    {
+      "check": "calibration_contract_exists",
+      "detail": "schema_version=1.0.0, status=DEFAULTS_ONLY",
+      "pass": true
+    },
+    {
+      "check": "calibration_contract_schema_valid",
+      "detail": "All required fields present",
+      "pass": true
+    },
+    {
+      "check": "calibration_params_valid",
+      "detail": "12 params, all have value+source",
+      "pass": true
+    },
+    {
+      "check": "acquire_stub_exists_acquire_fee_tiers",
+      "detail": "exists",
+      "pass": true
+    },
+    {
+      "check": "acquire_stub_exists_acquire_funding_rates",
+      "detail": "exists",
+      "pass": true
+    },
+    {
+      "check": "acquire_stub_exists_acquire_market_snapshot",
+      "detail": "exists",
+      "pass": true
+    },
+    {
+      "check": "acquire_failclosed_acquire_fee_tiers",
+      "detail": "Correctly blocked without ALLOW_NETWORK",
+      "pass": true
+    },
+    {
+      "check": "acquire_failclosed_acquire_funding_rates",
+      "detail": "Correctly blocked without ALLOW_NETWORK",
+      "pass": true
+    },
+    {
+      "check": "acquire_failclosed_acquire_market_snapshot",
+      "detail": "Correctly blocked without ALLOW_NETWORK",
+      "pass": true
+    },
+    {
+      "check": "locks_dir_absent_ok",
+      "detail": "LOCKS dir absent (BLOCKED NEEDS_DATA)",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_DATA_LOCKS01",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

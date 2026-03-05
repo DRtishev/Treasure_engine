@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "check": "imports_cost_model_paper_live_runner.mjs",
+      "detail": "computeTotalCost import present",
+      "pass": true
+    },
+    {
+      "check": "no_legacy_feeBps_paper_live_runner.mjs",
+      "detail": "No legacy feeBps",
+      "pass": true
+    },
+    {
+      "check": "no_legacy_slipBps_paper_live_runner.mjs",
+      "detail": "No legacy slipBps",
+      "pass": true
+    },
+    {
+      "check": "imports_cost_model_e111_paper_live_real_feed_runner.mjs",
+      "detail": "computeTotalCost import present",
+      "pass": true
+    },
+    {
+      "check": "no_legacy_feeBps_e111_paper_live_real_feed_runner.mjs",
+      "detail": "No legacy feeBps",
+      "pass": true
+    },
+    {
+      "check": "no_legacy_slipBps_e111_paper_live_real_feed_runner.mjs",
+      "detail": "No legacy slipBps",
+      "pass": true
+    },
+    {
+      "check": "imports_cost_model_paper_trading_harness.mjs",
+      "detail": "computeTotalCost import present",
+      "pass": true
+    },
+    {
+      "check": "no_legacy_feeBps_paper_trading_harness.mjs",
+      "detail": "No legacy feeBps",
+      "pass": true
+    },
+    {
+      "check": "no_legacy_slipBps_paper_trading_harness.mjs",
+      "detail": "No legacy slipBps",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REALISM_WIRING_FAST01",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -1,0 +1,31 @@
+{
+  "checks": [
+    {
+      "check": "imports_evaluatePromotion",
+      "detail": "evaluatePromotion import present",
+      "pass": true
+    },
+    {
+      "check": "imports_evaluateCanary",
+      "detail": "evaluateCanary import present",
+      "pass": true
+    },
+    {
+      "check": "calls_evaluatePromotion",
+      "detail": "evaluatePromotion() call found",
+      "pass": true
+    },
+    {
+      "check": "calls_evaluateCanary",
+      "detail": "evaluateCanary() call found",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_PROMO_CANARY_WIRING_FAST01",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

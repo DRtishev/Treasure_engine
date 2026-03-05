@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "fill_has_cost_model",
+      "detail": "cost_model present: {\"fee_bps\":4,\"slippage_bps\":0.7502,\"total_cost_bps\":4.7502,\"fill_ratio\":0.95}",
+      "pass": true
+    },
+    {
+      "check": "cost_model_has_fee_bps",
+      "detail": "fee_bps=4",
+      "pass": true
+    },
+    {
+      "check": "cost_model_has_slippage_bps",
+      "detail": "slippage_bps=0.7502",
+      "pass": true
+    },
+    {
+      "check": "cost_model_has_total_cost_bps",
+      "detail": "total_cost_bps=4.7502",
+      "pass": true
+    },
+    {
+      "check": "exec_price_from_ssot",
+      "detail": "exec_price=50003.751 vs market=50000",
+      "pass": true
+    },
+    {
+      "check": "paper_loop_completes",
+      "detail": "status=COMPLETED, fills=48",
+      "pass": true
+    },
+    {
+      "check": "ledger_fills_have_exec_price_offset",
+      "detail": "48 fills checked, all have exec_price != price",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REALISM06_PAPER_USES_COSTMODEL_E2E",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

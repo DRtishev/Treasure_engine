@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "canary_events_generated",
+      "detail": "56 canary events",
+      "pass": true
+    },
+    {
+      "check": "canary_has_blocking_action",
+      "detail": "actions: PAUSE, FLATTEN",
+      "pass": true
+    },
+    {
+      "check": "canary_event_has_reason_code",
+      "detail": "reason_code=ORDER_RATE_EXCEEDED",
+      "pass": true
+    },
+    {
+      "check": "canary_state_orders_paused",
+      "detail": "ordersPaused=true",
+      "pass": true
+    },
+    {
+      "check": "no_canary_events_in_paper_stage",
+      "detail": "canary_events=0",
+      "pass": true
+    },
+    {
+      "check": "canary_reduces_fills",
+      "detail": "paper=58 vs canary=2",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_CANARY03_INTEGRATION_E2E",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}
