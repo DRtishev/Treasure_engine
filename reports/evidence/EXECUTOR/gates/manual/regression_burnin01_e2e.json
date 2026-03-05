@@ -1,0 +1,56 @@
+{
+  "checks": [
+    {
+      "check": "burnin_completes",
+      "detail": "status=COMPLETED, ticks=216, fills=100",
+      "pass": true
+    },
+    {
+      "check": "burnin_has_fills",
+      "detail": "fills=100",
+      "pass": true
+    },
+    {
+      "check": "ledger_reconciles",
+      "detail": "realized=-105.4083, unrealized=-10.7850, equity=9883.8068, drift=0.000000",
+      "pass": true
+    },
+    {
+      "check": "fees_tracked",
+      "detail": "total_fees=19.0000",
+      "pass": true
+    },
+    {
+      "check": "slippage_tracked",
+      "detail": "total_slippage=3.5634",
+      "pass": true
+    },
+    {
+      "check": "fills_have_exec_price",
+      "detail": "100/100 fills have exec_price",
+      "pass": true
+    },
+    {
+      "check": "promotion_result_returned",
+      "detail": "verdict=BLOCKED",
+      "pass": true
+    },
+    {
+      "check": "promotion_verdict_valid",
+      "detail": "verdict=BLOCKED, valid_verdicts=PROMOTE_ELIGIBLE,BLOCKED,INSUFFICIENT_DATA",
+      "pass": true
+    },
+    {
+      "check": "multi_day_coverage",
+      "detail": "ticks=216 (target >= 200)",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_BURNIN01",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

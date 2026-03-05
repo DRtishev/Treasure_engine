@@ -1,0 +1,29 @@
+{
+  "checks": [
+    {
+      "check": "reality_gap_exists",
+      "detail": "MISSING",
+      "pass": false
+    },
+    {
+      "check": "ledger_reconcile_exists",
+      "detail": "MISSING",
+      "pass": false
+    },
+    {
+      "check": "calibration_contract_intact",
+      "detail": "schema_version=1.0.0, status=DEFAULTS_ONLY",
+      "pass": true
+    }
+  ],
+  "failed_checks": [
+    "reality_gap_exists",
+    "ledger_reconcile_exists"
+  ],
+  "gate_id": "RG_BURNIN_FAST01",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "BURNIN_FAST01_FAIL",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "FAIL"
+}

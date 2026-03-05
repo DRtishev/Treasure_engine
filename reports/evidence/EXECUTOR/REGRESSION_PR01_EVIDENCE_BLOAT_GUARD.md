@@ -6,47 +6,62 @@ RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 80
-- changed_evidence_files_n: 39
+- changed_evidence_files_n: 54
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
 ## OFFENDERS
+- reports/evidence/EPOCH-V2-S10-BASELINE/SNAPSHOT.md
 - reports/evidence/EPOCH-V2-S9-AUDIT/AUDIT_AFTER_SPRINT_9.md
 - reports/evidence/EPOCH-V2-S9-AUDIT/COMMANDS_EXECUTED.md
 - reports/evidence/EPOCH-V2-S9-AUDIT/GATE_MATRIX.md
 - reports/evidence/EXECUTOR/gates/manual/regression_canary_e2e01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_canary_e2e02.json
 - reports/evidence/EXECUTOR/gates/manual/regression_canary01_policy_contract.json
+- reports/evidence/EXECUTOR/gates/manual/regression_canary03_integration_e2e.json
+- reports/evidence/EXECUTOR/gates/manual/regression_data_locks01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_epoch_skip01_respects_tracked_state.json
 - reports/evidence/EXECUTOR/gates/manual/regression_fsm02_consciousness.json
 - reports/evidence/EXECUTOR/gates/manual/regression_immune01_integration.json
 - reports/evidence/EXECUTOR/gates/manual/regression_metaagent01_fleet.json
 - reports/evidence/EXECUTOR/gates/manual/regression_pr01_evidence_bloat_guard.json
+- reports/evidence/EXECUTOR/gates/manual/regression_promo_canary_wiring_fast01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_promo_e2e01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_promo_e2e02.json
 - reports/evidence/EXECUTOR/gates/manual/regression_promo01_contract_valid.json
+- reports/evidence/EXECUTOR/gates/manual/regression_promo03_integration_e2e.json
+- reports/evidence/EXECUTOR/gates/manual/regression_realism_wiring_fast01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_realism01_cost_contract.json
 - reports/evidence/EXECUTOR/gates/manual/regression_realism02_no_proxy_metrics.json
 - reports/evidence/EXECUTOR/gates/manual/regression_realism03_parity_e2e.json
 - reports/evidence/EXECUTOR/gates/manual/regression_realism04_partial_fill_e2e.json
 - reports/evidence/EXECUTOR/gates/manual/regression_realism05_funding_bounds.json
+- reports/evidence/EXECUTOR/gates/manual/regression_realism06_paper_uses_costmodel_e2e.json
+- reports/evidence/EXECUTOR/gates/manual/regression_realism07_dryrun_uses_costmodel_e2e.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_reason01_token_purity.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_reason02_in_taxonomy.json
 - reports/evidence/EXECUTOR/REGRESSION_CANARY_E2E01.md
 - reports/evidence/EXECUTOR/REGRESSION_CANARY_E2E02.md
 - reports/evidence/EXECUTOR/REGRESSION_CANARY01_POLICY_CONTRACT.md
+- reports/evidence/EXECUTOR/REGRESSION_CANARY03_INTEGRATION_E2E.md
+- reports/evidence/EXECUTOR/REGRESSION_DATA_LOCKS01.md
 - reports/evidence/EXECUTOR/REGRESSION_EPOCH_SKIP01_RESPECTS_TRACKED_STATE.md
 - reports/evidence/EXECUTOR/REGRESSION_FSM02.md
 - reports/evidence/EXECUTOR/REGRESSION_IMMUNE01.md
 - reports/evidence/EXECUTOR/REGRESSION_METAAGENT01.md
 - reports/evidence/EXECUTOR/REGRESSION_PR01_EVIDENCE_BLOAT_GUARD.md
+- reports/evidence/EXECUTOR/REGRESSION_PROMO_CANARY_WIRING_FAST01.md
 - reports/evidence/EXECUTOR/REGRESSION_PROMO_E2E01.md
 - reports/evidence/EXECUTOR/REGRESSION_PROMO_E2E02.md
 - reports/evidence/EXECUTOR/REGRESSION_PROMO01_CONTRACT_VALID.md
+- reports/evidence/EXECUTOR/REGRESSION_PROMO03_INTEGRATION_E2E.md
+- reports/evidence/EXECUTOR/REGRESSION_REALISM_WIRING_FAST01.md
 - reports/evidence/EXECUTOR/REGRESSION_REALISM01_COST_CONTRACT.md
 - reports/evidence/EXECUTOR/REGRESSION_REALISM02_NO_PROXY_METRICS.md
 - reports/evidence/EXECUTOR/REGRESSION_REALISM03_PARITY_E2E.md
 - reports/evidence/EXECUTOR/REGRESSION_REALISM04_PARTIAL_FILL_E2E.md
 - reports/evidence/EXECUTOR/REGRESSION_REALISM05_FUNDING_BOUNDS.md
+- reports/evidence/EXECUTOR/REGRESSION_REALISM06_PAPER_USES_COSTMODEL_E2E.md
+- reports/evidence/EXECUTOR/REGRESSION_REALISM07_DRYRUN_USES_COSTMODEL_E2E.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_REASON01.md
 - reports/evidence/EXECUTOR/REGRESSION_RG_REASON02.md
