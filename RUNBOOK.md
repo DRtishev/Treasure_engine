@@ -104,7 +104,7 @@ Lightweight regression gates. No E2E execution. Must pass x2 for determinism.
 npm run -s verify:fast
 ```
 
-**Current gate inventory (Sprint 9):**
+**Current gate inventory (Sprint 12):**
 - Toolchain: node truth, nvm ban, churn, vendored backend
 - Evidence: byte audit x2, bloat guard, SSOT stable set
 - Safety: kill-switch triggers, flatten, reconcile drift
@@ -112,7 +112,10 @@ npm run -s verify:fast
 - Cost model: realism01 (cost contract), realism02 (no proxy metrics)
 - Promotion: promo01 (contract valid)
 - Canary: canary01 (policy contract)
-- **Sprint 9:** realism-wiring-fast01 (paper modules use SSOT), promo-canary-wiring-fast01 (runtime callsites exist)
+- **S9:** realism-wiring-fast01, promo-canary-wiring-fast01
+- **S10:** data-locks01 (calibration contract, acquire fail-closed, lock schema)
+- **S11:** burnin-fast01 (REALITY_GAP.md, LEDGER_RECONCILE.md present)
+- **S12:** canary-runbook-fast01 (RUNBOOK micro_live section, canary docs)
 
 ### verify:deep (E2E, ~minutes)
 
@@ -122,12 +125,14 @@ Full E2E execution gates with real pipeline paths.
 npm run -s verify:deep
 ```
 
-**Current gate inventory (Sprint 9):**
+**Current gate inventory (Sprint 12):**
 - Dryrun live E2E: ks01, sizer01, dryrun_live_e2e_v2, ks02 autotick, sizer02 enforced
 - Cost parity: realism03 (backtest vs paper), realism04 (partial fill), realism05 (funding bounds)
 - Promotion: promo-e2e01 (paper to microlive), promo-e2e02 (failclosed)
 - Canary: canary-e2e01 (daily loss), canary-e2e02 (order rate)
-- **Sprint 9:** realism06 (paper uses cost model), realism07 (dryrun uses cost model), promo03 (integration), canary03 (integration)
+- **S9:** realism06 (paper cost model), realism07 (dryrun cost model), promo03, canary03
+- **S11:** burnin01 (multi-day burn-in, ledger reconciliation)
+- **S12:** canary-session01 (micro_live canary triggers PAUSE/FLATTEN)
 
 ### victory:seal
 
@@ -153,6 +158,58 @@ Canary policy is checked on every tick via `evaluateCanary()` and can PAUSE/FLAT
 
 ---
 
+## MICRO-LIVE OPERATING PROCEDURES
+
+### Prerequisites
+1. Paper burn-in complete with LEDGER_RECONCILE.md proof
+2. Promotion verdict = PROMOTE_ELIGIBLE from paper stage
+3. ALLOW_NETWORK enabled (for real exchange data)
+4. Canary policy configured with micro_live limits
+
+### Canary Limits (micro_live defaults)
+| Limit | Value | Action on Breach |
+|-------|------:|-----------------|
+| max_exposure_usd | 100 | FLATTEN |
+| max_daily_loss_usd | 10 | PAUSE |
+| max_orders_per_min | 5 | REDUCE |
+| max_daily_loss_pct | 1% | PAUSE |
+
+### Running micro_live
+```bash
+# Stage must be explicitly set — no auto-promotion
+STAGE=micro_live npm run -s paper:live
+```
+
+### Canary Actions
+| Action | Meaning | Response |
+|--------|---------|----------|
+| CONTINUE | All metrics within limits | Normal operation |
+| REDUCE | Order rate too high | Slow down, skip next tick |
+| PAUSE | Loss limit breached | Stop all orders, continue monitoring |
+| FLATTEN | Exposure limit breached | Close all positions immediately |
+
+### Per-Session Receipts
+After each micro_live session, a receipt is generated at:
+```
+reports/evidence/EPOCH-V2-S12-CANARY/SESSION_RECEIPT_<run_id>.md
+```
+
+Receipt contains:
+- Session start/end timestamps
+- Ticks processed, fills count
+- Canary events (action, reason, violations)
+- Ledger summary (equity, PnL, fees)
+- Promotion evaluation result
+
+### Emergency Procedures
+If canary fires FLATTEN:
+1. All positions are closed
+2. Session is halted
+3. Review canary event log in session receipt
+4. Do NOT restart without operator review
+
+---
+
 ## EVIDENCE LOCATION
 
 All evidence is in `reports/evidence/FINAL_MEGA/`. Key files:
@@ -166,6 +223,9 @@ All evidence is in `reports/evidence/FINAL_MEGA/`. Key files:
 Sprint evidence directories:
 - `reports/evidence/EPOCH-V2-S9-BASELINE/` — Sprint 9 baseline snapshot
 - `reports/evidence/EPOCH-V2-S9-AUDIT/` — Sprint 9 final audit
+- `reports/evidence/EPOCH-V2-S10-BASELINE/` — Sprint 10 calibration receipt
+- `reports/evidence/EPOCH-V2-S11-BURNIN/` — Sprint 11 burn-in (REALITY_GAP, LEDGER_RECONCILE)
+- `reports/evidence/EPOCH-V2-S12-CANARY/` — Sprint 12 canary session receipts
 - `reports/evidence/EXECUTOR/gates/manual/` — individual gate receipts (JSON)
 
 ### How to read receipts
