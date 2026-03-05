@@ -108,6 +108,57 @@
 | INV-S6-3: Doctor x2 deterministic | S6 | ops:doctor liveness_deterministic |
 | INV-S6-4: verify:fast x2 PASS | S6 | standard |
 
+## Sprint 7: PROFIT REALISM LAYER
+
+| Requirement | Sprint | Description | Code Location | Gate | Evidence Path | DoD |
+|------------|--------|------------|---------------|------|---------------|-----|
+| REQ-COST-01 | S7 | SSOT cost_model with computeTotalCost | `core/cost/cost_model.mjs` | `RG_REALISM01_COST_CONTRACT` | `gates/manual/regression_realism01_cost_contract.json` | S7-DoD-1 |
+| REQ-COST-02 | S7 | fees_model maker/taker separation | `core/cost/fees_model.mjs` | `RG_REALISM01_COST_CONTRACT` | `gates/manual/regression_realism01_cost_contract.json` | S7-DoD-2 |
+| REQ-COST-03 | S7 | Deterministic slippage model | `core/cost/slippage_model.mjs` | `RG_REALISM01_COST_CONTRACT` | `gates/manual/regression_realism01_cost_contract.json` | S7-DoD-3 |
+| REQ-COST-04 | S7 | Funding bounds model (fail-closed) | `core/cost/funding_model.mjs` | `RG_REALISM01_COST_CONTRACT` | `gates/manual/regression_realism01_cost_contract.json` | S7-DoD-4 |
+| REQ-PARITY-01 | S7 | No inline cost bypass in backtest/paper/live | `core/backtest/`, `core/paper/`, `core/live/` | `RG_REALISM02_NO_PROXY_METRICS` | `gates/manual/regression_realism02_no_proxy_metrics.json` | S7-DoD-6 |
+| REQ-PARITY-02 | S7 | Parity: identical costs for identical input | `core/cost/cost_model.mjs` | `RG_REALISM03_PARITY_E2E` | `gates/manual/regression_realism03_parity_e2e.json` | S7-DoD-7 |
+| REQ-FILL-01 | S7 | Partial fills: fill_ratio < 1.0 for large orders | `core/cost/cost_model.mjs` | `RG_REALISM04_PARTIAL_FILL_E2E` | `gates/manual/regression_realism04_partial_fill_e2e.json` | S7-DoD-8 |
+| REQ-FUND-01 | S7 | Funding bounds: cost > 0 when holding | `core/cost/funding_model.mjs` | `RG_REALISM05_FUNDING_BOUNDS` | `gates/manual/regression_realism05_funding_bounds.json` | S7-DoD-9 |
+
+### Sprint 7 Invariants
+
+| Invariant | Sprint | Gate |
+|-----------|--------|------|
+| INV-S7-1: computeTotalCost returns all required fields | S7 | RG_REALISM01 |
+| INV-S7-2: No inline cost calculation bypassing cost_model | S7 | RG_REALISM02 |
+| INV-S7-3: Parity across backtest/paper for identical input | S7 | RG_REALISM03 |
+| INV-S7-4: Partial fill ratio < 1.0 for large orders | S7 | RG_REALISM04 |
+| INV-S7-5: Funding > 0 for holding positions | S7 | RG_REALISM05 |
+| INV-S7-6: verify:fast x2 PASS | S7 | standard |
+| INV-S7-7: e108 x2 PASS | S7 | standard |
+| INV-S7-8: verify:deep PASS | S7 | standard |
+| INV-S7-9: Frozen params contract hash valid | S7 | contract |
+
+## Sprint 8: PROMOTION LADDER
+
+| Requirement | Sprint | Description | Code Location | Gate | Evidence Path | DoD |
+|------------|--------|------------|---------------|------|---------------|-----|
+| REQ-PROMO-01 | S8 | evaluatePromotion with criteria schema | `core/promotion/promotion_ladder.mjs` | `RG_PROMO01_CONTRACT_VALID` | `gates/manual/regression_promo01_contract_valid.json` | S8-DoD-1 |
+| REQ-PROMO-02 | S8 | Promotion criteria met -> PROMOTE_ELIGIBLE | `core/promotion/promotion_ladder.mjs` | `RG_PROMO_E2E01_PAPER_TO_MICROLIVE` | `gates/manual/regression_promo_e2e01.json` | S8-DoD-5 |
+| REQ-PROMO-03 | S8 | Missing metrics -> INSUFFICIENT_DATA | `core/promotion/promotion_ladder.mjs` | `RG_PROMO_E2E02_FAILCLOSED_UNCERTAINTY` | `gates/manual/regression_promo_e2e02.json` | S8-DoD-6 |
+| REQ-CANARY-01 | S8 | evaluateCanary with limits schema | `core/promotion/canary_policy.mjs` | `RG_CANARY01_POLICY_CONTRACT` | `gates/manual/regression_canary01_policy_contract.json` | S8-DoD-2 |
+| REQ-CANARY-02 | S8 | Daily loss exceeded -> FLATTEN | `core/promotion/canary_policy.mjs` | `RG_CANARY_E2E01_DAILY_LOSS_TRIGGER` | `gates/manual/regression_canary_e2e01.json` | S8-DoD-7 |
+| REQ-CANARY-03 | S8 | Order rate limit -> PAUSE | `core/promotion/canary_policy.mjs` | `RG_CANARY_E2E02_ORDER_RATE_LIMIT` | `gates/manual/regression_canary_e2e02.json` | S8-DoD-8 |
+
+### Sprint 8 Invariants
+
+| Invariant | Sprint | Gate |
+|-----------|--------|------|
+| INV-S8-1: evaluatePromotion returns valid PromotionResult | S8 | RG_PROMO01 |
+| INV-S8-2: evaluateCanary returns valid CanaryResult | S8 | RG_CANARY01 |
+| INV-S8-3: Fail-closed on missing data | S8 | RG_PROMO_E2E02 |
+| INV-S8-4: Daily loss triggers FLATTEN | S8 | RG_CANARY_E2E01 |
+| INV-S8-5: Order rate limit enforced | S8 | RG_CANARY_E2E02 |
+| INV-S8-6: verify:fast x2 PASS | S8 | standard |
+| INV-S8-7: e108 x2 PASS | S8 | standard |
+| INV-S8-8: verify:deep PASS | S8 | standard |
+
 ---
 
 ## Cross-Reference: V1 → V2

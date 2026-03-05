@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "promotion_ladder_exports",
+      "detail": "evaluatePromotion exported",
+      "pass": true
+    },
+    {
+      "check": "promotion_result_fields",
+      "detail": "All 6 fields present",
+      "pass": true
+    },
+    {
+      "check": "verdict_valid",
+      "detail": "verdict=PROMOTE_ELIGIBLE",
+      "pass": true
+    },
+    {
+      "check": "criteria_results_array",
+      "detail": "criteria_results length=5",
+      "pass": true
+    },
+    {
+      "check": "criteria_result_schema",
+      "detail": "All criteria results have required fields",
+      "pass": true
+    },
+    {
+      "check": "stages_exported",
+      "detail": "STAGES=[\"paper\",\"micro_live\",\"small_live\",\"live\"]",
+      "pass": true
+    },
+    {
+      "check": "promotion_contract_json",
+      "detail": "version=1.0.0, stages=4",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_PROMO01_CONTRACT_VALID",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

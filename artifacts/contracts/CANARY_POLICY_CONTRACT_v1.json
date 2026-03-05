@@ -1,0 +1,31 @@
+{
+  "version": "1.0.0",
+  "sprint": "S8",
+  "created": "2026-03-05",
+  "limits": {
+    "micro_live": {
+      "max_exposure_usd": 100,
+      "max_orders_per_min": 5,
+      "max_daily_loss_usd": 10,
+      "max_daily_loss_pct": 0.02,
+      "max_open_positions": 1
+    },
+    "small_live": {
+      "max_exposure_usd": 1000,
+      "max_orders_per_min": 10,
+      "max_daily_loss_usd": 100,
+      "max_daily_loss_pct": 0.03,
+      "max_open_positions": 3
+    },
+    "live": {
+      "max_exposure_usd": 10000,
+      "max_orders_per_min": 20,
+      "max_daily_loss_usd": 500,
+      "max_daily_loss_pct": 0.05,
+      "max_open_positions": 10
+    }
+  },
+  "required_result_fields": ["action", "violations", "reason_code", "new_state"],
+  "valid_actions": ["CONTINUE", "REDUCE", "PAUSE", "FLATTEN"],
+  "fail_closed_on_missing": true
+}

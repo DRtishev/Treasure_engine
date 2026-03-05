@@ -1,0 +1,35 @@
+{
+  "version": "1.0.0",
+  "sprint": "S8",
+  "created": "2026-03-05",
+  "stages": ["paper", "micro_live", "small_live", "live"],
+  "transitions": {
+    "paper_to_micro_live": {
+      "min_trades": 100,
+      "stability_window_days": 14,
+      "max_drawdown": 0.05,
+      "sharpe": 0.5,
+      "win_rate": 0.45
+    },
+    "micro_live_to_small_live": {
+      "min_trades": 200,
+      "stability_window_days": 7,
+      "max_drawdown": 0.03,
+      "sharpe": 0.8,
+      "robustness_score": 0.6
+    },
+    "small_live_to_live": {
+      "min_trades": 500,
+      "stability_window_days": 30,
+      "max_drawdown": 0.02,
+      "sharpe": 1.0,
+      "robustness_score": 0.7,
+      "deflated_sharpe": 0.3
+    }
+  },
+  "required_result_fields": [
+    "eligible", "verdict", "target_stage",
+    "criteria_results", "reason_code", "evidence_summary"
+  ],
+  "valid_verdicts": ["PROMOTE_ELIGIBLE", "BLOCKED", "INSUFFICIENT_DATA"]
+}

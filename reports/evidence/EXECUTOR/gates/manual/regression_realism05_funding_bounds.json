@@ -1,0 +1,51 @@
+{
+  "checks": [
+    {
+      "check": "no_holding_zero_funding",
+      "detail": "funding_usd=0, funding_bps=0",
+      "pass": true
+    },
+    {
+      "check": "holding_default_rate_positive",
+      "detail": "funding_usd=7.13, funding_bps=15",
+      "pass": true
+    },
+    {
+      "check": "holding_default_status_bounds",
+      "detail": "funding_status=BOUNDS_ESTIMATE",
+      "pass": true
+    },
+    {
+      "check": "known_rate_status",
+      "detail": "funding_status=KNOWN",
+      "pass": true
+    },
+    {
+      "check": "known_rate_positive",
+      "detail": "funding_usd=2.85",
+      "pass": true
+    },
+    {
+      "check": "oob_rate_insufficient_evidence",
+      "detail": "funding_status=INSUFFICIENT_EVIDENCE",
+      "pass": true
+    },
+    {
+      "check": "oob_rate_worst_case",
+      "detail": "funding_bps=30 (expected 30 = 15*2)",
+      "pass": true
+    },
+    {
+      "check": "negative_rate_known",
+      "detail": "funding_status=KNOWN, bps=-3",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REALISM05_FUNDING_BOUNDS",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

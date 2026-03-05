@@ -1,0 +1,66 @@
+{
+  "checks": [
+    {
+      "check": "parity_trade_1",
+      "detail": "BUY 0.01@50000 — identical across modes",
+      "pass": true
+    },
+    {
+      "check": "parity_trade_2",
+      "detail": "SELL 0.02@50100 — identical across modes",
+      "pass": true
+    },
+    {
+      "check": "parity_trade_3",
+      "detail": "BUY 0.005@49900 — identical across modes",
+      "pass": true
+    },
+    {
+      "check": "parity_trade_4",
+      "detail": "SELL 0.015@51000 — identical across modes",
+      "pass": true
+    },
+    {
+      "check": "parity_trade_5",
+      "detail": "BUY 0.03@48000 — identical across modes",
+      "pass": true
+    },
+    {
+      "check": "parity_trade_6",
+      "detail": "SELL 0.008@52000 — identical across modes",
+      "pass": true
+    },
+    {
+      "check": "parity_trade_7",
+      "detail": "BUY 0.012@50500 — identical across modes",
+      "pass": true
+    },
+    {
+      "check": "parity_trade_8",
+      "detail": "SELL 0.025@49500 — identical across modes",
+      "pass": true
+    },
+    {
+      "check": "parity_trade_9",
+      "detail": "BUY 0.007@50200 — identical across modes",
+      "pass": true
+    },
+    {
+      "check": "parity_trade_10",
+      "detail": "SELL 0.018@49800 — identical across modes",
+      "pass": true
+    },
+    {
+      "check": "determinism_x2",
+      "detail": "Identical results on x2 calls",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_REALISM03_PARITY_E2E",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

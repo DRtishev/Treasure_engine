@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "check": "promotion_missing_metric_insufficient",
+      "detail": "verdict=INSUFFICIENT_DATA, reason=MISSING_METRICS",
+      "pass": true
+    },
+    {
+      "check": "promotion_all_missing_insufficient",
+      "detail": "verdict=INSUFFICIENT_DATA",
+      "pass": true
+    },
+    {
+      "check": "canary_missing_exposure_pause",
+      "detail": "action=PAUSE, reason=MISSING_METRIC_FAILCLOSED",
+      "pass": true
+    },
+    {
+      "check": "canary_missing_daily_loss_pause",
+      "detail": "action=PAUSE",
+      "pass": true
+    },
+    {
+      "check": "canary_complete_metrics_continue",
+      "detail": "action=CONTINUE",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_PROMO_E2E02_FAILCLOSED_UNCERTAINTY",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -1,0 +1,41 @@
+{
+  "checks": [
+    {
+      "check": "order_rate_exceeded_pause",
+      "detail": "action=PAUSE, reason=ORDER_RATE_EXCEEDED",
+      "pass": true
+    },
+    {
+      "check": "order_rate_orders_paused",
+      "detail": "ordersPaused=true",
+      "pass": true
+    },
+    {
+      "check": "order_rate_ok_continue",
+      "detail": "action=CONTINUE",
+      "pass": true
+    },
+    {
+      "check": "small_live_rate_pause",
+      "detail": "action=PAUSE",
+      "pass": true
+    },
+    {
+      "check": "exposure_warning_reduce",
+      "detail": "action=REDUCE",
+      "pass": true
+    },
+    {
+      "check": "order_rate_violation_severity",
+      "detail": "severity=CRITICAL",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_CANARY_E2E02_ORDER_RATE_LIMIT",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

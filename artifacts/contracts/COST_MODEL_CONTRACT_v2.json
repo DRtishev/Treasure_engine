@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "sprint": "S7",
+  "created": "2026-03-05",
+  "fee_maker_bps": 2,
+  "fee_taker_bps": 4,
+  "spread_default_bps": 1.5,
+  "depth_default_usd": 1000000,
+  "depth_coeff": 0.5,
+  "vol_coeff": 0.1,
+  "liquidity_fraction": 0.1,
+  "default_fill_ratio": 0.95,
+  "funding_default_bps": 5,
+  "funding_bounds_min_bps": -5,
+  "funding_bounds_max_bps": 15,
+  "funding_period_hours": 8,
+  "required_fields": [
+    "fee_bps", "fee_usd",
+    "slippage_bps", "slippage_usd",
+    "funding_bps", "funding_usd", "funding_status",
+    "fill_ratio", "filled_qty",
+    "total_cost_bps", "total_cost_usd",
+    "exec_price"
+  ]
+}
