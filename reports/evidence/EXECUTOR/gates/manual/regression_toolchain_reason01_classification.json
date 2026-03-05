@@ -1,0 +1,46 @@
+{
+  "checks": [
+    {
+      "check": "case1_lock_missing_yields_ACQ_LOCK01",
+      "detail": "ACQ_LOCK01 used when lock absent — OK",
+      "pass": true
+    },
+    {
+      "check": "case2_binary_missing_yields_NT02",
+      "detail": "NT02 used for toolchain_binary_missing — OK",
+      "pass": true
+    },
+    {
+      "check": "case3_not_executable_yields_NT02",
+      "detail": "NT02 used for toolchain_not_executable — OK",
+      "pass": true
+    },
+    {
+      "check": "case4_wrong_version_yields_NT02",
+      "detail": "NT02 used for toolchain_wrong_version — OK",
+      "pass": true
+    },
+    {
+      "check": "anti_NETV01_forbidden_in_ensure",
+      "detail": "NETV01 not assigned in ensure — OK",
+      "pass": true
+    },
+    {
+      "check": "all_detail_kinds_present",
+      "detail": "all detail.kind values present — OK",
+      "pass": true
+    },
+    {
+      "check": "live_receipt_reason_code_not_NETV01",
+      "detail": "live receipt reason_code=NONE — OK",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_TOOLCHAIN_REASON01_CLASSIFICATION",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

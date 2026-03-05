@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "check": "oversized_order_rejected",
+      "detail": "Oversized order correctly REJECTED",
+      "pass": true
+    },
+    {
+      "check": "error_mentions_tier",
+      "detail": "Error: \"Position size exceeds tier limit: requested=1, max=0.1, tier=micro\"",
+      "pass": true
+    },
+    {
+      "check": "valid_order_accepted",
+      "detail": "Valid order placed: e2e_sizer01_HACK_SIZER_01_test_0_1",
+      "pass": true
+    },
+    {
+      "check": "unknown_tier_rejected",
+      "detail": "Unknown tier correctly REJECTED",
+      "pass": true
+    },
+    {
+      "check": "reduce_downgrades_to_micro",
+      "detail": "REDUCE action downgrades tier to micro",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_PROFIT_E2E_SIZER01",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

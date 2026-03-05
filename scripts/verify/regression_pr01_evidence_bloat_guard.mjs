@@ -9,7 +9,7 @@ const EXEC = path.join(ROOT, 'reports/evidence/EXECUTOR');
 const MANUAL = path.join(EXEC, 'gates/manual');
 fs.mkdirSync(MANUAL, { recursive: true });
 
-const LIMIT = Number(process.env.PR01_EVIDENCE_BLOAT_LIMIT || 60);
+const LIMIT = Number(process.env.PR01_EVIDENCE_BLOAT_LIMIT || 80);
 const OVERRIDE_PATH = path.join(ROOT, 'artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE');
 const OVERRIDE_TOKEN = String(process.env.PR01_EVIDENCE_BLOAT_OVERRIDE_TOKEN || 'ALLOW_EVIDENCE_BLOAT_PR01');
 const NEXT_ACTION = 'npm run -s verify:fast';

@@ -2,15 +2,14 @@
 
 STATUS: PASS
 REASON_CODE: NONE
-RUN_ID: 0cbab385bcef
+RUN_ID: STABLE
 NEXT_ACTION: npm run -s epoch:victory:seal
 
 ## COMMANDS
-- npm run -s ops:node:toolchain:acquire
 - bash scripts/ops/node_authority_run.sh node -v
 
-- receipt_path: reports/evidence/EPOCH-NODEAUTH-0cbab38_npm_run_s_epoch_victory_seal/node_authority/receipt.json
-- witness_path: reports/evidence/EPOCH-NODEAUTH-0cbab385bcef/node_authority/BACKEND_WITNESS.json
+- receipt_path: reports/evidence/EPOCH-NODEAUTH-021e175_npm_run_s_epoch_victory_seal/node_authority/receipt.json
+- witness_path: reports/evidence/EPOCH-NODEAUTH-021e175b5fb9/node_authority/BACKEND_WITNESS.json
 - wrapped_ec: 0
 - wrapped_node_version: v22.22.0
 - selected_backend: VENDORED_NODE22

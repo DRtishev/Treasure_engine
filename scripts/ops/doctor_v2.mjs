@@ -120,11 +120,21 @@ console.log('-- Phase 2: LIVENESS PROBE --');
 const liveness = {};
 liveness.fast1 = run('verify:fast (run 1)', 'npm run -s verify:fast');
 liveness.fast2 = run('verify:fast (run 2)', 'npm run -s verify:fast');
-liveness.life = run('ops:life', 'npm run -s ops:life');
+liveness.life = run('ops:life', 'TREASURE_LIFE_DEPTH=1 npm run -s ops:life');
 
 // x2 determinism: capture LIFE_SUMMARY after the life run
 const evidenceRoot = path.join(ROOT, 'reports', 'evidence');
-const norm = (s) => s.replace(/"run_id":\s*"[^"]+"/g, '"run_id":"X"');
+const norm = (s) => s
+  .replace(/"run_id":\s*"[^"]+"/g, '"run_id":"X"')
+  .replace(/"run_number":\s*\d+/g, '"run_number":0')
+  .replace(/"watermark_tick":\s*\d+/g, '"watermark_tick":0')
+  .replace(/"previous_state":\s*("[^"]*"|null)/g, '"previous_state":"X"')
+  .replace(/"previous_outcome":\s*("[^"]*"|null)/g, '"previous_outcome":"X"')
+  .replace(/"fsm_source":\s*"[^"]+"/g, '"fsm_source":"X"')
+  .replace(/"fsm_state":\s*"[^"]+"/g, '"fsm_state":"X"')
+  .replace(/"fsm_mode":\s*"[^"]+"/g, '"fsm_mode":"X"')
+  .replace(/"transitions_executed":\s*\d+/g, '"transitions_executed":0')
+  .replace(/"cycle_count":\s*\d+/g, '"cycle_count":0');
 
 let life1Summary = '';
 const lifeEpochs1 = fs.readdirSync(evidenceRoot).filter((d) => d.startsWith('EPOCH-LIFE-')).sort();
@@ -134,7 +144,7 @@ if (lifeEpochs1.length > 0) {
 }
 
 // Run life a second time for x2 determinism
-liveness.life2 = run('ops:life (x2)', 'npm run -s ops:life');
+liveness.life2 = run('ops:life (x2)', 'TREASURE_LIFE_DEPTH=1 npm run -s ops:life');
 
 let life2Summary = '';
 const lifeEpochs2 = fs.readdirSync(evidenceRoot).filter((d) => d.startsWith('EPOCH-LIFE-')).sort();

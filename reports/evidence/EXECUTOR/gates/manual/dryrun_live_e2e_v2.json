@@ -1,0 +1,66 @@
+{
+  "checks": [
+    {
+      "check": "components_assembled",
+      "detail": "MasterExecutor + LiveAdapterDryRun + SafetyLoop + Recon + Sizer",
+      "pass": true
+    },
+    {
+      "check": "full_flow_success",
+      "detail": "order=dryrun_v2_HACK_V2_01_test_0_0",
+      "pass": true
+    },
+    {
+      "check": "fills_present",
+      "detail": "1 fill(s)",
+      "pass": true
+    },
+    {
+      "check": "reconciliation_ran",
+      "detail": "ran",
+      "pass": true
+    },
+    {
+      "check": "stats_tracked",
+      "detail": "orders=1, recons=1",
+      "pass": true
+    },
+    {
+      "check": "ks_metrics_available",
+      "detail": "reality_gap=0",
+      "pass": true
+    },
+    {
+      "check": "safety_state_clean",
+      "detail": "paused=false",
+      "pass": true
+    },
+    {
+      "check": "position_sizer_callable",
+      "detail": "size=10, tier=micro",
+      "pass": true
+    },
+    {
+      "check": "network_isolation",
+      "detail": "no banned network imports",
+      "pass": true
+    },
+    {
+      "check": "me_imports_position_sizer",
+      "detail": "import present",
+      "pass": true
+    },
+    {
+      "check": "me_has_safety_loop",
+      "detail": "safetyLoop field present",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_DRYRUN_LIVE_E2E_V2",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

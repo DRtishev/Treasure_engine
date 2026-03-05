@@ -1,0 +1,71 @@
+{
+  "checks": [
+    {
+      "check": "safety_loop_exists",
+      "detail": "createSafetyLoop is exported function",
+      "pass": true
+    },
+    {
+      "check": "safety_loop_imports_kill_switch",
+      "detail": "imports evaluateKillSwitch from kill_switch.mjs",
+      "pass": true
+    },
+    {
+      "check": "safety_loop_calls_flatten",
+      "detail": "calls onFlatten()",
+      "pass": true
+    },
+    {
+      "check": "safety_loop_calls_pause",
+      "detail": "calls onPause()",
+      "pass": true
+    },
+    {
+      "check": "safety_loop_calls_reduce",
+      "detail": "calls onReduce()",
+      "pass": true
+    },
+    {
+      "check": "ks_flatten_triggers_orders_paused",
+      "detail": "FLATTEN triggers → ordersPaused=true + onFlatten called",
+      "pass": true
+    },
+    {
+      "check": "ks_safe_metrics_no_trigger",
+      "detail": "Safe metrics → no trigger ✓",
+      "pass": true
+    },
+    {
+      "check": "ks_pause_triggers_orders_paused",
+      "detail": "PAUSE triggers → onPause called ✓",
+      "pass": true
+    },
+    {
+      "check": "sizer_micro_correct",
+      "detail": "micro: size=10, max_risk=$100 ✓",
+      "pass": true
+    },
+    {
+      "check": "sizer_unknown_tier_rejected",
+      "detail": "Unknown tier → size=0 (rejected) ✓",
+      "pass": true
+    },
+    {
+      "check": "recon_detects_drift",
+      "detail": "Drift detected: 1 drift(s) ✓",
+      "pass": true
+    },
+    {
+      "check": "recon_clean_match",
+      "detail": "Clean match → ok=true ✓",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_PROFIT_WIRING01",
+  "next_action": "npm run -s verify:fast",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

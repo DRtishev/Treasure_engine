@@ -1,0 +1,4 @@
+{"run_id":"9aa26a8b2a39","verdict":"SICK","reason_code":"LIVENESS_FAIL","score":70,"confidence_score":70,"escalation_stage":0,"appended_at_tick":"9aa26a8b2a39"}
+{"run_id":"a4e3b0615d2c","verdict":"SICK","reason_code":"LIVENESS_FAIL","score":70,"confidence_score":70,"escalation_stage":0,"appended_at_tick":"a4e3b0615d2c"}
+{"run_id":"021e175b5fb9","verdict":"SICK","reason_code":"LIVENESS_FAIL","score":70,"confidence_score":70,"escalation_stage":0,"appended_at_tick":"021e175b5fb9"}
+{"run_id":"4e51a4095b93","verdict":"HEALTHY","reason_code":"NONE","score":100,"confidence_score":100,"escalation_stage":0,"appended_at_tick":"4e51a4095b93"}

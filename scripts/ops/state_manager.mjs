@@ -435,8 +435,7 @@ export function executeTransition(bus, currentState, transitionId, context = {})
     for (let run = 1; run <= runCount; run++) {
       const result = spawnSync('npm', ['run', '-s', ...actionParts], {
         cwd: ROOT,
-        stdio: 'pipe',
-        encoding: 'utf8',
+        stdio: ['pipe', 'inherit', 'inherit'],
         timeout: timeoutMs,
       });
 
@@ -457,7 +456,7 @@ export function executeTransition(bus, currentState, transitionId, context = {})
               exit_code: String(result.status ?? -1),
               reason: failReason,
               run_number: String(run),
-              budget_ms: String(timeoutMs),
+              timeout_budget: String(timeoutMs),
             },
           });
         }

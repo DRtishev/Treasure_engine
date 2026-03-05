@@ -37,37 +37,37 @@
     },
     {
       "check": "life_summary_v2_schema",
-      "detail": "no life evidence yet — skip-safe PASS",
+      "detail": "OK: LIFE_SUMMARY.json schema_version=2.0.0",
       "pass": true
     },
     {
       "check": "consciousness_result_present",
-      "detail": "no life evidence yet — skip-safe PASS",
-      "pass": true
-    },
-    {
-      "check": "proprio_scan_event",
-      "detail": "no life evidence yet — skip-safe PASS",
-      "pass": true
-    },
-    {
-      "check": "consciousness_result_event",
-      "detail": "no life evidence yet — skip-safe PASS",
-      "pass": true
-    },
-    {
-      "check": "no_hardcoded_cert_mode",
-      "detail": "no life evidence yet — skip-safe PASS",
+      "detail": "OK: consciousness_result present — reached=true final_state=CERTIFIED",
       "pass": true
     },
     {
       "check": "reflexes_field_present",
-      "detail": "no life evidence yet — skip-safe PASS",
+      "detail": "OK: reflexes_fired is array (length=0)",
       "pass": true
     },
     {
       "check": "fsm_final_state_valid",
-      "detail": "no life evidence yet — skip-safe PASS",
+      "detail": "OK: fsm_final_state=\"CERTIFIED\" is valid",
+      "pass": true
+    },
+    {
+      "check": "proprio_scan_event",
+      "detail": "OK: PROPRIO_SCAN event found with fsm_state=CERTIFIED",
+      "pass": true
+    },
+    {
+      "check": "consciousness_result_event",
+      "detail": "OK: CONSCIOUSNESS_RESULT event found — reached=true",
+      "pass": true
+    },
+    {
+      "check": "no_hardcoded_cert_mode",
+      "detail": "OK: modes FSM-derived (CERT) — proprio fsm_state=CERTIFIED",
       "pass": true
     }
   ],

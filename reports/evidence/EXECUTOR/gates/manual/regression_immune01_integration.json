@@ -27,7 +27,7 @@
     },
     {
       "check": "life_summary_immune_field",
-      "detail": "no LIFE_SUMMARY.json yet — skip-safe PASS",
+      "detail": "OK: immune field present — doctor_ran=false verdict=null",
       "pass": true
     },
     {

@@ -41,7 +41,7 @@ deterministic, tick-ordered, timestamp-free events. This file is the
 | `tick` | integer ≥ 1 | YES | Monotonically increasing within a run; no gaps required |
 | `run_id` | string | YES | Hex ID from git HEAD or TREASURE_RUN_ID env |
 | `mode` | string | YES | One of: CERT, CLOSE, AUDIT, RESEARCH, ACCEL, LIFE |
-| `component` | string | YES | One of: TIMEMACHINE, AUTOPILOT, COCKPIT, REGISTRY, EVENTBUS, LIFE |
+| `component` | string | YES | One of: TIMEMACHINE, AUTOPILOT, COCKPIT, REGISTRY, EVENTBUS, LIFE, DATA_ORGAN, FSM, DOCTOR, METAAGENT |
 | `event` | string | YES | SCREAMING_SNAKE_CASE event name |
 | `reason_code` | string | YES | NONE if success; else registered reason code |
 | `surface` | string | YES | UX, PR, OFFLINE_AUTHORITY, CONTRACT, PROFIT, DATA |
