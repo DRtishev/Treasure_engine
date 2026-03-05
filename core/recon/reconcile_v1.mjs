@@ -18,7 +18,17 @@ export const MismatchCode = {
   MISSING_FILL: 'MISSING_FILL',
   ORDER_STATE_DRIFT: 'ORDER_STATE_DRIFT',
   UNEXPECTED_FILL: 'UNEXPECTED_FILL',
-  TIMESTAMP_DRIFT: 'TIMESTAMP_DRIFT'
+  TIMESTAMP_DRIFT: 'TIMESTAMP_DRIFT',
+  FUNDING_MISMATCH: 'FUNDING_MISMATCH'   // R2.4
+};
+
+/**
+ * R2.4: Reconciliation action codes
+ */
+export const ReconAction = {
+  RECON_OK: 'RECON_OK',
+  RECON_WARN_DRIFT: 'RECON_WARN_DRIFT',
+  RECON_HALT_MISMATCH: 'RECON_HALT_MISMATCH'
 };
 
 /**
@@ -346,4 +356,54 @@ export function reconcile(ledgerFills, exchangeFills, tolerancePct = 0.01) {
   }
 
   return { ok: drifts.length === 0, drifts, total_checked: ledgerFills.length + exchangeFills.length };
+}
+
+/**
+ * R2.4: Incremental (per-fill) reconciliation for streaming use.
+ *
+ * @param {Object} newFill — { order_id, price, size, fee, funding }
+ * @param {Object} expected — { price, size, fee, funding } from cost model prediction
+ * @param {number} tolerancePct — max acceptable drift (default 1%)
+ * @returns {{ action: string, drifts: Object[] }}
+ */
+export function reconcileIncremental(newFill, expected, tolerancePct = 0.01) {
+  const drifts = [];
+
+  if (expected.price !== undefined) {
+    const priceDrift = Math.abs(newFill.price - expected.price) / Math.max(expected.price, 1e-12);
+    if (priceDrift > tolerancePct) {
+      drifts.push({ type: 'PRICE_DRIFT', actual: newFill.price, expected: expected.price, drift: priceDrift });
+    }
+  }
+
+  if (expected.size !== undefined) {
+    const sizeDrift = Math.abs(newFill.size - expected.size) / Math.max(expected.size, 1e-12);
+    if (sizeDrift > tolerancePct) {
+      drifts.push({ type: 'SIZE_DRIFT', actual: newFill.size, expected: expected.size, drift: sizeDrift });
+    }
+  }
+
+  if (expected.fee !== undefined) {
+    const feeDrift = Math.abs((newFill.fee || 0) - expected.fee) / Math.max(expected.fee, 1e-12);
+    if (feeDrift > tolerancePct * 10) { // fees have higher tolerance
+      drifts.push({ type: 'FEE_DRIFT', actual: newFill.fee, expected: expected.fee, drift: feeDrift });
+    }
+  }
+
+  // R2.4: Funding reconciliation
+  if (expected.funding !== undefined && newFill.funding !== undefined) {
+    const fundingDrift = Math.abs(newFill.funding - expected.funding) / Math.max(Math.abs(expected.funding), 1e-12);
+    if (fundingDrift > tolerancePct * 5) { // funding has medium tolerance
+      drifts.push({ type: 'FUNDING_DRIFT', actual: newFill.funding, expected: expected.funding, drift: fundingDrift });
+    }
+  }
+
+  // Determine action
+  let action = ReconAction.RECON_OK;
+  if (drifts.length > 0) {
+    const hasCritical = drifts.some(d => d.type === 'PRICE_DRIFT' || d.type === 'SIZE_DRIFT');
+    action = hasCritical ? ReconAction.RECON_HALT_MISMATCH : ReconAction.RECON_WARN_DRIFT;
+  }
+
+  return { action, drifts, ok: drifts.length === 0 };
 }

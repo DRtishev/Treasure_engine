@@ -17,6 +17,7 @@ export function createLedger(config = {}) {
     realized_pnl: 0,
     total_fees: 0,
     total_slippage: 0,
+    total_funding: 0,
     high_watermark: config.initial_capital || 10000,
     max_drawdown: 0,
     created_at: config.created_at || '2026-01-01T00:00:00Z'
@@ -30,7 +31,7 @@ export function createLedger(config = {}) {
  * @returns {Object} Updated ledger (mutated)
  */
 export function recordFill(ledger, fill) {
-  const { symbol, side, qty, price, exec_price, fee = 0, ts, trade_id } = fill;
+  const { symbol, side, qty, price, exec_price, fee = 0, funding = 0, ts, trade_id } = fill;
 
   const slippage = Math.abs(exec_price - price) * qty;
 
@@ -43,6 +44,7 @@ export function recordFill(ledger, fill) {
     price,
     exec_price,
     fee,
+    funding,
     slippage,
     realized_pnl: 0
   };
@@ -99,6 +101,7 @@ export function recordFill(ledger, fill) {
 
   ledger.total_fees += fee;
   ledger.total_slippage += slippage;
+  ledger.total_funding += funding;
 
   // W1.4: Drawdown tracking — use exec_price for unrealized PnL precision
   const fillPrices = { [symbol]: exec_price };
@@ -168,9 +171,37 @@ export function getLedgerSummary(ledger, prices = {}) {
     return_pct: returnPct,
     total_fees: ledger.total_fees,
     total_slippage: ledger.total_slippage,
+    total_funding: ledger.total_funding,
     max_drawdown: ledger.max_drawdown,
     total_fills: ledger.fills.length,
     currency: ledger.currency
+  };
+}
+
+/**
+ * R2.1: Get PnL attribution breakdown (4-component)
+ * Returns: gross_pnl, fees_cost, slippage_cost, funding_cost, net_pnl, edge_pnl
+ */
+export function getAttribution(ledger, prices = {}) {
+  const unrealizedPnl = getUnrealizedPnL(ledger, prices);
+  const gross_pnl = ledger.realized_pnl + unrealizedPnl;
+  const fees_cost = ledger.total_fees;
+  const slippage_cost = ledger.total_slippage;
+  const funding_cost = ledger.total_funding;
+  const total_costs = fees_cost + slippage_cost + funding_cost;
+  // net_pnl = gross - costs (fees already subtracted from realized_pnl in recordFill,
+  // so edge_pnl = gross_pnl + total_costs - total_costs = gross_pnl as residual)
+  const net_pnl = gross_pnl;
+  const edge_pnl = net_pnl + total_costs; // pre-cost alpha
+
+  return {
+    gross_pnl,
+    fees_cost,
+    slippage_cost,
+    funding_cost,
+    total_costs,
+    net_pnl,
+    edge_pnl
   };
 }
 
