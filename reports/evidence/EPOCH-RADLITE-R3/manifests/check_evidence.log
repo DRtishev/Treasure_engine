@@ -1,0 +1,3 @@
+$ sha256sum -c reports/evidence/EPOCH-RADLITE-R3/SHA256SUMS.EVIDENCE.txt
+reports/evidence/EPOCH-RADLITE-R3/fast_tiers_proof.md: OK
+reports/evidence/EPOCH-RADLITE-R3/script_index_proof.md: OK
