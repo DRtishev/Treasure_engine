@@ -86,6 +86,10 @@ export class MasterExecutor {
     this.enable_persistence = options.enable_persistence !== false;
     this.enable_events = options.enable_events !== false;
     
+    // Risk state references (R1.4: real kill metrics)
+    this.riskGovernor = options.riskGovernor || null; // RiskGovernorState
+    this.ledger = options.ledger || null; // profit ledger
+
     // Statistics
     this.stats = {
       intents_created: 0,
@@ -95,7 +99,10 @@ export class MasterExecutor {
       reconciliation_failures: 0,
       persistence_writes: 0,
       events_logged: 0,
-      total_latency_ms: 0
+      total_latency_ms: 0,
+      exchange_errors: 0,
+      consecutive_losses: 0,
+      last_fill_pnl: 0
     };
     
     // Initialize run
@@ -365,8 +372,31 @@ export class MasterExecutor {
    * @private
    */
   async _checkIntentIdempotency(intent, ctx) {
-    // Placeholder: implement with repoState.createIntent
-    // For now, assume no duplicates
+    // R1.1: Wire real idempotency via repoState DB-backed dedup
+    if (!this.repoState) return { created: false };
+
+    const intentRecord = {
+      intent_id: intent.intent_id,
+      run_id: this.ctx?.run_id || 'unknown',
+      hack_id: ctx.hack_id || 'unknown',
+      side: intent.side,
+      size: intent.size,
+      symbol: intent.symbol || 'unknown',
+      price: intent.price || 0,
+      status: 'pending',
+      created_at_ms: this.ctx?.clock?.now() || Date.now()
+    };
+
+    const result = this.repoState.createIntent(intentRecord);
+
+    if (!result.created) {
+      // Intent already exists — duplicate detected
+      this._logEvent('EXEC', 'intent_dedup', {
+        intent_id: intent.intent_id, reason: 'DUPLICATE_INTENT'
+      }, EventLevel.WARN);
+      return { created: true, intent_id: intent.intent_id };
+    }
+
     return { created: false };
   }
 
@@ -443,12 +473,39 @@ export class MasterExecutor {
   getKillSwitchMetrics() {
     const recon = this.stats.reconciliation_failures;
     const total = this.stats.reconciliations_run || 1;
+    const ordersSent = this.stats.orders_placed || 1;
+
+    // R1.4: Wire real metrics from RiskGovernor + Ledger + adapter stats
+    const drawdown = this.riskGovernor
+      ? this.riskGovernor.getCurrentDrawdown()
+      : (this.ledger ? (this.ledger.getMaxDrawdown?.() || 0) : 0);
+
     return {
-      max_drawdown: 0, // caller must provide actual drawdown
+      max_drawdown: drawdown,
       reality_gap: total > 0 ? recon / total : 0,
-      exchange_error_rate: 0, // caller must provide
-      consecutive_losses: 0, // caller must provide
+      exchange_error_rate: this.stats.exchange_errors / ordersSent,
+      consecutive_losses: this.stats.consecutive_losses,
     };
+  }
+
+  /**
+   * Track fill outcome for consecutive loss counter (R1.4)
+   * Call this after each fill with the fill PnL.
+   */
+  trackFillOutcome(pnl) {
+    if (pnl < 0) {
+      this.stats.consecutive_losses++;
+    } else if (pnl > 0) {
+      this.stats.consecutive_losses = 0;
+    }
+    this.stats.last_fill_pnl = pnl;
+  }
+
+  /**
+   * Record an exchange error (R1.4)
+   */
+  recordExchangeError() {
+    this.stats.exchange_errors++;
   }
 
   /**

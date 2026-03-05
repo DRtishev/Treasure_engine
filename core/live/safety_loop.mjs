@@ -46,6 +46,7 @@ export function createSafetyLoop(opts) {
     onReduce = () => {},
     clock = { now: () => Date.now() },
     eventLog = null,
+    repoState = null,  // R1.2: optional persistence layer for kill state recovery
   } = opts;
 
   /** @type {SafetyState} */
@@ -56,6 +57,35 @@ export function createSafetyLoop(opts) {
     lastEvalTs: 0,
     history: [],
   };
+
+  // R1.2: Restore persisted state on init (fail-closed: unknown = paused)
+  if (repoState) {
+    try {
+      const saved = repoState.loadCheckpoint('safety_state');
+      if (saved) {
+        const parsed = typeof saved === 'string' ? JSON.parse(saved) : saved;
+        if (parsed.ordersPaused !== undefined) state.ordersPaused = parsed.ordersPaused;
+        if (parsed.currentTier) state.currentTier = parsed.currentTier;
+        if (parsed.lastAction) state.lastAction = parsed.lastAction;
+      }
+    } catch {
+      // Fail-closed: if checkpoint load fails, assume paused
+      state.ordersPaused = true;
+      state.lastAction = 'CHECKPOINT_LOAD_FAIL';
+    }
+  }
+
+  /** R1.2: Persist state to DB on change */
+  function _persistState() {
+    if (!repoState) return;
+    try {
+      repoState.saveCheckpoint('safety_state', JSON.stringify({
+        ordersPaused: state.ordersPaused,
+        currentTier: state.currentTier,
+        lastAction: state.lastAction,
+      }));
+    } catch { /* best-effort persistence */ }
+  }
 
   let intervalHandle = null;
 
@@ -86,12 +116,15 @@ export function createSafetyLoop(opts) {
       if (result.action === 'FLATTEN') {
         state.ordersPaused = true;
         onFlatten({ metrics, conditions: result.conditions, ts });
+        _persistState(); // R1.2
       } else if (result.action === 'PAUSE') {
         state.ordersPaused = true;
         onPause({ metrics, conditions: result.conditions, ts });
+        _persistState(); // R1.2
       } else if (result.action === 'REDUCE') {
         state.currentTier = 'micro';
         onReduce({ metrics, conditions: result.conditions, ts });
+        _persistState(); // R1.2
       }
     }
 
@@ -124,6 +157,7 @@ export function createSafetyLoop(opts) {
     state.ordersPaused = false;
     state.currentTier = 'normal';
     state.lastAction = null;
+    _persistState(); // R1.2
   }
 
   /**

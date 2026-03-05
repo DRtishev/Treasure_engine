@@ -4,6 +4,7 @@
 // CRITICAL: HALTED is terminal (requires manual reset)
 
 import { MODES, VERDICTS } from '../truth/truth_engine.mjs';
+import { existsSync, readFileSync, unlinkSync } from 'fs';
 
 /**
  * State transitions (FSM rules)
@@ -149,12 +150,38 @@ export class GovernanceFSM {
 
   /**
    * Request manual reset (to exit HALT)
+   * R1.3: Requires double-key protocol — file token + applyFlag
    */
-  requestManualReset() {
+  requestManualReset({ applyFlag = false } = {}) {
+    const tokenPath = 'artifacts/incoming/HALT_RESET_APPROVED';
+    const fileExists = existsSync(tokenPath);
+    let fileValid = false;
+    if (fileExists) {
+      try {
+        const content = readFileSync(tokenPath, 'utf8').trim();
+        fileValid = content === 'HALT_RESET: YES';
+      } catch { fileValid = false; }
+    }
+
+    if (!applyFlag || !fileValid) {
+      return {
+        success: false,
+        reason: 'DOUBLE_KEY_REQUIRED',
+        applyFlag,
+        fileValid,
+        message: 'HALT reset requires --apply flag AND artifacts/incoming/HALT_RESET_APPROVED with "HALT_RESET: YES"',
+        timestamp: Date.now()
+      };
+    }
+
     this.manualResetRequested = true;
+
+    // Single-use: consume token file after successful use
+    try { unlinkSync(tokenPath); } catch { /* already consumed or missing */ }
+
     return {
       success: true,
-      message: 'Manual reset requested - next transition will clear HALT',
+      message: 'HALT reset approved via double-key protocol',
       timestamp: Date.now()
     };
   }
