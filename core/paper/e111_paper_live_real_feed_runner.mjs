@@ -1,4 +1,6 @@
 import { sha256Text } from '../../scripts/verify/e66_lib.mjs';
+// Sprint 9: SSOT cost model — PARITY LAW wiring
+import { computeTotalCost } from '../cost/cost_model.mjs';
 
 export function runPaperLiveRealFeed(candles, opts = {}) {
   const maxDailyLoss = opts.maxDailyLoss ?? 0.03;
@@ -22,10 +24,21 @@ export function runPaperLiveRealFeed(candles, opts = {}) {
     else if (edge < -0.0015) side = -1;
     if (side === 0) continue;
     const notional = Math.min(cash * 0.05, 500);
-    const slipBps = 2;
-    const feeBps = 4;
+    const sideStr = side > 0 ? 'BUY' : 'SELL';
+
+    // Sprint 9: use computeTotalCost() SSOT instead of legacy feeBps/slipBps
+    const costResult = computeTotalCost({
+      price: px,
+      qty: notional / px,
+      side: sideStr,
+      order_type: 'TAKER',
+      mode: 'paper',
+      market_context: opts.market_context || {},
+      config: opts.cost_config || {}
+    });
+
+    const cost = costResult.fee_usd + costResult.slippage_usd;
     const pnl = side === 1 ? notional * edge : -notional * edge;
-    const cost = notional * (slipBps + feeBps) / 10000;
     const net = pnl - cost;
     cash += net;
     trades++;
@@ -33,7 +46,16 @@ export function runPaperLiveRealFeed(candles, opts = {}) {
     if (losses >= 3) cooldown = 5;
     peak = Math.max(peak, cash);
     const dd = (peak - cash) / peak;
-    fills.push({ ts: candles[i].ts, side: side > 0 ? 'BUY' : 'SELL', net });
+    fills.push({
+      ts: candles[i].ts,
+      side: sideStr,
+      net,
+      cost_model: {
+        fee_bps: costResult.fee_bps,
+        slippage_bps: costResult.slippage_bps,
+        total_cost_bps: costResult.total_cost_bps
+      }
+    });
     const initCap = opts.initialCapital ?? 10000;
     if ((initCap - cash) / initCap > maxDailyLoss) break;
     if (dd > maxDrawdown) break;

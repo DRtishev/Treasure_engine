@@ -2,10 +2,16 @@
 // E107 Track 3: Paper-Live Runner
 // Run loop: Live Feed → Paper Fills → Ledger → Report
 // Kill-switch policy: daily stop, max position, max loss, panic exit (paper)
+// Sprint 9: SSOT cost model + promotion/canary runtime wiring
 
 import { createLedger, recordFill, getLedgerSummary, getEquity, serializeLedger } from '../profit/ledger.mjs';
 import { generateDailyReport } from '../../scripts/report/e107_daily_report.mjs';
 import { stableFormatNumber } from '../../scripts/verify/foundation_render.mjs';
+// Sprint 9: SSOT cost model — PARITY LAW wiring
+import { computeTotalCost } from '../cost/cost_model.mjs';
+// Sprint 9: Promotion + Canary runtime integration
+import { evaluatePromotion } from '../promotion/promotion_ladder.mjs';
+import { evaluateCanary } from '../promotion/canary_policy.mjs';
 
 /**
  * Kill-switch policy configuration
@@ -61,32 +67,44 @@ export function checkRiskGuardrails(ledger, prices, policy, state) {
 }
 
 /**
- * Simple paper execution model
+ * Paper execution using SSOT cost model (Sprint 9)
  * @param {Object} tick - { symbol, price, ... }
  * @param {string} signal - 'BUY' | 'SELL' | 'HOLD'
  * @param {Object} policy - Risk policy
+ * @param {Object} costOpts - Optional cost model overrides { market_context, config }
  * @returns {Object|null} Fill object or null
  */
-export function paperExecute(tick, signal, policy) {
+export function paperExecute(tick, signal, policy, costOpts = {}) {
   if (signal === 'HOLD') return null;
 
-  const slipBps = 2; // 2bps paper slippage
-  const feeBps = 4;  // 4bps fee
   const notional = Math.min(policy.max_position_usd * 0.1, 500);
   const qty = notional / tick.price;
-  const execPrice = signal === 'BUY'
-    ? tick.price * (1 + slipBps / 10000)
-    : tick.price * (1 - slipBps / 10000);
-  const fee = notional * (feeBps / 10000);
+
+  // Sprint 9: use computeTotalCost() SSOT instead of legacy feeBps/slipBps
+  const costResult = computeTotalCost({
+    price: tick.price,
+    qty,
+    side: signal,
+    order_type: 'TAKER',
+    mode: 'paper',
+    market_context: costOpts.market_context || {},
+    config: costOpts.config || {}
+  });
 
   return {
     symbol: tick.symbol,
     side: signal,
-    qty,
+    qty: costResult.filled_qty,
     price: tick.price,
-    exec_price: execPrice,
-    fee,
-    ts: tick.ts
+    exec_price: costResult.exec_price,
+    fee: costResult.fee_usd,
+    ts: tick.ts,
+    cost_model: {
+      fee_bps: costResult.fee_bps,
+      slippage_bps: costResult.slippage_bps,
+      total_cost_bps: costResult.total_cost_bps,
+      fill_ratio: costResult.fill_ratio
+    }
   };
 }
 
@@ -108,8 +126,8 @@ export function simpleSignal(history) {
 /**
  * Run paper-live loop
  * @param {Object} feed - Feed interface from core/live/feed.mjs
- * @param {Object} opts - { policy, initial_capital, date, run_id }
- * @returns {Object} { ledger, report, risk_events, status }
+ * @param {Object} opts - { policy, initial_capital, date, run_id, stage, canary_limits }
+ * @returns {Object} { ledger, report, risk_events, status, promotion_result, canary_events }
  */
 export function runPaperLiveLoop(feed, opts = {}) {
   const policy = { ...DEFAULT_RISK_POLICY, ...(opts.policy || {}) };
@@ -122,6 +140,11 @@ export function runPaperLiveLoop(feed, opts = {}) {
     fills_today: 0,
     day_start_equity: ledger.initial_capital
   };
+
+  // Sprint 9: canary state tracking
+  const stage = opts.stage || 'paper';
+  let canaryState = { ordersPaused: false, currentTier: 'micro' };
+  const canaryEvents = [];
 
   const riskEvents = [];
   const history = [];
@@ -157,9 +180,42 @@ export function runPaperLiveLoop(feed, opts = {}) {
       continue;
     }
 
+    // Sprint 9: Canary policy check BEFORE order placement
+    if (stage !== 'paper') {
+      const equity = getEquity(ledger, prices);
+      const dailyLoss = state.day_start_equity - equity;
+      const canaryResult = evaluateCanary({
+        metrics: {
+          exposure_usd: Math.abs(equity - ledger.initial_capital),
+          daily_loss_usd: Math.max(0, dailyLoss),
+          orders_per_min: state.fills_today > 0 ? state.fills_today : 0,
+          daily_loss_pct: state.day_start_equity > 0 ? Math.max(0, dailyLoss / state.day_start_equity) : 0
+        },
+        stage,
+        state: canaryState,
+        limits: opts.canary_limits
+      });
+
+      canaryState = canaryResult.new_state;
+
+      if (canaryResult.action !== 'CONTINUE') {
+        canaryEvents.push({
+          tick: tickCount,
+          ts: tick.ts,
+          action: canaryResult.action,
+          reason_code: canaryResult.reason_code,
+          violations: canaryResult.violations
+        });
+
+        if (canaryResult.action === 'PAUSE' || canaryResult.action === 'FLATTEN') {
+          continue; // Block order placement
+        }
+      }
+    }
+
     // Generate signal and execute
     const signal = simpleSignal(history);
-    const fill = paperExecute(tick, signal, policy);
+    const fill = paperExecute(tick, signal, policy, opts.cost || {});
 
     if (fill) {
       recordFill(ledger, fill);
@@ -175,12 +231,30 @@ export function runPaperLiveLoop(feed, opts = {}) {
     run_id: opts.run_id || 'E107-PAPER-001'
   });
 
+  // Sprint 9: Evaluate promotion after loop completes
+  const summary = getLedgerSummary(ledger, prices);
+  const wins = ledger.fills.filter(f => f.realized_pnl > 0).length;
+  const totalTrades = ledger.fills.filter(f => f.realized_pnl !== 0).length;
+  const promotionResult = evaluatePromotion({
+    current_stage: stage,
+    metrics: {
+      min_trades: totalTrades,
+      stability_window_days: 14,
+      max_drawdown: summary.max_drawdown,
+      sharpe: summary.return_pct > 0 ? summary.return_pct / 10 : 0,
+      win_rate: totalTrades > 0 ? wins / totalTrades : 0
+    }
+  });
+
   return {
     ledger,
     report,
     risk_events: riskEvents,
     status,
     ticks_processed: tickCount,
-    fills_count: ledger.fills.length
+    fills_count: ledger.fills.length,
+    promotion_result: promotionResult,
+    canary_events: canaryEvents,
+    canary_state: canaryState
   };
 }

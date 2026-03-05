@@ -159,6 +159,29 @@
 | INV-S8-7: e108 x2 PASS | S8 | standard |
 | INV-S8-8: verify:deep PASS | S8 | standard |
 
+## Sprint 9: REAL PIPELINE INTEGRATION
+
+| Requirement | Sprint | Description | Code Location | Gate | Evidence Path | DoD |
+|------------|--------|------------|---------------|------|---------------|-----|
+| REQ-WIRE-C1 | S9 | Paper runner uses computeTotalCost() SSOT | `core/paper/paper_live_runner.mjs` | `RG_REALISM_WIRING_FAST01`, `RG_REALISM06_PAPER_USES_COSTMODEL_E2E` | `gates/manual/regression_realism_wiring_fast01.json` | S9-DoD-1 |
+| REQ-WIRE-C2 | S9 | Paper real-feed uses computeTotalCost() SSOT | `core/paper/e111_paper_live_real_feed_runner.mjs` | `RG_REALISM_WIRING_FAST01`, `RG_REALISM07_DRYRUN_USES_COSTMODEL_E2E` | `gates/manual/regression_realism07_dryrun_uses_costmodel_e2e.json` | S9-DoD-2 |
+| REQ-WIRE-C3 | S9 | Paper harness uses computeTotalCost() SSOT | `core/paper/paper_trading_harness.mjs` | `RG_REALISM_WIRING_FAST01` | `gates/manual/regression_realism_wiring_fast01.json` | S9-DoD-3 |
+| REQ-WIRE-P1 | S9 | evaluatePromotion() called in paper pipeline | `core/paper/paper_live_runner.mjs` | `RG_PROMO_CANARY_WIRING_FAST01`, `RG_PROMO03_INTEGRATION_E2E` | `gates/manual/regression_promo03_integration_e2e.json` | S9-DoD-4 |
+| REQ-WIRE-P2 | S9 | evaluateCanary() called in paper loop | `core/paper/paper_live_runner.mjs` | `RG_PROMO_CANARY_WIRING_FAST01`, `RG_CANARY03_INTEGRATION_E2E` | `gates/manual/regression_canary03_integration_e2e.json` | S9-DoD-5 |
+| REQ-WIRE-P3 | S9 | Canary PAUSE blocks orders | `core/paper/paper_live_runner.mjs` | `RG_CANARY03_INTEGRATION_E2E` | `gates/manual/regression_canary03_integration_e2e.json` | S9-DoD-6 |
+
+### Sprint 9 Invariants
+
+| Invariant | Sprint | Gate |
+|-----------|--------|------|
+| INV-S9-1: Paper modules use computeTotalCost (no legacy feeBps/slipBps) | S9 | RG_REALISM_WIRING_FAST01 |
+| INV-S9-2: evaluatePromotion + evaluateCanary imported in paper_live_runner | S9 | RG_PROMO_CANARY_WIRING_FAST01 |
+| INV-S9-3: Paper loop generates promotion receipt | S9 | RG_PROMO03_INTEGRATION_E2E |
+| INV-S9-4: Canary breach blocks orders in paper loop | S9 | RG_CANARY03_INTEGRATION_E2E |
+| INV-S9-5: verify:fast x2 PASS | S9 | standard |
+| INV-S9-6: e108 x2 PASS | S9 | standard |
+| INV-S9-7: verify:deep PASS | S9 | standard |
+
 ---
 
 ## Cross-Reference: V1 → V2
