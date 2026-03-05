@@ -1,9 +1,10 @@
 {
-  "files_scanned": 352,
+  "files_scanned": 354,
   "gate_id": "RG_REASON02_IN_TAXONOMY",
   "next_action": "npm run -s verify:fast",
   "observed_tokens": [
     "ACQ02",
+    "BURNIN_FAST01_FAIL",
     "CHURN01",
     "DC90",
     "DEP02",

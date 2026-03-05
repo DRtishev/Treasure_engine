@@ -6,15 +6,19 @@ RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 80
-- changed_evidence_files_n: 54
+- changed_evidence_files_n: 60
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
 ## OFFENDERS
 - reports/evidence/EPOCH-V2-S10-BASELINE/SNAPSHOT.md
+- reports/evidence/EPOCH-V2-S11-BURNIN/LEDGER_RECONCILE.md
+- reports/evidence/EPOCH-V2-S11-BURNIN/REALITY_GAP.md
 - reports/evidence/EPOCH-V2-S9-AUDIT/AUDIT_AFTER_SPRINT_9.md
 - reports/evidence/EPOCH-V2-S9-AUDIT/COMMANDS_EXECUTED.md
 - reports/evidence/EPOCH-V2-S9-AUDIT/GATE_MATRIX.md
+- reports/evidence/EXECUTOR/gates/manual/regression_burnin_fast01.json
+- reports/evidence/EXECUTOR/gates/manual/regression_burnin01_e2e.json
 - reports/evidence/EXECUTOR/gates/manual/regression_canary_e2e01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_canary_e2e02.json
 - reports/evidence/EXECUTOR/gates/manual/regression_canary01_policy_contract.json
@@ -40,6 +44,8 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_realism07_dryrun_uses_costmodel_e2e.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_reason01_token_purity.json
 - reports/evidence/EXECUTOR/gates/manual/regression_rg_reason02_in_taxonomy.json
+- reports/evidence/EXECUTOR/REGRESSION_BURNIN_FAST01.md
+- reports/evidence/EXECUTOR/REGRESSION_BURNIN01_E2E.md
 - reports/evidence/EXECUTOR/REGRESSION_CANARY_E2E01.md
 - reports/evidence/EXECUTOR/REGRESSION_CANARY_E2E02.md
 - reports/evidence/EXECUTOR/REGRESSION_CANARY01_POLICY_CONTRACT.md
