@@ -2,7 +2,7 @@
   "checks": [
     {
       "check": "tracked_epoch_files_total",
-      "detail": "3001 tracked EPOCH-* files",
+      "detail": "3002 tracked EPOCH-* files",
       "pass": true
     },
     {
@@ -32,6 +32,6 @@
   "run_id": "STABLE",
   "schema_version": "1.0.0",
   "status": "PASS",
-  "tracked_epoch_files_total": 3001,
+  "tracked_epoch_files_total": 3002,
   "tracked_gate_receipts": 113
 }

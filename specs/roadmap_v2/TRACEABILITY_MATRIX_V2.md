@@ -35,6 +35,14 @@
 | REQ-E2E-02 | S5b | E2E: tier violation → order rejected | `scripts/verify/regression_profit_e2e_sizer01.mjs` | `regression_profit_e2e_sizer01` | `gates/manual/regression_profit_e2e_sizer01.json` | S5b-DoD-5 |
 | REQ-E2E-03 | S5b | E2E: full offline path (dryrun_live_e2e_v2) | `scripts/verify/dryrun_live_e2e_v2.mjs` | `dryrun_live_e2e_v2` | `gates/manual/dryrun_live_e2e_v2.json` | S5b-DoD-6 |
 
+## Sprint 5c: SAFETYLOOP FRESHNESS
+
+| Requirement | Sprint | Description | Code Location | Gate | Evidence Path | DoD |
+|------------|--------|------------|---------------|------|---------------|-----|
+| REQ-FRESH-01 | S5c | SafetyLoop auto-tick before order gating | `core/exec/master_executor.mjs:156` | `regression_profit_e2e_ks02_autotick` | `gates/manual/regression_profit_e2e_ks02_autotick.json` | S5c-DoD-1 |
+| REQ-FRESH-02 | S5c | Position sizer enforcement with tier downgrade | `core/exec/master_executor.mjs:173` | `regression_profit_e2e_sizer02_enforced` | `gates/manual/regression_profit_e2e_sizer02_enforced.json` | S5c-DoD-2 |
+| REQ-FRESH-03 | S5c | No stale state — evaluate() called, not just getState() | `core/exec/master_executor.mjs:156` | `regression_profit_e2e_ks02_autotick` | `EPOCH-V2-S5C-AUDIT/WIRING_GAP_PROOF.md` | S5c-DoD-3 |
+
 ## Sprint 6: DOCTOR LIVENESS FIX
 
 | Requirement | Sprint | Description | Code Location | Gate | Evidence Path | DoD |
@@ -81,6 +89,15 @@
 | INV-S5b-4: verify:fast x2 PASS | S5b | standard |
 | INV-S5b-5: e108 x2 PASS | S5b | standard |
 | INV-S5b-6: verify:deep PASS | S5b | verify:deep chain |
+
+### Sprint 5c (freshness)
+
+| Invariant | Sprint | Gate |
+|-----------|--------|------|
+| INV-S5c-1: SafetyLoop auto-tick in MasterExecutor (no stale state) | S5c | regression_profit_e2e_ks02_autotick |
+| INV-S5c-2: Position sizer enforced with tier downgrade (REDUCE) | S5c | regression_profit_e2e_sizer02_enforced |
+| INV-S5c-3: verify:fast x2 PASS | S5c | standard |
+| INV-S5c-4: verify:deep PASS (5 gates) | S5c | verify:deep chain |
 
 ### Sprint 6
 

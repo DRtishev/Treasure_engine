@@ -1,17 +1,17 @@
 /**
- * regression_profit_e2e_ks01.mjs — E2E: Kill Switch FLATTEN → orders blocked
+ * regression_profit_e2e_ks02_autotick.mjs — E2E: SafetyLoop auto-tick freshness
  *
- * Sprint 5b: Prove that when kill switch triggers FLATTEN, MasterExecutor
- * blocks all subsequent order placements.
+ * Sprint 5c: Prove that MasterExecutor auto-evaluates the kill switch
+ * WITHOUT any manual safetyLoop.evaluate() call from the test.
  *
  * Flow:
- *   1. Create MasterExecutor with safety_loop + LiveAdapterDryRun
- *   2. Trigger FLATTEN via dangerous metrics
- *   3. Attempt executeIntent → MUST be rejected
- *   4. Verify error message contains kill switch reference
+ *   1. Create MasterExecutor with SafetyLoop using dangerous metrics
+ *   2. Do NOT call safetyLoop.evaluate() — executor must do it internally
+ *   3. executeIntent → MUST be blocked by auto-ticked kill switch
+ *   4. Switch metrics to safe + reset → orders resume
  *
- * Gate ID : RG_PROFIT_E2E_KS01
- * Wired   : verify:deep (Sprint 5b)
+ * Gate ID : RG_PROFIT_KS02_AUTOTICK
+ * Wired   : verify:deep (Sprint 5c)
  */
 
 import fs from 'node:fs';
@@ -24,7 +24,7 @@ const EXEC = path.join(ROOT, 'reports/evidence/EXECUTOR');
 const MANUAL = path.join(EXEC, 'gates/manual');
 fs.mkdirSync(MANUAL, { recursive: true });
 
-const GATE_ID = 'RG_PROFIT_E2E_KS01';
+const GATE_ID = 'RG_PROFIT_KS02_AUTOTICK';
 const NEXT_ACTION = 'npm run -s verify:deep';
 
 const checks = [];
@@ -36,30 +36,27 @@ try {
 
   const matrix = JSON.parse(fs.readFileSync(path.join(ROOT, 'specs/kill_switch_matrix.json'), 'utf8'));
 
-  // --- Setup: create safety loop with switchable metrics ---
-  let flattenFired = false;
+  // --- Setup: dangerous metrics that should trigger FLATTEN ---
   let dangerousMetrics = true;
   const safetyLoop = createSafetyLoop({
     matrix,
     metricsProvider: () => dangerousMetrics
       ? { max_drawdown: 0.10, reality_gap: 0, exchange_error_rate: 0, consecutive_losses: 0 }
       : { max_drawdown: 0, reality_gap: 0, exchange_error_rate: 0, consecutive_losses: 0 },
-    onFlatten: () => { flattenFired = true; },
     clock: { now: () => 1000000 },
   });
 
-  // Trigger the kill switch
-  const evalResult = safetyLoop.evaluate();
+  // KEY: we do NOT call safetyLoop.evaluate() here.
+  // The executor's auto-tick must handle it.
 
+  // Verify: before executor call, state should be clean (no evaluate called yet)
+  const preState = safetyLoop.getState();
   checks.push({
-    check: 'flatten_triggered',
-    pass: evalResult.triggered && evalResult.action === 'FLATTEN' && flattenFired,
-    detail: evalResult.triggered
-      ? `FLATTEN triggered, onFlatten called=${flattenFired}`
-      : `NOT triggered: action=${evalResult.action}`,
+    check: 'pre_state_clean',
+    pass: preState.ordersPaused === false && preState.lastEvalTs === 0,
+    detail: `paused=${preState.ordersPaused}, lastEvalTs=${preState.lastEvalTs}`,
   });
 
-  // --- Create MasterExecutor with the triggered safety loop ---
   const adapter = createLiveAdapterDryRun();
   const executor = new MasterExecutor({
     adapter,
@@ -69,7 +66,6 @@ try {
     enable_events: false,
   });
 
-  // --- Attempt to place an order → should be BLOCKED ---
   const intent = {
     side: 'BUY',
     size: 0.001,
@@ -79,22 +75,23 @@ try {
   };
 
   const execCtx = {
-    run_id: 'e2e_ks01',
-    hack_id: 'HACK_KS_01',
+    run_id: 'e2e_ks02',
+    hack_id: 'HACK_KS02',
     mode: 'test',
     bar_idx: 0,
     order_seq: 0,
     bar: { t_ms: 1000000 },
   };
 
+  // --- TEST 1: executor auto-ticks, detects danger, blocks order ---
   const result = await executor.executeIntent(intent, execCtx);
 
   checks.push({
-    check: 'order_blocked',
+    check: 'auto_tick_blocked_order',
     pass: result.success === false,
     detail: result.success === false
-      ? 'Order correctly REJECTED when kill switch active'
-      : 'FAIL: order should have been rejected',
+      ? 'Order correctly BLOCKED by auto-tick (no manual evaluate)'
+      : 'FAIL: order should have been blocked',
   });
 
   checks.push({
@@ -102,7 +99,15 @@ try {
     pass: result.errors.some(e => /kill.?switch/i.test(e)),
     detail: result.errors.some(e => /kill.?switch/i.test(e))
       ? `Error: "${result.errors[0]}"`
-      : `FAIL: no kill switch mention in errors: ${JSON.stringify(result.errors)}`,
+      : `FAIL: ${JSON.stringify(result.errors)}`,
+  });
+
+  // Verify: after executor call, safetyLoop state should show evaluation happened
+  const postState = safetyLoop.getState();
+  checks.push({
+    check: 'evaluate_was_called',
+    pass: postState.lastEvalTs > 0 && postState.ordersPaused === true,
+    detail: `lastEvalTs=${postState.lastEvalTs}, paused=${postState.ordersPaused}`,
   });
 
   checks.push({
@@ -111,21 +116,22 @@ try {
     detail: result.fills.length === 0 ? 'No fills (correct)' : `FAIL: ${result.fills.length} fills`,
   });
 
-  // --- Verify: after reset + safe metrics, orders go through ---
-  dangerousMetrics = false; // switch to safe metrics so auto-tick won't re-trigger
+  // --- TEST 2: switch to safe metrics + reset → orders resume ---
+  dangerousMetrics = false;
   safetyLoop.reset();
-  const resultAfterReset = await executor.executeIntent(intent, {
+
+  const result2 = await executor.executeIntent(intent, {
     ...execCtx,
     order_seq: 1,
     bar: { t_ms: 2000000 },
   });
 
   checks.push({
-    check: 'orders_resume_after_reset',
-    pass: resultAfterReset.order_id !== null,
-    detail: resultAfterReset.order_id
-      ? `Order placed after reset: ${resultAfterReset.order_id}`
-      : 'FAIL: order still blocked after reset',
+    check: 'safe_metrics_order_accepted',
+    pass: result2.order_id !== null,
+    detail: result2.order_id
+      ? `Order placed after safe metrics: ${result2.order_id}`
+      : `FAIL: order still blocked: ${result2.errors.join(', ')}`,
   });
 } catch (e) {
   checks.push({ check: 'e2e_execution', pass: false, detail: `Error: ${e.message}` });
@@ -134,10 +140,10 @@ try {
 // --- Summary ---
 const failed = checks.filter(c => !c.pass);
 const status = failed.length === 0 ? 'PASS' : 'FAIL';
-const reason_code = failed.length === 0 ? 'NONE' : 'E2E_KS01_FAIL';
+const reason_code = failed.length === 0 ? 'NONE' : 'KS02_AUTOTICK_FAIL';
 
-writeMd(path.join(EXEC, 'REGRESSION_PROFIT_E2E_KS01.md'), [
-  '# REGRESSION_PROFIT_E2E_KS01.md', '',
+writeMd(path.join(EXEC, 'REGRESSION_PROFIT_E2E_KS02_AUTOTICK.md'), [
+  '# REGRESSION_PROFIT_E2E_KS02_AUTOTICK.md', '',
   `STATUS: ${status}`,
   `REASON_CODE: ${reason_code}`,
   `RUN_ID: ${RUN_ID}`,
@@ -148,7 +154,7 @@ writeMd(path.join(EXEC, 'REGRESSION_PROFIT_E2E_KS01.md'), [
   failed.length === 0 ? '- NONE' : failed.map(c => `- ${c.check}: ${c.detail}`).join('\n'),
 ].join('\n'));
 
-writeJsonDeterministic(path.join(MANUAL, 'regression_profit_e2e_ks01.json'), {
+writeJsonDeterministic(path.join(MANUAL, 'regression_profit_e2e_ks02_autotick.json'), {
   schema_version: '1.0.0',
   gate_id: GATE_ID,
   status,
@@ -159,5 +165,5 @@ writeJsonDeterministic(path.join(MANUAL, 'regression_profit_e2e_ks01.json'), {
   failed_checks: failed.map(c => c.check),
 });
 
-console.log(`[${status}] regression_profit_e2e_ks01 — ${reason_code}`);
+console.log(`[${status}] regression_profit_e2e_ks02_autotick — ${reason_code}`);
 process.exit(status === 'PASS' ? 0 : 1);

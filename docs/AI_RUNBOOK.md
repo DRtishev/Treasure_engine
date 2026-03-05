@@ -31,6 +31,36 @@ Never skip gates. Never claim PASS without evidence.
 
 ---
 
+## 2b. VERIFY CHAINS: FAST vs DEEP
+
+### verify:fast (boot gate)
+- **Purpose:** Structural/regression checks (grep, import, AST, manifest)
+- **Budget:** ≤ 80ms per gate, ≤ 6s total wall-clock
+- **Run order:** Always first, always x2 (anti-flake)
+- **Gate count:** 48+ gates (as of Sprint 5c)
+- **Command:** `npm run -s verify:fast`
+
+### verify:deep (integration gate)
+- **Purpose:** E2E tests that instantiate real components (MasterExecutor, SafetyLoop, LiveAdapterDryRun)
+- **Budget:** ≤ 60s total
+- **Run order:** After verify:fast passes
+- **Gate count:** 5 gates (as of Sprint 5c):
+  1. `regression_profit_e2e_ks01` — Kill switch FLATTEN → orders blocked
+  2. `regression_profit_e2e_sizer01` — Tier violation → order rejected
+  3. `dryrun_live_e2e_v2` — Full offline execution path
+  4. `regression_profit_e2e_ks02_autotick` — SafetyLoop auto-tick (no manual evaluate)
+  5. `regression_profit_e2e_sizer02_enforced` — Sizer enforcement with REDUCE tier downgrade
+- **Command:** `npm run -s verify:deep`
+
+### Reading evidence
+- All gates write to `reports/evidence/EXECUTOR/`
+- MD reports: `REGRESSION_*.md`, `DRYRUN_*.md`
+- JSON gates: `gates/manual/*.json`
+- Each JSON has: `schema_version`, `status`, `reason_code`, `run_id`, `checks[]`
+- Sprint audit reports: `reports/evidence/EPOCH-V2-S{N}-AUDIT/`
+
+---
+
 ## 3. MODE SELECTION
 
 | Situation | Mode | Allowed |

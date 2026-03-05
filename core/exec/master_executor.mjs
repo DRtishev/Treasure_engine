@@ -151,6 +151,10 @@ export class MasterExecutor {
       // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
       if (this.safetyLoop) {
+        // Sprint 5c: auto-tick — evaluate kill switch BEFORE reading state
+        // Guarantees freshness: no stale state, no "wired but not powered" gap
+        this.safetyLoop.evaluate();
+
         const safetyState = this.safetyLoop.getState();
         if (safetyState.ordersPaused) {
           result.success = false;

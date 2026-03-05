@@ -119,8 +119,8 @@ regression_perf_budget01_ms_per_gate:
 | INV-V2-4 | Все fetch/http вызовы за NET guard | regression_net_guard01 |
 | INV-V2-5 | ms_per_gate <= 80ms | regression_perf_budget01 |
 | INV-V2-6 | verify:fast x2 идентичен | Существующий RG_ND_BYTE02 |
-| INV-V2-7 | Kill switch evaluator вызывается из live loop | regression_profit_ks_wired01 |
-| INV-V2-8 | Position sizer вызывается перед order placement | regression_profit_sizer_wired01 |
+| INV-V2-7 | Kill switch auto-tick в MasterExecutor (freshness) | regression_profit_e2e_ks02_autotick |
+| INV-V2-8 | Position sizer enforced в executor path | regression_profit_e2e_sizer02_enforced |
 
 ---
 
@@ -147,5 +147,15 @@ verify:fast = **boot gate** (< 6 секунд). Тяжёлые проверки 
 
 - **[Sprint 4: ND-EXORCISM](./SPRINT_4_ND_EXORCISM_SPEC.md)**
 - **[Sprint 5: PROFIT_LANE_WIRING](./SPRINT_5_PROFIT_LANE_WIRING_SPEC.md)**
-- Аудит-шаблоны: [AUDIT_AFTER_SPRINT_4](./AUDIT_AFTER_SPRINT_4.md), [AUDIT_AFTER_SPRINT_5](./AUDIT_AFTER_SPRINT_5.md)
+- **Sprint 5b: PROFIT_LANE_WIRING (real integration)** — kill switch + sizer wired into MasterExecutor
+- **Sprint 5c: SAFETYLOOP_FRESHNESS** — auto-tick guarantee, no stale safety state
+- **Sprint 6: DOCTOR_LIVENESS_FIX** — 70→100/100, 7 bugs fixed
+- Аудиты: [AUDIT_AFTER_SPRINT_4](./AUDIT_AFTER_SPRINT_4.md), [AUDIT_AFTER_SPRINT_5B](../../reports/evidence/EPOCH-V2-S5B-AUDIT/AUDIT_AFTER_SPRINT_5B.md), [AUDIT_SPRINT_6](../../reports/evidence/EPOCH-V2-S6-AUDIT/AUDIT_SPRINT_6_DOCTOR_LIVENESS.md)
 - Traceability: [TRACEABILITY_MATRIX_V2](./TRACEABILITY_MATRIX_V2.md)
+
+### Следующие этапы (планируемые)
+
+| Sprint | Название | Scope |
+|--------|----------|-------|
+| S7 | PROFIT_REALISM_LAYER | Fees, slippage, funding в backtest + live path |
+| S8 | PROMOTION_LADDER | Canary limits, paper→live graduation criteria |
