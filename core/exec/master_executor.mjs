@@ -16,10 +16,13 @@
  */
 
 import { RunContext } from '../sys/context.mjs';
-import { EventLogV2, EventCategory, EventLevel } from '../obs/event_log_v2.mjs';
 import { DatabaseManager } from '../persist/db.mjs';
 import { RepoState } from '../persist/repo_state.mjs';
 import { ReconciliationEngine } from '../recon/reconcile_v1.mjs';
+import { computePositionSize } from '../risk/position_sizer.mjs';
+
+// EventLevel constants (avoids hard ajv dependency via event_log_v2.mjs)
+const EventLevel = { DEBUG: 'DEBUG', INFO: 'INFO', WARN: 'WARN', ERROR: 'ERROR', CRITICAL: 'CRITICAL' };
 
 /**
  * Execution result
@@ -72,7 +75,12 @@ export class MasterExecutor {
     this.db = options.db || null; // DatabaseManager
     this.repoState = options.repoState || null; // RepoStateManager
     this.reconEngine = options.reconEngine || null; // ReconciliationEngine
-    
+    this.safetyLoop = options.safetyLoop || null; // SafetyLoop (Sprint 5b)
+
+    // Position sizer config (Sprint 5b)
+    this.positionSizerTier = options.positionSizerTier || null; // 'micro'|'small'|'normal'
+    this.equity = options.equity || 0;
+
     // Configuration
     this.enable_reconciliation = options.enable_reconciliation !== false;
     this.enable_persistence = options.enable_persistence !== false;
@@ -139,11 +147,55 @@ export class MasterExecutor {
       }
       
       // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      // PHASE 1b: Kill Switch Gate (Sprint 5b)
+      // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+      if (this.safetyLoop) {
+        const safetyState = this.safetyLoop.getState();
+        if (safetyState.ordersPaused) {
+          result.success = false;
+          result.errors.push(`Kill switch active: orders paused (last_action=${safetyState.lastAction})`);
+          this._logEvent('SAFETY', 'order_blocked_by_kill_switch', {
+            action: safetyState.lastAction, intent
+          }, EventLevel.WARN);
+          return result;
+        }
+      }
+
+      // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      // PHASE 1c: Position Sizer Gate (Sprint 5b)
+      // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+      if (this.positionSizerTier && this.equity > 0) {
+        const tier = this.safetyLoop?.getState().currentTier || this.positionSizerTier;
+        const signalRisk = intent.signal_risk || (intent.price * 0.02); // default 2% stop
+        const sized = computePositionSize(this.equity, tier, signalRisk);
+
+        if (sized.size <= 0) {
+          result.success = false;
+          result.errors.push(`Position sizer rejected: tier=${tier}, reason=${sized.reason}`);
+          this._logEvent('SAFETY', 'order_rejected_by_sizer', {
+            tier, equity: this.equity, reason: sized.reason, intent
+          }, EventLevel.WARN);
+          return result;
+        }
+
+        if (intent.size > sized.size) {
+          result.success = false;
+          result.errors.push(`Position size exceeds tier limit: requested=${intent.size}, max=${sized.size}, tier=${tier}`);
+          this._logEvent('SAFETY', 'order_oversized', {
+            requested: intent.size, max_allowed: sized.size, tier, intent
+          }, EventLevel.WARN);
+          return result;
+        }
+      }
+
+      // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       // PHASE 2: Order Placement
       // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-      
+
       const orderStartTime = this.ctx?.clock?.now() || Date.now();
-      
+
       const orderResult = await this.adapter.placeOrder(intent, executionContext);
       
       const orderLatency = (this.ctx?.clock?.now() || Date.now()) - orderStartTime;
@@ -378,6 +430,21 @@ export class MasterExecutor {
     } catch (err) {
       console.error('[MasterExecutor] Event logging failed:', err.message);
     }
+  }
+
+  /**
+   * Get metrics for kill switch evaluation (Sprint 5b).
+   * Feed this into safetyLoop metricsProvider.
+   */
+  getKillSwitchMetrics() {
+    const recon = this.stats.reconciliation_failures;
+    const total = this.stats.reconciliations_run || 1;
+    return {
+      max_drawdown: 0, // caller must provide actual drawdown
+      reality_gap: total > 0 ? recon / total : 0,
+      exchange_error_rate: 0, // caller must provide
+      consecutive_losses: 0, // caller must provide
+    };
   }
 
   /**

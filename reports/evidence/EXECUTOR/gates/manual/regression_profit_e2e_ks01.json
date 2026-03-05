@@ -1,0 +1,36 @@
+{
+  "checks": [
+    {
+      "check": "flatten_triggered",
+      "detail": "FLATTEN triggered, onFlatten called=true",
+      "pass": true
+    },
+    {
+      "check": "order_blocked",
+      "detail": "Order correctly REJECTED when kill switch active",
+      "pass": true
+    },
+    {
+      "check": "error_mentions_kill_switch",
+      "detail": "Error: \"Kill switch active: orders paused (last_action=FLATTEN)\"",
+      "pass": true
+    },
+    {
+      "check": "no_fills",
+      "detail": "No fills (correct)",
+      "pass": true
+    },
+    {
+      "check": "orders_resume_after_reset",
+      "detail": "Order placed after reset: e2e_ks01_HACK_KS_01_test_0_1",
+      "pass": true
+    }
+  ],
+  "failed_checks": [],
+  "gate_id": "RG_PROFIT_E2E_KS01",
+  "next_action": "npm run -s verify:deep",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -99,11 +99,13 @@
       "path": "reports/evidence/EXECUTOR/REPO_SHA256SUMS.txt"
     }
   ],
-  "file_count": 8389,
-  "forbidden_hits": [],
-  "manifest_sha256": "f885262f292f7d5b4fe79a1ce583b9fa092ac87d72e0306b731089b1576d7aaa",
-  "reason_code": "NONE",
+  "reason_code": "RG_BYTE_UNTRACKED",
   "run_id": "STABLE",
   "schema_version": "1.1.0",
-  "status": "PASS"
+  "status": "FAIL",
+  "untracked": [
+    "scripts/verify/dryrun_live_e2e_v2.mjs",
+    "scripts/verify/regression_profit_e2e_ks01.mjs",
+    "scripts/verify/regression_profit_e2e_sizer01.mjs"
+  ]
 }

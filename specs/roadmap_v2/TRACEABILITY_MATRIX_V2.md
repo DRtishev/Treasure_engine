@@ -8,7 +8,7 @@
 
 | Requirement | Sprint | Description | Code Location | Gate | Evidence Path | DoD |
 |------------|--------|------------|---------------|------|---------------|-----|
-| REQ-ND-01 | S4 | No Math.random in repo_state._generateRunId | `core/persist/repo_state.mjs:256` | `regression_nd_runid01_no_bare_random` | `gates/manual/regression_nd_runid01.json` | S4-DoD-1 |
+| REQ-ND-01 | S4 | HYBRID RUN_ID: no Math.random in _generateRunId | `core/persist/repo_state.mjs:256` | `regression_nd_core_san01` | `gates/manual/regression_nd_core_san01.json` | S4-DoD-1 |
 | REQ-ND-02 | S4 | No Date.now in court_v2 reports | `core/court/court_v2.mjs:36,52` | `regression_nd_court01_no_bare_datenow` | `gates/manual/regression_nd_court01.json` | S4-DoD-2 |
 | REQ-ND-03 | S4 | No new Date in court_v2 output | `core/court/court_v2.mjs:248` | `regression_nd_court01_no_bare_datenow` | `gates/manual/regression_nd_court01.json` | S4-DoD-2 |
 | REQ-ND-04 | S4 | No Date.now/new Date in e122 adapter | `core/execution/e122_execution_adapter_v3.mjs:34-50` | `regression_nd_exec01_no_bare_clock` | `gates/manual/regression_nd_exec01.json` | S4-DoD-3 |
@@ -17,16 +17,33 @@
 | REQ-PERF-01 | S4 | Performance Law V2: ms_per_gate ≤ 80ms | `verify:fast` chain | `regression_perf_budget01_ms_per_gate` | `gates/manual/regression_perf_budget01.json` | S4-DoD-6 |
 | REQ-DRIFT-01 | S4 | Sprint 0 spec fixed (runEdgeLabPipeline) | `specs/roadmap_v1/SPRINT_0_*.md` | `regression_spec_drift01_sprint0_fixed` | `gates/manual/regression_spec_drift01.json` | S4-DoD-7 |
 
-## Sprint 5: PROFIT LANE WIRING
+## Sprint 5: PROFIT LANE WIRING (foundation)
 
 | Requirement | Sprint | Description | Code Location | Gate | Evidence Path | DoD |
 |------------|--------|------------|---------------|------|---------------|-----|
-| REQ-WIRE-KS-01 | S5 | Kill switch evaluator in safety_loop | `core/live/safety_loop.mjs` | `regression_profit_ks_wired01` | `gates/manual/regression_profit_ks_wired01.json` | S5-DoD-1 |
-| REQ-WIRE-KS-02 | S5 | FLATTEN trigger → emergency_flatten | `core/live/safety_loop.mjs` | `regression_profit_ks_flatten01` | `gates/manual/regression_profit_ks_flatten01.json` | S5-DoD-2 |
-| REQ-WIRE-PS-01 | S5 | Position sizer enforceTier before order | `core/exec/adapters/*.mjs` | `regression_profit_sizer_wired01` | `gates/manual/regression_profit_sizer_wired01.json` | S5-DoD-3 |
-| REQ-WIRE-RC-01 | S5 | Reconcile after fill batch | fill handler | `regression_profit_recon_wired01` | `gates/manual/regression_profit_recon_wired01.json` | S5-DoD-4 |
-| REQ-E2E-01 | S5 | E2E: trigger → flatten → positions=0 | test harness | `regression_profit_e2e_ks01` | `gates/manual/regression_profit_e2e_ks01.json` | S5-DoD-5 |
-| REQ-E2E-02 | S5 | E2E: tier violation → order rejected | test harness | `regression_profit_e2e_sizer01` | `gates/manual/regression_profit_e2e_sizer01.json` | S5-DoD-6 |
+| REQ-WIRE-FOUND-01 | S5 | Module existence: safety_loop, position_sizer, kill_switch, recon | `core/live/`, `core/risk/`, `core/recon/` | `regression_profit_wiring01` | `gates/manual/regression_profit_wiring01.json` | S5-DoD-1 |
+| REQ-WIRE-FOUND-02 | S5 | Profit foundation freeze (SSOT + autogen) | `core/live/`, `core/risk/`, `core/exec/` | `regression_profit_foundation_freeze_ssot` | `gates/manual/regression_profit_foundation_freeze_ssot.json` | S5-DoD-2 |
+
+## Sprint 5b: PROFIT LANE WIRING (real integration)
+
+| Requirement | Sprint | Description | Code Location | Gate | Evidence Path | DoD |
+|------------|--------|------------|---------------|------|---------------|-----|
+| REQ-WIRE-KS-01 | S5b | Kill switch gate in MasterExecutor (Phase 1b) | `core/exec/master_executor.mjs` | `regression_profit_e2e_ks01` | `gates/manual/regression_profit_e2e_ks01.json` | S5b-DoD-1 |
+| REQ-WIRE-PS-01 | S5b | Position sizer gate in MasterExecutor (Phase 1c) | `core/exec/master_executor.mjs` | `regression_profit_e2e_sizer01` | `gates/manual/regression_profit_e2e_sizer01.json` | S5b-DoD-2 |
+| REQ-WIRE-RC-01 | S5b | Reconcile after fill in MasterExecutor (Phase 4) | `core/exec/master_executor.mjs` | `dryrun_live_e2e_v2` | `gates/manual/dryrun_live_e2e_v2.json` | S5b-DoD-3 |
+| REQ-E2E-01 | S5b | E2E: FLATTEN → orders blocked → resume | `scripts/verify/regression_profit_e2e_ks01.mjs` | `regression_profit_e2e_ks01` | `gates/manual/regression_profit_e2e_ks01.json` | S5b-DoD-4 |
+| REQ-E2E-02 | S5b | E2E: tier violation → order rejected | `scripts/verify/regression_profit_e2e_sizer01.mjs` | `regression_profit_e2e_sizer01` | `gates/manual/regression_profit_e2e_sizer01.json` | S5b-DoD-5 |
+| REQ-E2E-03 | S5b | E2E: full offline path (dryrun_live_e2e_v2) | `scripts/verify/dryrun_live_e2e_v2.mjs` | `dryrun_live_e2e_v2` | `gates/manual/dryrun_live_e2e_v2.json` | S5b-DoD-6 |
+
+## Sprint 6: DOCTOR LIVENESS FIX
+
+| Requirement | Sprint | Description | Code Location | Gate | Evidence Path | DoD |
+|------------|--------|------------|---------------|------|---------------|-----|
+| REQ-DOC-01 | S6 | Fix recursive doctor/life nesting (depth guard) | `scripts/ops/life.mjs:63`, `scripts/ops/doctor_v2.mjs:128` | `ops:doctor` | `EPOCH-V2-S6-AUDIT/AUDIT_SPRINT_6_DOCTOR_LIVENESS.md` | S6-DoD-1 |
+| REQ-DOC-02 | S6 | Fix EVT_SCHEMA_ERROR budget_ms → timeout_budget | `scripts/ops/state_manager.mjs:460` | `ops:doctor` | `EPOCH-V2-S6-AUDIT/AUDIT_SPRINT_6_DOCTOR_LIVENESS.md` | S6-DoD-2 |
+| REQ-DOC-03 | S6 | Add METAAGENT to VALID_COMPONENTS | `scripts/ops/event_schema_v1.mjs` | `ops:doctor` | `EPOCH-V2-S6-AUDIT/AUDIT_SPRINT_6_DOCTOR_LIVENESS.md` | S6-DoD-3 |
+| REQ-DOC-04 | S6 | Fix x2 determinism — normalize stateful fields | `scripts/ops/doctor_v2.mjs:132` | `ops:doctor` | `EPOCH-V2-S6-AUDIT/AUDIT_SPRINT_6_DOCTOR_LIVENESS.md` | S6-DoD-4 |
+| REQ-DOC-05 | S6 | Doctor score 70 → 100/100 HEALTHY | `scripts/ops/doctor_v2.mjs` | `ops:doctor` | `EPOCH-V2-S6-AUDIT/AUDIT_SPRINT_6_DOCTOR_LIVENESS.md` | S6-DoD-5 |
 
 ---
 
@@ -45,17 +62,34 @@
 | INV-S4-7: verify:fast x2 PASS | S4 | standard |
 | INV-S4-8: e108 x2 PASS | S4 | standard |
 
-### Sprint 5
+### Sprint 5 (foundation)
 
 | Invariant | Sprint | Gate |
 |-----------|--------|------|
-| INV-S5-1: Kill switch in safety_loop | S5 | regression_profit_ks_wired01 |
-| INV-S5-2: FLATTEN → emergency_flatten | S5 | regression_profit_ks_flatten01 |
-| INV-S5-3: Sizer before every order | S5 | regression_profit_sizer_wired01 |
-| INV-S5-4: Tier violation → reject + log | S5 | regression_profit_e2e_sizer01 |
-| INV-S5-5: Reconcile after fill batch | S5 | regression_profit_recon_wired01 |
-| INV-S5-6: verify:fast x2 PASS | S5 | standard |
-| INV-S5-7: e108 x2 PASS | S5 | standard |
+| INV-S5-1: Modules exist (safety_loop, position_sizer, kill_switch, recon) | S5 | regression_profit_wiring01 |
+| INV-S5-2: Foundation freeze SSOT hashes match | S5 | regression_profit_foundation_freeze_ssot |
+| INV-S5-3: verify:fast x2 PASS | S5 | standard |
+| INV-S5-4: e108 x2 PASS | S5 | standard |
+
+### Sprint 5b (real integration)
+
+| Invariant | Sprint | Gate |
+|-----------|--------|------|
+| INV-S5b-1: Kill switch gate in MasterExecutor blocks when paused | S5b | regression_profit_e2e_ks01 |
+| INV-S5b-2: Position sizer gate rejects oversized orders | S5b | regression_profit_e2e_sizer01 |
+| INV-S5b-3: Full offline path: adapter → executor → safety → sizer → recon | S5b | dryrun_live_e2e_v2 |
+| INV-S5b-4: verify:fast x2 PASS | S5b | standard |
+| INV-S5b-5: e108 x2 PASS | S5b | standard |
+| INV-S5b-6: verify:deep PASS | S5b | verify:deep chain |
+
+### Sprint 6
+
+| Invariant | Sprint | Gate |
+|-----------|--------|------|
+| INV-S6-1: ops:doctor HEALTHY (100/100) | S6 | ops:doctor |
+| INV-S6-2: No recursive doctor/life nesting | S6 | ops:doctor liveness_alive |
+| INV-S6-3: Doctor x2 deterministic | S6 | ops:doctor liveness_deterministic |
+| INV-S6-4: verify:fast x2 PASS | S6 | standard |
 
 ---
 
@@ -66,8 +100,8 @@
 | FINDING-B (Courts orphaned) | CLOSED ✓ | — |
 | FINDING-C (Metrics bifurcation) | CLOSED ✓ | — |
 | FINDING-E (engine_paper calling) | CLOSED ✓ | — |
-| FINDING-D (ND surface) | MONITOR | Sprint 4 (ND-EXORCISM) |
-| Profit Lane mock-only | PARTIAL | Sprint 5 (WIRING) |
-| Performance budget | POLICY CONFLICT | Sprint 4 (PERF LAW V2) |
-| Spec drift | DOCUMENTATION | Sprint 4 (DRIFT-01 fix) |
-| Doctor liveness | NEW (POSTV1) | Sprint 6 (DOCTOR_LIVENESS_FIX) |
+| FINDING-D (ND surface) | CLOSED ✓ | Sprint 4 (ND-EXORCISM) |
+| Profit Lane mock-only | CLOSED ✓ | Sprint 5 (foundation) + Sprint 5b (real wiring into MasterExecutor) |
+| Performance budget | CLOSED ✓ | Sprint 4 (PERF LAW V2) |
+| Spec drift | CLOSED ✓ | Sprint 4 (DRIFT-01 fix) + Sprint 5b (doc drift update) |
+| Doctor liveness | CLOSED ✓ | Sprint 6 (DOCTOR_LIVENESS_FIX) — 70→100/100 |

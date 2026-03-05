@@ -16,7 +16,7 @@
 
 | ID | Файл | Проблема | Fix |
 |----|------|---------|-----|
-| ND-01 | `core/persist/repo_state.mjs:256` | `Math.random()` в `_generateRunId()` | Заменить на `crypto.randomBytes(4).toString('hex')` |
+| ND-01 | `core/persist/repo_state.mjs:256` | `Math.random()` в `_generateRunId()` | HYBRID RUN_ID LAW: CERT/CI → RUN_ID_REQUIRED; dev → `crypto.randomUUID()` |
 | ND-02 | `core/court/court_v2.mjs:36,52` | `Date.now()` в court reports | Принимать `ctx.clock`, использовать `ctx.clock.now()` |
 | ND-03 | `core/court/court_v2.mjs:248` | `new Date().toISOString()` | Использовать `ctx.clock.toISOString()` |
 | ND-04 | `core/execution/e122_execution_adapter_v3.mjs:34,37,41,44,47,50` | `Date.now()` + `new Date()` | Инжектировать clock через options |

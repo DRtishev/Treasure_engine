@@ -1,10 +1,10 @@
 # REPO_BYTE_AUDIT.md
 
-STATUS: PASS
-REASON_CODE: NONE
+STATUS: FAIL
+REASON_CODE: RG_BYTE_UNTRACKED
 RUN_ID: STABLE
-NEXT_ACTION: npm run -s verify:repo:byte-audit:x2
+NEXT_ACTION: npm run -s verify:repo:byte-audit
 
-- file_count: 8389
-- manifest_sha256: f885262f292f7d5b4fe79a1ce583b9fa092ac87d72e0306b731089b1576d7aaa
-- forbidden_hits: 0
+- untracked: scripts/verify/dryrun_live_e2e_v2.mjs
+- untracked: scripts/verify/regression_profit_e2e_ks01.mjs
+- untracked: scripts/verify/regression_profit_e2e_sizer01.mjs

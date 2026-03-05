@@ -28,9 +28,9 @@
 
 | Файл | Действие | Описание |
 |---|---|---|
-| `scripts/edge/strategy_sweep.mjs` | MODIFY | Import и вызов runCandidatePipeline() вместо raw backtest |
+| `scripts/edge/strategy_sweep.mjs` | MODIFY | Import и вызов `runEdgeLabPipeline()` (Вариант A — minimal diff) |
 | `scripts/ops/candidate_fsm.mjs:37-60` | MODIFY | guard_backtest_pass: REQUIRE court_verdicts (не optional) |
-| `core/edge/candidate_pipeline.mjs` | READ-ONLY | Проверить что runCandidatePipeline() корректно wires courts |
+| `core/edge_lab/pipeline.mjs` | READ-ONLY | Проверить court orchestration (runEdgeLabPipeline) |
 | `core/edge_lab/pipeline.mjs` | READ-ONLY | Проверить court orchestration |
 | `scripts/verify/regression_court_wiring01_sweep_uses_pipeline.mjs` | CREATE | Regression gate #1 |
 | `scripts/verify/regression_court_wiring02_guard_rejects_empty.mjs` | CREATE | Regression gate #2 |
@@ -41,12 +41,13 @@
 
 После завершения Sprint 0, следующие инварианты ОБЯЗАНЫ быть истинными:
 
-**INV-S0-1:** `strategy_sweep.mjs` IMPORTS `runCandidatePipeline` из `core/edge/candidate_pipeline.mjs`.
-- Проверка: `grep -c "runCandidatePipeline" scripts/edge/strategy_sweep.mjs` >= 1
+**INV-S0-1:** `strategy_sweep.mjs` IMPORTS `runEdgeLabPipeline` из `core/edge_lab/pipeline.mjs` (Вариант A).
+- Проверка: `grep -c "runEdgeLabPipeline" scripts/edge/strategy_sweep.mjs` >= 1
+- РЕАЛИЗОВАНО: Вариант A (minimal diff) — sweep вызывает court pipeline напрямую
 
 **INV-S0-2:** `strategy_sweep.mjs` НЕ вызывает `runBacktest()` напрямую для финального candidate pipeline.
 - Проверка: strategy_sweep.mjs может использовать runBacktest для determinism x2 check,
-  но candidate registration MUST go through runCandidatePipeline().
+  но court validation MUST go through `runEdgeLabPipeline()`.
 
 **INV-S0-3:** `guard_backtest_pass()` возвращает `{pass: false}` если `court_verdicts` пуст или отсутствует.
 - Проверка: вызвать guard с `{metrics: {backtest_sharpe: 1.0}, court_verdicts: []}` → `{pass: false}`
