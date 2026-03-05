@@ -9,6 +9,8 @@ NEXT_ACTION: npm run -s verify:fast
 - REGRESSION_*.md
 - SAN_*.md
 - CHAOS_*.md
+- NODE_*.md
+- DRYRUN_*.md
 - gates/manual/*.json
 - MERGE_PLAN.md
 

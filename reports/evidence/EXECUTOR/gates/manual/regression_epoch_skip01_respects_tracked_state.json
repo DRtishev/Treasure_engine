@@ -2,7 +2,7 @@
   "checks": [
     {
       "check": "tracked_epoch_files_total",
-      "detail": "3000 tracked EPOCH-* files",
+      "detail": "3001 tracked EPOCH-* files",
       "pass": true
     },
     {
@@ -17,13 +17,13 @@
     },
     {
       "check": "files_scanned_determinism_x2",
-      "detail": "FILES_SCANNED=329 stable x2",
+      "detail": "FILES_SCANNED=332 stable x2",
       "pass": true
     }
   ],
   "failed_checks": [],
-  "files_scanned_run1": 329,
-  "files_scanned_run2": 329,
+  "files_scanned_run1": 332,
+  "files_scanned_run2": 332,
   "gate_id": "RG_EPOCH_SKIP01_RESPECTS_TRACKED_STATE",
   "masked_violations_n": 0,
   "next_action": "npm run -s verify:fast",
@@ -32,6 +32,6 @@
   "run_id": "STABLE",
   "schema_version": "1.0.0",
   "status": "PASS",
-  "tracked_epoch_files_total": 3000,
+  "tracked_epoch_files_total": 3001,
   "tracked_gate_receipts": 113
 }

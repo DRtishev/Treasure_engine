@@ -13,7 +13,7 @@ VIOLATIONS: 0
 - [PASS] guard_probe_failure_reads_evidence: OK: guard_probe_failure reads EPOCH-DOCTOR receipt
 - [PASS] guard_healable_checks_conditions: OK: guard_healable checks doctor_verdict context
 - [PASS] guard_heal_complete_reads_receipt: OK: guard_heal_complete reads HEAL_RECEIPT
-- [PASS] life_summary_immune_field: no LIFE_SUMMARY.json yet — skip-safe PASS
+- [PASS] life_summary_immune_field: OK: immune field present — doctor_ran=false verdict=null
 - [PASS] heal_runner_exists: OK: scripts/ops/heal_runner.mjs exists
 - [PASS] doctor_v2_has_trending: OK: doctor_v2.mjs surfaces trending in DOCTOR.json
 

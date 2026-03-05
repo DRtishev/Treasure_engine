@@ -1,5 +1,5 @@
 {
-  "files_scanned": 329,
+  "files_scanned": 332,
   "gate_id": "RG_REASON02_IN_TAXONOMY",
   "next_action": "npm run -s verify:fast",
   "observed_tokens": [
@@ -11,6 +11,7 @@
     "EP00",
     "EP02_REAL_REQUIRED",
     "NDA02",
+    "ND_BYTE01",
     "NONE",
     "NT02",
     "OF90",
@@ -18,6 +19,7 @@
     "PFZ01_NEEDS_DATA",
     "RDROP01",
     "RDY01",
+    "RG_BYTE_UNTRACKED",
     "SNAP01",
     "STEP_EC_7"
   ],
