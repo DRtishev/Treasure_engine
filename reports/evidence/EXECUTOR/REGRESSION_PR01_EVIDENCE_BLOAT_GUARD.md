@@ -6,7 +6,7 @@ RUN_ID: STABLE
 NEXT_ACTION: npm run -s verify:fast
 
 - limit: 80
-- changed_evidence_files_n: 60
+- changed_evidence_files_n: 65
 - override_path: artifacts/incoming/EVIDENCE_BLOAT_OVERRIDE
 - override_accepted: false
 
@@ -14,6 +14,7 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EPOCH-V2-S10-BASELINE/SNAPSHOT.md
 - reports/evidence/EPOCH-V2-S11-BURNIN/LEDGER_RECONCILE.md
 - reports/evidence/EPOCH-V2-S11-BURNIN/REALITY_GAP.md
+- reports/evidence/EPOCH-V2-S12-CANARY/SESSION_RECEIPT_CANARY_E2E.md
 - reports/evidence/EPOCH-V2-S9-AUDIT/AUDIT_AFTER_SPRINT_9.md
 - reports/evidence/EPOCH-V2-S9-AUDIT/COMMANDS_EXECUTED.md
 - reports/evidence/EPOCH-V2-S9-AUDIT/GATE_MATRIX.md
@@ -21,6 +22,8 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/gates/manual/regression_burnin01_e2e.json
 - reports/evidence/EXECUTOR/gates/manual/regression_canary_e2e01.json
 - reports/evidence/EXECUTOR/gates/manual/regression_canary_e2e02.json
+- reports/evidence/EXECUTOR/gates/manual/regression_canary_runbook_fast01.json
+- reports/evidence/EXECUTOR/gates/manual/regression_canary_session01_e2e.json
 - reports/evidence/EXECUTOR/gates/manual/regression_canary01_policy_contract.json
 - reports/evidence/EXECUTOR/gates/manual/regression_canary03_integration_e2e.json
 - reports/evidence/EXECUTOR/gates/manual/regression_data_locks01.json
@@ -48,6 +51,8 @@ NEXT_ACTION: npm run -s verify:fast
 - reports/evidence/EXECUTOR/REGRESSION_BURNIN01_E2E.md
 - reports/evidence/EXECUTOR/REGRESSION_CANARY_E2E01.md
 - reports/evidence/EXECUTOR/REGRESSION_CANARY_E2E02.md
+- reports/evidence/EXECUTOR/REGRESSION_CANARY_RUNBOOK_FAST01.md
+- reports/evidence/EXECUTOR/REGRESSION_CANARY_SESSION01_E2E.md
 - reports/evidence/EXECUTOR/REGRESSION_CANARY01_POLICY_CONTRACT.md
 - reports/evidence/EXECUTOR/REGRESSION_CANARY03_INTEGRATION_E2E.md
 - reports/evidence/EXECUTOR/REGRESSION_DATA_LOCKS01.md
