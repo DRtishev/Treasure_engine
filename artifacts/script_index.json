@@ -1,0 +1,6287 @@
+{
+  "generated": "DETERMINISTIC",
+  "total_scripts": 1046,
+  "categories": {
+    "verify": 708,
+    "regression": 304,
+    "ops": 34
+  },
+  "scripts": [
+    {
+      "file": "scripts/verify/adversarial_safety.mjs",
+      "npm": "labs:adversarial",
+      "purpose": "scripts/verify/adversarial_safety.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/agent_smoke.mjs",
+      "npm": "verify:agent",
+      "purpose": "scripts/verify/agent_smoke.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/baseline_check.mjs",
+      "npm": "verify:baseline",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/binance_smoke.mjs",
+      "npm": "verify:binance",
+      "purpose": "scripts/verify/binance_smoke.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/cache_policy_check.mjs",
+      "npm": "verify:cache:policy",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/cache_utils.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/cacheable_stage.mjs",
+      "npm": "verify:epochs:freeze",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/chaos_evidence_tamper.mjs",
+      "npm": "chaos:evidence-tamper",
+      "purpose": "chaos_evidence_tamper.mjs — CHAOS_EVIDENCE_TAMPER",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/chaos_fp01_trap.mjs",
+      "npm": "chaos:fp01",
+      "purpose": "chaos_fp01_trap.mjs — CHAOS_FP01",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/chaos_mode_lie.mjs",
+      "npm": "chaos:mode-lie",
+      "purpose": "chaos_mode_lie.mjs — CHAOS_MODE_LIE",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/chaos_net_leak.mjs",
+      "npm": "chaos:net-leak",
+      "purpose": "chaos_net_leak.mjs — CHAOS_NET_LEAK",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/chaos_orphan_write.mjs",
+      "npm": "chaos:orphan",
+      "purpose": "chaos_orphan_write.mjs — CHAOS_ORPHAN",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/confidence_score.test.mjs",
+      "npm": "verify:confidence",
+      "purpose": "scripts/verify/confidence_score.test.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/config_check.mjs",
+      "npm": "verify:config",
+      "purpose": "Validate configuration against schema",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/contracts_check.mjs",
+      "npm": "verify:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/court_stub.mjs",
+      "npm": "verify:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/data_readiness_seal.mjs",
+      "npm": "_verify:public:data:readiness",
+      "purpose": "data_readiness_seal.mjs — verify:public:data:readiness",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/dataset_check.mjs",
+      "npm": "verify:dataset",
+      "purpose": "scripts/verify/dataset_check.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/deep_attribution_e2e01.mjs",
+      "npm": "verify:deep:attribution-e2e01",
+      "purpose": "deep_attribution_e2e01.mjs — RG_ATTRIBUTION_E2E01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/deep_fill_quality_e2e01.mjs",
+      "npm": "verify:deep:fill-quality-e2e01",
+      "purpose": "deep_fill_quality_e2e01.mjs — RG_FILL_QUALITY_E2E01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/deep_idempotency_e2e01.mjs",
+      "npm": "verify:deep:idempotency-e2e01",
+      "purpose": "deep_idempotency_e2e01.mjs — RG_IDEMPOTENCY_E2E01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/deep_kill_metrics_e2e01.mjs",
+      "npm": "verify:deep:kill-metrics-e2e01",
+      "purpose": "deep_kill_metrics_e2e01.mjs — RG_KILL_METRICS_E2E01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/deep_kill_persist_e2e01.mjs",
+      "npm": "verify:deep:kill-persist-e2e01",
+      "purpose": "deep_kill_persist_e2e01.mjs — RG_KILL_PERSIST_E2E01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/deep_parity_e2e02.mjs",
+      "npm": "verify:deep:parity-e2e02",
+      "purpose": "deep_parity_e2e02.mjs — RG_PARITY_E2E02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/deep_recon_e2e02.mjs",
+      "npm": "verify:deep:recon-e2e02",
+      "purpose": "deep_recon_e2e02.mjs — RG_RECON_E2E02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/dep02_failclosed_readiness_gate.mjs",
+      "npm": "verify:dep02:failclosed",
+      "purpose": "dep02_failclosed_readiness_gate.mjs — DEP02 Fail-Closed Regression Gate",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/deps_offline_install_contract.mjs",
+      "npm": "verify:deps:offline",
+      "purpose": "deps_offline_install_contract.mjs — R12 offline deps detection",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/derived_docs_check.mjs",
+      "npm": "verify:derived",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/determinism.mjs",
+      "npm": "verify:determinism",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/docs_links_check.mjs",
+      "npm": "verify:docs",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/docs_truth_check.mjs",
+      "npm": "verify:docs:truth",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/dryrun_live_e2e.mjs",
+      "npm": "verify:dryrun-live",
+      "purpose": "Test LiveAdapterDryRun with reconciliation (100% offline)",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/dryrun_live_e2e_v2.mjs",
+      "npm": "verify:deep:dryrun-live-e2e",
+      "purpose": "dryrun_live_e2e_v2.mjs — Full offline execution path with all safety wiring",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e100_apply_txn.mjs",
+      "npm": "verify:e100:apply_txn",
+      "purpose": "E100-2: Transactional APPLY with journaling",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e100_bundle_hash.mjs",
+      "npm": "verify:e100:bundle_hash",
+      "purpose": "E100-3: Portable bundle hashing (no tar dependency)",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e100_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e100_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e100_no_secrets_scan.mjs",
+      "npm": "verify:e100:contracts",
+      "purpose": "E100-5: No-secrets scan for E100 evidence",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e100_path_invariance_contract.mjs",
+      "npm": "verify:e100:contracts",
+      "purpose": "E100-4: Path invariance contract - scan E97..E100 evidence for absolute paths",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e100_rollback_txn.mjs",
+      "npm": "verify:e100:rollback",
+      "purpose": "E100-2: Deterministic ROLLBACK from journal",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e100_run.mjs",
+      "npm": "verify:e100",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e100_stage_contract.mjs",
+      "npm": null,
+      "purpose": "E100-5: Stage contract - verify update-mode completeness",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e101_apply_txn.mjs",
+      "npm": "verify:e101:apply_txn",
+      "purpose": "E101-4,5,6: Transaction Apply v2 with crash-safety + triangle check",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e101_case_collision_contract.mjs",
+      "npm": "verify:e101:contracts",
+      "purpose": "E101-10A: Case-collision scan across repo",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e101_eol_contract.mjs",
+      "npm": "verify:e101:contracts",
+      "purpose": "E101-10D: EOL/CRLF contract for reports/evidence/**/*.md",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e101_evidence.mjs",
+      "npm": null,
+      "purpose": "E101 Evidence Generator - Canonical parity + SHA256SUMS",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e101_lib.mjs",
+      "npm": null,
+      "purpose": "E101 Library - Triple Stack Core",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e101_no_secrets_scan.mjs",
+      "npm": "verify:e101:contracts",
+      "purpose": "E101-10C: No-secrets scan",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e101_node_truth_contract.mjs",
+      "npm": "verify:e101:contracts",
+      "purpose": "E101-10F: Node truth contract",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e101_path_invariance_contract.mjs",
+      "npm": "verify:e101:contracts",
+      "purpose": "E101-10B: Path invariance scan across E97..E101 evidence + journals",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e101_rollback_txn.mjs",
+      "npm": "verify:e101:rollback",
+      "purpose": "E101-4,6: Rollback Transaction v2 with determinism x2 + crash-safety",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e101_run.mjs",
+      "npm": "verify:e101",
+      "purpose": "E101 Orchestrator - Triple Stack",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e102_evidence.mjs",
+      "npm": null,
+      "purpose": "E102 Evidence Generator - Honest Assessment",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e102_lib.mjs",
+      "npm": null,
+      "purpose": "E102 Library - Quintuple Stack Core",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e102_operator_playbook.mjs",
+      "npm": "verify:e102:operator_playbook",
+      "purpose": "E102-A5: Generate Operator Playbook (copy-paste commands)",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e102_run.mjs",
+      "npm": "verify:e102",
+      "purpose": "E102 Orchestrator - Quintuple Stack (Minimal Core)",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e103_evidence.mjs",
+      "npm": "verify:e103:evidence",
+      "purpose": "E103 Evidence Generator - Close The Skips",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e103_goal1_fast_apply.mjs",
+      "npm": null,
+      "purpose": "E103-1: Fast Apply - Performance + Correctness",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e103_goal2_corruption_drill.mjs",
+      "npm": null,
+      "purpose": "E103-2: Corruption Drill - P0 Security Test",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e103_goal3_seal_x2.mjs",
+      "npm": null,
+      "purpose": "E103-3: Evidence Sealing x2 - Meta-Determinism Proof",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e103_goal4_no_git_bootstrap.mjs",
+      "npm": null,
+      "purpose": "E103-4: NO-GIT Bootstrap Full Test - Real Simulation",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e103_lib.mjs",
+      "npm": null,
+      "purpose": "E103 Library - Close The Skips",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e103_run.mjs",
+      "npm": "verify:e103",
+      "purpose": "E103 Orchestrator - Close The Skips",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e104_bundle_hash_v2.mjs",
+      "npm": "verify:e104:bundle_hash_v2",
+      "purpose": "E104-C1: Bundle Hash V2 - Filesystem-order independent",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e104_dep_cycle_contract.mjs",
+      "npm": "verify:e104:contracts",
+      "purpose": "E104-D1: Dependency Cycle Detection - Import graph cycle detection",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e104_evidence.mjs",
+      "npm": null,
+      "purpose": "E104 Evidence Generator - Foundation Adoption + Hardening Quintuple",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e104_lib.mjs",
+      "npm": null,
+      "purpose": "E104 Library - Foundation Adoption + Hardening Quintuple",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e104_porcelain_contract.mjs",
+      "npm": "verify:e104:contracts",
+      "purpose": "E104-B2: Git Porcelain Contract - Validate parser against test vectors",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e104_run.mjs",
+      "npm": "verify:e104",
+      "purpose": "E104 Orchestrator - Foundation Adoption + Hardening Quintuple",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e104_speed_budget_contract.mjs",
+      "npm": null,
+      "purpose": "E104-E1: Speed Budget Contract - Performance regression detection",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e105_evidence.mjs",
+      "npm": "verify:e105:evidence",
+      "purpose": "E105 Evidence Generator",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e105_lib.mjs",
+      "npm": null,
+      "purpose": "E105 Library - Foundation Adoption + Speed Budget Endgame",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e105_perf_baseline.mjs",
+      "npm": "verify:e105:perf:baseline",
+      "purpose": "E105 Speed Budget Baseline Generator",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e105_run.mjs",
+      "npm": "verify:e105",
+      "purpose": "E105 Orchestrator - Foundation Adoption + Speed Budget Endgame",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e105_speed_budget_contract.mjs",
+      "npm": "verify:e105:contracts",
+      "purpose": "E105 Speed Budget Contract - Performance regression detection",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e106_baseline_lock.mjs",
+      "npm": null,
+      "purpose": "E106 Baseline Lock Contract",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e106_evidence.mjs",
+      "npm": null,
+      "purpose": "E106 Evidence Generator",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e106_foundation_selftest.mjs",
+      "npm": "verify:e106:contracts",
+      "purpose": "E106 Foundation Module Self-Tests",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e106_lib.mjs",
+      "npm": null,
+      "purpose": "E106 Library - Anchors and fingerprinting",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e106_perf_trend.mjs",
+      "npm": "verify:e106:perf:trend",
+      "purpose": "E106 Performance Trend Snapshot",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e106_porcelain_contract.mjs",
+      "npm": "verify:e106:contracts",
+      "purpose": "E106 Porcelain Contract - Enhanced parser validation",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e106_porcelain_vectors.mjs",
+      "npm": null,
+      "purpose": "E106 Enhanced Porcelain Test Vectors",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e106_run.mjs",
+      "npm": "verify:e106",
+      "purpose": "E106 Run - Orchestrator for all E106 contracts and evidence generation",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e106_seal_x2.mjs",
+      "npm": "verify:e106:seal_x2",
+      "purpose": "E106 Seal X2 - Meta-determinism proof",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e107_evidence.mjs",
+      "npm": null,
+      "purpose": "E107 Evidence Generator - First Profit Loop",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e107_lib.mjs",
+      "npm": null,
+      "purpose": "E107 Library - Anchors and fingerprinting for First Profit Loop",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e107_no_net_in_tests_contract.mjs",
+      "npm": "verify:e107:contracts",
+      "purpose": "E107 Contract: No Network in Tests",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e107_paper_live_contract.mjs",
+      "npm": "verify:e107:contracts",
+      "purpose": "E107 Contract: Paper-Live Runner end-to-end test",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e107_profit_ledger_contract.mjs",
+      "npm": "verify:e107:contracts",
+      "purpose": "E107 Contract: Profit Ledger deterministic behavior",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e107_run.mjs",
+      "npm": "verify:e107",
+      "purpose": "E107 Run - Orchestrator for First Profit Loop",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e107_seal_x2.mjs",
+      "npm": "verify:e107:seal_x2",
+      "purpose": "E107 Seal X2 - Meta-determinism proof",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e108_backtest_determinism_x2_contract.mjs",
+      "npm": "verify:e108:contracts",
+      "purpose": "E108 Contract: Backtest Determinism X2",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e108_evidence.mjs",
+      "npm": null,
+      "purpose": "E108 Evidence Generator - Edge Factory",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e108_lib.mjs",
+      "npm": null,
+      "purpose": "E108 Library - Anchors and fingerprinting for Edge Factory",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e108_no_lookahead_contract.mjs",
+      "npm": "verify:e108:contracts",
+      "purpose": "E108 Contract: No Lookahead",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e108_run.mjs",
+      "npm": "verify:e108",
+      "purpose": "E108 Run - Orchestrator for Edge Factory",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e108_seal_x2.mjs",
+      "npm": "verify:e108:seal_x2",
+      "purpose": "E108 Seal X2 - Meta-determinism proof",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e109_data_quorum_contract.mjs",
+      "npm": "verify:e109:contracts",
+      "purpose": "E109 Contract: Data Quorum",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e109_evidence.mjs",
+      "npm": null,
+      "purpose": "E109 Evidence Generator — Reality Capsules + Execution Adapter + Micro-Live Pilot",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e109_lib.mjs",
+      "npm": null,
+      "purpose": "E109 Library: Anchors + Evidence Fingerprint",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e109_live_safety_contract.mjs",
+      "npm": "verify:e109:contracts",
+      "purpose": "E109 Contract: Live Safety",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e109_run.mjs",
+      "npm": "verify:e109",
+      "purpose": "E109 Run — Orchestrator for Reality Capsules + Execution Adapter + Micro-Live Pilot",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e109_seal_x2.mjs",
+      "npm": "verify:e109:seal_x2",
+      "purpose": "E109 Seal X2 — Meta-determinism proof",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e110_cost_model.mjs",
+      "npm": null,
+      "purpose": "E110 Track B: Execution Cost Model v1 + Gap Monitor",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e110_data_quorum_v2_contract.mjs",
+      "npm": "verify:e110:contracts",
+      "purpose": "E110 Contract: Data Quorum v2",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e110_evidence.mjs",
+      "npm": null,
+      "purpose": "E110 Evidence Generator — Reality Quorum + Execution Gap + First Cashflow Experiment",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e110_gap_contract.mjs",
+      "npm": "verify:e110:contracts",
+      "purpose": "E110 Contract: Execution Gap",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e110_lib.mjs",
+      "npm": null,
+      "purpose": "E110 Library: Anchors + Evidence Fingerprint",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e110_micro_live_plan.mjs",
+      "npm": null,
+      "purpose": "E110 Track D: Micro-Live P1 Plan + Daily Report Sample (fixture-based)",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e110_run.mjs",
+      "npm": "verify:e110",
+      "purpose": "E110 Run — Orchestrator for Reality Quorum + Execution Gap + First Cashflow Experiment",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e110_seal_x2.mjs",
+      "npm": "verify:e110:seal_x2:raw",
+      "purpose": "E110 Seal X2 — Meta-determinism proof",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e110_speed_budget_contract.mjs",
+      "npm": "verify:e110:contracts",
+      "purpose": "E110 Contract: Speed Budget",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e111_candidate_minimums_contract.mjs",
+      "npm": "verify:e111:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e111_data_quorum_v3_contract.mjs",
+      "npm": "verify:e111:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e111_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e111_graduation_readiness_contract.mjs",
+      "npm": "verify:e111:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e111_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e111_live_feed_isolation_contract.mjs",
+      "npm": "verify:e111:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e111_run.mjs",
+      "npm": "verify:e111",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e111_seal_x2.mjs",
+      "npm": "verify:e111:seal_x2:raw",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e112_contracts_pack.mjs",
+      "npm": "verify:e112:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e112_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e112_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e112_run.mjs",
+      "npm": "verify:e112",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e112_seal_x2.mjs",
+      "npm": "verify:e112:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e113_contracts_pack.mjs",
+      "npm": "verify:e113:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e113_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e113_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e113_online_proof_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e113_replay_x2.mjs",
+      "npm": "verify:e113:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e113_run.mjs",
+      "npm": "verify:e113",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e113_seal_x2.mjs",
+      "npm": "verify:e113:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e113_snapshot_freshness_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e113_zero_writes_on_fail.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e114_contracts_pack.mjs",
+      "npm": "verify:e114:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e114_data_quorum_v5.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e114_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e114_graduation_realism_gate.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e114_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e114_promotion_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e114_provider_parity_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e114_replay_x2.mjs",
+      "npm": "verify:e114:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e114_run.mjs",
+      "npm": "verify:e114",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e114_seal_x2.mjs",
+      "npm": "verify:e114:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e114_zero_writes_on_fail.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e115_contracts_pack.mjs",
+      "npm": "verify:e115:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e115_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e115_input_binding_lock_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e115_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e115_mapping_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e115_replay_x2.mjs",
+      "npm": "verify:e115:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e115_run.mjs",
+      "npm": "verify:e115",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e115_seal_x2.mjs",
+      "npm": "verify:e115:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e115_snapshot_integrity_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e115_wss_replay_parity_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e115_zero_writes_on_fail.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e116_contracts_pack.mjs",
+      "npm": "verify:e116:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e116_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e116_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e116_replay_x2.mjs",
+      "npm": "verify:e116:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e116_run.mjs",
+      "npm": "verify:e116",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e116_seal_x2.mjs",
+      "npm": "verify:e116:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e117_contracts_pack.mjs",
+      "npm": "verify:e117:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e117_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e117_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e117_replay_x2.mjs",
+      "npm": "verify:e117:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e117_run.mjs",
+      "npm": "verify:e117",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e117_seal_x2.mjs",
+      "npm": "verify:e117:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e118_anti_fake_full_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e118_contracts_pack.mjs",
+      "npm": "verify:e118:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e118_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e118_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e118_lineage_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e118_replay_x2.mjs",
+      "npm": "verify:e118:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e118_run.mjs",
+      "npm": "verify:e118",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e118_seal_x2.mjs",
+      "npm": "verify:e118:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e119_anti_fake_full_v2_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e119_contracts_pack.mjs",
+      "npm": "verify:e119:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e119_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e119_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e119_parity_live_input_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e119_quorum_score_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e119_replay_x2.mjs",
+      "npm": "verify:e119:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e119_run.mjs",
+      "npm": "verify:e119",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e119_seal_x2.mjs",
+      "npm": "verify:e119:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_anti_fake_full_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_ci_boundary_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_contracts_pack.mjs",
+      "npm": "verify:e120:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_live_safety_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_replay_determinism_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_replay_x2.mjs",
+      "npm": "verify:e120:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_run.mjs",
+      "npm": "verify:e120",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_seal_x2.mjs",
+      "npm": "verify:e120:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_secrets_redaction_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e120_zero_writes_on_fail_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e121_contract_anchor_sanity.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e121_contract_anti_fake_full.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e121_contract_redaction.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e121_contracts_pack.mjs",
+      "npm": "verify:e121:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e121_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e121_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e121_replay_x2.mjs",
+      "npm": "verify:e121:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e121_run.mjs",
+      "npm": "verify:e121",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e121_seal_x2.mjs",
+      "npm": "verify:e121:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e122_contract_anti_fake_full.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e122_contract_redaction.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e122_contracts_pack.mjs",
+      "npm": "verify:e122:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e122_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e122_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e122_live_fill_gate.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e122_replay_x2.mjs",
+      "npm": "verify:e122:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e122_run.mjs",
+      "npm": "verify:e122",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e122_seal_x2.mjs",
+      "npm": "verify:e122:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_contract_anti_fake_full_v4.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_contract_diag_completeness.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_contract_fill_ledger_match.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_contract_packaging.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_contract_redaction.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_contract_zero_writes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_contracts_pack.mjs",
+      "npm": "verify:e123:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_live_fill_gate.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_replay_x2.mjs",
+      "npm": "verify:e123:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_run.mjs",
+      "npm": "verify:e123",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e123_seal_x2.mjs",
+      "npm": "verify:e123:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e124_contracts_pack.mjs",
+      "npm": "verify:e124:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e124_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e124_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e124_replay_x2.mjs",
+      "npm": "verify:e124:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e124_run.mjs",
+      "npm": "verify:e124",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e124_seal_x2.mjs",
+      "npm": "verify:e124:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e125_contracts_pack.mjs",
+      "npm": "verify:e125:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e125_diag.mjs",
+      "npm": "verify:e125:diag",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e125_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e125_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e125_replay_x2.mjs",
+      "npm": "verify:e125:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e125_run.mjs",
+      "npm": "verify:e125",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e125_seal_x2.mjs",
+      "npm": "verify:e125:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e126_contracts_pack.mjs",
+      "npm": "verify:e126:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e126_diag.mjs",
+      "npm": "verify:e126:diag",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e126_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e126_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e126_replay_x2.mjs",
+      "npm": "verify:e126:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e126_run.mjs",
+      "npm": "verify:e126",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e126_seal_x2.mjs",
+      "npm": "verify:e126:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e127_contracts_pack.mjs",
+      "npm": "verify:e127:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e127_diag.mjs",
+      "npm": "verify:e127:diag",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e127_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e127_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e127_replay_x2.mjs",
+      "npm": "verify:e127:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e127_run.mjs",
+      "npm": "verify:e127",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e127_seal_x2.mjs",
+      "npm": "verify:e127:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e128_contracts_pack.mjs",
+      "npm": "verify:e128:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e128_diag.mjs",
+      "npm": "verify:e128:diag",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e128_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e128_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e128_replay_x2.mjs",
+      "npm": "verify:e128:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e128_run.mjs",
+      "npm": "verify:e128",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e128_seal_x2.mjs",
+      "npm": "verify:e128:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e129_contracts_pack.mjs",
+      "npm": "verify:e129:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e129_diag.mjs",
+      "npm": "verify:e129:diag",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e129_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e129_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e129_replay_x2.mjs",
+      "npm": "verify:e129:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e129_run.mjs",
+      "npm": "verify:e129",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e129_seal_x2.mjs",
+      "npm": "verify:e129:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e130_contracts_pack.mjs",
+      "npm": "verify:e130:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e130_diag.mjs",
+      "npm": "verify:e130:diag",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e130_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e130_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e130_replay_x2.mjs",
+      "npm": "verify:e130:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e130_run.mjs",
+      "npm": "verify:e130",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e130_seal_x2.mjs",
+      "npm": "verify:e130:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e131_contracts_pack.mjs",
+      "npm": "verify:e131:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e131_diag.mjs",
+      "npm": "verify:e131:diag",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e131_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e131_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e131_replay_x2.mjs",
+      "npm": "verify:e131:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e131_run.mjs",
+      "npm": "verify:e131",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e131_seal_x2.mjs",
+      "npm": "verify:e131:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e132_contracts_pack.mjs",
+      "npm": "verify:e132:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e132_diag.mjs",
+      "npm": "verify:e132:diag",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e132_diag_deep.mjs",
+      "npm": "verify:e132:diag:deep",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e132_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e132_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e132_replay_x2.mjs",
+      "npm": "verify:e132:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e132_run.mjs",
+      "npm": "verify:e132",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e132_seal_x2.mjs",
+      "npm": "verify:e132:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e133_contracts_pack.mjs",
+      "npm": "verify:e133:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e133_diag.mjs",
+      "npm": "verify:e133:diag",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e133_diag_deep.mjs",
+      "npm": "verify:e133:diag:deep",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e133_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e133_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e133_replay_x2.mjs",
+      "npm": "verify:e133:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e133_run.mjs",
+      "npm": "verify:e133",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e133_seal_x2.mjs",
+      "npm": "verify:e133:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e134_contracts_pack.mjs",
+      "npm": "verify:e134:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e134_diag.mjs",
+      "npm": "verify:e134:diag",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e134_diag_deep.mjs",
+      "npm": "verify:e134:diag:deep",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e134_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e134_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e134_replay_x2.mjs",
+      "npm": "verify:e134:replay_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e134_run.mjs",
+      "npm": "verify:e134",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e134_seal_x2.mjs",
+      "npm": "verify:e134:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e135_contracts.mjs",
+      "npm": "verify:e135:contracts",
+      "purpose": "E135 Contracts — md-only check, redaction scan, header exactness.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e135_export.mjs",
+      "npm": "verify:e135:export",
+      "purpose": "E135 Export — generates EXPORT_MANIFEST.md and EXPORT_RECEIPT.md.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e135_lib.mjs",
+      "npm": null,
+      "purpose": "E135 Library — shared constants, helpers, CI boundary, fingerprinting.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e135_run.mjs",
+      "npm": "verify:e135",
+      "purpose": "E135 Run — orchestrates harness + contracts + export + sha evidence.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e135_transport_harness.mjs",
+      "npm": null,
+      "purpose": "E135 Transport Harness — offline, deterministic.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e136_contracts.mjs",
+      "npm": "verify:e136:contracts",
+      "purpose": "E136 Contracts — md-only check, redaction scan, header exactness.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e136_export.mjs",
+      "npm": "verify:e136:export",
+      "purpose": "E136 Export — deterministic EXPORT_MANIFEST.md + optional gitignored archive.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e136_import_verify.mjs",
+      "npm": "verify:e136:import",
+      "purpose": "E136 Import Verify — validates evidence on receiving machine.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e136_lib.mjs",
+      "npm": null,
+      "purpose": "E136 Library — shared constants, helpers, CI boundary, fingerprinting.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e136_online_diag.mjs",
+      "npm": "verify:e136:online",
+      "purpose": "E136 Online Diag — GATED. Requires ENABLE_NET=1 and I_UNDERSTAND_LIVE_RISK=1.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e136_run.mjs",
+      "npm": "verify:e136",
+      "purpose": "E136 Run — orchestrates all E136 evidence generation.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e136_seal_x2.mjs",
+      "npm": "verify:e136:seal_x2",
+      "purpose": "E136 Seal X2 — two-run anti-flake: verifies fingerprint of deterministic",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e137_contracts.mjs",
+      "npm": "verify:e137:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e137_export.mjs",
+      "npm": "verify:e137:export",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e137_import.mjs",
+      "npm": "verify:e137:import",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e137_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e137_offline.mjs",
+      "npm": "verify:e137:offline",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e137_online.mjs",
+      "npm": "verify:e137:online",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e137_run.mjs",
+      "npm": "verify:e137",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e137_seal_x2.mjs",
+      "npm": "verify:e137:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e138_probe.mjs",
+      "npm": "verify:e137:probe",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e139_contracts.mjs",
+      "npm": "verify:e139:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e139_doctor.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e139_run.mjs",
+      "npm": "verify:e139",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e140_contracts.mjs",
+      "npm": "verify:e140:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e140_doctor.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e140_export.mjs",
+      "npm": "verify:e140:export",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e140_import.mjs",
+      "npm": "verify:e140:import",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e140_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e140_node_bootstrap.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e140_run.mjs",
+      "npm": "verify:e140",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e141_contracts.mjs",
+      "npm": "verify:e141:contracts",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e141_doctor.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e141_exec_with_pinned_node.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e141_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e141_node_acquire.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e141_node_bootstrap.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e141_node_capsule.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e141_run.mjs",
+      "npm": "verify:e141",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e141_seal_x2.mjs",
+      "npm": "verify:e141:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e142m_contracts.mjs",
+      "npm": "verify:mega:contracts",
+      "purpose": "P0-B: REQUIRED contains only files written BEFORE contracts runs.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e142m_doctor.mjs",
+      "npm": "doctor",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e142m_export.mjs",
+      "npm": "verify:mega:export",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e142m_import.mjs",
+      "npm": "verify:mega:import",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e142m_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e142m_network_classify.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e142m_regression.mjs",
+      "npm": "verify:mega:regression",
+      "purpose": "P0-F: Regression guard — offline, deterministic, md-only output.",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e142m_run.mjs",
+      "npm": "verify:mega",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e142m_seal_x2.mjs",
+      "npm": "verify:mega:seal_x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e2_multi_seed.mjs",
+      "npm": "verify:e2:multi",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e66_cas.mjs",
+      "npm": "verify:cas",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e66_evidence.mjs",
+      "npm": "verify:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e66_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e66_phoenix_x2.mjs",
+      "npm": "verify:phoenix:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e66_provenance.mjs",
+      "npm": "truth:provenance",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e66_run.mjs",
+      "npm": "verify:e66",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e66_snapshots.mjs",
+      "npm": "verify:snapshots",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e67_evidence.mjs",
+      "npm": "verify:e67:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e67_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e67_recon_x2.mjs",
+      "npm": "verify:edge:recon:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e67_run.mjs",
+      "npm": "verify:e67",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e68_edge_magic_x2.mjs",
+      "npm": "verify:edge:magic:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e68_evidence.mjs",
+      "npm": "verify:e68:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e68_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e68_run.mjs",
+      "npm": "verify:e68",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e69_edge_magic_suite_x2.mjs",
+      "npm": "verify:edge:magic:suite:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e69_evidence.mjs",
+      "npm": "verify:e69:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e69_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e69_run.mjs",
+      "npm": "verify:e69",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e70_chain_bundle.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e70_edge_stress_x2.mjs",
+      "npm": "verify:edge:stress:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e70_evidence.mjs",
+      "npm": "verify:e70:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e70_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e70_run.mjs",
+      "npm": "verify:e70",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e71_edge_metamorphic_x2.mjs",
+      "npm": "verify:edge:meta:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e71_evidence.mjs",
+      "npm": "verify:e71:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e71_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e71_run.mjs",
+      "npm": "verify:e71",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e71_wow_verify.mjs",
+      "npm": "verify:wow",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e72_edge_contract_x2.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e72_evidence.mjs",
+      "npm": "verify:e72:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e72_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e72_run.mjs",
+      "npm": "verify:e72",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e72_wow_usage_verify.mjs",
+      "npm": "verify:wow:usage",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e73_contract_court.mjs",
+      "npm": "verify:contract:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e73_edge_contract_x2.mjs",
+      "npm": "verify:edge:contract:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e73_evidence.mjs",
+      "npm": "verify:e73:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e73_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e73_run.mjs",
+      "npm": "verify:e73",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e74_contract_court.mjs",
+      "npm": "verify:contract:court:selftest",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e74_contract_snapshots.mjs",
+      "npm": "verify:contract:snapshots",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e74_edge_contract_x2.mjs",
+      "npm": "verify:edge:contract:x2:e74",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e74_evidence.mjs",
+      "npm": "verify:e74:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e74_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e74_run.mjs",
+      "npm": "verify:e74",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e75_edge_profit_x2.mjs",
+      "npm": "verify:edge:profit:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e75_evidence.mjs",
+      "npm": "verify:e75:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e75_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e75_profit_harness_check.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e75_run.mjs",
+      "npm": "verify:e75",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e76_edge_profit_envelope_x2.mjs",
+      "npm": "verify:edge:profit:envelope:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e76_evidence.mjs",
+      "npm": "verify:e76:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e76_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e76_manual_recon_collect.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e76_run.mjs",
+      "npm": "verify:e76",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e77_calibration_court.mjs",
+      "npm": "verify:e77:calibration:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e77_edge_canary_x2.mjs",
+      "npm": "verify:edge:canary:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e77_evidence.mjs",
+      "npm": "verify:e77:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e77_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e77_run.mjs",
+      "npm": "verify:e77",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e78_calibration_court.mjs",
+      "npm": "verify:e78:calibration:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e78_edge_canary_x2.mjs",
+      "npm": "verify:edge:canary:x2:e78",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e78_edge_profit_search_x2.mjs",
+      "npm": "verify:edge:profit:search:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e78_evidence.mjs",
+      "npm": "verify:e78:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e78_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e78_run.mjs",
+      "npm": "verify:e78",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e79_edge_canary_x2.mjs",
+      "npm": "verify:edge:canary:x2:e79",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e79_edge_shortlist.mjs",
+      "npm": "verify:edge:shortlist",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e79_evidence.mjs",
+      "npm": "verify:e79:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e79_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e79_quiet_smoke.mjs",
+      "npm": "verify:quiet:smoke",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e79_recon_observed_multi.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e79_run.mjs",
+      "npm": "verify:e79",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e80_calibration_court.mjs",
+      "npm": "verify:e80:calibration:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e80_edge_canary_x2.mjs",
+      "npm": "verify:edge:canary:x2:e80",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e80_edge_shortlist.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e80_evidence.mjs",
+      "npm": "verify:e80:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e80_exec_recon_microfill_manual.mjs",
+      "npm": "verify:exec:recon:microfill",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e80_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e80_recon_observed_expand.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e80_run.mjs",
+      "npm": "verify:e80",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e81_calibration_court.mjs",
+      "npm": "verify:e81:calibration:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e81_edge_canary_x2.mjs",
+      "npm": "verify:edge:canary:x2:e81",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e81_evidence.mjs",
+      "npm": "verify:e81:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e81_exec_recon_demo_manual.mjs",
+      "npm": "verify:exec:recon:demo",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e81_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e81_recon_observed_multi.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e81_run.mjs",
+      "npm": "verify:e81",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e82_calibration_court.mjs",
+      "npm": "verify:e82:calibration:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e82_edge_canary_x2.mjs",
+      "npm": "verify:edge:canary:x2:e82",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e82_evidence.mjs",
+      "npm": "verify:e82:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e82_exec_recon_demo_daily.mjs",
+      "npm": "verify:exec:recon:daily",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e82_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e82_recon_observed_multi.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e82_run.mjs",
+      "npm": "verify:e82",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e83_edge_canary_x2.mjs",
+      "npm": "verify:edge:canary:x2:e83",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e83_evidence.mjs",
+      "npm": "verify:e83:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e83_exec_recon_demo_daily.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e83_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e83_operator_cadence_runner.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e83_readiness_tracker.mjs",
+      "npm": "verify:e83:readiness",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e83_recon_observed_multi.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e83_run.mjs",
+      "npm": "verify:e83",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e83_threshold_court.mjs",
+      "npm": "verify:e83:threshold:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e84_edge_canary_x2.mjs",
+      "npm": "verify:edge:canary:x2:e84",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e84_evidence.mjs",
+      "npm": "verify:e84:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e84_exec_recon_demo_daily_manual.mjs",
+      "npm": "verify:exec:recon:demo:daily",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e84_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e84_profit_ledger.mjs",
+      "npm": "verify:e84:profit:ledger",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e84_recon_observed_multi.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e84_run.mjs",
+      "npm": "verify:e84",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e84_threshold_court.mjs",
+      "npm": "verify:e84:threshold:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e85_evidence.mjs",
+      "npm": "verify:e85:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e85_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e85_run.mjs",
+      "npm": "verify:e85",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e85_threshold_apply.mjs",
+      "npm": "verify:threshold:apply",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e85_threshold_apply_x2.mjs",
+      "npm": "verify:threshold:apply:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e86_demo_daily_cadence.mjs",
+      "npm": "verify:demo:daily:e86",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e86_edge_canary_x2.mjs",
+      "npm": "verify:edge:canary:x2:e86",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e86_evidence.mjs",
+      "npm": "verify:e86:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e86_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e86_ordering_contract.mjs",
+      "npm": "verify:e86:ordering:contract",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e86_run.mjs",
+      "npm": "verify:e86",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e86_threshold_apply.mjs",
+      "npm": "verify:threshold:apply:e86",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e86_threshold_apply_x2.mjs",
+      "npm": "verify:threshold:apply:x2:e86",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e86_tightening_court.mjs",
+      "npm": "verify:e86:tightening:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e87_apply_extension.mjs",
+      "npm": "verify:e87:apply",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e87_apply_x2.mjs",
+      "npm": "verify:e87:apply:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e87_disablelist_court.mjs",
+      "npm": "verify:e87:disablelist:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e87_evidence.mjs",
+      "npm": "verify:e87:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e87_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e87_microfill_cadence.mjs",
+      "npm": "verify:e87:microfill",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e87_mitigation_court.mjs",
+      "npm": "verify:e87:mitigation:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e87_no_secrets_scan.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e87_ordering_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e87_perf_notes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e87_run.mjs",
+      "npm": "verify:e87",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e88_apply_x2.mjs",
+      "npm": "verify:e88:apply:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e88_evidence.mjs",
+      "npm": "verify:e88:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e88_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e88_no_secrets_scan.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e88_ordering_contract.mjs",
+      "npm": "verify:e88:ordering:contract",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e88_park_aging_court.mjs",
+      "npm": "verify:e88:park:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e88_perf_notes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e88_reason_history_update.mjs",
+      "npm": "verify:e88:reason-history",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e88_run.mjs",
+      "npm": "verify:e88",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e89_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e89_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e89_no_secrets_scan.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e89_park_aging_core.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e89_park_aging_fixture_contract.mjs",
+      "npm": "verify:e89:fixture:contract",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e89_perf_notes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e89_run.mjs",
+      "npm": "verify:e89",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e90_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e90_kill_lock_drill.mjs",
+      "npm": "verify:e90:drill:raw",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e90_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e90_metamorphic_suite.mjs",
+      "npm": "verify:e90:metamorphic",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e90_no_secrets_scan.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e90_perf_notes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e90_run.mjs",
+      "npm": "verify:e90",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e91_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e91_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e91_no_secrets_scan.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e91_perf_notes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e91_run.mjs",
+      "npm": "verify:e91",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e91_sparsity_suite.mjs",
+      "npm": "verify:e91:sparsity",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e92_apply.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e92_ev_delta_court.mjs",
+      "npm": "verify:e92:ev:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e92_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e92_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e92_no_secrets_scan.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e92_perf_notes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e92_run.mjs",
+      "npm": "verify:e92",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e93_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e93_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e93_no_secrets_scan.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e93_perf_notes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e93_post_apply_validate.mjs",
+      "npm": "verify:e93:post:apply",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e93_promotion_readiness_court.mjs",
+      "npm": "verify:e93:promote:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e93_rollback.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e93_run.mjs",
+      "npm": "verify:e93",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e94_cadence_update.mjs",
+      "npm": "verify:e94:cadence:update",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e94_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e94_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e94_no_secrets_scan.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e94_ordering_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e94_perf_notes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e94_promotion_multiwindow_court.mjs",
+      "npm": "verify:e94:promote:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e94_run.mjs",
+      "npm": "verify:e94",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e95_adverse_readiness_suite.mjs",
+      "npm": "verify:e95:adverse:suite",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e95_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e95_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e95_no_secrets_scan.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e95_ordering_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e95_perf_notes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e95_real_state_promotion.mjs",
+      "npm": "verify:e95:real:promotion",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e95_run.mjs",
+      "npm": "verify:e95",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e96_adversarial_suite.mjs",
+      "npm": "verify:e96:adversarial",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e96_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e96_invariant_fuzz.mjs",
+      "npm": "verify:e96:fuzz",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e96_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e96_no_secrets_scan.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e96_ordering_contract.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e96_perf_notes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e96_real_state_tiered_promotion.mjs",
+      "npm": "verify:e96:real",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e96_run.mjs",
+      "npm": "verify:e96",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e97_adverse_fixture_suite.mjs",
+      "npm": "verify:e97:adverse",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e97_apply_overlay.mjs",
+      "npm": null,
+      "purpose": "E100-1: CI truthiness hardening",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e97_envelope_tuning_court.mjs",
+      "npm": "verify:e97:court",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e97_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e97_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e97_no_secrets_scan.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e97_perf_notes.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e97_profit_ledger_update.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e97_run.mjs",
+      "npm": "verify:e97",
+      "purpose": "E100-1: CI truthiness hardening",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e98_apply_rehearsal.mjs",
+      "npm": "verify:e98:apply_rehearsal:raw",
+      "purpose": "E98-3: Governed apply rehearsal - exercise E97 apply path safely",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e98_case_collision_scan.mjs",
+      "npm": "verify:e98:case_collision_contract",
+      "purpose": "E98-1: Case collision detection for macOS portability",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e98_evidence.mjs",
+      "npm": "verify:e98:evidence",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e98_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e98_path_invariance_check.mjs",
+      "npm": null,
+      "purpose": "E98-2: Path invariance - ensure E98 evidence has no absolute path leakage",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e98_run.mjs",
+      "npm": "verify:e98",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e99_apply_rehearsal.mjs",
+      "npm": "verify:e99:apply_rehearsal:raw",
+      "purpose": "E99-1: COMPLETE APPLY REHEARSAL (mandatory execution)",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e99_case_collision_contract.mjs",
+      "npm": "verify:e99:contracts",
+      "purpose": "E99 case collision contract (should be 0 after E98)",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e99_evidence.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e99_lib.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e99_no_secrets_scan.mjs",
+      "npm": "verify:e99:contracts",
+      "purpose": "E99 no-secrets scan",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e99_path_invariance_contract.mjs",
+      "npm": "verify:e99:contracts",
+      "purpose": "E99 path invariance contract - scan E99 evidence for absolute paths",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e99_post_apply_stability_court.mjs",
+      "npm": "verify:e99:post_apply:court",
+      "purpose": "E99-2: POST-APPLY STABILITY COURT (\"NO-WORSE\")",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e99_run.mjs",
+      "npm": "verify:e99",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/e99_stage_contract.mjs",
+      "npm": null,
+      "purpose": "E99-4: Stage contract - verify update-mode completeness",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/edge_all_epochs.mjs",
+      "npm": "verify:edge",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/edge_epoch_gate.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/edge_lab_validation.mjs",
+      "npm": "verify:edge-lab",
+      "purpose": "scripts/verify/edge_lab_validation.mjs — EDGE LAB Validation Gate",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/edge_profit_00_release_artifacts_gate.mjs",
+      "npm": "verify:edge:profit:00:release",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/edge_profit_00_scope_guard.mjs",
+      "npm": "verify:edge:profit:00:scope",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/env_node22_bootstrap_gate.mjs",
+      "npm": "env:node22:bootstrap:gate",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/env_node_truth_authority.mjs",
+      "npm": "verify:env:authority",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch07_integration.mjs",
+      "npm": "verify:epoch07",
+      "purpose": "scripts/verify/epoch07_integration.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch08_integration.mjs",
+      "npm": "verify:epoch08",
+      "purpose": "scripts/verify/epoch08_integration.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch09_integration.mjs",
+      "npm": "verify:epoch09",
+      "purpose": "scripts/verify/epoch09_integration.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch10_integration.mjs",
+      "npm": "verify:epoch10",
+      "purpose": "EPOCH-10 INTEGRATION TESTS",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch11_master_orchestrator.mjs",
+      "npm": "verify:epoch11",
+      "purpose": "EPOCH-11: MASTER ORCHESTRATOR VERIFICATION",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch22_ai_validation_harness.mjs",
+      "npm": "verify:epoch22",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch23_signal_intent_contract_check.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch24_walkforward_reality_gap_check.mjs",
+      "npm": "verify:epoch24",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch25_testnet_campaign_check.mjs",
+      "npm": "verify:epoch25",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch26_micro_live_governor_check.mjs",
+      "npm": "verify:epoch26",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch27_ai_contracts_deterministic_harness.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch28_ai_signal_intent_safety_check.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch29_walkforward_leakage_sentinel.mjs",
+      "npm": "verify:epoch29",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch30_final_polish_release_freeze_check.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch31_edge_gate.mjs",
+      "npm": "verify:epoch31",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch32_edge_gate.mjs",
+      "npm": "verify:epoch32",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch33_edge_gate.mjs",
+      "npm": "verify:epoch33",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch34_edge_gate.mjs",
+      "npm": "verify:epoch34",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch35_edge_gate.mjs",
+      "npm": "verify:epoch35",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch36_edge_gate.mjs",
+      "npm": "verify:epoch36",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch37_edge_gate.mjs",
+      "npm": "verify:epoch37",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch38_edge_gate.mjs",
+      "npm": "verify:epoch38",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch39_edge_gate.mjs",
+      "npm": "verify:epoch39",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch40_edge_gate.mjs",
+      "npm": "verify:epoch40",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch41_bridge.mjs",
+      "npm": "verify:epoch41",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch42_execution_realism.mjs",
+      "npm": "verify:epoch42",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch43_overfit_defense.mjs",
+      "npm": "verify:epoch43",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch44_risk_fortress.mjs",
+      "npm": "verify:epoch44",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch45_agent_mesh.mjs",
+      "npm": "verify:epoch45",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch46_data_plane.mjs",
+      "npm": "verify:epoch46",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch49_live_public_collector.mjs",
+      "npm": "verify:epoch49",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch50_private_fills_calibration.mjs",
+      "npm": "verify:epoch50",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch51_paper_trading_harness.mjs",
+      "npm": "verify:epoch51",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch52_canary_controller.mjs",
+      "npm": "verify:epoch52",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch53_canary_forensics.mjs",
+      "npm": "verify:epoch53",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch54_live_shadow_record.mjs",
+      "npm": "verify:epoch54",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch55_paper_fitness_lab.mjs",
+      "npm": "verify:epoch55",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch56_trickpack01.mjs",
+      "npm": "verify:epoch56",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch_fallback_gate.mjs",
+      "npm": "verify:epoch21",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch_freeze_regression.mjs",
+      "npm": "verify:epochs:freeze:raw",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/epoch_sweep_1_58.mjs",
+      "npm": "verify:epochs:sweep:raw",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/events_schema_check.mjs",
+      "npm": "verify:events",
+      "purpose": "Validate event logs against schemas",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/evidence_commit_binding_check.mjs",
+      "npm": "verify:evidence:commit_binding",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/executor_commands_run_guard.mjs",
+      "npm": "verify:executor:commands:guard",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/export_contract_integrity_gate.mjs",
+      "npm": "verify:export:contract",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/export_contract_receipt_format_guard.mjs",
+      "npm": "verify:export:receipt",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/fixture_guard_gate.mjs",
+      "npm": "verify:fixture:guard",
+      "purpose": "fixture_guard_gate.mjs — FG01 Fixture Guard Gate",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/format_policy_gate.mjs",
+      "npm": "verify:format:policy",
+      "purpose": "format_policy_gate.mjs — FP01 format policy enforcement",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/foundation_ci.mjs",
+      "npm": null,
+      "purpose": "Foundation CI Module - E101 Track 1",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/foundation_git.mjs",
+      "npm": null,
+      "purpose": "Foundation Git Module - E101 Track 1",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/foundation_git_vectors.mjs",
+      "npm": null,
+      "purpose": "Git Porcelain Test Vectors - Deterministic parser validation",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/foundation_lock.mjs",
+      "npm": null,
+      "purpose": "Foundation Lock Module - E101 Track 1",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/foundation_paths.mjs",
+      "npm": null,
+      "purpose": "Foundation Paths Module - E101 Track 1",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/foundation_render.mjs",
+      "npm": null,
+      "purpose": "Foundation Render Module - E101 Track 1",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/foundation_sums.mjs",
+      "npm": null,
+      "purpose": "Foundation Sums Module - E101 Track 1",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/godtier_integration.mjs",
+      "npm": "labs:godtier",
+      "purpose": "scripts/verify/godtier_integration.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/golden_vectors_check.mjs",
+      "npm": "verify:golden",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/goldens_apply_gate.mjs",
+      "npm": "verify:goldens:apply",
+      "purpose": "goldens_apply_gate.mjs — G001/G002 golden vectors governance gate",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/governance_check.mjs",
+      "npm": "verify:governance",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/hacks_validate.mjs",
+      "npm": "verify:hacks",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/infra_p0_closeout.mjs",
+      "npm": "infra:p0:closeout",
+      "purpose": "infra_p0_closeout.mjs — INFRA P0 closeout orchestrator",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/infra_p0_run.mjs",
+      "npm": "infra:p0",
+      "purpose": "infra_p0_run.mjs — INFRA P0 runner (runner, not renderer)",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/json_schema_check.mjs",
+      "npm": "verify:court",
+      "purpose": "scripts/verify/json_schema_check.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/kb_check.mjs",
+      "npm": "verify:kb",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/ledger_check.mjs",
+      "npm": "verify:ledger",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/ledger_schema_strict.mjs",
+      "npm": "verify:ledger:schema",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/liquidations_smoke_gate.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/live_adapter_smoke.mjs",
+      "npm": "labs:live",
+      "purpose": "scripts/verify/live_adapter_smoke.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/master_integration_e2e.mjs",
+      "npm": "verify:integration",
+      "purpose": "Test MasterExecutor with ALL systems integrated",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/merge_court.mjs",
+      "npm": "verify:merge-court",
+      "purpose": "merge_court.mjs — MERGE_COURT evidence generator",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/monitoring_perf_check.mjs",
+      "npm": "verify:monitoring",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/net_isolation_proof.mjs",
+      "npm": "verify:net:isolation",
+      "purpose": "net_isolation_proof.mjs — NET01 Network Isolation Proof Gate",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/netv01_probe.mjs",
+      "npm": "verify:netv01:probe",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/no_placeholders_check.mjs",
+      "npm": "verify:no_placeholders",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/node_truth_gate.mjs",
+      "npm": "verify:node:truth",
+      "purpose": "node_truth_gate.mjs — NT01/NT02 Node version SSOT validation",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/offline_check.mjs",
+      "npm": "verify:offline",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/paper_e2e.mjs",
+      "npm": "verify:paper:raw",
+      "purpose": "scripts/verify/paper_e2e.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/paper_multi_seed.mjs",
+      "npm": "verify:paper:multi",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/passports_check.mjs",
+      "npm": "verify:passports",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/persist_idempotency.mjs",
+      "npm": "verify:persist",
+      "purpose": "Verify that persistence layer prevents duplicate orders on restart",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/phase2_smoke.mjs",
+      "npm": null,
+      "purpose": "scripts/verify/phase2_smoke.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/phase2_verify.mjs",
+      "npm": "verify:phase2",
+      "purpose": "scripts/verify/phase2_verify.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/phoenix_gate.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/phoenix_x2.mjs",
+      "npm": "verify:phoenix:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/profit_foundation_freeze_gate.mjs",
+      "npm": "verify:profit:foundation",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/profit_ready_cert_gate.mjs",
+      "npm": "verify:profit:ready",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/properties.mjs",
+      "npm": "verify:properties",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/provenance_check.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/public_data_readiness_seal.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/r3_okx_acquire_contract.mjs",
+      "npm": "verify:r3:okx-acquire-contract",
+      "purpose": "r3_okx_acquire_contract.mjs — verify:r3:okx-acquire-contract",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/r3_preflight.mjs",
+      "npm": "verify:r3:preflight",
+      "purpose": "r3_preflight.mjs — R3 OKX Live Acquire Preflight v2",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/reachability.mjs",
+      "npm": "verify:reachability",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/real_public_network_sanity_gate.mjs",
+      "npm": "verify:real-public:net",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/regression_accept_restore_propagates_exitcode.mjs",
+      "npm": "verify:regression:accept-restore-propagates-exitcode",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_acq_network_unreachable_classification.mjs",
+      "npm": "verify:regression:acq-network-unreachable-classification",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_acq_unlock_contract.mjs",
+      "npm": "verify:regression:acq-unlock-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_agent01_agents_present.mjs",
+      "npm": "verify:regression:agent01-agents-present",
+      "purpose": "regression_agent01_agents_present.mjs — RG_AGENT01_AGENTS_PRESENT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_agent02_claude_md_drift.mjs",
+      "npm": "verify:regression:agent02-claude-md-drift",
+      "purpose": "regression_agent02_claude_md_drift.mjs — RG_AGENT02_CLAUDE_MD_DRIFT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_agent03_no_legacy_contradictions.mjs",
+      "npm": "verify:regression:agent03-no-legacy-contradictions",
+      "purpose": "regression_agent03_no_legacy_contradictions.mjs — RG_AGENT03_NO_LEGACY_CONTRADICTIONS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_audit01_exporters_only_in_audit.mjs",
+      "npm": "verify:regression:audit01-exporters-only-in-audit",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_auto01_mode_router.mjs",
+      "npm": "verify:regression:auto01-mode-router",
+      "purpose": "regression_auto01_mode_router.mjs — RG_AUTO01_MODE_ROUTER",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_auto02_no_cert_in_research.mjs",
+      "npm": "verify:regression:auto02-no-cert-in-research",
+      "purpose": "regression_auto02_no_cert_in_research.mjs — RG_AUTO02_NO_CERT_IN_RESEARCH",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_auto03_pr_cleanroom_applied.mjs",
+      "npm": "verify:regression:auto03-pr-cleanroom-applied",
+      "purpose": "regression_auto03_pr_cleanroom_applied.mjs — RG_AUTO03_PR_CLEANROOM_APPLIED",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_auto04_apply_unlock_required.mjs",
+      "npm": "verify:regression:auto04-apply-unlock-required",
+      "purpose": "regression_auto04_apply_unlock_required.mjs — RG_AUTO04_APPLY_UNLOCK_REQUIRED",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_auto05_event_emission.mjs",
+      "npm": "verify:regression:auto05-event-emission",
+      "purpose": "regression_auto05_event_emission.mjs — RG_AUTO05_EVENT_EMISSION",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_backtest01_organ_health.mjs",
+      "npm": "verify:regression:backtest01-organ-health",
+      "purpose": "regression_backtest01_organ_health.mjs — RG_BACKTEST_ORGAN01: Backtest Organ Health",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_baseline_clean_no_tracked_drift.mjs",
+      "npm": "verify:regression:baseline-clean-no-tracked-drift",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_baseline_preserve_critical_receipts.mjs",
+      "npm": "verify:regression:baseline-preserve-critical-receipts",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_baseline_telemetry_semantic_volatile_split.mjs",
+      "npm": "verify:regression:baseline-telemetry-semantic-volatile-split",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_bounded_kill_tree.mjs",
+      "npm": "verify:regression:bounded-kill-tree",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_burnin01_e2e.mjs",
+      "npm": "verify:deep:burnin01",
+      "purpose": "regression_burnin01_e2e.mjs -- RG_BURNIN01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_burnin_fast01.mjs",
+      "npm": "verify:regression:burnin-fast01",
+      "purpose": "regression_burnin_fast01.mjs -- RG_BURNIN_FAST01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_bus01_determinism_x2.mjs",
+      "npm": "verify:regression:bus01-determinism-x2",
+      "purpose": "regression_bus01_determinism_x2.mjs — RG_BUS01_DETERMINISM_X2",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_bus02_write_scope.mjs",
+      "npm": "verify:regression:bus02-write-scope",
+      "purpose": "regression_bus02_write_scope.mjs — RG_BUS02_WRITE_SCOPE",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_bus03_aggregator_stable_order.mjs",
+      "npm": "verify:regression:bus03-aggregator-stable-order",
+      "purpose": "regression_bus03_aggregator_stable_order.mjs — RG_BUS03_AGGREGATOR_STABLE_ORDER",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_canary01_policy_contract.mjs",
+      "npm": "verify:regression:canary01-policy-contract",
+      "purpose": "regression_canary01_policy_contract.mjs -- RG_CANARY01_POLICY_CONTRACT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_canary03_integration_e2e.mjs",
+      "npm": "verify:deep:canary03-integration",
+      "purpose": "regression_canary03_integration_e2e.mjs -- RG_CANARY03_INTEGRATION_E2E",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_canary_e2e01_daily_loss.mjs",
+      "npm": "verify:deep:canary-e2e01",
+      "purpose": "regression_canary_e2e01_daily_loss.mjs -- RG_CANARY_E2E01_DAILY_LOSS_TRIGGER",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_canary_e2e02_order_rate.mjs",
+      "npm": "verify:deep:canary-e2e02",
+      "purpose": "regression_canary_e2e02_order_rate.mjs -- RG_CANARY_E2E02_ORDER_RATE_LIMIT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_canary_runbook_fast01.mjs",
+      "npm": "verify:regression:canary-runbook-fast01",
+      "purpose": "regression_canary_runbook_fast01.mjs -- RG_CANARY_RUNBOOK_FAST01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_canary_session01_e2e.mjs",
+      "npm": "verify:deep:canary-session01",
+      "purpose": "regression_canary_session01_e2e.mjs -- RG_CANARY_SESSION01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_canon_commands_run_timestamps.mjs",
+      "npm": "verify:regression:canon-commands-run-timestamps",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_canon_d005_nonvolatile_unchanged.mjs",
+      "npm": "verify:regression:canon-d005-nonvolatile-unchanged",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_canon_includes_ms_timing_markers.mjs",
+      "npm": "verify:regression:canon-includes-ms-timing-markers",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_canon_ms_timestamps_normalized.mjs",
+      "npm": "verify:regression:canon-ms-timestamps-normalized",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_cap01_capabilities_present.mjs",
+      "npm": "verify:regression:cap01-capabilities-present",
+      "purpose": "regression_cap01_capabilities_present.mjs — RG_CAP01_CAPABILITIES_PRESENT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_cap02_capabilities_coverage.mjs",
+      "npm": "verify:regression:cap02-capabilities-coverage",
+      "purpose": "regression_cap02_capabilities_coverage.mjs — RG_CAP02_CAPABILITIES_COVERAGE",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_cap03_exceptions_accounted.mjs",
+      "npm": "verify:regression:cap03-exceptions-accounted",
+      "purpose": "regression_cap03_exceptions_accounted.mjs — RG_CAP03_EXCEPTIONS_ACCOUNTED",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_cap04_no_wallclock_policy_fields.mjs",
+      "npm": "verify:regression:cap04-no-wallclock-policy-fields",
+      "purpose": "regression_cap04_no_wallclock_policy_fields.mjs — RG_CAP04_NO_WALLCLOCK_POLICY_FIELDS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_cap05_scope_aware_limits.mjs",
+      "npm": "verify:regression:cap05-scope-aware-limits",
+      "purpose": "regression_cap05_scope_aware_limits.mjs — RG_CAP05_SCOPE_AWARE_LIMITS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_churn_contract01.mjs",
+      "npm": "verify:regression:churn-contract01",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_churn_write_scope_guard.mjs",
+      "npm": "verify:regression:churn-write-scope-guard",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_close01_no_exporters_in_close.mjs",
+      "npm": "verify:regression:close01-no-exporters-in-close",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_closeout_not_before_victory.mjs",
+      "npm": "verify:regression:closeout-not-before-victory",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_cockpit03_integration.mjs",
+      "npm": "verify:regression:cockpit03-integration",
+      "purpose": "regression_cockpit03_integration.mjs — RG_COCKPIT03_INTEGRATION",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_cockpit04_eventbus_source.mjs",
+      "npm": "verify:regression:cockpit04-eventbus-source",
+      "purpose": "regression_cockpit04_eventbus_source.mjs — RG_COCKPIT04_EVENTBUS_SOURCE",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_cockpit05_links_exist.mjs",
+      "npm": "verify:regression:cockpit05-links-exist",
+      "purpose": "regression_cockpit05_links_exist.mjs — RG_COCKPIT05_LINKS_EXIST",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_cockpit06_readiness_scorecard_present.mjs",
+      "npm": "verify:regression:cockpit06-readiness-scorecard-present",
+      "purpose": "regression_cockpit06_readiness_scorecard_present.mjs — RG_COCKPIT06_READINESS_SCORECARD_PRESENT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_cockpit_dynamic_next01.mjs",
+      "npm": "verify:regression:cockpit-dynamic-next01",
+      "purpose": "regression_cockpit_dynamic_next01.mjs — RG_COCKPIT_DYNAMIC_NEXT01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_commands_run_header_ssot.mjs",
+      "npm": "verify:regression:commands-run-header-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_court_wiring01_sweep_uses_pipeline.mjs",
+      "npm": "verify:regression:court-wiring01-sweep-uses-pipeline",
+      "purpose": "regression_court_wiring01_sweep_uses_pipeline.mjs — RG_COURT_WIRING01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_court_wiring02_guard_rejects_empty.mjs",
+      "npm": "verify:regression:court-wiring02-guard-rejects-empty",
+      "purpose": "regression_court_wiring02_guard_rejects_empty.mjs — RG_COURT_WIRING02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_data_evt01_event_emission.mjs",
+      "npm": "verify:regression:data-evt01-event-emission",
+      "purpose": "regression_data_evt01_event_emission.mjs — RG_DATA_EVT01_EVENT_EMISSION",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_data_locks01.mjs",
+      "npm": "verify:regression:data-locks01",
+      "purpose": "regression_data_locks01.mjs -- RG_DATA_LOCKS01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_data_organ01_alchemist.mjs",
+      "npm": "verify:regression:data-organ01-alchemist",
+      "purpose": "regression_data_organ01_alchemist.mjs — RG_DATA_ORGAN01: Alchemist Determinism x2",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_data_organ02_bar_valid.mjs",
+      "npm": "verify:regression:data-organ02-bar-valid",
+      "purpose": "regression_data_organ02_bar_valid.mjs — RG_DATA_ORGAN02: Bar Validation Invariants",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_data_organ03_vol_regime.mjs",
+      "npm": "verify:regression:data-organ03-vol-regime",
+      "purpose": "regression_data_organ03_vol_regime.mjs — RG_DATA_ORGAN03: Vol Regime Classification",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_data_organ04_freshness.mjs",
+      "npm": "verify:regression:data-organ04-freshness",
+      "purpose": "regression_data_organ04_freshness.mjs — RG_DATA_ORGAN04: Freshness Sentinel",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_data_readiness_ssot.mjs",
+      "npm": "verify:regression:data-readiness-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_dec01_decimal_sort_total_order.mjs",
+      "npm": "verify:regression:dec01-decimal-sort-total-order",
+      "purpose": "regression_dec01_decimal_sort_total_order.mjs — RG_DEC01_DECIMAL_SORT_TOTAL_ORDER",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_determinism_audit.mjs",
+      "npm": "verify:regression:determinism-audit",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_doctor01_output_stable_x2.mjs",
+      "npm": "verify:regression:doctor01-output-stable-x2",
+      "purpose": "regression_doctor01_output_stable_x2.mjs — RG_DOCTOR01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_doctor02_no_net.mjs",
+      "npm": "verify:regression:doctor02-no-net",
+      "purpose": "regression_doctor02_no_net.mjs — RG_DOCTOR02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_doctor03_scoreboard_sum.mjs",
+      "npm": "verify:regression:doctor03-scoreboard-sum",
+      "purpose": "regression_doctor03_scoreboard_sum.mjs — RG_DOCTOR03",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_doctor04_differential_axes.mjs",
+      "npm": "verify:regression:doctor04-differential-axes",
+      "purpose": "regression_doctor04_differential_axes.mjs — RG_DOCTOR04",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_doctor05_provenance_chain.mjs",
+      "npm": "verify:regression:doctor05-provenance-chain",
+      "purpose": "regression_doctor05_provenance_chain.mjs — RG_DOCTOR05",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_doctor_score01_confidence.mjs",
+      "npm": "verify:regression:doctor-score01-confidence",
+      "purpose": "regression_doctor_score01_confidence.mjs — RG_DOCTOR_SCORE01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_drift_severity_classification.mjs",
+      "npm": "verify:regression:drift-severity-classification",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ec01_reason_context_contract.mjs",
+      "npm": "verify:regression:ec01-reason-context-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_epoch_evidence_cycle_gitignore.mjs",
+      "npm": "verify:regression:epoch-evidence-cycle-gitignore",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_epoch_skip01_respects_tracked_state.mjs",
+      "npm": "verify:regression:epoch-skip01-respects-tracked-state",
+      "purpose": "regression_epoch_skip01_respects_tracked_state.mjs",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_evidence_bundle_contract_ssot.mjs",
+      "npm": "verify:regression:evidence-bundle-contract-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_evidence_bundle_deterministic_x2.mjs",
+      "npm": "verify:regression:evidence-bundle-deterministic-x2",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_evidence_bundle_portable_mode.mjs",
+      "npm": "verify:regression:evidence-bundle-portable-mode",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_evt01_schema_lock.mjs",
+      "npm": "verify:regression:evt01-schema-lock",
+      "purpose": "regression_evt01_schema_lock.mjs — RG_EVT01_SCHEMA_LOCK",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_evt02_no_time_fields.mjs",
+      "npm": "verify:regression:evt02-no-time-fields",
+      "purpose": "regression_evt02_no_time_fields.mjs — RG_EVT02_NO_TIME_FIELDS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_exec01_no_executor_writes_during_victory.mjs",
+      "npm": "verify:regression:exec01-no-executor-writes-during-victory",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_exec02_no_executor_writes_during_victory.mjs",
+      "npm": "verify:regression:exec02-no-executor-writes-during-victory",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_execution_forensics_netkill_probe_not_missing.mjs",
+      "npm": "verify:regression:execution-forensics-netkill-probe",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_executor_netkill_coverage.mjs",
+      "npm": "verify:regression:executor-netkill-coverage",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_executor_netkill_ledger_proof.mjs",
+      "npm": "verify:regression:executor-netkill-ledger-proof",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_executor_netkill_runtime_ledger.mjs",
+      "npm": "verify:regression:executor-netkill-runtime-ledger",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_export_final_validated_x2.mjs",
+      "npm": "verify:regression:export-final-validated-x2",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_fast_tiers_fast01.mjs",
+      "npm": "verify:regression:fast-tiers-fast01",
+      "purpose": "regression_fast_tiers_fast01.mjs — RG_FAST_TIERS_FAST01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_fix01_lock_schema.mjs",
+      "npm": "verify:regression:fix01-lock-schema",
+      "purpose": "regression_fix01_lock_schema.mjs — RG_FIX01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_fix02_replay_pass.mjs",
+      "npm": "verify:regression:fix02-replay-pass",
+      "purpose": "regression_fix02_replay_pass.mjs — RG_FIX02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_fix03_determinism_x2.mjs",
+      "npm": "verify:regression:fix03-determinism-x2",
+      "purpose": "regression_fix03_determinism_x2.mjs — RG_FIX03",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_flatten01_closes_all.mjs",
+      "npm": "verify:regression:flatten01-closes-all",
+      "purpose": "regression_flatten01_closes_all.mjs — RG_FLATTEN01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_foundation_seal_next_action_ssot.mjs",
+      "npm": "verify:regression:foundation-seal-next-action-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_foundation_seal_step_order_ssot.mjs",
+      "npm": "verify:regression:foundation-seal-step-order-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_foundation_suite_x2_seal.mjs",
+      "npm": "verify:regression:foundation-suite-x2-seal",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_foundation_timeout_triage_contract.mjs",
+      "npm": "verify:regression:foundation-timeout-triage-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_fsm01_no_skip_states.mjs",
+      "npm": "verify:regression:fsm01-no-skip-states",
+      "purpose": "regression_fsm01_no_skip_states.mjs — RG_FSM01_NO_SKIP_STATES",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_fsm02_consciousness.mjs",
+      "npm": "verify:regression:fsm02-consciousness",
+      "purpose": "regression_fsm02_consciousness.mjs — RG_FSM02_CONSCIOUSNESS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_fsm_deadlock01_detection.mjs",
+      "npm": "verify:regression:fsm-deadlock01-detection",
+      "purpose": "regression_fsm_deadlock01_detection.mjs — RG_FSM_DEADLOCK01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_gate_receipt_presence_contract.mjs",
+      "npm": "verify:regression:gate-receipt-presence-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_git_outgoing_ignore.mjs",
+      "npm": "verify:regression:git-outgoing-ignore",
+      "purpose": "regression_git_outgoing_ignore.mjs — RG_GIT_OUT01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_gitignore_allow_network.mjs",
+      "npm": "verify:regression:gitignore-allow-network",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_gitignore_incoming_json.mjs",
+      "npm": "verify:regression:gitignore-incoming-json",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_halt_doublekey_fast01.mjs",
+      "npm": "verify:regression:halt-doublekey-fast01",
+      "purpose": "regression_halt_doublekey_fast01.mjs — RG_HALT_DOUBLEKEY_FAST01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_idempotency_fast01.mjs",
+      "npm": "verify:regression:idempotency-fast01",
+      "purpose": "regression_idempotency_fast01.mjs — RG_IDEMPOTENCY_FAST01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_immune01_integration.mjs",
+      "npm": "verify:regression:immune01-integration",
+      "purpose": "regression_immune01_integration.mjs — RG_IMMUNE01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_kill_switch01_triggers.mjs",
+      "npm": "verify:regression:kill-switch01-triggers",
+      "purpose": "regression_kill_switch01_triggers.mjs — RG_KILL_SWITCH01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_lane01_registry_present.mjs",
+      "npm": "verify:regression:lane01-registry-present",
+      "purpose": "regression_lane01_registry_present.mjs — RG_LANE01_REGISTRY_PRESENT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_lane02_code_matches_registry.mjs",
+      "npm": "verify:regression:lane02-code-matches-registry",
+      "purpose": "regression_lane02_code_matches_registry.mjs — RG_LANE02_CODE_MATCHES_REGISTRY",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_lane03_no_dup_schema_version.mjs",
+      "npm": "verify:regression:lane03-no-dup-schema-version",
+      "purpose": "regression_lane03_no_dup_schema_version.mjs — RG_LANE03_NO_DUP_SCHEMA_VERSION",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_lane04_truth_requires_truth_ready.mjs",
+      "npm": "verify:regression:lane04-truth-requires-truth-ready",
+      "purpose": "regression_lane04_truth_requires_truth_ready.mjs — RG_LANE04_TRUTH_REQUIRES_TRUTH_READY",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_life01_no_net.mjs",
+      "npm": "verify:regression:life01-no-net",
+      "purpose": "regression_life01_no_net.mjs — RG_LIFE01_NO_NET",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_life02_stable_output.mjs",
+      "npm": "verify:regression:life02-stable-output",
+      "purpose": "regression_life02_stable_output.mjs — RG_LIFE02_STABLE_OUTPUT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_life03_write_scope.mjs",
+      "npm": "verify:regression:life03-write-scope",
+      "purpose": "regression_life03_write_scope.mjs — RG_LIFE03_WRITE_SCOPE",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_liq_fixture_offline_x2.mjs",
+      "npm": "verify:regression:liq-fixture-offline-x2",
+      "purpose": "A1+A2: updated to allLiquidation topic + liq_side normalization (v2 schema)",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_liq_lock01_normalized_hash_match.mjs",
+      "npm": "verify:regression:liq-lock01-normalized-hash-match",
+      "purpose": "regression_liq_lock01_normalized_hash_match.mjs — RG_LIQ_LOCK01_NORMALIZED_HASH_MATCH",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_liq_ssot01_schema_alignment.mjs",
+      "npm": "verify:regression:liq-ssot01-schema-alignment",
+      "purpose": "regression_liq_ssot01_schema_alignment.mjs — RG_LIQ_SSOT01_SCHEMA_ALIGNMENT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_liquidations_lock_schema_contract.mjs",
+      "npm": "verify:regression:liquidations-lock-schema-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_liquidations_offline_replay_no_network.mjs",
+      "npm": "verify:regression:liquidations-offline-replay-no-network",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_live03_readiness_gate.mjs",
+      "npm": "verify:regression:live03-readiness-gate",
+      "purpose": "regression_live03_readiness_gate.mjs — RG_LIVE03",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_live04_telemetry_contract.mjs",
+      "npm": "verify:regression:live04-telemetry-contract",
+      "purpose": "regression_live04_telemetry_contract.mjs — RG_LIVE04",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_log01_logs_under_epoch_root.mjs",
+      "npm": "verify:regression:log01-logs-under-epoch-root",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_mega_proof_x2_failure_classification.mjs",
+      "npm": "verify:regression:mega-proof-x2-failure-classification",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_mega_proof_x2_ignores_ms_timing.mjs",
+      "npm": "verify:regression:mega-proof-x2-ignores-ms-timing",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_mega_proof_x2_semantic_mismatch_classification.mjs",
+      "npm": "verify:regression:mega-proof-x2-semantic-mismatch-classification",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_mega_proof_x2_stability_contract.mjs",
+      "npm": "verify:regression:mega-proof-x2-stability-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_metaagent01_fleet.mjs",
+      "npm": "verify:regression:metaagent01-fleet",
+      "purpose": "regression_metaagent01_fleet.mjs — RG_METAAGENT01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_metric_parity01_overfit_uses_unified.mjs",
+      "npm": "verify:regression:metric-parity01-overfit-uses-unified",
+      "purpose": "regression_metric_parity01_overfit_uses_unified.mjs — RG_METRIC_PARITY01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_metric_parity02_canary_real_dd.mjs",
+      "npm": "verify:regression:metric-parity02-canary-real-dd",
+      "purpose": "regression_metric_parity02_canary_real_dd.mjs — RG_METRIC_PARITY02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_metric_parity03_required_keys.mjs",
+      "npm": "verify:regression:metric-parity03-required-keys",
+      "purpose": "regression_metric_parity03_required_keys.mjs — RG_METRIC_PARITY03",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_microlive01_must_fail_default.mjs",
+      "npm": "verify:regression:microlive01-must-fail-default",
+      "purpose": "regression_microlive01_must_fail_default.mjs — RG_ML01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_microlive02_kill_switch.mjs",
+      "npm": "verify:regression:microlive02-kill-switch",
+      "purpose": "regression_microlive02_kill_switch.mjs — RG_ML02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_mini_chain_mode_guard.mjs",
+      "npm": "verify:regression:mini-chain-mode-guard",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_nd_commands_run01.mjs",
+      "npm": "verify:regression:nd-commands-run01",
+      "purpose": "regression_nd_commands_run01.mjs",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_nd_core_san01.mjs",
+      "npm": "verify:regression:nd-core-san01",
+      "purpose": "regression_nd_core_san01.mjs — RG_ND_CORE_SAN01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_net_diag_rootcause_none_on_pass.mjs",
+      "npm": "verify:regression:net-diag-rootcause-none-on-pass",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_net_kill_preload_hard.mjs",
+      "npm": "verify:regression:net-kill-preload-hard",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_net_kill_preload_path_safe.mjs",
+      "npm": "verify:regression:net-kill-preload-path-safe",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_net_toolchain01_no_net_in_verify_fast.mjs",
+      "npm": "verify:regression:net-toolchain01-no-net-in-verify-fast",
+      "purpose": "regression_net_toolchain01_no_net_in_verify_fast.mjs — RG_NET_TOOLCHAIN01_NO_NET_IN_VERIFY_FAST",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_netkill_ledger_deterministic_x2.mjs",
+      "npm": "verify:regression:netkill-ledger-deterministic-x2",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_netkill_ledger_enforcement.mjs",
+      "npm": "verify:regression:netkill-ledger-enforcement",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_netkill_ledger_summary_consistency.mjs",
+      "npm": "verify:regression:netkill-ledger-summary-consistency",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_netkill_physics_full_surface.mjs",
+      "npm": "verify:regression:netkill-physics-full-surface",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_no_network_in_verify_profit.mjs",
+      "npm": "verify:regression:no-network-in-verify-profit",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_no_rg_writes_during_cert.mjs",
+      "npm": "verify:regression:no-rg-writes-during-cert",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_no_sandbox_promotion.mjs",
+      "npm": "verify:regression:no-sandbox-promotion",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_no_stub_promotion.mjs",
+      "npm": "verify:regression:no-stub-promotion",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_no_unbounded_spawnsync.mjs",
+      "npm": "verify:regression:no-unbounded-spawn",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node22_wrapper_timeout.mjs",
+      "npm": "verify:regression:node22-wrapper-timeout",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_backend_receipt_contract.mjs",
+      "npm": "verify:regression:node-backend-receipt-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_churn_receipt_routing.mjs",
+      "npm": "verify:regression:node-churn-receipt-routing",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_nvm01.mjs",
+      "npm": "verify:regression:node-nvm-ban",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_options_netkill_dedupe.mjs",
+      "npm": "verify:regression:node-options-netkill-dedupe",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_options_no_overwrite.mjs",
+      "npm": "verify:regression:node-options-no-overwrite",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_options_preload_eviction.mjs",
+      "npm": "verify:regression:node-options-preload-eviction",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_toolchain_lock_contract.mjs",
+      "npm": "verify:regression:node-toolchain-lock-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_truth_alignment.mjs",
+      "npm": "verify:regression:node-truth-alignment",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_truth_enforcement.mjs",
+      "npm": "verify:regression:node-truth-enforcement",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_truth_next_action_contract.mjs",
+      "npm": "verify:regression:node-truth-next-action-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_vendor01.mjs",
+      "npm": "verify:regression:node-vendored-backend-must-win",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_node_wrap_contract.mjs",
+      "npm": "verify:regression:node-wrap-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_nodeauth01_path_canonical.mjs",
+      "npm": "verify:regression:nodeauth-path-canonical",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx01_fixture_integrity.mjs",
+      "npm": "verify:regression:ob-okx01-fixture-integrity",
+      "purpose": "regression_ob_okx01_fixture_integrity.mjs — RG_OB_OKX01_FIXTURE_INTEGRITY",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx02_lock_integrity.mjs",
+      "npm": "verify:regression:ob-okx02-lock-integrity",
+      "purpose": "regression_ob_okx02_lock_integrity.mjs — RG_OB_OKX02_LOCK_INTEGRITY",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx03_seq_state_machine.mjs",
+      "npm": "verify:regression:ob-okx03-seq-state-machine",
+      "purpose": "regression_ob_okx03_seq_state_machine.mjs — RG_OB_OKX03_SEQ_STATE_MACHINE",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx04_book_digest.mjs",
+      "npm": "verify:regression:ob-okx04-book-digest",
+      "purpose": "regression_ob_okx04_book_digest.mjs — RG_OB_OKX04_BOOK_DIGEST",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx05_eventbus_events.mjs",
+      "npm": "verify:regression:ob-okx05-eventbus-events",
+      "purpose": "regression_ob_okx05_eventbus_events.mjs — RG_OB_OKX05_EVENTBUS_EVENTS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx06_gap_detection.mjs",
+      "npm": "verify:regression:ob-okx06-gap-detection",
+      "purpose": "regression_ob_okx06_gap_detection.mjs — RG_OB_OKX06_GAP_DETECTION",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx08_multi_level_sort_canon.mjs",
+      "npm": "verify:regression:ob-okx08-multi-level-sort-canon",
+      "purpose": "regression_ob_okx08_multi_level_sort_canon.mjs — RG_OB_OKX08_MULTI_LEVEL_SORT_CANON",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx09_duplicate_idempotent.mjs",
+      "npm": "verify:regression:ob-okx09-duplicate-idempotent",
+      "purpose": "regression_ob_okx09_duplicate_idempotent.mjs — RG_OB_OKX09_DUPLICATE_IDEMPOTENT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx10_reorder_window_policy.mjs",
+      "npm": "verify:regression:ob-okx10-reorder-window-policy",
+      "purpose": "regression_ob_okx10_reorder_window_policy.mjs — RG_OB_OKX10_REORDER_WINDOW_POLICY",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx12_align_invariants.mjs",
+      "npm": "verify:regression:ob-okx12-align-invariants",
+      "purpose": "regression_ob_okx12_align_invariants.mjs — RG_OB_OKX12_ALIGN_INVARIANTS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx13_buffer_discard_rules.mjs",
+      "npm": "verify:regression:ob-okx13-buffer-discard-rules",
+      "purpose": "regression_ob_okx13_buffer_discard_rules.mjs — RG_OB_OKX13_BUFFER_DISCARD_RULES",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx14_align_determinism_x2.mjs",
+      "npm": "verify:regression:ob-okx14-align-determinism-x2",
+      "purpose": "regression_ob_okx14_align_determinism_x2.mjs — RG_OB_OKX14_ALIGN_DETERMINISM_X2",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx15_digest_spec_present.mjs",
+      "npm": "verify:regression:ob-okx15-digest-spec-present",
+      "purpose": "regression_ob_okx15_digest_spec_present.mjs — RG_OB_OKX15_DIGEST_SPEC_PRESENT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ob_okx16_digest_matches_spec.mjs",
+      "npm": "verify:regression:ob-okx16-digest-matches-spec",
+      "purpose": "regression_ob_okx16_digest_matches_spec.mjs — RG_OB_OKX16_DIGEST_MATCHES_SPEC",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_op_safe01_receipt_presence_contract.mjs",
+      "npm": "verify:regression:op-safe01-receipt-presence-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_op_safe_untracked_only_does_not_block.mjs",
+      "npm": "verify:regression:op-safe-untracked-only-does-not-block",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_opa01_op_safe_next_action_wrapper.mjs",
+      "npm": "verify:regression:opa01-op-safe-next-action-wrapper",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_opa02_op_safe_ignore_evidence_drift.mjs",
+      "npm": "verify:regression:opa02-op-safe-ignore-evidence-drift",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_operator_single_action_ssot.mjs",
+      "npm": "verify:regression:operator-single-action-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_paper01_determinism.mjs",
+      "npm": "verify:regression:paper01-determinism",
+      "purpose": "regression_paper01_determinism.mjs — RG_PAPER01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_paper02_no_net.mjs",
+      "npm": "verify:regression:paper02-no-net",
+      "purpose": "regression_paper02_no_net.mjs — RG_PAPER02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_paper03_metrics_contract.mjs",
+      "npm": "verify:regression:paper03-metrics-contract",
+      "purpose": "regression_paper03_metrics_contract.mjs — RG_PAPER03",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_paper04_slippage_sensitivity.mjs",
+      "npm": "verify:regression:paper04-slippage-sensitivity",
+      "purpose": "regression_paper04_slippage_sensitivity.mjs — RG_PAPER04",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_parity_score_fast01.mjs",
+      "npm": "verify:regression:parity-score-fast01",
+      "purpose": "regression_parity_score_fast01.mjs — RG_PARITY_SCORE_FAST01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_pnl_attribution_fast01.mjs",
+      "npm": "verify:regression:pnl-attribution-fast01",
+      "purpose": "regression_pnl_attribution_fast01.mjs — RG_PNL_ATTRIBUTION_FAST01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_policy01_kernel_valid.mjs",
+      "npm": "verify:regression:policy01-kernel-valid",
+      "purpose": "regression_policy01_kernel_valid.mjs — RG_POLICY01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_policy02_mode_truth.mjs",
+      "npm": "verify:regression:policy02-mode-truth",
+      "purpose": "regression_policy02_mode_truth.mjs — RG_POLICY02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_policy03_write_scope.mjs",
+      "npm": "verify:regression:policy03-write-scope",
+      "purpose": "regression_policy03_write_scope.mjs — RG_POLICY03",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_portable_manifest_env_byte_free_strict.mjs",
+      "npm": "verify:regression:portable-manifest-env-byte-free-strict",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_portable_proof_pack_recipe_ssot.mjs",
+      "npm": "verify:regression:portable-proof-pack-recipe-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_pr01_evidence_bloat_guard.mjs",
+      "npm": "verify:regression:pr01-evidence-bloat-guard",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_pr05_executor_ssot_stable_set.mjs",
+      "npm": "verify:regression:pr05-executor-ssot-stable-set",
+      "purpose": "regression_pr05_executor_ssot_stable_set.mjs — RG_PR05_EXECUTOR_SSOT_STABLE_SET",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_pr07_executor_runid_immutable.mjs",
+      "npm": "verify:regression:pr07-executor-runid-immutable",
+      "purpose": "regression_pr07_executor_runid_immutable.mjs — RG_PR07_EXECUTOR_RUNID_IMMUTABLE",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_pr08_executor_stable_only.mjs",
+      "npm": "verify:regression:pr08-executor-stable-only",
+      "purpose": "regression_pr08_executor_stable_only.mjs — RG_PR08_EXECUTOR_STABLE_ONLY",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_profile_source_mismatch.mjs",
+      "npm": "verify:regression:profile-source",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_profit_e2e_ks01.mjs",
+      "npm": "verify:deep:dryrun-live-e2e-ks01",
+      "purpose": "regression_profit_e2e_ks01.mjs — E2E: Kill Switch FLATTEN → orders blocked",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_profit_e2e_ks02_autotick.mjs",
+      "npm": "verify:deep:ks02-autotick",
+      "purpose": "regression_profit_e2e_ks02_autotick.mjs — E2E: SafetyLoop auto-tick freshness",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_profit_e2e_sizer01.mjs",
+      "npm": "verify:deep:dryrun-live-e2e-sizer01",
+      "purpose": "regression_profit_e2e_sizer01.mjs — E2E: Position Sizer tier violation → order rejected",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_profit_e2e_sizer02_enforced.mjs",
+      "npm": "verify:deep:sizer02-enforced",
+      "purpose": "regression_profit_e2e_sizer02_enforced.mjs — E2E: Position Sizer enforcement in executor path",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_profit_foundation_freeze_gate_autogen.mjs",
+      "npm": "verify:regression:profit-foundation-freeze-gate-autogen",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_profit_foundation_freeze_ssot.mjs",
+      "npm": "verify:regression:profit-foundation-freeze-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_profit_wiring01.mjs",
+      "npm": "verify:regression:profit-wiring01",
+      "purpose": "regression_profit_wiring01.mjs — RG_PROFIT_WIRING01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_promo01_contract_valid.mjs",
+      "npm": "verify:regression:promo01-contract-valid",
+      "purpose": "regression_promo01_contract_valid.mjs -- RG_PROMO01_CONTRACT_VALID",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_promo03_integration_e2e.mjs",
+      "npm": "verify:deep:promo03-integration",
+      "purpose": "regression_promo03_integration_e2e.mjs -- RG_PROMO03_INTEGRATION_E2E",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_promo_canary_wiring_fast01.mjs",
+      "npm": "verify:regression:promo-canary-wiring-fast01",
+      "purpose": "regression_promo_canary_wiring_fast01.mjs -- RG_PROMO_CANARY_WIRING_FAST01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_promo_e2e01_paper_to_microlive.mjs",
+      "npm": "verify:deep:promo-e2e01",
+      "purpose": "regression_promo_e2e01_paper_to_microlive.mjs -- RG_PROMO_E2E01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_promo_e2e02_failclosed.mjs",
+      "npm": "verify:deep:promo-e2e02",
+      "purpose": "regression_promo_e2e02_failclosed.mjs -- RG_PROMO_E2E02_FAILCLOSED_UNCERTAINTY",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_public_acq02_is_not_nd01.mjs",
+      "npm": "verify:regression:public-acq02-not-nd01",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_public_data_readiness_exitcode_contract.mjs",
+      "npm": "verify:regression:public-data-readiness-exitcode-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_public_data_readiness_ssot.mjs",
+      "npm": "verify:regression:public-data-readiness-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_public_diag_bounded.mjs",
+      "npm": "verify:regression:public-diag-bounded",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_public_epoch_offline_replay_no_network.mjs",
+      "npm": "verify:regression:public-epoch-offline-replay-no-network",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_public_no_smoke_bypass.mjs",
+      "npm": "verify:regression:public-no-smoke-bypass",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_public_provider_hostpool_determinism.mjs",
+      "npm": "verify:regression:public-provider-hostpool-determinism",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_public_publicdata_lock_smoke.mjs",
+      "npm": "verify:regression:public-publicdata-lock-smoke",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_public_smoke_offline_replay.mjs",
+      "npm": "verify:regression:public-smoke-offline-replay",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_public_zip_authority.mjs",
+      "npm": "verify:regression:public-zip-authority",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_publicdata_no_csv_fallback.mjs",
+      "npm": "verify:regression:publicdata-no-csv-fallback",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_r2_01_no_daily_wiring.mjs",
+      "npm": "verify:regression:r2-01-no-daily-wiring",
+      "purpose": "regression_r2_01_no_daily_wiring.mjs — RG_R2_01_NO_DAILY_WIRING",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_r2_02_fixtures_readonly.mjs",
+      "npm": "verify:regression:r2-02-fixtures-readonly",
+      "purpose": "regression_r2_02_fixtures_readonly.mjs — RG_R2_02_FIXTURES_READONLY",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rdy_step01_foundation_reason_mapping.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_realism01_cost_contract.mjs",
+      "npm": "verify:regression:realism01-cost-contract",
+      "purpose": "regression_realism01_cost_contract.mjs -- RG_REALISM01_COST_CONTRACT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_realism02_no_proxy_metrics.mjs",
+      "npm": "verify:regression:realism02-no-proxy-metrics",
+      "purpose": "regression_realism02_no_proxy_metrics.mjs -- RG_REALISM02_NO_PROXY_METRICS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_realism03_parity_e2e.mjs",
+      "npm": "verify:deep:realism03-parity-e2e",
+      "purpose": "regression_realism03_parity_e2e.mjs -- RG_REALISM03_PARITY_E2E",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_realism04_partial_fill_e2e.mjs",
+      "npm": "verify:deep:realism04-partial-fill",
+      "purpose": "regression_realism04_partial_fill_e2e.mjs -- RG_REALISM04_PARTIAL_FILL_E2E",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_realism05_funding_bounds.mjs",
+      "npm": "verify:deep:realism05-funding-bounds",
+      "purpose": "regression_realism05_funding_bounds.mjs -- RG_REALISM05_FUNDING_BOUNDS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_realism06_paper_uses_costmodel_e2e.mjs",
+      "npm": "verify:deep:realism06-paper-costmodel",
+      "purpose": "regression_realism06_paper_uses_costmodel_e2e.mjs -- RG_REALISM06",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_realism07_dryrun_uses_costmodel_e2e.mjs",
+      "npm": "verify:deep:realism07-dryrun-costmodel",
+      "purpose": "regression_realism07_dryrun_uses_costmodel_e2e.mjs -- RG_REALISM07",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_realism_wiring_fast01.mjs",
+      "npm": "verify:regression:realism-wiring-fast01",
+      "purpose": "regression_realism_wiring_fast01.mjs -- RG_REALISM_WIRING_FAST01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_reconcile01_detects_drift.mjs",
+      "npm": "verify:regression:reconcile01-detects-drift",
+      "purpose": "regression_reconcile01_detects_drift.mjs — RG_RECONCILE01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_reg01_schema_lock.mjs",
+      "npm": "verify:regression:reg01-schema-lock",
+      "purpose": "regression_reg01_schema_lock.mjs — RG_REG01_SCHEMA_LOCK",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_reg02_no_orphans.mjs",
+      "npm": "verify:regression:reg02-no-orphans",
+      "purpose": "regression_reg02_no_orphans.mjs — RG_REG02_NO_ORPHANS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_reg03_promotion_only.mjs",
+      "npm": "verify:regression:reg03-promotion-only",
+      "purpose": "regression_reg03_promotion_only.mjs — RG_REG03_PROMOTION_ONLY",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_reg04_determinism_x2.mjs",
+      "npm": "verify:regression:reg04-determinism-x2",
+      "purpose": "regression_reg04_determinism_x2.mjs — RG_REG04_DETERMINISM_X2",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_reg05_eventbus_promotion.mjs",
+      "npm": "verify:regression:reg05-eventbus-promotion",
+      "purpose": "regression_reg05_eventbus_promotion.mjs — RG_REG05_EVENTBUS_PROMOTION",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_repo_byte_audit_anti_recursion.mjs",
+      "npm": "verify:regression:repo-byte-audit-anti-recursion",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg01_no_rg_writes_during_certification.mjs",
+      "npm": "verify:regression:rg01-no-rg-writes-during-certification",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg02_no_rg_writes_during_certification.mjs",
+      "npm": "verify:regression:rg02-no-rg-writes-during-certification",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_cap06_physics_policy_split.mjs",
+      "npm": "verify:regression:rg-cap06-physics-policy-split",
+      "purpose": "regression_rg_cap06_physics_policy_split.mjs — RG_CAP06",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_cap_mean01_keys_have_meaning.mjs",
+      "npm": "verify:regression:rg-cap-mean01-keys-have-meaning",
+      "purpose": "regression_rg_cap_mean01_keys_have_meaning.mjs — RG_CAP_MEAN01_KEYS_HAVE_MEANING",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_data01_lock_schema_contract.mjs",
+      "npm": "verify:regression:rg-data01-lock-schema-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_data02_deep_canonical_json_stable.mjs",
+      "npm": "verify:regression:rg-data02-deep-canonical-json-stable",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_data03_offline_replay_network_forbidden.mjs",
+      "npm": "verify:regression:rg-data03-offline-replay-network-forbidden",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_deliv01_delivery_doc_present.mjs",
+      "npm": "verify:regression:rg-deliv01-delivery-doc-present",
+      "purpose": "regression_rg_deliv01_delivery_doc_present.mjs — RG_DELIV01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_deliv02_delivery_doc_coherence.mjs",
+      "npm": "verify:regression:rg-deliv02-delivery-doc-coherence",
+      "purpose": "regression_rg_deliv02_delivery_doc_coherence.mjs — RG_DELIV02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_lane05_static_readiness.mjs",
+      "npm": "verify:regression:rg-lane05-static-readiness",
+      "purpose": "regression_rg_lane05_static_readiness.mjs — RG_LANE05_STATIC_READINESS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_lane06_static_nonempty.mjs",
+      "npm": "verify:regression:rg-lane06-static-nonempty",
+      "purpose": "regression_rg_lane06_static_nonempty.mjs — RG_LANE06",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_life04_next_action_surfacing.mjs",
+      "npm": "verify:regression:life04-next-action-surfacing",
+      "purpose": "regression_rg_life04_next_action_surfacing.mjs — RG_LIFE04_NEXT_ACTION_SURFACING",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_life_net01_netkill_self_hardening.mjs",
+      "npm": null,
+      "purpose": "regression_rg_life_net01_netkill_self_hardening.mjs",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_net_unlock01_file_contract.mjs",
+      "npm": "verify:regression:rg-net-unlock01-file-contract",
+      "purpose": "regression_rg_net_unlock01_file_contract.mjs — RG_NET_UNLOCK01_FILE_CONTRACT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_net_unlock02_no_allow_file_after_lock.mjs",
+      "npm": "verify:regression:rg-net-unlock02-no-allow-file-after-lock",
+      "purpose": "regression_rg_net_unlock02_no_allow_file_after_lock.mjs — RG_NET_UNLOCK02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_net_unlock03_cert_refuses_with_allow_file.mjs",
+      "npm": "verify:regression:rg-net-unlock03-cert-refuses-with-allow-file",
+      "purpose": "regression_rg_net_unlock03_cert_refuses_with_allow_file.mjs — RG_NET_UNLOCK03",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_r3_mode01_acquire_not_cert.mjs",
+      "npm": "verify:regression:rg-r3-mode01-acquire-not-cert",
+      "purpose": "regression_rg_r3_mode01_acquire_not_cert.mjs — RG_R3_MODE01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_r3_unlock01_refusal_contract.mjs",
+      "npm": "verify:regression:rg-r3-unlock01-refusal-contract",
+      "purpose": "regression_rg_r3_unlock01_refusal_contract.mjs — RG_R3_UNLOCK01_REFUSAL_CONTRACT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_rdy_select01_forces_run_id.mjs",
+      "npm": "verify:regression:rg-rdy-select01-forces-run-id",
+      "purpose": "regression_rg_rdy_select01_forces_run_id.mjs — RG_RDY_SELECT01_FORCES_RUN_ID",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_rdy_select02_selector_absent_in_daily.mjs",
+      "npm": "verify:regression:rg-rdy-select02-selector-absent-in-daily",
+      "purpose": "regression_rg_rdy_select02_selector_absent_in_daily.mjs — RG_RDY_SELECT02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_reason01_token_purity.mjs",
+      "npm": "verify:regression:rg-reason01-token-purity",
+      "purpose": "regression_rg_reason01_token_purity.mjs — RG_REASON01_TOKEN_PURITY",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_reason02_in_taxonomy.mjs",
+      "npm": "verify:regression:rg-reason02-in-taxonomy",
+      "purpose": "regression_rg_reason02_in_taxonomy.mjs — RG_REASON02_IN_TAXONOMY",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_trust01_trust_doc_present.mjs",
+      "npm": "verify:regression:rg-trust01-trust-doc-present",
+      "purpose": "regression_rg_trust01_trust_doc_present.mjs — RG_TRUST01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_rg_trust02_cockpit_truthlevel_column.mjs",
+      "npm": "verify:regression:rg-trust02-cockpit-truthlevel-column",
+      "purpose": "regression_rg_trust02_cockpit_truthlevel_column.mjs — RG_TRUST02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_san01_global_forbidden_apis.mjs",
+      "npm": "verify:regression:san01-global-forbidden-apis",
+      "purpose": "regression_san01_global_forbidden_apis.mjs — RG_SAN01_GLOBAL_FORBIDDEN_APIS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_san02_cert_coverage.mjs",
+      "npm": "verify:regression:san02-cert-coverage",
+      "purpose": "regression_san02_cert_coverage.mjs — RG_SAN02_CERT_COVERAGE",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_script_index_fast01.mjs",
+      "npm": "verify:regression:script-index-fast01",
+      "purpose": "regression_script_index_fast01.mjs — RG_SCRIPT_INDEX_FAST01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_sharpe_ssot01_no_inline.mjs",
+      "npm": "verify:regression:sharpe-ssot01-no-inline",
+      "purpose": "regression_sharpe_ssot01_no_inline.mjs — RG_SHARPE_SSOT01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_sig01_schema_lock.mjs",
+      "npm": "verify:regression:sig01-schema-lock",
+      "purpose": "regression_sig01_schema_lock.mjs — RG_SIG01",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_sig02_determinism_x2.mjs",
+      "npm": "verify:regression:sig02-determinism-x2",
+      "purpose": "regression_sig02_determinism_x2.mjs — RG_SIG02",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_sig03_semantic_mapping.mjs",
+      "npm": "verify:regression:sig03-semantic-mapping",
+      "purpose": "regression_sig03_semantic_mapping.mjs — RG_SIG03",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_smoke_is_first.mjs",
+      "npm": "verify:regression:smoke-is-first",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_step7_foundation_writescope_contract.mjs",
+      "npm": "verify:regression:step7-foundation-writescope-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_strat01_interface.mjs",
+      "npm": "verify:regression:strat01-interface-contract",
+      "purpose": "regression_strat01_interface.mjs — RG_STRAT01_INTERFACE_CONTRACT",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_strat02_determinism.mjs",
+      "npm": "verify:regression:strat02-determinism",
+      "purpose": "regression_strat02_determinism.mjs — RG_STRAT02_DETERMINISM",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_strat03_court_pass.mjs",
+      "npm": "verify:regression:strat03-court-pass",
+      "purpose": "regression_strat03_court_pass.mjs — RG_STRAT03_COURT_PASS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_time01_stable_tick_order.mjs",
+      "npm": "verify:regression:time01-stable-tick-order",
+      "purpose": "regression_time01_stable_tick_order.mjs — RG_TIME01_STABLE_TICK_ORDER",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_time02_no_time_fields.mjs",
+      "npm": "verify:regression:time02-no-time-fields",
+      "purpose": "regression_time02_no_time_fields.mjs — RG_TIME02_NO_TIME_FIELDS",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_time03_eventbus_source.mjs",
+      "npm": "verify:regression:time03-eventbus-source",
+      "purpose": "regression_time03_eventbus_source.mjs — RG_TIME03_EVENTBUS_SOURCE",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_tmp01_no_temp_outside_allowed_roots.mjs",
+      "npm": "verify:regression:tmp01-no-temp-outside-allowed-roots",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_to01_timeout_triage_contract.mjs",
+      "npm": "verify:regression:to01-timeout-triage-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_to01_victory_wrapper_budget.mjs",
+      "npm": "verify:regression:to01-victory-wrapper-budget",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_toolchain_reason01_classification.mjs",
+      "npm": "verify:regression:toolchain-reason01-classification",
+      "purpose": "regression_toolchain_reason01_classification.mjs — RG_TOOLCHAIN_REASON01_CLASSIFICATION",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_toolchain_reason02_detail_required.mjs",
+      "npm": "verify:regression:toolchain-reason02-detail-required",
+      "purpose": "regression_toolchain_reason02_detail_required.mjs — RG_TOOLCHAIN_REASON02_DETAIL_REQUIRED",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_truth_separation_no_foundation_readiness_claim.mjs",
+      "npm": "verify:regression:truth-separation-no-foundation-readiness-claim",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_tsu01_mixed_units.mjs",
+      "npm": "verify:regression:tsu01-mixed-units",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_unlock01_no_incoming_unlock_files.mjs",
+      "npm": "verify:regression:unlock01-no-incoming-unlock-files",
+      "purpose": "regression_unlock01_no_incoming_unlock_files.mjs — RG_UNLOCK01_NO_INCOMING_UNLOCK_FILES",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_verify_netkill_enforced.mjs",
+      "npm": "verify:regression:verify-netkill-enforced",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_vic_fnd01_reason_propagation.mjs",
+      "npm": "verify:regression:victory-foundation-reason-propagation",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_evidence_seal_ssot.mjs",
+      "npm": "verify:regression:victory-evidence-seal-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_fast_no_heavy.mjs",
+      "npm": "verify:regression:victory-fast-no-heavy",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_precheck_clean_tree_contract.mjs",
+      "npm": "verify:regression:victory-precheck-clean-tree-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_precheck_offenders_contract.mjs",
+      "npm": "verify:regression:victory-precheck-offenders-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_readiness_coherence.mjs",
+      "npm": "verify:regression:victory-readiness-coherence",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_reason_classification.mjs",
+      "npm": "verify:regression:victory-reason-classification",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_receipt_staleness_contract.mjs",
+      "npm": "verify:regression:victory-receipt-staleness-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_seal_deterministic_x2.mjs",
+      "npm": "verify:regression:victory-seal-deterministic-x2",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_seal_needs_data_exitcode_contract.mjs",
+      "npm": "verify:regression:victory-seal-needs-data-exitcode-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_seal_step_order_ssot.mjs",
+      "npm": "verify:regression:victory-seal-step-order-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_step_timeout_plan_contract.mjs",
+      "npm": "verify:regression:victory-step-timeout-plan-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_test_mode_safety.mjs",
+      "npm": "verify:regression:victory-test-mode-safety",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_timeout_triage_contract.mjs",
+      "npm": "verify:regression:victory-timeout-triage-contract",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_triage_readiness_classification.mjs",
+      "npm": "verify:regression:victory-triage-readiness-classification",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_triage_reason_surface.mjs",
+      "npm": "verify:regression:victory-triage-reason-surface",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_victory_triage_ssot.mjs",
+      "npm": "verify:regression:victory-triage-ssot",
+      "purpose": "",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/regression_ws05_limiter_active_binance.mjs",
+      "npm": "verify:regression:ws05-limiter-active-binance",
+      "purpose": "regression_ws05_limiter_active_binance.mjs — RG_WS05_LIMITER_ACTIVE_BINANCE",
+      "category": "regression"
+    },
+    {
+      "file": "scripts/verify/release_chain_check.mjs",
+      "npm": "verify:release:chain",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/release_check.mjs",
+      "npm": "verify:release",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/release_governor_check.mjs",
+      "npm": "verify:release-governor",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/release_repro_check.mjs",
+      "npm": "verify:release:repro",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/repo_byte_audit.mjs",
+      "npm": "verify:repo:byte-audit",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/repo_byte_audit_x2.mjs",
+      "npm": "_verify:repo:byte-audit:x2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/repo_manifest.mjs",
+      "npm": "verify:manifest",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/repo_sanity_check.mjs",
+      "npm": "verify:repo",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/report_contradiction_guard.mjs",
+      "npm": "verify:report:contradiction",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/run_with_context.mjs",
+      "npm": "verify:e2",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/safety_gates_check.mjs",
+      "npm": "verify:safety",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/safety_integrated_executor_check.mjs",
+      "npm": "verify:epoch17",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/san_cert_offline.mjs",
+      "npm": "verify:san:cert-offline",
+      "purpose": "san_cert_offline.mjs — SAN CERT_OFFLINE zone scanner",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/san_mutation.mjs",
+      "npm": "verify:san:mutation",
+      "purpose": "san_mutation.mjs — Write scope mutation scanner",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/san_research_net.mjs",
+      "npm": "verify:san:research-net",
+      "purpose": "san_research_net.mjs — SAN RESEARCH_NET zone scanner",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/specs_check.mjs",
+      "npm": "verify:specs",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/ssot_check.mjs",
+      "npm": "verify:ssot",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/strategy_check.mjs",
+      "npm": "verify:strategy",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/system_lockdown_cert_gate.mjs",
+      "npm": "verify:system:lockdown",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/truth.sh",
+      "npm": "verify:truth",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/truth_layer_check.mjs",
+      "npm": "verify:truth-layer",
+      "purpose": "scripts/verify/truth_layer_check.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/verify_adversarial.mjs",
+      "npm": null,
+      "purpose": "scripts/verify/verify_adversarial.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/verify_mode_gate.mjs",
+      "npm": "verify:verify:mode",
+      "purpose": "verify_mode_gate.mjs — VERIFY_MODE validation + VM04 fingerprint format check",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/verify_reality_gap.mjs",
+      "npm": "verify:reality-gap",
+      "purpose": "scripts/verify/verify_reality_gap.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/wall.mjs",
+      "npm": "verify:wall",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/websocket_smoke.mjs",
+      "npm": "verify:websocket",
+      "purpose": "scripts/verify/websocket_smoke.mjs",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/wow_specs_check.mjs",
+      "npm": "verify:wow:spec",
+      "purpose": "",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/verify/zero_war_probe.mjs",
+      "npm": "verify:zero:war:probe",
+      "purpose": "zero_war_probe.mjs — ZW01 Zero-War Kill Switch Must-Fail Proof Gate",
+      "category": "verify"
+    },
+    {
+      "file": "scripts/ops/autopilot_court_v2.mjs",
+      "npm": "ops:autopilot",
+      "purpose": "autopilot_court_v2.mjs — WOW8 Autopilot Court V2 (EventBus-unified)",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/baseline_restore.sh",
+      "npm": "ops:baseline:restore",
+      "purpose": "",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/build_final_validated.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/candidate_fsm.mjs",
+      "npm": null,
+      "purpose": "candidate_fsm.mjs — CandidateFSM — Per-candidate lifecycle state machine",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/candidate_registry.mjs",
+      "npm": "ops:candidates",
+      "purpose": "candidate_registry.mjs — WOW9 Candidate Registry (EventBus-unified)",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/clean_clone_bootstrap.mjs",
+      "npm": "verify:clean-clone",
+      "purpose": "",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/cockpit.mjs",
+      "npm": "ops:cockpit",
+      "purpose": "cockpit.mjs — ops:cockpit integration HUD (WOW6–WOW9, EventBus-unified)",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/doctor.mjs",
+      "npm": "doctor",
+      "purpose": "doctor.mjs — ops:doctor — Single-button deterministic health proof",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/doctor_history.mjs",
+      "npm": null,
+      "purpose": "doctor_history.mjs — Append-only JSONL ledger for Doctor runs",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/doctor_v2.mjs",
+      "npm": "ops:doctor",
+      "purpose": "doctor_v2.mjs — ops:doctor — THE LIVING DOCTOR v3 (EPOCH-DOCTOR)",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/emergency_flatten.mjs",
+      "npm": "ops:emergency:flatten",
+      "purpose": "emergency_flatten.mjs — Emergency position closer (CERT mode mock)",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/event_schema_v1.mjs",
+      "npm": null,
+      "purpose": "event_schema_v1.mjs — WOW Organism Event Schema v1.0.0",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/eventbus_v1.mjs",
+      "npm": null,
+      "purpose": "eventbus_v1.mjs — WOW Organism EventBus v1",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/evidence_helpers.mjs",
+      "npm": null,
+      "purpose": "",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/fsm_compensations.mjs",
+      "npm": null,
+      "purpose": "fsm_compensations.mjs — EPOCH-69 Organism Brain FSM Compensation Functions",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/fsm_guards.mjs",
+      "npm": null,
+      "purpose": "fsm_guards.mjs — EPOCH-69 Organism Brain FSM Guard Functions",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/graduation_court.mjs",
+      "npm": null,
+      "purpose": "graduation_court.mjs — GraduationCourt — Formal Trial for Candidate Promotion",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/heal_runner.mjs",
+      "npm": "ops:heal-runner",
+      "purpose": "heal_runner.mjs — EPOCH-71 healAll() wrapper for FSM T06 action",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/life.mjs",
+      "npm": "ops:life",
+      "purpose": "life.mjs v4 — ops:life — THE METAAGENT ORGANISM",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/metaagent.mjs",
+      "npm": null,
+      "purpose": "metaagent.mjs — MetaAgent — Fleet Consciousness",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/net_lock.mjs",
+      "npm": "ops:net:lock",
+      "purpose": "net_lock.mjs — ops:net:lock",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/net_unlock.mjs",
+      "npm": "ops:net:unlock",
+      "purpose": "net_unlock.mjs — ops:net:unlock",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/node_authority_run.sh",
+      "npm": "epoch:edge:profit:03",
+      "purpose": "",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/node_backend_check.sh",
+      "npm": "ops:node:backend:check",
+      "purpose": "",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/node_toolchain_acquire.mjs",
+      "npm": "ops:node:toolchain:acquire",
+      "purpose": "node_toolchain_acquire.mjs — ops:node:toolchain:acquire",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/node_toolchain_bootstrap.mjs",
+      "npm": "ops:node:toolchain:bootstrap",
+      "purpose": "node_toolchain_bootstrap.mjs — ops:node:toolchain:bootstrap",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/node_toolchain_ensure.mjs",
+      "npm": "ops:node:toolchain:ensure",
+      "purpose": "node_toolchain_ensure.mjs — ops:node:toolchain:ensure",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/node_truth_doctor.mjs",
+      "npm": "env:node22:doctor",
+      "purpose": "",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/proprioception.mjs",
+      "npm": null,
+      "purpose": "proprioception.mjs — Organism self-awareness scanner (EPOCH-70 G8)",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/regen_manifests.mjs",
+      "npm": "regen:manifests",
+      "purpose": "",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/replay_engine.mjs",
+      "npm": "ops:replay",
+      "purpose": "replay_engine.mjs — EPOCH-70 Organism Brain FSM Replay Engine",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/script_index.mjs",
+      "npm": "ops:script-index",
+      "purpose": "or Purpose: line",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/state_manager.mjs",
+      "npm": null,
+      "purpose": "state_manager.mjs — EPOCH-69 Organism Brain FSM State Manager",
+      "category": "ops"
+    },
+    {
+      "file": "scripts/ops/timemachine_ledger.mjs",
+      "npm": "ops:timemachine",
+      "purpose": "timemachine_ledger.mjs — WOW7 TimeMachine Ledger (EventBus-unified)",
+      "category": "ops"
+    }
+  ]
+}

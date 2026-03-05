@@ -1,0 +1,34 @@
+{
+  "checks": [
+    {
+      "check": "flatten_triggers_and_pauses",
+      "detail": "OK: FLATTEN triggered, orders paused",
+      "pass": true
+    },
+    {
+      "check": "checkpoint_saved",
+      "detail": "OK: checkpoint saved to store",
+      "pass": true
+    },
+    {
+      "check": "state_recovered_after_restart",
+      "detail": "OK: ordersPaused=true after restart",
+      "pass": true
+    },
+    {
+      "check": "lastAction_preserved",
+      "detail": "OK: lastAction=FLATTEN",
+      "pass": true
+    },
+    {
+      "check": "reset_state_persisted",
+      "detail": "OK: ordersPaused=false after reset+restart",
+      "pass": true
+    }
+  ],
+  "gate_id": "RG_KILL_PERSIST_E2E01",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

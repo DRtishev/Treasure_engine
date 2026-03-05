@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "check": "instant_tier_exists",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "instant_gate_count_budget",
+      "detail": "11 gates (max 15)",
+      "pass": true
+    },
+    {
+      "check": "instant_is_subset_of_full",
+      "detail": "OK: all instant gates in verify:fast",
+      "pass": true
+    },
+    {
+      "check": "full_fast_has_gates",
+      "detail": "67 gates in verify:fast",
+      "pass": true
+    }
+  ],
+  "checks_total": 4,
+  "failed_checks": [],
+  "gate_id": "RG_FAST_TIERS_FAST01",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

@@ -65,6 +65,7 @@ net_violations_n: 0
 - [PASS] clean_proprioception_mjs: scripts/ops/proprioception.mjs — no forbidden APIs
 - [PASS] clean_regen_manifests_mjs: scripts/ops/regen_manifests.mjs — no forbidden APIs
 - [PASS] clean_replay_engine_mjs: scripts/ops/replay_engine.mjs — no forbidden APIs
+- [PASS] clean_script_index_mjs: scripts/ops/script_index.mjs — no forbidden APIs
 - [PASS] clean_state_manager_mjs: scripts/ops/state_manager.mjs — no forbidden APIs
 - [PASS] clean_timemachine_ledger_mjs: scripts/ops/timemachine_ledger.mjs — no forbidden APIs
 - [PASS] clean_decimal_sort_mjs: scripts/edge/data_organ/decimal_sort.mjs — no forbidden APIs

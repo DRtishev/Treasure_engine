@@ -1,0 +1,32 @@
+{
+  "checks": [
+    {
+      "check": "index_exists",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "has_total_scripts",
+      "detail": "total_scripts=1046",
+      "pass": true
+    },
+    {
+      "check": "count_matches_reality",
+      "detail": "index=1046, actual=1046, diff=0 (tolerance ±10)",
+      "pass": true
+    },
+    {
+      "check": "has_categories",
+      "detail": "categories: verify, regression, ops",
+      "pass": true
+    }
+  ],
+  "checks_total": 4,
+  "failed_checks": [],
+  "gate_id": "RG_SCRIPT_INDEX_FAST01",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

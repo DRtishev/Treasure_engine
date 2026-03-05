@@ -144,6 +144,11 @@
       "pass": true
     },
     {
+      "check": "clean_script_index_mjs",
+      "detail": "scripts/ops/script_index.mjs — no forbidden APIs",
+      "pass": true
+    },
+    {
       "check": "clean_state_manager_mjs",
       "detail": "scripts/ops/state_manager.mjs — no forbidden APIs",
       "pass": true

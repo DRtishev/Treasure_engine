@@ -1,0 +1,38 @@
+{
+  "checks": [
+    {
+      "check": "no_idempotency_stub",
+      "detail": "OK: stub removed",
+      "pass": true
+    },
+    {
+      "check": "idempotency_uses_repoState",
+      "detail": "OK: references repoState",
+      "pass": true
+    },
+    {
+      "check": "real_kill_metrics",
+      "detail": "OK: max_drawdown wired to real source",
+      "pass": true
+    },
+    {
+      "check": "trackFillOutcome_exists",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "stats_has_error_and_loss_fields",
+      "detail": "OK",
+      "pass": true
+    }
+  ],
+  "checks_total": 5,
+  "failed_checks": [],
+  "gate_id": "RG_IDEMPOTENCY_FAST01",
+  "next_action": "npm run -s verify:regression:idempotency-fast01",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

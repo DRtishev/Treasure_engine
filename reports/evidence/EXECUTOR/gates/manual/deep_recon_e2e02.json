@@ -1,0 +1,34 @@
+{
+  "checks": [
+    {
+      "check": "no_drift_ok",
+      "detail": "action=RECON_OK, ok=true",
+      "pass": true
+    },
+    {
+      "check": "price_drift_halt",
+      "detail": "action=RECON_HALT_MISMATCH, drifts=1",
+      "pass": true
+    },
+    {
+      "check": "fee_drift_warn",
+      "detail": "action=RECON_WARN_DRIFT",
+      "pass": true
+    },
+    {
+      "check": "funding_drift_detected",
+      "detail": "OK: FUNDING_DRIFT found",
+      "pass": true
+    },
+    {
+      "check": "recon_action_constants",
+      "detail": "OK",
+      "pass": true
+    }
+  ],
+  "gate_id": "RG_RECON_E2E02",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

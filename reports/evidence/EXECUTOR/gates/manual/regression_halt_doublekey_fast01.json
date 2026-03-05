@@ -1,0 +1,43 @@
+{
+  "checks": [
+    {
+      "check": "fsm_checks_file_token",
+      "detail": "OK: checks HALT_RESET_APPROVED file",
+      "pass": true
+    },
+    {
+      "check": "fsm_checks_apply_flag",
+      "detail": "OK: checks applyFlag parameter",
+      "pass": true
+    },
+    {
+      "check": "no_unconditional_reset",
+      "detail": "OK: guarded by double-key",
+      "pass": true
+    },
+    {
+      "check": "safety_loop_accepts_repoState",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "safety_loop_persists_state",
+      "detail": "OK: _persistState called",
+      "pass": true
+    },
+    {
+      "check": "safety_loop_restores_checkpoint",
+      "detail": "OK: restores from checkpoint",
+      "pass": true
+    }
+  ],
+  "checks_total": 6,
+  "failed_checks": [],
+  "gate_id": "RG_HALT_DOUBLEKEY_FAST01",
+  "next_action": "npm run -s verify:regression:halt-doublekey-fast01",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

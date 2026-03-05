@@ -1,0 +1,29 @@
+{
+  "checks": [
+    {
+      "check": "first_intent_succeeds",
+      "detail": "OK: first intent executed",
+      "pass": true
+    },
+    {
+      "check": "duplicate_intent_rejected",
+      "detail": "OK: duplicate rejected",
+      "pass": true
+    },
+    {
+      "check": "only_one_order_placed",
+      "detail": "OK: 1 order",
+      "pass": true
+    },
+    {
+      "check": "different_intent_succeeds",
+      "detail": "OK: different intent_id accepted",
+      "pass": true
+    }
+  ],
+  "gate_id": "RG_IDEMPOTENCY_E2E01",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

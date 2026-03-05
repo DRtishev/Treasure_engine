@@ -1,0 +1,38 @@
+{
+  "checks": [
+    {
+      "check": "composite_score_in_range",
+      "detail": "score=79.76190476190476",
+      "pass": true
+    },
+    {
+      "check": "overall_verdict_valid",
+      "detail": "verdict=WARN",
+      "pass": true
+    },
+    {
+      "check": "all_dimensions_computed",
+      "detail": "OK: fee, slippage, fill_rate, pnl",
+      "pass": {
+        "diff": 5,
+        "pct": 10,
+        "verdict": "PASS"
+      }
+    },
+    {
+      "check": "deterministic",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "perfect_parity_is_100",
+      "detail": "score=100, verdict=PASS",
+      "pass": true
+    }
+  ],
+  "gate_id": "RG_PARITY_E2E02",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

@@ -1,0 +1,37 @@
+{
+  "checks": [
+    {
+      "check": "ledger_has_total_funding",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "getAttribution_exists",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "summary_includes_funding",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "recon_has_funding_mismatch",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "reconcileIncremental_exists",
+      "detail": "OK",
+      "pass": true
+    }
+  ],
+  "checks_total": 5,
+  "failed_checks": [],
+  "gate_id": "RG_PNL_ATTRIBUTION_FAST01",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}

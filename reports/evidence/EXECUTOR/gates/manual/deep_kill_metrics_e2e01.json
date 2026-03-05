@@ -1,0 +1,34 @@
+{
+  "checks": [
+    {
+      "check": "max_drawdown_non_zero",
+      "detail": "OK: max_drawdown=0.05",
+      "pass": true
+    },
+    {
+      "check": "consecutive_losses_tracked",
+      "detail": "OK: consecutive_losses=3",
+      "pass": true
+    },
+    {
+      "check": "exchange_error_rate_non_zero",
+      "detail": "OK: exchange_error_rate=0.1",
+      "pass": true
+    },
+    {
+      "check": "win_resets_losses",
+      "detail": "OK: win resets consecutive_losses to 0",
+      "pass": true
+    },
+    {
+      "check": "drawdown_magnitude_correct",
+      "detail": "OK: drawdown=0.05 ≈ 0.05",
+      "pass": true
+    }
+  ],
+  "gate_id": "RG_KILL_METRICS_E2E01",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS"
+}

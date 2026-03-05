@@ -1,0 +1,37 @@
+{
+  "checks": [
+    {
+      "check": "fill_quality_exists",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "evaluateFillQuality_exported",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "evaluateBatchQuality_exported",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "parity_score_exists",
+      "detail": "OK",
+      "pass": true
+    },
+    {
+      "check": "computeParityScore_exported",
+      "detail": "OK",
+      "pass": true
+    }
+  ],
+  "checks_total": 5,
+  "failed_checks": [],
+  "gate_id": "RG_PARITY_SCORE_FAST01",
+  "reason_code": "NONE",
+  "run_id": "STABLE",
+  "schema_version": "1.0.0",
+  "status": "PASS",
+  "violations": 0
+}
